@@ -1,0 +1,139 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <h2 class="text-xl font-bold text-natural-900 tracking-tight leading-none">Inventaris Produk</h2>
+                <p class="text-natural-500 text-[10px] mt-0.5">Kelola stok laptop, part, dan aksesoris sistem.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                @role('Admin')
+                <a href="{{ route('products.export') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-natural-200 rounded-xl text-natural-600 text-xs font-bold hover:bg-natural-50 transition-all shadow-sm">
+                    <i class='bx bx-export text-lg'></i>
+                    Export Excel
+                </a>
+                @endrole
+                @role('Admin')
+                <a href="{{ route('products.create') }}" class="flex items-center gap-2 px-4 py-2 bg-brand-600 rounded-xl text-white text-xs font-bold hover:bg-brand-700 transition-all shadow-md">
+                    <i class='bx bx-plus text-lg'></i>
+                    Tambah Produk
+                </a>
+                @endrole
+            </div>
+        </div>
+    </x-slot>
+
+    <div class="flex flex-col h-full space-y-4">
+        <!-- Search & Filter Bar -->
+        <form id="filterForm" action="{{ route('products.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+            <div class="relative flex-grow max-w-md">
+                <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-xl'></i>
+                <input type="text" name="search" value="{{ request('search') }}" id="productSearch" oninput="debounceSubmit()" placeholder="Cari nama laptop, brand, atau kode..." 
+                       class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
+            </div>
+            <div class="flex items-center gap-2">
+                <select name="category_id" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                    <option value="">Semua Kategori</option>
+                    @foreach(\App\Models\Category::all() as $cat)
+                        <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                    <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua Status</option>
+                    <option value="available" {{ request('status', 'available') == 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="sold" {{ request('status') == 'sold' ? 'selected' : '' }}>Habis (Terjual)</option>
+                </select>
+            </div>
+        </form>
+
+        <!-- Inventory Table Container -->
+        <div class="bg-white rounded-3xl shadow-sm border border-natural-100/50 overflow-hidden flex-grow flex flex-col">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-natural-50/50 border-b border-natural-100">
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Info Produk</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Kategori</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-center">Stok</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Harga Jual</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-natural-50">
+                        @forelse($products as $product)
+                        <tr class="hover:bg-natural-50/30 transition-colors group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-natural-100 flex items-center justify-center text-natural-400 group-hover:bg-brand-50 group-hover:text-brand-600 transition-colors">
+                                        <i class='bx bx-laptop text-xl'></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[12px] font-bold text-natural-800 line-clamp-1">{{ $product->brand }} {{ $product->model_series }}</p>
+                                        <p class="text-[9px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded-lg bg-natural-100 text-natural-600 text-[10px] font-bold uppercase tracking-wider">
+                                    {{ $product->category->name ?? 'Uncategorized' }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[12px] font-black {{ $product->stock <= 2 ? 'text-red-600' : 'text-natural-800' }}">
+                                        {{ $product->stock }}
+                                    </span>
+                                    <span class="text-[8px] font-bold text-natural-400 uppercase">Unit</span>
+                                </div>
+
+                            </td>
+                            <td class="px-6 py-4">
+                                @php
+                                    $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
+                                @endphp
+                                <p class="text-[12px] font-black text-brand-600">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                                <p class="text-[8px] text-natural-400 font-medium line-through">Rp {{ number_format((float) $finalPrice * 1.1, 0, ',', '.') }}</p>
+                            </td>
+
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-1">
+                                    <a href="{{ route('products.show', $product->id) }}" class="p-2 text-natural-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
+                                        <i class='bx bx-show text-lg'></i>
+                                    </a>
+                                    @role('Admin')
+                                    <a href="{{ route('products.edit', $product->id) }}" class="p-2 text-natural-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Edit">
+                                        <i class='bx bx-edit-alt text-lg'></i>
+                                    </a>
+                                    @endrole
+                                    @role('Admin')
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus produk ini?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="p-2 text-natural-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
+                                            <i class='bx bx-trash text-lg'></i>
+                                        </button>
+                                    </form>
+                                    @endrole
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center justify-center text-natural-400">
+                                    <i class='bx bx-package text-5xl mb-2 opacity-20'></i>
+                                    <p class="text-sm font-medium italic">Tidak ada produk ditemukan.</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination (Simplified) -->
+            <div class="mt-auto px-6 py-4 bg-natural-50/30 border-t border-natural-100">
+                {{ $products->links() }}
+            </div>
+        </div>
+    </div>
+</x-app-layout>

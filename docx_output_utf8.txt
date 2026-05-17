@@ -1,0 +1,215 @@
+ 
+ 
+ 
+LAPORAN HASIL AUDIT SISTEM INFORMASI
+Sistem Informasi Pembayaran Listrik Pascabayar
+ 
+Organisasi: [Nama Organisasi/Unit] 
+Periode Audit: 1 Mei 2026 - 15 Mei 2026
+Versi Dokumen: v1.0 
+Disusun oleh:  
+19251913 – Catur Yudha Yunandar
+19252417- Mursanto  
+[NIM - Nama Tim Audit],  
+[NIM - Nama Tim Audit], 
+[NIM - Nama Tim Audit] 
+Diverifikasi oleh: Dewi Laraswati, M. Kom
+
+ 	 
+DAFTAR ISI 
+Executive Summary 
+Latar Belakang & Tujuan 
+Ruang Lingkup Audit 
+Metodologi Audit 
+Gambaran Objek Audit (Sisfo) 
+Hasil Penilaian Capability (Per Proses/Praktik/Aktivitas) 
+Hasil Perhitungan Maturity  
+Temuan Audit & Analisis Risiko  Opsional 
+Analisis Gap (Current vs Target) 
+Rekomendasi & Rencana Tindak Lanjut  Opsional 
+Roadmap Peningkatan  Opsional 
+Kesimpulan 
+Lampiran 
+ 
+ 
+ 	 
+1. Executive Summary 
+Executive summary diisi setelah bagian Gambaran Objek Audit (Sisfo), Penilaian Capability, 
+Perhitungan Maturity, Temuan Audit & Analisis Risiko, Analisis Gap dan Action Plan terisi 
+1.1 Ringkasan Tujuan Audit:  
+Contoh: Menilai kapabilitas proses DSS02 (penanganan permintaan layanan & insiden) pada SIAKAD dan memastikan mekanisme eskalasi, pelacakan status, dan pelaporan berjalan efektif. 
+1.2 Ringkasan Ruang Lingkup:  
+Contoh: Proses COBIT yang dinilai: DSS02. Aktivitas fokus: DSS02.07 (Track status & produce reports) dan aktivitas monitoring eskalasi/resolusi. Periode bukti: Okt–Des 2025. 
+1.3 Ringkasan Hasil (Highlight):  
+Contoh: Current capability DSS02 = Level 2 (Managed). DSS02.07 = Level 2. Maturity domain DSS (agregasi 6 proses) = 2,33 (Level 2). Terdapat 2 temuan High, 3 Medium, 2 Low. Prioritas perbaikan: standardisasi laporan, dan analisis tren insiden. 
+1.4 Kesimpulan Eksekutif:  
+Contoh: Proses penanganan insiden sudah berjalan dan dipantau, namun belum konsisten terukur dan prediktif. Pelaporan status insiden ada tetapi belum standar dan belum menyajikan tren/indikator kuantitatif. Rekomendasi utama adalah menetapkan KPI/SLA eskalasi, memperkuat tata kelola pelaporan (format & frekuensi), dan membangun review bulanan berbasis data untuk perbaikan berkelanjutan. 
+
+
+
+
+
+
+
+B A B   I I
+LATAR BELAKANG DAN TUJUAN
+
+2. Latar Belakang & Tujuan 
+
+2.1 Latar Belakang
+			Transformasi digital telah mendorong berbagai sektor publik untuk mengadopsi sistem informasi berbasis web, termasuk dalam layanan pembayaran tagihan listrik pascabayar. Digitalisasi ini bertujuan meningkatkan efisiensi, transparansi, dan kepuasan pelanggan (Oktafiani dkk., 2023). Namun, keberhasilan transformasi digital sangat bergantung pada kualitas tata kelola teknologi informasi (TI) yang diterapkan oleh penyelenggara layanan. Tanpa tata kelola TI yang memadai, sistem pembayaran elektronik berisiko menimbulkan kerugian finansial, kebocoran data, serta menurunkan tingkat kepercayaan publik terhadap layanan yang diberikan.
+Sistem pembayaran listrik pascabayar memiliki karakteristik khusus, seperti volume transaksi yang tinggi pada periode tertentu, pengelolaan data pelanggan yang bersifat sensitif, serta tuntutan ketersediaan layanan selama 24 jam. Untuk mendukung kebutuhan tersebut, banyak organisasi mulai memanfaatkan infrastruktur cloud publik karena menawarkan skalabilitas, kemudahan deployment, dan efisiensi biaya infrastruktur. Namun, migrasi sistem ke cloud publik juga meningkatkan kompleksitas tata kelola TI, terutama dalam aspek keamanan, operasional, dan pengendalian perubahan sistem dibandingkan dengan lingkungan on-premise.
+Berbagai risiko tata kelola TI dapat muncul setelah implementasi sistem pada cloud publik. Dari sisi keamanan, endpoint sistem yang terhubung langsung ke internet berpotensi menjadi sasaran berbagai ancaman akses ilegal dan eksploitasi autentikasi. Dari sisi manajemen perubahan, lingkungan cloud dengan siklus deployment yang cepat membutuhkan pengendalian yang lebih ketat terhadap perubahan kode maupun konfigurasi agar tidak mengganggu stabilitas layanan (Saputra dkk., 2024). Selain itu, karakteristik infrastruktur cloud yang dinamis menuntut prosedur pemantauan, backup, dan pemulihan bencana yang terdokumentasi dengan baik. Apabila risiko-risiko tersebut tidak dikelola secara sistematis, sistem pembayaran listrik berpotensi mengalami downtime, kehilangan data transaksi, maupun kebocoran data pelanggan yang dapat menimbulkan kerugian finansial dan sanksi regulasi.
+Sistem pembayaran listrik pascabayar berbasis web yang menjadi objek penelitian ini telah berhasil diimplementasikan pada lingkungan cloud publik. Meskipun demikian, belum pernah dilakukan evaluasi formal terhadap tingkat kapabilitas tata kelola TI yang diterapkan pada sistem tersebut. Organisasi penyelenggara belum mengetahui sejauh mana proses-proses kritis seperti manajemen risiko, pengendalian perubahan, operasional layanan, dan keamanan sistem telah berjalan sesuai praktik terbaik industri (Fianty, 2024). Tanpa adanya pemetaan kesenjangan (gap analysis), proses perbaikan tata kelola TI cenderung bersifat reaktif dan tidak terukur. Oleh karena itu, audit tata kelola TI perlu dilakukan untuk mengidentifikasi kelemahan, memitigasi risiko, serta merumuskan rekomendasi perbaikan yang lebih sistematis dan berkelanjutan (Atrinawati & Anastasia, 2020).
+Kerangka kerja COBIT 2019 dipilih sebagai acuan audit karena memiliki fleksibilitas melalui konsep design factors yang memungkinkan penyesuaian dengan konteks organisasi, termasuk profil risiko dan strategi adopsi cloud (ISACA, 2021). Selain itu, COBIT 2019 menyediakan model kapabilitas proses dengan skala 0–5 yang dapat digunakan untuk mengukur tingkat kematangan tata kelola TI secara objektif. Audit dalam penelitian ini difokuskan pada empat proses COBIT 2019 yang dinilai paling relevan terhadap operasional sistem pembayaran listrik berbasis cloud, yaitu APO12 (Managed Risk) untuk pengelolaan risiko keamanan, BAI06 (Managed IT Changes) untuk pengendalian perubahan sistem dan konfigurasi, DSS01 (Managed Operations) untuk pengelolaan operasional layanan, serta DSS05 (Managed Security Services) untuk perlindungan akses logis dan keamanan layanan (Prayudi, Mulyana, & Fauzi, 2023).
+Hasil audit ini diharapkan dapat memberikan rekomendasi yang konkret bagi organisasi dalam meningkatkan kapabilitas tata kelola TI dari tingkat managed (Level 2) menuju established (Level 3), serta menjadi landasan dalam pengembangan tata kelola TI yang lebih matang, efektif, dan berkelanjutan di masa mendatang.
+			
+
+2.2 Tujuan Audit
+	Tujuan pelaksanaan audit sistem informasi ini adalah untuk mengevaluasi tingkat kapabilitas tata kelola teknologi informasi pada sistem pembayaran listrik pascabayar berbasis web yang diimplementasikan pada lingkungan cloud publik menggunakan framework COBIT 2019. Audit dilakukan untuk mengetahui sejauh mana proses tata kelola TI telah diterapkan secara efektif dalam mendukung keamanan, operasional layanan, pengendalian perubahan sistem, serta pengelolaan risiko teknologi informasi.
+Secara khusus, tujuan audit dalam penelitian ini meliputi:
+Mengukur dan menilai tingkat kapabilitas (current capability level) proses APO12 (Managed Risk), BAI06 (Managed IT Changes), DSS01 (Managed Operations), dan DSS05 (Managed Security Services) pada sistem pembayaran listrik pascabayar berbasis web. 
+Mengidentifikasi kesenjangan (gap analysis) antara tingkat kapabilitas tata kelola TI saat ini dengan target kapabilitas yang diharapkan organisasi, yaitu Level 3 (Established Process). 
+Mengevaluasi efektivitas penerapan kontrol tata kelola TI pada aspek pengelolaan risiko, keamanan akses sistem, pengendalian perubahan aplikasi, dan stabilitas operasional layanan berbasis cloud publik. 
+Mengetahui kelemahan dan potensi risiko pada proses operasional sistem pembayaran listrik yang dapat mempengaruhi keamanan data, kontinuitas layanan, dan kualitas layanan kepada pelanggan. 
+Menyusun rekomendasi perbaikan serta rencana tindak lanjut (action plan) guna meningkatkan tingkat kapabilitas tata kelola TI agar lebih terstruktur, konsisten, dan sesuai dengan praktik terbaik COBIT 2019. 
+Memberikan masukan bagi organisasi dalam meningkatkan kualitas tata kelola TI, khususnya pada pengelolaan sistem pembayaran listrik berbasis cloud publik agar lebih aman, andal, dan berkelanjutan di masa mendatang.
+
+2.3 Kriteria/Standar/Acuan: COBIT 2019 
+Audit sistem informasi ini menggunakan framework COBIT 2019 (Control Objectives for Information and Related Technologies) yang dikembangkan oleh ISACA sebagai standar acuan dalam mengevaluasi tata kelola teknologi informasi pada sistem pembayaran listrik pascabayar berbasis web. COBIT 2019 dipilih karena menyediakan pedoman tata kelola dan manajemen TI yang komprehensif, fleksibel, serta mampu menyesuaikan kebutuhan organisasi berdasarkan kondisi dan profil risiko sistem yang diaudit.
+Framework COBIT 2019 membedakan area governance dan management sehingga proses evaluasi tidak hanya berfokus pada operasional teknis, tetapi juga pada pengelolaan risiko, pengendalian proses, monitoring, dan pencapaian tujuan organisasi. Dalam struktur domainnya, COBIT 2019 menempatkan EDM (Evaluate, Direct, and Monitor) sebagai domain governance, sedangkan APO (Align, Plan, and Organize), BAI (Build, Acquire, and Implement), DSS (Deliver, Service, and Support), dan MEA (Monitor, Evaluate, and Assess) berada pada domain management.
+
+2.3.1 Alasan Pemilihan COBIT 2019
+			COBIT 2019 dipilih dalam penelitian ini karena memiliki beberapa keunggulan, yaitu:
+Mampu memetakan hubungan antara tujuan organisasi dengan objective tata kelola dan manajemen TI yang relevan. 
+Menyediakan pendekatan design factors sehingga proses audit dapat disesuaikan dengan kondisi nyata organisasi dan karakteristik sistem pembayaran listrik berbasis cloud publik. 
+Memiliki model capability level yang dapat digunakan untuk mengukur tingkat kapabilitas proses tata kelola TI secara objektif dan terstruktur. 
+Mendukung proses identifikasi kesenjangan (gap analysis) antara kondisi saat ini dengan target tata kelola yang diharapkan organisasi. 
+Relevan digunakan untuk mengevaluasi sistem berbasis layanan digital dan cloud computing yang membutuhkan pengendalian risiko, keamanan, operasional, dan perubahan sistem secara berkelanjutan.
+
+2.3.2 Komponen COBIT 2019 yang Digunakan dalam Penelitian/Audit
+			Dalam pelaksanaan audit tata kelola teknologi informasi ini, penelitian menggunakan beberapa komponen utama pada framework COBIT 2019 yang disesuaikan dengan kebutuhan evaluasi sistem pembayaran listrik pascabayar berbasis cloud publik. Pemilihan komponen tersebut bertujuan agar proses audit dapat dilakukan secara terstruktur, terukur, dan relevan dengan kondisi operasional sistem yang diteliti. Komponen-komponen COBIT 2019 yang digunakan dalam penelitian ini meliputi:
+Design Factors COBIT 2019
+Digunakan sebagai dasar dalam menyesuaikan sistem tata kelola TI dengan karakteristik organisasi, profil risiko, kebutuhan layanan, serta kondisi implementasi sistem berbasis cloud publik. 
+Domain dan Objective COBIT 2019
+Digunakan untuk menentukan proses tata kelola dan manajemen TI yang menjadi fokus audit berdasarkan kebutuhan pengendalian pada sistem pembayaran listrik pascabayar berbasis web. 
+Capability Level 0–5
+Digunakan untuk mengukur tingkat kapabilitas proses tata kelola TI secara objektif berdasarkan tingkat kematangan implementasi proses yang berjalan pada organisasi. 
+Skala Penilaian COBIT 2019
+Menggunakan kategori Fully Achieved (F), Largely Achieved (L), Partially Achieved (P), dan Not Achieved (N) untuk mengevaluasi tingkat pencapaian aktivitas dan bukti implementasi pada setiap proses yang diaudit. 
+Target Capability Level
+Digunakan sebagai acuan dalam melakukan analisis kesenjangan (gap analysis) antara kondisi aktual tata kelola TI dengan tingkat kapabilitas yang diharapkan organisasi, serta sebagai dasar penyusunan rekomendasi perbaikan.
+
+
+2.3.3 Design Factor COBIT 2019
+	COBIT 2019 menggunakan pendekatan design factors untuk menyesuaikan sistem tata kelola TI dengan kondisi, kebutuhan, dan profil risiko organisasi. Dalam penelitian ini, design factor digunakan untuk membantu menentukan fokus domain audit yang relevan terhadap sistem pembayaran listrik pascabayar berbasis web yang diimplementasikan pada lingkungan cloud publik.
+Enterprise Strategy
+Strategi organisasi difokuskan pada digitalisasi layanan pembayaran listrik guna meningkatkan efisiensi layanan, kemudahan akses pelanggan, dan ketersediaan layanan secara online.
+Enterprise Goals
+Tujuan organisasi adalah meningkatkan kualitas layanan pembayaran listrik, menjaga kontinuitas layanan, serta meningkatkan keamanan dan keandalan sistem transaksi.
+Risk Profile
+Risiko utama sistem meliputi downtime layanan, kebocoran data pelanggan, kegagalan deployment, dan ancaman akses ilegal terhadap sistem berbasis cloud publik.
+I&T Related Issues
+Isu TI yang relevan mencakup pengelolaan keamanan akses, pengendalian perubahan sistem, stabilitas operasional cloud, dan monitoring layanan berbasis web.
+Threat Landscape
+Ancaman utama yang menjadi perhatian adalah brute force attack, credential stuffing, eksploitasi autentikasi, dan serangan terhadap layanan web yang terhubung langsung ke internet.
+Compliance Requirements
+Sistem harus menjaga kerahasiaan data pelanggan, keamanan transaksi, serta memastikan layanan berjalan sesuai prosedur operasional organisasi.
+Role of IT
+Teknologi informasi berperan sebagai layanan operasional utama sehingga gangguan pada sistem dapat langsung mempengaruhi proses transaksi pelanggan.
+Sourcing Model for IT
+Organisasi menggunakan layanan cloud publik sehingga pengelolaan infrastruktur server sebagian bergantung pada penyedia layanan cloud.
+IT Implementation Methods
+Sistem dikembangkan menggunakan pendekatan pengembangan aplikasi berbasis web dengan proses deployment dan perubahan sistem yang dilakukan secara bertahap pada lingkungan cloud publik.
+Technology Adoption Strategy
+Organisasi mengadopsi teknologi cloud computing dan layanan berbasis web untuk meningkatkan skalabilitas, fleksibilitas, dan efisiensi operasional sistem pembayaran listrik.
+
+2.3.4 Capability Level COBIT 2019
+	Penilaian tingkat kapabilitas proses dilakukan menggunakan model Process Capability Level berdasarkan COBIT 2019. Tingkatan capability level terdiri dari:
+Level 0
+Incomplete Process: Proses tidak diimplementasikan atau gagal mencapai tujuan proses. 
+Level 1
+Performed Process: Proses telah dilaksanakan dan mampu mencapai tujuan dasar proses. 
+Level 2
+Managed Process: Proses telah direncanakan, dipantau, dan dikelola dengan baik. 
+Level 3
+Established Process: Proses telah terdokumentasi, distandardisasi, dan diterapkan secara konsisten. 
+Level 4
+Predictable Process: Proses telah diukur dan dikendalikan menggunakan parameter kuantitatif. 
+Level 5
+Optimizing Process: Proses terus ditingkatkan secara berkelanjutan melalui inovasi dan optimalisasi.
+
+2.3.5 Skala Penilaian
+	Penilaian aktivitas proses dalam COBIT 2019 dilakukan menggunakan skala pencapaian (achievement rating) sebagai berikut:
+Fully Achieved (F) : >85% — Aktivitas proses telah diterapkan secara lengkap dan konsisten. 
+Largely Achieved (L) : 50%–85% — Sebagian besar aktivitas proses telah diterapkan dengan beberapa kekurangan minor. 
+Partially Achieved (P) : 15%–50% — Aktivitas proses baru diterapkan sebagian. 
+Not Achieved (N) : <15% — Aktivitas proses belum diterapkan atau bukti penerapan sangat minim.
+
+2.3.6 Target Penilaian Capability
+	Target capability level dalam penelitian ini ditetapkan pada Level 3 (Established Process). Target tersebut dipilih karena organisasi diharapkan telah memiliki proses tata kelola TI yang terdokumentasi, terstandarisasi, dan diterapkan secara konsisten pada pengelolaan sistem pembayaran listrik berbasis cloud publik.
+Penetapan target Level 3 juga mempertimbangkan kebutuhan organisasi terhadap stabilitas operasional layanan, keamanan sistem, pengendalian perubahan, serta pengelolaan risiko yang lebih terstruktur. Hasil penilaian capability level selanjutnya digunakan untuk melakukan analisis kesenjangan (gap analysis) antara kondisi aktual dan target yang diharapkan organisasi.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+B A B   III
+Ruang Lingkup Audit
+
+3. Ruang Lingkup Audit 
+3.1 Objek Audit
+	Objek audit pada penelitian ini adalah Sistem Informasi Pembayaran Listrik Pascabayar Berbasis Web yang digunakan untuk mendukung proses pengelolaan dan transaksi pembayaran listrik pelanggan secara digital. Sistem dikembangkan menggunakan framework Laravel 12, Livewire 3, Flux UI, serta database MySQL dan diimplementasikan pada lingkungan cloud publik untuk mendukung akses layanan secara online dan terdistribusi.
+Audit difokuskan pada beberapa modul utama yang memiliki keterkaitan langsung dengan keamanan, operasional layanan, pengelolaan data, dan transaksi pembayaran, yaitu:
+Modul Registrasi dan Autentikasi Pengguna
+Modul yang digunakan untuk mengelola proses registrasi, login, dan autentikasi pengguna dengan pemisahan hak akses antara administrator dan pelanggan. 
+Modul Verifikasi Keamanan Two-Factor Authentication (2FA) berbasis One-Time Password (OTP)
+Modul keamanan tambahan yang digunakan untuk memverifikasi identitas pengguna melalui pengiriman kode OTP secara dinamis menggunakan layanan Gmail SMTP guna meningkatkan keamanan akses sistem. 
+Modul Pengelolaan Data Tarif dan Pelanggan
+Modul yang digunakan untuk mengelola data pelanggan, golongan tarif listrik, serta informasi administratif yang berkaitan dengan layanan pembayaran listrik. 
+Modul Pencatatan Pemakaian Listrik
+Modul yang digunakan oleh operator untuk melakukan pencatatan meter awal dan meter akhir pemakaian listrik pelanggan sebagai dasar perhitungan tagihan bulanan. 
+Modul Transaksi dan Verifikasi Pembayaran
+Modul yang digunakan pelanggan untuk melihat tagihan, melakukan pembayaran, mengunggah bukti transaksi, serta mendukung proses verifikasi pembayaran oleh administrator sistem. 
+Modul Permohonan Perubahan Daya Listrik
+Modul layanan mandiri yang digunakan pelanggan untuk mengajukan perubahan kapasitas daya listrik secara digital melalui sistem. 
+Infrastruktur teknologi yang mendukung sistem meliputi layanan cloud publik, database management system (DBMS) MySQL, serta integrasi layanan email SMTP untuk distribusi OTP dan notifikasi sistem.
+Pihak yang terlibat dalam penggunaan sistem terdiri dari:
+Administrator/Operator Sistem, yang bertanggung jawab terhadap pengelolaan operasional sistem, data pelanggan, dan verifikasi transaksi. 
+Pelanggan, sebagai pengguna layanan yang melakukan akses informasi tagihan, pembayaran, dan pengajuan layanan kelistrikan secara mandiri.
+
+3.2 Proses COBIT yang Dinilai
+			Berdasarkan hasil pemetaan design factors COBIT 2019 serta kebutuhan tata kelola pada sistem pembayaran listrik berbasis cloud publik, audit difokuskan pada empat proses COBIT 2019 yang dinilai paling relevan terhadap pengelolaan risiko, perubahan sistem, operasional layanan, dan keamanan informasi.
+Adapun proses COBIT 2019 yang dinilai dalam penelitian ini meliputi:
+1. APO12 - Managed Risk
+Proses APO12 digunakan untuk mengevaluasi kemampuan organisasi dalam mengidentifikasi, menganalisis, dan mengelola risiko teknologi informasi yang dapat mempengaruhi keamanan dan keberlangsungan layanan sistem pembayaran listrik berbasis web.
+2. BAI06 - Managed IT Changes
+Proses BAI06 digunakan untuk menilai pengelolaan perubahan sistem teknologi informasi, baik pada perubahan kode program, konfigurasi aplikasi, maupun perubahan infrastruktur pendukung.
+3. DSS01 - Managed Operations
+Proses DSS01 digunakan untuk mengevaluasi pengelolaan operasional harian sistem pembayaran listrik berbasis web guna memastikan layanan berjalan secara stabil, konsisten, dan berkelanjutan.
+4. DSS05 - Managed Security Services
+Proses DSS05 digunakan untuk mengevaluasi efektivitas layanan keamanan dalam melindungi akses sistem dan data pengguna.
+Hasil penilaian terhadap keempat proses COBIT 2019 tersebut digunakan untuk menentukan tingkat kapabilitas tata kelola TI saat ini (current capability level), mengidentifikasi kesenjangan (gap analysis) terhadap target yang diharapkan organisasi, serta menyusun rekomendasi perbaikan tata kelola TI pada sistem pembayaran listrik pascabayar berbasis web.

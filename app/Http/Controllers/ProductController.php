@@ -1,0 +1,274 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use App\Models\Category;
+use App\Exports\ProductsExport;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Excel;
+
+class ProductController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = \App\Models\Product::with('category');
+
+        // Status Filter: Default 'available'
+        $status = $request->input('status', 'available');
+        if ($status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        // Category Filter
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Search Filter
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('brand', 'LIKE', "%{$search}%")
+                  ->orWhere('model_series', 'LIKE', "%{$search}%")
+                  ->orWhere('serial_number', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $products = $query->latest()->paginate(10)->appends($request->all());
+        $categories = \App\Models\Category::all();
+
+        return view('products.index', compact('products', 'status', 'categories'));
+    }
+
+    public function create()
+    {
+        $categories = \App\Models\Category::with('children')->whereNull('parent_id')->get();
+        return view('products.create', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $validation = [
+            'category_id' => 'required|exists:categories,id',
+            'brand' => 'required|string|max:255',
+            'model_series' => 'required|string|max:255',
+            'serial_number' => 'nullable|string|max:255|unique:products',
+            'processor' => 'nullable|string|max:255',
+            'ram' => 'nullable|string|max:255',
+            'storage' => 'nullable|string|max:255',
+            'screen_size' => 'nullable|numeric',
+            'battery_health' => 'nullable|integer',
+            'battery_runtime' => 'nullable|numeric',
+            'condition' => 'required|string|max:255',
+            'purchase_price' => 'required|integer|min:0',
+            'selling_price' => 'required|integer|min:0',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+        ];
+        
+        $request->validate($validation);
+
+        // Logika Auto-Status berdasarkan stok
+        $status = ($request->stock > 0) ? 'available' : 'sold';
+
+        $data = $request->all();
+        $data['status'] = $status; // Gunakan status otomatis
+
+        // 1. Logika Auto-Generate Serial Number untuk Barang Massal
+        if (empty($request->serial_number) || $request->serial_number == '-') {
+            // Membuat kode batch unik: BATCH-TahunBulanHari-JamMenitDetik-Random
+            $data['serial_number'] = 'BATCH-' . date('Ymd-His') . '-' . rand(100, 999);
+        } else {
+            $data['serial_number'] = $request->serial_number;
+        }
+
+        // 2. Pastikan stok terisi (minimal 1 jika kosong)
+        $data['stock'] = $request->stock ?? 1;
+
+        // 3. Bypass nilai spesifikasi untuk barang non-unit agar database tidak error (NOT NULL)
+        $data['processor'] = $request->processor ?? '-';
+        $data['ram'] = $request->ram ?? '-';
+        $data['storage'] = $request->storage ?? '-';
+        $data['screen_size'] = $request->screen_size ?? 0;
+        $data['battery_health'] = 0; // Forced default since we removed input
+        $data['battery_runtime'] = $request->battery_runtime ?? 0;
+
+        // 4. Handle Catalog Uploads
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_main_' . Str::slug($data['brand'] . '-' . $data['model_series']) . '.' . $file->getClientOriginalExtension();
+            $data['image_path'] = $file->storeAs('public/catalog', $filename);
+        }
+
+        if ($request->hasFile('gallery_images')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery_images') as $index => $file) {
+                if (count($galleryPaths) >= 9) break;
+                $filename = time() . '_gallery_' . $index . '_' . Str::slug($data['brand'] . '-' . $data['model_series']) . '.' . $file->getClientOriginalExtension();
+                $galleryPaths[] = $file->storeAs('public/catalog/gallery', $filename);
+            }
+            $data['gallery_images'] = $galleryPaths;
+        }
+
+        if ($request->has('description')) {
+            $data['description'] = $request->description;
+        }
+
+        // Eksekusi simpan ke database
+        Product::create($data);
+
+        return redirect()->route('products.index')
+            ->with('success', 'Product created successfully.');
+    }
+
+    public function show(Product $product)
+    {
+        $product->load('category');
+        return view('products.show', compact('product'));
+    }
+
+    public function edit(Product $product)
+    {
+        $categories = \App\Models\Category::with('children')->whereNull('parent_id')->get();
+        return view('products.edit', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'brand' => 'required|string|max:255',
+            'model_series' => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255|unique:products,serial_number,' . $product->id,
+            'processor' => 'nullable|string|max:255',
+            'ram' => 'nullable|string|max:255',
+            'storage' => 'nullable|string|max:255',
+            'screen_size' => 'nullable|numeric',
+            'battery_runtime' => 'nullable|numeric',
+            'condition' => 'required|string|max:255',
+            'purchase_price' => 'required|integer|min:0',
+            'selling_price' => 'required|integer|min:0',
+            'operational_cost' => 'nullable|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+        ]);
+
+        // Logika Auto-Status berdasarkan stok
+        $status = ($request->stock > 0) ? 'available' : 'sold';
+
+        $product->update([
+            'category_id' => $request->category_id,
+            'brand' => $request->brand,
+            'model_series' => $request->model_series,
+            'serial_number' => $request->serial_number,
+            'processor' => $request->processor ?? '-',
+            'ram' => $request->ram ?? '-',
+            'storage' => $request->storage ?? '-',
+            'screen_size' => $request->screen_size ?? 0,
+            'battery_runtime' => $request->battery_runtime ?? 0,
+            'condition' => $request->condition,
+            'purchase_price' => $request->purchase_price,
+            'selling_price' => $request->selling_price,
+            'operational_cost' => $request->operational_cost ?? $product->operational_cost,
+            'stock' => $request->stock,
+            'status' => $status, // Gunakan status otomatis
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($product->image_path && Storage::exists($product->image_path)) {
+                Storage::delete($product->image_path);
+            }
+            $file = $request->file('image');
+            $filename = time() . '_main_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
+            $product->update(['image_path' => $file->storeAs('public/catalog', $filename)]);
+        }
+
+        $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
+        $galleryUpdated = false;
+
+        if ($request->has('delete_gallery')) {
+            foreach ($request->delete_gallery as $delPath) {
+                if (in_array($delPath, $galleryPaths)) {
+                    if (Storage::exists($delPath)) Storage::delete($delPath);
+                    $galleryPaths = array_diff($galleryPaths, [$delPath]);
+                    $galleryUpdated = true;
+                }
+            }
+            $galleryPaths = array_values($galleryPaths); // Re-index array
+        }
+
+        if ($request->hasFile('gallery_images')) {
+            $newFiles = $request->file('gallery_images');
+            if ((count($galleryPaths) + count($newFiles)) > 9) {
+                return redirect()->back()->withErrors(['gallery_images' => 'Total maksimal foto galeri adalah 9 lembar.'])->withInput();
+            }
+
+            foreach ($newFiles as $index => $file) {
+                if (count($galleryPaths) >= 9) break;
+                $filename = time() . '_gallery_' . uniqid() . '_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
+                $galleryPaths[] = $file->storeAs('public/catalog/gallery', $filename);
+                $galleryUpdated = true;
+            }
+        }
+
+        if ($galleryUpdated) {
+            $product->update(['gallery_images' => $galleryPaths]);
+        }
+
+        if ($request->has('description')) {
+            $product->update(['description' => $request->description]);
+        }
+
+        // If product is sold, sync operational_cost to related sales
+        if ($product->status === 'sold') {
+            $product->saleDetails()->each(function ($saleDetail) use ($product) {
+                $sale = $saleDetail->sale;
+                if ($sale) {
+                    // Recalculate operational_cost for the sale
+                    $totalOperationalCost = $sale->saleDetails->sum(function ($detail) {
+                        return $detail->product->operational_cost ?? 0;
+                    });
+                    
+                    // Update the sale with new operational_cost
+                    $sale->update(['operational_cost' => $totalOperationalCost]);
+                    
+                    // Recalculate profit_amount
+                    $totalHpp = $sale->saleDetails->sum('purchase_price');
+                    $sale->update(['profit_amount' => $sale->total_amount - $totalHpp]);
+                }
+            });
+        }
+
+        return redirect()->route('products.index')
+            ->with('success', 'Product updated successfully.');
+    }
+
+    public function destroy(Product $product)
+    {
+        if ($product->image_path && Storage::exists($product->image_path)) {
+            Storage::delete($product->image_path);
+        }
+        if (is_array($product->gallery_images)) {
+            foreach ($product->gallery_images as $path) {
+                if (Storage::exists($path)) Storage::delete($path);
+            }
+        }
+
+        $product->delete();
+
+        return redirect()->route('products.index')
+            ->with('success', 'Product deleted successfully.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProductsExport, 'produk.xlsx');
+    }
+}
