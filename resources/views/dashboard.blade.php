@@ -8,7 +8,7 @@
         </div>
     </x-slot>
 
-    <div class="flex flex-col h-[calc(100vh-170px)] min-h-0 space-y-1.5">
+    <div class="flex flex-col h-auto lg:h-[calc(100vh-170px)] lg:min-h-0 space-y-3 lg:space-y-1.5 pb-6 lg:pb-0">
 
         <!-- Colorful Stat Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 shrink-0">
@@ -119,10 +119,10 @@
         </div>
 
         <!-- Lower Section (Balanced Height) -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-3 flex-grow min-h-0 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:flex-grow lg:min-h-0 items-stretch">
             
             <!-- Quick Navigation (1 col) -->
-            <div class="lg:col-span-1 bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+            <div class="lg:col-span-1 bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-auto lg:h-full">
                 <h3 class="text-xs font-bold text-natural-900 mb-2 flex items-center gap-2 border-b border-natural-100 pb-1 shrink-0">
                     <i class='bx bx-bolt-circle text-amber-500 text-sm'></i> Akses Cepat
                 </h3>
@@ -181,9 +181,9 @@
             </div>
 
             <!-- Data Lists (3 cols - Equal Height Grid) -->
-            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-3 h-full items-stretch">
+            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-3 h-auto lg:h-full items-stretch">
                 <!-- Stok Laptop -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-auto lg:h-full min-h-[200px]">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-blue-100 text-blue-600 flex items-center justify-center"><i class='bx bx-laptop text-xs'></i></div> 
@@ -215,7 +215,7 @@
                 </div>
 
                 <!-- Stok Part/Aksesoris -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-auto lg:h-full min-h-[200px]">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class='bx bx-chip text-xs'></i></div>
