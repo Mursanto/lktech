@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/cfsw7633/public_html/
+    - export DEPLOYPATH=/home/cfsw7633/public_html/lktech.online/
     - /bin/cp -R * $DEPLOYPATH
