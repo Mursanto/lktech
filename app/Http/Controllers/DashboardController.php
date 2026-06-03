@@ -51,18 +51,29 @@ class DashboardController extends Controller
             $profitTrend[] = \App\Models\Sale::whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('profit_amount');
         }
 
-        // Data Stok Laptop/Device Terbanyak (Max 5)
-        $topLaptops = \App\Models\Product::with('category')->where('status', 'available')
+        // Data Stok Unit Device Menipis (Max 5)
+        $lowUnitDevice = \App\Models\Product::with('category')->where('status', 'available')
             ->whereHas('category', function($q) {
-                $q->where('name', 'LIKE', '%Device%')->orWhere('name', 'LIKE', '%Laptop%')->orWhere('name', 'LIKE', '%PC%');
-            })->where('stock', '>', 0)->orderBy('stock', 'desc')->limit(5)->get();
+                $q->where('name', 'Unit Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Unit Device'); });
+            })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(5)->get();
 
-
-        // Data Stok Non-Laptop Terbanyak (Max 5)
-        $topLainnya = \App\Models\Product::with('category')->where('status', 'available')
+        // Data Stok Sparepart Menipis (Max 5)
+        $lowSparepart = \App\Models\Product::with('category')->where('status', 'available')
             ->whereHas('category', function($q) {
-                $q->where('name', 'NOT LIKE', '%Device%')->where('name', 'NOT LIKE', '%Laptop%')->where('name', 'NOT LIKE', '%PC%');
-            })->where('stock', '>', 0)->orderBy('stock', 'desc')->limit(5)->get();
+                $q->where('name', 'Sparepart / Komponen')->orWhereHas('parent', function($q2) { $q2->where('name', 'Sparepart / Komponen'); });
+            })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(5)->get();
+
+        // Data Stok Aksesoris Menipis (Max 3)
+        $lowAksesoris = \App\Models\Product::with('category')->where('status', 'available')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'Aksesoris')->orWhereHas('parent', function($q2) { $q2->where('name', 'Aksesoris'); });
+            })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(3)->get();
+
+        // Data Stok Software Menipis (Max 3)
+        $lowSoftware = \App\Models\Product::with('category')->where('status', 'available')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'Software / Digital')->orWhereHas('parent', function($q2) { $q2->where('name', 'Software / Digital'); });
+            })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(3)->get();
 
 
 
@@ -87,7 +98,12 @@ class DashboardController extends Controller
         $labaBulanIni = \App\Models\Sale::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
         $labaBulanLalu = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
 
+        $visitorCount = \App\Models\CatalogVisitor::whereMonth('visited_at', now()->month)
+                                                  ->whereYear('visited_at', now()->year)
+                                                  ->count();
+
         return view('dashboard', [
+            'visitorCount' => $visitorCount,
             'totalOmzet' => $omzetBulanIni, // Tampilkan bulan ini sebagai default total
             'totalLaba' => $labaBulanIni, // Tampilkan bulan ini sebagai default total
             'totalStok' => $totalStok,
@@ -109,8 +125,10 @@ class DashboardController extends Controller
             'salesTrend' => $salesTrend,
             'profitTrend' => $profitTrend,
             'trendLabels' => $trendLabels,
-            'topLaptops' => $topLaptops,
-            'topLainnya' => $topLainnya,
+            'lowUnitDevice' => $lowUnitDevice,
+            'lowSparepart' => $lowSparepart,
+            'lowAksesoris' => $lowAksesoris,
+            'lowSoftware' => $lowSoftware,
             'totalSewa' => $totalSewa,
             'sewaAktif' => $sewaAktif,
             'sewaSelesai' => $sewaSelesai,

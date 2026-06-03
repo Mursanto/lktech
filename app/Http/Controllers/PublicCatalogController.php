@@ -67,6 +67,11 @@ class PublicCatalogController extends Controller
 
     public function katalog(Request $request)
     {
+        \App\Models\CatalogVisitor::firstOrCreate([
+            'ip_address' => $request->ip(),
+            'visited_at' => now()->toDateString(),
+        ]);
+
         $mainCategories = \App\Models\Category::whereNull('parent_id')->with('children')->get();
         $selectedCategoryId = $request->category_id;
 
