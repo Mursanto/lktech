@@ -70,9 +70,6 @@
                                 @endphp
                                 <div class="flex items-center gap-2 mt-1">
                                     <p class="text-base font-black text-brand-600 leading-none">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
-                                    <button class="w-6 h-6 flex items-center justify-center rounded-lg bg-brand-50 text-brand-600 hover:bg-brand-600 hover:text-white transition-all shadow-sm border border-brand-100" title="Bagikan">
-                                        <i class='bx bx-share-alt text-xs'></i>
-                                    </button>
                                 </div>
                             </div>
                             <div class="text-right pb-0.5">
