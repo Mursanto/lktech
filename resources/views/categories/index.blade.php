@@ -4,9 +4,24 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Manajemen Kategori
             </h2>
-            <a href="{{ route('categories.create') }}" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow flex items-center gap-2">
-                <i class='bx bx-plus'></i> Tambah Kategori
-            </a>
+            <div class="flex items-center gap-3">
+                <form method="GET" action="{{ route('categories.index') }}" class="flex items-center gap-2">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kategori..." class="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand-500 w-48">
+                    <select name="filter" class="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-brand-500" onchange="this.form.submit()">
+                        <option value="">Semua Kategori</option>
+                        <option value="main" {{ request('filter') == 'main' ? 'selected' : '' }}>Hanya Kategori Utama</option>
+                        @if(isset($mainCategories))
+                            @foreach($mainCategories as $main)
+                                <option value="{{ $main->id }}" {{ request('filter') == $main->id ? 'selected' : '' }}>Filter: {{ $main->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <button type="submit" class="hidden"></button>
+                </form>
+                <a href="{{ route('categories.create') }}" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-bold text-sm shadow flex items-center gap-2">
+                    <i class='bx bx-plus'></i> Tambah Kategori
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -19,7 +34,7 @@
                             <tr>
                                 <th class="px-4 py-3 border-b">ID</th>
                                 <th class="px-4 py-3 border-b">Nama Kategori</th>
-                                <th class="px-4 py-3 border-b">Tipe Kategori</th>
+                                <th class="px-4 py-3 border-b">Tipe Kategori (Induk)</th>
                                 <th class="px-4 py-3 border-b">Aksi</th>
                             </tr>
                         </thead>
@@ -29,7 +44,11 @@
                                 <td class="px-4 py-3 text-gray-500">#{{ $category->id }}</td>
                                 <td class="px-4 py-3 font-bold text-gray-800">{{ $category->name }}</td>
                                 <td class="px-4 py-3">
-                                    <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase">{{ $category->type_category }}</span>
+                                    @if($category->parent_id)
+                                        <span class="px-2 py-1 bg-brand-50 text-brand-700 rounded text-[10px] font-bold">{{ $category->parent->name }}</span>
+                                    @else
+                                        <span class="px-2 py-1 bg-fuchsia-50 text-fuchsia-700 rounded text-[10px] font-bold uppercase">Kategori Utama</span>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2">

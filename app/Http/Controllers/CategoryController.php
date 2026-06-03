@@ -12,10 +12,33 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        $query = Category::with('parent');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($request->has('filter') && $request->filter != '') {
+            $filter = $request->filter;
+            if ($filter == 'main') {
+                $query->whereNull('parent_id');
+            } else {
+                $query->where('parent_id', $filter);
+            }
+        }
+
+        $categories = $query->get()->sortBy(function($cat) {
+            $parentName = $cat->parent_id ? ($cat->parent->name ?? '') : $cat->name;
+            $isChild = $cat->parent_id ? 1 : 0;
+            return $parentName . '-' . $isChild . '-' . $cat->name;
+        })->values();
+
+        $mainCategories = Category::whereNull('parent_id')->orderBy('name')->get();
+
+        return view('categories.index', compact('categories', 'mainCategories'));
     }
 
     /**
@@ -38,8 +61,16 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
-            'type_category' => 'required|in:hardware,peripheral,software,service',
+            'parent_id' => 'nullable|exists:categories,id',
+            'type_category' => 'nullable|in:hardware,peripheral,software,service',
         ]);
+
+        if (!empty($validated['parent_id'])) {
+            $parent = Category::find($validated['parent_id']);
+            $validated['type_category'] = $parent->type_category;
+        } else {
+            $validated['type_category'] = $validated['type_category'] ?? 'hardware';
+        }
 
         Category::create($validated);
 
@@ -79,8 +110,16 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-            'type_category' => 'required|in:hardware,peripheral,software,service',
+            'parent_id' => 'nullable|exists:categories,id',
+            'type_category' => 'nullable|in:hardware,peripheral,software,service',
         ]);
+
+        if (!empty($validated['parent_id'])) {
+            $parent = Category::find($validated['parent_id']);
+            $validated['type_category'] = $parent->type_category;
+        } else {
+            $validated['type_category'] = $validated['type_category'] ?? $category->type_category;
+        }
 
         $category->update($validated);
 
