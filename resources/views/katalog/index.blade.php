@@ -130,7 +130,7 @@
             <div class="mb-6 flex justify-between items-end">
                 <div>
                     <h1 class="text-2xl font-black text-gray-900 font-montserrat">
-                        {{ isset($selectedCategoryId) ? 'Kategori: ' . $displayCategories->first()->name : 'Katalog Produk Terlengkap' }}
+                        {{ isset($selectedCategoryId) ? 'Kategori: ' . $displayCategories->first()->name : 'Katalog Produk' }}
                     </h1>
                     <p class="text-gray-500 text-sm mt-1">Jelajahi berbagai kategori produk pilihan yang siap memenuhi kebutuhan Anda.</p>
                 </div>
@@ -189,6 +189,96 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Mobile Bottom Navigation & Bottom Sheet -->
+    <div x-data="{ 
+            lastScrollTop: window.pageYOffset,
+            isVisible: true,
+            isSheetOpen: false,
+            onScroll() {
+                let st = window.pageYOffset || document.documentElement.scrollTop;
+                if (st > this.lastScrollTop && st > 50) {
+                    this.isVisible = false; // scroll down
+                } else {
+                    this.isVisible = true; // scroll up
+                }
+                this.lastScrollTop = st <= 0 ? 0 : st;
+            }
+         }"
+         @scroll.window="onScroll"
+         class="md:hidden"
+    >
+        <!-- Bottom Nav Bar -->
+        <div class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 transition-transform duration-300 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]"
+             :class="isVisible ? 'translate-y-0' : 'translate-y-full'">
+            <div class="flex justify-around items-center h-16">
+                <a href="{{ route('home') }}" class="flex flex-col items-center gap-1 text-gray-500 hover:text-brand-600 transition-colors w-1/3">
+                    <i class='bx bx-home-alt text-2xl'></i>
+                    <span class="text-[10px] font-bold">Beranda</span>
+                </a>
+                <button @click="isSheetOpen = true" class="flex flex-col items-center gap-1 text-brand-600 hover:text-brand-700 transition-colors w-1/3">
+                    <i class='bx bx-category text-2xl'></i>
+                    <span class="text-[10px] font-bold">Kategori</span>
+                </button>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center gap-1 text-gray-500 hover:text-brand-600 transition-colors w-1/3">
+                    <i class='bx bx-up-arrow-alt text-2xl'></i>
+                    <span class="text-[10px] font-bold">Ke Atas</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Sheet Overlay & Modal -->
+        <div x-show="isSheetOpen" class="fixed inset-0 z-50 flex items-end bg-gray-900/40 backdrop-blur-sm" x-cloak>
+            <div x-show="isSheetOpen" 
+                 @click.outside="isSheetOpen = false"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="translate-y-full"
+                 x-transition:enter-end="translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="translate-y-0"
+                 x-transition:leave-end="translate-y-full"
+                 class="w-full bg-white rounded-t-3xl shadow-2xl max-h-[85vh] flex flex-col overflow-hidden relative">
+                
+                <!-- Drag Handle Indicator -->
+                <div class="w-full flex justify-center pt-3 pb-1" @click="isSheetOpen = false">
+                    <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+                </div>
+
+                <!-- Header -->
+                <div class="px-6 py-3 flex justify-between items-center border-b border-gray-100">
+                    <h3 class="font-black text-lg font-montserrat text-gray-800">Pilih Kategori</h3>
+                    <button @click="isSheetOpen = false" class="text-gray-400 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-full p-1 transition-colors">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                </div>
+                
+                <!-- Body / Category List -->
+                <div class="p-4 overflow-y-auto pb-8">
+                    <div class="space-y-3">
+                        @foreach($mainCategories as $category)
+                            @if($category->total_count > 0)
+                            <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-2xl hover:border-brand-500 hover:bg-brand-50 transition-all active:scale-[0.98]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-brand-600 shadow-sm">
+                                        <i class='bx bx-laptop text-xl'></i>
+                                    </div>
+                                    <span class="font-bold text-gray-800">{{ $category->name }}</span>
+                                </div>
+                                <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    {{ $category->total_count }} Produk
+                                </span>
+                            </a>
+                            @endif
+                        @endforeach
+                    </div>
+                    
+                    <a href="{{ route('katalog.index') }}" class="mt-4 block w-full text-center py-3 text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 rounded-xl transition-colors">
+                        Lihat Semua Katalog &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Global Toast using Alpine -->
     <div x-data="{ showToast: false, toastMessage: '' }" 
