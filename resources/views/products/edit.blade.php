@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
             condCol.style.display = 'none';
         } else if (categoryType === 'software') {
             specSection.style.display = 'none';
-            if(stockContainer) stockContainer.style.display = 'none';
+            if(stockContainer) stockContainer.style.display = 'block';
             snLabel.textContent = 'Kode Lisensi *';
             modelLabel.textContent = 'Tipe Lisensi *';
             condCol.style.display = 'none';

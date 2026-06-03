@@ -12,15 +12,8 @@ class PublicCatalogController extends Controller
     {
         $query = Product::with('category')->where('stock', '>', 0);
 
-        if (!$request->has('search') && !$request->has('all')) {
-            $query->whereHas('category', function($q) {
-                $q->where('name', 'like', '%laptop%')
-                  ->orWhere('name', 'like', '%ultrabook%')
-                  ->orWhere('name', 'like', '%komputer%')
-                  ->orWhere('name', 'like', '%pc%');
-            });
-        }
-        
+        // Removed category filter to show all in-stock products on the landing page
+
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {

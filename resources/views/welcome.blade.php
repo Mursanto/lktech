@@ -185,7 +185,7 @@
                         <p class="text-gray-500 text-xs mt-1">Menampilkan {{ $products->total() }} produk yang sesuai.</p>
                     @else
                         <h2 class="text-xl font-bold text-gray-800">Rekomendasi Pilihan</h2>
-                        <p class="text-gray-500 text-xs mt-1">Daftar stok unit laptop premium terbaru yang siap dipinang.</p>
+                        <p class="text-gray-500 text-xs mt-1">Daftar stok produk premium terbaru pilihan kami yang siap dipinang.</p>
                     @endif
                 </div>
                 @if(request()->has('search'))
