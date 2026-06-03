@@ -186,9 +186,9 @@ document.addEventListener('DOMContentLoaded', function() {
             modelLabel.textContent = 'Model Series *';
             condCol.style.display = 'none';
         } else if (categoryType === 'software') {
-            // Sembunyikan spesifikasi fisik dan stok
+            // Sembunyikan spesifikasi fisik, tetapi keep stock
             specSection.style.display = 'none';
-            if(stockContainer) stockContainer.style.display = 'none';
+            if(stockContainer) stockContainer.style.display = 'block';
             snLabel.textContent = 'Kode Lisensi *';
             modelLabel.textContent = 'Tipe Lisensi *';
             condCol.style.display = 'none';
