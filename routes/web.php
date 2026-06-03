@@ -114,4 +114,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+
+// Fallback route for storage images (useful for shared hosting without symlinks)
+Route::get('/storage/{path}', function($path) {
+    $filePath = storage_path('app/public/' . $path);
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+    return response()->file($filePath);
+})->where('path', '.*');
+
 require __DIR__.'/auth.php';

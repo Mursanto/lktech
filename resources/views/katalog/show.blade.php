@@ -130,7 +130,7 @@
                          @mouseleave="zoomActive = false">
                         <img :src="activeImage" 
                              alt="{{ $product->brand }} {{ $product->model_series }}" 
-                             class="absolute inset-0 w-full h-full object-cover zoom-image"
+                             class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white"
                              :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%` : 'transform-origin: center center'">
                     </div>
 
@@ -138,9 +138,9 @@
                     <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                         @foreach($product->all_images as $idx => $img)
                             <button @click="activeImage = '{{ $img }}'" 
-                                    class="relative w-16 h-16 xl:w-[72px] xl:h-[72px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200"
+                                    class="relative w-16 h-16 xl:w-[72px] xl:h-[72px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white"
                                     :class="activeImage === '{{ $img }}' ? 'border-brand-500 ring-2 ring-brand-200' : 'border-transparent hover:border-brand-300'">
-                                <img src="{{ $img }}" class="absolute inset-0 w-full h-full object-cover bg-gray-50">
+                                <img src="{{ $img }}" class="absolute inset-0 w-full h-full object-contain p-1">
                             </button>
                         @endforeach
                     </div>

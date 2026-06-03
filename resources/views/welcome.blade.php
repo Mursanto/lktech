@@ -159,7 +159,7 @@
                             <template x-for="(img, index) in images" :key="index">
                                 <img :src="img" 
                                      alt="Laptop LKTech" 
-                                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+                                     class="absolute inset-0 w-full h-full object-contain bg-white p-2 transition-opacity duration-1000 ease-in-out"
                                      :class="activeIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'">
                             </template>
                             
@@ -202,7 +202,7 @@
                     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
                         <!-- Image Area -->
                         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden border-b border-gray-100">
-                            <img src="{{ $product->display_image }}" alt="{{ $product->brand }} {{ $product->model_series }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ $product->display_image }}" alt="{{ $product->brand }} {{ $product->model_series }}" class="absolute inset-0 w-full h-full object-contain bg-white p-2 group-hover:scale-105 transition-transform duration-500">
                             
                             <!-- Badges -->
                             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
