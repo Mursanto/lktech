@@ -308,7 +308,7 @@
             snCol.className = 'col-span-12 mt-1 hidden sn-verification-container';
             snCol.innerHTML = `
                 <div class="flex items-center gap-2">
-                    <label class="text-[10px] font-bold text-emerald-700 uppercase whitespace-nowrap">Verifikasi SN *</label>
+                    <label class="text-[10px] font-bold text-emerald-700 uppercase whitespace-nowrap">Unit ID / SKU *</label>
                     <input type="text" name="items[${index}][serial_number]" class="sn-input w-full border border-emerald-300 rounded px-2 py-1 text-[10px] focus:ring-1 focus:ring-emerald-500" placeholder="Ketik/Scan Serial Number" disabled>
                 </div>
             `;
