@@ -54,49 +54,64 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-natural-50/50 border-b border-natural-100">
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Info Produk</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Kategori</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-center">Stok</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Harga Jual</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-left">Info Produk</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-left">Kategori</th>
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Stok</th>
+                            @hasanyrole('Admin|Owner')
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Harga Beli</th>
+                            @endhasanyrole
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Harga Jual</th>
+                            @hasanyrole('Admin|Owner')
+                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Persentase</th>
+                            @endhasanyrole
                             <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50">
+                    <tbody class="divide-y divide-natural-50 text-[13px]">
                         @forelse($products as $product)
-                        <tr class="hover:bg-natural-50/30 transition-colors group">
+                        <tr class="odd:bg-white even:bg-natural-50/50 hover:bg-brand-50/30 transition-colors group">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-natural-100 flex items-center justify-center text-natural-400 group-hover:bg-brand-50 group-hover:text-brand-600 transition-colors">
+                                    <div class="w-10 h-10 rounded-xl bg-natural-100 flex items-center justify-center text-natural-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
                                         <i class='bx bx-laptop text-xl'></i>
                                     </div>
                                     <div>
-                                        <p class="text-[12px] font-bold text-natural-800 line-clamp-1">{{ $product->brand }} {{ $product->model_series }}</p>
-                                        <p class="text-[9px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                        <p class="text-[13px] font-bold text-natural-800 line-clamp-1">{{ $product->brand }} {{ $product->model_series }}</p>
+                                        <p class="text-[10px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
                                     </div>
-
                                 </div>
                             </td>
-                            <td class="px-6 py-4">
-                                <span class="px-2.5 py-1 rounded-lg bg-natural-100 text-natural-600 text-[10px] font-bold uppercase tracking-wider">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2.5 py-1 rounded-lg bg-natural-100 text-natural-600 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
                                     {{ $product->category->name ?? 'Uncategorized' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-col items-center">
-                                    <span class="text-[12px] font-black {{ $product->stock <= 2 ? 'text-red-600' : 'text-natural-800' }}">
-                                        {{ $product->stock }}
-                                    </span>
-                                    <span class="text-[8px] font-bold text-natural-400 uppercase">Unit</span>
-                                </div>
-
+                            <td class="px-6 py-4 text-right whitespace-nowrap">
+                                <span class="text-[13px] font-black {{ $product->stock <= 2 ? 'text-red-600' : 'text-natural-800' }}">
+                                    {{ $product->stock }}
+                                </span>
+                                <span class="text-[9px] font-bold text-natural-400 uppercase ml-1">Unit</span>
                             </td>
-                            <td class="px-6 py-4">
-                                @php
-                                    $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
-                                @endphp
-                                <p class="text-[12px] font-black text-brand-600">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
-                                <p class="text-[8px] text-natural-400 font-medium line-through">Rp {{ number_format((float) $finalPrice * 1.1, 0, ',', '.') }}</p>
+                            @php
+                                $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
+                                $beli = $product->purchase_price ?: 1; 
+                                $margin = (($finalPrice - $product->purchase_price) / $beli) * 100;
+                            @endphp
+                            @hasanyrole('Admin|Owner')
+                            <td class="px-6 py-4 text-right whitespace-nowrap">
+                                <p class="text-[13px] font-semibold text-natural-600">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
                             </td>
+                            @endhasanyrole
+                            <td class="px-6 py-4 text-right whitespace-nowrap">
+                                <p class="text-[14px] font-black text-brand-600">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                            </td>
+                            @hasanyrole('Admin|Owner')
+                            <td class="px-6 py-4 text-right whitespace-nowrap">
+                                <span class="px-2 py-1 rounded-md text-[11px] font-bold {{ $margin >= 30 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700' }}">
+                                    {{ round($margin, 1) }}%
+                                </span>
+                            </td>
+                            @endhasanyrole
 
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-1">
