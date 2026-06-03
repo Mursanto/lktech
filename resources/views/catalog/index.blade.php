@@ -16,18 +16,27 @@
 
     <div class="flex flex-col h-full space-y-4">
         <!-- Search & Filter Bar -->
-        <div class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+        <form action="{{ route('catalog.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
             <div class="relative flex-grow max-w-md">
                 <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-xl'></i>
-                <input type="text" placeholder="Cari di katalog..." 
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari di katalog..." 
                        class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
             </div>
             <div class="flex items-center gap-2">
-                <button class="bg-brand-50 text-brand-700 px-4 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 border border-brand-100 transition-all hover:bg-brand-100">
-                    <i class='bx bx-filter-alt'></i> Filter Lanjut
+                <select name="category_id" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                    <option value="">Semua Kategori</option>
+                    @foreach($categories as $parentCat)
+                        <option value="{{ $parentCat->id }}" class="font-bold" {{ request('category_id') == $parentCat->id ? 'selected' : '' }}>{{ $parentCat->name }}</option>
+                        @foreach($parentCat->children as $childCat)
+                            <option value="{{ $childCat->id }}" {{ request('category_id') == $childCat->id ? 'selected' : '' }}>&nbsp;&nbsp;&nbsp;-- {{ $childCat->name }}</option>
+                        @endforeach
+                    @endforeach
+                </select>
+                <button type="submit" class="bg-brand-50 text-brand-700 px-4 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 border border-brand-100 transition-all hover:bg-brand-100">
+                    <i class='bx bx-filter-alt'></i> Terapkan
                 </button>
             </div>
-        </div>
+        </form>
 
         <!-- Catalog Grid Container -->
         <div class="flex-grow overflow-y-auto pr-1 custom-scrollbar">

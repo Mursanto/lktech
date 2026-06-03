@@ -10,7 +10,9 @@ class PublicCatalogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category')->where('stock', '>', 0);
+        $query = Product::with('category')
+                    ->where('stock', '>', 0)
+                    ->where('status', '!=', 'sold');
 
         // Removed category filter to show all in-stock products on the landing page
 
@@ -19,10 +21,13 @@ class PublicCatalogController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('brand', 'like', "%{$search}%")
                   ->orWhere('model_series', 'like', "%{$search}%")
-                  ->orWhere('processor', 'like', "%{$search}%");
+                  ->orWhere('processor', 'like', "%{$search}%")
+                  ->orWhereHas('category', function($cat) use ($search) {
+                      $cat->where('name', 'like', "%{$search}%");
+                  });
             });
         }
-        $products = $query->paginate(6);
+        $products = $query->latest()->paginate(12);
 
         $products->getCollection()->transform(function ($product) {
             if ($product->image_path) {
@@ -58,5 +63,46 @@ class PublicCatalogController extends Controller
         $product->all_images = $gallery;
 
         return view('katalog.show', compact('product'));
+    }
+
+    public function katalog(Request $request)
+    {
+        $mainCategories = \App\Models\Category::whereNull('parent_id')->with('children')->get();
+
+        foreach($mainCategories as $category) {
+            $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
+            
+            $query = \App\Models\Product::whereIn('category_id', $categoryIds)
+                        ->where('stock', '>', 0)
+                        ->where('status', '!=', 'sold');
+            
+            if ($request->has('search') && $request->search != '') {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->where('brand', 'like', "%{$search}%")
+                      ->orWhere('model_series', 'like', "%{$search}%")
+                      ->orWhere('processor', 'like', "%{$search}%")
+                      ->orWhereHas('category', function($cat) use ($search) {
+                          $cat->where('name', 'like', "%{$search}%");
+                      });
+                });
+            }
+
+            $products = $query->latest()->get();
+
+            $products->transform(function ($product) {
+                if ($product->image_path) {
+                    $product->display_image = Storage::url($product->image_path);
+                } else {
+                    $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
+                    $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                }
+                return $product;
+            });
+            
+            $category->all_products = $products;
+        }
+
+        return view('katalog.index', compact('mainCategories'));
     }
 }

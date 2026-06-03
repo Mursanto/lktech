@@ -14,9 +14,35 @@ class CatalogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->where('stock', '>', 0)->paginate(12);
+        $query = Product::with('category')
+                    ->where('stock', '>', 0)
+                    ->where('status', '!=', 'sold');
+
+        if ($request->has('category_id') && $request->category_id != '') {
+            $categoryId = $request->category_id;
+            $category = \App\Models\Category::with('children')->find($categoryId);
+            if ($category) {
+                $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
+                $query->whereIn('category_id', $categoryIds);
+            }
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('brand', 'LIKE', "%{$search}%")
+                  ->orWhere('model_series', 'LIKE', "%{$search}%")
+                  ->orWhere('processor', 'LIKE', "%{$search}%")
+                  ->orWhereHas('category', function($cat) use ($search) {
+                      $cat->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $products = $query->latest()->paginate(12)->appends($request->all());
+        $categories = \App\Models\Category::with('children')->whereNull('parent_id')->get();
 
         // Map through products to assign image logic
         $products->getCollection()->transform(function ($product) {
@@ -30,7 +56,7 @@ class CatalogController extends Controller
             return $product;
         });
 
-        return view('catalog.index', compact('products'));
+        return view('catalog.index', compact('products', 'categories'));
     }
 
     /**

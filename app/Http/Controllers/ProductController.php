@@ -24,7 +24,12 @@ class ProductController extends Controller
 
         // Category Filter
         if ($request->has('category_id') && $request->category_id != '') {
-            $query->where('category_id', $request->category_id);
+            $categoryId = $request->category_id;
+            $category = \App\Models\Category::with('children')->find($categoryId);
+            if ($category) {
+                $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
+                $query->whereIn('category_id', $categoryIds);
+            }
         }
 
         // Search Filter
@@ -38,7 +43,7 @@ class ProductController extends Controller
         }
 
         $products = $query->latest()->paginate(10)->appends($request->all());
-        $categories = \App\Models\Category::all();
+        $categories = \App\Models\Category::with('children')->whereNull('parent_id')->get();
 
         return view('products.index', compact('products', 'status', 'categories'));
     }

@@ -33,8 +33,11 @@
             <div class="flex items-center gap-2">
                 <select name="category_id" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                     <option value="">Semua Kategori</option>
-                    @foreach(\App\Models\Category::all() as $cat)
-                        <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @foreach($categories as $parentCat)
+                        <option value="{{ $parentCat->id }}" class="font-bold" {{ request('category_id') == $parentCat->id ? 'selected' : '' }}>{{ $parentCat->name }}</option>
+                        @foreach($parentCat->children as $childCat)
+                            <option value="{{ $childCat->id }}" {{ request('category_id') == $childCat->id ? 'selected' : '' }}>&nbsp;&nbsp;&nbsp;-- {{ $childCat->name }}</option>
+                        @endforeach
                     @endforeach
                 </select>
                 <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
