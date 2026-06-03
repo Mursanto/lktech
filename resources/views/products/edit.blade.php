@@ -33,8 +33,14 @@
                                     <label class="block text-[11px] font-bold text-gray-600 mb-1">Kategori *</label>
                                     <select name="category_id" required class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 focus:border-brand-500">
                                         <option value="">Pilih Kategori</option>
-                                        @foreach(\App\Models\Category::all() as $category)
-                                        <option value="{{ $category->id }}" data-type="{{ $category->type_category }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        @foreach(\App\Models\Category::whereNull('parent_id')->with('children')->get() as $parentCat)
+                                            <optgroup label="{{ $parentCat->name }}">
+                                                @foreach($parentCat->children as $childCat)
+                                                    <option value="{{ $childCat->id }}" data-type="{{ $childCat->type_category }}" {{ $product->category_id == $childCat->id ? 'selected' : '' }}>
+                                                        {{ $childCat->name }}
+                                                    </option>
+                                                @endforeach
+                                            </optgroup>
                                         @endforeach
                                     </select>
                                 </div>
@@ -222,8 +228,58 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (categorySelect) {
-        categorySelect.addEventListener('change', toggleSpecs);
+        categorySelect.addEventListener('change', () => {
+            toggleSpecs();
+            calculateSellingPrice();
+        });
         toggleSpecs(); 
+    }
+
+    const purchasePriceInput = document.querySelector('input[name="purchase_price"]');
+    const sellingPriceInput = document.querySelector('input[name="selling_price"]');
+
+    function calculateSellingPrice() {
+        if (!categorySelect || !purchasePriceInput || !sellingPriceInput) return;
+        const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+        if (!selectedOption || !selectedOption.value) return;
+
+        const categoryName = selectedOption.text.trim().toLowerCase();
+        const categoryType = selectedOption.getAttribute('data-type');
+        let purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+        let sellingPrice = 0;
+
+        if (categoryType === 'service') {
+            purchasePriceInput.value = 0;
+            if (categoryName.includes('instalasi')) {
+                sellingPrice = 150000;
+            } else if (categoryName.includes('perbaikan') || categoryName.includes('service')) {
+                sellingPrice = 200000;
+            } else if (categoryName.includes('website')) {
+                sellingPrice = 500000;
+            } else if (categoryName.includes('aplikasi')) {
+                sellingPrice = 1000000;
+            }
+        } else if (categoryType === 'software') {
+            sellingPrice = purchasePrice * 1.5;
+        } else {
+            if (purchasePrice <= 1999999) {
+                sellingPrice = purchasePrice * 1.4;
+            } else if (purchasePrice <= 2999999) {
+                sellingPrice = purchasePrice * 1.35;
+            } else if (purchasePrice <= 3999999) {
+                sellingPrice = purchasePrice * 1.3;
+            } else if (purchasePrice <= 4999999) {
+                sellingPrice = purchasePrice * 1.25;
+            } else {
+                sellingPrice = purchasePrice * 1.2;
+            }
+        }
+
+        sellingPriceInput.value = Math.round(sellingPrice);
+    }
+
+    if (purchasePriceInput) {
+        purchasePriceInput.addEventListener('input', calculateSellingPrice);
     }
 
     // Quill Minimalist Initialization
