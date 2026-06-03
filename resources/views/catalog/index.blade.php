@@ -35,21 +35,20 @@
                 @forelse($products as $product)
                 <div class="bg-white rounded-3xl shadow-sm border border-natural-100/50 overflow-hidden group hover:shadow-md transition-all duration-300">
                     <!-- Image Thumbnail -->
-                    <div class="aspect-[4/3] bg-natural-100 relative overflow-hidden flex items-center justify-center">
+                    <div class="h-32 bg-white relative overflow-hidden flex items-center justify-center border-b border-natural-100/50">
                         @if($product->image_path)
-                            <img src="{{ asset('storage/' . str_replace('public/', '', $product->image_path)) }}" alt="{{ $product->model_series }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ asset('storage/' . str_replace('public/', '', $product->image_path)) }}" alt="{{ $product->model_series }}" class="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500">
                         @else
                             <i class='bx bx-image text-4xl text-natural-300 group-hover:scale-110 transition-transform duration-500'></i>
                         @endif
 
-                        <div class="absolute top-3 left-3">
-
-                            <span class="px-2 py-1 rounded-lg bg-white/90 backdrop-blur-md text-natural-800 text-[9px] font-black uppercase tracking-widest shadow-sm">
+                        <div class="absolute top-2 left-2">
+                            <span class="px-2 py-0.5 rounded-lg bg-white/90 backdrop-blur-md text-natural-800 text-[8px] font-black uppercase tracking-widest shadow-sm border border-gray-100">
                                 {{ $product->brand }}
                             </span>
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/20 to-transparent">
-                            <span class="text-white text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-500 shadow-sm">
+                        <div class="absolute bottom-2 left-2">
+                            <span class="text-white text-[8px] font-bold px-2 py-0.5 rounded-full bg-brand-500 shadow-sm">
                                 {{ $product->category->name ?? 'Device' }}
                             </span>
                         </div>
@@ -82,11 +81,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-3">
-                            <a href="{{ route('products.show', $product->id) }}" class="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-natural-50 border border-natural-100 text-natural-600 text-[10px] font-bold hover:bg-natural-100 transition-all shadow-sm">
-                                <i class='bx bx-info-circle text-base'></i> Spesifikasi
-                            </a>
-                        </div>
+                        <!-- Action button removed based on user request to simplify the view -->
                     </div>
                 </div>
                 @empty
