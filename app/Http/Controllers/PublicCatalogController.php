@@ -68,8 +68,22 @@ class PublicCatalogController extends Controller
     public function katalog(Request $request)
     {
         $mainCategories = \App\Models\Category::whereNull('parent_id')->with('children')->get();
+        $selectedCategoryId = $request->category_id;
+
+        $displayCategories = $mainCategories;
+        if ($selectedCategoryId) {
+            $displayCategories = $mainCategories->where('id', $selectedCategoryId);
+        }
 
         foreach($mainCategories as $category) {
+            $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
+            $category->total_count = \App\Models\Product::whereIn('category_id', $categoryIds)
+                                        ->where('stock', '>', 0)
+                                        ->where('status', '!=', 'sold')
+                                        ->count();
+        }
+
+        foreach($displayCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
             
             $query = \App\Models\Product::whereIn('category_id', $categoryIds)
@@ -88,7 +102,11 @@ class PublicCatalogController extends Controller
                 });
             }
 
-            $products = $query->latest()->get();
+            if (!$selectedCategoryId && !$request->has('search')) {
+                $products = $query->latest()->take(5)->get();
+            } else {
+                $products = $query->latest()->get();
+            }
 
             $products->transform(function ($product) {
                 if ($product->image_path) {
@@ -103,6 +121,6 @@ class PublicCatalogController extends Controller
             $category->all_products = $products;
         }
 
-        return view('katalog.index', compact('mainCategories'));
+        return view('katalog.index', compact('mainCategories', 'displayCategories', 'selectedCategoryId'));
     }
 }

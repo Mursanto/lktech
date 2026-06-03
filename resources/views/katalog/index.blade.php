@@ -110,12 +110,12 @@
                 <h3 class="font-bold text-gray-800 text-lg border-b border-gray-100 pb-2 mb-3">Kategori Produk</h3>
                 <ul class="space-y-1">
                     @foreach($mainCategories as $category)
-                        @if($category->all_products->count() > 0)
+                        @if($category->total_count > 0)
                         <li>
-                            <a href="#kategori-{{ $category->id }}" class="flex justify-between items-center px-3 py-2 text-sm text-gray-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors group">
+                            <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex justify-between items-center px-3 py-2 text-sm {{ (isset($selectedCategoryId) && $selectedCategoryId == $category->id) ? 'text-brand-600 bg-brand-50 font-bold' : 'text-gray-600 hover:text-brand-600 hover:bg-brand-50' }} rounded-lg transition-colors group">
                                 <span class="truncate">{{ $category->name }}</span>
                                 <span class="bg-gray-100 text-gray-500 group-hover:bg-brand-100 group-hover:text-brand-600 px-2 py-0.5 rounded-full text-[10px] font-bold">
-                                    {{ $category->all_products->count() }}
+                                    {{ $category->total_count }}
                                 </span>
                             </a>
                         </li>
@@ -129,32 +129,47 @@
         <div class="flex-1 min-w-0">
             <div class="mb-6 flex justify-between items-end">
                 <div>
-                    <h1 class="text-2xl font-black text-gray-900 font-montserrat">Katalog Produk Terlengkap</h1>
+                    <h1 class="text-2xl font-black text-gray-900 font-montserrat">
+                        {{ isset($selectedCategoryId) ? 'Kategori: ' . $displayCategories->first()->name : 'Katalog Produk Terlengkap' }}
+                    </h1>
                     <p class="text-gray-500 text-sm mt-1">Jelajahi berbagai kategori produk pilihan yang siap memenuhi kebutuhan Anda.</p>
                 </div>
+                @if(isset($selectedCategoryId))
+                    <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg">
+                        Lihat Semua Kategori
+                    </a>
+                @endif
             </div>
 
             <div class="space-y-12">
-                @foreach($mainCategories as $category)
+                @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-100">
                             <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                <i class='bx bx-category text-brand-500'></i> {{ $category->name }}
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="hover:text-brand-600 transition-colors">
+                                    <i class='bx bx-category text-brand-500'></i> {{ $category->name }}
+                                </a>
                             </h2>
-                            <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->all_products->count() }} Produk</span>
+                            <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->total_count }} Produk</span>
                         </div>
 
-                        <!-- Horizontal Scroll / Grid -->
-                        <div class="relative group">
-                            <div class="flex overflow-x-auto hide-scrollbar gap-4 pb-4 snap-x" style="scroll-behavior: smooth;">
-                                @foreach($category->all_products as $product)
-                                    <div class="snap-start flex-none w-48 sm:w-56">
-                                        <x-product-card :product="$product" />
-                                    </div>
-                                @endforeach
-                            </div>
+                        <!-- CSS Grid for 5 items -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                            @foreach($category->all_products as $product)
+                                <div class="w-full">
+                                    <x-product-card :product="$product" />
+                                </div>
+                            @endforeach
                         </div>
+                        
+                        @if(!isset($selectedCategoryId) && !request()->has('search') && $category->total_count > 5)
+                            <div class="mt-4 text-right">
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="text-sm font-bold text-brand-600 hover:text-brand-700">
+                                    Lihat Semua {{ $category->name }} ({{ $category->total_count }}) &rarr;
+                                </a>
+                            </div>
+                        @endif
                     </section>
                     @endif
                 @endforeach
