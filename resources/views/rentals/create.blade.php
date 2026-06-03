@@ -129,6 +129,12 @@
                             </select>
                         </div>
 
+                        <!-- Manual SN -->
+                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">SN / License Key</label>
+                            <input type="text" name="manual_sn" value="{{ old('manual_sn') }}" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500" placeholder="Input SN fisik / Kode Lisensi Manual (Opsional)">
+                        </div>
+
                         <!-- Tanggal -->
                         <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
                             <div class="grid grid-cols-2 gap-2">

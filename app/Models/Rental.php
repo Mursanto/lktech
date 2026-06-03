@@ -15,6 +15,7 @@ class Rental extends Model
         'customer_phone',
         'laptop_name',
         'serial_number',
+        'manual_sn',
         'rental_date',
         'return_date',
         'daily_price',

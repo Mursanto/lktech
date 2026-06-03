@@ -153,7 +153,8 @@ class SaleController extends Controller
                         'quantity' => $item['quantity'],
                         'price_at_transaction' => $product->selling_price,
                         'purchase_price' => $product->purchase_price ?? 0,
-                        'profit' => $profit
+                        'profit' => $profit,
+                        'manual_sn' => $item['manual_sn'] ?? null
                     ]);
 
                     // Potong stok gudang
@@ -332,7 +333,8 @@ class SaleController extends Controller
                         'quantity' => $item['quantity'],
                         'price_at_transaction' => $product->selling_price,
                         'purchase_price' => $product->purchase_price ?? 0,
-                        'profit' => $profit
+                        'profit' => $profit,
+                        'manual_sn' => $item['manual_sn'] ?? null
                     ]);
 
                     $product->decrement('stock', $item['quantity']);

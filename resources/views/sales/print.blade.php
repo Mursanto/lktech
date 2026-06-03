@@ -216,7 +216,8 @@
                     <div class="company-info">
                         Alamat: Villa Mutiara 1 Sektor 2 BLOK i-18 No.03, RT.03/RW.12,<br>
                         Mekarwangi, Tanah Sereal, Kota Bogor, Jawa Barat 16168<br>
-                        Telepon: 0856-7354-046
+                        Telepon: 0856-7354-046<br>
+                        Website: <a href="https://lktech.online/" style="color: #1e3a8a; text-decoration: none;">https://lktech.online/</a>
                     </div>
                 </div>
                 <div class="text-right">
@@ -290,7 +291,12 @@
                                     </div>
                                 </div>
                             </td>
-                            <td style="width: 25%">{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</td>
+                            <td style="width: 25%">
+                                <div>{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</div>
+                                @if($detail->manual_sn)
+                                <div style="font-size: 10px; color: #4b5563; margin-top: 2px;">SN/Key: {{ $detail->manual_sn }}</div>
+                                @endif
+                            </td>
                             <td style="width: 25%" class="text-right">Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
@@ -319,7 +325,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td style="width: 25%">{{ $sale->product->serial_number ?? '-' }}</td>
+                        <td style="width: 25%">
+                            <div>{{ $sale->product->serial_number ?? '-' }}</div>
+                            @if($sale->manual_sn)
+                            <div style="font-size: 10px; color: #4b5563; margin-top: 2px;">SN/Key: {{ $sale->manual_sn }}</div>
+                            @endif
+                        </td>
                         <td style="width: 25%" class="text-right">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
                     </tr>
                 @endif

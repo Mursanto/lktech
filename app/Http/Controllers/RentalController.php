@@ -37,6 +37,7 @@ class RentalController extends Controller
             'total_price' => 'required|numeric|min:0',
             'status'      => 'required|in:active,completed,overdue',
             'notes'       => 'nullable|string',
+            'manual_sn'   => 'nullable|string',
         ];
 
         if ($isNewCustomer) {
@@ -83,6 +84,7 @@ class RentalController extends Controller
             'total_price'    => $request->total_price,
             'status'         => $request->status,
             'notes'          => $request->notes,
+            'manual_sn'      => $request->manual_sn,
         ]);
 
         return redirect()->route('rentals.index')
@@ -118,6 +120,7 @@ class RentalController extends Controller
             'total_price'    => 'required|numeric|min:0',
             'status'         => 'required|in:active,completed,overdue',
             'notes'          => 'nullable|string',
+            'manual_sn'      => 'nullable|string',
         ]);
 
         $oldStatus = $rental->status;
@@ -137,7 +140,7 @@ class RentalController extends Controller
             'customer_id', 'customer_name', 'customer_phone',
             'laptop_name', 'serial_number',
             'rental_date', 'return_date', 'daily_price', 'total_price',
-            'status', 'notes',
+            'status', 'notes', 'manual_sn',
         ]));
 
         // Kembalikan stok jika status berubah menjadi selesai

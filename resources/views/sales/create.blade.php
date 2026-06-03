@@ -314,6 +314,17 @@
             `;
             row.appendChild(snCol);
 
+            // --- Manual SN / License Key ---
+            const manualSnCol = document.createElement('div');
+            manualSnCol.className = 'col-span-12 mt-1';
+            manualSnCol.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <label class="text-[10px] font-bold text-slate-700 uppercase whitespace-nowrap w-24 text-right">SN / License Key</label>
+                    <input type="text" name="items[${index}][manual_sn]" class="w-full border border-slate-300 rounded px-2 py-1 text-[10px] focus:ring-1 focus:ring-emerald-500" placeholder="Input SN fisik / Kode Lisensi Manual (Opsional)">
+                </div>
+            `;
+            row.appendChild(manualSnCol);
+
             return { row, nativeSel, displaySel, qtyInput, subInput, remBtn, snCol };
         }
 

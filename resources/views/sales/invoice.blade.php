@@ -183,7 +183,8 @@
         <div class="logo">{{ $company['name'] }}</div>
         <div class="company-info">
             {{ $company['address'] }}<br>
-            Phone: {{ $company['phone'] }} | Email: {{ $company['email'] }}
+            Phone: {{ $company['phone'] }} | Email: {{ $company['email'] }}<br>
+            Website: <a href="https://lktech.online/" style="color: #2563eb; text-decoration: none;">https://lktech.online/</a>
         </div>
     </div>
 
@@ -233,7 +234,12 @@
                     <strong>Screen:</strong> {{ $detail->product->screen_size }}"<br>
                     <strong>Battery:</strong> {{ $detail->product->battery_health }}% ({{ $detail->product->battery_runtime }}h)
                 </td>
-                <td>{{ $detail->product->serial_number }}</td>
+                <td>
+                    <div>{{ $detail->product->serial_number ?? '-' }}</div>
+                    @if($detail->manual_sn)
+                    <div style="font-size: 10px; color: #666; margin-top: 2px;">SN/Key: {{ $detail->manual_sn }}</div>
+                    @endif
+                </td>
                 <td>{{ $detail->product->condition }}</td>
                 <td style="text-align: right;">Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}</td>
             </tr>

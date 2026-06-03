@@ -103,7 +103,8 @@
                                 <div class="leading-tight text-gray-600">
                                     Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
                                     Mekarwangi, Tanah Sereal, Bogor 16168<br>
-                                    Telp: 0856-7354-046
+                                    Telp: 0856-7354-046<br>
+                                    Website: <a href="https://lktech.online/" class="text-blue-600 hover:underline">https://lktech.online/</a>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +187,10 @@
                                         </div>
                                     </td>
                                     <td style="width: 25%; padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt; white-space: nowrap;">
-                                        {{ $rental->serial_number ?? '-' }}
+                                        <div>{{ $rental->serial_number ?? '-' }}</div>
+                                        @if($rental->manual_sn)
+                                        <div class="text-[10px] text-gray-600 mt-0.5">SN/Key: {{ $rental->manual_sn }}</div>
+                                        @endif
                                     </td>
                                     <td style="width: 25%; padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt; text-align: right; font-weight: 600;">
                                         Rp {{ number_format($rental->total_price, 0, ',', '.') }}

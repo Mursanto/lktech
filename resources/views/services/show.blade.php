@@ -103,7 +103,8 @@
                                 <div class="leading-tight text-gray-600">
                                     Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
                                     Mekarwangi, Tanah Sereal, Bogor 16168<br>
-                                    Telp: 0856-7354-046
+                                    Telp: 0856-7354-046<br>
+                                    Website: <a href="https://lktech.online/" class="text-blue-600 hover:underline">https://lktech.online/</a>
                                 </div>
                             </div>
                         </div>
