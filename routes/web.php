@@ -26,6 +26,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [App\Http\Controllers\PublicCatalogController::class, 'index'])->name('home');
 Route::get('/katalog', [App\Http\Controllers\PublicCatalogController::class, 'katalog'])->name('katalog.index');
+Route::post('/katalog/contact', [App\Http\Controllers\PublicCatalogController::class, 'contact'])->name('katalog.contact');
 Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::class, 'show'])->name('katalog.show');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])

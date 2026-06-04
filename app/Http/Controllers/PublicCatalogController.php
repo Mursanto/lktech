@@ -132,4 +132,23 @@ class PublicCatalogController extends Controller
 
         return view('katalog.index', compact('mainCategories', 'displayCategories', 'selectedCategoryId'));
     }
+
+    public function contact(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
+
+        try {
+            \Illuminate\Support\Facades\Mail::to('sales@lktech.online')
+                ->send(new \App\Mail\ContactUsMail($request->all()));
+        } catch (\Exception $e) {
+            // Ignore if email failed (SMTP might not be configured on local or test)
+            \Illuminate\Support\Facades\Log::error('Failed to send contact email: ' . $e->getMessage());
+        }
+
+        return back()->with('success', 'Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.');
+    }
 }
