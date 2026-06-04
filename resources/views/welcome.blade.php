@@ -175,6 +175,13 @@
         </div>
         @endif
 
+        <!-- 4 Info Cards Section -->
+        @if(!request()->has('search'))
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <x-info-cards />
+        </div>
+        @endif
+
         <!-- Product Grid Section -->
         <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex-shrink-0">
             
@@ -215,6 +222,9 @@
             
         </div>
     </main>
+
+    <!-- Modal Form Hubungi Kami -->
+    <x-contact-modal />
 
     <!-- Footer (Clean & Minimalist) -->
     <footer class="bg-white border-t border-gray-200 mt-auto">
@@ -315,6 +325,7 @@
 
     <!-- Global Toast using Alpine -->
     <div x-data="{ showToast: false, toastMessage: '' }" 
+         x-init="@if(session('success')) setTimeout(() => { $dispatch('show-toast', { message: '{{ session('success') }}' }) }, 500); @endif"
          @show-toast.window="toastMessage = $event.detail.message; showToast = true; setTimeout(() => showToast = false, 3000)"
          class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110]" x-cloak>
         <div x-show="showToast"
