@@ -69,6 +69,10 @@
                     <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
                         <span class="text-[#DF1921] italic">LinkAja</span>
                     </div>
+
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter italic">
+                        <span class="text-[#ED1C24]">QR</span><span class="text-[#005B9F]">IS</span>
+                    </div>
                 </div>
 
                 <!-- Ikuti Kami -->
