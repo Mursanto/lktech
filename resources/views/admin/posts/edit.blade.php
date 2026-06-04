@@ -70,19 +70,23 @@
                             <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
                                 <h3 class="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">Foto Sampul (Thumbnail)</h3>
                                 
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg bg-white relative group overflow-hidden" id="thumbnail-preview-container">
-                                    <div class="space-y-1 text-center {{ $post->thumbnail ? 'opacity-0' : '' }}" id="thumbnail-upload-text">
-                                        <i class='bx bx-image-add text-4xl text-gray-400'></i>
+                                <label for="thumbnail" class="relative cursor-pointer block mt-1 px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg bg-white group overflow-hidden hover:border-brand-500 transition-colors text-center" id="thumbnail-preview-container">
+                                    <input id="thumbnail" name="thumbnail" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(event)">
+                                    
+                                    <div class="space-y-1 relative z-10 transition-opacity duration-300 {{ $post->thumbnail ? 'opacity-0' : '' }}" id="thumbnail-upload-text">
+                                        <i class='bx bx-image-add text-4xl text-gray-400 group-hover:text-brand-500 transition-colors'></i>
                                         <div class="flex text-sm text-gray-600 justify-center">
-                                            <label for="thumbnail" class="relative cursor-pointer bg-white rounded-md font-medium text-brand-600 hover:text-brand-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-500">
-                                                <span>Upload/Ganti Foto</span>
-                                                <input id="thumbnail" name="thumbnail" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(event)">
-                                            </label>
+                                            <span class="font-bold text-brand-600 group-hover:text-brand-500">Upload/Ganti Foto</span>
                                         </div>
                                         <p class="text-xs text-gray-500">PNG, JPG, WEBP up to 2MB</p>
                                     </div>
-                                    <img id="thumbnail-preview" src="{{ $post->thumbnail ? Storage::url($post->thumbnail) : '#' }}" alt="Preview" class="{{ $post->thumbnail ? '' : 'hidden' }} absolute inset-0 w-full h-full object-cover">
-                                </div>
+
+                                    <img id="thumbnail-preview" src="{{ $post->thumbnail ? Storage::url($post->thumbnail) : '#' }}" alt="Preview" class="{{ $post->thumbnail ? '' : 'hidden' }} absolute inset-0 w-full h-full object-cover group-hover:opacity-40 transition-opacity duration-300">
+                                    
+                                    <div class="absolute inset-0 flex items-center justify-center {{ $post->thumbnail ? '' : 'opacity-0' }} transition-opacity duration-300 pointer-events-none group-hover:opacity-100" id="thumbnail-hover-overlay">
+                                        <span class="bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1 shadow-lg {{ $post->thumbnail ? 'opacity-0 group-hover:opacity-100 transition-opacity' : '' }}" id="overlay-btn"><i class='bx bx-edit'></i> Ganti Foto</span>
+                                    </div>
+                                </label>
                                 <p class="text-xs text-gray-500 mt-2">*Biarkan kosong jika tidak ingin mengubah foto sampul.</p>
                                 @error('thumbnail') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
@@ -155,10 +159,15 @@
             reader.onload = function() {
                 var output = document.getElementById('thumbnail-preview');
                 var uploadText = document.getElementById('thumbnail-upload-text');
+                var overlayBtn = document.getElementById('overlay-btn');
                 
                 output.src = reader.result;
                 output.classList.remove('hidden');
-                uploadText.classList.add('opacity-0'); // Hide text but keep clickable area
+                uploadText.classList.add('opacity-0'); 
+                
+                if (overlayBtn) {
+                    overlayBtn.classList.remove('opacity-0');
+                }
             }
             if(event.target.files[0]) {
                 reader.readAsDataURL(event.target.files[0]);

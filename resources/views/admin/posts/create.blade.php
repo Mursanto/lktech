@@ -69,19 +69,23 @@
                             <div class="bg-gray-50 p-5 rounded-xl border border-gray-100">
                                 <h3 class="font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">Foto Sampul (Thumbnail)</h3>
                                 
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg bg-white relative group overflow-hidden" id="thumbnail-preview-container">
-                                    <div class="space-y-1 text-center" id="thumbnail-upload-text">
-                                        <i class='bx bx-image-add text-4xl text-gray-400'></i>
+                                <label for="thumbnail" class="relative cursor-pointer block mt-1 px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg bg-white group overflow-hidden hover:border-brand-500 transition-colors text-center" id="thumbnail-preview-container">
+                                    <input id="thumbnail" name="thumbnail" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(event)">
+                                    
+                                    <div class="space-y-1 relative z-10 transition-opacity duration-300" id="thumbnail-upload-text">
+                                        <i class='bx bx-image-add text-4xl text-gray-400 group-hover:text-brand-500 transition-colors'></i>
                                         <div class="flex text-sm text-gray-600 justify-center">
-                                            <label for="thumbnail" class="relative cursor-pointer bg-white rounded-md font-medium text-brand-600 hover:text-brand-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-500">
-                                                <span>Upload a file</span>
-                                                <input id="thumbnail" name="thumbnail" type="file" class="sr-only" accept="image/png, image/jpeg, image/jpg, image/webp" onchange="previewImage(event)">
-                                            </label>
+                                            <span class="font-bold text-brand-600 group-hover:text-brand-500">Upload/Ganti Foto</span>
                                         </div>
                                         <p class="text-xs text-gray-500">PNG, JPG, WEBP up to 2MB</p>
                                     </div>
-                                    <img id="thumbnail-preview" src="#" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover">
-                                </div>
+
+                                    <img id="thumbnail-preview" src="#" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover group-hover:opacity-40 transition-opacity duration-300">
+                                    
+                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none" id="thumbnail-hover-overlay">
+                                        <span class="bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1 shadow-lg"><i class='bx bx-edit'></i> Ganti Foto</span>
+                                    </div>
+                                </label>
                                 @error('thumbnail') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
@@ -153,10 +157,19 @@
             reader.onload = function() {
                 var output = document.getElementById('thumbnail-preview');
                 var uploadText = document.getElementById('thumbnail-upload-text');
+                var overlay = document.getElementById('thumbnail-hover-overlay');
                 
                 output.src = reader.result;
                 output.classList.remove('hidden');
-                uploadText.classList.add('opacity-0'); // Hide text but keep clickable area
+                uploadText.classList.add('opacity-0'); 
+                
+                // Show hover overlay functionality after image is uploaded
+                document.getElementById('thumbnail-preview-container').addEventListener('mouseenter', function() {
+                    overlay.classList.remove('opacity-0');
+                });
+                document.getElementById('thumbnail-preview-container').addEventListener('mouseleave', function() {
+                    overlay.classList.add('opacity-0');
+                });
             }
             if(event.target.files[0]) {
                 reader.readAsDataURL(event.target.files[0]);
