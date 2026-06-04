@@ -71,11 +71,9 @@
                     Di samping itu, LKTech juga melayani kebutuhan penyewaan laptop untuk berbagai keperluan, baik individu maupun instansi, serta menyediakan layanan servis laptop dan komputer yang dikerjakan oleh teknisi berpengalaman. Seluruh layanan kami hadir dengan prinsip kepercayaan, kemudahan, dan kepuasan pelanggan sebagai prioritas utama.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 items-center">
                     <div>
-                        <div class="w-full h-48 bg-gray-100 rounded-xl flex items-center justify-center mb-4 border border-dashed border-gray-300">
-                            <span class="text-sm text-gray-400 font-semibold">[Placeholder Gambar Tim/Toko]</span>
-                        </div>
+                        <img src="{{ asset('images/TentangKami.webp') }}" alt="Tim LKTech" class="w-full h-auto rounded-xl shadow-lg object-cover border border-gray-100">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Visi & Misi</h3>
