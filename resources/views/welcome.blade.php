@@ -128,9 +128,9 @@
                             <a href="{{ route('katalog.index') }}" class="px-5 py-2.5 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm flex items-center gap-2">
                                 Lihat Semua Katalog
                             </a>
-                            <a href="https://wa.me/628567354046" target="_blank" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg shadow-sm hover:bg-gray-50 transition flex items-center gap-2 text-sm">
-                                <i class='bx bxl-whatsapp text-lg text-emerald-500'></i> Hubungi Kami
-                            </a>
+                            <button type="button" x-data @click="$dispatch('open-contact-modal')" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg shadow-sm hover:bg-gray-50 transition flex items-center gap-2 text-sm">
+                                <i class='bx bx-envelope text-lg text-gray-500'></i> Hubungi Kami
+                            </button>
                         </div>
                     </div>
                     
