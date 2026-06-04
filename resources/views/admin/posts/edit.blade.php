@@ -114,7 +114,7 @@
                     [{ 'header': [2, 3, false] }],
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['link', 'blockquote', 'code-block'],
+                    ['link', 'image', 'video', 'blockquote', 'code-block'],
                     ['clean']
                 ]
             },
