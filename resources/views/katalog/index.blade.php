@@ -171,7 +171,7 @@
                 </div>
 
                 <!-- Kartu 4: Kemitraan (Clickable) -->
-                <button @click="$dispatch('open-contact-modal')" type="button" class="text-left w-full bg-brand-50 border border-brand-100 rounded-2xl p-5 shadow-sm hover:bg-brand-100 hover:shadow-md transition-all group">
+                <button x-data @click="$dispatch('open-contact-modal')" type="button" class="text-left w-full bg-brand-50 border border-brand-100 rounded-2xl p-5 shadow-sm hover:bg-brand-100 hover:shadow-md transition-all group">
                     <div class="w-12 h-12 bg-white text-brand-600 rounded-xl flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
                         <i class='bx bx-support text-2xl'></i>
                     </div>
