@@ -37,6 +37,16 @@ Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-ga
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [App\Http\Controllers\PublicBlogController::class, 'show'])->name('blog.show');
 
+// Temporary Migration Route for cPanel (Hanya gunakan sekali, lalu bisa dihapus)
+Route::get('/run-migration-secret-lktech', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return 'Migration Berhasil Dijalankan! <a href="/">Kembali ke Home</a>';
+    } catch (\Exception $e) {
+        return 'Gagal: ' . $e->getMessage();
+    }
+});
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
