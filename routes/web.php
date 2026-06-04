@@ -29,6 +29,10 @@ Route::get('/katalog', [App\Http\Controllers\PublicCatalogController::class, 'ka
 Route::post('/katalog/contact', [App\Http\Controllers\PublicCatalogController::class, 'contact'])->name('katalog.contact');
 Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::class, 'show'])->name('katalog.show');
 
+// Static Pages
+Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
+Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');

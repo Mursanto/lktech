@@ -258,6 +258,28 @@
                     <div class="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium bg-gray-50 py-2 rounded-lg">
                         <i class='bx bx-check-shield text-base text-emerald-500'></i> Transaksi Aman & Bergaransi
                     </div>
+
+                    <!-- Trust Badge Section -->
+                    <div class="mt-5 border-t border-gray-100 pt-4 space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-shield-quarter text-lg'></i>
+                            </div>
+                            <span class="text-sm text-gray-700 font-medium">Lulus Quality Control</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-medal text-lg'></i>
+                            </div>
+                            <span class="text-sm text-gray-700 font-medium">Bergaransi Terpercaya</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-wrench text-lg'></i>
+                            </div>
+                            <span class="text-sm text-gray-700 font-medium">Layanan After-Sales</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -265,18 +287,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-50 border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
-                <div>
-                    &copy; {{ date('Y') }} LKTech TN SEREAL. All rights reserved.
-                </div>
-                <div class="text-right">
-                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03, Bogor 16168
-                </div>
-            </div>
-        </div>
-    </footer>
+    <x-footer />
 
 </body>
 </html>

@@ -226,17 +226,8 @@
     <!-- Modal Form Hubungi Kami -->
     <x-contact-modal />
 
-    <!-- Footer (Clean & Minimalist) -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center md:text-right">
-                <div class="text-sm text-gray-500 font-medium">
-                    &copy; {{ date('Y') }} LKTech TN SEREAL. All rights reserved.<br>
-                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03, Bogor 16168
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer -->
+    <x-footer />
 
     <!-- Login Modal (Pop-up Mode) -->
     <div x-show="loginModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-900/50 backdrop-blur-sm p-4 sm:p-0" x-cloak>

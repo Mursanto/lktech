@@ -187,16 +187,7 @@
     <x-contact-modal />
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center md:text-right">
-                <div class="text-sm text-gray-500 font-medium">
-                    &copy; {{ date('Y') }} LKTech TN SEREAL. All rights reserved.<br>
-                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03, Bogor 16168
-                </div>
-            </div>
-        </div>
-    </footer>
+    <x-footer />
     
     <!-- Mobile Bottom Navigation & Bottom Sheet -->
     <div x-data="{ 
