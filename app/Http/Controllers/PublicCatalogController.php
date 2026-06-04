@@ -39,10 +39,15 @@ class PublicCatalogController extends Controller
             return $product;
         });
 
-        $latestPosts = \App\Models\Post::where('is_published', true)
-            ->latest('published_at')
-            ->take(3)
-            ->get();
+        $latestPosts = collect();
+        try {
+            $latestPosts = \App\Models\Post::where('is_published', true)
+                ->latest('published_at')
+                ->take(3)
+                ->get();
+        } catch (\Exception $e) {
+            // Abaikan jika tabel posts belum dimigrasi di server produksi
+        }
 
         return view('welcome', compact('products', 'latestPosts'));
     }
