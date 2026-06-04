@@ -1,6 +1,6 @@
 <footer class="bg-white border-t border-gray-200 mt-auto pt-10 pb-6">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <!-- Kolom 1: Profil Singkat -->
             <div>
                 <a href="{{ route('home') }}" class="flex items-center gap-2 mb-4">
@@ -45,6 +45,37 @@
                     <li><a href="{{ route('tentang-kami') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"><i class='bx bx-chevron-right text-brand-500'></i> Tentang Kami</a></li>
                     <li><a href="{{ route('kebijakan-garansi') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"><i class='bx bx-chevron-right text-brand-500'></i> Kebijakan Garansi</a></li>
                 </ul>
+            </div>
+            <!-- Kolom 4: Metode Pembayaran & Sosial Media -->
+            <div>
+                <!-- Metode Pembayaran -->
+                <h4 class="font-bold text-gray-800 mb-4 font-montserrat">Metode Pembayaran</h4>
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <!-- Text based minimal badges for payment methods -->
+                    <div class="px-3 py-1.5 bg-white border border-gray-200 shadow-sm rounded-lg text-[11px] font-bold text-blue-900 flex items-center tracking-tight">
+                        Livin' by Mandiri
+                    </div>
+                    <div class="px-3 py-1.5 bg-white border border-gray-200 shadow-sm rounded-lg text-[11px] font-bold text-teal-700 flex items-center tracking-tight">
+                        wondr by BNI
+                    </div>
+                    <div class="px-3 py-1.5 bg-white border border-gray-200 shadow-sm rounded-lg text-[11px] font-bold text-purple-700 flex items-center tracking-tight">
+                        OVO
+                    </div>
+                    <div class="px-3 py-1.5 bg-white border border-gray-200 shadow-sm rounded-lg text-[11px] font-bold text-sky-500 flex items-center tracking-tight">
+                        GoPay
+                    </div>
+                </div>
+
+                <!-- Ikuti Kami -->
+                <h4 class="font-bold text-gray-800 mb-4 font-montserrat">Ikuti Kami</h4>
+                <div class="flex gap-3">
+                    <a href="https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH" target="_blank" class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300" title="Facebook">
+                        <i class='bx bxl-facebook text-xl'></i>
+                    </a>
+                    <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-pink-50 text-pink-600 flex items-center justify-center hover:bg-gradient-to-tr hover:from-orange-500 hover:to-pink-600 hover:text-white transition-all duration-300" title="Instagram">
+                        <i class='bx bxl-instagram text-xl'></i>
+                    </a>
+                </div>
             </div>
         </div>
 
