@@ -98,9 +98,14 @@ class DashboardController extends Controller
         $labaBulanIni = \App\Models\Sale::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
         $labaBulanLalu = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
 
-        $visitorCount = \App\Models\CatalogVisitor::whereMonth('visited_at', now()->month)
-                                                  ->whereYear('visited_at', now()->year)
-                                                  ->count();
+        $visitorCount = 0;
+        try {
+            $visitorCount = \App\Models\CatalogVisitor::whereMonth('visited_at', now()->month)
+                                                      ->whereYear('visited_at', now()->year)
+                                                      ->count();
+        } catch (\Exception $e) {
+            // Ignore error if table is not yet migrated
+        }
 
         return view('dashboard', [
             'visitorCount' => $visitorCount,
