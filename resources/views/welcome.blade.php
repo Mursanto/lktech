@@ -57,10 +57,18 @@
                 
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
+
                     <a href="{{ route('home') }}" class="flex items-center gap-2">
                         <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 w-auto">
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
                     </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
+                    <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors">Blog & Panduan</a>
+                    <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors">Tentang Kami</a>
                 </div>
 
                 <!-- Search Bar -->
@@ -221,6 +229,58 @@
             </div>
             
         </div>
+        <!-- Blog & Panduan Section -->
+        @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">Artikel & Panduan</h2>
+                    <p class="text-gray-500">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
+                </div>
+                <a href="{{ route('blog.index') }}" class="hidden sm:flex items-center gap-1 text-brand-600 font-bold hover:text-brand-700 transition-colors">
+                    Lihat Semua <i class='bx bx-right-arrow-alt text-xl'></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($latestPosts as $post)
+                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
+                    <!-- Thumbnail -->
+                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-48 bg-gray-100 overflow-hidden">
+                        @if($post->thumbnail)
+                            <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
+                                <i class='bx bx-image text-4xl'></i>
+                            </div>
+                        @endif
+                    </a>
+                    <!-- Content -->
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="text-xs text-brand-600 font-bold mb-2 flex items-center gap-1">
+                            <i class='bx bx-calendar'></i> {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight group-hover:text-brand-600 transition-colors">
+                            <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
+                        </h3>
+                        <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-grow">
+                            {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
+                        </p>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="text-sm font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
+                            Baca Selengkapnya <i class='bx bx-right-arrow-alt'></i>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="mt-6 text-center sm:hidden">
+                <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 bg-brand-50 px-6 py-2.5 rounded-xl">
+                    Lihat Semua Artikel <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+        </div>
+        @endif
+
     </main>
 
     <!-- Modal Form Hubungi Kami -->

@@ -96,6 +96,13 @@
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Laporan</span>
             </a>
 
+            <a href="{{ route('posts.index') }}" 
+               class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('posts.*') ? 'bg-pink-50 text-pink-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
+               :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Blog / Artikel">
+                <i class='bx bx-news text-lg {{ request()->routeIs('posts.*') ? 'text-pink-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
+                <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Blog / Artikel</span>
+            </a>
+
             <a href="{{ route('categories.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('categories.*') ? 'bg-orange-50 text-orange-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Kategori">

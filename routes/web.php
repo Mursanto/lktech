@@ -33,6 +33,10 @@ Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
 
+// Blog Public Routes
+Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [App\Http\Controllers\PublicBlogController::class, 'show'])->name('blog.show');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
@@ -59,6 +63,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
+    Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify

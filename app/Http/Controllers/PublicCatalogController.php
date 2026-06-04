@@ -39,7 +39,12 @@ class PublicCatalogController extends Controller
             return $product;
         });
 
-        return view('welcome', compact('products'));
+        $latestPosts = \App\Models\Post::where('is_published', true)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        return view('welcome', compact('products', 'latestPosts'));
     }
 
     public function show(Product $product)

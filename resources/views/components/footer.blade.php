@@ -41,6 +41,7 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-600 transition-colors">Beranda</a></li>
                     <li><a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors">Katalog Produk</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"><i class='bx bx-chevron-right text-brand-500'></i> Blog & Panduan</a></li>
                     <li><a href="{{ route('tentang-kami') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"><i class='bx bx-chevron-right text-brand-500'></i> Tentang Kami</a></li>
                     <li><a href="{{ route('kebijakan-garansi') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1"><i class='bx bx-chevron-right text-brand-500'></i> Kebijakan Garansi</a></li>
                 </ul>
