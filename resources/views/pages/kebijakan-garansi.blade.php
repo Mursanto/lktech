@@ -71,28 +71,28 @@
 
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Masa Berlaku Garansi</h2>
                 <p class="mb-6">
-                    [Tuliskan penjelasan masa garansi. Misalnya: Kami memberikan garansi mesin selama 1 bulan dan garansi software selama 1 minggu sejak tanggal pembelian tertera di nota.]
+                    Kami memberikan garansi mesin selama 1 (satu) bulan dan garansi perangkat lunak (software) selama 1 (satu) minggu, terhitung sejak tanggal pembelian yang tercantum pada nota.
                 </p>
 
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Syarat Klaim Garansi</h2>
                 <ul class="space-y-3 mb-6 list-none p-0">
                     <li class="flex items-start gap-3">
                         <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>[Tuliskan syarat 1: Nota pembelian wajib dilampirkan atau ditunjukkan saat klaim.]</span>
+                        <span>Nota pembelian wajib dilampirkan atau ditunjukkan pada saat pengajuan klaim.</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>[Tuliskan syarat 2: Segel garansi toko pada bagian bawah laptop utuh dan tidak rusak/robek.]</span>
+                        <span>Segel garansi toko yang terletak pada bagian bawah laptop harus dalam keadaan utuh dan tidak rusak atau sobek.</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>[Tuliskan syarat 3: Kerusakan bukan disebabkan oleh human error (terjatuh, terkena air, konsleting listrik rumah, atau modifikasi sepihak).]</span>
+                        <span>Kerusakan tidak disebabkan oleh faktor kelalaian pengguna (human error), seperti terjatuh, terkena air, konsleting listrik rumah, atau modifikasi sepihak.</span>
                     </li>
                 </ul>
 
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Prosedur Pengembalian / Servis</h2>
                 <p class="mb-6">
-                    [Tuliskan tata cara klaim. Misalnya: Bawa unit beserta kelengkapan (charger, tas) langsung ke toko kami. Teknisi kami akan melakukan pengecekan selama 1-3 hari kerja sebelum memberikan keputusan perbaikan atau penggantian unit (jika stok tersedia).]
+                    Pelanggan dapat membawa unit laptop beserta kelengkapannya (charger dan tas) langsung ke toko kami. Selanjutnya, teknisi kami akan melakukan pemeriksaan menyeluruh dalam waktu 1–3 hari kerja, sebelum memberikan keputusan berupa perbaikan atau penggantian unit (jika stok tersedia).
                 </p>
             </div>
         </div>

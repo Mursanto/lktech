@@ -64,8 +64,11 @@
 
             <div class="p-8 md:p-12 prose max-w-none text-gray-600 leading-relaxed">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Kisah Kami</h2>
+                <p class="mb-4">
+                    LKTech adalah sebuah usaha mikro yang bergerak di bidang penjualan laptop bekas berkualitas premium. Kami tidak sekadar menjual perangkat, tetapi juga mengutamakan layanan purna jual (after sales) serta menerapkan proses quality control yang ketat. Dengan demikian, kami berkomitmen untuk memastikan bahwa setiap perangkat yang sampai ke tangan pelanggan tetap dalam kondisi prima dan berkualitas tinggi.
+                </p>
                 <p class="mb-6">
-                    [Tuliskan sejarah berdirinya LKTech di sini. Kapan dimulai, apa visinya, dan komitmen untuk melayani pelanggan di bidang IT.]
+                    Di samping itu, LKTech juga melayani kebutuhan penyewaan laptop untuk berbagai keperluan, baik individu maupun instansi, serta menyediakan layanan servis laptop dan komputer yang dikerjakan oleh teknisi berpengalaman. Seluruh layanan kami hadir dengan prinsip kepercayaan, kemudahan, dan kepuasan pelanggan sebagai prioritas utama.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
@@ -76,11 +79,13 @@
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Visi & Misi</h3>
-                        <p class="mb-4">
-                            [Tuliskan visi perusahaan di sini. Misalnya: Menjadi mitra pengadaan IT terpercaya di Bogor dan sekitarnya.]
+                        <h4 class="font-bold text-gray-800 mb-1">Visi</h4>
+                        <p class="mb-4 text-sm md:text-base">
+                            Menjadi mitra pengadaan teknologi informasi yang terpercaya, baik di wilayah Bogor dan sekitarnya, maupun di seluruh Nusantara.
                         </p>
-                        <p>
-                            [Tuliskan misi perusahaan di sini. Misalnya: Menyediakan laptop bekas berkualitas layaknya baru dengan garansi penuh.]
+                        <h4 class="font-bold text-gray-800 mb-1">Misi</h4>
+                        <p class="text-sm md:text-base">
+                            Menyediakan laptop bekas berkualitas premium dengan jaminan garansi serta layanan purna jual yang bertanggung jawab dan memuaskan.
                         </p>
                     </div>
                 </div>
