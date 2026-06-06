@@ -15,19 +15,19 @@ class DashboardController extends Controller
     {
         // 1. Rincian Stok Berdasarkan Kategori
         $stokDevice = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'LIKE', '%Device%')->orWhere('name', 'LIKE', '%Laptop%')->orWhere('name', 'LIKE', '%PC%'); 
+            $q->where('name', 'Unit Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Unit Device'); });
         })->sum('stock');
 
         $stokSparepart = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'LIKE', '%Sparepart%')->orWhere('name', 'LIKE', '%Part%'); 
+            $q->where('name', 'Sparepart / Komponen')->orWhereHas('parent', function($q2) { $q2->where('name', 'Sparepart / Komponen'); });
         })->sum('stock');
 
         $stokAksesoris = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'LIKE', '%Aksesoris%')->orWhere('name', 'LIKE', '%Aksesori%'); 
+            $q->where('name', 'Aksesoris')->orWhereHas('parent', function($q2) { $q2->where('name', 'Aksesoris'); });
         })->sum('stock');
 
         $stokSoftware = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'LIKE', '%Software%'); 
+            $q->where('name', 'Software / Digital')->orWhereHas('parent', function($q2) { $q2->where('name', 'Software / Digital'); });
         })->sum('stock');
 
         // Total Stok Utama: menjumlahkan seluruh kolom stock dari tabel products yang memiliki status = 'available'
@@ -98,6 +98,10 @@ class DashboardController extends Controller
         $labaBulanIni = \App\Models\Sale::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
         $labaBulanLalu = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
 
+        // Pertumbuhan Persentase MoM
+        $omzetGrowth = $omzetBulanLalu > 0 ? (($omzetBulanIni - $omzetBulanLalu) / $omzetBulanLalu) * 100 : ($omzetBulanIni > 0 ? 100 : 0);
+        $labaGrowth = $labaBulanLalu > 0 ? (($labaBulanIni - $labaBulanLalu) / $labaBulanLalu) * 100 : ($labaBulanIni > 0 ? 100 : 0);
+
         $visitorCount = 0;
         try {
             $visitorCount = \App\Models\CatalogVisitor::whereMonth('visited_at', now()->month)
@@ -142,6 +146,8 @@ class DashboardController extends Controller
             'omzetBulanLalu' => $omzetBulanLalu,
             'labaBulanIni' => $labaBulanIni,
             'labaBulanLalu' => $labaBulanLalu,
+            'omzetGrowth' => $omzetGrowth,
+            'labaGrowth' => $labaGrowth,
         ]);
     }
 }

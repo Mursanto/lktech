@@ -23,10 +23,10 @@
                     </div>
                     
                     <div class="grid grid-cols-2 gap-1 text-[9px] font-medium text-blue-50 w-full mt-auto">
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Dev: {{ $stokDevice ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Device: {{ $stokDevice ?? 0 }}</div>
                         <div class="bg-white/10 px-1 py-0.5 rounded text-center">Part: {{ $stokSparepart ?? 0 }}</div>
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Acc: {{ $stokAksesoris ?? 0 }}</div>
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Soft: {{ $stokSoftware ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Aksesoris: {{ $stokAksesoris ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Software: {{ $stokSoftware ?? 0 }}</div>
                     </div>
                 </div>
                 <div class="bg-black/10 py-1 px-3 text-[9px] font-medium text-center text-blue-100">Real-time</div>
@@ -82,9 +82,9 @@
                         Rp {{ number_format($omzetBulanIni ?? 0, 0, ',', '.') }}
                     </h3>
                     <div class="mt-1 text-[9px] font-medium flex items-center gap-1 relative z-10">
-                        <span class="px-1 py-0.5 rounded bg-white/10 flex items-center gap-0.5">
-                            <i class='bx bx-trending-up'></i>
-                            Tren Stabil
+                        <span class="px-1 py-0.5 rounded bg-white/10 flex items-center gap-0.5 {{ ($omzetGrowth ?? 0) >= 0 ? 'text-white' : 'text-red-200' }}">
+                            <i class='bx {{ ($omzetGrowth ?? 0) > 0 ? 'bx-trending-up' : (($omzetGrowth ?? 0) < 0 ? 'bx-trending-down' : 'bx-minus') }}'></i>
+                            {{ ($omzetGrowth ?? 0) > 0 ? '+' : ''}}{{ number_format($omzetGrowth ?? 0, 1, ',', '.') }}% vs Bulan Lalu
                         </span>
                     </div>
                 </div>
@@ -104,9 +104,9 @@
                         Rp {{ number_format($labaBulanIni ?? 0, 0, ',', '.') }}
                     </h3>
                     <div class="mt-1 text-[9px] font-medium flex items-center gap-1 relative z-10">
-                        <span class="px-1 py-0.5 rounded bg-white/10 flex items-center gap-0.5">
-                            <i class='bx bx-check-double'></i>
-                            Efisiensi Baik
+                        <span class="px-1 py-0.5 rounded bg-white/10 flex items-center gap-0.5 {{ ($labaGrowth ?? 0) >= 0 ? 'text-white' : 'text-red-200' }}">
+                            <i class='bx {{ ($labaGrowth ?? 0) > 0 ? 'bx-trending-up' : (($labaGrowth ?? 0) < 0 ? 'bx-trending-down' : 'bx-minus') }}'></i>
+                            {{ ($labaGrowth ?? 0) > 0 ? '+' : ''}}{{ number_format($labaGrowth ?? 0, 1, ',', '.') }}% vs Bulan Lalu
                         </span>
                     </div>
                 </div>
