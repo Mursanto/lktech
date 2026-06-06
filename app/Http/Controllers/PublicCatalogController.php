@@ -43,7 +43,7 @@ class PublicCatalogController extends Controller
         try {
             $latestPosts = \App\Models\Post::where('is_published', true)
                 ->latest('published_at')
-                ->take(3)
+                ->take(4)
                 ->get();
         } catch (\Exception $e) {
             // Abaikan jika tabel posts belum dimigrasi di server produksi
