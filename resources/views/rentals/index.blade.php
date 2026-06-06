@@ -65,27 +65,27 @@
                             <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50">
+                    <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($rentals as $rental)
                         <tr class="hover:bg-natural-50/30 transition-colors group">
                             <td class="px-6 py-4">
-                                <p class="text-sm font-black text-natural-800">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-[10px] text-natural-500 font-medium">Tgl: {{ $rental->created_at->format('d/m/y') }}</p>
+                                <p class="text-sm font-semibold text-natural-800">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-natural-500 font-medium">Tgl: {{ $rental->created_at->format('d/m/y') }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm font-bold text-natural-800 truncate w-32">{{ $rental->customer->name ?? 'Unknown' }}</p>
-                                <p class="text-[9px] text-natural-500 font-medium">{{ $rental->customer->phone ?? '-' }}</p>
+                                <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2">{{ $rental->customer->name ?? 'Unknown' }}</p>
+                                <p class="text-xs text-natural-500 font-medium">{{ $rental->customer->phone ?? '-' }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm font-bold text-natural-700">{{ $rental->product->brand ?? 'Unit' }} {{ $rental->product->model_series ?? '-' }}</p>
-                                <p class="text-[9px] text-cyan-600 font-bold uppercase tracking-tight">S/N: {{ $rental->product->serial_number ?? 'N/A' }}</p>
+                                <p class="text-sm font-semibold text-natural-700 whitespace-normal line-clamp-2">{{ $rental->product->brand ?? 'Unit' }} {{ $rental->product->model_series ?? '-' }}</p>
+                                <p class="text-xs text-cyan-600 font-medium uppercase tracking-tight">S/N: {{ $rental->product->serial_number ?? 'N/A' }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 @php
                                     $isLate = $rental->status == 'active' && now() > $rental->return_date;
                                 @endphp
-                                <p class="text-sm font-black {{ $isLate ? 'text-red-600' : 'text-natural-800' }}">{{ $rental->return_date->format('d M Y') }}</p>
-                                <p class="text-[9px] font-bold uppercase {{ $isLate ? 'text-red-400' : 'text-natural-400' }}">
+                                <p class="text-sm font-semibold {{ $isLate ? 'text-red-600' : 'text-natural-800' }}">{{ $rental->return_date->format('d M Y') }}</p>
+                                <p class="text-xs font-medium uppercase {{ $isLate ? 'text-red-400' : 'text-natural-400' }}">
                                     {{ $isLate ? 'Terlambat!' : 'Estimasi Kembali' }}
                                 </p>
                             </td>

@@ -52,20 +52,20 @@
                             <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50">
+                    <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($services as $service)
                         <tr class="hover:bg-natural-50/30 transition-colors group">
                             <td class="px-6 py-4">
-                                <p class="text-sm font-black text-natural-800">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-[10px] text-natural-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
+                                <p class="text-sm font-semibold text-natural-800">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-natural-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm font-bold text-natural-800 truncate w-32">{{ $service->customer->name ?? 'Unknown' }}</p>
-                                <p class="text-[9px] text-natural-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
+                                <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2">{{ $service->customer->name ?? 'Unknown' }}</p>
+                                <p class="text-xs text-natural-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm font-bold text-natural-700 truncate w-40">{{ $service->device_name }}</p>
-                                <p class="text-[9px] text-amber-600 font-bold uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
+                                <p class="text-sm font-semibold text-natural-700 whitespace-normal line-clamp-2">{{ $service->device_name }}</p>
+                                <p class="text-xs text-amber-600 font-medium uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
                             </td>
                             <td class="px-6 py-4 text-center">
                                 @php

@@ -60,12 +60,12 @@
                             <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50">
+                    <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($sales as $sale)
                         <tr class="hover:bg-natural-50/30 transition-colors group">
                             <td class="px-6 py-4">
-                                <p class="text-[12px] font-black text-natural-800 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-[9px] text-natural-500 font-medium mt-1">{{ $sale->created_at->format('d M Y, H:i') }}</p>
+                                <p class="text-sm font-semibold text-natural-800 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-xs text-natural-500 mt-1">{{ $sale->created_at->format('d M Y, H:i') }}</p>
 
                             </td>
                             <td class="px-6 py-4">
@@ -74,8 +74,8 @@
                                         {{ substr($sale->customer->name ?? 'C', 0, 1) }}
                                     </div>
                                     <div>
-                                        <p class="text-[12px] font-bold text-natural-800 truncate w-32 leading-none">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
-                                        <p class="text-[9px] text-natural-400 font-medium mt-1">{{ $sale->customer->phone ?? '-' }}</p>
+                                        <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2 leading-tight">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
+                                        <p class="text-xs text-natural-500 mt-1">{{ $sale->customer->phone ?? '-' }}</p>
                                     </div>
 
                                 </div>
@@ -86,8 +86,8 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-[12px] font-black text-emerald-600">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
-                                <p class="text-[9px] text-natural-400 font-medium mt-0.5">{{ $sale->details_count ?? 0 }} Item Terjual</p>
+                                <p class="text-sm font-semibold text-emerald-600">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
+                                <p class="text-xs text-natural-500 mt-0.5">{{ $sale->details_count ?? 0 }} Item Terjual</p>
                             </td>
 
                             <td class="px-6 py-4 text-right">

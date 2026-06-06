@@ -72,7 +72,7 @@
                             <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50 text-[13px]">
+                    <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($products as $product)
                         <tr class="odd:bg-white even:bg-natural-50/50 hover:bg-brand-50/30 transition-colors group">
                             <td class="px-6 py-4">
@@ -81,9 +81,9 @@
                                         <i class='bx bx-laptop text-xl'></i>
                                     </div>
                                     <div>
-                                        <p class="text-[13px] font-bold text-natural-800 line-clamp-1">{{ $product->brand }} {{ $product->model_series }}</p>
+                                        <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2">{{ $product->brand }} {{ $product->model_series }}</p>
                                         <div class="flex items-center gap-1.5 mt-0.5">
-                                            <p class="text-[10px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                            <p class="text-xs text-natural-500 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
                                             {{-- Badge Tipe Stok --}}
                                             @if(($product->tipe_stok ?? 'ready_stock') === 'ready_stock')
                                                 <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-wider">Ready</span>
