@@ -135,10 +135,6 @@ Route::get('/storage/{path}', function($path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
-// Temporary: Cache Clear Route (hapus setelah digunakan)
-Route::get('/clear-server-cache', function() {
-    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
-    return 'Cache server berhasil dibersihkan secara total, Kawan!';
-});
+
 
 require __DIR__.'/auth.php';
