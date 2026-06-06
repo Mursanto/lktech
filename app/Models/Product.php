@@ -26,6 +26,7 @@ class Product extends Model
         'operational_cost',
         'status',
         'stock',
+        'tipe_stok',
         'image_path',
         'description',
         'gallery_images',

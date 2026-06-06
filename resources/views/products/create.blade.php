@@ -87,6 +87,28 @@
 
                             <div id="inventaris-harga-section">
                                 <h3 class="text-sm font-bold text-brand-700 uppercase tracking-wider mb-3 border-b pb-1 mt-4">Inventaris & Harga</h3>
+
+                                {{-- Tipe Stok: Ready Stock / Open Order --}}
+                                <div class="mb-3">
+                                    <label class="block text-[11px] font-bold text-gray-600 mb-1">Tipe Stok *</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <label class="flex items-center gap-2 p-2 border-2 rounded cursor-pointer transition-all has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 border-gray-200">
+                                            <input type="radio" name="tipe_stok" value="ready_stock" checked class="accent-emerald-500">
+                                            <div>
+                                                <p class="text-[11px] font-bold text-gray-700">Ready Stock</p>
+                                                <p class="text-[9px] text-gray-400">Stok tersedia fisik</p>
+                                            </div>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 border-2 rounded cursor-pointer transition-all has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50 border-gray-200">
+                                            <input type="radio" name="tipe_stok" value="open_order" class="accent-orange-500">
+                                            <div>
+                                                <p class="text-[11px] font-bold text-gray-700">Open Order</p>
+                                                <p class="text-[9px] text-gray-400">Pre-order / indent</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div class="grid grid-cols-4 gap-3">
                                     <div id="stock-qty-container">
                                     <label class="block text-[11px] font-bold text-gray-600 mb-1">Stok QTY *</label>

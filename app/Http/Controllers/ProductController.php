@@ -22,6 +22,11 @@ class ProductController extends Controller
             $query->where('status', $status);
         }
 
+        // Tipe Stok Filter (ready_stock / open_order)
+        if ($request->has('tipe_stok') && $request->tipe_stok != '') {
+            $query->where('tipe_stok', $request->tipe_stok);
+        }
+
         // Category Filter
         if ($request->has('category_id') && $request->category_id != '') {
             $categoryId = $request->category_id;
@@ -72,6 +77,7 @@ class ProductController extends Controller
             'purchase_price' => 'required|integer|min:0',
             'selling_price' => 'required|integer|min:0',
             'stock' => 'required|integer|min:0',
+            'tipe_stok' => 'required|in:ready_stock,open_order',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'description' => 'nullable|string',
@@ -161,6 +167,7 @@ class ProductController extends Controller
             'selling_price' => 'required|integer|min:0',
             'operational_cost' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'tipe_stok' => 'required|in:ready_stock,open_order',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'description' => 'nullable|string',
@@ -184,6 +191,7 @@ class ProductController extends Controller
             'selling_price' => $request->selling_price,
             'operational_cost' => $request->operational_cost ?? $product->operational_cost,
             'stock' => $request->stock,
+            'tipe_stok' => $request->tipe_stok ?? $product->tipe_stok,
             'status' => $status, // Gunakan status otomatis
         ]);
 

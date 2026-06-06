@@ -40,6 +40,11 @@
                         @endforeach
                     @endforeach
                 </select>
+                <select name="tipe_stok" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                    <option value="">Semua Tipe Stok</option>
+                    <option value="ready_stock" {{ request('tipe_stok') == 'ready_stock' ? 'selected' : '' }}>Ready Stock</option>
+                    <option value="open_order" {{ request('tipe_stok') == 'open_order' ? 'selected' : '' }}>Open Order</option>
+                </select>
                 <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                     <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua Status</option>
                     <option value="available" {{ request('status', 'available') == 'available' ? 'selected' : '' }}>Tersedia</option>
@@ -77,7 +82,15 @@
                                     </div>
                                     <div>
                                         <p class="text-[13px] font-bold text-natural-800 line-clamp-1">{{ $product->brand }} {{ $product->model_series }}</p>
-                                        <p class="text-[10px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                        <div class="flex items-center gap-1.5 mt-0.5">
+                                            <p class="text-[10px] text-natural-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                            {{-- Badge Tipe Stok --}}
+                                            @if(($product->tipe_stok ?? 'ready_stock') === 'ready_stock')
+                                                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-wider">Ready</span>
+                                            @else
+                                                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-orange-100 text-orange-700 uppercase tracking-wider">Open Order</span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </td>

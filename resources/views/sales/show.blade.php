@@ -178,10 +178,17 @@
                             </thead>
                             <tbody>
                                 @foreach($sale->saleDetails as $detail)
-                                <tr style="background-color: #ffffff;" class="hover:bg-gray-50">
-                                    <td style="width: 50%; padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
+                                <tr style="background-color: #ffffff;" class="hover:bg-gray-50">                                     <td style="width: 50%; padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
                                         <div>
-                                            <div class="font-bold text-gray-800">{{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}</div>
+                                            <div class="font-bold text-gray-800 flex items-center gap-1.5 flex-wrap">
+                                                {{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}
+                                                {{-- Badge Tipe Stok di Laporan --}}
+                                                @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
+                                                    <span style="display:inline-block; padding: 1px 5px; border-radius: 3px; font-size: 7pt; font-weight: 700; background-color: #fff7ed; color: #c2410c; border: 1px solid #fed7aa;">Pre-Order</span>
+                                                @else
+                                                    <span style="display:inline-block; padding: 1px 5px; border-radius: 3px; font-size: 7pt; font-weight: 700; background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0;">Ready</span>
+                                                @endif
+                                            </div>
                                             <div class="text-[10px] text-gray-500">{{ $detail->product->category->name ?? 'Umum' }}</div>
                                             @if((!empty($detail->product->processor) && $detail->product->processor != '-') || 
                                                 (!empty($detail->product->ram) && $detail->product->ram != '-') || 
