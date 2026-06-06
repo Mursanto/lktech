@@ -11,6 +11,17 @@
                 <p class="text-sm text-gray-500 leading-relaxed mt-1 text-justify">
                     Penyedia layanan IT terpercaya: Penjualan laptop second berkualitas, servis & maintenance profesional, serta persewaan perangkat IT untuk kebutuhan acara dan instansi Anda.
                 </p>
+                
+                <!-- Google Maps Embed -->
+                <div class="mt-6">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=LKtech+TN+SEREAL,+Tanah+Sereal,+Bogor&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        class="w-full h-40 md:h-48 rounded-lg shadow-sm border-0" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
 
             <!-- Kolom 2: Informasi Kontak -->
