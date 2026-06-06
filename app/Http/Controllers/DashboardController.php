@@ -84,9 +84,9 @@ class DashboardController extends Controller
         $sewaTerlambat = 0;
         try {
             $totalSewa = \App\Models\Rental::count();
-            $sewaAktif = \App\Models\Rental::where('status', 'active')->count();
+            $sewaAktif = \App\Models\Rental::where('status', 'active')->whereDate('return_date', '>=', now())->count();
             $sewaSelesai = \App\Models\Rental::where('status', 'completed')->count();
-            $sewaTerlambat = \App\Models\Rental::where('status', 'late')->count();
+            $sewaTerlambat = \App\Models\Rental::where('status', 'active')->whereDate('return_date', '<', now())->count();
         } catch (\Exception $e) {
             // Rental model might not exist or table not created
         }
