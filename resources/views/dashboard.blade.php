@@ -8,7 +8,7 @@
         </div>
     </x-slot>
 
-    <div class="flex flex-col h-auto lg:h-[calc(100vh-170px)] lg:min-h-0 space-y-3 lg:space-y-1.5 pb-6 lg:pb-0">
+    <div class="flex flex-col flex-1 space-y-3">
 
         <!-- Colorful Stat Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 shrink-0">
@@ -119,13 +119,13 @@
         </div>
 
         <!-- Lower Section (Balanced Rows) -->
-        <div class="flex flex-col gap-3 lg:flex-grow lg:min-h-0">
+        <div class="flex flex-col gap-3">
             
             <!-- BARIS 1: Akses Cepat | Unit Device | Sparepart -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
                 
                 <!-- Akses Cepat -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden">
                     <h3 class="text-xs font-bold text-natural-900 mb-2 flex items-center gap-2 border-b border-natural-100 pb-1 shrink-0">
                         <i class='bx bx-bolt-circle text-amber-500 text-sm'></i> Akses Cepat
                     </h3>
@@ -183,7 +183,7 @@
                 </div>
 
                 <!-- Unit Device -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-blue-100 text-blue-600 flex items-center justify-center"><i class='bx bx-laptop text-xs'></i></div> 
@@ -191,7 +191,7 @@
                         </h3>
                     </div>
                     
-                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar flex-grow content-start">
+                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar max-h-48">
                         @if(!empty($lowUnitDevice) && count($lowUnitDevice) > 0)
                             @foreach($lowUnitDevice as $item)
                                 <div class="flex items-center py-2 px-1 border-b border-natural-50 last:border-b-0 hover:bg-natural-50/50 transition-colors">
@@ -213,7 +213,7 @@
                 </div>
 
                 <!-- Sparepart / Komponen -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class='bx bx-chip text-xs'></i></div> 
@@ -221,7 +221,7 @@
                         </h3>
                     </div>
                     
-                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar flex-grow content-start">
+                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar max-h-48">
                         @if(!empty($lowSparepart) && count($lowSparepart) > 0)
                             @foreach($lowSparepart as $item)
                                 <div class="flex items-center py-2 px-1 border-b border-natural-50 last:border-b-0 hover:bg-natural-50/50 transition-colors">
@@ -246,7 +246,7 @@
             <!-- BARIS 2: Aksesoris | Software | Pengunjung Katalog -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch mt-3 lg:mt-0">
                 <!-- Aksesoris -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-fuchsia-100 text-fuchsia-600 flex items-center justify-center"><i class='bx bx-headphone text-xs'></i></div> 
@@ -254,7 +254,7 @@
                         </h3>
                     </div>
                     
-                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar flex-grow content-start">
+                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar max-h-48">
                         @if(!empty($lowAksesoris) && count($lowAksesoris) > 0)
                             @foreach($lowAksesoris as $item)
                                 <div class="flex items-center py-2 px-1 border-b border-natural-50 last:border-b-0 hover:bg-natural-50/50 transition-colors">
@@ -276,7 +276,7 @@
                 </div>
 
                 <!-- Software / Digital -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden">
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class='bx bx-code-alt text-xs'></i></div> 
@@ -284,7 +284,7 @@
                         </h3>
                     </div>
                     
-                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar flex-grow content-start">
+                    <div class="flex flex-col overflow-y-auto pr-1 custom-scrollbar max-h-48">
                         @if(!empty($lowSoftware) && count($lowSoftware) > 0)
                             @foreach($lowSoftware as $item)
                                 <div class="flex items-center py-2 px-1 border-b border-natural-50 last:border-b-0 hover:bg-natural-50/50 transition-colors">
@@ -306,7 +306,7 @@
                 </div>
 
                 <!-- Pengunjung Katalog (Widget Baru) -->
-                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden h-full bg-gradient-to-br from-violet-50 to-white relative justify-center">
+                <div class="bg-white p-3 flex flex-col border border-natural-100/60 shadow-sm rounded-xl overflow-hidden bg-gradient-to-br from-violet-50 to-white relative justify-center">
                     <div class="absolute -right-4 -bottom-4 opacity-10">
                         <i class='bx bx-user-pin text-8xl text-violet-600'></i>
                     </div>
