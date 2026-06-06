@@ -112,7 +112,7 @@
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 px-4 py-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto flex flex-col">
+            <main class="flex-1 px-4 py-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto">
 
                 @if (session('success'))
                     <div class="mb-6 p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 flex items-center gap-3 shadow-sm" x-data="{ show: true }" x-show="show">
@@ -132,7 +132,7 @@
                 {{ $slot }}
             </main>
 
-            <footer class="mt-auto border-t border-natural-200 bg-white no-print print:hidden pb-2">
+            <footer class="shrink-0 border-t border-natural-200 bg-white no-print print:hidden">
                 <div class="px-4 py-3 sm:px-6 lg:px-8 text-center text-[10px] text-natural-400 font-medium tracking-wide">
                     © {{ date('Y') }} LK Tech. Sistem Profesional & Terpercaya.
                 </div>
