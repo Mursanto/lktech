@@ -242,9 +242,9 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 @foreach($latestPosts->take(4) as $post)
-                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
+                <div class="flex-none w-[85%] sm:w-80 snap-center md:w-auto bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
                     <!-- Thumbnail -->
                     <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-32 bg-gray-100 overflow-hidden">
                         @if($post->thumbnail)
