@@ -77,8 +77,16 @@
                                 <p class="text-xs text-natural-500 font-medium">{{ $rental->customer->phone ?? '-' }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm font-semibold text-natural-700 whitespace-normal line-clamp-2">{{ $rental->product->brand ?? 'Unit' }} {{ $rental->product->model_series ?? '-' }}</p>
-                                <p class="text-xs text-cyan-600 font-medium uppercase tracking-tight">S/N: {{ $rental->product->serial_number ?? 'N/A' }}</p>
+                                <div>
+                                    <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2">
+                                        {{ $rental->product ? $rental->product->brand . ' ' . $rental->product->model_series : ($rental->laptop_name ?? 'Unit Tidak Diketahui') }}
+                                    </p>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <p class="text-xs text-natural-500 font-medium tracking-tight">
+                                            ID: {{ $rental->product ? '#' . str_pad($rental->product->id, 5, '0', STR_PAD_LEFT) : 'N/A' }}
+                                        </p>
+                                    </div>
+                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 @php

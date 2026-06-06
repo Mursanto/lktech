@@ -11,7 +11,7 @@ class RentalController extends Controller
 {
     public function index()
     {
-        $rentals = Rental::with('customer')->latest()->paginate(10);
+        $rentals = Rental::with(['customer', 'product'])->latest()->paginate(10);
         return view('rentals.index', compact('rentals'));
     }
 
