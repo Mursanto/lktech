@@ -9,10 +9,23 @@ use Excel;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Memanggil relasi yang benar: saleDetails dan product-nya
-    $sales = \App\Models\Sale::with('saleDetails.product')->orderBy('created_at', 'desc')->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Base query
+        $query = \App\Models\Sale::with('saleDetails.product')->orderBy('created_at', 'desc');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } else {
+            // Default to current month
+            $query->whereMonth('created_at', now()->month)
+                  ->whereYear('created_at', now()->year);
+        }
+
+        $sales = $query->get();
         
         // 1. Total Penjualan
         $totalPenjualan = $sales->sum('total_amount');
@@ -31,8 +44,32 @@ class ReportController extends Controller
         // 5. Total Modal (HPP) = Total Penjualan - Laba Kotor
         $totalModal = $totalPenjualan - $totalLabaKotor;
 
+        // --- Month-over-Month (MoM) Calculation ---
+        $currentMonthSales = \App\Models\Sale::whereMonth('created_at', now()->month)
+                                             ->whereYear('created_at', now()->year)->get();
+        $previousMonthSales = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)
+                                              ->whereYear('created_at', now()->subMonth()->year)->get();
+                                              
+        // Current Month Metrics
+        $cmPendapatan = $currentMonthSales->sum('total_amount');
+        $cmLaba = $currentMonthSales->sum('profit_amount');
+        $cmModal = $cmPendapatan - $cmLaba;
+        
+        // Previous Month Metrics
+        $pmPendapatan = $previousMonthSales->sum('total_amount');
+        $pmLaba = $previousMonthSales->sum('profit_amount');
+        $pmModal = $pmPendapatan - $pmLaba;
+        
+        // Growth Percentages
+        $growthPendapatan = $pmPendapatan > 0 ? (($cmPendapatan - $pmPendapatan) / $pmPendapatan) * 100 : ($cmPendapatan > 0 ? 100 : 0);
+        $growthModal = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
+        $growthLaba = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
+
         return view('reports.index', compact(
-            'sales', 'totalPenjualan', 'totalModal', 'totalLabaKotor', 'totalBiayaOperasional', 'totalLabaBersih'
+            'sales', 'totalPenjualan', 'totalModal', 'totalLabaKotor', 'totalBiayaOperasional', 'totalLabaBersih',
+            'cmPendapatan', 'cmModal', 'cmLaba',
+            'pmPendapatan', 'pmModal', 'pmLaba',
+            'growthPendapatan', 'growthModal', 'growthLaba'
         ));
     }
     
@@ -41,16 +78,38 @@ class ReportController extends Controller
         // Ambil data penjualan terbaru beserta relasi produknya
         $sales = \App\Models\Sale::with('product')->orderBy('created_at', 'desc')->get();
         
-        // Kalkulasi Total secara Real-time
+        // Kalkulasi Total secara Real-time (Keseluruhan)
         $totalPendapatan = $sales->sum('total_amount');
         $totalLaba = $sales->sum('profit_amount');
         $totalModal = $totalPendapatan - $totalLaba;
         
-        // Asumsi tambahan: Ambil data servis yang sudah 'done' jika ada labanya
-        // $services = \App\Models\Service::where('status', 'done')->get();
-        // ... tambahkan logika servis di sini jika database service memiliki kolom profit
+        // --- Month-over-Month (MoM) Calculation ---
+        $currentMonthSales = \App\Models\Sale::whereMonth('created_at', now()->month)
+                                             ->whereYear('created_at', now()->year)->get();
+        $previousMonthSales = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)
+                                              ->whereYear('created_at', now()->subMonth()->year)->get();
+                                              
+        // Current Month Metrics
+        $cmPendapatan = $currentMonthSales->sum('total_amount');
+        $cmLaba = $currentMonthSales->sum('profit_amount');
+        $cmModal = $cmPendapatan - $cmLaba;
+        
+        // Previous Month Metrics
+        $pmPendapatan = $previousMonthSales->sum('total_amount');
+        $pmLaba = $previousMonthSales->sum('profit_amount');
+        $pmModal = $pmPendapatan - $pmLaba;
+        
+        // Growth Percentages
+        $growthPendapatan = $pmPendapatan > 0 ? (($cmPendapatan - $pmPendapatan) / $pmPendapatan) * 100 : ($cmPendapatan > 0 ? 100 : 0);
+        $growthModal = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
+        $growthLaba = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
 
-        return view('reports.profit', compact('sales', 'totalPendapatan', 'totalModal', 'totalLaba'));
+        return view('reports.profit', compact(
+            'sales', 'totalPendapatan', 'totalModal', 'totalLaba',
+            'cmPendapatan', 'cmModal', 'cmLaba',
+            'pmPendapatan', 'pmModal', 'pmLaba',
+            'growthPendapatan', 'growthModal', 'growthLaba'
+        ));
     }
 
     public function export()

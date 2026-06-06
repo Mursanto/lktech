@@ -24,6 +24,11 @@
                     <div>
                         <p class="text-sm font-bold text-gray-500">Total Pendapatan (Omzet)</p>
                         <h3 class="text-2xl font-black text-gray-800">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h3>
+                        @if($growthPendapatan >= 0)
+                            <p class="text-xs text-emerald-600 mt-1 font-medium">↑ +{{ number_format($growthPendapatan, 1) }}% dari bulan lalu</p>
+                        @else
+                            <p class="text-xs text-red-600 mt-1 font-medium">↓ {{ number_format($growthPendapatan, 1) }}% dari bulan lalu</p>
+                        @endif
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-orange-500 flex items-center gap-4">
@@ -31,6 +36,11 @@
                     <div>
                         <p class="text-sm font-bold text-gray-500">Total Harga Modal (HPP)</p>
                         <h3 class="text-2xl font-black text-gray-800">Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
+                        @if($growthModal >= 0)
+                            <p class="text-xs text-emerald-600 mt-1 font-medium">↑ +{{ number_format($growthModal, 1) }}% dari bulan lalu</p>
+                        @else
+                            <p class="text-xs text-red-600 mt-1 font-medium">↓ {{ number_format($growthModal, 1) }}% dari bulan lalu</p>
+                        @endif
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-purple-500 flex items-center gap-4">
@@ -38,7 +48,72 @@
                     <div>
                         <p class="text-sm font-bold text-gray-500">Total Laba Bersih</p>
                         <h3 class="text-2xl font-black text-purple-700">Rp {{ number_format($totalLaba, 0, ',', '.') }}</h3>
+                        @if($growthLaba >= 0)
+                            <p class="text-xs text-emerald-600 mt-1 font-medium">↑ +{{ number_format($growthLaba, 1) }}% dari bulan lalu</p>
+                        @else
+                            <p class="text-xs text-red-600 mt-1 font-medium">↓ {{ number_format($growthLaba, 1) }}% dari bulan lalu</p>
+                        @endif
                     </div>
+                </div>
+            </div>
+
+            <!-- MoM Comparison Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-100 bg-gray-50">
+                    <h3 class="text-lg font-bold text-gray-800">Perbandingan Bulan ke Bulan (MoM)</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white text-gray-500 text-xs uppercase border-b border-gray-200">
+                                <th class="px-6 py-4 font-bold">Metrik Keuangan</th>
+                                <th class="px-6 py-4 font-bold text-right">Bulan Lalu</th>
+                                <th class="px-6 py-4 font-bold text-right">Bulan Ini</th>
+                                <th class="px-6 py-4 font-bold text-right">Tren / Persentase</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-gray-50">
+                            <!-- Pendapatan -->
+                            <tr class="hover:bg-gray-50/50 transition">
+                                <td class="px-6 py-4 font-semibold text-gray-800">Pendapatan</td>
+                                <td class="px-6 py-4 text-right text-gray-600">Rp {{ number_format($pmPendapatan, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-semibold text-gray-800">Rp {{ number_format($cmPendapatan, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-bold">
+                                    @if($growthPendapatan >= 0)
+                                        <span class="text-emerald-600">↑ +{{ number_format($growthPendapatan, 1) }}%</span>
+                                    @else
+                                        <span class="text-red-600">↓ {{ number_format($growthPendapatan, 1) }}%</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <!-- Modal Stok -->
+                            <tr class="hover:bg-gray-50/50 transition">
+                                <td class="px-6 py-4 font-semibold text-gray-800">Modal Stok</td>
+                                <td class="px-6 py-4 text-right text-gray-600">Rp {{ number_format($pmModal, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-semibold text-gray-800">Rp {{ number_format($cmModal, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-bold">
+                                    @if($growthModal >= 0)
+                                        <span class="text-emerald-600">↑ +{{ number_format($growthModal, 1) }}%</span>
+                                    @else
+                                        <span class="text-red-600">↓ {{ number_format($growthModal, 1) }}%</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <!-- Laba Bersih -->
+                            <tr class="hover:bg-gray-50/50 transition">
+                                <td class="px-6 py-4 font-semibold text-gray-800">Laba Bersih</td>
+                                <td class="px-6 py-4 text-right text-gray-600">Rp {{ number_format($pmLaba, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-semibold text-gray-800">Rp {{ number_format($cmLaba, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-right font-bold">
+                                    @if($growthLaba >= 0)
+                                        <span class="text-emerald-600">↑ +{{ number_format($growthLaba, 1) }}%</span>
+                                    @else
+                                        <span class="text-red-600">↓ {{ number_format($growthLaba, 1) }}%</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
