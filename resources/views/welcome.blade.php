@@ -132,12 +132,12 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="pt-2 flex flex-wrap gap-3">
-                            <a href="{{ route('katalog.index') }}" class="px-5 py-2.5 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm flex items-center gap-2">
-                                Lihat Semua Katalog
+                        <div class="pt-2 flex flex-row w-full gap-2 sm:gap-4">
+                            <a href="{{ route('katalog.index') }}" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
+                                Lihat Katalog
                             </a>
-                            <button type="button" x-data @click="$dispatch('open-contact-modal')" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg shadow-sm hover:bg-gray-50 transition flex items-center gap-2 text-sm">
-                                <i class='bx bx-envelope text-lg text-gray-500'></i> Hubungi Kami
+                            <button type="button" x-data @click="$dispatch('open-contact-modal')" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg shadow-sm hover:bg-gray-50 transition flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                                <i class='bx bx-envelope text-lg text-gray-500 hidden sm:inline-block'></i> Hubungi Kami
                             </button>
                         </div>
                     </div>
