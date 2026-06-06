@@ -82,11 +82,12 @@
                             </td>
                             <td class="px-6 py-4">
                                 @php
-                                    $isLate = $rental->status == 'active' && now() > $rental->return_date;
+                                    $isLate = ($rental->status == 'active' && now()->startOfDay() > $rental->return_date) || $rental->status == 'overdue';
+                                    $isDone = $rental->status == 'completed';
                                 @endphp
-                                <p class="text-sm font-semibold {{ $isLate ? 'text-red-600' : 'text-natural-800' }}">{{ $rental->return_date->format('d M Y') }}</p>
-                                <p class="text-xs font-medium uppercase {{ $isLate ? 'text-red-400' : 'text-natural-400' }}">
-                                    {{ $isLate ? 'Terlambat!' : 'Estimasi Kembali' }}
+                                <p class="text-sm font-semibold {{ $isLate ? 'text-red-600' : ($isDone ? 'text-emerald-600' : 'text-natural-800') }}">{{ $rental->return_date->format('d M Y') }}</p>
+                                <p class="text-xs font-medium uppercase {{ $isLate ? 'text-red-400' : ($isDone ? 'text-emerald-400' : 'text-natural-400') }}">
+                                    {{ $isLate ? 'Terlambat!' : ($isDone ? 'Selesai' : 'Estimasi Kembali') }}
                                 </p>
                             </td>
                             <td class="px-6 py-4 text-right">
