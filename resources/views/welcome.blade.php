@@ -185,13 +185,13 @@
 
         <!-- 4 Info Cards Section -->
         @if(!request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <x-info-cards />
         </div>
         @endif
 
         <!-- Product Grid Section -->
-        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex-shrink-0">
+        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 flex-shrink-0">
             
             <div class="mb-2 flex justify-between items-end">
                 <div>
@@ -231,7 +231,7 @@
         </div>
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <div class="flex justify-between items-end mb-8">
                 <div>
                     <h2 class="text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">Artikel & Panduan</h2>
@@ -242,11 +242,11 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @foreach($latestPosts as $post)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                @foreach($latestPosts->take(4) as $post)
                 <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
                     <!-- Thumbnail -->
-                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-48 bg-gray-100 overflow-hidden">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-32 bg-gray-100 overflow-hidden">
                         @if($post->thumbnail)
                             <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
@@ -256,18 +256,18 @@
                         @endif
                     </a>
                     <!-- Content -->
-                    <div class="p-5 flex flex-col flex-grow">
-                        <div class="text-xs text-brand-600 font-bold mb-2 flex items-center gap-1">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <div class="text-[10px] text-brand-600 font-bold mb-1.5 flex items-center gap-1">
                             <i class='bx bx-calendar'></i> {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
                         </div>
-                        <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight group-hover:text-brand-600 transition-colors">
+                        <h3 class="font-bold text-gray-900 text-sm mb-2 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
-                        <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-grow">
+                        <p class="text-xs text-gray-500 leading-relaxed mb-3 flex-grow line-clamp-2">
                             {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
                         </p>
-                        <a href="{{ route('blog.show', $post->slug) }}" class="text-sm font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
-                            Baca Selengkapnya <i class='bx bx-right-arrow-alt'></i>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="text-[11px] font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
+                            Baca <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
                 </div>
