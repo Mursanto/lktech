@@ -8,7 +8,7 @@
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-6 w-auto object-contain">
                     <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">LKTech TN SEREAL</span>
                 </a>
-                <p class="text-sm text-gray-500 leading-relaxed mt-1">
+                <p class="text-sm text-gray-500 leading-relaxed mt-1 text-justify">
                     Penyedia layanan IT terpercaya: Penjualan laptop second berkualitas, servis & maintenance profesional, serta persewaan perangkat IT untuk kebutuhan acara dan instansi Anda.
                 </p>
             </div>
