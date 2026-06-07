@@ -119,6 +119,7 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Beranda</a></li>
                     <li><a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Katalog Produk</a></li>
+                    <li><a href="{{ route('rakit-pc') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Rakit PC</a></li>
                     <li><a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Blog & Panduan</a></li>
                     <li><a href="{{ route('tentang-kami') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tentang Kami</a></li>
                     <li><a href="{{ route('kebijakan-garansi') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Kebijakan Garansi</a></li>
