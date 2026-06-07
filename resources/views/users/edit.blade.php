@@ -80,7 +80,7 @@
                     <!-- Direct Permissions -->
                     <div>
                         <label class="block text-sm font-bold text-natural-700 mb-3">Akses Ekstra (Opsional)</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <!-- Access Blog -->
                             <label class="relative flex cursor-pointer rounded-xl border border-natural-200 bg-natural-50 p-4 hover:bg-white hover:border-brand-300 transition-all shadow-sm">
                                 <div class="flex w-full items-center justify-between">
@@ -115,6 +115,25 @@
                                         <input name="permissions[]" value="access_settings" type="checkbox"
                                                class="h-5 w-5 rounded border-natural-300 bg-white text-brand-600 focus:ring-brand-500 transition-colors"
                                                {{ (is_array(old('permissions')) && in_array('access_settings', old('permissions'))) || in_array('access_settings', $userPermissions) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Access Rakit PC -->
+                            <label class="relative flex cursor-pointer rounded-xl border border-natural-200 bg-natural-50 p-4 hover:bg-white hover:border-brand-300 transition-all shadow-sm">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                                            <i class='bx bx-desktop text-lg'></i>
+                                        </div>
+                                        <div class="text-sm">
+                                            <p class="font-bold text-natural-800">Rakit PC</p>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex h-5 items-center">
+                                        <input name="permissions[]" value="access_rakit_pc" type="checkbox"
+                                               class="h-5 w-5 rounded border-natural-300 bg-white text-brand-600 focus:ring-brand-500 transition-colors"
+                                               {{ (is_array(old('permissions')) && in_array('access_rakit_pc', old('permissions'))) || in_array('access_rakit_pc', $userPermissions) ? 'checked' : '' }}>
                                     </div>
                                 </div>
                             </label>

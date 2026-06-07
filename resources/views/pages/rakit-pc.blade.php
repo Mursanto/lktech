@@ -86,72 +86,73 @@
                 <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Pilihan Paket Rakit PC</h2>
                 <p class="text-gray-500 text-sm max-w-xl mx-auto">Tentukan standar performa yang Anda inginkan. Komponen di bawah adalah estimasi referensi yang bisa di-custom sesuai kebutuhan Anda.</p>
             </div>
-            
+            @if($packages->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 hover:shadow-xl transition-shadow flex flex-col relative overflow-hidden group">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border border-blue-100">
-                        <i class='bx bx-briefcase'></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Office & Administrasi</h3>
-                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Performa mulus untuk Microsoft Office, kasir, browsing cepat, dan administrasi kantor harian.</p>
-                    <ul class="space-y-3 mb-8 text-[13px] text-gray-600 font-medium">
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>CPU:</b> Core i3 / Ryzen 3</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>RAM:</b> 8GB DDR4</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>Storage:</b> 256GB / 512GB SSD NVMe</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>GPU:</b> Integrated Graphics</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>Case:</b> Standard Office Tower</span></li>
-                    </ul>
-                    <div class="pt-5 border-t border-gray-100">
-                        <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Mulai dari</p>
-                        <p class="text-3xl font-black text-gray-900">Rp 3 Jutaan</p>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white rounded-3xl shadow-2xl border border-brand-200 p-8 transform md:-translate-y-4 flex flex-col relative overflow-hidden z-10">
-                    <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
+                @foreach($packages as $index => $package)
+                @php
+                    // Alternating styles for visual variety
+                    $styles = [
+                        0 => [
+                            'bg' => 'bg-white', 'text' => 'text-gray-900', 'desc' => 'text-gray-500', 
+                            'icon_bg' => 'bg-blue-50', 'icon_text' => 'text-blue-600', 'border' => 'border-gray-100',
+                            'check' => 'text-brand-500', 'price' => 'text-gray-900', 'card_extra' => ''
+                        ],
+                        1 => [
+                            'bg' => 'bg-white', 'text' => 'text-gray-900', 'desc' => 'text-gray-500', 
+                            'icon_bg' => 'bg-brand-50', 'icon_text' => 'text-brand-600', 'border' => 'border-brand-200',
+                            'check' => 'text-brand-500', 'price' => 'text-brand-600', 'card_extra' => 'shadow-2xl md:-translate-y-4 z-10'
+                        ],
+                        2 => [
+                            'bg' => 'bg-gray-900', 'text' => 'text-white', 'desc' => 'text-gray-400', 
+                            'icon_bg' => 'bg-gray-800', 'icon_text' => 'text-purple-400', 'border' => 'border-gray-800',
+                            'check' => 'text-purple-400', 'price' => 'text-purple-400', 'card_extra' => ''
+                        ]
+                    ];
+                    $style = $styles[$index % 3];
+                @endphp
+                <div class="{{ $style['bg'] }} rounded-3xl shadow-sm border {{ $style['border'] }} p-8 hover:shadow-xl transition-all flex flex-col relative overflow-hidden group {{ $style['card_extra'] }}">
+                    @if($index % 3 == 1)
+                    <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">
                         Paling Laris
                     </div>
-                    <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border border-brand-100">
-                        <i class='bx bx-joystick'></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Gaming & Editing Standard</h3>
-                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Lancar bermain game kompetitif (Valorant, Dota 2) & editing video Full HD 1080p dengan frame rate tinggi.</p>
-                    <ul class="space-y-3 mb-8 text-[13px] text-gray-600 font-medium">
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>CPU:</b> Core i5 / Ryzen 5 (Terbaru)</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>RAM:</b> 16GB (2x8GB) DDR4/DDR5</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>Storage:</b> 512GB SSD NVMe Gen4</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>GPU:</b> GTX 1650 / RTX 3050</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-brand-500 mt-0.5 text-lg'></i> <span><b>Case:</b> Gaming Case with ARGB Fans</span></li>
-                    </ul>
-                    <div class="pt-5 border-t border-gray-100">
-                        <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Mulai dari</p>
-                        <p class="text-3xl font-black text-brand-600">Rp 7 Jutaan</p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-gray-900 rounded-3xl shadow-lg border border-gray-800 p-8 hover:shadow-2xl transition-shadow flex flex-col relative overflow-hidden text-white group">
+                    @elseif($index % 3 == 2)
                     <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent"></div>
-                    <div class="w-14 h-14 bg-gray-800 text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-6 border border-gray-700 relative z-10">
-                        <i class='bx bx-video-recording'></i>
+                    @endif
+                    
+                    <div class="w-14 h-14 {{ $style['icon_bg'] }} {{ $style['icon_text'] }} rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border {{ $style['border'] }} relative z-10">
+                        @if($package->foto)
+                            <img src="{{ Storage::url($package->foto) }}" alt="{{ $package->nama_paket }}" class="w-full h-full object-cover rounded-2xl">
+                        @else
+                            <i class='bx bx-desktop'></i>
+                        @endif
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2 font-montserrat relative z-10">Professional Creator</h3>
-                    <p class="text-sm text-gray-400 mb-6 flex-grow leading-relaxed relative z-10">Performa buas tanpa kompromi untuk 3D rendering kompleks, editing video 4K, dan game AAA rata kanan.</p>
-                    <ul class="space-y-3 mb-8 text-[13px] text-gray-300 font-medium relative z-10">
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-purple-400 mt-0.5 text-lg'></i> <span><b>CPU:</b> Core i7 / Ryzen 7 (High-End)</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-purple-400 mt-0.5 text-lg'></i> <span><b>RAM:</b> 32GB (2x16GB) DDR5</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-purple-400 mt-0.5 text-lg'></i> <span><b>Storage:</b> 1TB SSD NVMe Gen4 (Heatsink)</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-purple-400 mt-0.5 text-lg'></i> <span><b>GPU:</b> RTX 4060 / 4070 series</span></li>
-                        <li class="flex items-start gap-2.5"><i class='bx bx-check text-purple-400 mt-0.5 text-lg'></i> <span><b>Case:</b> Premium Case, Liquid Cooler</span></li>
+                    <h3 class="text-xl font-bold {{ $style['text'] }} mb-2 font-montserrat relative z-10">{{ $package->nama_paket }}</h3>
+                    <p class="text-sm {{ $style['desc'] }} mb-6 flex-grow leading-relaxed relative z-10">{{ $package->deskripsi }}</p>
+                    
+                    @if($package->spesifikasi_singkat)
+                    <ul class="space-y-3 mb-8 text-[13px] {{ $index % 3 == 2 ? 'text-gray-300' : 'text-gray-600' }} font-medium relative z-10">
+                        @foreach(explode("\n", str_replace("\r", "", $package->spesifikasi_singkat)) as $spec)
+                            @if(trim($spec) != '')
+                                <li class="flex items-start gap-2.5"><i class='bx bx-check {{ $style['check'] }} mt-0.5 text-lg'></i> <span>{!! nl2br(e($spec)) !!}</span></li>
+                            @endif
+                        @endforeach
                     </ul>
-                    <div class="pt-5 border-t border-gray-800 relative z-10">
-                        <p class="text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">Mulai dari</p>
-                        <p class="text-3xl font-black text-purple-400">Rp 15 Jutaan</p>
+                    @endif
+                    
+                    <div class="pt-5 border-t {{ $index % 3 == 2 ? 'border-gray-800' : 'border-gray-100' }} relative z-10">
+                        <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Mulai dari</p>
+                        <p class="text-3xl font-black {{ $style['price'] }}">Rp {{ number_format($package->harga_estimasi, 0, ',', '.') }}</p>
                     </div>
                 </div>
+                @endforeach
             </div>
+            @else
+            <div class="text-center py-12">
+                <i class='bx bx-desktop text-6xl text-gray-300 mb-4'></i>
+                <p class="text-gray-500 font-medium">Belum ada paket Rakit PC yang tersedia saat ini.</p>
+                <p class="text-sm text-gray-400 mt-2">Silakan hubungi kami untuk konsultasi langsung.</p>
+            </div>
+            @endif
         </div>
 
         <!-- Assembly Workflow -->

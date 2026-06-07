@@ -58,35 +58,37 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-1">
                                     @php
-                                        $hasAdmin = $user->hasRole('Admin');
-                                        $hasStaff = $user->hasRole('Staff');
-                                        $hasTeknisi = $user->hasRole('Teknisi');
-                                        $hasBlog = $user->hasPermissionTo('access_blog');
-                                        $hasSettings = $user->hasPermissionTo('access_settings');
+                                        $hasInventory = $user->hasRole('Admin') || $user->hasRole('Staff') || $user->hasRole('Teknisi');
+                                        $hasSales = $user->hasRole('Admin') || $user->hasRole('Staff');
+                                        $hasService = $user->hasRole('Admin') || $user->hasRole('Teknisi') || $user->hasRole('Staff') || $user->hasRole('Kasir') || $user->hasRole('Sales');
+                                        $hasRental = $user->hasRole('Admin') || $user->hasRole('Staff') || $user->hasRole('Kasir') || $user->hasRole('Sales');
+                                        $hasBlog = $user->hasPermissionTo('access_blog') || $user->hasRole('Admin');
+                                        $hasSettings = $user->hasPermissionTo('access_settings') || $user->hasRole('Admin');
+                                        $hasRakitPc = $user->hasPermissionTo('access_rakit_pc') || $user->hasRole('Admin');
                                     @endphp
-                                    
-                                    <!-- Modules indicators -->
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin || $hasStaff || $hasTeknisi ? 'bg-blue-50 border-blue-100 text-blue-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Inventaris">
-                                        <i class='bx bx-box text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin || $hasStaff ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Penjualan">
-                                        <i class='bx bx-cart text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin || $hasTeknisi ? 'bg-amber-50 border-amber-100 text-amber-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Servis">
-                                        <i class='bx bx-wrench text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin || $hasStaff ? 'bg-cyan-50 border-cyan-100 text-cyan-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Sewa">
-                                        <i class='bx bx-laptop text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin ? 'bg-rose-50 border-rose-100 text-rose-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Laporan & Audit">
-                                        <i class='bx bx-line-chart text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasBlog ? 'bg-pink-50 border-pink-100 text-pink-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Blog / Artikel">
-                                        <i class='bx bx-news text-xs'></i>
-                                    </span>
-                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasSettings ? 'bg-purple-50 border-purple-100 text-purple-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Pengaturan Web">
-                                        <i class='bx bx-cog text-xs'></i>
-                                    </span>
+                                    <div class="flex flex-wrap gap-1 mt-1">
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasInventory ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400' }}" title="Inventaris">
+                                            <i class='bx bx-box text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasSales ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-400' }}" title="Penjualan">
+                                            <i class='bx bx-cart text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasService ? 'bg-amber-100 text-amber-600' : 'bg-gray-100 text-gray-400' }}" title="Servis">
+                                            <i class='bx bx-wrench text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasRental ? 'bg-cyan-100 text-cyan-600' : 'bg-gray-100 text-gray-400' }}" title="Sewa Laptop">
+                                            <i class='bx bx-laptop text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasRakitPc ? 'bg-purple-100 text-purple-600' : 'bg-gray-100 text-gray-400' }}" title="Rakit PC">
+                                            <i class='bx bx-desktop text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasBlog ? 'bg-pink-100 text-pink-600' : 'bg-gray-100 text-gray-400' }}" title="Blog / Artikel">
+                                            <i class='bx bx-news text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasSettings ? 'bg-fuchsia-100 text-fuchsia-600' : 'bg-gray-100 text-gray-400' }}" title="Pengaturan Web">
+                                            <i class='bx bx-cog text-xs'></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">

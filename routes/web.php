@@ -32,7 +32,7 @@ Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
-Route::view('/rakit-pc', 'pages.rakit-pc')->name('rakit-pc');
+Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'index'])->name('rakit-pc');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
@@ -130,10 +130,16 @@ Route::middleware(['auth', 'permission:access_blog'])->group(function () {
     Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
 });
 
-Route::middleware(['auth', 'permission:access_settings'])->group(function () {
-    // Web Settings (CMS)
-    Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
-    Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['permission:access_settings'])->group(function () {
+        Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
+        Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
+    });
+
+    // Rakit PC Admin Routes
+    Route::middleware(['permission:access_rakit_pc'])->group(function () {
+        Route::resource('rakit-pc-admin', App\Http\Controllers\Admin\RakitPcController::class);
+    });
 });
 
 
@@ -146,6 +152,14 @@ Route::get('/storage/{path}', function($path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
-
+Route::get('/run-migration-secret-lktech', function () {
+    try {
+        // Run migration with --force flag for production environment
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return 'Mantap kawan! Migration database berhasil dieksekusi.';
+    } catch (\Exception $e) {
+        return 'Waduh, ada error: ' . $e->getMessage();
+    }
+});
 
 require __DIR__.'/auth.php';
