@@ -148,13 +148,3 @@ Route::get('/storage/{path}', function($path) {
 
 
 require __DIR__.'/auth.php';
-
-Route::get('/run-migration-secret-lktech', function () {
-    try {
-        // Run migration with --force flag for production environment
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return 'Mantap kawan! Migration database berhasil dieksekusi.';
-    } catch (\Exception $e) {
-        return 'Waduh, ada error: ' . $e->getMessage();
-    }
-});
