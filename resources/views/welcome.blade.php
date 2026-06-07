@@ -67,6 +67,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
                     <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
+                    <a href="{{ route('rakit-pc') }}" class="hover:text-brand-600 transition-colors">Rakit PC</a>
                     <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors">Blog & Panduan</a>
                     <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors">Tentang Kami</a>
                 </div>

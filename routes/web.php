@@ -32,6 +32,7 @@ Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
+Route::view('/rakit-pc', 'pages.rakit-pc')->name('rakit-pc');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
