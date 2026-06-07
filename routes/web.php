@@ -64,6 +64,10 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
     Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
+    
+    // Web Settings (CMS)
+    Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
+    Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify

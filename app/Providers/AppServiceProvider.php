@@ -26,5 +26,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Product::observe(ProductObserver::class);
+
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('web_settings')) {
+                \Illuminate\Support\Facades\View::share('settings', \App\Models\WebSetting::first());
+            }
+        } catch (\Exception $e) {
+            // Ignore if DB is not ready
+        }
     }
 }

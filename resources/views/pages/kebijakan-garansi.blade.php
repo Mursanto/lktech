@@ -69,31 +69,35 @@
                     </p>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Masa Berlaku Garansi</h2>
-                <p class="mb-6">
-                    Kami memberikan garansi mesin selama 1 (satu) bulan dan garansi perangkat lunak (software) selama 1 (satu) minggu, terhitung sejak tanggal pembelian yang tercantum pada nota.
-                </p>
+                @if(isset($settings) && $settings->kebijakan_garansi)
+                    {!! $settings->kebijakan_garansi !!}
+                @else
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Masa Berlaku Garansi</h2>
+                    <p class="mb-6">
+                        Kami memberikan garansi mesin selama 1 (satu) bulan dan garansi perangkat lunak (software) selama 1 (satu) minggu, terhitung sejak tanggal pembelian yang tercantum pada nota.
+                    </p>
 
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Syarat Klaim Garansi</h2>
-                <ul class="space-y-3 mb-6 list-none p-0">
-                    <li class="flex items-start gap-3">
-                        <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>Nota pembelian wajib dilampirkan atau ditunjukkan pada saat pengajuan klaim.</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>Segel garansi toko yang terletak pada bagian bawah laptop harus dalam keadaan utuh dan tidak rusak atau sobek.</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
-                        <span>Kerusakan tidak disebabkan oleh faktor kelalaian pengguna (human error), seperti terjatuh, terkena air, konsleting listrik rumah, atau modifikasi sepihak.</span>
-                    </li>
-                </ul>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Syarat Klaim Garansi</h2>
+                    <ul class="space-y-3 mb-6 list-none p-0">
+                        <li class="flex items-start gap-3">
+                            <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
+                            <span>Nota pembelian wajib dilampirkan atau ditunjukkan pada saat pengajuan klaim.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
+                            <span>Segel garansi toko yang terletak pada bagian bawah laptop harus dalam keadaan utuh dan tidak rusak atau sobek.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class='bx bx-check text-emerald-500 text-xl mt-0.5'></i>
+                            <span>Kerusakan tidak disebabkan oleh faktor kelalaian pengguna (human error), seperti terjatuh, terkena air, konsleting listrik rumah, atau modifikasi sepihak.</span>
+                        </li>
+                    </ul>
 
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Prosedur Pengembalian / Servis</h2>
-                <p class="mb-6">
-                    Pelanggan dapat membawa unit laptop beserta kelengkapannya (charger dan tas) langsung ke toko kami. Selanjutnya, teknisi kami akan melakukan pemeriksaan menyeluruh dalam waktu 1–3 hari kerja, sebelum memberikan keputusan berupa perbaikan atau penggantian unit (jika stok tersedia).
-                </p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Prosedur Pengembalian / Servis</h2>
+                    <p class="mb-6">
+                        Pelanggan dapat membawa unit laptop beserta kelengkapannya (charger dan tas) langsung ke toko kami. Selanjutnya, teknisi kami akan melakukan pemeriksaan menyeluruh dalam waktu 1–3 hari kerja, sebelum memberikan keputusan berupa perbaikan atau penggantian unit (jika stok tersedia).
+                    </p>
+                @endif
             </div>
         </div>
         

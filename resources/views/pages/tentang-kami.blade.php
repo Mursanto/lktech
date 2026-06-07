@@ -63,46 +63,50 @@
             </div>
 
             <div class="p-8 md:p-12 prose max-w-none text-gray-600 leading-relaxed">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Kisah Kami</h2>
-                <p class="mb-4">
-                    LKTech adalah sebuah usaha mikro yang bergerak di bidang penjualan laptop bekas berkualitas premium. Kami tidak sekadar menjual perangkat, tetapi juga mengutamakan layanan purna jual (after sales) serta menerapkan proses quality control yang ketat. Dengan demikian, kami berkomitmen untuk memastikan bahwa setiap perangkat yang sampai ke tangan pelanggan tetap dalam kondisi prima dan berkualitas tinggi.
-                </p>
-                <p class="mb-6">
-                    Di samping itu, LKTech juga melayani kebutuhan penyewaan laptop untuk berbagai keperluan, baik individu maupun instansi, serta menyediakan layanan servis laptop dan komputer yang dikerjakan oleh teknisi berpengalaman. Seluruh layanan kami hadir dengan prinsip kepercayaan, kemudahan, dan kepuasan pelanggan sebagai prioritas utama.
-                </p>
+                @if(isset($settings) && $settings->tentang_kami)
+                    {!! $settings->tentang_kami !!}
+                @else
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Kisah Kami</h2>
+                    <p class="mb-4">
+                        LKTech adalah sebuah usaha mikro yang bergerak di bidang penjualan laptop bekas berkualitas premium. Kami tidak sekadar menjual perangkat, tetapi juga mengutamakan layanan purna jual (after sales) serta menerapkan proses quality control yang ketat. Dengan demikian, kami berkomitmen untuk memastikan bahwa setiap perangkat yang sampai ke tangan pelanggan tetap dalam kondisi prima dan berkualitas tinggi.
+                    </p>
+                    <p class="mb-6">
+                        Di samping itu, LKTech juga melayani kebutuhan penyewaan laptop untuk berbagai keperluan, baik individu maupun instansi, serta menyediakan layanan servis laptop dan komputer yang dikerjakan oleh teknisi berpengalaman. Seluruh layanan kami hadir dengan prinsip kepercayaan, kemudahan, dan kepuasan pelanggan sebagai prioritas utama.
+                    </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 items-center">
-                    <div>
-                        <img src="{{ asset('images/TentangKami.webp') }}" alt="Tim LKTech" class="w-full h-auto rounded-xl shadow-lg object-cover border border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 items-center">
+                        <div>
+                            <img src="{{ asset('images/TentangKami.webp') }}" alt="Tim LKTech" class="w-full h-auto rounded-xl shadow-lg object-cover border border-gray-100">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Visi & Misi</h3>
+                            <h4 class="font-bold text-gray-800 mb-1">Visi</h4>
+                            <p class="mb-4 text-sm md:text-base">
+                                Menjadi mitra pengadaan teknologi informasi yang terpercaya, baik di wilayah Bogor dan sekitarnya, maupun di seluruh Nusantara.
+                            </p>
+                            <h4 class="font-bold text-gray-800 mb-1">Misi</h4>
+                            <p class="text-sm md:text-base">
+                                Menyediakan laptop bekas berkualitas premium dengan jaminan garansi serta layanan purna jual yang bertanggung jawab dan memuaskan.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Visi & Misi</h3>
-                        <h4 class="font-bold text-gray-800 mb-1">Visi</h4>
-                        <p class="mb-4 text-sm md:text-base">
-                            Menjadi mitra pengadaan teknologi informasi yang terpercaya, baik di wilayah Bogor dan sekitarnya, maupun di seluruh Nusantara.
-                        </p>
-                        <h4 class="font-bold text-gray-800 mb-1">Misi</h4>
-                        <p class="text-sm md:text-base">
-                            Menyediakan laptop bekas berkualitas premium dengan jaminan garansi serta layanan purna jual yang bertanggung jawab dan memuaskan.
-                        </p>
-                    </div>
-                </div>
 
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Mengapa Memilih Kami?</h2>
-                <ul class="space-y-3 mb-6 list-none p-0">
-                    <li class="flex items-center gap-3">
-                        <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
-                        <span>Produk melewati 2 lapis Quality Control ketat.</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
-                        <span>Harga transparan dan bersaing di pasaran.</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
-                        <span>Dukungan purna jual (after-sales) yang ramah dan cepat.</span>
-                    </li>
-                </ul>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Mengapa Memilih Kami?</h2>
+                    <ul class="space-y-3 mb-6 list-none p-0">
+                        <li class="flex items-center gap-3">
+                            <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
+                            <span>Produk melewati 2 lapis Quality Control ketat.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
+                            <span>Harga transparan dan bersaing di pasaran.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class='bx bx-check-circle text-emerald-500 text-xl'></i>
+                            <span>Dukungan purna jual (after-sales) yang ramah dan cepat.</span>
+                        </li>
+                    </ul>
+                @endif
             </div>
         </div>
         

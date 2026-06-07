@@ -6,21 +6,25 @@
             <div>
                 <a href="{{ route('home') }}" class="flex items-center gap-2 mb-4 h-6">
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-6 w-auto object-contain">
-                    <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">LKTech TN SEREAL</span>
+                    <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
                 </a>
                 <p class="text-sm text-gray-500 leading-relaxed mt-1 text-justify">
-                    Penyedia layanan IT terpercaya: Penjualan laptop second berkualitas, servis & maintenance profesional, serta persewaan perangkat IT untuk kebutuhan acara dan instansi Anda.
+                    {{ $settings->deskripsi_footer ?? 'Penyedia layanan IT terpercaya: Penjualan laptop second berkualitas, servis & maintenance profesional, serta persewaan perangkat IT untuk kebutuhan acara dan instansi Anda.' }}
                 </p>
                 
                 <!-- Google Maps Embed -->
                 <div class="mt-6">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=LKtech+TN+SEREAL,+Tanah+Sereal,+Bogor&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                        class="w-full h-40 md:h-48 rounded-lg shadow-sm border-0" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    @if(isset($settings) && $settings->maps_iframe)
+                        {!! $settings->maps_iframe !!}
+                    @else
+                        <iframe 
+                            src="https://maps.google.com/maps?q=LKtech+TN+SEREAL,+Tanah+Sereal,+Bogor&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            class="w-full h-40 md:h-48 rounded-lg shadow-sm border-0" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    @endif
                 </div>
             </div>
 
@@ -30,19 +34,19 @@
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-start gap-2">
                         <i class='bx bx-map text-lg text-brand-500 mt-0.5 flex-shrink-0'></i>
-                        <span class="leading-relaxed">Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168</span>
+                        <span class="leading-relaxed">{!! $settings->alamat ?? 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168' !!}</span>
                     </li>
                     <li class="flex items-center gap-2">
                         <i class='bx bx-envelope text-lg text-brand-500 flex-shrink-0'></i>
-                        <a href="mailto:sales@lktech.online" class="hover:text-brand-600 transition-colors">sales@lktech.online</a>
+                        <a href="mailto:{{ strip_tags($settings->email ?? 'sales@lktech.online') }}" class="hover:text-brand-600 transition-colors">{{ strip_tags($settings->email ?? 'sales@lktech.online') }}</a>
                     </li>
                     <li class="flex items-center gap-2">
                         <i class='bx bxl-whatsapp text-lg text-brand-500 flex-shrink-0'></i>
-                        <a href="https://wa.me/628567354046" target="_blank" class="hover:text-brand-600 transition-colors">+62 856-7354-046</a>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->telepon ?? '628567354046') }}" target="_blank" class="hover:text-brand-600 transition-colors">{{ $settings->telepon ?? '+62 856-7354-046' }}</a>
                     </li>
                     <li class="flex items-center gap-2">
                         <i class='bx bx-time-five text-lg text-brand-500 flex-shrink-0'></i>
-                        <span>Senin - Sabtu: 09:00 - 17:00</span>
+                        <span>{{ $settings->jam_operasional ?? 'Senin - Sabtu: 09:00 - 17:00' }}</span>
                     </li>
                 </ul>
             </div>
@@ -90,11 +94,11 @@
                 <h4 class="font-bold text-gray-800 mb-4 font-montserrat h-6 flex items-center">Ikuti Kami</h4>
                 <div class="flex gap-2">
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300" title="Facebook">
+                    <a href="{{ $settings->facebook_url ?? 'https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300" title="Facebook">
                         <i class='bx bxl-facebook text-lg text-[#1877F2]'></i>
                     </a>
                     <!-- Instagram -->
-                    <a href="#" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group" title="Instagram">
+                    <a href="{{ $settings->instagram_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group" title="Instagram">
                         <div class="absolute inset-0 bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <i class='bx bxl-instagram text-lg text-gray-700 group-hover:text-white relative z-10 transition-colors'></i>
                     </a>
@@ -103,7 +107,7 @@
                         <i class='bx bxl-linkedin text-lg text-[#0A66C2]'></i>
                     </a>
                     <!-- TikTok -->
-                    <a href="#" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300" title="TikTok">
+                    <a href="{{ $settings->tiktok_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 transition-transform duration-300" title="TikTok">
                         <i class='bx bxl-tiktok text-lg text-[#010101]'></i>
                     </a>
                 </div>
