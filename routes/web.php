@@ -63,11 +63,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
-    Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
-    
-    // Web Settings (CMS)
-    Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
-    Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
+
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify
@@ -128,6 +124,16 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// RBAC Permissions Routes
+Route::middleware(['auth', 'permission:access_blog'])->group(function () {
+    Route::resource('posts', App\Http\Controllers\Admin\PostController::class);
+});
+
+Route::middleware(['auth', 'permission:access_settings'])->group(function () {
+    // Web Settings (CMS)
+    Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
+    Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
+});
 
 
 // Fallback route for storage images (useful for shared hosting without symlinks)

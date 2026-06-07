@@ -61,6 +61,8 @@
                                         $hasAdmin = $user->hasRole('Admin');
                                         $hasStaff = $user->hasRole('Staff');
                                         $hasTeknisi = $user->hasRole('Teknisi');
+                                        $hasBlog = $user->hasPermissionTo('access_blog');
+                                        $hasSettings = $user->hasPermissionTo('access_settings');
                                     @endphp
                                     
                                     <!-- Modules indicators -->
@@ -78,6 +80,12 @@
                                     </span>
                                     <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasAdmin ? 'bg-rose-50 border-rose-100 text-rose-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Laporan & Audit">
                                         <i class='bx bx-line-chart text-xs'></i>
+                                    </span>
+                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasBlog ? 'bg-pink-50 border-pink-100 text-pink-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Blog / Artikel">
+                                        <i class='bx bx-news text-xs'></i>
+                                    </span>
+                                    <span class="w-5 h-5 rounded flex items-center justify-center border {{ $hasSettings ? 'bg-purple-50 border-purple-100 text-purple-600' : 'bg-natural-50 border-natural-100 text-natural-300' }}" title="Pengaturan Web">
+                                        <i class='bx bx-cog text-xs'></i>
                                     </span>
                                 </div>
                             </td>

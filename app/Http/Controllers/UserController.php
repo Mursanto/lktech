@@ -34,6 +34,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'roles' => ['required', 'array'],
+            'permissions' => ['nullable', 'array'],
         ]);
 
         $user = User::create([
@@ -43,6 +44,10 @@ class UserController extends Controller
         ]);
 
         $user->assignRole($request->roles);
+        
+        if ($request->has('permissions')) {
+            $user->syncPermissions($request->permissions);
+        }
 
         return redirect()->route('users.index')
             ->with('success', 'User berhasil ditambahkan.');
@@ -52,7 +57,8 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $userRoles = $user->roles->pluck('name')->toArray();
-        return view('users.edit', compact('user', 'roles', 'userRoles'));
+        $userPermissions = $user->permissions->pluck('name')->toArray();
+        return view('users.edit', compact('user', 'roles', 'userRoles', 'userPermissions'));
     }
 
     public function update(Request $request, User $user)
@@ -61,6 +67,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'roles' => ['required', 'array'],
+            'permissions' => ['nullable', 'array'],
         ];
 
         if ($request->filled('password')) {
@@ -79,6 +86,7 @@ class UserController extends Controller
         $user->save();
 
         $user->syncRoles($request->roles);
+        $user->syncPermissions($request->input('permissions', []));
 
         return redirect()->route('users.index')
             ->with('success', 'Data user berhasil diperbarui.');

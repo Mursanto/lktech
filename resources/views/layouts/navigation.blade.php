@@ -77,7 +77,7 @@
             </a>
             @endhasanyrole
 
-            @if(auth()->check() && auth()->user()->hasRole('Admin'))
+            @if(auth()->check() && (auth()->user()->hasRole('Admin') || auth()->user()->hasPermissionTo('access_blog') || auth()->user()->hasPermissionTo('access_settings')))
             <!-- Administrasi Section -->
             <div x-show="sidebarOpen" class="px-5 mt-2 mb-1 flex items-center transition-opacity duration-300">
                 <div class="h-px bg-natural-100 flex-1"></div>
@@ -89,20 +89,25 @@
                 <div class="h-px w-6 bg-natural-200"></div>
             </div>
             
+            @if(auth()->user()->hasRole('Admin'))
             <a href="{{ route('reports.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('reports.*') ? 'bg-rose-50 text-rose-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Laporan">
                 <i class='bx bx-pie-chart-alt-2 text-lg {{ request()->routeIs('reports.*') ? 'text-rose-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Laporan</span>
             </a>
+            @endif
 
+            @if(auth()->user()->hasPermissionTo('access_blog'))
             <a href="{{ route('posts.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('posts.*') ? 'bg-pink-50 text-pink-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Blog / Artikel">
                 <i class='bx bx-news text-lg {{ request()->routeIs('posts.*') ? 'text-pink-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Blog / Artikel</span>
             </a>
+            @endif
 
+            @if(auth()->user()->hasRole('Admin'))
             <a href="{{ route('categories.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('categories.*') ? 'bg-orange-50 text-orange-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Kategori">
@@ -123,13 +128,16 @@
                 <i class='bx bx-history text-lg {{ request()->routeIs('activity-logs.*') ? 'text-slate-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Log Aktivitas</span>
             </a>
+            @endif
             
+            @if(auth()->user()->hasPermissionTo('access_settings'))
             <a href="{{ route('settings.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('settings.*') ? 'bg-purple-50 text-purple-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Pengaturan Web">
                 <i class='bx bx-cog text-lg {{ request()->routeIs('settings.*') ? 'text-purple-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Pengaturan Web</span>
             </a>
+            @endif
             @endif
 
         </div>

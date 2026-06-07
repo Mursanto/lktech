@@ -76,6 +76,50 @@
                         </div>
                         @error('roles') <span class="text-sm text-red-500 mt-2 block font-medium">{{ $message }}</span> @enderror
                     </div>
+
+                    <!-- Direct Permissions -->
+                    <div>
+                        <label class="block text-sm font-bold text-natural-700 mb-3">Akses Ekstra (Opsional)</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Access Blog -->
+                            <label class="relative flex cursor-pointer rounded-xl border border-natural-200 bg-natural-50 p-4 hover:bg-white hover:border-brand-300 transition-all shadow-sm">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center">
+                                            <i class='bx bx-news text-lg'></i>
+                                        </div>
+                                        <div class="text-sm">
+                                            <p class="font-bold text-natural-800">Blog / Artikel</p>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex h-5 items-center">
+                                        <input name="permissions[]" value="access_blog" type="checkbox"
+                                               class="h-5 w-5 rounded border-natural-300 bg-white text-brand-600 focus:ring-brand-500 transition-colors"
+                                               {{ (is_array(old('permissions')) && in_array('access_blog', old('permissions'))) || in_array('access_blog', $userPermissions) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Access Settings -->
+                            <label class="relative flex cursor-pointer rounded-xl border border-natural-200 bg-natural-50 p-4 hover:bg-white hover:border-brand-300 transition-all shadow-sm">
+                                <div class="flex w-full items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                                            <i class='bx bx-cog text-lg'></i>
+                                        </div>
+                                        <div class="text-sm">
+                                            <p class="font-bold text-natural-800">Pengaturan Web</p>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 flex h-5 items-center">
+                                        <input name="permissions[]" value="access_settings" type="checkbox"
+                                               class="h-5 w-5 rounded border-natural-300 bg-white text-brand-600 focus:ring-brand-500 transition-colors"
+                                               {{ (is_array(old('permissions')) && in_array('access_settings', old('permissions'))) || in_array('access_settings', $userPermissions) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3 border-t border-natural-100 pt-6">
