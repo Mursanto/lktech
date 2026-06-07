@@ -144,7 +144,7 @@
                                             <i class='bx bx-image-add text-2xl text-gray-400'></i>
                                             <p class="text-[9px] text-gray-500 mt-1">Klik Unggah</p>
                                         </div>
-                                        <img src="" id="image-preview" class="absolute inset-0 w-full h-full object-cover hidden">
+                                        <img src="" id="image-preview" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2 hidden">
                                         <input type="file" id="image-upload" name="image" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" accept="image/*" onchange="previewImage(event)">
                                     </div>
                                 </div>
@@ -385,7 +385,7 @@ function renderGalleryPreviews() {
         reader.onload = function(e) {
             const div = document.createElement('div');
             div.className = 'gallery-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200 group';
-            div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-cover">
+            div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none"></div>
                              <button type="button" onclick="removeNewGalleryImage(${index})" class="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow" title="Hapus">
                                  <i class='bx bx-trash text-xs'></i>

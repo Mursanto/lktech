@@ -129,7 +129,7 @@
                                 <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Foto Utama</label>
                                 <div class="relative w-full aspect-square bg-white rounded border border-gray-300 overflow-hidden flex items-center justify-center">
                                     @if($product->image_path)
-                                        <img src="{{ Storage::url($product->image_path) }}" class="absolute inset-0 w-full h-full object-cover">
+                                        <img src="{{ Storage::url($product->image_path) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                     @else
                                         <div class="text-center p-2 text-gray-400">
                                             <i class='bx bx-image text-3xl'></i>
@@ -146,7 +146,7 @@
                                     @if(is_array($product->gallery_images) && count($product->gallery_images) > 0)
                                         @foreach($product->gallery_images as $img)
                                         <div class="relative w-full aspect-square bg-white rounded overflow-hidden border border-gray-200">
-                                            <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-cover">
+                                            <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                         </div>
                                         @endforeach
                                     @else

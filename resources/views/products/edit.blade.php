@@ -150,7 +150,7 @@
                                             <i class='bx bx-image-add text-2xl text-gray-400'></i>
                                             <p class="text-[9px] text-gray-500 mt-1">Klik Unggah</p>
                                         </div>
-                                        <img src="{{ $product->image_path ? Storage::url($product->image_path) : '' }}" id="image-preview" class="absolute inset-0 w-full h-full object-cover {{ $product->image_path ? '' : 'hidden' }}">
+                                        <img src="{{ $product->image_path ? Storage::url($product->image_path) : '' }}" id="image-preview" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2 {{ $product->image_path ? '' : 'hidden' }}">
                                         <input type="file" id="image-upload" name="image" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" accept="image/*" onchange="previewImage(event)">
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                                         @if(is_array($product->gallery_images))
                                             @foreach($product->gallery_images as $img)
                                             <div class="gallery-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200 group">
-                                                <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-cover">
+                                                <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                                 <button type="button" onclick="removeExistingGalleryImage(this, '{{ $img }}')" class="absolute top-1 right-1 bg-red-600 text-white rounded p-0.5 opacity-0 group-hover:opacity-100 transition shadow hover:bg-red-700">
                                                     <i class='bx bx-trash text-[10px]'></i>
                                                 </button>
@@ -351,7 +351,7 @@ function previewGallery(event) {
             reader.onload = function(e) {
                 const div = document.createElement('div');
                 div.className = 'gallery-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200';
-                div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-cover">
+                div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                  <div class="absolute inset-0 bg-black bg-opacity-10 pointer-events-none"></div>
                                  <div class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] px-1 rounded">Baru</div>`;
                 container.insertBefore(div, addBtn);

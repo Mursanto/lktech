@@ -92,7 +92,7 @@
                                         <p class="text-xs text-gray-500">PNG, JPG, WEBP up to 2MB</p>
                                     </div>
 
-                                    <img id="foto-preview" src="{{ $package->foto ? Storage::url($package->foto) : '#' }}" alt="Preview" class="{{ $package->foto ? '' : 'hidden' }} absolute inset-0 w-full h-full object-cover group-hover:opacity-40 transition-opacity duration-300">
+                                    <img id="foto-preview" src="{{ $package->foto ? Storage::url($package->foto) : '#' }}" alt="Preview" class="{{ $package->foto ? '' : 'hidden' }} absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2 group-hover:opacity-40 transition-opacity duration-300">
                                     
                                     <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none" id="foto-hover-overlay">
                                         <span class="bg-black/70 text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1 shadow-lg"><i class='bx bx-edit'></i> Ganti Foto</span>

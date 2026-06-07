@@ -87,7 +87,7 @@
                 <p class="text-gray-500 text-sm max-w-xl mx-auto">Tentukan standar performa yang Anda inginkan. Komponen di bawah adalah estimasi referensi yang bisa di-custom sesuai kebutuhan Anda.</p>
             </div>
             @if($packages->count() > 0)
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 @foreach($packages as $index => $package)
                 @php
                     // Alternating styles for visual variety
@@ -110,7 +110,7 @@
                     ];
                     $style = $styles[$index % 3];
                 @endphp
-                <div class="{{ $style['bg'] }} rounded-3xl shadow-sm border {{ $style['border'] }} p-8 hover:shadow-xl transition-all flex flex-col relative overflow-hidden group {{ $style['card_extra'] }}">
+                <div class="{{ $style['bg'] }} rounded-3xl shadow-sm border {{ $style['border'] }} p-8 hover:shadow-xl transition-all flex flex-col h-full relative overflow-hidden group {{ $style['card_extra'] }}">
                     @if($index % 3 == 1)
                     <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">
                         Paling Laris
@@ -119,27 +119,34 @@
                     <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent"></div>
                     @endif
                     
-                    <div class="w-14 h-14 {{ $style['icon_bg'] }} {{ $style['icon_text'] }} rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border {{ $style['border'] }} relative z-10">
+                    <div class="flex-grow">
                         @if($package->foto)
-                            <img src="{{ Storage::url($package->foto) }}" alt="{{ $package->nama_paket }}" class="w-full h-full object-cover rounded-2xl">
+                            <div class="w-full h-48 mb-6 shadow-sm border {{ $style['border'] }} relative z-10 rounded-2xl overflow-hidden bg-white sm:bg-gray-50 p-2">
+                                <img src="{{ Storage::url($package->foto) }}" alt="{{ $package->nama_paket }}" class="w-full h-full object-contain">
+                            </div>
                         @else
-                            <i class='bx bx-desktop'></i>
+                            <div class="w-14 h-14 {{ $style['icon_bg'] }} {{ $style['icon_text'] }} rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm border {{ $style['border'] }} relative z-10">
+                                <i class='bx bx-desktop'></i>
+                            </div>
+                        @endif
+                        <h3 class="text-xl font-bold {{ $style['text'] }} mb-2 font-montserrat relative z-10">{{ $package->nama_paket }}</h3>
+                        
+                        @if(!empty($package->deskripsi))
+                        <p class="text-sm {{ $style['desc'] }} mb-6 leading-relaxed relative z-10">{{ $package->deskripsi }}</p>
+                        @endif
+                        
+                        @if($package->spesifikasi_singkat)
+                        <ul class="space-y-3 mb-8 text-[13px] {{ $index % 3 == 2 ? 'text-gray-300' : 'text-gray-600' }} font-medium relative z-10">
+                            @foreach(explode("\n", str_replace("\r", "", $package->spesifikasi_singkat)) as $spec)
+                                @if(trim($spec) != '')
+                                    <li class="flex items-start gap-2.5"><i class='bx bx-check {{ $style['check'] }} mt-0.5 text-lg'></i> <span>{!! nl2br(e($spec)) !!}</span></li>
+                                @endif
+                            @endforeach
+                        </ul>
                         @endif
                     </div>
-                    <h3 class="text-xl font-bold {{ $style['text'] }} mb-2 font-montserrat relative z-10">{{ $package->nama_paket }}</h3>
-                    <p class="text-sm {{ $style['desc'] }} mb-6 flex-grow leading-relaxed relative z-10">{{ $package->deskripsi }}</p>
                     
-                    @if($package->spesifikasi_singkat)
-                    <ul class="space-y-3 mb-8 text-[13px] {{ $index % 3 == 2 ? 'text-gray-300' : 'text-gray-600' }} font-medium relative z-10">
-                        @foreach(explode("\n", str_replace("\r", "", $package->spesifikasi_singkat)) as $spec)
-                            @if(trim($spec) != '')
-                                <li class="flex items-start gap-2.5"><i class='bx bx-check {{ $style['check'] }} mt-0.5 text-lg'></i> <span>{!! nl2br(e($spec)) !!}</span></li>
-                            @endif
-                        @endforeach
-                    </ul>
-                    @endif
-                    
-                    <div class="pt-5 border-t {{ $index % 3 == 2 ? 'border-gray-800' : 'border-gray-100' }} relative z-10">
+                    <div class="mt-auto pt-5 border-t {{ $index % 3 == 2 ? 'border-gray-800' : 'border-gray-100' }} relative z-10">
                         <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Mulai dari</p>
                         <p class="text-3xl font-black {{ $style['price'] }}">Rp {{ number_format($package->harga_estimasi, 0, ',', '.') }}</p>
                     </div>

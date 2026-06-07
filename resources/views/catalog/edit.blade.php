@@ -32,14 +32,14 @@
                                     <!-- Image Preview Container -->
                                     <div class="relative w-full aspect-square bg-gray-100 rounded-xl border-2 border-dashed border-gray-300 overflow-hidden flex items-center justify-center group" id="image-preview-container">
                                         @if($product->image_path)
-                                            <img src="{{ Storage::url($product->image_path) }}" id="image-preview" class="absolute inset-0 w-full h-full object-cover">
+                                            <img src="{{ Storage::url($product->image_path) }}" id="image-preview" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                         @else
                                             <!-- Fallback preview -->
                                             @php
                                                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
                                                 $fallbackUrl = "https://source.unsplash.com/400x400/?{$searchQuery}";
                                             @endphp
-                                            <img src="{{ $fallbackUrl }}" id="image-preview" class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale">
+                                            <img src="{{ $fallbackUrl }}" id="image-preview" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2 opacity-50 grayscale">
                                             <div class="text-center z-10" id="placeholder-text">
                                                 <i class='bx bx-image-add text-4xl text-gray-400'></i>
                                                 <p class="text-xs text-gray-500 mt-2 font-medium px-4">Menggunakan Gambar Auto-Fetch.<br>Klik untuk unggah foto asli.</p>
@@ -69,7 +69,7 @@
                                         @if($product->gallery_images && is_array($product->gallery_images))
                                             @foreach($product->gallery_images as $galleryImg)
                                                 <div class="gallery-item relative w-full aspect-square bg-gray-100 rounded-md overflow-hidden border border-gray-200 shadow-sm group">
-                                                    <img src="{{ Storage::url($galleryImg) }}" class="absolute inset-0 w-full h-full object-cover">
+                                                    <img src="{{ Storage::url($galleryImg) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                                     <button type="button" onclick="removeExistingGalleryImage(this, '{{ $galleryImg }}')" class="absolute top-1 right-1 bg-red-600 text-white rounded p-1 opacity-0 group-hover:opacity-100 transition shadow hover:bg-red-700">
                                                         <i class='bx bx-trash text-xs'></i>
                                                     </button>
@@ -156,7 +156,7 @@
                 if(!output) {
                     output = document.createElement('img');
                     output.id = 'image-preview';
-                    output.className = 'absolute inset-0 w-full h-full object-cover';
+                    output.className = 'absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2';
                     document.getElementById('image-preview-container').appendChild(output);
                 }
                 output.src = reader.result;
@@ -182,7 +182,7 @@
                     reader.onload = function(e) {
                         const div = document.createElement('div');
                         div.className = 'gallery-item relative w-full aspect-square bg-gray-100 rounded-md overflow-hidden border border-gray-200 shadow-sm';
-                        div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-cover">
+                        div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                          <div class="absolute inset-0 bg-black bg-opacity-10 pointer-events-none"></div>
                                          <div class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[10px] px-1.5 py-0.5 rounded font-bold">Baru</div>`;
                         container.insertBefore(div, addBtn);

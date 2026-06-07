@@ -39,7 +39,7 @@
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-4 py-3">
                                     @if($package->foto)
-                                        <img src="{{ Storage::url($package->foto) }}" alt="Foto" class="h-10 w-16 object-cover rounded-md border border-gray-200">
+                                        <img src="{{ Storage::url($package->foto) }}" alt="Foto" class="h-10 w-16 object-contain bg-white rounded-md border border-gray-200 p-0.5">
                                     @else
                                         <div class="h-10 w-16 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200 text-gray-400">
                                             <i class='bx bx-image'></i>
