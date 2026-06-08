@@ -87,12 +87,12 @@
                 // Teks WA dan CTA berbeda berdasarkan tipe_stok
                 $tipeStok = $product->tipe_stok ?? 'ready_stock';
                 if ($tipeStok === 'open_order') {
-                    $waText = urlencode("Halo LKTech, saya ingin memesan (Pre-Order) produk *{$product->brand} {$product->model_series}* (Rp " . number_format($product->selling_price, 0, ',', '.') . "). Mohon info ketersediaan dan estimasi waktu.");
+                    $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda (Pre-Order): {$product->brand} {$product->model_series}");
                     $ctaLabel = 'Pesan (Pre-Order)';
                     $ctaColor = 'bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200';
                     $ctaIcon = 'bxl-whatsapp';
                 } else {
-                    $waText = urlencode("Halo LKTech, saya tertarik dengan produk *{$product->brand} {$product->model_series}* (Rp " . number_format($product->selling_price, 0, ',', '.') . "). Apakah stok masih tersedia?");
+                    $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda: {$product->brand} {$product->model_series}");
                     $ctaLabel = 'Hubungi Kami';
                     $ctaColor = 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200';
                     $ctaIcon = 'bxl-whatsapp';

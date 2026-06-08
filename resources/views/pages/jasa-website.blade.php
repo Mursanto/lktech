@@ -91,7 +91,7 @@
                     <a href="#paket" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">
                         Lihat Paket Harga <i class='bx bx-down-arrow-alt text-xl'></i>
                     </a>
-                    <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20ingin%20konsultasi%20pembuatan%20website." target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full font-bold transition-all backdrop-blur-sm transform hover:-translate-y-1">
+                    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full font-bold transition-all backdrop-blur-sm transform hover:-translate-y-1">
                         <i class='bx bxl-whatsapp text-xl'></i> Konsultasi Gratis
                     </a>
                 </div>
@@ -173,7 +173,7 @@
                             </ul>
                         </div>
                         <div class="mt-auto pt-6 border-t border-gray-100">
-                            <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Jasa%20Website%20Paket%20Starter." target="_blank" class="w-full block text-center px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20Starter)." target="_blank" class="w-full block text-center px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200">
                                 Pilih Paket
                             </a>
                         </div>
@@ -204,7 +204,7 @@
                             </ul>
                         </div>
                         <div class="mt-auto pt-6 border-t border-brand-100 relative z-10">
-                            <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Jasa%20Website%20Paket%20Profesional." target="_blank" class="w-full block text-center px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20Profesional)." target="_blank" class="w-full block text-center px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                                 Pilih Paket Paling Laris
                             </a>
                         </div>
@@ -230,7 +230,7 @@
                             </ul>
                         </div>
                         <div class="mt-auto pt-6 border-t border-gray-800 relative z-10">
-                            <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Jasa%20Website%20Paket%20E-Commerce." target="_blank" class="w-full block text-center px-6 py-3 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-600/50 font-bold rounded-xl transition-all">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20E-Commerce)." target="_blank" class="w-full block text-center px-6 py-3 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-600/50 font-bold rounded-xl transition-all">
                                 Pilih Paket E-Commerce
                             </a>
                         </div>
@@ -314,7 +314,7 @@
                 <p class="text-brand-100 text-lg mb-10 max-w-2xl mx-auto">
                     Jangan biarkan kompetitor mendahului Anda. Mari ciptakan website profesional yang meningkatkan kredibilitas dan penjualan hari ini juga!
                 </p>
-                <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20untuk%20konsultasi%20jasa%20Pembuatan%20Website." target="_blank" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." target="_blank" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
                     <i class='bx bxl-whatsapp text-2xl'></i> Hubungi Tim Kami Sekarang
                 </a>
             </div>
@@ -322,7 +322,7 @@
     </main>
 
     <!-- Floating CTA (WhatsApp) -->
-    <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20untuk%20konsultasi%20jasa%20Pembuatan%20Website." 
+    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." 
        target="_blank"
        class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] hover:-translate-y-1 transition-all flex items-center gap-2 group border-2 border-white">
         <i class='bx bxl-whatsapp text-3xl'></i>

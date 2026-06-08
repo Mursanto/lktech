@@ -243,13 +243,13 @@
 
                     <div class="space-y-2">
                         @php
-                            $waText = urlencode("Halo LKTech, saya tertarik untuk membeli unit *{$product->brand} {$product->model_series}* (Harga: Rp " . number_format($product->selling_price, 0, ',', '.') . "). Apakah saya bisa cek barangnya langsung ke lokasi?");
+                            $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda: {$product->brand} {$product->model_series}");
                         @endphp
                         <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" 
                            class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md shadow-brand-200 flex justify-center items-center gap-2">
                             + Keranjang WhatsApp
                         </a>
-                        <a href="https://wa.me/628567354046?text=Halo LKTech, saya mau tanya-tanya dulu seputar laptop {{ $product->brand }} {{ $product->model_series }}" target="_blank" 
+                        <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk%20di%20Katalog%20Anda:%20{{ $product->brand }}%20{{ $product->model_series }}" target="_blank" 
                            class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-3 px-4 rounded-xl transition-colors flex justify-center items-center gap-2">
                             <i class='bx bx-message-rounded-dots text-xl'></i> Tanya Admin
                         </a>

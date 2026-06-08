@@ -245,7 +245,7 @@
     </main>
 
     <!-- Floating CTA (WhatsApp) -->
-    <a href="https://wa.me/6281234567890?text=Halo%20LKTech,%20saya%20tertarik%20untuk%20konsultasi%20jasa%20Rakit%20PC." 
+    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20perakitan%20PC%20custom." 
        target="_blank"
        class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] hover:-translate-y-1 transition-all flex items-center gap-2 group border-2 border-white">
         <i class='bx bxl-whatsapp text-3xl'></i>
