@@ -70,6 +70,18 @@
         </div>
     </div>
 
+    <!-- Mobile Search Bar (visible only on mobile/tablet) -->
+    <div class="block lg:hidden bg-white border-t border-gray-50">
+        <form action="{{ route('katalog.index') }}" method="GET" class="px-4 pb-3 pt-2">
+            <div class="relative w-full shadow-sm rounded-full">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, merk, atau prosesor..." class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-shadow">
+                <button type="submit" class="absolute right-0 top-0 h-full px-4 flex items-center justify-center text-gray-400 hover:text-brand-600">
+                    <i class='bx bx-search text-lg'></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Mobile Menu Dropdown -->
     <nav x-show="mobileMenuOpen" 
          x-transition:enter="transition ease-out duration-200"
