@@ -63,34 +63,8 @@
 <body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
 
     <!-- Header (Simple Tokopedia Style) -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 gap-4">
-                <!-- Logo & Back Button -->
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('home') }}" class="text-gray-500 hover:text-brand-600 transition flex items-center justify-center p-2 rounded-full hover:bg-gray-100">
-                        <i class='bx bx-arrow-back text-2xl'></i>
-                    </a>
-                    <div class="h-6 w-px bg-gray-300"></div>
-                    <a href="{{ route('home') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-8 w-auto">
-                        <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
-                    </a>
-                </div>
 
-                <!-- Search Placeholder -->
-                <div class="flex-1 max-w-2xl px-4 lg:px-12 hidden md:block">
-                    <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full">
-                        <input type="text" name="search" placeholder="Cari laptop idamanmu di sini..." 
-                               class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all bg-gray-50 hover:bg-white focus:bg-white shadow-inner">
-                        <button type="submit" class="absolute right-0 top-0 h-full px-4 flex items-center justify-center text-gray-400 hover:text-brand-600 bg-gray-100 rounded-r-lg border-l border-gray-300">
-                            <i class='bx bx-search text-xl'></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </header>
+    <x-navbar />
 
     <!-- Main Product Layout (Tokopedia Style 3 Columns) -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4" x-data="{ 

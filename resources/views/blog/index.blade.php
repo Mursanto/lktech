@@ -24,37 +24,8 @@
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-14 gap-4">
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 w-auto">
-                        <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
-                    </a>
-                </div>
-                <!-- Navigation Links -->
-                <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
-                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
-                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
-                    <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
-                        <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1">
-                            Layanan <i class='bx bx-chevron-down text-lg'></i>
-                        </button>
-                        <div x-show="open" x-transition.opacity class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50" style="display: none;">
-                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Rakit PC</a>
-                            <a href="{{ route('jasa-website') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Pembuatan Website</a>
-                        </div>
-                    </div>
-                    <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors text-brand-600">Blog & Panduan</a>
-                    <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors">Tentang Kami</a>
-                </div>
-                <div class="flex-shrink-0 flex items-center gap-3 md:hidden">
-                    <a href="{{ route('katalog.index') }}" class="text-sm font-semibold text-gray-600 hover:text-brand-600">Ke Katalog</a>
-                </div>
-            </div>
-        </div>
-    </header>
+
+    <x-navbar />
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16 max-md:pb-24">
