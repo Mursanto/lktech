@@ -12,6 +12,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SetupRoleController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
 Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'index'])->name('rakit-pc');
+Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-website');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
