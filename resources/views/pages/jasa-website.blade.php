@@ -70,7 +70,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full">
+    <main class="flex-grow w-full max-md:pb-24">
         <!-- Hero Section -->
         <x-inner-page-header title="Jasa Pembuatan Website" subtitle="Tingkatkan kredibilitas bisnis Anda dengan website profesional." />
 
@@ -272,6 +272,9 @@
 
     <!-- Footer -->
     <x-footer />
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>

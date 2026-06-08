@@ -70,7 +70,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full">
+    <main class="flex-grow w-full max-md:pb-24">
         <!-- Hero Section -->
         <x-inner-page-header title="Rakit PC Impian Anda" subtitle="Mulai dari PC Office hingga PC Gaming & Rendering kelas atas. Perakitan profesional sesuai budget Anda." />
 
@@ -239,6 +239,9 @@
 
     <!-- Footer -->
     <x-footer />
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>

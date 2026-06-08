@@ -70,10 +70,9 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-12 lg:pb-20 max-md:pb-24">
         <x-inner-page-header title="Kisah LKtech" subtitle="Mengenal lebih dekat perjalanan dan komitmen kami untuk Anda." />
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 lg:pb-16">
             <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="p-8 md:p-12 prose max-w-none text-gray-600 leading-relaxed">
                 @if(isset($settings) && $settings->tentang_kami)
@@ -127,6 +126,9 @@
 
     <!-- Footer -->
     <x-footer />
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>

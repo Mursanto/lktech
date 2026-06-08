@@ -55,7 +55,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16 max-md:pb-24">
         
         <!-- Breadcrumbs -->
         <nav class="flex text-sm text-gray-500 mb-8 font-medium">
@@ -135,6 +135,9 @@
 
     <!-- Footer -->
     <x-footer />
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>

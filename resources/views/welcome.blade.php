@@ -112,7 +112,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow">
+    <main class="flex-grow w-full max-md:pb-24">
         
         <!-- Hero Section -->
         <!-- Hero Section -->
@@ -417,5 +417,8 @@
             }
         }
     </script>
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
+
 </body>
 </html>

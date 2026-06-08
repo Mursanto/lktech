@@ -70,7 +70,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full">
+    <main class="flex-grow w-full max-md:pb-24">
         <x-inner-page-header title="Kebijakan Garansi" subtitle="Transparansi dan perlindungan maksimal untuk setiap transaksi Anda." />
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 lg:pb-16">
@@ -118,6 +118,9 @@
 
     <!-- Footer -->
     <x-footer />
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>
