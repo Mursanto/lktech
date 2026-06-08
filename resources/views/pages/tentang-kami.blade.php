@@ -50,12 +50,18 @@
                     <!-- 1. KISAH KAMI & PHOTO SECTION -->
                     <div class="mb-16 text-gray-700 leading-relaxed text-justify clearfix">
                         <img src="{{ asset('images/TentangKami.webp') }}" alt="Tim LKTech" class="float-left w-full sm:w-1/2 md:w-1/3 lg:w-80 h-auto object-cover rounded-2xl shadow-xl mr-6 mb-4 mt-2">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-6 font-montserrat">Kisah Kami</h2>
-                        <p class="mb-4 text-gray-600">
-                            LKTech adalah sebuah usaha mikro yang bergerak di bidang penjualan laptop bekas berkualitas premium. Kami tidak sekadar menjual perangkat, tetapi juga mengutamakan layanan purna jual (after sales) serta menerapkan proses quality control yang ketat. Dengan demikian, kami berkomitmen untuk memastikan bahwa setiap perangkat yang sampai ke tangan pelanggan tetap dalam kondisi prima dan berkualitas tinggi.
+                        <h2 class="text-3xl font-bold text-blue-900 mb-4 block">Kisah Kami</h2>
+
+                        <p class="mb-5 text-gray-700 leading-relaxed text-justify">
+                            Berawal dari sebuah komitmen untuk menghadirkan perangkat teknologi yang terjangkau namun berkualitas premium, LKtech lahir sebagai solusi tepercaya bagi masyarakat dan instansi di wilayah Bogor dan sekitarnya. Kami memulai langkah dengan spesialisasi pada penyediaan perangkat laptop standar tinggi yang wajib melewati proses <em>Quality Control</em> (QC) ketat, guna memastikan setiap unit yang diterima pelanggan selalu dalam kondisi prima dan siap tempur.
                         </p>
-                        <p class="text-gray-600">
-                            Di samping itu, LKTech juga melayani kebutuhan penyewaan laptop untuk berbagai keperluan, baik individu maupun instansi, serta menyediakan layanan servis laptop dan komputer yang dikerjakan oleh teknisi berpengalaman. Seluruh layanan kami hadir dengan prinsip kepercayaan, kemudahan, dan kepuasan pelanggan sebagai prioritas utama.
+
+                        <p class="mb-5 text-gray-700 leading-relaxed text-justify">
+                            Seiring dengan pesatnya tuntutan era digital dan besarnya dukungan kepercayaan dari para pelanggan setia, LKtech kini telah bertransformasi menjadi penyedia solusi teknologi informasi terpadu <em>(One-Stop IT Solution)</em>. Jangkauan layanan kami telah berekspansi secara profesional, mencakup layanan perakitan PC <em>custom</em> berspesifikasi tinggi untuk kebutuhan <em>office</em>, <em>gaming</em>, hingga <em>rendering</em>, serta penyedia jasa pembuatan <em>website</em> modern yang didedikasikan untuk membantu UMKM dan perusahaan melakukan digitalisasi bisnis dengan mudah, responsif, dan elegan.
+                        </p>
+
+                        <p class="text-gray-700 leading-relaxed text-justify">
+                            Meskipun skala layanan kami semakin membesar, nilai inti fundamental LKtech tidak pernah bergeser. Kami selalu menomorsatukan layanan purna jual <em>(after-sales)</em> yang prima, jaminan garansi yang transparan, serta dukungan servis oleh teknisi ahli yang berpengalaman. Di LKtech, kami tidak sekadar menjual produk atau sekadar menyelesaikan proyek; kami hadir untuk membangun kemitraan teknologi jangka panjang yang berlandaskan prinsip kepercayaan, kemudahan, dan kepuasan Anda sebagai prioritas utama.
                         </p>
                     </div>
 
