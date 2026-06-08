@@ -44,7 +44,9 @@
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
                     </a>
                 </div>
+                <!-- Navigation Links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
                     <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors">Semua Artikel</a>
                     <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
                 </div>

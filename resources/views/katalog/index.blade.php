@@ -71,8 +71,25 @@
                     </a>
                 </div>
 
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
+                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors text-brand-600">Katalog</a>
+                    <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
+                        <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1">
+                            Layanan <i class='bx bx-chevron-down text-lg'></i>
+                        </button>
+                        <div x-show="open" x-transition.opacity class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50" style="display: none;">
+                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Rakit PC</a>
+                            <a href="{{ route('jasa-website') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Pembuatan Website</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors">Blog & Panduan</a>
+                    <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors">Tentang Kami</a>
+                </div>
+
                 <!-- Search Bar -->
-                <div class="flex-1 max-w-2xl px-4 lg:px-12">
+                <div class="flex-1 max-w-2xl px-4 lg:px-12 hidden lg:block">
                     <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full">
                         <input type="text" name="search" placeholder="Cari laptop, merk, atau prosesor..." 
                                class="w-full pl-4 pr-10 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm">
@@ -102,8 +119,11 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8">
+    <main class="flex-grow w-full">
         
+        <x-inner-page-header title="Katalog Produk & Layanan" subtitle="Jelajahi berbagai perangkat keras premium, paket perakitan, dan solusi IT terbaik dari LKtech." />
+
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex flex-col md:flex-row gap-8">
         <!-- Sidebar Navigation (Categories) -->
         <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
             <div class="sticky top-20 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
@@ -127,19 +147,13 @@
 
         <!-- Product Sections -->
         <div class="flex-1 min-w-0">
-            <div class="mb-6 flex justify-between items-end">
-                <div>
-                    <h1 class="text-2xl font-black text-gray-900 font-montserrat">
-                        {{ isset($selectedCategoryId) ? 'Kategori: ' . $displayCategories->first()->name : 'Katalog Produk' }}
-                    </h1>
-                    <p class="text-gray-500 text-sm mt-1">Jelajahi berbagai kategori produk pilihan yang siap memenuhi kebutuhan Anda.</p>
-                </div>
-                @if(isset($selectedCategoryId))
-                    <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg">
-                        Lihat Semua Kategori
-                    </a>
-                @endif
+            @if(isset($selectedCategoryId))
+            <div class="mb-6 flex justify-end">
+                <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg">
+                    Lihat Semua Kategori
+                </a>
             </div>
+            @endif
 
             <!-- 4 Info Cards Section -->
             <div class="mb-10">
@@ -181,6 +195,7 @@
             </div>
         </div>
 
+        </div> <!-- End of flex container -->
     </main>
 
     <!-- Modal Form Hubungi Kami -->

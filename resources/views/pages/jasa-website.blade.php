@@ -48,6 +48,7 @@
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
                     <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
                     <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
                         <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-brand-600">
@@ -71,32 +72,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full">
         <!-- Hero Section -->
-        <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-brand-900 py-24 relative overflow-hidden">
-            <div class="absolute inset-0 bg-black opacity-30"></div>
-            <!-- Decorative blur -->
-            <div class="absolute top-0 left-10 w-96 h-96 bg-brand-500 rounded-full blur-[120px] opacity-20"></div>
-            <div class="absolute bottom-0 right-10 w-80 h-80 bg-cyan-500 rounded-full blur-[100px] opacity-20"></div>
-            
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 text-brand-300 border border-brand-400/30 rounded-full font-bold tracking-wider uppercase text-[11px] mb-6 backdrop-blur-sm">
-                    <i class='bx bx-code-alt text-lg'></i> Jasa Web Development
-                </span>
-                <h1 class="text-4xl md:text-6xl font-black text-white font-montserrat mb-6 drop-shadow-lg tracking-tight leading-tight max-w-4xl mx-auto">
-                    Tingkatkan Kredibilitas Bisnis Anda dengan Website Profesional
-                </h1>
-                <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
-                    Dari Landing Page hingga E-Commerce, LKTech siap mewujudkan website impian Anda yang cepat, responsif, dan siap bersaing di era digital.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#paket" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">
-                        Lihat Paket Harga <i class='bx bx-down-arrow-alt text-xl'></i>
-                    </a>
-                    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full font-bold transition-all backdrop-blur-sm transform hover:-translate-y-1">
-                        <i class='bx bxl-whatsapp text-xl'></i> Konsultasi Gratis
-                    </a>
-                </div>
-            </div>
-        </div>
+        <x-inner-page-header title="Jasa Pembuatan Website" subtitle="Tingkatkan kredibilitas bisnis Anda dengan website profesional." />
 
         <!-- Mengapa Memilih Kami (Features Grid) -->
         <div class="bg-white py-20 relative">

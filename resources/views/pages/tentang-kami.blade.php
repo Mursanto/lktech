@@ -15,6 +15,7 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -35,7 +36,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
 
-    <!-- Header (Simple Tokopedia Style) -->
+    <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-14 gap-4">
@@ -45,7 +46,23 @@
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
                     </a>
                 </div>
-                <div class="flex-shrink-0 flex items-center gap-3">
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
+                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
+                    <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
+                        <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1">
+                            Layanan <i class='bx bx-chevron-down text-lg'></i>
+                        </button>
+                        <div x-show="open" x-transition.opacity class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50" style="display: none;">
+                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Rakit PC</a>
+                            <a href="{{ route('jasa-website') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Pembuatan Website</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors">Blog & Panduan</a>
+                    <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors text-brand-600">Tentang Kami</a>
+                </div>
+                <div class="flex-shrink-0 flex items-center gap-3 md:hidden">
                     <a href="{{ route('katalog.index') }}" class="text-sm font-semibold text-gray-600 hover:text-brand-600">Ke Katalog</a>
                 </div>
             </div>
@@ -53,16 +70,12 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-        
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
-            <!-- Banner Placeholder -->
-            <div class="w-full h-48 md:h-64 bg-gray-200 flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-500 relative">
-                <i class='bx bx-image text-5xl text-white/50 absolute'></i>
-                <h1 class="text-3xl md:text-5xl font-black text-white font-montserrat z-10 drop-shadow-md">Tentang LKTech</h1>
-            </div>
+    <main class="flex-grow w-full">
+        <x-inner-page-header title="Kisah LKtech" subtitle="Mengenal lebih dekat perjalanan dan komitmen kami untuk Anda." />
 
-            <div class="p-8 md:p-12 prose max-w-none text-gray-600 leading-relaxed">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 lg:pb-16">
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="p-8 md:p-12 prose max-w-none text-gray-600 leading-relaxed">
                 @if(isset($settings) && $settings->tentang_kami)
                     {!! $settings->tentang_kami !!}
                 @else

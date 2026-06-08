@@ -48,6 +48,7 @@
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
+                    <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
                     <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
                     <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
                         <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-brand-600">
@@ -71,23 +72,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full">
         <!-- Hero Section -->
-        <div class="bg-gradient-to-br from-gray-900 to-blue-900 py-20 relative overflow-hidden">
-            <div class="absolute inset-0 bg-black opacity-40"></div>
-            <!-- Decorative blur -->
-            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500 rounded-full blur-[100px] opacity-30"></div>
-            <div class="absolute bottom-0 left-10 w-64 h-64 bg-cyan-500 rounded-full blur-[100px] opacity-20"></div>
-            
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                <span class="inline-block px-3 py-1 bg-white/10 text-brand-300 border border-brand-400/30 rounded-full font-bold tracking-wider uppercase text-[10px] mb-4">Layanan Profesional LKTech</span>
-                <h1 class="text-4xl md:text-6xl font-black text-white font-montserrat mb-6 drop-shadow-lg tracking-tight">Rakit PC Impian Anda</h1>
-                <p class="text-lg text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Mulai dari PC Office hingga PC Gaming & Rendering kelas atas. Kami bantu pilih komponen terbaik, rakit dengan manajemen kabel super rapi, dan uji performa maksimal sesuai budget Anda.
-                </p>
-                <a href="#paket" class="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] transform hover:-translate-y-1">
-                    Lihat Paket Rekomendasi <i class='bx bx-down-arrow-alt text-xl'></i>
-                </a>
-            </div>
-        </div>
+        <x-inner-page-header title="Rakit PC Impian Anda" subtitle="Mulai dari PC Office hingga PC Gaming & Rendering kelas atas. Perakitan profesional sesuai budget Anda." />
 
         <!-- Packages Grid -->
         <div id="paket" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

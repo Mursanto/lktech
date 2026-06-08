@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -32,9 +33,24 @@
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
                     </a>
                 </div>
+                <!-- Navigation Links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
                     <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors">Beranda</a>
                     <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
+                    <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
+                        <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1">
+                            Layanan <i class='bx bx-chevron-down text-lg'></i>
+                        </button>
+                        <div x-show="open" x-transition.opacity class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50" style="display: none;">
+                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Rakit PC</a>
+                            <a href="{{ route('jasa-website') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Pembuatan Website</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors text-brand-600">Blog & Panduan</a>
+                    <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors">Tentang Kami</a>
+                </div>
+                <div class="flex-shrink-0 flex items-center gap-3 md:hidden">
+                    <a href="{{ route('katalog.index') }}" class="text-sm font-semibold text-gray-600 hover:text-brand-600">Ke Katalog</a>
                 </div>
             </div>
         </div>
@@ -43,10 +59,7 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
         
-        <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-5xl font-black text-gray-900 font-montserrat tracking-tight mb-4">Blog & Panduan IT</h1>
-            <p class="text-gray-500 text-lg max-w-2xl mx-auto">Temukan berbagai tips, trik, rekomendasi, dan edukasi seputar dunia teknologi dari ahlinya.</p>
-        </div>
+        <x-inner-page-header title="Blog & Panduan IT" subtitle="Tips, trik, dan wawasan seputar dunia teknologi." />
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($posts as $post)
