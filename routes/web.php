@@ -142,6 +142,11 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['permission:access_rakit_pc'])->group(function () {
         Route::resource('rakit-pc-admin', App\Http\Controllers\Admin\RakitPcController::class);
     });
+
+    // Jasa Website Admin Routes
+    Route::middleware(['role:Admin'])->group(function () {
+        Route::resource('jasa-website-admin', App\Http\Controllers\Admin\JasaWebsiteController::class);
+    });
 });
 
 

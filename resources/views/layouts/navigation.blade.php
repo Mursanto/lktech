@@ -86,6 +86,15 @@
             </a>
             @endif
 
+            @if(auth()->user()->hasRole('Admin'))
+            <a href="{{ route('jasa-website-admin.index') }}" 
+               class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('jasa-website-admin.*') ? 'bg-brand-50 text-brand-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
+               :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Jasa Website">
+                <i class='bx bx-code-alt text-lg {{ request()->routeIs('jasa-website-admin.*') ? 'text-brand-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
+                <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Jasa Website</span>
+            </a>
+            @endif
+
             @if(auth()->check() && (auth()->user()->hasRole('Admin') || auth()->user()->hasPermissionTo('access_blog') || auth()->user()->hasPermissionTo('access_settings')))
             <!-- Administrasi Section -->
             <div x-show="sidebarOpen" class="px-5 mt-2 mb-1 flex items-center transition-opacity duration-300">

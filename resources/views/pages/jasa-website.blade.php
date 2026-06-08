@@ -154,87 +154,52 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                     
-                    <!-- Card 1: Paket Starter -->
-                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 hover:shadow-xl transition-all flex flex-col h-full relative group">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-gray-900 mb-1 font-montserrat">Paket Starter</h3>
-                            <p class="text-xs text-brand-600 font-bold uppercase tracking-wider mb-6">Landing Page / UMKM</p>
-                            
-                            <div class="mb-8">
-                                <span class="text-3xl font-black text-gray-900">Rp 1.499.000</span>
-                            </div>
-                            
-                            <ul class="space-y-4 mb-8 text-sm text-gray-600 font-medium">
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-brand-500 text-xl'></i> <span>1 Halaman Landing Page Panjang</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-brand-500 text-xl'></i> <span>Desain Modern (Template Premium)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-brand-500 text-xl'></i> <span>Gratis Domain (.com/.id) & Hosting 1 Thn</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-brand-500 text-xl'></i> <span>SSL Certificate (Keamanan HTTPS)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-brand-500 text-xl'></i> <span>Integrasi Tombol WhatsApp</span></li>
-                            </ul>
-                        </div>
-                        <div class="mt-auto pt-6 border-t border-gray-100">
-                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20Starter)." target="_blank" class="w-full block text-center px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200">
-                                Pilih Paket
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Paket Profesional (Highlighted) -->
-                    <div class="bg-white rounded-3xl shadow-2xl border-2 border-brand-500 p-8 flex flex-col h-full relative z-10 md:-translate-y-4 transform">
+                    @forelse($packages as $package)
+                    @php
+                        $isHighlighted = !empty($package->badge);
+                    @endphp
+                    <!-- Card: {{ $package->nama_paket }} -->
+                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-8 transition-all flex flex-col h-full relative group">
+                        @if($isHighlighted)
                         <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
-                            Best Seller
+                            {{ $package->badge }}
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl pointer-events-none"></div>
+                        @endif
                         
                         <div class="flex-grow relative z-10">
-                            <h3 class="text-2xl font-bold text-brand-600 mb-1 font-montserrat">Paket Profesional</h3>
-                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6">Company Profile</p>
+                            <h3 class="{{ $isHighlighted ? 'text-2xl font-bold text-brand-600' : 'text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
+                            <p class="text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-6">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
                             <div class="mb-8">
-                                <span class="text-4xl font-black text-gray-900">Rp 3.499.000</span>
+                                <span class="{{ $isHighlighted ? 'text-4xl' : 'text-3xl' }} font-black text-gray-900">Rp {{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
-                            <ul class="space-y-4 mb-8 text-sm text-gray-700 font-semibold">
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Hingga 5 Halaman Custom</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Custom Design UI/UX</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Gratis Domain & Cloud Hosting 1 Thn</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Basic SEO Setup (On-Page)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Email Bisnis Resmi (contoh: info@domain.com)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bxs-check-circle text-brand-600 text-xl'></i> <span>Formulir Kontak Terintegrasi</span></li>
+                            <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
+                                @if($package->fitur_list)
+                                    @foreach(explode("\n", $package->fitur_list) as $fitur)
+                                        @if(trim($fitur))
+                                        <li class="flex items-start gap-3"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-xl'></i> <span>{{ trim($fitur) }}</span></li>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
-                        <div class="mt-auto pt-6 border-t border-brand-100 relative z-10">
-                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20Profesional)." target="_blank" class="w-full block text-center px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                                Pilih Paket Paling Laris
+                        <div class="mt-auto pt-6 border-t {{ $isHighlighted ? 'border-brand-100' : 'border-gray-100' }} relative z-10">
+                            @php
+                                $waText = urlencode("Halo LKtech, saya ingin konsultasi mengenai Jasa Pembuatan Website (".$package->nama_paket.").");
+                            @endphp
+                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5' : 'px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200' }}">
+                                {{ $isHighlighted ? 'Pilih Paket Spesial' : 'Pilih Paket' }}
                             </a>
                         </div>
                     </div>
-
-                    <!-- Card 3: Paket E-Commerce -->
-                    <div class="bg-gray-900 rounded-3xl shadow-sm border border-gray-800 p-8 hover:shadow-xl transition-all flex flex-col h-full relative group">
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent rounded-3xl pointer-events-none"></div>
-                        <div class="flex-grow relative z-10">
-                            <h3 class="text-xl font-bold text-white mb-1 font-montserrat">Paket E-Commerce</h3>
-                            <p class="text-xs text-purple-400 font-bold uppercase tracking-wider mb-6">Toko Online Digital</p>
-                            
-                            <div class="mb-8">
-                                <span class="text-3xl font-black text-white">Rp 6.999.000</span>
-                            </div>
-                            
-                            <ul class="space-y-4 mb-8 text-sm text-gray-300 font-medium">
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-purple-500 text-xl'></i> <span>Katalog Produk (Upload s/d 100 Produk)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-purple-500 text-xl'></i> <span>Fitur Keranjang & Checkout Lengkap</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-purple-500 text-xl'></i> <span>Integrasi Payment Gateway Otomatis</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-purple-500 text-xl'></i> <span>Cek Ongkir Otomatis (JNE, J&T, dll)</span></li>
-                                <li class="flex items-start gap-3"><i class='bx bx-check-circle text-purple-500 text-xl'></i> <span>Dashboard Admin Manajemen Toko</span></li>
-                            </ul>
-                        </div>
-                        <div class="mt-auto pt-6 border-t border-gray-800 relative z-10">
-                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website%20(Paket%20E-Commerce)." target="_blank" class="w-full block text-center px-6 py-3 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-600/50 font-bold rounded-xl transition-all">
-                                Pilih Paket E-Commerce
-                            </a>
-                        </div>
+                    @empty
+                    <div class="col-span-1 md:col-span-3 text-center py-12 text-gray-500">
+                        <i class='bx bx-info-circle text-4xl mb-3 text-gray-400'></i>
+                        <p>Paket Jasa Website belum tersedia saat ini. Silakan hubungi kami untuk informasi lebih lanjut.</p>
                     </div>
+                    @endforelse
 
                 </div>
             </div>
