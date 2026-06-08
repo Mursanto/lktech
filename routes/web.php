@@ -160,3 +160,17 @@ Route::get('/storage/{path}', function($path) {
 })->where('path', '.*');
 
 require __DIR__.'/auth.php';
+
+Route::get('/migrate-jasa-website', function () {
+    try {
+        // Bersihkan cache memori agar server mengenali modul baru
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        
+        // Eksekusi pembuatan tabel baru di database
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        
+        return 'Mantap kawan! Tabel Jasa Website berhasil dibuat di server.';
+    } catch (\Exception $e) {
+        return 'Waduh, ada error: ' . $e->getMessage();
+    }
+});
