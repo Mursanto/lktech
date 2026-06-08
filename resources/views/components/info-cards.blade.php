@@ -1,5 +1,5 @@
 <!-- 4 Info Cards Section -->
-<div class="flex overflow-x-auto snap-x snap-mandatory gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible hide-scrollbar py-2">
+<div class="flex overflow-x-auto snap-x snap-mandatory gap-6 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible hide-scrollbar py-2">
     <!-- Kartu 1: Penjualan -->
     <div class="group min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-center md:snap-align-none bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-3">
@@ -57,4 +57,15 @@
             Hubungi Kami <i class='bx bx-right-arrow-alt text-base'></i>
         </div>
     </button>
+
+    <!-- Kartu 6: Jasa Pembuatan Website -->
+    <a href="{{ route('jasa-website') }}" class="group min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-center md:snap-align-none text-left w-full bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-3">
+            <i class='bx bx-globe text-2xl'></i>
+        </div>
+        <h3 class="font-bold text-gray-900 text-[15px] mb-1 group-hover:text-indigo-600 transition-colors">Jasa Pembuatan Website</h3>
+        <div class="max-h-10 group-hover:max-h-40 overflow-hidden transition-all duration-500 ease-in-out">
+            <p class="text-[13px] text-gray-500 leading-relaxed">Tingkatkan kredibilitas bisnis Anda dengan website profesional, responsif, dan SEO-friendly.</p>
+        </div>
+    </a>
 </div>
