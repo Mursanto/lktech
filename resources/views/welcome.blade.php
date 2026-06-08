@@ -127,17 +127,16 @@
                     <!-- Left: Text (60%) -->
                     <div class="md:col-span-7 space-y-4">
                         <h1 class="text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Temukan Laptop Terbaik Untuk Kebutuhan Anda
+                            Solusi IT Terlengkap & Tepercaya untuk Anda
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
-                                LKTech TN SEREAL menyediakan berbagai macam laptop berkualitas dengan harga terbaik. Bergaransi dan terpercaya.
+                                Dari pengadaan laptop premium, rakit PC custom, servis bergaransi, hingga pembuatan website profesional. LKtech siap mendukung produktivitas harian dan pertumbuhan bisnis Anda.
                             </p>
                             <!-- Informasi Layanan Tambahan -->
                             <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm">
-                                <i class='bx bx-check-shield text-brand-600 text-lg mr-2'></i>
-                                <p class="text-[11px] md:text-sm text-gray-700 font-medium">
-                                    Melayani <span class="font-bold text-brand-800">Service Laptop Profesional</span>, <span class="font-bold text-brand-800">Upgrade Hardware</span>, dan <span class="font-bold text-brand-800">Sewa Laptop</span>.
+                                <p class="text-sm md:text-base text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap">
+                                    ✅ Laptop Premium | Servis & Sewa | Rakit PC | Jasa Website
                                 </p>
                             </div>
                         </div>
