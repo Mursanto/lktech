@@ -224,6 +224,8 @@ class ServiceController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'customer_email' => 'nullable|email|max:255',
+            'customer_phone' => 'nullable|string|max:50',
+            'customer_address' => 'nullable|string|max:500',
             'items'                              => 'required|array|min:1|max:10',
             'items.*.device_name'                => 'required|string|max:255',
             'items.*.serial_number'              => 'nullable|string|max:255',
@@ -241,11 +243,21 @@ class ServiceController extends Controller
 
         $oldStatus = $service->status;
 
-        // Update customer email if provided
-        if ($request->filled('customer_email')) {
-            $customer = \App\Models\Customer::find($request->customer_id);
-            if ($customer && $customer->email !== $request->customer_email) {
-                $customer->update(['email' => $request->customer_email]);
+        // Update customer details directly from the form
+        $customer = \App\Models\Customer::find($request->customer_id);
+        if ($customer) {
+            $updates = [];
+            if ($request->has('customer_email') && $customer->email !== $request->customer_email) {
+                $updates['email'] = $request->customer_email;
+            }
+            if ($request->has('customer_phone') && $customer->phone !== $request->customer_phone) {
+                $updates['phone'] = $request->customer_phone;
+            }
+            if ($request->has('customer_address') && $customer->address !== $request->customer_address) {
+                $updates['address'] = $request->customer_address;
+            }
+            if (!empty($updates)) {
+                $customer->update($updates);
             }
         }
 

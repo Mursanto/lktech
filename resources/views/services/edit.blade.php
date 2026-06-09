@@ -83,7 +83,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Telepon</label>
-                                        <input type="text" id="customer_phone" readonly class="w-full border border-gray-200 rounded px-2 py-1 text-xs bg-gray-100 text-gray-600" value="{{ $service->customer->phone ?? '' }}">
+                                        <input type="text" id="customer_phone" name="customer_phone" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500" value="{{ $service->customer->phone ?? '' }}">
                                     </div>
                                     <div>
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Email</label>
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="md:col-span-3">
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Alamat</label>
-                                        <input type="text" id="customer_address" readonly class="w-full border border-gray-200 rounded px-2 py-1 text-xs bg-gray-100 text-gray-600" value="{{ $service->customer->address ?? '' }}">
+                                        <input type="text" id="customer_address" name="customer_address" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500" value="{{ $service->customer->address ?? '' }}">
                                     </div>
                                 </div>
                             </div>
