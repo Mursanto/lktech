@@ -159,9 +159,4 @@ Route::get('/storage/{path}', function($path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
-Route::get('/run-migrations', function () {
-    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-    return 'Migrations executed successfully: ' . \Illuminate\Support\Facades\Artisan::output();
-});
-
 require __DIR__.'/auth.php';
