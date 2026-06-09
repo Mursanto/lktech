@@ -30,11 +30,11 @@
 
             <!-- Kolom 2: Informasi Kontak -->
             <div>
-                <h4 class="font-bold text-gray-800 mb-4 font-montserrat h-6 flex items-center">Hubungi Kami</h4>
-                <ul class="space-y-3 text-sm text-gray-600">
+                <h4 class="font-bold text-gray-800 mb-2 md:mb-4 font-montserrat h-6 flex items-center">Hubungi Kami</h4>
+                <ul class="space-y-1 md:space-y-3 text-sm text-gray-600">
                     <li class="flex items-start gap-2">
                         <i class='bx bx-map text-lg text-brand-500 mt-0.5 flex-shrink-0'></i>
-                        <span class="leading-relaxed">{!! $settings->alamat ?? 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168' !!}</span>
+                        <span class="leading-tight">{!! $settings->alamat ?? 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168' !!}</span>
                     </li>
                     <li class="flex items-center gap-2">
                         <i class='bx bx-envelope text-lg text-brand-500 flex-shrink-0'></i>
@@ -114,7 +114,7 @@
             </div>
 
             <!-- Kolom 4: Tautan Berguna -->
-            <div>
+            <div class="hidden md:block">
                 <h4 class="font-bold text-gray-800 mb-4 font-montserrat h-6 flex items-center">Informasi</h4>
                 <ul class="space-y-3 text-sm">
                     <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Beranda</a></li>

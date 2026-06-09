@@ -34,11 +34,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($posts as $post)
-            <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group transform hover:-translate-y-1">
+            <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-row md:flex-col h-full group transform hover:-translate-y-1 p-3 md:p-0 gap-4 md:gap-0 items-center md:items-stretch">
                 <!-- Thumbnail -->
-                <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-56 bg-gray-100 overflow-hidden relative">
+                <a href="{{ route('blog.show', $post->slug) }}" class="block w-24 h-24 md:w-full md:h-56 bg-gray-100 overflow-hidden relative shrink-0 rounded-xl md:rounded-none">
                     @if($post->thumbnail)
-                        <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     @else
                         <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                             <i class='bx bx-image-alt text-5xl'></i>
@@ -48,17 +48,17 @@
                 </a>
                 
                 <!-- Content -->
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="text-xs text-brand-600 font-bold mb-3 flex items-center gap-2">
+                <div class="flex flex-col flex-grow py-1 md:p-6 w-full">
+                    <div class="text-[10px] md:text-xs text-brand-600 font-bold mb-1 md:mb-3 flex items-center gap-2">
                         <span class="bg-brand-50 text-brand-600 px-2 py-1 rounded-md"><i class='bx bx-calendar'></i> {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}</span>
                     </div>
-                    <h2 class="font-bold text-gray-900 text-xl mb-3 leading-tight group-hover:text-brand-600 transition-colors">
+                    <h2 class="font-bold text-gray-900 text-sm md:text-xl mb-1 md:mb-3 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
                         <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                     </h2>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-6 flex-grow">
+                    <p class="hidden md:block text-sm text-gray-500 leading-relaxed mb-6 flex-grow">
                         {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 100) }}
                     </p>
-                    <a href="{{ route('blog.show', $post->slug) }}" class="inline-flex items-center gap-1 text-sm font-bold text-brand-600 hover:text-brand-700 mt-auto w-max group-hover:gap-2 transition-all">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="hidden md:inline-flex items-center gap-1 text-sm font-bold text-brand-600 hover:text-brand-700 mt-auto w-max group-hover:gap-2 transition-all">
                         Baca Selengkapnya <i class='bx bx-right-arrow-alt text-lg'></i>
                     </a>
                 </div>
