@@ -194,13 +194,13 @@
                 </a>
             </div>
 
-            <div class="flex flex-col gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible">
+            <div class="flex flex-row gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 @foreach($latestPosts->take(4) as $post)
-                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-row md:flex-col gap-4 p-3 md:p-0 group items-center md:items-stretch">
+                <div class="w-64 sm:w-72 shrink-0 snap-start md:w-auto bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
                     <!-- Thumbnail -->
-                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-24 h-24 md:w-full md:h-48 bg-gray-100 overflow-hidden shrink-0 rounded-xl md:rounded-none">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-full h-32 md:h-40 bg-gray-100 overflow-hidden shrink-0">
                         @if($post->thumbnail)
-                            <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="w-full h-full object-cover shrink-0 group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                                 <i class='bx bx-image text-4xl'></i>
@@ -208,17 +208,17 @@
                         @endif
                     </a>
                     <!-- Content -->
-                    <div class="flex flex-col flex-grow py-1 md:p-4">
-                        <div class="text-[10px] text-brand-600 font-bold mb-1 md:mb-1.5 flex items-center gap-1">
+                    <div class="flex flex-col flex-grow p-4">
+                        <div class="text-[10px] md:text-xs text-brand-600 font-bold mb-1.5 flex items-center gap-1">
                             <i class='bx bx-calendar'></i> {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
                         </div>
-                        <h3 class="font-bold text-gray-900 text-sm mb-2 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
+                        <h3 class="font-bold text-gray-900 text-sm md:text-base mb-2 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
                         <p class="hidden md:block text-xs text-gray-500 leading-relaxed mb-3 flex-grow line-clamp-2">
                             {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
                         </p>
-                        <a href="{{ route('blog.show', $post->slug) }}" class="text-[11px] font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
+                        <a href="{{ route('blog.show', $post->slug) }}" class="text-xs font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
                             Baca <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
