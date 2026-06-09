@@ -161,13 +161,31 @@
                                     <div class="bg-gray-50 rounded border border-gray-200 p-2">
                                         <div class="flex justify-between items-center mb-2">
                                             <label class="block text-[10px] font-bold text-gray-600 uppercase">Spareparts / Suku Cadang</label>
-                                            <button type="button" @click="item.spareparts.push({ name: '', price: 0 })" class="text-[9px] font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-0.5 rounded transition">
+                                            <button type="button" @click="item.spareparts.push({ product_id: '', name: '', price: 0 })" class="text-[9px] font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-0.5 rounded transition">
                                                 + Tambah Sparepart
                                             </button>
                                         </div>
                                         <template x-for="(part, pIndex) in item.spareparts" :key="pIndex">
                                             <div class="flex items-center gap-2 mb-1">
-                                                <input type="text" :name="'items['+index+'][spareparts]['+pIndex+'][name]'" x-model="part.name" required class="flex-grow border border-gray-300 rounded px-2 py-1 text-[10px] bg-white focus:ring-1 focus:ring-emerald-500" placeholder="Nama Sparepart (cth: SSD 512GB)">
+                                                <select :name="'items['+index+'][spareparts]['+pIndex+'][product_id]'" 
+                                                        x-model="part.product_id" 
+                                                        required 
+                                                        @change="let opt = $event.target.options[$event.target.selectedIndex]; part.price = parseInt(opt.dataset.price || 0); part.name = opt.dataset.name || ''"
+                                                        class="flex-grow border border-gray-300 rounded px-2 py-1 text-[10px] bg-white focus:ring-1 focus:ring-emerald-500">
+                                                    <option value="">-- Pilih Produk --</option>
+                                                    @foreach($groupedProducts as $category => $products)
+                                                        <optgroup label="{{ $category }}">
+                                                            @foreach($products as $product)
+                                                                <option value="{{ $product->id }}" 
+                                                                    data-price="{{ $product->selling_price ?? 0 }}"
+                                                                    data-name="{{ trim($product->brand . ' ' . $product->model_series) }}">
+                                                                    {{ $product->brand }} {{ $product->model_series }} — Rp {{ number_format($product->selling_price ?? 0, 0, ',', '.') }} (Sisa: {{ $product->stock }})
+                                                                </option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                    @endforeach
+                                                </select>
+                                                <input type="hidden" :name="'items['+index+'][spareparts]['+pIndex+'][name]'" x-model="part.name">
                                                 <div class="relative w-1/3">
                                                     <span class="absolute left-2 top-1 text-[10px] text-gray-400">Rp</span>
                                                     <input type="number" :name="'items['+index+'][spareparts]['+pIndex+'][price]'" x-model.number="part.price" required min="0" class="w-full border border-gray-300 rounded pl-6 pr-2 py-1 text-[10px] text-right font-bold bg-white focus:ring-1 focus:ring-emerald-500">
@@ -190,27 +208,6 @@
                         <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-3 border border-purple-100">
                             <h4 class="text-xs font-bold text-gray-800 uppercase mb-2">Catatan Teknisi</h4>
                             <textarea name="notes" rows="3" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Catatan awal diagnosa atau instruksi khusus secara umum..."></textarea>
-                        </div>
-
-                        <!-- 4. Sparepart Digunakan (Opsional, dari Inventaris) -->
-                        <div class="bg-gradient-to-br from-gray-50 to-white rounded-lg p-3 border border-gray-200">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-xs font-bold text-gray-800 uppercase">Sparepart / Produk Digunakan <span class="text-gray-400 font-normal normal-case text-[10px]">(Opsional)</span></h4>
-                                <span class="text-[9px] text-gray-400">Harga otomatis masuk ke Estimasi Suku Cadang</span>
-                            </div>
-                            <select name="parts[]" id="parts-select" multiple class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white h-20 focus:ring-1 focus:ring-emerald-500">
-                                @foreach($groupedProducts as $category => $products)
-                                    <optgroup label="{{ $category }}">
-                                        @foreach($products as $product)
-                                            <option value="{{ $product->id }}"
-                                                data-price="{{ $product->selling_price ?? 0 }}">
-                                                {{ $product->brand }} {{ $product->model_series }} — Rp {{ number_format($product->selling_price ?? 0, 0, ',', '.') }} (Sisa: {{ $product->stock }})
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                            <p class="text-[9px] text-gray-400 mt-1">Tahan Ctrl (Windows) / Command (Mac) untuk pilih lebih dari satu. Stok akan otomatis dikurangi saat disimpan.</p>
                         </div>
                     </div>
 

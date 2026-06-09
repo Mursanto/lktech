@@ -97,6 +97,7 @@ class ServiceController extends Controller
             'items.*.complaint'                  => 'required|string',
             'items.*.service_charge'             => 'required|numeric|min:0',
             'items.*.spareparts'                 => 'nullable|array',
+            'items.*.spareparts.*.product_id'    => 'nullable|exists:products,id',
             'items.*.spareparts.*.name'          => 'required_with:items.*.spareparts|string|max:255',
             'items.*.spareparts.*.price'         => 'required_with:items.*.spareparts|numeric|min:0',
             'technician_id'        => 'required|exists:users,id',
@@ -174,6 +175,21 @@ class ServiceController extends Controller
                         'service_charge' => $itemData['service_charge'],
                         'spareparts' => array_values($itemData['spareparts'] ?? []),
                     ]);
+
+                    // Deduct stock for inventory parts
+                    if (!empty($itemData['spareparts'])) {
+                        foreach ($itemData['spareparts'] as $part) {
+                            if (!empty($part['product_id'])) {
+                                $product = \App\Models\Product::find($part['product_id']);
+                                if ($product) {
+                                    $product->decrement('stock');
+                                    if ($product->stock <= 0) {
+                                        $product->update(['status' => 'sold']);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
 
@@ -233,6 +249,7 @@ class ServiceController extends Controller
             'items.*.complaint'                  => 'required|string',
             'items.*.service_charge'             => 'required|numeric|min:0',
             'items.*.spareparts'                 => 'nullable|array',
+            'items.*.spareparts.*.product_id'    => 'nullable|exists:products,id',
             'items.*.spareparts.*.name'          => 'required_with:items.*.spareparts|string|max:255',
             'items.*.spareparts.*.price'         => 'required_with:items.*.spareparts|numeric|min:0',
             'technician_id' => 'required|exists:users,id',
@@ -292,6 +309,23 @@ class ServiceController extends Controller
             'issue_description' => $firstItem['complaint'], // Fallback legacy
         ]);
 
+        // Revert old stock before deleting old items
+        foreach ($service->items as $oldItem) {
+            if (!empty($oldItem->spareparts)) {
+                foreach ($oldItem->spareparts as $part) {
+                    if (!empty($part['product_id'])) {
+                        $product = \App\Models\Product::find($part['product_id']);
+                        if ($product) {
+                            $product->increment('stock');
+                            if ($product->stock > 0 && $product->status === 'sold') {
+                                $product->update(['status' => 'available']);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         $service->items()->delete();
         foreach ($items as $itemData) {
             $service->items()->create([
@@ -302,6 +336,21 @@ class ServiceController extends Controller
                 'service_charge' => $itemData['service_charge'],
                 'spareparts' => array_values($itemData['spareparts'] ?? []),
             ]);
+
+            // Deduct stock for inventory parts
+            if (!empty($itemData['spareparts'])) {
+                foreach ($itemData['spareparts'] as $part) {
+                    if (!empty($part['product_id'])) {
+                        $product = \App\Models\Product::find($part['product_id']);
+                        if ($product) {
+                            $product->decrement('stock');
+                            if ($product->stock <= 0) {
+                                $product->update(['status' => 'sold']);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // If status changed to 'done' and has payment, create/update sale record
