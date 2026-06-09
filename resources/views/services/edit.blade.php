@@ -32,7 +32,21 @@
     <div class="py-4 h-[calc(100vh-65px)] overflow-hidden">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 h-full flex flex-col">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex-grow flex flex-col overflow-hidden">
-                <form action="{{ route('services.update', $service->id) }}" method="POST" class="flex-grow flex flex-col md:flex-row overflow-hidden">
+                <form action="{{ route('services.update', $service->id) }}" method="POST" class="flex-grow flex flex-col md:flex-row overflow-hidden" 
+                      x-data="{ 
+                          items: {{ json_encode($service->items->count() > 0 ? $service->items : [['device_name' => $service->device_name, 'serial_number' => $service->serial_number, 'equipment_details' => $service->equipment_details, 'complaint' => $service->complaint, 'service_charge' => $service->service_fee, 'spareparts' => []]]) }},
+                          get totalPartsCost() {
+                              return this.items.reduce((sum, item) => {
+                                  return sum + (item.spareparts ? item.spareparts.reduce((pSum, part) => pSum + (parseFloat(part.price) || 0), 0) : 0);
+                              }, 0);
+                          },
+                          get totalServiceFee() {
+                              return this.items.reduce((sum, item) => sum + (parseFloat(item.service_charge) || 0), 0);
+                          },
+                          get grandTotal() {
+                              return this.totalPartsCost + this.totalServiceFee;
+                          }
+                      }">
                     @csrf
                     @method('PUT')
 
@@ -104,54 +118,93 @@
                             </div>
                         </div>
 
-                        <!-- 2. Detail Perangkat -->
+                        <!-- 2. Detail Perangkat & Keluhan (Dynamic Array) -->
                         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-3 border border-blue-100">
-                            <h4 class="text-xs font-bold text-gray-800 uppercase mb-2">Detail Perangkat</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-                                <div class="md:col-span-1">
-                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Model/Type *</label>
-                                    <input type="text" name="device_name" required class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" value="{{ $service->device_name }}" placeholder="ThinkPad T470s">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Serial No. / IMEI</label>
-                                    <input type="text" name="serial_number" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" value="{{ $service->serial_number }}" placeholder="SN: ...">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Kelengkapan Unit</label>
-                                    <input type="text" name="equipment_details" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" value="{{ old('equipment_details', $service->equipment_details) }}" placeholder="Laptop, Charger, Tas">
-                                </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="text-xs font-bold text-gray-800 uppercase">Perangkat & Keluhan</h4>
+                                <button type="button" @click="if(items.length < 10) items.push({ device_name: '', serial_number: '', equipment_details: '', complaint: '', service_charge: 0, spareparts: [] })" 
+                                        x-show="items.length < 10"
+                                        class="px-2 py-1 bg-blue-600 text-white text-[10px] font-bold rounded shadow hover:bg-blue-700 transition">
+                                    + Tambah Perangkat (Maks 10)
+                                </button>
                             </div>
+                            
+                            <template x-for="(item, index) in items" :key="index">
+                                <div class="bg-white p-3 rounded border border-gray-200 mb-4 shadow-sm relative">
+                                    <div class="absolute top-2 right-2" x-show="items.length > 1">
+                                        <button type="button" @click="items.splice(index, 1)" class="text-red-500 hover:text-red-700">
+                                            <i class='bx bx-trash text-sm'></i>
+                                        </button>
+                                    </div>
+                                    <h5 class="text-[10px] font-bold text-blue-800 uppercase mb-2 border-b pb-1" x-text="'Perangkat #' + (index + 1)"></h5>
+                                    
+                                    <!-- Meta Perangkat -->
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mb-2">
+                                        <div class="md:col-span-1">
+                                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Model / Type *</label>
+                                            <input type="text" :name="'items['+index+'][device_name]'" x-model="item.device_name" required class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" placeholder="Cth: ThinkPad T470s">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Serial No / IMEI</label>
+                                            <input type="text" :name="'items['+index+'][serial_number]'" x-model="item.serial_number" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" placeholder="SN: ...">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Kelengkapan Unit</label>
+                                            <input type="text" :name="'items['+index+'][equipment_details]'" x-model="item.equipment_details" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" placeholder="Laptop, Charger, Tas">
+                                        </div>
+                                    </div>
+
+                                    <!-- Service Action -->
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+                                        <div class="md:col-span-2">
+                                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Keluhan / Kendala *</label>
+                                            <input type="text" :name="'items['+index+'][complaint]'" x-model="item.complaint" required class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-emerald-500" placeholder="Deskripsi keluhan pelanggan...">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-emerald-600 uppercase mb-0.5">Biaya Jasa *</label>
+                                            <div class="relative">
+                                                <span class="absolute left-2 top-1 text-xs text-gray-400 font-bold">Rp</span>
+                                                <input type="number" :name="'items['+index+'][service_charge]'" x-model.number="item.service_charge" required min="0" class="w-full border border-gray-300 rounded pl-7 pr-2 py-1 text-xs text-right font-bold bg-white focus:ring-1 focus:ring-emerald-500">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Spareparts Nested Array -->
+                                    <div class="bg-gray-50 rounded border border-gray-200 p-2">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <label class="block text-[10px] font-bold text-gray-600 uppercase">Spareparts / Suku Cadang</label>
+                                            <button type="button" @click="item.spareparts.push({ name: '', price: 0 })" class="text-[9px] font-bold bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-0.5 rounded transition">
+                                                + Tambah Sparepart
+                                            </button>
+                                        </div>
+                                        <template x-for="(part, pIndex) in item.spareparts" :key="pIndex">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <input type="text" :name="'items['+index+'][spareparts]['+pIndex+'][name]'" x-model="part.name" required class="flex-grow border border-gray-300 rounded px-2 py-1 text-[10px] bg-white focus:ring-1 focus:ring-emerald-500" placeholder="Nama Sparepart (cth: SSD 512GB)">
+                                                <div class="relative w-1/3">
+                                                    <span class="absolute left-2 top-1 text-[10px] text-gray-400">Rp</span>
+                                                    <input type="number" :name="'items['+index+'][spareparts]['+pIndex+'][price]'" x-model.number="part.price" required min="0" class="w-full border border-gray-300 rounded pl-6 pr-2 py-1 text-[10px] text-right font-bold bg-white focus:ring-1 focus:ring-emerald-500">
+                                                </div>
+                                                <button type="button" @click="item.spareparts.splice(pIndex, 1)" class="text-red-400 hover:text-red-600">
+                                                    <i class='bx bx-x text-sm'></i>
+                                                </button>
+                                            </div>
+                                        </template>
+                                        <div x-show="item.spareparts.length === 0" class="text-[9px] text-gray-400 italic text-center py-1">
+                                            Belum ada sparepart ditambahkan untuk perangkat ini.
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <!-- 3. Catatan Teknisi -->
+                        <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-3 border border-purple-100">
+                            <h4 class="text-xs font-bold text-gray-800 uppercase mb-2">Catatan Teknisi</h4>
+                            <textarea name="notes" rows="3" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Catatan awal diagnosa atau instruksi khusus secara umum...">{{ $service->notes }}</textarea>
                         </div>
 
-                        <!-- 3. Keluhan & Catatan Teknisi (side by side) -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-3 border border-green-100">
-                                <h4 class="text-xs font-bold text-gray-800 uppercase mb-2">Keluhan / Kendala</h4>
-                                <textarea name="complaint" required rows="4" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Masalah teknis yang dilaporkan...">{{ $service->complaint }}</textarea>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-3 border border-purple-100">
-                                <h4 class="text-xs font-bold text-gray-800 uppercase mb-2">Catatan Teknisi</h4>
-                                <textarea name="notes" rows="4" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Progres pengerjaan, tindakan yang dilakukan...">{{ $service->notes }}</textarea>
-                            </div>
-                        </div>
 
-                        <!-- 4. Sparepart digunakan -->
-                        <div class="bg-gradient-to-br from-gray-50 to-white rounded-lg p-3 border border-gray-200">
-                            <h4 class="text-xs font-bold text-gray-800 uppercase mb-1">Sparepart / Produk Digunakan</h4>
-                            <p class="text-[9px] text-gray-400 mb-1.5">Tahan Ctrl (Windows) / Command (Mac) untuk pilih lebih dari satu. Stok akan otomatis dikurangi.</p>
-                            <select name="parts[]" multiple class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white h-24 focus:ring-1 focus:ring-emerald-500">
-                                @php $usedPartsIds = $service->parts->pluck('product_id')->toArray(); @endphp
-                                @foreach($groupedProducts as $category => $products)
-                                    <optgroup label="{{ $category }}">
-                                        @foreach($products as $product)
-                                            <option value="{{ $product->id }}" {{ in_array($product->id, $usedPartsIds) ? 'selected' : '' }}>
-                                                {{ $product->brand }} {{ $product->model_series }} (Sisa: {{ $product->stock }})
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
 
                     <!-- ===== RIGHT PANEL: Admin & Biaya ===== -->
@@ -194,22 +247,22 @@
                                     <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Estimasi Suku Cadang</label>
                                     <div class="relative">
                                         <span class="absolute left-2 top-1 text-xs text-gray-400 font-bold">Rp</span>
-                                        <input type="number" name="estimated_parts_cost" min="0" value="{{ $service->estimated_parts_cost ?? 0 }}"
-                                               class="w-full border border-gray-300 rounded pl-7 pr-2 py-1 text-xs text-right font-bold text-blue-600 bg-gray-50 focus:ring-1 focus:ring-brand-500">
+                                        <input type="number" readonly :value="totalPartsCost"
+                                               class="w-full border border-gray-300 rounded pl-7 pr-2 py-1 text-xs text-right font-bold text-blue-600 bg-gray-100 focus:outline-none">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Biaya Jasa *</label>
                                     <div class="relative">
                                         <span class="absolute left-2 top-1 text-xs text-gray-400 font-bold">Rp</span>
-                                        <input type="number" name="service_fee" required min="0" value="{{ $service->service_fee ?? 0 }}"
-                                               class="w-full border border-gray-300 rounded pl-7 pr-2 py-1 text-xs text-right font-bold text-emerald-600 bg-gray-50 focus:ring-1 focus:ring-brand-500">
+                                        <input type="number" readonly :value="totalServiceFee"
+                                               class="w-full border border-gray-300 rounded pl-7 pr-2 py-1 text-xs text-right font-bold text-emerald-600 bg-gray-100 focus:outline-none">
                                     </div>
                                 </div>
                                 <div class="pt-2 border-t mt-1">
                                     <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Grand Total</label>
-                                    <div id="grand-total" class="text-xl font-black text-emerald-600 text-right">
-                                        Rp {{ number_format(($service->estimated_parts_cost ?? 0) + ($service->service_fee ?? 0), 0, ',', '.') }}
+                                    <div class="text-xl font-black text-emerald-600 text-right" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')">
+                                        Rp 0
                                     </div>
                                 </div>
                             </div>
@@ -281,18 +334,7 @@
                 document.getElementById('customer_email').value   = sel.getAttribute('data-email')   || '';
             });
 
-            // Grand Total auto-calc
-            const partsInput   = document.querySelector('input[name="estimated_parts_cost"]');
-            const feeInput     = document.querySelector('input[name="service_fee"]');
-            const totalDisplay = document.getElementById('grand-total');
-
-            function recalc() {
-                const total = (parseFloat(partsInput.value) || 0) + (parseFloat(feeInput.value) || 0);
-                totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
-            }
-
-            partsInput.addEventListener('input', recalc);
-            feeInput.addEventListener('input', recalc);
+            // Grand Total auto-calc replaced by AlpineJS.
         });
     </script>
 </x-app-layout>

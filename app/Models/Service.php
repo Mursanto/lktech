@@ -29,6 +29,7 @@ class Service extends Model
         'device_model',
         'issue_description',
         'estimated_cost',
+        'devices',
     ];
 
     protected $casts = [
@@ -38,11 +39,17 @@ class Service extends Model
         'total_amount'         => 'decimal:2',
         'actual_cost'          => 'decimal:2',
         'completion_date'      => 'datetime',
+        'devices'              => 'array',
     ];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(ServiceItem::class);
     }
 
     public function technician()

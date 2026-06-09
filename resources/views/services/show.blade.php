@@ -174,87 +174,84 @@
                         <table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
                             <thead>
                                 <tr style="background-color: #f9fafb;">
-                                    <th style="width: 50%; padding: 4px 8px; text-align: left; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">PERANGKAT & KELENGKAPAN</th>
-                                    <th style="width: 50%; padding: 4px 8px; text-align: left; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">KELUHAN & CATATAN TEKNISI</th>
+                                    <th style="width: 50%; padding: 6px 8px; text-align: left; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">DESKRIPSI ITEM</th>
+                                    <th style="width: 25%; padding: 6px 8px; text-align: left; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">KETERANGAN</th>
+                                    <th style="width: 25%; padding: 6px 8px; text-align: right; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">HARGA</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="background-color: #ffffff;">
-                                    <td style="width: 50%; padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; font-size: 8pt;">
-                                        <div class="mb-2">
-                                            <div class="font-bold text-gray-800">{{ $service->device_name }}</div>
-                                            <div class="text-[10px] text-gray-500">SN: {{ $service->serial_number ?: 'Tidak Ada' }}</div>
-                                        </div>
-                                        <div>
-                                            <span class="font-semibold text-gray-700 text-[9px] uppercase tracking-wider block mb-0.5">Kelengkapan Unit:</span>
-                                            <p class="text-gray-600 leading-tight">{{ $service->equipment_details ?: 'Tidak ada kelengkapan tercatat' }}</p>
-                                        </div>
-                                    </td>
-                                    <td style="width: 50%; padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
-                                        <div class="mb-2">
-                                            <span class="font-semibold text-gray-700 text-[9px] uppercase tracking-wider block mb-0.5">Keluhan Pelanggan:</span>
-                                            <p class="text-gray-800 leading-tight">{{ $service->complaint ?: '-' }}</p>
-                                        </div>
-                                        <div>
-                                            <span class="font-semibold text-gray-700 text-[9px] uppercase tracking-wider block mb-0.5">Catatan Perbaikan:</span>
-                                            <p class="text-gray-800 leading-tight italic">{{ $service->notes ?: 'Belum ada catatan teknisi.' }}</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Cost Breakdown Table -->
-                    <div class="mt-2">
-                        <table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
-                            <thead>
-                                <tr style="background-color: #f9fafb;">
-                                    <th style="width: 75%; padding: 4px 8px; text-align: left; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">RINCIAN BIAYA</th>
-                                    <th style="width: 25%; padding: 4px 8px; text-align: right; font-size: 8pt; font-weight: 700; color: #374151; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db;">SUBTOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($service->estimated_parts_cost > 0)
-                                <tr style="background-color: #ffffff;" class="hover:bg-gray-50">
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
-                                        Estimasi Suku Cadang
-                                    </td>
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt; text-align: right; font-weight: 600;">
-                                        Rp {{ number_format($service->estimated_parts_cost, 0, ',', '.') }}
-                                    </td>
-                                </tr>
-                                @endif
-                                
-                                @if($service->service_fee > 0)
-                                <tr style="background-color: #ffffff;" class="hover:bg-gray-50">
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
-                                        Biaya Jasa Teknisi
-                                    </td>
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt; text-align: right; font-weight: 600;">
-                                        Rp {{ number_format($service->service_fee, 0, ',', '.') }}
-                                    </td>
-                                </tr>
-                                @endif
-
-                                @if($service->actual_cost > 0 && $service->actual_cost != ($service->estimated_parts_cost + $service->service_fee))
-                                <tr style="background-color: #ffffff;" class="hover:bg-gray-50">
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
-                                        Tambahan / Penyesuaian Biaya
-                                    </td>
-                                    <td style="padding: 4px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt; text-align: right; font-weight: 600;">
-                                        Rp {{ number_format($service->actual_cost - ($service->estimated_parts_cost + $service->service_fee), 0, ',', '.') }}
-                                    </td>
-                                </tr>
-                                @endif
-
+                                @foreach($service->items as $index => $item)
+                                <!-- Device Separator -->
                                 <tr style="background-color: #f3f4f6;">
-                                    <td style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">GRAND TOTAL</td>
-                                    <td style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">
-                                        Rp {{ number_format($service->total_amount ?? $service->actual_cost ?? ($service->estimated_parts_cost + $service->service_fee), 0, ',', '.') }}
+                                    <td colspan="3" style="padding: 8px; border: 1px solid #e5e7eb;">
+                                        <span style="font-weight: 800; color: #111827; font-size: 9pt;">Perangkat {{ $index + 1 }}: {{ $item->device_name }}</span> 
+                                        <span style="font-size: 8pt; color: #4b5563;">- SN: {{ $item->serial_number ?: 'Tidak Ada' }}</span>
                                     </td>
                                 </tr>
+                                
+                                <!-- Biaya Jasa -->
+                                <tr style="background-color: #ffffff;">
+                                    <td style="padding: 8px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                                        <div style="font-weight: 600; color: #111827; font-size: 8.5pt;">Jasa Perbaikan / Instalasi</div>
+                                        <div style="font-size: 8pt; color: #4b5563; margin-top: 2px;">{{ $item->complaint ?: '-' }}</div>
+                                    </td>
+                                    <td style="padding: 8px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; color: #111827; font-size: 8pt;">
+                                        Kelengkapan: {{ $item->equipment_details ?: '-' }}
+                                    </td>
+                                    <td style="padding: 8px 8px; vertical-align: top; text-align: right; border-bottom: 1px solid #e5e7eb; color: #111827; font-weight: 600; font-size: 8.5pt;">
+                                        Rp {{ number_format($item->service_charge, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+
+                                <!-- Spareparts -->
+                                @foreach($item->spareparts ?? [] as $part)
+                                <tr style="background-color: #ffffff;">
+                                    <td style="padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                                        <div style="font-weight: 500; color: #4b5563; padding-left: 10px; font-size: 8.5pt;">• Suku Cadang</div>
+                                    </td>
+                                    <td style="padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; color: #111827; font-size: 8pt;">
+                                        {{ $part['name'] }}
+                                    </td>
+                                    <td style="padding: 6px 8px; vertical-align: top; text-align: right; border-bottom: 1px solid #e5e7eb; color: #111827; font-size: 8.5pt;">
+                                        Rp {{ number_format($part['price'], 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                @endforeach
+                                
+                                <!-- Subtotal Perangkat -->
+                                @php 
+                                    $itemTotal = $item->service_charge + collect($item->spareparts)->sum('price');
+                                @endphp
+                                <tr style="background-color: #f9fafb;">
+                                    <td colspan="2" style="padding: 8px; text-align: right; font-weight: 600; font-size: 8.5pt; color: #374151; border-bottom: 2px solid #d1d5db; border-right: 1px solid #e5e7eb;">
+                                        Subtotal Perangkat {{ $index + 1 }}
+                                    </td>
+                                    <td style="padding: 8px; text-align: right; font-weight: 700; font-size: 8.5pt; color: #111827; border-bottom: 2px solid #d1d5db;">
+                                        Rp {{ number_format($itemTotal, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                @endforeach
+
+                                <!-- Catatan Teknisi Keseluruhan -->
+                                @if($service->notes)
+                                <tr style="background-color: #ffffff;">
+                                    <td colspan="3" style="padding: 8px 8px; border-bottom: 1px solid #e5e7eb;">
+                                        <span style="font-weight: 600; color: #374151; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">Catatan Teknisi:</span>
+                                        <p style="color: #1f2937; font-style: italic; font-size: 8.5pt; margin: 0; line-height: 1.2;">{{ $service->notes }}</p>
+                                    </td>
+                                </tr>
+                                @endif
                             </tbody>
+                            <tfoot>
+                                <tr style="background-color: #f3f4f6;">
+                                    <td colspan="2" style="padding: 10px 8px; text-align: right; font-weight: 800; font-size: 10pt; color: #111827; border-top: 2px solid #9ca3af; border-bottom: 2px solid #9ca3af;">
+                                        GRAND TOTAL
+                                    </td>
+                                    <td style="padding: 10px 8px; text-align: right; font-weight: 800; font-size: 10pt; color: #059669; border-top: 2px solid #9ca3af; border-bottom: 2px solid #9ca3af;">
+                                        Rp {{ number_format($service->estimated_cost, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
 

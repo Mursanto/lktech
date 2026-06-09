@@ -90,16 +90,17 @@ class ServiceController extends Controller
 
         // 2. Validasi Dinamis
         $rules = [
-            'device_name'          => 'required|string|max:255',
-            'serial_number'        => 'nullable|string|max:255',
-            'equipment_details'    => 'nullable|string|max:500',
-            'complaint'            => 'required|string',
+            'items'                              => 'required|array|min:1|max:10',
+            'items.*.device_name'                => 'required|string|max:255',
+            'items.*.serial_number'              => 'nullable|string|max:255',
+            'items.*.equipment_details'          => 'nullable|string|max:500',
+            'items.*.complaint'                  => 'required|string',
+            'items.*.service_charge'             => 'required|numeric|min:0',
+            'items.*.spareparts'                 => 'nullable|array',
+            'items.*.spareparts.*.name'          => 'required_with:items.*.spareparts|string|max:255',
+            'items.*.spareparts.*.price'         => 'required_with:items.*.spareparts|numeric|min:0',
             'technician_id'        => 'required|exists:users,id',
             'status'               => 'required|string',
-            'service_fee'          => 'required|numeric|min:0',
-            'estimated_parts_cost' => 'nullable|numeric|min:0',
-            'parts'                => 'nullable|array',
-            'parts.*'              => 'exists:products,id',
         ];
 
         if ($isNewCustomer) {
@@ -129,46 +130,53 @@ class ServiceController extends Controller
                     $customerId = $request->customer_id;
                 }
 
-                $estimatedParts = $request->estimated_parts_cost ?? 0;
-                $serviceFee     = $request->service_fee ?? 0;
+                $items = $request->items ?? [];
+                $firstItem = $items[0] ?? [
+                    'device_name' => '-', 'serial_number' => null, 
+                    'equipment_details' => null, 'complaint' => '-'
+                ];
+
+                $serviceFee     = collect($items)->sum('service_charge');
+                $estimatedParts = collect($items)->sum(function($item) {
+                    return collect($item['spareparts'] ?? [])->sum('price');
+                });
                 $totalAmount    = $estimatedParts + $serviceFee;
 
                 // 4. Buat record Servis
                 $service = Service::create([
                     'customer_id'          => $customerId,
                     'technician_id'        => $request->technician_id,
-                    'device_name'          => $request->device_name,
-                    'serial_number'        => $request->serial_number,
-                    'equipment_details'    => $request->equipment_details,
-                    'complaint'            => $request->complaint,
+                    'device_name'          => $firstItem['device_name'],
+                    'serial_number'        => $firstItem['serial_number'] ?? null,
+                    'equipment_details'    => $firstItem['equipment_details'] ?? null,
+                    'complaint'            => $firstItem['complaint'],
+                    'devices'              => [], // Deprecated
                     'status'               => $request->status,
                     'service_fee'          => $serviceFee,
                     'estimated_parts_cost' => $estimatedParts,
                     'total_amount'         => $totalAmount,
                     // Legacy columns fallback
                     'service_type'         => 'Perbaikan Umum',
-                    'description'          => $request->complaint,
-                    'device_brand'         => explode(' ', $request->device_name)[0] ?? '-',
-                    'device_model'         => $request->device_name,
-                    'issue_description'    => $request->complaint,
+                    'description'          => $firstItem['complaint'],
+                    'device_brand'         => explode(' ', $firstItem['device_name'])[0] ?? '-',
+                    'device_model'         => $firstItem['device_name'],
+                    'issue_description'    => $firstItem['complaint'],
                     'estimated_cost'       => $totalAmount,
                     'actual_cost'          => 0,
                 ]);
 
-                // 5. Kurangi stok sparepart yang dipakai (opsional)
-                if ($request->has('parts') && is_array($request->parts)) {
-                    foreach ($request->parts as $productId) {
-                        $part = \App\Models\Product::find($productId);
-                        if ($part && $part->stock > 0) {
-                            $part->decrement('stock');
-                            if ($part->stock == 0) $part->update(['status' => 'sold']);
-                        }
-                        // Attach to service parts pivot if relation exists
-                        if (method_exists($service, 'parts')) {
-                            $service->parts()->syncWithoutDetaching([$productId => ['product_id' => $productId]]);
-                        }
-                    }
+                foreach ($items as $itemData) {
+                    $service->items()->create([
+                        'device_name' => $itemData['device_name'],
+                        'serial_number' => $itemData['serial_number'] ?? null,
+                        'equipment_details' => $itemData['equipment_details'] ?? null,
+                        'complaint' => $itemData['complaint'],
+                        'service_charge' => $itemData['service_charge'],
+                        'spareparts' => array_values($itemData['spareparts'] ?? []),
+                    ]);
                 }
+
+
 
                 return $service;
             });
@@ -216,14 +224,17 @@ class ServiceController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'customer_email' => 'nullable|email|max:255',
-            'device_name' => 'required|string|max:255',
-            'serial_number' => 'nullable|string|max:255',
-            'equipment_details' => 'nullable|string|max:500',
-            'complaint' => 'required|string',
+            'items'                              => 'required|array|min:1|max:10',
+            'items.*.device_name'                => 'required|string|max:255',
+            'items.*.serial_number'              => 'nullable|string|max:255',
+            'items.*.equipment_details'          => 'nullable|string|max:500',
+            'items.*.complaint'                  => 'required|string',
+            'items.*.service_charge'             => 'required|numeric|min:0',
+            'items.*.spareparts'                 => 'nullable|array',
+            'items.*.spareparts.*.name'          => 'required_with:items.*.spareparts|string|max:255',
+            'items.*.spareparts.*.price'         => 'required_with:items.*.spareparts|numeric|min:0',
             'technician_id' => 'required|exists:users,id',
             'status' => 'required|in:pending,process,done,cancelled',
-            'service_fee' => 'required|numeric|min:0',
-            'actual_cost' => 'nullable|numeric|min:0',
             'completion_date' => 'nullable|date',
             'notes' => 'nullable|string',
         ]);
@@ -238,65 +249,48 @@ class ServiceController extends Controller
             }
         }
 
-        // Handle Spareparts Sync
-        $oldPartIds = $service->parts()->pluck('product_id')->toArray();
-        $newPartIds = $request->parts ?? [];
+        $items = $request->items ?? [];
+        $firstItem = $items[0] ?? [
+            'device_name' => '-', 'serial_number' => null, 
+            'equipment_details' => null, 'complaint' => '-'
+        ];
 
-        $removedParts = array_diff($oldPartIds, $newPartIds);
-        $addedParts = array_diff($newPartIds, $oldPartIds);
-
-        // Kembalikan stok untuk part yang dihapus
-        foreach ($removedParts as $removedId) {
-            $part = \App\Models\Product::find($removedId);
-            if ($part) {
-                $part->increment('stock');
-                if ($part->stock > 0) $part->update(['status' => 'available']);
-            }
-            $service->parts()->where('product_id', $removedId)->delete();
-        }
-
-        // Kurangi stok untuk part yang baru ditambahkan
-        foreach ($addedParts as $addedId) {
-            $part = \App\Models\Product::find($addedId);
-            if ($part) {
-                if ($part->stock <= 0) {
-                    return back()->withInput()->withErrors(['parts' => "Stok produk {$part->brand} {$part->model_series} tidak mencukupi."]);
-                }
-                $part->decrement('stock');
-                if ($part->stock == 0) $part->update(['status' => 'sold']);
-                
-                \App\Models\ServicePart::create([
-                    'service_id' => $service->id,
-                    'product_id' => $part->id,
-                    'part_name' => trim($part->brand . ' ' . $part->model_series),
-                    'price' => $part->price ?? 0,
-                    'quantity' => 1,
-                ]);
-            }
-        }
-
-        // Auto calculate estimated parts cost if parts are selected
-        $calculatedPartsCost = $service->parts()->sum('price');
-        $estimatedPartsCost = $request->estimated_parts_cost > 0 ? $request->estimated_parts_cost : $calculatedPartsCost;
+        $serviceFee = collect($items)->sum('service_charge');
+        $estimatedPartsCost = collect($items)->sum(function($item) {
+            return collect($item['spareparts'] ?? [])->sum('price');
+        });
 
         // Update data beserta fallback kolom lama agar tidak error
         $service->update([
             'customer_id' => $request->customer_id,
             'technician_id' => $request->technician_id,
-            'device_name' => $request->device_name,
-            'serial_number' => $request->serial_number,
-            'equipment_details' => $request->equipment_details,
-            'complaint' => $request->complaint,
+            'device_name' => $firstItem['device_name'],
+            'serial_number' => $firstItem['serial_number'] ?? null,
+            'equipment_details' => $firstItem['equipment_details'] ?? null,
+            'complaint' => $firstItem['complaint'],
+            'devices' => [], // Deprecated
             'status' => $request->status,
-            'service_fee' => $request->service_fee,
+            'service_fee' => $serviceFee,
             'estimated_parts_cost' => $estimatedPartsCost,
-            'estimated_cost' => $request->service_fee + $estimatedPartsCost, // Fallback legacy
+            'estimated_cost' => $serviceFee + $estimatedPartsCost, // Fallback legacy
             'actual_cost' => $request->actual_cost ?? 0,
             'completion_date' => $request->completion_date,
             'notes' => $request->notes,
-            'description' => $request->complaint, // Fallback legacy
-            'issue_description' => $request->complaint, // Fallback legacy
+            'description' => $firstItem['complaint'], // Fallback legacy
+            'issue_description' => $firstItem['complaint'], // Fallback legacy
         ]);
+
+        $service->items()->delete();
+        foreach ($items as $itemData) {
+            $service->items()->create([
+                'device_name' => $itemData['device_name'],
+                'serial_number' => $itemData['serial_number'] ?? null,
+                'equipment_details' => $itemData['equipment_details'] ?? null,
+                'complaint' => $itemData['complaint'],
+                'service_charge' => $itemData['service_charge'],
+                'spareparts' => array_values($itemData['spareparts'] ?? []),
+            ]);
+        }
 
         // If status changed to 'done' and has payment, create/update sale record
         if ($service->status === 'done' && $request->actual_cost > 0 && $oldStatus !== 'done') {
