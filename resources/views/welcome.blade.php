@@ -215,9 +215,11 @@
                         <h3 class="line-clamp-2 text-base md:text-lg font-bold text-gray-900 mb-1 md:mb-2 leading-tight group-hover:text-brand-600 transition-colors">
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
-                        <p class="hidden md:block line-clamp-2 text-xs md:text-sm text-gray-600 leading-relaxed mb-3">
-                            {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
-                        </p>
+                        <div class="hidden md:block mb-3">
+                            <p class="line-clamp-2 text-xs md:text-sm text-gray-600 leading-relaxed">
+                                {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
+                            </p>
+                        </div>
                         <a href="{{ route('blog.show', $post->slug) }}" class="text-xs font-bold text-brand-600 flex items-center gap-1 hover:text-brand-700 mt-auto">
                             Baca <i class='bx bx-right-arrow-alt'></i>
                         </a>
