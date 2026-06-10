@@ -58,24 +58,24 @@
             <div class="overflow-x-auto bg-white rounded-xl border-0">
                 <table class="w-full border-collapse text-left">
                     <thead>
-                        <tr class="border-b border-gray-100">
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-left">Info Produk</th>
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-left">Kategori</th>
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Stok</th>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Info Produk</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kategori</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Stok</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Harga Beli</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Harga Beli</th>
                             @endhasanyrole
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Harga Jual</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Harga Jual</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Persentase</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Persentase</th>
                             @endhasanyrole
-                            <th class="px-6 py-4 bg-gray-50/80 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($products as $product)
-                        <tr class="border-b border-gray-100 hover:bg-gray-50/50 transition-colors group">
-                            <td class="px-6 py-3.5 whitespace-nowrap">
+                        <tr class="hover:bg-gray-50/50 transition-colors group">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
                                         <i class='bx bx-laptop text-lg'></i>
@@ -94,12 +94,12 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-3.5 whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100">
                                 <span class="px-2 py-1 rounded border border-gray-200 bg-white text-gray-600 text-[11px] font-medium whitespace-nowrap">
                                     {{ $product->category->name ?? 'Uncategorized' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-3.5 text-right whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
                                 <span class="text-sm font-medium {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-700' }}">
                                     {{ $product->stock }}
                                 </span>
@@ -111,22 +111,22 @@
                                 $margin = (($finalPrice - $product->purchase_price) / $beli) * 100;
                             @endphp
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-3.5 text-right whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
                                 <p class="text-sm font-medium text-gray-700">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
                             </td>
                             @endhasanyrole
-                            <td class="px-6 py-3.5 text-right whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
                                 <p class="text-sm font-medium text-gray-700">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
                             </td>
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-3.5 text-right whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
                                 <span class="px-1.5 py-0.5 rounded-md text-xs font-bold border {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200' }}">
                                     {{ round($margin, 1) }}%
                                 </span>
                             </td>
                             @endhasanyrole
 
-                            <td class="px-6 py-3.5 text-right whitespace-nowrap">
+                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
                                 <div class="flex items-center justify-end gap-1">
                                     <a href="{{ route('products.show', $product->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
                                         <i class='bx bx-show text-lg'></i>
