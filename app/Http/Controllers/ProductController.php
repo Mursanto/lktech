@@ -12,6 +12,7 @@ use Excel;
 
 class ProductController extends Controller
 {
+    use \App\Traits\UploadsImage;
     public function index(Request $request)
     {
         $query = \App\Models\Product::with('category');
@@ -112,17 +113,14 @@ class ProductController extends Controller
 
         // 4. Handle Catalog Uploads
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_main_' . Str::slug($data['brand'] . '-' . $data['model_series']) . '.' . $file->getClientOriginalExtension();
-            $data['image_path'] = $file->storeAs('public/catalog', $filename);
+            $data['image_path'] = $this->compressAndStore($request->file('image'), 'public/catalog');
         }
 
         if ($request->hasFile('gallery_images')) {
             $galleryPaths = [];
             foreach ($request->file('gallery_images') as $index => $file) {
                 if (count($galleryPaths) >= 9) break;
-                $filename = time() . '_gallery_' . $index . '_' . Str::slug($data['brand'] . '-' . $data['model_series']) . '.' . $file->getClientOriginalExtension();
-                $galleryPaths[] = $file->storeAs('public/catalog/gallery', $filename);
+                $galleryPaths[] = $this->compressAndStore($file, 'public/catalog/gallery');
             }
             $data['gallery_images'] = $galleryPaths;
         }
@@ -199,9 +197,7 @@ class ProductController extends Controller
             if ($product->image_path && Storage::exists($product->image_path)) {
                 Storage::delete($product->image_path);
             }
-            $file = $request->file('image');
-            $filename = time() . '_main_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
-            $product->update(['image_path' => $file->storeAs('public/catalog', $filename)]);
+            $product->update(['image_path' => $this->compressAndStore($request->file('image'), 'public/catalog')]);
         }
 
         $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
@@ -226,8 +222,7 @@ class ProductController extends Controller
 
             foreach ($newFiles as $index => $file) {
                 if (count($galleryPaths) >= 9) break;
-                $filename = time() . '_gallery_' . uniqid() . '_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
-                $galleryPaths[] = $file->storeAs('public/catalog/gallery', $filename);
+                $galleryPaths[] = $this->compressAndStore($file, 'public/catalog/gallery');
                 $galleryUpdated = true;
             }
         }

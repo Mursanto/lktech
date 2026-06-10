@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RakitPcController extends Controller
 {
+    use \App\Traits\UploadsImage;
     public function index()
     {
         $packages = RakitPcPackage::orderBy('created_at', 'desc')->get();
@@ -34,7 +35,7 @@ class RakitPcController extends Controller
         $validated['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('rakit-pc', 'public');
+            $path = $this->compressAndStore($request->file('foto'), 'rakit-pc');
             $validated['foto'] = $path;
         }
 
@@ -69,7 +70,7 @@ class RakitPcController extends Controller
             if ($package->foto && Storage::disk('public')->exists($package->foto)) {
                 Storage::disk('public')->delete($package->foto);
             }
-            $path = $request->file('foto')->store('rakit-pc', 'public');
+            $path = $this->compressAndStore($request->file('foto'), 'rakit-pc');
             $validated['foto'] = $path;
         }
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 class CatalogController extends Controller
 {
+    use \App\Traits\UploadsImage;
     /**
      * Display a listing of the resource.
      *
@@ -94,10 +95,7 @@ class CatalogController extends Controller
                 Storage::delete($product->image_path);
             }
 
-            $file = $request->file('image');
-            $filename = time() . '_main_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/catalog', $filename);
-            $product->image_path = $path;
+            $product->image_path = $this->compressAndStore($request->file('image'), 'public/catalog');
         }
 
         $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
@@ -123,8 +121,7 @@ class CatalogController extends Controller
             foreach ($newFiles as $index => $file) {
                 if (count($galleryPaths) >= 9) break; // Limit to 9 gallery images
                 
-                $filename = time() . '_gallery_' . uniqid() . '_' . Str::slug($product->brand . '-' . $product->model_series) . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('public/catalog/gallery', $filename);
+                $path = $this->compressAndStore($file, 'public/catalog/gallery');
                 $galleryPaths[] = $path;
                 $galleryUpdated = true;
             }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    use \App\Traits\UploadsImage;
     public function index()
     {
         $posts = Post::latest()->paginate(10);
@@ -39,7 +40,7 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $request->file('thumbnail')->store('blogs', 'public');
+            $data['thumbnail'] = $this->compressAndStore($request->file('thumbnail'), 'blogs');
         }
 
         Post::create($data);
@@ -80,7 +81,7 @@ class PostController extends Controller
             if ($post->thumbnail) {
                 Storage::disk('public')->delete($post->thumbnail);
             }
-            $data['thumbnail'] = $request->file('thumbnail')->store('blogs', 'public');
+            $data['thumbnail'] = $this->compressAndStore($request->file('thumbnail'), 'blogs');
         }
 
         $post->update($data);
