@@ -85,7 +85,7 @@
                             </td>
                             <td class="px-6 py-3 whitespace-nowrap">
                                 <p class="text-sm font-semibold text-gray-900">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
-                                <p class="text-sm text-gray-500 mt-0.5">{{ $sale->details_count ?? 0 }} Item Terjual</p>
+                                <p class="text-sm text-gray-500 mt-0.5">{{ $sale->saleDetails->sum('quantity') }} Item Terjual</p>
                             </td>
 
                             <td class="px-6 py-3 whitespace-nowrap text-right">
