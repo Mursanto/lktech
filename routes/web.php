@@ -173,6 +173,21 @@ Route::get('/run-migrations', function () {
     }
 });
 
+// Route rahasia untuk melihat error log langsung dari browser
+Route::get('/read-logs', function () {
+    $logFile = storage_path('logs/laravel.log');
+    if (!file_exists($logFile)) {
+        return "Log file tidak ditemukan atau belum ada error yang tercatat.";
+    }
+    
+    // Ambil 500 baris terakhir dari log agar browser tidak hang
+    $file = file($logFile);
+    $lines = array_slice($file, -500);
+    
+    $content = htmlspecialchars(implode("", $lines));
+    return "<pre style='background:#111; color:#0f0; padding:20px; font-family:monospace; white-space:pre-wrap; overflow-x:auto;'>" . $content . "</pre>";
+});
+
 // Route to execute Git Pull and Composer Install from Browser (For Shared Hosting)
 Route::get('/deploy-system', function () {
     ini_set('display_errors', 1);
