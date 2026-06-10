@@ -56,36 +56,44 @@
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Feature 1 -->
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-14 h-14 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
+                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
                             <i class='bx bx-devices'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Desain Modern & Responsif</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Tampil sempurna di berbagai perangkat, mulai dari Smartphone, Tablet, hingga Layar Desktop.</p>
+                        <div>
+                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Desain Modern & Responsif</h3>
+                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Tampil sempurna di berbagai perangkat, mulai dari Smartphone, Tablet, hingga Layar Desktop.</p>
+                        </div>
                     </div>
                     <!-- Feature 2 -->
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
+                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
                             <i class='bx bx-search-alt'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">SEO Friendly</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Struktur kode dioptimasi agar website Anda lebih mudah terindeks dan ditemukan di halaman pencarian Google.</p>
+                        <div>
+                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">SEO Friendly</h3>
+                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur kode dioptimasi agar website Anda lebih mudah terindeks dan ditemukan di halaman pencarian Google.</p>
+                        </div>
                     </div>
                     <!-- Feature 3 -->
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
+                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
                             <i class='bx bx-globe'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Gratis Domain & Hosting</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Terima beres! Paket kami sudah termasuk gratis pendaftaran Domain (.com) dan Hosting berkecepatan tinggi untuk tahun pertama.</p>
+                        <div>
+                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Gratis Domain & Hosting</h3>
+                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Terima beres! Paket kami sudah termasuk gratis pendaftaran Domain (.com) dan Hosting berkecepatan tinggi untuk tahun pertama.</p>
+                        </div>
                     </div>
                     <!-- Feature 4 -->
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
+                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
                             <i class='bx bx-support'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Support & Maintenance</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Dukungan teknis penuh setelah website dirilis untuk memastikan semuanya berjalan lancar dan aman.</p>
+                        <div>
+                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Support & Maintenance</h3>
+                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Dukungan teknis penuh setelah website dirilis untuk memastikan semuanya berjalan lancar dan aman.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,48 +176,58 @@
                     <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0"></div>
 
                     <!-- Step 1 -->
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-3xl font-black shadow-sm mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
+                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             1
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2">Konsultasi</h4>
-                        <p class="text-xs text-gray-500 px-2">Diskusi konsep, target audiens, dan fitur yang dibutuhkan.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Konsultasi</h4>
+                            <p class="hidden md:block text-xs text-gray-500 px-2">Diskusi konsep, target audiens, dan fitur yang dibutuhkan.</p>
+                        </div>
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-3xl font-black shadow-sm mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
+                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             2
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2">Desain UI/UX</h4>
-                        <p class="text-xs text-gray-500 px-2">Pembuatan mockup visual yang memukau dan mudah digunakan.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Desain UI/UX</h4>
+                            <p class="hidden md:block text-xs text-gray-500 px-2">Pembuatan mockup visual yang memukau dan mudah digunakan.</p>
+                        </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-3xl font-black shadow-sm mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
+                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             3
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2">Development</h4>
-                        <p class="text-xs text-gray-500 px-2">Proses coding yang rapi, optimasi kecepatan, dan keamanan.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Development</h4>
+                            <p class="hidden md:block text-xs text-gray-500 px-2">Proses coding yang rapi, optimasi kecepatan, dan keamanan.</p>
+                        </div>
                     </div>
 
                     <!-- Step 4 -->
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-3xl font-black shadow-sm mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
+                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             4
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2">Revisi</h4>
-                        <p class="text-xs text-gray-500 px-2">Kami berikan kesempatan revisi agar hasil benar-benar sempurna.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Revisi</h4>
+                            <p class="hidden md:block text-xs text-gray-500 px-2">Kami berikan kesempatan revisi agar hasil benar-benar sempurna.</p>
+                        </div>
                     </div>
 
                     <!-- Step 5 -->
-                    <div class="relative z-10">
-                        <div class="w-20 h-20 mx-auto bg-emerald-500 border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] mb-4">
+                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
+                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-emerald-500 border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] md:mb-4">
                             <i class='bx bx-check'></i>
                         </div>
-                        <h4 class="font-bold text-emerald-600 mb-2">Rilis & Panduan</h4>
-                        <p class="text-xs text-gray-500 px-2">Website online! Anda akan dibekali panduan penggunaannya.</p>
+                        <div>
+                            <h4 class="font-bold text-emerald-600 text-sm md:text-base md:mb-2">Rilis & Panduan</h4>
+                            <p class="hidden md:block text-xs text-gray-500 px-2">Website online! Anda akan dibekali panduan penggunaannya.</p>
+                        </div>
                     </div>
 
                 </div>
