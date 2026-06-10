@@ -141,57 +141,57 @@
                 
                 <div class="relative">
                     <!-- Vertical Line -->
-                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-brand-100 via-brand-200 to-emerald-100"></div>
+                    <div class="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-brand-100 via-brand-200 to-emerald-100"></div>
                     
-                    <div class="space-y-12 md:space-y-0 relative">
+                    <div class="space-y-0 relative">
                         <!-- Step 1 -->
-                        <div class="relative flex flex-col md:flex-row items-center justify-between md:mb-20 group">
-                            <div class="order-2 md:order-1 md:w-5/12 text-center md:text-right pt-6 md:pt-0">
-                                <h4 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Konsultasi Spek & Harga</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Diskusikan kebutuhan dan anggaran Anda. Teknisi kami akan meracik komponen terbaik yang 100% kompatibel tanpa ada bottleneck yang mubazir.</p>
+                        <div class="relative flex flex-row items-start md:items-center justify-between mb-8 md:mb-20 group">
+                            <div class="order-2 md:order-1 ml-4 md:ml-0 md:w-5/12 text-left md:text-right">
+                                <h4 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2 font-montserrat">Konsultasi Spek & Harga</h4>
+                                <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Diskusikan kebutuhan dan anggaran Anda. Teknisi kami akan meracik komponen terbaik yang 100% kompatibel tanpa ada bottleneck yang mubazir.</p>
                             </div>
-                            <div class="order-1 md:order-2 z-10 flex items-center justify-center w-14 h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">1</div>
-                            <div class="order-3 md:order-3 md:w-5/12"></div>
+                            <div class="order-1 md:order-2 z-10 shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-lg md:text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">1</div>
+                            <div class="hidden md:block order-3 md:w-5/12"></div>
                         </div>
 
                         <!-- Step 2 -->
-                        <div class="relative flex flex-col md:flex-row items-center justify-between md:mb-20 group">
-                            <div class="order-2 md:order-1 md:w-5/12 hidden md:block"></div>
-                            <div class="order-1 md:order-2 z-10 flex items-center justify-center w-14 h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">2</div>
-                            <div class="order-3 md:order-3 md:w-5/12 text-center md:text-left pt-6 md:pt-0">
-                                <h4 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Pembayaran / DP</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Setelah *parts list* disepakati, Anda dapat melakukan pembayaran DP atau Full Payment sebagai tanda jadi agar komponen bisa langsung kami proses.</p>
+                        <div class="relative flex flex-row items-start md:items-center justify-between mb-8 md:mb-20 group">
+                            <div class="hidden md:block order-1 md:w-5/12"></div>
+                            <div class="order-1 md:order-2 z-10 shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-lg md:text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">2</div>
+                            <div class="order-2 md:order-3 ml-4 md:ml-0 md:w-5/12 text-left">
+                                <h4 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2 font-montserrat">Pembayaran / DP</h4>
+                                <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Setelah *parts list* disepakati, Anda dapat melakukan pembayaran DP atau Full Payment sebagai tanda jadi agar komponen bisa langsung kami proses.</p>
                             </div>
                         </div>
 
                         <!-- Step 3 -->
-                        <div class="relative flex flex-col md:flex-row items-center justify-between md:mb-20 group">
-                            <div class="order-2 md:order-1 md:w-5/12 text-center md:text-right pt-6 md:pt-0">
-                                <h4 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Perakitan & Cable Management</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Komponen dirakit dengan sangat teliti. Kami menjamin *cable management* yang sangat rapi untuk estetika dan sirkulasi udara (airflow) casing yang maksimal.</p>
+                        <div class="relative flex flex-row items-start md:items-center justify-between mb-8 md:mb-20 group">
+                            <div class="order-2 md:order-1 ml-4 md:ml-0 md:w-5/12 text-left md:text-right">
+                                <h4 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2 font-montserrat">Perakitan & Cable Management</h4>
+                                <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Komponen dirakit dengan sangat teliti. Kami menjamin *cable management* yang sangat rapi untuk estetika dan sirkulasi udara (airflow) casing yang maksimal.</p>
                             </div>
-                            <div class="order-1 md:order-2 z-10 flex items-center justify-center w-14 h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">3</div>
-                            <div class="order-3 md:order-3 md:w-5/12"></div>
+                            <div class="order-1 md:order-2 z-10 shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-lg md:text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">3</div>
+                            <div class="hidden md:block order-3 md:w-5/12"></div>
                         </div>
 
                         <!-- Step 4 -->
-                        <div class="relative flex flex-col md:flex-row items-center justify-between md:mb-20 group">
-                            <div class="order-2 md:order-1 md:w-5/12 hidden md:block"></div>
-                            <div class="order-1 md:order-2 z-10 flex items-center justify-center w-14 h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">4</div>
-                            <div class="order-3 md:order-3 md:w-5/12 text-center md:text-left pt-6 md:pt-0">
-                                <h4 class="text-xl font-bold text-gray-900 mb-2 font-montserrat">Strict Stress Testing (QC)</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Instalasi OS & Driver original. PC wajib melewati stress test ketat (Cinebench/Furmark) untuk memastikan tidak ada overheat dan kerusakan pabrik (defect).</p>
+                        <div class="relative flex flex-row items-start md:items-center justify-between mb-8 md:mb-20 group">
+                            <div class="hidden md:block order-1 md:w-5/12"></div>
+                            <div class="order-1 md:order-2 z-10 shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-white border-4 border-brand-100 text-brand-600 font-black text-lg md:text-xl shadow-[0_0_15px_rgba(37,99,235,0.1)] group-hover:bg-brand-600 group-hover:border-brand-200 group-hover:text-white transition-all duration-300">4</div>
+                            <div class="order-2 md:order-3 ml-4 md:ml-0 md:w-5/12 text-left">
+                                <h4 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2 font-montserrat">Strict Stress Testing (QC)</h4>
+                                <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Instalasi OS & Driver original. PC wajib melewati stress test ketat (Cinebench/Furmark) untuk memastikan tidak ada overheat dan kerusakan pabrik (defect).</p>
                             </div>
                         </div>
 
                         <!-- Step 5 -->
-                        <div class="relative flex flex-col md:flex-row items-center justify-between group">
-                            <div class="order-2 md:order-1 md:w-5/12 text-center md:text-right pt-6 md:pt-0">
-                                <h4 class="text-xl font-bold text-emerald-600 mb-2 font-montserrat">Penyerahan Unit Selesai</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">PC impian Anda siap tempur! Silakan ambil langsung di toko LKTech, atau kami kirim ke alamat Anda dengan packing kayu super aman berasuransi.</p>
+                        <div class="relative flex flex-row items-start md:items-center justify-between group mb-8 md:mb-0">
+                            <div class="order-2 md:order-1 ml-4 md:ml-0 md:w-5/12 text-left md:text-right">
+                                <h4 class="text-base md:text-xl font-bold text-emerald-600 mb-1 md:mb-2 font-montserrat">Penyerahan Unit Selesai</h4>
+                                <p class="text-xs md:text-sm text-gray-500 leading-relaxed">PC impian Anda siap tempur! Silakan ambil langsung di toko LKTech, atau kami kirim ke alamat Anda dengan packing kayu super aman berasuransi.</p>
                             </div>
-                            <div class="order-1 md:order-2 z-10 flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 border-4 border-emerald-100 text-white font-black text-2xl shadow-[0_0_20px_rgba(16,185,129,0.3)]"><i class='bx bx-check'></i></div>
-                            <div class="order-3 md:order-3 md:w-5/12"></div>
+                            <div class="order-1 md:order-2 z-10 shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-500 border-4 border-emerald-100 text-white font-black text-xl md:text-2xl shadow-[0_0_20px_rgba(16,185,129,0.3)]"><i class='bx bx-check'></i></div>
+                            <div class="hidden md:block order-3 md:w-5/12"></div>
                         </div>
                     </div>
                 </div>
