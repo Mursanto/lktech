@@ -162,4 +162,15 @@ Route::get('/storage/{path}', function($path) {
     return response()->file($filePath);
 })->where('path', '.*');
 
+// Temporary Route for cPanel Shared Hosting (Run Migration & Cache Clear)
+Route::get('/run-migrations', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        return 'Migrasi Database dan Clear Cache Berhasil! Silakan kembali ke halaman utama.';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';
