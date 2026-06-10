@@ -26,10 +26,14 @@ class PublicCatalogController extends Controller
                       $cat->where('name', 'like', "%{$search}%");
                   });
             });
+            $products = $query->latest()->paginate(12)->withQueryString();
+            $collectionToTransform = $products->getCollection();
+        } else {
+            $products = $query->latest()->take(12)->get();
+            $collectionToTransform = $products;
         }
-        $products = $query->latest()->paginate(12);
 
-        $products->getCollection()->transform(function ($product) {
+        $collectionToTransform->transform(function ($product) {
             if ($product->image_path) {
                 $product->display_image = Storage::url($product->image_path);
             } else {

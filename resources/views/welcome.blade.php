@@ -164,9 +164,11 @@
             </div>
 
             <!-- Pagination -->
+            @if(method_exists($products, 'links'))
             <div class="mt-8">
                 {{ $products->links() }}
             </div>
+            @endif
             
         </div>
         <!-- Blog & Panduan Section -->
