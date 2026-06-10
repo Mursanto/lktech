@@ -99,8 +99,8 @@
             </div>
             @endif
 
-            <!-- 4 Info Cards Section -->
-            <div class="mb-10">
+            <!-- Info Cards Section (Hidden on Mobile) -->
+            <div class="hidden md:block mb-10">
                 <x-info-cards />
             </div>
 
