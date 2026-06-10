@@ -107,7 +107,7 @@ class PublicCatalogController extends Controller
         foreach($displayCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
             
-            $query = \App\Models\Product::whereIn('category_id', $categoryIds)
+            $query = \App\Models\Product::with('category')->whereIn('category_id', $categoryIds)
                         ->where('stock', '>', 0)
                         ->where('status', '!=', 'sold');
             
@@ -125,11 +125,13 @@ class PublicCatalogController extends Controller
 
             if (!$selectedCategoryId && !$request->has('search')) {
                 $products = $query->latest()->take(5)->get();
+                $collectionToTransform = $products;
             } else {
-                $products = $query->latest()->get();
+                $products = $query->latest()->paginate(12)->withQueryString();
+                $collectionToTransform = $products->getCollection();
             }
 
-            $products->transform(function ($product) {
+            $collectionToTransform->transform(function ($product) {
                 if ($product->image_path) {
                     $product->display_image = Storage::url($product->image_path);
                 } else {

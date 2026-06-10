@@ -132,6 +132,10 @@
                                     Lihat Semua {{ $category->name }} ({{ $category->total_count }}) &rarr;
                                 </a>
                             </div>
+                        @elseif(method_exists($category->all_products, 'links'))
+                            <div class="mt-8">
+                                {{ $category->all_products->links() }}
+                            </div>
                         @endif
                     </section>
                     @endif
