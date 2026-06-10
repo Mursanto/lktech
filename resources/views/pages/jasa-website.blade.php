@@ -171,61 +171,61 @@
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Proses yang terstruktur untuk memastikan hasil akhir yang memuaskan dan sesuai ekspektasi.</p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4 text-center relative">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 text-center relative">
                     <!-- Connecting Line for Desktop -->
                     <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0"></div>
 
                     <!-- Step 1 -->
-                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
-                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
+                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             1
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Konsultasi</h4>
+                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Konsultasi</h4>
                             <p class="hidden md:block text-xs text-gray-500 px-2">Diskusi konsep, target audiens, dan fitur yang dibutuhkan.</p>
                         </div>
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
-                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
+                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             2
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Desain UI/UX</h4>
+                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Desain UI/UX</h4>
                             <p class="hidden md:block text-xs text-gray-500 px-2">Pembuatan mockup visual yang memukau dan mudah digunakan.</p>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
-                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
+                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             3
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Development</h4>
+                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Development</h4>
                             <p class="hidden md:block text-xs text-gray-500 px-2">Proses coding yang rapi, optimasi kecepatan, dan keamanan.</p>
                         </div>
                     </div>
 
                     <!-- Step 4 -->
-                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
-                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-sm md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
+                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
                             4
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-sm md:text-base md:mb-2">Revisi</h4>
+                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Revisi</h4>
                             <p class="hidden md:block text-xs text-gray-500 px-2">Kami berikan kesempatan revisi agar hasil benar-benar sempurna.</p>
                         </div>
                     </div>
 
                     <!-- Step 5 -->
-                    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start text-left md:text-center gap-4 md:block">
-                        <div class="w-12 h-12 md:w-20 md:h-20 shrink-0 md:mx-auto bg-emerald-500 border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-xl md:text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] md:mb-4">
+                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100 col-span-2 md:col-span-1">
+                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-emerald-500 border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] mb-2 md:mb-4">
                             <i class='bx bx-check'></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-emerald-600 text-sm md:text-base md:mb-2">Rilis & Panduan</h4>
+                            <h4 class="font-bold text-emerald-600 text-xs md:text-base leading-tight md:mb-2">Rilis & Panduan</h4>
                             <p class="hidden md:block text-xs text-gray-500 px-2">Website online! Anda akan dibekali panduan penggunaannya.</p>
                         </div>
                     </div>
