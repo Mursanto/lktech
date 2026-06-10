@@ -21,14 +21,27 @@ trait UploadsImage
     public function compressAndStore(UploadedFile $file, $directory, $maxWidth = 1000, $quality = 80)
     {
         $manager = new ImageManager(new Driver());
-        $image = $manager->read($file);
-
-        if ($image->width() > $maxWidth) {
-            $image->scale(width: $maxWidth);
+        
+        // Kompatibilitas untuk versi Intervention Image yang berbeda
+        if (method_exists($manager, 'read')) {
+            $image = $manager->read($file->getPathname());
+        } elseif (method_exists($manager, 'decodePath')) {
+            $image = $manager->decodePath($file->getPathname());
+        } else {
+            $image = $manager->decode($file->getPathname());
         }
 
-        $filename = uniqid() . '.webp';
-        $encoded = $image->toWebp($quality);
+        if ($image->width() > $maxWidth) {
+            $image->scaleDown(width: $maxWidth);
+        }
+
+        $filename = uniqid('img_') . '_' . time() . '.webp';
+        
+        if (method_exists($image, 'toWebp')) {
+            $encoded = $image->toWebp($quality);
+        } else {
+            $encoded = $image->encode(new \Intervention\Image\Encoders\WebpEncoder($quality));
+        }
 
         // Remove trailing slash if exists
         $directory = rtrim($directory, '/');

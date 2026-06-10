@@ -30,8 +30,17 @@ class ConvertImagesToWebp extends Command
             if (!str_ends_with(strtolower($product->image_path), '.webp') && $disk->exists($product->image_path)) {
                 $fileContent = $disk->get($product->image_path);
                 try {
-                    $image = $manager->read($fileContent);
-                    $encoded = $image->toWebp(80);
+                    if (method_exists($manager, 'read')) {
+                        $image = $manager->read($fileContent);
+                    } else {
+                        $image = $manager->decode($fileContent);
+                    }
+                    
+                    if (method_exists($image, 'toWebp')) {
+                        $encoded = $image->toWebp(80);
+                    } else {
+                        $encoded = $image->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+                    }
                     
                     $newPath = preg_replace('/\.[^.]+$/', '.webp', $product->image_path);
                     $disk->put($newPath, (string) $encoded);
