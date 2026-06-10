@@ -173,4 +173,30 @@ Route::get('/run-migrations', function () {
     }
 });
 
+// Route to execute Git Pull and Composer Install from Browser (For Shared Hosting)
+Route::get('/deploy-system', function () {
+    try {
+        $output = [];
+        $output[] = "<b>Memulai Deployment Sistem...</b><br>";
+
+        // 1. Eksekusi Git Pull
+        exec('git pull origin main 2>&1', $outGit, $retGit);
+        $output[] = "<b>Git Pull Status:</b><br>" . nl2br(implode("\n", $outGit)) . "<br>";
+
+        // 2. Eksekusi Composer Install
+        // Menggunakan path absolute composer jika memungkinkan, atau sekadar composer
+        putenv('COMPOSER_HOME=' . storage_path('framework/cache'));
+        exec('composer install --no-dev --optimize-autoloader 2>&1', $outComp, $retComp);
+        $output[] = "<b>Composer Install Status:</b><br>" . nl2br(implode("\n", $outComp)) . "<br>";
+
+        // 3. Clear Cache
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        $output[] = "<b>Optimize Clear:</b> Berhasil membersihkan cache Laravel.<br>";
+
+        return implode("<br>", $output);
+    } catch (\Exception $e) {
+        return '<b>Terjadi Kesalahan:</b> ' . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';
