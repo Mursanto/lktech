@@ -412,7 +412,7 @@ class ServiceController extends Controller
 
     public function export()
     {
-        return redirect()->back()->with('error', 'Fungsi export belum tersedia.');
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ServicesExport, 'servis.xlsx');
     }
 }
 

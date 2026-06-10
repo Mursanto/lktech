@@ -168,7 +168,7 @@ class RentalController extends Controller
 
     public function export()
     {
-        return redirect()->back()->with('error', 'Fungsi export belum tersedia.');
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\RentalsExport, 'sewa_laptop.xlsx');
     }
 }
 

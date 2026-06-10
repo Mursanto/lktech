@@ -58,53 +58,53 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">No. Kontrak</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Penyewa</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Unit Laptop</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Batas Waktu</th>
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Kontrak</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Penyewa</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Unit</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Tgl Kembali</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($rentals as $rental)
                         <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
-                            <td class="px-5 py-2.5 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-xs text-gray-500 font-medium">Tgl: {{ $rental->created_at->format('d/m/y') }}</p>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                <p class="text-xs font-semibold text-gray-900">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-[10px] text-gray-500 font-medium">Tgl: {{ $rental->created_at->format('d/m/y') }}</p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $rental->customer->name ?? 'Unknown' }}</p>
-                                <p class="text-xs text-gray-500 font-medium">{{ $rental->customer->phone ?? '-' }}</p>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2 max-w-[150px] truncate" title="{{ $rental->customer->name ?? 'Unknown' }}">{{ $rental->customer->name ?? 'Unknown' }}</p>
+                                <p class="text-[10px] text-gray-500 font-medium">{{ $rental->customer->phone ?? '-' }}</p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap">
+                            <td class="px-4 py-2 whitespace-nowrap">
                                 <div>
-                                    <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2">
+                                    <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2 max-w-[150px] truncate" title="{{ $rental->product ? $rental->product->brand . ' ' . $rental->product->model_series : ($rental->laptop_name ?? 'Unit Tidak Diketahui') }}">
                                         {{ $rental->product ? $rental->product->brand . ' ' . $rental->product->model_series : ($rental->laptop_name ?? 'Unit Tidak Diketahui') }}
                                     </p>
                                     <div class="flex items-center gap-1.5 mt-0.5">
-                                        <p class="text-xs text-gray-500 font-medium tracking-tight">
+                                        <p class="text-[10px] text-gray-500 font-medium tracking-tight">
                                             ID: {{ $rental->product ? '#' . str_pad($rental->product->id, 5, '0', STR_PAD_LEFT) : 'N/A' }}
                                         </p>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap">
+                            <td class="px-4 py-2 whitespace-nowrap">
                                 @php
                                     $isLate = ($rental->status == 'active' && now()->startOfDay() > $rental->return_date) || $rental->status == 'overdue';
                                     $isDone = $rental->status == 'completed';
                                 @endphp
-                                <p class="text-sm font-semibold {{ $isLate ? 'text-red-600' : ($isDone ? 'text-emerald-600' : 'text-gray-900') }}">{{ $rental->return_date->format('d M Y') }}</p>
-                                <p class="text-[10px] font-medium uppercase {{ $isLate ? 'text-red-400' : ($isDone ? 'text-emerald-400' : 'text-gray-500') }}">
+                                <p class="text-xs font-semibold {{ $isLate ? 'text-red-600' : ($isDone ? 'text-emerald-600' : 'text-gray-900') }}">{{ $rental->return_date->format('d M Y') }}</p>
+                                <p class="text-[9px] font-medium uppercase {{ $isLate ? 'text-red-400' : ($isDone ? 'text-emerald-400' : 'text-gray-500') }}">
                                     {{ $isLate ? 'Terlambat!' : ($isDone ? 'Selesai' : 'Estimasi Kembali') }}
                                 </p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap text-right">
+                            <td class="px-4 py-2 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('rentals.show', $rental->id) }}" class="p-1 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
-                                        <i class='bx bx-show text-lg'></i>
+                                    <a href="{{ route('rentals.show', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
+                                        <i class='bx bx-show text-base'></i>
                                     </a>
-                                    <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-sm text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Kembalikan / Update">
-                                        <i class='bx bx-redo text-lg'></i>
+                                    <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Kembalikan / Update">
+                                        <i class='bx bx-redo text-base'></i>
                                     </a>
                                 </div>
                             </td>

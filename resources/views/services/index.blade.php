@@ -45,29 +45,29 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">No. Nota & Tgl</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Perangkat</th>
-                            <th class="px-6 py-3 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">No. Nota</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Perangkat</th>
+                            <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($services as $service)
                         <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
-                            <td class="px-5 py-2.5 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-xs text-gray-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                <p class="text-xs font-semibold text-gray-900">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-[10px] text-gray-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $service->customer->name ?? 'Unknown' }}</p>
-                                <p class="text-xs text-gray-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $service->customer->name ?? 'Unknown' }}</p>
+                                <p class="text-[10px] text-gray-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $service->device_name }}</p>
-                                <p class="text-[10px] text-amber-600 font-medium uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2 max-w-[150px] truncate" title="{{ $service->device_name }}">{{ $service->device_name }}</p>
+                                <p class="text-[9px] text-amber-600 font-medium uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap text-center">
+                            <td class="px-4 py-2 whitespace-nowrap text-center">
                                 @php
                                     $statusClass = match($service->status) {
                                         'pending' => 'bg-slate-50 text-slate-700',
@@ -77,18 +77,18 @@
                                         default => 'bg-gray-50 text-gray-700'
                                     };
                                 @endphp
-                                <span class="px-2.5 py-1 rounded-full {{ $statusClass }} text-[10px] font-semibold uppercase tracking-wider">
+                                <span class="px-2 py-0.5 rounded-full {{ $statusClass }} text-[9px] font-semibold uppercase tracking-wider">
                                     {{ $service->status }}
                                 </span>
                             </td>
-                            <td class="px-5 py-2.5 whitespace-nowrap text-right">
+                            <td class="px-4 py-2 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('services.show', $service->id) }}" class="p-1 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
-                                        <i class='bx bx-show text-lg'></i>
+                                    <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
+                                        <i class='bx bx-show text-base'></i>
                                     </a>
                                     @hasanyrole('Admin|Teknisi')
-                                    <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-sm text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Update Status">
-                                        <i class='bx bx-refresh text-lg'></i>
+                                    <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Update Status">
+                                        <i class='bx bx-refresh text-base'></i>
                                     </a>
                                     @endhasanyrole
                                 </div>
