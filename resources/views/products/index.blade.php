@@ -59,23 +59,23 @@
                 <table class="w-full border-collapse text-left">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Info Produk</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kategori</th>
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Stok</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Info Produk</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Kategori</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Stok</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Harga Beli</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Harga Beli</th>
                             @endhasanyrole
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Harga Jual</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Harga Jual</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Persentase</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Persentase</th>
                             @endhasanyrole
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($products as $product)
-                        <tr class="hover:bg-gray-50/50 transition-colors group">
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100">
+                        <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
+                            <td class="px-6 py-3 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
                                         <i class='bx bx-laptop text-lg'></i>
@@ -83,27 +83,27 @@
                                     <div>
                                         <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $product->brand }} {{ $product->model_series }}</p>
                                         <div class="flex items-center gap-1.5 mt-0.5">
-                                            <p class="text-xs text-gray-400 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                            <p class="text-sm text-gray-500 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
                                             {{-- Badge Tipe Stok --}}
                                             @if(($product->tipe_stok ?? 'ready_stock') === 'ready_stock')
-                                                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-700 uppercase tracking-wider border border-emerald-100">Ready</span>
+                                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 uppercase tracking-wider">Ready</span>
                                             @else
-                                                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-orange-50 text-orange-700 uppercase tracking-wider border border-orange-100">Open Order</span>
+                                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-orange-50 text-orange-700 uppercase tracking-wider">Open Order</span>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100">
-                                <span class="px-2 py-1 rounded border border-gray-200 bg-white text-gray-600 text-[11px] font-medium whitespace-nowrap">
+                            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                <span class="px-2 py-1 rounded-full bg-gray-50 text-gray-600 text-xs font-semibold whitespace-nowrap border border-gray-100">
                                     {{ $product->category->name ?? 'Uncategorized' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
-                                <span class="text-sm font-medium {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-700' }}">
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
+                                <span class="text-sm font-semibold {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-900' }}">
                                     {{ $product->stock }}
                                 </span>
-                                <span class="text-[10px] font-medium text-gray-400 uppercase ml-0.5">Unit</span>
+                                <span class="text-xs font-medium text-gray-500 uppercase ml-0.5">Unit</span>
                             </td>
                             @php
                                 $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
@@ -111,22 +111,22 @@
                                 $margin = (($finalPrice - $product->purchase_price) / $beli) * 100;
                             @endphp
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
-                                <p class="text-sm font-medium text-gray-700">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
+                                <p class="text-sm font-semibold text-gray-900">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
                             </td>
                             @endhasanyrole
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
-                                <p class="text-sm font-medium text-gray-700">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
+                                <p class="text-sm font-semibold text-gray-900">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
                             </td>
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
-                                <span class="px-1.5 py-0.5 rounded-md text-xs font-bold border {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200' }}">
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700' }}">
                                     {{ round($margin, 1) }}%
                                 </span>
                             </td>
                             @endhasanyrole
 
-                            <td class="px-6 py-3.5 whitespace-nowrap text-sm text-gray-700 border-b border-gray-100 text-right">
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
                                     <a href="{{ route('products.show', $product->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
                                         <i class='bx bx-show text-lg'></i>

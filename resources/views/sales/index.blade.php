@@ -52,58 +52,56 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-natural-50/50 border-b border-natural-100">
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Faktur & Tanggal</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Pelanggan</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-center">Metode</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider">Total Transaksi</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Faktur & Tanggal</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
+                            <th class="px-6 py-3 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($sales as $sale)
-                        <tr class="hover:bg-natural-50/30 transition-colors group">
-                            <td class="px-6 py-4">
-                                <p class="text-sm font-semibold text-natural-800 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
-                                <p class="text-xs text-natural-500 mt-1">{{ $sale->created_at->format('d M Y, H:i') }}</p>
-
+                        <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
+                            <td class="px-6 py-3 whitespace-nowrap">
+                                <p class="text-sm font-semibold text-gray-900 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-sm text-gray-500 mt-1">{{ $sale->created_at->format('d M Y, H:i') }}</p>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-3 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-natural-100 flex items-center justify-center text-natural-500 text-xs font-bold">
+                                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-sm font-bold">
                                         {{ substr($sale->customer->name ?? 'C', 0, 1) }}
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2 leading-tight">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
-                                        <p class="text-xs text-natural-500 mt-1">{{ $sale->customer->phone ?? '-' }}</p>
+                                        <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2 leading-tight">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
+                                        <p class="text-sm text-gray-500 mt-1">{{ $sale->customer->phone ?? '-' }}</p>
                                     </div>
-
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider">
+                            <td class="px-6 py-3 whitespace-nowrap text-center">
+                                <span class="px-2.5 py-1 text-xs font-semibold rounded-full uppercase tracking-wider {{ strtolower($sale->payment_method) == 'cash' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700' }}">
                                     {{ $sale->payment_method ?? 'Cash' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4">
-                                <p class="text-sm font-semibold text-emerald-600">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
-                                <p class="text-xs text-natural-500 mt-0.5">{{ $sale->details_count ?? 0 }} Item Terjual</p>
+                            <td class="px-6 py-3 whitespace-nowrap">
+                                <p class="text-sm font-semibold text-gray-900">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
+                                <p class="text-sm text-gray-500 mt-0.5">{{ $sale->details_count ?? 0 }} Item Terjual</p>
                             </td>
 
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-6 py-3 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('sales.show', $sale->id) }}" class="p-2 text-natural-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
+                                    <a href="{{ route('sales.show', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
                                         <i class='bx bx-show text-lg'></i>
                                     </a>
                                     @hasanyrole('Admin|Staff')
-                                    <a href="{{ route('sales.edit', $sale->id) }}" class="p-2 text-natural-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Edit">
+                                    <a href="{{ route('sales.edit', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Edit">
                                         <i class='bx bx-edit-alt text-lg'></i>
                                     </a>
                                     @endhasanyrole
                                     @role('Admin')
                                     <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus transaksi ini?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="p-2 text-natural-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
+                                        <button type="submit" class="p-1.5 text-sm text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
                                             <i class='bx bx-trash text-lg'></i>
                                         </button>
                                     </form>
