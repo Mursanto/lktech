@@ -41,7 +41,7 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-md:pb-24">
+    <main class="flex-grow w-full pb-20 md:pb-0">
         <!-- Hero Section -->
         <x-inner-page-header title="Jasa Pembuatan Website" subtitle="Tingkatkan kredibilitas bisnis Anda dengan website profesional." />
 

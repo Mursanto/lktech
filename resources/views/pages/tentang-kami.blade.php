@@ -41,7 +41,7 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-12 lg:pb-20 max-md:pb-24">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 pb-20 md:pb-0 lg:pt-12 lg:pb-20">
         <x-inner-page-header title="Kisah LKtech" subtitle="Mengenal lebih dekat perjalanan dan komitmen kami untuk Anda." />
 
             <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">

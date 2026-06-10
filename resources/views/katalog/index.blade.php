@@ -63,7 +63,7 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-md:pb-24">
+    <main class="flex-grow w-full pb-20 md:pb-0">
         
         <x-inner-page-header title="Katalog Produk & Layanan" subtitle="Jelajahi berbagai perangkat keras premium, paket perakitan, dan solusi IT terbaik dari LKtech." />
 

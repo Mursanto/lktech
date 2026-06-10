@@ -41,7 +41,7 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-md:pb-24">
+    <main class="flex-grow w-full pb-20 md:pb-0">
         <!-- Hero Section -->
         <x-inner-page-header title="Rakit PC Impian Anda" subtitle="Mulai dari PC Office hingga PC Gaming & Rendering kelas atas. Perakitan profesional sesuai budget Anda." />
 
