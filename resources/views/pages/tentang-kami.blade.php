@@ -87,28 +87,34 @@
                         <h2 class="text-2xl font-bold text-center text-gray-900 mb-10 font-montserrat">Mengapa Memilih Kami?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <!-- Card 1 -->
-                            <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center group">
-                                <div class="w-16 h-16 bg-emerald-50 group-hover:bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-5 transition-colors">
-                                    <i class='bx bx-check-shield text-3xl'></i>
+                            <div class="flex flex-row md:flex-col items-start md:items-center text-left md:text-center bg-white p-4 md:p-8 rounded-xl md:rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group gap-4 md:gap-0">
+                                <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-emerald-50 group-hover:bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center md:mx-auto md:mb-5 transition-colors">
+                                    <i class='bx bx-check-shield text-xl md:text-3xl'></i>
                                 </div>
-                                <h4 class="font-bold text-gray-900 mb-3 text-lg">Quality Control Ketat</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Setiap produk melewati 2 lapis pengujian teknis untuk memastikan performa dan fisik maksimal.</p>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1 md:mb-3 text-sm md:text-lg leading-tight">Quality Control Ketat</h4>
+                                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Setiap produk melewati 2 lapis pengujian teknis untuk memastikan performa dan fisik maksimal.</p>
+                                </div>
                             </div>
                             <!-- Card 2 -->
-                            <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center group">
-                                <div class="w-16 h-16 bg-blue-50 group-hover:bg-blue-100 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-5 transition-colors">
-                                    <i class='bx bx-money text-3xl'></i>
+                            <div class="flex flex-row md:flex-col items-start md:items-center text-left md:text-center bg-white p-4 md:p-8 rounded-xl md:rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group gap-4 md:gap-0">
+                                <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-blue-50 group-hover:bg-blue-100 text-brand-500 rounded-full flex items-center justify-center md:mx-auto md:mb-5 transition-colors">
+                                    <i class='bx bx-money text-xl md:text-3xl'></i>
                                 </div>
-                                <h4 class="font-bold text-gray-900 mb-3 text-lg">Harga Transparan</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Penawaran harga terbaik dan sangat bersaing di pasaran tanpa adanya biaya tersembunyi.</p>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1 md:mb-3 text-sm md:text-lg leading-tight">Harga Transparan</h4>
+                                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Penawaran harga terbaik dan sangat bersaing di pasaran tanpa adanya biaya tersembunyi.</p>
+                                </div>
                             </div>
                             <!-- Card 3 -->
-                            <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center group">
-                                <div class="w-16 h-16 bg-purple-50 group-hover:bg-purple-100 text-purple-500 rounded-full flex items-center justify-center mx-auto mb-5 transition-colors">
-                                    <i class='bx bx-support text-3xl'></i>
+                            <div class="flex flex-row md:flex-col items-start md:items-center text-left md:text-center bg-white p-4 md:p-8 rounded-xl md:rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group gap-4 md:gap-0">
+                                <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-purple-50 group-hover:bg-purple-100 text-purple-500 rounded-full flex items-center justify-center md:mx-auto md:mb-5 transition-colors">
+                                    <i class='bx bx-support text-xl md:text-3xl'></i>
                                 </div>
-                                <h4 class="font-bold text-gray-900 mb-3 text-lg">Layanan Purna Jual</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Dukungan teknisi (*after-sales*) yang ramah, cepat tanggap, dan senantiasa siap membantu.</p>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1 md:mb-3 text-sm md:text-lg leading-tight">Layanan Purna Jual</h4>
+                                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Dukungan teknisi (*after-sales*) yang ramah, cepat tanggap, dan senantiasa siap membantu.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
