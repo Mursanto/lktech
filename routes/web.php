@@ -175,7 +175,15 @@ Route::get('/run-migrations', function () {
 
 // Route to execute Git Pull and Composer Install from Browser (For Shared Hosting)
 Route::get('/deploy-system', function () {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    
     try {
+        if (!function_exists('exec')) {
+            return "<b>Error:</b> Fungsi exec() dinonaktifkan di server hosting Anda (biasanya karena alasan keamanan cPanel). Anda harus menjalankan composer install via terminal SSH atau lokal.";
+        }
+
         $output = [];
         $output[] = "<b>Memulai Deployment Sistem...</b><br>";
 
@@ -184,7 +192,6 @@ Route::get('/deploy-system', function () {
         $output[] = "<b>Git Pull Status:</b><br>" . nl2br(implode("\n", $outGit)) . "<br>";
 
         // 2. Eksekusi Composer Install
-        // Menggunakan path absolute composer jika memungkinkan, atau sekadar composer
         putenv('COMPOSER_HOME=' . storage_path('framework/cache'));
         exec('composer install --no-dev --optimize-autoloader 2>&1', $outComp, $retComp);
         $output[] = "<b>Composer Install Status:</b><br>" . nl2br(implode("\n", $outComp)) . "<br>";
@@ -194,8 +201,8 @@ Route::get('/deploy-system', function () {
         $output[] = "<b>Optimize Clear:</b> Berhasil membersihkan cache Laravel.<br>";
 
         return implode("<br>", $output);
-    } catch (\Exception $e) {
-        return '<b>Terjadi Kesalahan:</b> ' . $e->getMessage();
+    } catch (\Throwable $e) {
+        return '<b>Terjadi Kesalahan Fatal:</b> ' . $e->getMessage() . ' di file ' . $e->getFile() . ' baris ' . $e->getLine();
     }
 });
 
