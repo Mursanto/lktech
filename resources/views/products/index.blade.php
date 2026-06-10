@@ -59,29 +59,29 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-natural-50/50 border-b border-natural-100">
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-left">Info Produk</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-left">Kategori</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Stok</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-left">Info Produk</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-left">Kategori</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Stok</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Harga Beli</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Harga Beli</th>
                             @endhasanyrole
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Harga Jual</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Harga Jual</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Persentase</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Persentase</th>
                             @endhasanyrole
-                            <th class="px-6 py-4 text-[11px] font-bold text-natural-500 uppercase tracking-wider text-right">Aksi</th>
+                            <th class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
                         @forelse($products as $product)
                         <tr class="odd:bg-white even:bg-natural-50/50 hover:bg-brand-50/30 transition-colors group">
-                            <td class="px-6 py-4">
+                            <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-natural-100 flex items-center justify-center text-natural-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
-                                        <i class='bx bx-laptop text-xl'></i>
+                                    <div class="w-8 h-8 rounded-lg bg-natural-100 flex items-center justify-center text-natural-400 group-hover:bg-brand-100 group-hover:text-brand-700 transition-colors">
+                                        <i class='bx bx-laptop text-lg'></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-natural-800 whitespace-normal line-clamp-2">{{ $product->brand }} {{ $product->model_series }}</p>
+                                        <p class="text-sm font-semibold text-gray-700 whitespace-normal line-clamp-2">{{ $product->brand }} {{ $product->model_series }}</p>
                                         <div class="flex items-center gap-1.5 mt-0.5">
                                             <p class="text-xs text-natural-500 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
                                             {{-- Badge Tipe Stok --}}
@@ -94,16 +94,16 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2.5 py-1 rounded-lg bg-natural-100 text-natural-600 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                <span class="px-2 py-1 rounded border border-natural-200 bg-white text-gray-700 text-xs font-semibold whitespace-nowrap">
                                     {{ $product->category->name ?? 'Uncategorized' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-right whitespace-nowrap">
-                                <span class="text-[13px] font-black {{ $product->stock <= 2 ? 'text-red-600' : 'text-natural-800' }}">
+                            <td class="px-4 py-3 text-right whitespace-nowrap">
+                                <span class="text-sm font-bold {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-700' }}">
                                     {{ $product->stock }}
                                 </span>
-                                <span class="text-[9px] font-bold text-natural-400 uppercase ml-1">Unit</span>
+                                <span class="text-[10px] font-semibold text-natural-400 uppercase ml-0.5">Unit</span>
                             </td>
                             @php
                                 $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
@@ -111,35 +111,35 @@
                                 $margin = (($finalPrice - $product->purchase_price) / $beli) * 100;
                             @endphp
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-4 text-right whitespace-nowrap">
-                                <p class="text-[13px] font-semibold text-natural-600">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
+                            <td class="px-4 py-3 text-right whitespace-nowrap">
+                                <p class="text-sm font-semibold text-gray-600">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
                             </td>
                             @endhasanyrole
-                            <td class="px-6 py-4 text-right whitespace-nowrap">
-                                <p class="text-[14px] font-black text-brand-600">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                            <td class="px-4 py-3 text-right whitespace-nowrap">
+                                <p class="text-sm font-bold text-gray-700">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
                             </td>
                             @hasanyrole('Admin|Owner')
-                            <td class="px-6 py-4 text-right whitespace-nowrap">
-                                <span class="px-2 py-1 rounded-md text-[11px] font-bold {{ $margin >= 30 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700' }}">
+                            <td class="px-4 py-3 text-right whitespace-nowrap">
+                                <span class="px-1.5 py-0.5 rounded-md text-xs font-bold border {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200' }}">
                                     {{ round($margin, 1) }}%
                                 </span>
                             </td>
                             @endhasanyrole
 
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('products.show', $product->id) }}" class="p-2 text-natural-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
+                                    <a href="{{ route('products.show', $product->id) }}" class="p-1.5 text-natural-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
                                         <i class='bx bx-show text-lg'></i>
                                     </a>
                                     @role('Admin')
-                                    <a href="{{ route('products.edit', $product->id) }}" class="p-2 text-natural-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Edit">
+                                    <a href="{{ route('products.edit', $product->id) }}" class="p-1.5 text-natural-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Edit">
                                         <i class='bx bx-edit-alt text-lg'></i>
                                     </a>
                                     @endrole
                                     @role('Admin')
                                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus produk ini?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="p-2 text-natural-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
+                                        <button type="submit" class="p-1.5 text-natural-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
                                             <i class='bx bx-trash text-lg'></i>
                                         </button>
                                     </form>

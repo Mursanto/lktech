@@ -12,7 +12,8 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
     public function collection()
     {
         return Product::with('category')
-            ->orderBy('name', 'asc')
+            ->orderBy('brand', 'asc')
+            ->orderBy('model_series', 'asc')
             ->get();
     }
 
@@ -22,7 +23,7 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
             'ID',
             'Nama Produk',
             'Kategori',
-            'SKU',
+            'Serial Number',
             'Harga Beli',
             'Harga Jual',
             'Stok',
@@ -35,13 +36,13 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $product->id,
-            $product->name,
+            $product->brand . ' ' . $product->model_series,
             $product->category ? $product->category->name : '-',
-            $product->sku ?? '-',
+            $product->serial_number ?? '-',
             $product->purchase_price,
             $product->selling_price,
             $product->stock,
-            $product->status === 'available' ? 'Tersedia' : 'Tidak Tersedia',
+            $product->status === 'available' ? 'Tersedia' : 'Habis/Terjual',
             $product->created_at->format('d/m/Y')
         ];
     }
