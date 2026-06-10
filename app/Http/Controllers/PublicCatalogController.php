@@ -49,7 +49,9 @@ class PublicCatalogController extends Controller
             // Abaikan jika tabel posts belum dimigrasi di server produksi
         }
 
-        return view('welcome', compact('products', 'latestPosts'));
+        $setting = \App\Models\WebSetting::first();
+
+        return view('welcome', compact('products', 'latestPosts', 'setting'));
     }
 
     public function show(Product $product)

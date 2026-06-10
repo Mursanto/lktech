@@ -136,6 +136,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['permission:access_settings'])->group(function () {
         Route::get('/settings', [\App\Http\Controllers\WebSettingController::class, 'edit'])->name('settings.index');
         Route::put('/settings', [\App\Http\Controllers\WebSettingController::class, 'update'])->name('settings.update');
+        
+        Route::get('/promo', [\App\Http\Controllers\PromoBannerController::class, 'edit'])->name('promo.edit');
+        Route::put('/promo', [\App\Http\Controllers\PromoBannerController::class, 'update'])->name('promo.update');
     });
 
     // Rakit PC Admin Routes

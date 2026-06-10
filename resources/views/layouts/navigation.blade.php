@@ -155,6 +155,13 @@
                 <i class='bx bx-cog text-lg {{ request()->routeIs('settings.*') ? 'text-purple-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Pengaturan Web</span>
             </a>
+            
+            <a href="{{ route('promo.edit') }}" 
+               class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('promo.*') ? 'bg-fuchsia-50 text-fuchsia-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
+               :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Pengaturan Banner Promo">
+                <i class='bx bx-image text-lg {{ request()->routeIs('promo.*') ? 'text-fuchsia-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
+                <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Banner Promo</span>
+            </a>
             @endif
             @endif
 

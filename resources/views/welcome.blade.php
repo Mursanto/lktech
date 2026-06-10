@@ -94,40 +94,28 @@
                         </div>
                     </div>
                     
-                    <!-- Right: Dynamic Slideshow Image (40%) -->
+                    <!-- Right: Dynamic Promo Banner (40%) -->
                     <div class="md:col-span-5 hidden md:block relative px-4 lg:px-8 flex justify-center">
-                        @php
-                            // Get top images from the recommended products
-                            $slideshowImages = $products->take(6)->map(function($product) {
-                                return $product->display_image;
-                            })->values()->toJson();
-                        @endphp
-                        
-                        <div class="aspect-[4/3] w-4/5 max-w-sm mx-auto rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-white transform rotate-2 hover:rotate-0 transition duration-700 hover:scale-105"
-                             x-data="{ 
-                                images: {{ $slideshowImages }}, 
-                                activeIndex: 0,
-                                init() {
-                                    if(this.images.length > 1) {
-                                        setInterval(() => {
-                                            this.activeIndex = (this.activeIndex + 1) % this.images.length;
-                                        }, 4000);
-                                    }
-                                }
-                             }">
-                             
-                            <template x-for="(img, index) in images" :key="index">
-                                <img :src="img" 
-                                     alt="Laptop LKTech" 
-                                     class="absolute inset-0 w-full h-full object-contain bg-white p-2 transition-opacity duration-1000 ease-in-out"
-                                     :class="activeIndex === index ? 'opacity-100 z-10' : 'opacity-0 z-0'">
-                            </template>
-                            
-                            <!-- Placeholder if no images exist -->
-                            @if(count($products) == 0)
-                                <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop Premium" class="absolute inset-0 w-full h-full object-cover">
+                        @if(isset($setting) && $setting->promo_image_path)
+                            @if($setting->promo_link)
+                                <a href="{{ $setting->promo_link }}" class="block relative w-4/5 max-w-sm mx-auto group">
+                                    <img src="{{ asset('storage/' . $setting->promo_image_path) }}" 
+                                         alt="Promo Banner" 
+                                         class="w-full h-auto object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500">
+                                </a>
+                            @else
+                                <div class="relative w-4/5 max-w-sm mx-auto">
+                                    <img src="{{ asset('storage/' . $setting->promo_image_path) }}" 
+                                         alt="Promo Banner" 
+                                         class="w-full h-auto object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500">
+                                </div>
                             @endif
-                        </div>
+                        @else
+                            <!-- Placeholder jika belum ada promo -->
+                            <div class="aspect-[4/3] w-4/5 max-w-sm mx-auto rounded-3xl overflow-hidden shadow-2xl border border-gray-200 bg-white transform rotate-2 hover:rotate-0 transition duration-500 hover:scale-105">
+                                <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop Premium" class="w-full h-full object-cover">
+                            </div>
+                        @endif
                     </div>
 
                 </div>
