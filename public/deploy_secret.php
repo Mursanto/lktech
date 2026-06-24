@@ -87,8 +87,30 @@ if ($zip->open($zipFile) === TRUE) {
         unlink($zipFile);
         echo "3. File sementara berhasil dibersihkan.<br><br>";
         
+        // Update .env SMTP config
+        echo "4. Memperbarui pengaturan email di .env server...<br>";
+        $envPath = $baseDir . '/.env';
+        if (file_exists($envPath)) {
+            $envContent = file_get_contents($envPath);
+            $envContent = preg_replace('/^MAIL_MAILER=.*$/m', 'MAIL_MAILER=smtp', $envContent);
+            $envContent = preg_replace('/^MAIL_HOST=.*$/m', 'MAIL_HOST=mail.lktech.online', $envContent);
+            $envContent = preg_replace('/^MAIL_PORT=.*$/m', 'MAIL_PORT=465', $envContent);
+            $envContent = preg_replace('/^MAIL_USERNAME=.*$/m', 'MAIL_USERNAME=sales@lktech.online', $envContent);
+            $envContent = preg_replace('/^MAIL_PASSWORD=.*$/m', 'MAIL_PASSWORD=Lktech123qwe', $envContent);
+            $envContent = preg_replace('/^MAIL_ENCRYPTION=.*$/m', 'MAIL_ENCRYPTION=ssl', $envContent);
+            $envContent = preg_replace('/^MAIL_FROM_ADDRESS=.*$/m', 'MAIL_FROM_ADDRESS="sales@lktech.online"', $envContent);
+            
+            if (strpos($envContent, 'MAIL_HOST=') === false) {
+                $envContent .= "\nMAIL_MAILER=smtp\nMAIL_HOST=mail.lktech.online\nMAIL_PORT=465\nMAIL_USERNAME=sales@lktech.online\nMAIL_PASSWORD=Lktech123qwe\nMAIL_ENCRYPTION=ssl\nMAIL_FROM_ADDRESS=\"sales@lktech.online\"\n";
+            }
+            file_put_contents($envPath, $envContent);
+            echo "- Pengaturan SMTP di .env hosting berhasil diotomatisasi.<br><br>";
+        } else {
+            echo "- File .env tidak ditemukan di server.<br><br>";
+        }
+        
         // 5. Jalankan optimasi Laravel (Clear Cache & Migrate)
-        echo "4. Menjalankan Optimasi & Migrasi Database...<br>";
+        echo "5. Menjalankan Optimasi & Migrasi Database...<br>";
         require __DIR__.'/../vendor/autoload.php';
         $app = require_once __DIR__.'/../bootstrap/app.php';
         $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
