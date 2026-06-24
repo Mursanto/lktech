@@ -132,13 +132,7 @@ class SaleController extends Controller
                         throw new \Exception("Stok {$product->brand} tidak mencukupi! Sisa: {$product->stock}");
                     }
 
-                    // Verifikasi SN untuk kategori hardware
-                    if ($product->category && $product->category->type_category === 'hardware') {
-                        $inputSn = $item['serial_number'] ?? null;
-                        if (!$inputSn || trim($inputSn) !== trim($product->serial_number)) {
-                            throw new \Exception("Verifikasi Serial Number untuk {$product->brand} {$product->model_series} gagal! SN yang dimasukkan tidak cocok.");
-                        }
-                    }
+                    // Verifikasi SN telah dihapus agar lebih fleksibel
 
                     $subtotal = $product->selling_price * $item['quantity'];
                     $profit = ($product->selling_price - $product->purchase_price) * $item['quantity']; 
@@ -313,13 +307,7 @@ class SaleController extends Controller
                         throw new \Exception("Stok {$product->brand} tidak mencukupi! Sisa: {$product->stock}");
                     }
 
-                    // Verifikasi SN untuk kategori hardware
-                    if ($product->category && $product->category->type_category === 'hardware') {
-                        $inputSn = $item['serial_number'] ?? null;
-                        if (!$inputSn || trim($inputSn) !== trim($product->serial_number)) {
-                            throw new \Exception("Verifikasi Serial Number untuk {$product->brand} {$product->model_series} gagal! SN yang dimasukkan tidak cocok.");
-                        }
-                    }
+                    // Verifikasi SN telah dihapus agar lebih fleksibel
 
                     $subtotal = $product->selling_price * $item['quantity'];
                     $profit = ($product->selling_price - ($product->purchase_price ?? 0)) * $item['quantity']; 
@@ -500,5 +488,46 @@ class SaleController extends Controller
     public function export()
     {
         return Excel::download(new SalesExport, 'penjualan.xlsx');
+    }
+
+    /**
+     * Mark sale as paid (Lunas), deduct stock, and send final invoice.
+     */
+    public function markAsPaid(Sale $sale)
+    {
+        if ($sale->payment_status === 'success') {
+            return back()->with('error', 'Penjualan ini sudah lunas.');
+        }
+
+        try {
+            DB::transaction(function () use ($sale) {
+                // Update status
+                $sale->update(['payment_status' => 'success']);
+
+                // Deduct stock
+                foreach ($sale->saleDetails as $detail) {
+                    $product = Product::lockForUpdate()->find($detail->product_id);
+                    if ($product) {
+                        $product->decrement('stock', $detail->quantity);
+                        if ($product->stock <= 0) {
+                            $product->update(['status' => 'Sold']);
+                        }
+                    }
+                }
+
+                // Send Email Invoice Lunas
+                if ($sale->customer && $sale->customer->email) {
+                    try {
+                        \Illuminate\Support\Facades\Mail::to($sale->customer->email)->send(new \App\Mail\OrderInvoiceMail($sale));
+                    } catch (\Exception $e) {
+                        \Illuminate\Support\Facades\Log::error('Gagal mengirim email invoice lunas: ' . $e->getMessage());
+                    }
+                }
+            });
+
+            return back()->with('success', 'Pembayaran berhasil dikonfirmasi (Lunas), stok telah dikurangi, dan Invoice telah dikirim ke email pelanggan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
+        }
     }
 }

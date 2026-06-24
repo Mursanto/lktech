@@ -215,17 +215,88 @@
                         </div>
                     </div>
 
-                    <div class="space-y-2">
-                        @php
-                            $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda: {$product->brand} {$product->model_series}");
-                        @endphp
-                        <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" 
-                           class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md shadow-brand-200 flex justify-center items-center gap-2">
-                            + Keranjang WhatsApp
-                        </a>
+                    <div class="space-y-3" x-data="{
+                        adding: false,
+                        buyingNow: false,
+                        addToCart(productId, buyNow = false) {
+                            if(buyNow) this.buyingNow = true; else this.adding = true;
+                            fetch('{{ route('cart.add') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({ product_id: productId })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if(buyNow) this.buyingNow = false; else this.adding = false;
+                                if(data.success) {
+                                    if(buyNow) {
+                                        window.location.href = '/checkout';
+                                    } else {
+                                        window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
+                                        
+                                        const toast = document.createElement('div');
+                                        toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-sm';
+                                        toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-xl'></i> <span>Berhasil ditambahkan ke keranjang</span>`;
+                                        document.body.appendChild(toast);
+                                        
+                                        setTimeout(() => {
+                                            toast.classList.add('translate-y-10', 'opacity-0');
+                                            setTimeout(() => toast.remove(), 300);
+                                        }, 3000);
+                                    }
+                                }
+                            })
+                            .catch(err => {
+                                if(buyNow) this.buyingNow = false; else this.adding = false;
+                                alert('Kesalahan koneksi sistem.');
+                            });
+                        }
+                    }">
+                        @if($product->stock > 0 && $product->status !== 'Sold')
+                            @if($product->status == 'Pre-Order')
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 px-3 rounded-lg text-sm transition-all shadow-sm flex justify-center items-center gap-1.5">
+                                        <span x-text="buyingNow ? 'Memproses...' : 'Beli Sekarang'"></span>
+                                    </button>
+                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2.5 px-3 rounded-lg text-sm transition-all flex justify-center items-center gap-1.5 shadow-sm">
+                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Memproses...' : '+ Keranjang'"></span>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-orange-600 font-medium leading-tight text-center">
+                                    *Estimasi pengiriman Pre-Order ±7 hari.
+                                </p>
+                            @else
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-3 rounded-lg text-sm transition-all shadow-sm flex justify-center items-center gap-1.5">
+                                        <span x-text="buyingNow ? 'Memproses...' : 'Beli Sekarang'"></span>
+                                    </button>
+                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2.5 px-3 rounded-lg text-sm transition-all flex justify-center items-center gap-1.5 shadow-sm">
+                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Memproses...' : '+ Keranjang'"></span>
+                                    </button>
+                                </div>
+                            @endif
+                        @else
+                            <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2">
+                                Stok Habis
+                            </button>
+                        @endif
+
+                        <div class="flex items-center justify-center gap-6 py-1 text-sm text-gray-500 font-medium">
+                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-heart text-lg'></i> Wishlist
+                            </button>
+                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-share-alt text-lg'></i> Bagikan
+                            </button>
+                        </div>
+
                         <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk%20di%20Katalog%20Anda:%20{{ $product->brand }}%20{{ $product->model_series }}" target="_blank" 
-                           class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-3 px-4 rounded-xl transition-colors flex justify-center items-center gap-2">
-                            <i class='bx bx-message-rounded-dots text-xl'></i> Tanya Admin
+                           class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-2.5 px-3 rounded-lg text-sm transition-colors flex justify-center items-center gap-2 shadow-sm">
+                            <i class='bx bx-message-rounded-dots text-lg'></i> Tanya Admin
                         </a>
                     </div>
                     

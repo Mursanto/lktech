@@ -235,6 +235,11 @@
                                 <i class='bx bx-trash text-sm mr-1'></i> Hapus
                             </button>
                         </form>
+                        @if(!$rental->isPaid())
+                        <button type="button" onclick="payWithSnap('rental', {{ $rental->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
+                            <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
+                        </button>
+                        @endif
                         <button onclick="window.print()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-printer text-sm mr-1'></i> Cetak
                         </button>
@@ -243,4 +248,58 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    <script>
+        function payWithSnap(type, id) {
+            const btn = document.getElementById('pay-button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin text-sm mr-1'></i> Memproses...";
+            btn.disabled = true;
+
+            fetch('{{ route("payment.snap_token") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ transaction_id: id, type: type })
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                if (data.snap_token) {
+                    if (data.snap_token.startsWith('mock-')) {
+                        window.location.reload();
+                        return;
+                    }
+                    window.snap.pay(data.snap_token, {
+                        onSuccess: function(result){
+                            alert("Pembayaran berhasil!");
+                            window.location.reload();
+                        },
+                        onPending: function(result){
+                            alert("Menunggu pembayaran Anda!");
+                        },
+                        onError: function(result){
+                            alert("Pembayaran gagal!");
+                        },
+                        onClose: function(){
+                            console.log('Customer closed the popup without finishing the payment');
+                        }
+                    });
+                } else {
+                    alert('Error: ' + (data.error || 'Gagal mendapatkan token.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan koneksi.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+    </script>
 </x-app-layout>

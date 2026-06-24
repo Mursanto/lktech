@@ -40,6 +40,11 @@
 
             <!-- Auth Navigation (Desktop) -->
             <div class="hidden md:flex flex-shrink-0 items-center gap-3">
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-2 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+                    <i class='bx bx-cart text-2xl'></i>
+                    <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
+                </a>
+
                 @auth
                     <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-gray-600 hover:text-brand-600">Dashboard</a>
                     <div class="h-6 w-px bg-gray-200"></div>
@@ -59,8 +64,13 @@
                 @endauth
             </div>
 
-            <!-- Hamburger Button (Mobile) -->
-            <div class="flex items-center md:hidden">
+            <!-- Hamburger Button & Cart (Mobile) -->
+            <div class="flex items-center md:hidden gap-3">
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+                    <i class='bx bx-cart text-2xl'></i>
+                    <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
+                </a>
+                
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg">
                     <i class='bx bx-menu text-3xl' x-show="!mobileMenuOpen"></i>
                     <i class='bx bx-x text-3xl' x-show="mobileMenuOpen" x-cloak></i>

@@ -30,6 +30,14 @@ Route::get('/katalog', [App\Http\Controllers\PublicCatalogController::class, 'ka
 Route::post('/katalog/contact', [App\Http\Controllers\PublicCatalogController::class, 'contact'])->name('katalog.contact');
 Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::class, 'show'])->name('katalog.show');
 
+// Cart & Hybrid Checkout Routes
+Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update/{id}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove/{id}', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+Route::get('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout.index');
+Route::post('/checkout/process', [App\Http\Controllers\CartController::class, 'process'])->name('checkout.process');
+Route::get('/checkout/success/{order_id}', [App\Http\Controllers\CartController::class, 'success'])->name('checkout.success');
+
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
@@ -71,6 +79,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify
 Route::middleware(['auth', 'role:Admin|Staff'])->group(function () {
+    Route::post('/sales/{sale}/mark-paid', [SaleController::class, 'markAsPaid'])->name('sales.mark-paid');
     Route::resource('sales', SaleController::class)->except(['index', 'show']);
     Route::resource('rentals', RentalController::class)->except(['index', 'show']);
 });
@@ -219,6 +228,11 @@ Route::get('/deploy-system', function () {
     } catch (\Throwable $e) {
         return '<b>Terjadi Kesalahan Fatal:</b> ' . $e->getMessage() . ' di file ' . $e->getFile() . ' baris ' . $e->getLine();
     }
+});
+
+Route::get('/buka-brankas', function () {
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return 'Berhasil! Pintu brankas gambar sudah dibuka.';
 });
 
 require __DIR__.'/auth.php';

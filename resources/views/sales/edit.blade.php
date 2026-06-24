@@ -290,17 +290,7 @@
             row.appendChild(subCol);
             row.appendChild(remCol);
 
-            const isHardware = initialVal && PRODUCTS.find(p => p.id == initialVal.product_id)?.type_category === 'hardware';
-            const snVal = isHardware ? PRODUCTS.find(p => p.id == initialVal.product_id)?.sn : '';
-            const snCol = document.createElement('div');
-            snCol.className = 'col-span-12 mt-1 sn-verification-container ' + (isHardware ? '' : 'hidden');
-            snCol.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <label class="text-[10px] font-bold text-emerald-700 uppercase whitespace-nowrap">Unit ID / SKU *</label>
-                    <input type="text" name="items[${index}][serial_number]" class="sn-input w-full border border-emerald-300 rounded px-2 py-1 text-[10px] focus:ring-1 focus:ring-emerald-500" placeholder="Ketik/Scan Serial Number" value="${snVal}" ${isHardware ? '' : 'disabled'}>
-                </div>
-            `;
-            row.appendChild(snCol);
+            // --- Verifikasi SN telah dihapus sesuai permintaan ---
 
             // --- Manual SN / License Key ---
             const manualSnVal = initialVal && initialVal.manual_sn ? initialVal.manual_sn : '';
@@ -314,11 +304,11 @@
             `;
             row.appendChild(manualSnCol);
 
-            return { row, nativeSel, displaySel, qtyInput, subInput, remBtn, snCol };
+            return { row, nativeSel, displaySel, qtyInput, subInput, remBtn };
         }
 
         function addRow(initialVal = null) {
-            const { row, nativeSel, displaySel, qtyInput, subInput, remBtn, snCol } = buildRow(rowCount, initialVal);
+            const { row, nativeSel, displaySel, qtyInput, subInput, remBtn } = buildRow(rowCount, initialVal);
             document.getElementById('products-container').appendChild(row);
 
             $(displaySel).select2({
@@ -331,14 +321,7 @@
             $(displaySel).on('select2:select select2:unselecting', function() {
                 nativeSel.value = $(this).val() || '';
                 
-                const opt = this.options[this.selectedIndex];
-                if (opt && opt.dataset.typeCategory === 'hardware') {
-                    snCol.classList.remove('hidden');
-                    snCol.querySelector('input').disabled = false;
-                } else {
-                    snCol.classList.add('hidden');
-                    snCol.querySelector('input').disabled = true;
-                }
+                // SN Verification logic has been removed.
 
                 recalcRow(row, qtyInput, subInput);
                 updateTotals();

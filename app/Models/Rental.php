@@ -22,6 +22,9 @@ class Rental extends Model
         'total_price',
         'status',
         'notes',
+        'payment_status',
+        'payment_method',
+        'payment_reference_id',
     ];
 
     protected $casts = [
@@ -39,5 +42,10 @@ class Rental extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'serial_number', 'serial_number');
+    }
+
+    public function isPaid()
+    {
+        return $this->payment_status === 'success';
     }
 }

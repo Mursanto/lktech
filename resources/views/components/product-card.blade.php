@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group relative min-w-[160px]">
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group relative min-w-[160px] h-full">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
@@ -21,12 +21,7 @@
                     </span>
                 @endif
 
-                {{-- Badge Tipe Stok: Ready Stock / Open Order --}}
-                @if(($product->tipe_stok ?? 'ready_stock') === 'open_order')
-                    <span class="bg-orange-500 text-white px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm flex items-center gap-1">
-                        <i class='bx bx-time-five text-[10px]'></i> Pre-Order
-                    </span>
-                @endif
+                {{-- Removed Top-Right Pre-Order Badge to avoid duplication --}}
             </div>
 
             {{-- Label Tipe Stok di kiri bawah gambar --}}
@@ -81,28 +76,66 @@
     </a>
 
     <!-- Separated Action Button Container at Bottom -->
-    <div class="p-1.5 sm:p-2 pt-0 mt-auto">
+    <div class="p-1.5 sm:p-2 pt-0 mt-auto" x-data="{
+        adding: false,
+        addToCart(productId) {
+            this.adding = true;
+            fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                this.adding = false;
+                if(data.success) {
+                    window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
+                    
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-sm';
+                    toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-xl'></i> <span>Berhasil ditambahkan ke keranjang</span>`;
+                    document.body.appendChild(toast);
+                    
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-10', 'opacity-0');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                }
+            })
+            .catch(err => {
+                this.adding = false;
+                alert('Kesalahan koneksi sistem.');
+            });
+        }
+    }">
         <div class="pt-2 border-t border-gray-100 flex gap-1.5">
             @php
-                // Teks WA dan CTA berbeda berdasarkan tipe_stok
-                $tipeStok = $product->tipe_stok ?? 'ready_stock';
-                if ($tipeStok === 'open_order') {
-                    $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda (Pre-Order): {$product->brand} {$product->model_series}");
-                    $ctaLabel = 'Pesan (Pre-Order)';
-                    $ctaColor = 'bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200';
-                    $ctaIcon = 'bxl-whatsapp';
-                } else {
-                    $waText = urlencode("Halo LKtech, saya tertarik dengan produk di Katalog Anda: {$product->brand} {$product->model_series}");
-                    $ctaLabel = 'Hubungi Kami';
-                    $ctaColor = 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200';
-                    $ctaIcon = 'bxl-whatsapp';
-                }
                 $shareUrl = route('katalog.show', $product->id);
+                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                $isSold = $product->stock <= 0 || $product->status === 'Sold';
             @endphp
-            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="flex-grow {{ $ctaColor }} font-bold py-1.5 rounded-md text-[11px] transition-colors flex justify-center items-center gap-1 shadow-sm">
-                <i class='bx {{ $ctaIcon }} text-sm'></i> {{ $ctaLabel }}
-            </a>
-            <button type="button" onclick="shareProduct('{{ $shareUrl }}')" class="flex-none w-8 flex justify-center items-center bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 rounded-md transition-colors shadow-sm" title="Bagikan Produk">
+            
+            @if(!$isSold)
+                @if($isPreOrder)
+                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-grow bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 rounded-md text-[11px] transition-colors flex justify-center items-center gap-1 shadow-sm disabled:opacity-75">
+                        <i class='bx bx-cart-add text-sm'></i> <span x-text="adding ? 'Proses...' : 'Pre-Order'"></span>
+                    </button>
+                @else
+                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-grow bg-brand-600 hover:bg-brand-700 text-white font-bold py-1.5 rounded-md text-[11px] transition-colors flex justify-center items-center gap-1 shadow-sm disabled:opacity-75">
+                        <i class='bx bx-cart-add text-sm'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
+                    </button>
+                @endif
+            @else
+                <button disabled class="flex-grow bg-gray-300 text-gray-500 font-bold py-1.5 rounded-md text-[11px] flex justify-center items-center gap-1 cursor-not-allowed">
+                    Stok Habis
+                </button>
+            @endif
+
+            <button type="button" @click.prevent="shareProduct('{{ $shareUrl }}')" class="flex-none w-8 flex justify-center items-center bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 rounded-md transition-colors shadow-sm" title="Bagikan Produk">
                 <i class='bx bx-share-alt text-sm'></i>
             </button>
         </div>

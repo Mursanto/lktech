@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth bg-gray-50">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - LKTech</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800 antialiased">
+    <x-navbar />
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24" x-data="checkoutForm()">
+        <div class="mb-8">
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight mb-2">Keranjang & Checkout</h1>
+            <p class="text-gray-500">Terdapat {{ array_sum(array_column($cart, 'quantity')) }} item dalam keranjang belanja Anda.</p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left: Cart Items -->
+            <div class="w-full lg:flex-1 space-y-4">
+                @if(count($cart) > 0)
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Pesanan Anda</h2>
+                    
+                    <div class="space-y-6">
+                        @foreach($cart as $id => $item)
+                        <div class="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0 last:pb-0">
+                            <div class="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 border border-gray-200 overflow-hidden p-2">
+                                @if(!empty($item['photo']))
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($item['photo']) }}" class="w-full h-full rounded object-cover" onerror="this.src='https://source.unsplash.com/400x400/?laptop';">
+                                @elseif(!empty($item['image']))
+                                    <img src="{{ $item['image'] }}" class="w-full h-full object-contain">
+                                @else
+                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                        <i class='bx bx-laptop text-gray-400 text-2xl'></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="flex-1 min-w-0 flex flex-col justify-between h-[80px]">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-bold text-gray-900 line-clamp-2 text-sm md:text-base pr-4">{{ $item['name'] }}</h3>
+                                    <button type="button" @click.prevent="removeItem('{{ route('cart.remove', $id) }}')" class="text-red-400 hover:text-red-600 transition-colors" title="Hapus Item">
+                                        <i class='bx bx-trash text-lg'></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between w-full mt-auto">
+                                    <div class="flex items-center border border-gray-200 rounded text-sm bg-white">
+                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] - 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-50" {{ $item['quantity'] <= 1 ? 'disabled' : '' }}>
+                                            <i class='bx bx-minus'></i>
+                                        </button>
+                                        <div class="w-8 h-7 flex items-center justify-center font-bold text-gray-800 border-x border-gray-200 text-xs">
+                                            {{ $item['quantity'] }}
+                                        </div>
+                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] + 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
+                                            <i class='bx bx-plus'></i>
+                                        </button>
+                                    </div>
+                                    <p class="font-bold text-brand-600">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @else
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 flex flex-col items-center justify-center h-full min-h-[300px]">
+                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-5 border border-gray-100">
+                        <i class='bx bx-shopping-bag text-4xl text-gray-400'></i>
+                    </div>
+                    <h2 class="text-xl font-black text-gray-900 mb-2 tracking-tight">Keranjang Kosong</h2>
+                    <p class="text-gray-500 text-center max-w-sm mb-6 text-sm">Belum ada produk yang ditambahkan. Silakan temukan produk favorit Anda dan mulai belanja!</p>
+                    <a href="{{ route('katalog.index') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-sm text-sm">
+                        Mulai Belanja
+                    </a>
+                </div>
+                @endif
+            </div>
+
+            <!-- Right: Checkout Details -->
+            <div class="w-full lg:w-[400px] flex-shrink-0">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Ringkasan & Kontak</h2>
+                    
+                    <!-- Contact Form -->
+                    <div class="space-y-4 mb-6 pb-6 border-b border-gray-100">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="formData.customer_name" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="Contoh: Budi Santoso">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email <span class="text-red-500">*</span></label>
+                            <input type="email" x-model="formData.email" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="budi@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="formData.phone" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="0812xxxx">
+                        </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between items-center text-gray-600 text-sm">
+                            <span>Subtotal Produk</span>
+                            <span class="font-medium">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-600 text-sm">
+                            <span>Biaya Pengiriman</span>
+                            <span class="text-orange-600 font-bold text-xs italic">Dihitung Terpisah</span>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100 flex justify-between items-center">
+                            <span class="font-bold text-gray-900">Total Pembayaran</span>
+                            <span class="text-xl font-black text-brand-600 tracking-tight">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Disclaimer -->
+                    <div class="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6 flex gap-3 items-start">
+                        <i class='bx bx-info-circle text-orange-500 text-xl flex-shrink-0 mt-0.5'></i>
+                        <p class="text-xs text-orange-800 leading-relaxed font-medium">
+                            <strong class="block mb-1">Harga Belum Termasuk Ongkos Kirim!</strong>
+                            Biaya pengiriman unit fisik akan dikoordinasikan terpisah melalui WhatsApp secara manual setelah pembayaran produk ini berhasil.
+                        </p>
+                    </div>
+
+                    <button type="button" @click.prevent="processPayment($event)" :disabled="isLoading || !isFormValid || {{ count($cart) == 0 ? 'true' : 'false' }}" 
+                            class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
+                        <template x-if="isLoading">
+                            <i class='bx bx-loader-alt bx-spin text-xl'></i>
+                        </template>
+                        <template x-if="!isLoading">
+                            <i class='bx bx-credit-card-front text-xl'></i>
+                        </template>
+                        <span x-text="isLoading ? 'Memproses...' : 'Bayar Sekarang'"></span>
+                    </button>
+                    
+                    <div class="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium">
+                        <i class='bx bx-shield-alt-2 text-emerald-500 text-base'></i> Pembayaran Aman by Midtrans
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <x-footer />
+
+    <script>
+        function checkoutForm() {
+            return {
+                formData: {
+                    customer_name: '',
+                    email: '',
+                    phone: ''
+                },
+                isLoading: false,
+                updateQuantity(id, qty) {
+                    if (qty < 1) return;
+                    fetch('/cart/update/' + id, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ quantity: qty })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert(data.message || 'Gagal mengubah jumlah.');
+                        }
+                    })
+                    .catch(() => window.location.reload());
+                },
+                removeItem(url) {
+                    if(!confirm('Hapus produk ini dari keranjang?')) return;
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(() => window.location.reload())
+                    .catch(() => window.location.reload());
+                },
+                get isFormValid() {
+                    return this.formData.customer_name.trim().length > 0 && 
+                           this.formData.email.trim().length > 0 &&
+                           this.formData.phone.trim().length > 0;
+                },
+                async processPayment(e) {
+                    if (e && typeof e.preventDefault === 'function') {
+                        e.preventDefault();
+                    }
+                    if (!this.isFormValid) {
+                        alert('Mohon lengkapi Nama, Email, dan WhatsApp Anda.');
+                        return;
+                    }
+                    
+                    this.isLoading = true;
+
+                    try {
+                        const response = await fetch('{{ route("checkout.process") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify(this.formData)
+                        });
+
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            console.error("SERVER ERROR DUMP:", errorText);
+                            alert("Gagal memproses. Silakan cek Inspect -> Console untuk detail error.");
+                            this.isLoading = false;
+                            return;
+                        }
+
+                        const responseData = await response.json();
+                        this.isLoading = false;
+
+                        if (responseData.snap_token) {
+                            if (responseData.snap_token.startsWith('mock-')) {
+                                window.location.href = '/checkout/success/' + responseData.order_id;
+                                return;
+                            }
+
+                            window.snap.pay(responseData.snap_token, {
+                                onSuccess: function(result) {
+                                    window.location.href = '/checkout/success/' + responseData.order_id;
+                                },
+                                onPending: function(result) {
+                                    window.location.href = '/checkout/success/' + responseData.order_id;
+                                },
+                                onError: function(result) {
+                                    alert('Pembayaran gagal atau dibatalkan.');
+                                },
+                                onClose: function() {
+                                    alert('Anda menutup pop-up sebelum menyelesaikan pembayaran.');
+                                }
+                            });
+                        } else {
+                            alert('Gagal memproses pembayaran: ' + (responseData.error || 'Unknown Error'));
+                        }
+                    } catch (err) {
+                        this.isLoading = false;
+                        console.error(err);
+                        alert('Terjadi kesalahan koneksi sistem.');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

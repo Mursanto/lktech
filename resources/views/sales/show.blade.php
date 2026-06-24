@@ -158,8 +158,8 @@
                                 </div>
                                 <div class="flex justify-between items-center pt-0.5">
                                     <span class="font-medium">Status:</span>
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800 border border-green-200">
-                                        ✓ LUNAS
+                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->isPaid() ? 'bg-green-100 text-green-800 border-green-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200' }} border">
+                                        {{ $sale->isPaid() ? '✓ LUNAS' : '⌛ PENDING' }}
                                     </span>
                                 </div>
                             </div>
@@ -252,6 +252,17 @@
                             </button>
                         </form>
                         @endrole
+                        @if(!$sale->isPaid())
+                        <form action="{{ route('sales.mark-paid', $sale->id) }}" method="POST" onsubmit="return confirm('Tandai pesanan ini sebagai LUNAS? Stok akan dipotong dan Invoice otomatis dikirim ke pelanggan.')" class="inline">
+                            @csrf
+                            <button type="submit" class="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                <i class='bx bx-check-circle text-sm mr-1'></i> Tandai Lunas
+                            </button>
+                        </form>
+                        <button type="button" onclick="payWithSnap('sale', {{ $sale->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
+                            <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
+                        </button>
+                        @endif
                         <button onclick="window.print()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-printer text-sm mr-1'></i> Cetak
                         </button>
@@ -260,4 +271,58 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    <script>
+        function payWithSnap(type, id) {
+            const btn = document.getElementById('pay-button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<i class='bx bx-loader-alt bx-spin text-sm mr-1'></i> Memproses...";
+            btn.disabled = true;
+
+            fetch('{{ route("payment.snap_token") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ transaction_id: id, type: type })
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                if (data.snap_token) {
+                    if (data.snap_token.startsWith('mock-')) {
+                        window.location.reload();
+                        return;
+                    }
+                    window.snap.pay(data.snap_token, {
+                        onSuccess: function(result){
+                            alert("Pembayaran berhasil!");
+                            window.location.reload();
+                        },
+                        onPending: function(result){
+                            alert("Menunggu pembayaran Anda!");
+                        },
+                        onError: function(result){
+                            alert("Pembayaran gagal!");
+                        },
+                        onClose: function(){
+                            console.log('Customer closed the popup without finishing the payment');
+                        }
+                    });
+                } else {
+                    alert('Error: ' + (data.error || 'Gagal mendapatkan token.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan koneksi.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+    </script>
 </x-app-layout>

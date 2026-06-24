@@ -31,4 +31,9 @@ class Sale extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function isPaid()
+    {
+        return $this->payment_status === 'success';
+    }
 }

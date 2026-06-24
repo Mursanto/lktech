@@ -30,6 +30,9 @@ class Service extends Model
         'issue_description',
         'estimated_cost',
         'devices',
+        'payment_status',
+        'payment_method',
+        'payment_reference_id',
     ];
 
     protected $casts = [
@@ -85,5 +88,10 @@ class Service extends Model
             'done' => 'Selesai',
             'cancelled' => 'Batal',
         ][$this->status] ?? 'Unknown';
+    }
+
+    public function isPaid()
+    {
+        return $this->payment_status === 'success';
     }
 }
