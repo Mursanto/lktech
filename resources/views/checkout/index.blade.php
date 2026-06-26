@@ -116,6 +116,10 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
                             <input type="text" x-model="formData.phone" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="0812xxxx">
                         </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
+                            <textarea x-model="formData.address" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" rows="3" placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
+                        </div>
                     </div>
 
                     <!-- Summary -->
@@ -170,7 +174,8 @@
                 formData: {
                     customer_name: '',
                     email: '',
-                    phone: ''
+                    phone: '',
+                    address: ''
                 },
                 isLoading: false,
                 updateQuantity(id, qty) {

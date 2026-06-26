@@ -113,6 +113,7 @@ class CartController extends Controller
             'customer_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:255',
+            'address' => 'nullable|string|max:1000',
         ]);
 
         $cart = session()->get('cart', []);
@@ -137,12 +138,16 @@ class CartController extends Controller
 
         $customer = \App\Models\Customer::firstOrCreate(
             ['email' => $email],
-            ['name' => $request->customer_name, 'phone' => $phone]
+            ['name' => $request->customer_name, 'phone' => $phone, 'address' => $request->address]
         );
         
-        // Update name and phone if it already exists but changed
-        if ($customer->name !== $request->customer_name || $customer->phone !== $phone) {
-            $customer->update(['name' => $request->customer_name, 'phone' => $phone]);
+        // Update details if it already exists but changed
+        if ($customer->name !== $request->customer_name || $customer->phone !== $phone || ($request->filled('address') && $customer->address !== $request->address)) {
+            $updateData = ['name' => $request->customer_name, 'phone' => $phone];
+            if ($request->filled('address')) {
+                $updateData['address'] = $request->address;
+            }
+            $customer->update($updateData);
         }
 
         $sale = Sale::create([
