@@ -96,20 +96,65 @@
                     
                     <!-- Right: Dynamic Promo Banner (40%) -->
                     <div class="md:col-span-5 hidden md:block relative px-4 lg:px-8 flex justify-center">
-                        @if(isset($setting) && $setting->promo_image_path)
-                            @if($setting->promo_link)
-                                <a href="{{ $setting->promo_link }}" class="block relative w-4/5 max-w-sm mx-auto group">
-                                    <img src="{{ asset('storage/' . $setting->promo_image_path) }}" 
-                                         alt="Promo Banner" 
-                                         class="w-full h-auto object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500">
-                                </a>
-                            @else
-                                <div class="relative w-4/5 max-w-sm mx-auto">
-                                    <img src="{{ asset('storage/' . $setting->promo_image_path) }}" 
-                                         alt="Promo Banner" 
-                                         class="w-full h-auto object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500">
+                        @php
+                            $promoBanners = [];
+                            if (isset($setting)) {
+                                $promoBanners = $setting->promo_banners ?? [];
+                                if (empty($promoBanners) && $setting->promo_image_path) {
+                                    $promoBanners[] = [
+                                        'image' => $setting->promo_image_path,
+                                        'link' => $setting->promo_link
+                                    ];
+                                }
+                            }
+                        @endphp
+                        
+                        @if(count($promoBanners) > 0)
+                            <div class="relative w-4/5 max-w-sm mx-auto group"
+                                 x-data="{ 
+                                    activeSlide: 0, 
+                                    slides: {{ count($promoBanners) }},
+                                    init() {
+                                        if(this.slides > 1) {
+                                            setInterval(() => {
+                                                this.activeSlide = this.activeSlide === this.slides - 1 ? 0 : this.activeSlide + 1
+                                            }, 4000);
+                                        }
+                                    }
+                                 }">
+                                 
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500 aspect-[4/3] bg-white">
+                                    @foreach($promoBanners as $index => $banner)
+                                        <div x-show="activeSlide === {{ $index }}" 
+                                             x-transition:enter="transition ease-in-out duration-500"
+                                             x-transition:enter-start="opacity-0 translate-x-8"
+                                             x-transition:enter-end="opacity-100 translate-x-0"
+                                             x-transition:leave="transition ease-in-out duration-500 absolute inset-0"
+                                             x-transition:leave-start="opacity-100 translate-x-0"
+                                             x-transition:leave-end="opacity-0 -translate-x-8"
+                                             class="absolute inset-0 w-full h-full flex items-center justify-center">
+                                            @if(!empty($banner['link']))
+                                                <a href="{{ $banner['link'] }}" class="block w-full h-full">
+                                                    <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain">
+                                                </a>
+                                            @else
+                                                <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain">
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endif
+                                
+                                @if(count($promoBanners) > 1)
+                                    <!-- Dots Indicators -->
+                                    <div class="absolute -bottom-6 left-0 right-0 flex justify-center gap-2">
+                                        @foreach($promoBanners as $index => $banner)
+                                            <button @click="activeSlide = {{ $index }}" 
+                                                    class="w-2 h-2 rounded-full transition-all duration-300"
+                                                    :class="activeSlide === {{ $index }} ? 'bg-brand-600 w-4' : 'bg-brand-300 hover:bg-brand-400'"></button>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         @else
                             <!-- Placeholder jika belum ada promo -->
                             <div class="aspect-[4/3] w-4/5 max-w-sm mx-auto rounded-3xl overflow-hidden shadow-2xl border border-gray-200 bg-white transform rotate-2 hover:rotate-0 transition duration-500 hover:scale-105">

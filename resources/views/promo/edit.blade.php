@@ -30,44 +30,73 @@
                 @csrf
                 @method('PUT')
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    <!-- Kiri: Form Input -->
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-bold text-natural-900 mb-1.5">Gambar Banner Promo</label>
-                            <input type="file" name="promo_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full bg-natural-50 border border-natural-200 text-natural-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-2.5 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-colors">
-                            <p class="text-xs text-natural-500 mt-2">Format: JPG, PNG, WEBP. Maks 5MB. Gambar akan otomatis dioptimasi (resize max 1200px & konversi ke WebP) untuk performa <i>sat-set</i>.</p>
-                            @error('promo_image')
-                                <p class="text-rose-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+                @php
+                    $promoBanners = $setting->promo_banners ?? [];
+                    if (empty($promoBanners) && $setting->promo_image_path) {
+                        $promoBanners[0] = [
+                            'image' => $setting->promo_image_path,
+                            'link' => $setting->promo_link
+                        ];
+                    }
+                @endphp
 
-                        <div>
-                            <label class="block text-sm font-bold text-natural-900 mb-1.5">Tautan / Link Promo (Opsional)</label>
-                            <input type="url" name="promo_link" value="{{ old('promo_link', $setting->promo_link) }}" class="w-full bg-natural-50 border border-natural-200 text-natural-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-3 transition-colors" placeholder="https://contoh.com/promo-juni">
-                            <p class="text-xs text-natural-500 mt-2">URL tujuan jika banner promo diklik oleh pengunjung.</p>
-                            @error('promo_link')
-                                <p class="text-rose-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
+                <div class="space-y-8">
+                    @for($i = 0; $i < 5; $i++)
+                        @php
+                            $banner = $promoBanners[$i] ?? null;
+                        @endphp
+                        <div class="p-6 border border-natural-200 rounded-2xl bg-natural-50/50 relative">
+                            <h3 class="text-sm font-black text-brand-600 mb-4 uppercase tracking-wider">Slot Banner {{ $i + 1 }}</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <!-- Kiri: Form Input -->
+                                <div class="space-y-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-natural-900 mb-1.5">Gambar Banner Promo</label>
+                                        <input type="file" name="banners[{{ $i }}][image]" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full bg-white border border-natural-200 text-natural-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-2.5 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-colors">
+                                        @if($i == 0)
+                                            <p class="text-[11px] text-natural-500 mt-2">Format: JPG, PNG, WEBP. Maks 5MB. Otomatis di-resize max 1200px.</p>
+                                        @endif
+                                        @error("banners.{$i}.image")
+                                            <p class="text-rose-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
-                    <!-- Kanan: Preview -->
-                    <div>
-                        <label class="block text-sm font-bold text-natural-900 mb-1.5">Preview Banner Saat Ini</label>
-                        <div class="border-2 border-dashed border-natural-200 rounded-2xl flex items-center justify-center bg-natural-50 p-4 aspect-[4/3] overflow-hidden">
-                            @if($setting->promo_image_path)
-                                <img src="{{ asset('storage/' . $setting->promo_image_path) }}" alt="Banner Promo" class="max-w-full max-h-full object-contain rounded-lg shadow-sm">
-                            @else
-                                <div class="text-center text-natural-400">
-                                    <i class='bx bx-image text-5xl mb-2'></i>
-                                    <p class="text-sm font-medium">Belum ada banner promo aktif.</p>
+                                    <div>
+                                        <label class="block text-sm font-bold text-natural-900 mb-1.5">Tautan / Link Promo (Opsional)</label>
+                                        <input type="url" name="banners[{{ $i }}][link]" value="{{ old("banners.{$i}.link", $banner['link'] ?? '') }}" class="w-full bg-white border border-natural-200 text-natural-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-2.5 transition-colors" placeholder="https://contoh.com/promo">
+                                        @error("banners.{$i}.link")
+                                            <p class="text-rose-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    @if($banner && isset($banner['image']))
+                                    <div class="pt-2">
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" name="banners[{{ $i }}][delete]" value="1" class="rounded border-natural-300 text-rose-600 shadow-sm focus:ring-rose-500">
+                                            <span class="ml-2 text-sm font-bold text-rose-600 hover:text-rose-700">Hapus Banner Ini</span>
+                                        </label>
+                                    </div>
+                                    @endif
                                 </div>
-                            @endif
-                        </div>
-                    </div>
 
+                                <!-- Kanan: Preview -->
+                                <div>
+                                    <label class="block text-sm font-bold text-natural-900 mb-1.5">Preview Saat Ini</label>
+                                    <div class="border-2 border-dashed border-natural-200 rounded-2xl flex items-center justify-center bg-white p-3 aspect-[21/9] overflow-hidden">
+                                        @if($banner && isset($banner['image']))
+                                            <img src="{{ asset('storage/' . $banner['image']) }}" alt="Banner Promo {{ $i + 1 }}" class="max-w-full max-h-full object-contain rounded-lg shadow-sm">
+                                        @else
+                                            <div class="text-center text-natural-400">
+                                                <i class='bx bx-image text-4xl mb-1'></i>
+                                                <p class="text-xs font-medium">Belum ada gambar.</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
                 </div>
 
                 <div class="mt-8 pt-6 border-t border-natural-200 flex justify-end gap-3">
