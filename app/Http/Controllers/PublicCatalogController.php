@@ -11,8 +11,11 @@ class PublicCatalogController extends Controller
     public function index(Request $request)
     {
         $query = Product::with('category')
-                    ->where('stock', '>', 0)
-                    ->where('status', '!=', 'sold');
+                    ->where('status', '!=', 'sold')
+                    ->where(function($q) {
+                        $q->where('stock', '>', 0)
+                          ->orWhereNotNull('image_path');
+                    });
 
         // Removed category filter to show all in-stock products on the landing page
 
@@ -116,8 +119,11 @@ class PublicCatalogController extends Controller
         foreach($mainCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
             $category->total_count = \App\Models\Product::whereIn('category_id', $categoryIds)
-                                        ->where('stock', '>', 0)
                                         ->where('status', '!=', 'sold')
+                                        ->where(function($q) {
+                                            $q->where('stock', '>', 0)
+                                              ->orWhereNotNull('image_path');
+                                        })
                                         ->count();
         }
 
@@ -125,8 +131,11 @@ class PublicCatalogController extends Controller
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
             
             $query = \App\Models\Product::with('category')->whereIn('category_id', $categoryIds)
-                        ->where('stock', '>', 0)
-                        ->where('status', '!=', 'sold');
+                        ->where('status', '!=', 'sold')
+                        ->where(function($q) {
+                            $q->where('stock', '>', 0)
+                              ->orWhereNotNull('image_path');
+                        });
             
             if ($request->has('search') && $request->search != '') {
                 $search = $request->search;
