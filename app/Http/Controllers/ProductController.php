@@ -17,8 +17,8 @@ class ProductController extends Controller
     {
         $query = \App\Models\Product::with('category');
 
-        // Status Filter: Default 'available'
-        $status = $request->input('status', 'available');
+        // Status Filter: Default 'all'
+        $status = $request->input('status', 'all');
         if ($status !== 'all') {
             $query->where('status', $status);
         }

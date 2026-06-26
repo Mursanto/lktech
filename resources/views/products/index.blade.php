@@ -46,8 +46,8 @@
                     <option value="open_order" {{ request('tipe_stok') == 'open_order' ? 'selected' : '' }}>Open Order</option>
                 </select>
                 <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
-                    <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua Status</option>
-                    <option value="available" {{ request('status', 'available') == 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="all" {{ request('status', 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
+                    <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Tersedia</option>
                     <option value="sold" {{ request('status') == 'sold' ? 'selected' : '' }}>Habis (Terjual)</option>
                 </select>
             </div>
