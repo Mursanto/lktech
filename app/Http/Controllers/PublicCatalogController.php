@@ -127,11 +127,23 @@ class PublicCatalogController extends Controller
                 });
             }
 
+            if ($request->has('sort')) {
+                if ($request->sort == 'tertinggi') {
+                    $query->orderBy('selling_price', 'desc');
+                } elseif ($request->sort == 'terendah') {
+                    $query->orderBy('selling_price', 'asc');
+                } else {
+                    $query->latest();
+                }
+            } else {
+                $query->latest();
+            }
+
             if (!$selectedCategoryId && !$request->has('search')) {
-                $products = $query->latest()->take(5)->get();
+                $products = $query->take(5)->get();
                 $collectionToTransform = $products;
             } else {
-                $products = $query->latest()->paginate(12)->withQueryString();
+                $products = $query->paginate(12)->withQueryString();
                 $collectionToTransform = $products->getCollection();
             }
 

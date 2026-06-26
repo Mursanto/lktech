@@ -93,8 +93,8 @@
         <div class="flex-1 min-w-0">
             @if(isset($selectedCategoryId))
             <div class="mb-6 flex justify-end">
-                <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg">
-                    Lihat Semua Kategori
+                <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg transition-colors">
+                    &larr; Lihat Semua Kategori
                 </a>
             </div>
             @endif
@@ -108,13 +108,31 @@
                 @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-100">
+                        <div class="flex flex-wrap items-center justify-between mb-4 pb-2 border-b-2 border-gray-100 gap-4">
                             <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="hover:text-brand-600 transition-colors">
                                     <i class='bx bx-category text-brand-500'></i> {{ $category->name }}
                                 </a>
                             </h2>
-                            <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->total_count }} Produk</span>
+                            <div class="flex items-center gap-3">
+                                <form action="{{ route('katalog.index') }}" method="GET" class="relative">
+                                    @if(request()->has('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                    @endif
+                                    @if(request()->has('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+                                    <select name="sort" onchange="this.form.submit()" class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
+                                        <option value="terbaru" {{ request('sort') == 'terbaru' || !request()->has('sort') ? 'selected' : '' }}>Urutkan: Paling Sesuai</option>
+                                        <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Urutkan: Harga Tertinggi</option>
+                                        <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Urutkan: Harga Terendah</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                        <i class='bx bx-chevron-down text-sm'></i>
+                                    </div>
+                                </form>
+                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->total_count }} Produk</span>
+                            </div>
                         </div>
 
                         <!-- CSS Grid for 5 items -->
