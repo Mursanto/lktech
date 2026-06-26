@@ -99,10 +99,7 @@
             </div>
             @endif
 
-            <!-- Info Cards Section (Hidden on Mobile) -->
-            <div class="hidden md:block mb-10">
-                <x-info-cards />
-            </div>
+
 
             <div class="space-y-12">
                 @foreach($displayCategories as $category)
