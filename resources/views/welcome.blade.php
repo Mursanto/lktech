@@ -246,32 +246,27 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach($latestPosts->take(4) as $post)
-                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex group">
+                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex items-center p-2 group">
                     <!-- Thumbnail (Kiri) -->
-                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-2/5 sm:w-1/3 aspect-[4/3] bg-gray-100 overflow-hidden shrink-0 relative">
+                    <a href="{{ route('blog.show', $post->slug) }}" class="block w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden shrink-0 relative">
                         @if($post->thumbnail)
                             <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="absolute inset-0 w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
-                                <i class='bx bx-image text-3xl'></i>
+                                <i class='bx bx-image text-2xl'></i>
                             </div>
                         @endif
                     </a>
                     <!-- Content (Kanan) -->
-                    <div class="w-3/5 sm:w-2/3 p-3 md:p-4 flex flex-col justify-center">
+                    <div class="w-full pl-3 pr-1 flex flex-col justify-center">
                         <div class="text-[10px] text-brand-600 font-bold mb-1 flex items-center gap-1">
                             <i class='bx bx-calendar'></i> {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
                         </div>
-                        <h3 class="line-clamp-2 text-sm sm:text-base font-bold text-gray-900 mb-1.5 leading-snug group-hover:text-brand-600 transition-colors">
+                        <h3 class="line-clamp-2 text-xs font-bold text-gray-900 leading-snug group-hover:text-brand-600 transition-colors">
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
-                        <div class="hidden sm:block">
-                            <p class="line-clamp-2 text-xs text-gray-500 leading-relaxed">
-                                {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 80) }}
-                            </p>
-                        </div>
                     </div>
                 </div>
                 @endforeach
