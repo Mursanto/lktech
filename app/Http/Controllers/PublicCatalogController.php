@@ -16,6 +16,19 @@ class PublicCatalogController extends Controller
 
         // Removed category filter to show all in-stock products on the landing page
 
+        // Sort Filter
+        if ($request->has('sort')) {
+            if ($request->sort == 'tertinggi') {
+                $query->orderBy('selling_price', 'desc');
+            } elseif ($request->sort == 'terendah') {
+                $query->orderBy('selling_price', 'asc');
+            } else {
+                $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -26,10 +39,10 @@ class PublicCatalogController extends Controller
                       $cat->where('name', 'like', "%{$search}%");
                   });
             });
-            $products = $query->latest()->paginate(12)->withQueryString();
+            $products = $query->paginate(12)->withQueryString();
             $collectionToTransform = $products->getCollection();
         } else {
-            $products = $query->latest()->take(12)->get();
+            $products = $query->take(12)->get();
             $collectionToTransform = $products;
         }
 

@@ -133,7 +133,7 @@
         <!-- Product Grid Section -->
         <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 flex-shrink-0">
             
-            <div class="mb-2 flex justify-between items-end">
+            <div class="mb-4 flex flex-wrap justify-between items-end gap-4">
                 <div>
                     @if(request()->has('search') && request()->search != '')
                         <h2 class="text-xl font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
@@ -143,11 +143,28 @@
                         <p class="text-gray-500 text-xs mt-1">Daftar stok produk premium terbaru pilihan kami yang siap dipinang.</p>
                     @endif
                 </div>
-                @if(request()->has('search'))
-                    <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline">Lihat Semua</a>
-                @else
-                    <a href="{{ route('katalog.index') }}" class="text-brand-600 text-xs font-semibold hover:underline">Lihat Semua Katalog <i class='bx bx-right-arrow-alt'></i></a>
-                @endif
+                
+                <div class="flex flex-wrap items-center gap-3">
+                    <form action="{{ route('home') }}" method="GET" class="relative">
+                        @if(request()->has('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        <select name="sort" onchange="this.form.submit()" class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
+                            <option value="terbaru" {{ request('sort') == 'terbaru' || !request()->has('sort') ? 'selected' : '' }}>Urutkan: Paling Sesuai</option>
+                            <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Urutkan: Harga Tertinggi</option>
+                            <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Urutkan: Harga Terendah</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                            <i class='bx bx-chevron-down text-sm'></i>
+                        </div>
+                    </form>
+
+                    @if(request()->has('search'))
+                        <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline">Lihat Semua</a>
+                    @else
+                        <a href="{{ route('katalog.index') }}" class="text-brand-600 text-xs font-bold hover:text-brand-700 bg-brand-50 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">Lihat Semua Katalog <i class='bx bx-right-arrow-alt'></i></a>
+                    @endif
+                </div>
             </div>
 
             <!-- Precision Grid (Compact Design) -->
