@@ -12,97 +12,153 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+        $endDate   = $request->input('end_date');
 
-        // Base query
-        $query = \App\Models\Sale::with('saleDetails.product')->orderBy('created_at', 'desc');
+        // =====================================================
+        // SALES DATA
+        // =====================================================
+        $salesQuery = \App\Models\Sale::with('saleDetails.product')->orderBy('created_at', 'desc');
 
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+            $salesQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
         } else {
-            // Default to current month
-            $query->whereMonth('created_at', now()->month)
-                  ->whereYear('created_at', now()->year);
+            $salesQuery->whereMonth('created_at', now()->month)
+                       ->whereYear('created_at', now()->year);
         }
 
-        $sales = $query->get();
-        
-        // 1. Total Penjualan
-        $totalPenjualan = $sales->sum('total_amount');
-        
-        // 2. Laba Bersih (mengambil dari profit_amount)
-        $totalLabaBersih = $sales->sum('profit_amount');
-        
-        // 3. Biaya Operasional (Asumsi ada kolom operational_cost. Jika null, dianggap 0)
-        $totalBiayaOperasional = $sales->sum(function ($sale) {
-            return $sale->operational_cost ?? 0;
-        });
-        
-        // 4. Laba Kotor = Laba Bersih + Biaya Operasional
-        $totalLabaKotor = $totalLabaBersih + $totalBiayaOperasional;
-        
-        // 5. Total Modal (HPP) = Total Penjualan - Laba Kotor
-        $totalModal = $totalPenjualan - $totalLabaKotor;
+        $sales = $salesQuery->get();
 
-        // --- Month-over-Month (MoM) Calculation ---
-        $currentMonthSales = \App\Models\Sale::whereMonth('created_at', now()->month)
-                                             ->whereYear('created_at', now()->year)->get();
+        // Sales Totals
+        $totalPenjualan        = $sales->sum('total_amount');
+        $totalLabaBersih       = $sales->sum('profit_amount');
+        $totalBiayaOperasional = $sales->sum(fn($s) => $s->operational_cost ?? 0);
+        $totalLabaKotor        = $totalLabaBersih + $totalBiayaOperasional;
+        $totalModal            = $totalPenjualan - $totalLabaKotor;
+
+        // =====================================================
+        // SERVICE DATA
+        // =====================================================
+        $serviceQuery = \App\Models\Service::with('customer')->orderBy('created_at', 'desc');
+
+        if ($startDate && $endDate) {
+            $serviceQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } else {
+            $serviceQuery->whereMonth('created_at', now()->month)
+                         ->whereYear('created_at', now()->year);
+        }
+
+        $services = $serviceQuery->get();
+
+        // Service Totals (total_amount = biaya jasa + sparepart, service_fee = biaya jasa murni)
+        $totalPendapatanService = $services->sum('total_amount');
+        $totalLabaService       = $services->sum('service_fee');
+
+        // =====================================================
+        // RENTAL DATA
+        // =====================================================
+        $rentalQuery = \App\Models\Rental::with('customer')->orderBy('created_at', 'desc');
+
+        if ($startDate && $endDate) {
+            $rentalQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } else {
+            $rentalQuery->whereMonth('created_at', now()->month)
+                        ->whereYear('created_at', now()->year);
+        }
+
+        $rentals = $rentalQuery->get();
+
+        // Rental Totals (seluruh total_price = pendapatan, tidak ada HPP)
+        $totalPendapatanSewa = $rentals->sum('total_price');
+
+        // =====================================================
+        // MONTH-OVER-MONTH (MoM) — SALES
+        // =====================================================
+        $currentMonthSales  = \App\Models\Sale::whereMonth('created_at', now()->month)
+                                              ->whereYear('created_at', now()->year)->get();
         $previousMonthSales = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)
                                               ->whereYear('created_at', now()->subMonth()->year)->get();
-                                              
-        // Current Month Metrics
+
         $cmPendapatan = $currentMonthSales->sum('total_amount');
-        $cmLaba = $currentMonthSales->sum('profit_amount');
-        $cmModal = $cmPendapatan - $cmLaba;
-        
-        // Previous Month Metrics
+        $cmLaba       = $currentMonthSales->sum('profit_amount');
+        $cmModal      = $cmPendapatan - $cmLaba;
+
         $pmPendapatan = $previousMonthSales->sum('total_amount');
-        $pmLaba = $previousMonthSales->sum('profit_amount');
-        $pmModal = $pmPendapatan - $pmLaba;
-        
-        // Growth Percentages
+        $pmLaba       = $previousMonthSales->sum('profit_amount');
+        $pmModal      = $pmPendapatan - $pmLaba;
+
         $growthPendapatan = $pmPendapatan > 0 ? (($cmPendapatan - $pmPendapatan) / $pmPendapatan) * 100 : ($cmPendapatan > 0 ? 100 : 0);
-        $growthModal = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
-        $growthLaba = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
+        $growthModal      = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
+        $growthLaba       = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
+
+        // =====================================================
+        // MONTH-OVER-MONTH (MoM) — SERVICE
+        // =====================================================
+        $currentMonthServices  = \App\Models\Service::whereMonth('created_at', now()->month)
+                                                    ->whereYear('created_at', now()->year)->get();
+        $previousMonthServices = \App\Models\Service::whereMonth('created_at', now()->subMonth()->month)
+                                                    ->whereYear('created_at', now()->subMonth()->year)->get();
+
+        $cmService    = $currentMonthServices->sum('total_amount');
+        $pmService    = $previousMonthServices->sum('total_amount');
+        $growthService = $pmService > 0 ? (($cmService - $pmService) / $pmService) * 100 : ($cmService > 0 ? 100 : 0);
+
+        // =====================================================
+        // MONTH-OVER-MONTH (MoM) — RENTAL
+        // =====================================================
+        $currentMonthRentals  = \App\Models\Rental::whereMonth('created_at', now()->month)
+                                                  ->whereYear('created_at', now()->year)->get();
+        $previousMonthRentals = \App\Models\Rental::whereMonth('created_at', now()->subMonth()->month)
+                                                  ->whereYear('created_at', now()->subMonth()->year)->get();
+
+        $cmRental    = $currentMonthRentals->sum('total_price');
+        $pmRental    = $previousMonthRentals->sum('total_price');
+        $growthRental = $pmRental > 0 ? (($cmRental - $pmRental) / $pmRental) * 100 : ($cmRental > 0 ? 100 : 0);
 
         return view('reports.index', compact(
+            // Sales data
             'sales', 'totalPenjualan', 'totalModal', 'totalLabaKotor', 'totalBiayaOperasional', 'totalLabaBersih',
+            // Service data
+            'services', 'totalPendapatanService', 'totalLabaService',
+            // Rental data
+            'rentals', 'totalPendapatanSewa',
+            // MoM Sales
             'cmPendapatan', 'cmModal', 'cmLaba',
             'pmPendapatan', 'pmModal', 'pmLaba',
-            'growthPendapatan', 'growthModal', 'growthLaba'
+            'growthPendapatan', 'growthModal', 'growthLaba',
+            // MoM Service
+            'cmService', 'pmService', 'growthService',
+            // MoM Rental
+            'cmRental', 'pmRental', 'growthRental'
         ));
     }
-    
+
     public function profit()
     {
         // Ambil data penjualan terbaru beserta relasi produknya
         $sales = \App\Models\Sale::with('product')->orderBy('created_at', 'desc')->get();
-        
+
         // Kalkulasi Total secara Real-time (Keseluruhan)
         $totalPendapatan = $sales->sum('total_amount');
-        $totalLaba = $sales->sum('profit_amount');
-        $totalModal = $totalPendapatan - $totalLaba;
-        
+        $totalLaba       = $sales->sum('profit_amount');
+        $totalModal      = $totalPendapatan - $totalLaba;
+
         // --- Month-over-Month (MoM) Calculation ---
-        $currentMonthSales = \App\Models\Sale::whereMonth('created_at', now()->month)
+        $currentMonthSales  = \App\Models\Sale::whereMonth('created_at', now()->month)
                                              ->whereYear('created_at', now()->year)->get();
         $previousMonthSales = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)
-                                              ->whereYear('created_at', now()->subMonth()->year)->get();
-                                              
-        // Current Month Metrics
+                                             ->whereYear('created_at', now()->subMonth()->year)->get();
+
         $cmPendapatan = $currentMonthSales->sum('total_amount');
-        $cmLaba = $currentMonthSales->sum('profit_amount');
-        $cmModal = $cmPendapatan - $cmLaba;
-        
-        // Previous Month Metrics
+        $cmLaba       = $currentMonthSales->sum('profit_amount');
+        $cmModal      = $cmPendapatan - $cmLaba;
+
         $pmPendapatan = $previousMonthSales->sum('total_amount');
-        $pmLaba = $previousMonthSales->sum('profit_amount');
-        $pmModal = $pmPendapatan - $pmLaba;
-        
-        // Growth Percentages
+        $pmLaba       = $previousMonthSales->sum('profit_amount');
+        $pmModal      = $pmPendapatan - $pmLaba;
+
         $growthPendapatan = $pmPendapatan > 0 ? (($cmPendapatan - $pmPendapatan) / $pmPendapatan) * 100 : ($cmPendapatan > 0 ? 100 : 0);
-        $growthModal = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
-        $growthLaba = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
+        $growthModal      = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
+        $growthLaba       = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
 
         return view('reports.profit', compact(
             'sales', 'totalPendapatan', 'totalModal', 'totalLaba',
