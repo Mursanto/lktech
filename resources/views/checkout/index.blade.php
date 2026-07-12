@@ -106,20 +106,35 @@
                     <div class="space-y-4 mb-6 pb-6 border-b border-gray-100">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.customer_name" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="Contoh: Budi Santoso">
+                            <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')" :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="Contoh: Budi Santoso">
+                            <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class='bx bx-error-circle'></i></p>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email <span class="text-red-500">*</span></label>
-                            <input type="email" x-model="formData.email" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="budi@email.com">
+                            <input type="email" x-model="formData.email" @blur="validateField('email')" :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="budi@email.com">
+                            <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.phone" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" placeholder="0812xxxx">
+                            <input type="text" x-model="formData.phone" @blur="validateField('phone')" :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="0812xxxx">
+                            <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
                             <textarea x-model="formData.address" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" rows="3" placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
                         </div>
+                    </div>
+
+                    <!-- Inline Error Banner -->
+                    <div x-show="showErrorBanner" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 flex gap-3 items-start">
+                        <i class='bx bx-error-circle text-red-500 text-xl flex-shrink-0 mt-0.5'></i>
+                        <div>
+                            <p class="text-sm font-bold text-red-700">Inputan tidak sesuai</p>
+                            <p class="text-xs text-red-600 mt-0.5" x-text="errorBannerDetail"></p>
+                        </div>
+                        <button @click="showErrorBanner = false" class="ml-auto text-red-400 hover:text-red-600 flex-shrink-0">
+                            <i class='bx bx-x text-lg'></i>
+                        </button>
                     </div>
 
                     <!-- Summary -->
@@ -147,7 +162,7 @@
                         </p>
                     </div>
 
-                    <button type="button" @click.prevent="processPayment($event)" :disabled="isLoading || !isFormValid || {{ count($cart) == 0 ? 'true' : 'false' }}" 
+                    <button type="button" @click.prevent="processPayment($event)" :disabled="isLoading || {{ count($cart) == 0 ? 'true' : 'false' }}" 
                             class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
                         <template x-if="isLoading">
                             <i class='bx bx-loader-alt bx-spin text-xl'></i>
@@ -177,7 +192,74 @@
                     phone: '',
                     address: ''
                 },
+                errors: {
+                    customer_name: '',
+                    email: '',
+                    phone: ''
+                },
                 isLoading: false,
+                showErrorBanner: false,
+                errorBannerDetail: '',
+
+                // Validate individual field
+                validateField(field) {
+                    this.errors[field] = '';
+                    
+                    if (field === 'customer_name') {
+                        const name = this.formData.customer_name.trim();
+                        if (!name) {
+                            this.errors.customer_name = 'Nama lengkap wajib diisi.';
+                        } else if (name.length < 3) {
+                            this.errors.customer_name = 'Nama minimal 3 karakter.';
+                        }
+                    }
+
+                    if (field === 'email') {
+                        const email = this.formData.email.trim();
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!email) {
+                            this.errors.email = 'Email wajib diisi.';
+                        } else if (!emailRegex.test(email)) {
+                            this.errors.email = 'Inputan tidak sesuai. Gunakan format email yang valid (contoh: nama@email.com).';
+                        }
+                    }
+
+                    if (field === 'phone') {
+                        const phone = this.formData.phone.trim();
+                        const phoneRegex = /^(\+62|62|0)[0-9]{8,13}$/;
+                        if (!phone) {
+                            this.errors.phone = 'Nomor WhatsApp wajib diisi.';
+                        } else if (!phoneRegex.test(phone)) {
+                            this.errors.phone = 'Inputan tidak sesuai. Gunakan format nomor yang valid (contoh: 08123456789).';
+                        }
+                    }
+
+                    return !this.errors[field];
+                },
+
+                // Validate all fields
+                validateAll() {
+                    let valid = true;
+                    ['customer_name', 'email', 'phone'].forEach(field => {
+                        if (!this.validateField(field)) {
+                            valid = false;
+                        }
+                    });
+                    return valid;
+                },
+
+                get isFormValid() {
+                    const name = this.formData.customer_name.trim();
+                    const email = this.formData.email.trim();
+                    const phone = this.formData.phone.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    const phoneRegex = /^(\+62|62|0)[0-9]{8,13}$/;
+
+                    return name.length >= 3 && 
+                           emailRegex.test(email) &&
+                           phoneRegex.test(phone);
+                },
+
                 updateQuantity(id, qty) {
                     if (qty < 1) return;
                     fetch('/cart/update/' + id, {
@@ -211,20 +293,24 @@
                     .then(() => window.location.reload())
                     .catch(() => window.location.reload());
                 },
-                get isFormValid() {
-                    return this.formData.customer_name.trim().length > 0 && 
-                           this.formData.email.trim().length > 0 &&
-                           this.formData.phone.trim().length > 0;
-                },
+
                 async processPayment(e) {
                     if (e && typeof e.preventDefault === 'function') {
                         e.preventDefault();
                     }
-                    if (!this.isFormValid) {
-                        alert('Mohon lengkapi Nama, Email, dan WhatsApp Anda.');
+
+                    // Client-side validation
+                    if (!this.validateAll()) {
+                        this.showErrorBanner = true;
+                        const errorFields = [];
+                        if (this.errors.customer_name) errorFields.push('Nama');
+                        if (this.errors.email) errorFields.push('Email');
+                        if (this.errors.phone) errorFields.push('WhatsApp');
+                        this.errorBannerDetail = 'Mohon periksa kembali: ' + errorFields.join(', ') + '.';
                         return;
                     }
-                    
+
+                    this.showErrorBanner = false;
                     this.isLoading = true;
 
                     try {
@@ -238,11 +324,34 @@
                             body: JSON.stringify(this.formData)
                         });
 
-                        if (!response.ok) {
-                            const errorText = await response.text();
-                            console.error("SERVER ERROR DUMP:", errorText);
-                            alert("Gagal memproses. Silakan cek Inspect -> Console untuk detail error.");
+                        // Handle Laravel validation errors (422)
+                        if (response.status === 422) {
+                            const errorData = await response.json();
                             this.isLoading = false;
+                            
+                            // Map server validation errors to form fields
+                            if (errorData.errors) {
+                                if (errorData.errors.customer_name) {
+                                    this.errors.customer_name = 'Inputan tidak sesuai. ' + errorData.errors.customer_name[0];
+                                }
+                                if (errorData.errors.email) {
+                                    this.errors.email = 'Inputan tidak sesuai. ' + errorData.errors.email[0];
+                                }
+                                if (errorData.errors.phone) {
+                                    this.errors.phone = 'Inputan tidak sesuai. ' + errorData.errors.phone[0];
+                                }
+                            }
+                            
+                            this.showErrorBanner = true;
+                            this.errorBannerDetail = 'Mohon periksa kembali data yang dimasukkan.';
+                            return;
+                        }
+
+                        if (!response.ok) {
+                            this.isLoading = false;
+                            this.showErrorBanner = true;
+                            this.errorBannerDetail = 'Terjadi kesalahan pada server. Silakan coba beberapa saat lagi.';
+                            console.error("SERVER ERROR:", await response.text());
                             return;
                         }
 
@@ -270,12 +379,14 @@
                                 }
                             });
                         } else {
-                            alert('Gagal memproses pembayaran: ' + (responseData.error || 'Unknown Error'));
+                            this.showErrorBanner = true;
+                            this.errorBannerDetail = responseData.error || 'Gagal memproses pembayaran. Silakan coba lagi.';
                         }
                     } catch (err) {
                         this.isLoading = false;
                         console.error(err);
-                        alert('Terjadi kesalahan koneksi sistem.');
+                        this.showErrorBanner = true;
+                        this.errorBannerDetail = 'Terjadi kesalahan koneksi. Periksa koneksi internet Anda dan coba lagi.';
                     }
                 }
             }

@@ -110,10 +110,19 @@ class CartController extends Controller
     public function process(Request $request)
     {
         $request->validate([
-            'customer_name' => 'required|string|max:255',
+            'customer_name' => 'required|string|min:3|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:255',
+            'phone' => ['required', 'string', 'max:255', 'regex:/^(\+62|62|0)[0-9]{8,13}$/'],
             'address' => 'nullable|string|max:1000',
+        ], [
+            'customer_name.required' => 'Inputan tidak sesuai. Nama lengkap wajib diisi.',
+            'customer_name.min' => 'Inputan tidak sesuai. Nama minimal 3 karakter.',
+            'customer_name.max' => 'Inputan tidak sesuai. Nama maksimal 255 karakter.',
+            'email.required' => 'Inputan tidak sesuai. Email wajib diisi.',
+            'email.email' => 'Inputan tidak sesuai. Gunakan format email yang valid (contoh: nama@email.com).',
+            'phone.required' => 'Inputan tidak sesuai. Nomor WhatsApp wajib diisi.',
+            'phone.regex' => 'Inputan tidak sesuai. Gunakan format nomor yang valid (contoh: 08123456789).',
+            'address.max' => 'Inputan tidak sesuai. Alamat maksimal 1000 karakter.',
         ]);
 
         $cart = session()->get('cart', []);
