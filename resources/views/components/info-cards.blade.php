@@ -1,5 +1,5 @@
-<!-- 6 Marketplace-Style Service Cards Section -->
-<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4 py-2">
+<!-- 7 Marketplace-Style Service Cards Section -->
+<div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 py-2">
     <!-- Kartu 1: Penjualan -->
     <a href="/katalog" class="group block w-full bg-white border border-gray-100 rounded-xl p-3 lg:p-4 shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
         <div class="inline-flex items-center justify-center bg-blue-50 text-blue-600 rounded-2xl w-12 h-12 lg:w-10 lg:h-10 mb-2 group-hover:scale-110 transition-transform">
@@ -63,6 +63,17 @@
         <h3 class="text-sm lg:text-[11px] font-bold text-gray-800 leading-tight group-hover:text-indigo-600 transition-colors">Jasa Pembuatan Website</h3>
         <div class="hidden">
             <p>Tingkatkan kredibilitas bisnis Anda dengan website profesional, responsif, dan SEO-friendly.</p>
+        </div>
+    </a>
+
+    <!-- Kartu 7: Wifi Voucher Starlink -->
+    <a href="/wifi-voucher" class="group block w-full bg-white border border-gray-100 rounded-xl p-3 lg:p-4 shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
+        <div class="inline-flex items-center justify-center bg-cyan-50 text-cyan-600 rounded-2xl w-12 h-12 lg:w-10 lg:h-10 mb-2 group-hover:scale-110 transition-transform">
+            <i class='bx bx-wifi text-2xl lg:text-xl'></i>
+        </div>
+        <h3 class="text-sm lg:text-[11px] font-bold text-gray-800 leading-tight group-hover:text-cyan-600 transition-colors">Wifi Voucher Starlink</h3>
+        <div class="hidden">
+            <p>Solusi internet cepat satelit Starlink untuk desa dan kawasan wisata dengan sistem manajemen voucher.</p>
         </div>
     </a>
 </div>
