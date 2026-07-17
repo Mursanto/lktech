@@ -237,4 +237,29 @@ Route::get('/buka-brankas', function () {
     return 'Berhasil! Pintu brankas gambar sudah dibuka.';
 });
 
+// Temporary Route to seed Wifi Voucher Packages
+Route::get('/seed-wifi-voucher', function () {
+    \App\Models\WifiVoucher::truncate();
+    
+    \App\Models\WifiVoucher::create([
+        'nama_paket' => 'Skema Sharing Revenue',
+        'harga' => 0,
+        'badge' => 'TERPOPULER',
+        'deskripsi_singkat' => 'TIDAK ADA INVESTASI AWAL, MODAL MINIMAL',
+        'fitur_list' => "Paket voucher disediakan provider\nMargin Owner: Rp 2.100 (6 Jam)\nMargin Owner: Rp 5.250 (12 Jam)\nModal Minimal, Keuntungan dari Margin\nNote: Tidak ada investasi awal -> Modal minimal -> keuntungan dari margin penjualan voucher",
+        'is_active' => true
+    ]);
+
+    \App\Models\WifiVoucher::create([
+        'nama_paket' => 'Skema Beli Putus',
+        'harga' => 18900000,
+        'badge' => 'REKOMENDASI',
+        'deskripsi_singkat' => 'INVESTASI PERANGKAT + CLOUD SYSTEM',
+        'fitur_list' => "Kit Starlink: Perangkat satelit lengkap\nInstalasi: Bracket, Cabling, Aksesoris\nAP Outdoor: Access Point High End\nCloud System: Sistem hotspot & manajemen\nBiaya Bulanan: Rp 2.362.500 (Starlink + Support)\nnote: Investasi perangkat + Cloud system -> Aset milik owner -> Keuntungan penuh",
+        'is_active' => true
+    ]);
+
+    return 'Data Paket Wifi Voucher Berhasil Ditambahkan!';
+});
+
 require __DIR__.'/auth.php';
