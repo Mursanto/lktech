@@ -75,7 +75,7 @@
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
-                                Dari pengadaan laptop premium, rakit PC custom, servis bergaransi, hingga pembuatan website profesional. LKtech siap mendukung produktivitas harian dan pertumbuhan bisnis Anda.
+                                Dari pengadaan laptop premium, rakit PC custom, servis bergaransi, hingga pembuatan website profesional. Kini hadir juga layanan WiFi Voucher Starlink—solusi cerdas untuk ubah blank spot jadi cuan! LKtech siap mendukung produktivitas harian dan pertumbuhan bisnis Anda.
                             </p>
                             <!-- Informasi Layanan Tambahan -->
                             <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm">
