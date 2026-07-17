@@ -47,7 +47,7 @@
 
         <!-- Banner Image -->
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <img src="{{ asset('images/wifi_voucer.jpg') }}" alt="WiFi Voucher Starlink" class="w-full h-auto rounded-3xl shadow-xl border border-gray-100">
+            <img src="{{ asset('images/wifi_voucer.webp') }}" alt="WiFi Voucher Starlink" class="w-full h-auto rounded-3xl shadow-xl border border-gray-100">
         </div>
 
         <!-- Latar Belakang -->
