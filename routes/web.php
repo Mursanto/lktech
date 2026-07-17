@@ -43,6 +43,7 @@ Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
 Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'index'])->name('rakit-pc');
 Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-website');
+Route::get('/wifi-voucher', [PageController::class, 'wifiVoucher'])->name('wifi-voucher');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
@@ -158,6 +159,7 @@ Route::middleware(['auth'])->group(function () {
     // Jasa Website Admin Routes
     Route::middleware(['role:Admin'])->group(function () {
         Route::resource('jasa-website-admin', App\Http\Controllers\Admin\JasaWebsiteController::class);
+        Route::resource('wifi-voucher-admin', App\Http\Controllers\Admin\WifiVoucherController::class);
     });
 });
 

@@ -15,13 +15,14 @@
                 <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('home') ? 'text-brand-600' : '' }}">Beranda</a>
                 <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
                 <div class="relative group flex items-center h-full" x-data="{ open: false }" @mouseleave="open = false">
-                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') ? 'text-brand-600' : '' }}">
+                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') ? 'text-brand-600' : '' }}">
                         Layanan <i class='bx bx-chevron-down text-lg'></i>
                     </button>
                     <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-56 z-50" style="display: none;">
                         <div class="bg-white border border-gray-100 rounded-xl shadow-lg py-2 overflow-hidden">
                             <a href="{{ route('rakit-pc') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Rakit PC</a>
-                            <a href="{{ route('jasa-website') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Pembuatan Website</a>
+                            <a href="{{ route('jasa-website') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Jasa Pembuatan Website</a>
+                            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">WiFi Voucher Starlink</a>
                         </div>
                     </div>
                 </div>
@@ -116,6 +117,9 @@
             </a>
             <a href="{{ route('jasa-website') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Jasa Website
+            </a>
+            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                WiFi Voucher Starlink
             </a>
             <a href="{{ route('blog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Blog & Panduan
