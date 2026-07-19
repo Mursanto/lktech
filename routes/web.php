@@ -44,6 +44,7 @@ Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-ga
 Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'index'])->name('rakit-pc');
 Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-website');
 Route::get('/wifi-voucher', [PageController::class, 'wifiVoucher'])->name('wifi-voucher');
+Route::view('/jasa-furniture', 'pages.jasa-furniture')->name('jasa-furniture');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');

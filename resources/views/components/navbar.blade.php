@@ -22,7 +22,8 @@
                         <div class="bg-white border border-gray-100 rounded-xl shadow-lg py-2 overflow-hidden">
                             <a href="{{ route('rakit-pc') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Rakit PC</a>
                             <a href="{{ route('jasa-website') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Jasa Pembuatan Website</a>
-                            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">WiFi Voucher Starlink</a>
+                            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">WiFi Voucher Starlink</a>
+                            <a href="{{ route('jasa-furniture') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">Jasa Furniture</a>
                         </div>
                     </div>
                 </div>
@@ -120,6 +121,9 @@
             </a>
             <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 WiFi Voucher Starlink
+            </a>
+            <a href="{{ route('jasa-furniture') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                Jasa Furniture
             </a>
             <a href="{{ route('blog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Blog & Panduan
