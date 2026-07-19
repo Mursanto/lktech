@@ -319,13 +319,7 @@
         </div>
     </main>
 
-    <!-- Floating CTA (WhatsApp) -->
-    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20layanan%20WiFi%20Voucher%20Starlink." 
-       target="_blank"
-       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] hover:-translate-y-1 transition-all flex items-center gap-2 group border-2 border-white">
-        <i class='bx bxl-whatsapp text-3xl'></i>
-        <span class="font-bold text-sm max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap hidden md:block">Konsultasi WiFi Voucher</span>
-    </a>
+
 
     <!-- Footer -->
     <x-footer />
