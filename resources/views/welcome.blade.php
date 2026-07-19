@@ -71,7 +71,7 @@
                     <!-- Left: Text (60%) -->
                     <div class="md:col-span-7 space-y-4">
                         <h1 class="text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Satu Platform, Beragam Solusi: Solusi IT & Segala Kebutuhanmu!
+                            Solusi IT & Segala Kebutuhanmu!
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
