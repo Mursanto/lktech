@@ -15,7 +15,7 @@
 
     <!-- Company Identity Text -->
     <div class="text-center mb-8 relative z-10">
-        <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">LKtech TN SEREAL</h1>
+        <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">LKTech TN SEREAL</h1>
         <p class="text-blue-100 text-xl drop-shadow-md">Sistem Informasi Inventori dan Penjualan</p>
     </div>
 
