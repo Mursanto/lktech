@@ -170,7 +170,7 @@
 
         <!-- 4 Info Cards Section -->
         @if(!request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <x-info-cards />
         </div>
         @endif
