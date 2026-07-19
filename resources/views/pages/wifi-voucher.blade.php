@@ -172,7 +172,7 @@
                             
                             <div class="mb-8">
                                 <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Investasi / Harga</p>
-                                <span class="{{ $isHighlighted ? 'text-4xl' : 'text-3xl' }} font-black text-gray-900">Rp {{ number_format($package->harga, 0, ',', '.') }}</span>
+                                <span class="{{ $isHighlighted ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-xl sm:text-2xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga, 0, ',', '.') }}</span>
                             </div>
                             
                             <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">

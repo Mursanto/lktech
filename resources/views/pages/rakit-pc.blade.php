@@ -113,7 +113,7 @@
                     
                     <div class="mt-auto pt-5 border-t {{ $index % 3 == 2 ? 'border-gray-800' : 'border-gray-100' }} relative z-10">
                         <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Mulai dari</p>
-                        <p class="text-3xl font-black {{ $style['price'] }}">Rp {{ number_format($package->harga_estimasi, 0, ',', '.') }}</p>
+                        <p class="text-2xl sm:text-3xl font-black {{ $style['price'] }} whitespace-nowrap">Rp {{ number_format($package->harga_estimasi, 0, ',', '.') }}</p>
                     </div>
                 </div>
                 @endforeach

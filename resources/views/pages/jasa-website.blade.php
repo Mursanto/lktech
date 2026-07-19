@@ -127,7 +127,7 @@
                             <p class="text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-6">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
                             <div class="mb-8">
-                                <span class="{{ $isHighlighted ? 'text-4xl' : 'text-3xl' }} font-black text-gray-900">Rp {{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
+                                <span class="{{ $isHighlighted ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-xl sm:text-2xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
                             <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
