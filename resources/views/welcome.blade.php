@@ -71,16 +71,16 @@
                     <!-- Left: Text (60%) -->
                     <div class="md:col-span-7 space-y-4">
                         <h1 class="text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Solusi IT Tepat & Tepercaya
+                            Satu Platform, Beragam Solusi: Solusi IT & Segala Kebutuhanmu!
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
-                                Dari pengadaan laptop premium, rakit PC custom, servis bergaransi, hingga pembuatan website profesional. Kini hadir juga layanan WiFi Voucher Starlink—solusi cerdas untuk ubah blank spot jadi cuan! LKtech siap mendukung produktivitas harian dan pertumbuhan bisnis Anda.
+                                Dari urusan laptop rewel, rakit PC idaman, bikin website kece, sampai pasang WiFi Starlink anti-lelet. Butuh furnitur baru atau sewa mobil buat akhir pekan? Tenang, serahkan aja ke kami. LKTech siap bantu bikin urusanmu makin gampang dan praktis!
                             </p>
                             <!-- Informasi Layanan Tambahan -->
                             <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm">
                                 <p class="text-sm md:text-base text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap">
-                                    ✅ Laptop Premium | Servis & Sewa | Rakit PC | Jasa Website
+                                    ✅ Gadget & PC | Web & Internet | Furnitur | Sewa Mobil
                                 </p>
                             </div>
                         </div>
