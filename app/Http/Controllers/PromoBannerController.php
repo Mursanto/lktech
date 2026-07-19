@@ -21,7 +21,7 @@ class PromoBannerController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'banners' => 'nullable|array|max:5',
+            'banners' => 'nullable|array|max:7',
             'banners.*.image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'banners.*.link' => 'nullable|url|max:255',
             'banners.*.delete' => 'nullable|boolean',

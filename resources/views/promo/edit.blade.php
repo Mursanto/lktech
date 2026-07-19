@@ -41,7 +41,7 @@
                 @endphp
 
                 <div class="space-y-8">
-                    @for($i = 0; $i < 5; $i++)
+                    @for($i = 0; $i < 7; $i++)
                         @php
                             $banner = $promoBanners[$i] ?? null;
                         @endphp
