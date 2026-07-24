@@ -45,6 +45,7 @@ Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'i
 Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-website');
 Route::get('/wifi-voucher', [PageController::class, 'wifiVoucher'])->name('wifi-voucher');
 Route::view('/jasa-furniture', 'pages.jasa-furniture')->name('jasa-furniture');
+Route::view('/martabak-jawara', 'pages.martabak-jawara')->name('martabak-jawara');
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
