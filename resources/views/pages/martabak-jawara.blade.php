@@ -227,8 +227,10 @@
                             <span class="badge-shimmer">Jawara</span>
                         </h1>
 
-                        <p class="text-white/70 text-base md:text-lg leading-relaxed mb-4 fade-up delay-2">
-                            Martabak premium dengan beragam varian rasa kekinian — dari Black Forest, Tipker Chocomalltine, Pizza, hingga Original Keju Berlimpah. Dibuat segar setiap hari.
+                        <p class="text-white/80 text-base md:text-lg leading-relaxed mb-4 fade-up delay-2">
+                            Martabak Jawara hadir dengan 3 senjata pamungkas: Manis, Pizza, dan Tipker. Dibuat fresh setiap hari dari bahan pilihan, teksturnya di jamin lembut,serta tipker yang cruncy bikin nagih dan lagi.
+                            <br><br>
+                            <span class="font-bold text-amber-300">Satu gigitan, langsung kecanduan. Siap buktikan?</span>
                         </p>
 
                         {{-- Jam buka badge --}}
@@ -366,15 +368,15 @@
                             <p class="font-black text-base leading-tight">GrabFood</p>
                         </div>
                     </a>
-                    {{-- ShopeeFood (segera) --}}
-                    <div class="flex items-center gap-3 px-7 py-4 bg-gray-100 text-gray-400 font-bold rounded-2xl text-sm border-2 border-dashed border-gray-300 relative">
-                        <i class='bx bx-store text-2xl'></i>
+                    {{-- ShopeeFood --}}
+                    <a href="https://shopee.co.id/universal-link/now-food/shop/22505814?deep_and_deferred=1&shareChannel=whatsapp" target="_blank"
+                       class="flex items-center gap-3 px-7 py-4 shopee-btn text-white font-bold rounded-2xl transition-all shadow-md hover:shadow-orange-500/30 hover:-translate-y-1 text-sm">
+                        <i class='bx bx-shopping-bag text-2xl'></i>
                         <div class="text-left">
-                            <p class="text-[10px] font-medium opacity-80 leading-none">Segera di</p>
+                            <p class="text-[10px] font-medium opacity-80 leading-none">Pesan via</p>
                             <p class="font-black text-base leading-tight">ShopeeFood</p>
                         </div>
-                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">Segera</span>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
