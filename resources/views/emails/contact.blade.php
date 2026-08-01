@@ -12,6 +12,10 @@
         <td style="padding: 8px; border: 1px solid #ddd;">{{ $data['email'] }}</td>
     </tr>
     <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;"><strong>Nomor WhatsApp/Telp</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ $data['phone'] }}</td>
+    </tr>
+    <tr>
         <td style="padding: 8px; border: 1px solid #ddd;" colspan="2"><strong>Pesan & Kebutuhan:</strong></td>
     </tr>
     <tr>

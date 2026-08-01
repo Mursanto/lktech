@@ -55,6 +55,16 @@
             </div>
             
             <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp / Telepon <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class='bx bxl-whatsapp text-gray-400 text-lg'></i>
+                    </div>
+                    <input type="tel" name="phone" required pattern="^[0-9+\-\s()]*$" title="Harap masukkan nomor telepon yang valid (hanya angka dan simbol +, -, spasi, tanda kurung yang diperbolehkan)" class="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all bg-gray-50 hover:bg-white focus:bg-white" placeholder="08xxxxxxxxxx">
+                </div>
+            </div>
+            
+            <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Pesan & Kebutuhan <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
