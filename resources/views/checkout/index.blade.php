@@ -30,7 +30,7 @@
 <body class="text-gray-800 antialiased">
     <x-navbar />
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24" x-data="checkoutForm({{ htmlspecialchars(json_encode(array_values($cart), JSON_HEX_APOS | JSON_HEX_QUOT)) }})" x-init="$watch('selectedItems', () => updateSubtotal()); updateSubtotal()">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24" x-data="checkoutForm({{ Js::from(array_values($cart)) }})" x-init="$watch('selectedItems', () => updateSubtotal()); updateSubtotal()">
         
         <!-- Toast Notification -->
         <div x-show="toast.show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-2" class="fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 z-50">
