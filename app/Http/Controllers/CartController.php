@@ -133,6 +133,7 @@ class CartController extends Controller
             'email' => 'required|email|max:255',
             'phone' => ['required', 'string', 'max:255', 'regex:/^(\+62|62|0)[0-9]{8,13}$/'],
             'address' => 'nullable|string|max:1000',
+            'selected_items' => 'required|array|min:1',
         ], [
             'customer_name.required' => 'Inputan tidak sesuai. Nama lengkap wajib diisi.',
             'customer_name.min' => 'Inputan tidak sesuai. Nama minimal 3 karakter.',
@@ -146,14 +147,24 @@ class CartController extends Controller
 
         $cart = session()->get('cart', []);
         
-        if (empty($cart)) {
-            return response()->json(['error' => 'Keranjang kosong.'], 400);
+        $selectedItems = $request->input('selected_items', []);
+        $checkoutCart = [];
+        
+        foreach ($cart as $id => $item) {
+            // Using loose comparison in case JS sends string IDs and PHP has integer IDs
+            if (in_array($id, $selectedItems) || in_array((string)$id, $selectedItems)) {
+                $checkoutCart[$id] = $item;
+            }
+        }
+        
+        if (empty($checkoutCart)) {
+            return response()->json(['error' => 'Tidak ada produk yang dipilih untuk dicheckout.'], 400);
         }
 
         $totalAmount = 0;
         $totalProfit = 0;
 
-        foreach ($cart as $item) {
+        foreach ($checkoutCart as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
             $profitPerItem = $item['price'] - ($item['purchase_price'] ?? 0);
             $totalProfit += $profitPerItem * $item['quantity'];
@@ -190,7 +201,7 @@ class CartController extends Controller
             'payment_method' => 'Transfer Manual',
         ]);
 
-        foreach ($cart as $item) {
+        foreach ($checkoutCart as $item) {
             SaleDetail::create([
                 'sale_id' => $sale->id,
                 'product_id' => $item['id'],
@@ -229,8 +240,15 @@ class CartController extends Controller
 
     public function success($order_id)
     {
-        session()->forget('cart');
         $sale = Sale::with(['customer', 'saleDetails.product'])->findOrFail($order_id);
+        
+        $cart = session()->get('cart', []);
+        foreach ($sale->saleDetails as $detail) {
+            if (isset($cart[$detail->product_id])) {
+                unset($cart[$detail->product_id]);
+            }
+        }
+        session()->put('cart', $cart);
         
         $paymentInfo = null;
 

@@ -30,91 +30,98 @@
 <body class="text-gray-800 antialiased">
     <x-navbar />
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24" x-data="checkoutForm()">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24" x-data="checkoutForm({{ htmlspecialchars(json_encode(array_values($cart), JSON_HEX_APOS | JSON_HEX_QUOT)) }})" x-init="$watch('selectedItems', () => updateSubtotal()); updateSubtotal()">
+        
+        <!-- Toast Notification -->
+        <div x-show="toast.show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-2" class="fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 z-50">
+            <i class='bx bx-check-circle text-green-400 text-xl'></i>
+            <span class="text-sm font-medium" x-text="toast.message"></span>
+        </div>
+
         <div class="mb-8">
             <h1 class="text-3xl font-black text-gray-900 tracking-tight mb-2">Keranjang & Checkout</h1>
-            <p class="text-gray-500">Terdapat {{ array_sum(array_column($cart, 'quantity')) }} item dalam keranjang belanja Anda.</p>
+            <p class="text-gray-500">Terdapat <span x-text="totalItemsCount"></span> item dalam keranjang belanja Anda.</p>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Left: Cart Items -->
             <div class="w-full lg:flex-1 space-y-4">
-                @if(count($cart) > 0)
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                    <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
-                        <h2 class="text-xl font-bold text-gray-900">Pesanan Anda</h2>
-                        <button type="button" @click.prevent="emptyCart('{{ route('cart.empty') }}')" class="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg">
-                            <i class='bx bx-trash'></i> Kosongkan
-                        </button>
-                    </div>
-                    
-                    <div class="space-y-6">
-                        @foreach($cart as $id => $item)
-                        <div class="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0 last:pb-0">
-                            <div class="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 border border-gray-200 overflow-hidden p-2">
-                                @if(!empty($item['photo']))
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($item['photo']) }}" class="w-full h-full rounded object-cover" onerror="this.src='https://source.unsplash.com/400x400/?laptop';">
-                                @elseif(!empty($item['image']))
-                                    <img src="{{ $item['image'] }}" class="w-full h-full object-contain">
-                                @else
-                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                                        <i class='bx bx-laptop text-gray-400 text-2xl'></i>
-                                    </div>
-                                @endif
+                <template x-if="cartItems.length > 0">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" id="selectAll" x-model="selectAll" @change="toggleAll" class="w-5 h-5 text-brand-600 rounded border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                <label for="selectAll" class="text-xl font-bold text-gray-900 cursor-pointer">Pilih Semua</label>
                             </div>
-                            <div class="flex-1 min-w-0 flex flex-col justify-between h-[80px]">
-                                <div class="flex justify-between items-start">
-                                    <h3 class="font-bold text-gray-900 line-clamp-2 text-sm md:text-base pr-4">{{ $item['name'] }}</h3>
-                                    <button type="button" @click.prevent="removeItem('{{ route('cart.remove', $id) }}')" class="text-red-400 hover:text-red-600 transition-colors" title="Hapus Item">
-                                        <i class='bx bx-trash text-lg'></i>
-                                    </button>
-                                </div>
-                                <div class="flex items-center justify-between w-full mt-auto">
-                                    <div class="flex items-center border border-gray-200 rounded text-sm bg-white">
-                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] - 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
-                                            <i class='bx bx-minus'></i>
-                                        </button>
-                                        <div class="w-8 h-7 flex items-center justify-center font-bold text-gray-800 border-x border-gray-200 text-xs">
-                                            {{ $item['quantity'] }}
+                            <button type="button" @click.prevent="emptyCart('{{ route('cart.empty') }}')" class="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg">
+                                <i class='bx bx-trash'></i> Kosongkan
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <template x-for="item in cartItems" :key="item.id">
+                                <div class="flex items-start gap-4 pb-6 border-b border-gray-100 last:border-0 last:pb-0">
+                                    <div class="flex items-center h-20">
+                                        <input type="checkbox" :value="item.id" x-model="selectedItems" class="w-5 h-5 text-brand-600 rounded border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                    </div>
+                                    <div class="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 border border-gray-200 overflow-hidden p-2">
+                                        <img :src="item.photo ? '{{ \Illuminate\Support\Facades\Storage::url('') }}' + item.photo : (item.image || 'https://source.unsplash.com/400x400/?laptop')" class="w-full h-full rounded object-cover" onerror="this.src='https://source.unsplash.com/400x400/?laptop';">
+                                    </div>
+                                    <div class="flex-1 min-w-0 flex flex-col justify-between h-[80px]">
+                                        <div class="flex justify-between items-start">
+                                            <h3 class="font-bold text-gray-900 line-clamp-2 text-sm md:text-base pr-4" x-text="item.name"></h3>
+                                            <button type="button" @click.prevent="removeItem(item.id)" class="text-red-400 hover:text-red-600 transition-colors" title="Hapus Item">
+                                                <i class='bx bx-trash text-lg'></i>
+                                            </button>
                                         </div>
-                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] + 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
-                                            <i class='bx bx-plus'></i>
-                                        </button>
+                                        <div class="flex items-center justify-between w-full mt-auto">
+                                            <div class="flex items-center border border-gray-200 rounded text-sm bg-white">
+                                                <button type="button" @click.prevent="updateQuantity(item.id, parseInt(item.quantity) - 1)" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
+                                                    <i class='bx bx-minus'></i>
+                                                </button>
+                                                <div class="w-8 h-7 flex items-center justify-center font-bold text-gray-800 border-x border-gray-200 text-xs" x-text="item.quantity">
+                                                </div>
+                                                <button type="button" @click.prevent="updateQuantity(item.id, parseInt(item.quantity) + 1)" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
+                                                    <i class='bx bx-plus'></i>
+                                                </button>
+                                            </div>
+                                            <p class="font-bold text-brand-600" x-text="'Rp ' + formatPrice(item.price)"></p>
+                                        </div>
                                     </div>
-                                    <p class="font-bold text-brand-600">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
                                 </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+                
+                <template x-if="cartItems.length > 0">
+                    <!-- Informasi Pembeli & Pengiriman -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Informasi Pembeli & Pengiriman</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                                <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')" :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="Contoh: Budi Santoso">
+                                <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class='bx bx-error-circle'></i></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email <span class="text-red-500">*</span></label>
+                                <input type="email" x-model="formData.email" @blur="validateField('email')" :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="budi@email.com">
+                                <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                                <input type="text" x-model="formData.phone" @blur="validateField('phone')" :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="0812xxxx">
+                                <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
+                                <textarea x-model="formData.address" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" rows="3" placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
                             </div>
                         </div>
-                        @endforeach
                     </div>
-                </div>
-                
-                <!-- Informasi Pembeli & Pengiriman -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Informasi Pembeli & Pengiriman</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')" :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="Contoh: Budi Santoso">
-                            <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1 flex items-center gap-1"><i class='bx bx-error-circle'></i></p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email <span class="text-red-500">*</span></label>
-                            <input type="email" x-model="formData.email" @blur="validateField('email')" :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="budi@email.com">
-                            <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="formData.phone" @blur="validateField('phone')" :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="0812xxxx">
-                            <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1 flex items-center gap-1"></p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
-                            <textarea x-model="formData.address" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" rows="3" placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                @else
+                </template>
+                <template x-if="cartItems.length === 0">
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 flex flex-col items-center justify-center h-full min-h-[300px]">
                     <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-5 border border-gray-100">
                         <i class='bx bx-shopping-bag text-4xl text-gray-400'></i>
@@ -125,7 +132,7 @@
                         Mulai Belanja
                     </a>
                 </div>
-                @endif
+                </template>
             </div>
 
             <!-- Right: Checkout Details -->
@@ -149,7 +156,7 @@
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between items-center text-gray-600 text-sm">
                             <span>Subtotal Produk</span>
-                            <span class="font-medium">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                            <span class="font-medium" x-text="'Rp ' + formatPrice(dynamicSubtotal)"></span>
                         </div>
                         <div class="flex justify-between items-center text-gray-600 text-sm">
                             <span>Biaya Pengiriman</span>
@@ -157,7 +164,7 @@
                         </div>
                         <div class="pt-3 border-t border-gray-100 flex justify-between items-center">
                             <span class="font-bold text-gray-900">Total Pembayaran</span>
-                            <span class="text-xl font-black text-brand-600 tracking-tight">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                            <span class="text-xl font-black text-brand-600 tracking-tight" x-text="'Rp ' + formatPrice(dynamicSubtotal)"></span>
                         </div>
                     </div>
 
@@ -170,7 +177,7 @@
                         </p>
                     </div>
 
-                    <button type="button" @click.prevent="processPayment($event)" :disabled="isLoading || {{ count($cart) == 0 ? 'true' : 'false' }}" 
+                    <button type="button" @click.prevent="processPayment($event)" :disabled="isLoading || cartItems.length === 0 || selectedItems.length === 0" 
                             class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
                         <template x-if="isLoading">
                             <i class='bx bx-loader-alt bx-spin text-xl'></i>
@@ -192,8 +199,50 @@
     <x-footer />
 
     <script>
-        function checkoutForm() {
+        function checkoutForm(initialCart = []) {
             return {
+                cartItems: initialCart,
+                selectedItems: initialCart.map(item => item.id), // by default select all
+                selectAll: true,
+                dynamicSubtotal: 0,
+                
+                toast: {
+                    show: false,
+                    message: ''
+                },
+
+                showToast(msg) {
+                    this.toast.message = msg;
+                    this.toast.show = true;
+                    setTimeout(() => this.toast.show = false, 3000);
+                },
+
+                formatPrice(price) {
+                    return new Intl.NumberFormat('id-ID').format(price);
+                },
+
+                get totalItemsCount() {
+                    return this.cartItems.reduce((total, item) => total + parseInt(item.quantity), 0);
+                },
+
+                toggleAll() {
+                    if (this.selectAll) {
+                        this.selectedItems = this.cartItems.map(item => item.id);
+                    } else {
+                        this.selectedItems = [];
+                    }
+                },
+
+                updateSubtotal() {
+                    // Update selectAll checkbox state
+                    this.selectAll = this.cartItems.length > 0 && this.selectedItems.length === this.cartItems.length;
+                    
+                    // Calculate subtotal for selected items
+                    this.dynamicSubtotal = this.cartItems
+                        .filter(item => this.selectedItems.includes(item.id))
+                        .reduce((total, item) => total + (item.price * item.quantity), 0);
+                },
+
                 formData: {
                     customer_name: '',
                     email: '',
@@ -270,9 +319,17 @@
 
                 updateQuantity(id, qty) {
                     if (qty < 1) {
-                        this.removeItem('/cart/remove/' + id);
+                        this.removeItem(id);
                         return;
                     }
+                    
+                    // Optimistic UI Update
+                    const item = this.cartItems.find(i => i.id === id);
+                    if (item) {
+                        item.quantity = qty;
+                        this.updateSubtotal();
+                    }
+
                     fetch('/cart/update/' + id, {
                         method: 'POST',
                         headers: {
@@ -284,47 +341,46 @@
                     })
                     .then(res => res.json())
                     .then(data => {
-                        if (data.success) {
-                            window.location.reload();
-                        } else {
+                        if (!data.success) {
                             alert(data.message || 'Gagal mengubah jumlah.');
                         }
-                    })
-                    .catch(() => window.location.reload());
+                    });
                 },
-                removeItem(url) {
+
+                removeItem(id) {
                     if(!confirm('Hapus produk ini dari keranjang?')) return;
-                    fetch(url, {
+                    
+                    // Optimistic Update
+                    this.cartItems = this.cartItems.filter(item => item.id !== id);
+                    this.selectedItems = this.selectedItems.filter(selectedId => selectedId !== id);
+                    this.updateSubtotal();
+                    this.showToast('Produk berhasil dihapus dari keranjang');
+
+                    fetch('/cart/remove/' + id, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             'Accept': 'application/json'
                         }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.success) {
-                            window.location.reload();
-                        }
-                    })
-                    .catch(() => window.location.reload());
+                    });
                 },
+
                 emptyCart(url) {
                     if(!confirm('Anda yakin ingin mengosongkan keranjang? Semua produk akan dihapus.')) return;
+                    
+                    // Optimistic Update
+                    this.cartItems = [];
+                    this.selectedItems = [];
+                    this.updateSubtotal();
+                    this.showToast('Keranjang berhasil dikosongkan');
+
                     fetch(url, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                             'Accept': 'application/json'
                         }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.success) {
-                            window.location.reload();
-                        }
-                    })
-                    .catch(() => window.location.reload());
+                    });
                 },
 
                 async processPayment(e) {
@@ -347,6 +403,11 @@
                     this.isLoading = true;
 
                     try {
+                        const payload = {
+                            ...this.formData,
+                            selected_items: this.selectedItems
+                        };
+
                         const response = await fetch('{{ route("checkout.process") }}', {
                             method: 'POST',
                             headers: {
@@ -354,7 +415,7 @@
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                                 'Accept': 'application/json'
                             },
-                            body: JSON.stringify(this.formData)
+                            body: JSON.stringify(payload)
                         });
 
                         // Handle Laravel validation errors (422)
