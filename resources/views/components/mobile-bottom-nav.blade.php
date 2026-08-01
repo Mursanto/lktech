@@ -11,14 +11,20 @@
         <i class='bx {{ request()->routeIs('katalog.*') ? 'bxs-grid-alt' : 'bx-grid-alt' }} text-2xl mb-1'></i>
         <span class="text-[10px] font-bold">Katalog</span>
     </a>
+
+    <!-- Item 3: FAQ -->
+    <a href="{{ route('faq') }}" class="flex flex-col items-center justify-center w-full h-full text-xs transition-colors {{ request()->routeIs('faq') || request()->routeIs('kebijakan-garansi') ? 'text-brand-600' : 'text-gray-500 hover:text-brand-600' }}">
+        <i class='bx {{ request()->routeIs('faq') || request()->routeIs('kebijakan-garansi') ? 'bxs-help-circle' : 'bx-help-circle' }} text-2xl mb-1'></i>
+        <span class="text-[10px] font-bold">FAQ</span>
+    </a>
     
-    <!-- Item 3: WhatsApp -->
+    <!-- Item 4: WhatsApp -->
     <a href="https://wa.me/628567354046?text=Halo%20LKtech" target="_blank" class="flex flex-col items-center justify-center w-full h-full text-xs text-emerald-500 hover:text-emerald-600 transition-colors">
         <i class='bx bxl-whatsapp text-2xl mb-1'></i>
         <span class="text-[10px] font-bold">WhatsApp</span>
     </a>
     
-    <!-- Item 4: Akun -->
+    <!-- Item 5: Akun -->
     @auth
     <a href="{{ url('/dashboard') }}" class="flex flex-col items-center justify-center w-full h-full text-xs transition-colors text-gray-500 hover:text-brand-600">
         <i class='bx bxs-user-circle text-2xl mb-1'></i>
