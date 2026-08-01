@@ -194,12 +194,26 @@ class PublicCatalogController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
-            'message' => 'required|string',
+            'message' => 'required|string|max:1000', // Maksimal 1000 karakter
         ]);
+
+        // Limit pengiriman: Maksimal 3x per alamat email per 24 jam (86400 detik)
+        $rateLimitKey = 'contact_form_' . strtolower(trim($request->email));
+        if (\Illuminate\Support\Facades\RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
+            return back()->withErrors(['email' => 'Anda telah mencapai batas maksimal (3x) pengiriman pesan. Silakan coba lagi besok.'])->withInput();
+        }
+
+        // Membersihkan input pesan dari tag HTML/Script untuk keamanan (Mencegah XSS)
+        $cleanMessage = strip_tags($request->message);
+        $data = $request->all();
+        $data['message'] = $cleanMessage;
 
         try {
             \Illuminate\Support\Facades\Mail::to('sales@lktech.online')
-                ->send(new \App\Mail\ContactUsMail($request->all()));
+                ->send(new \App\Mail\ContactUsMail($data));
+            
+            // Catat attempt baru sukses
+            \Illuminate\Support\Facades\RateLimiter::hit($rateLimitKey, 86400);
         } catch (\Exception $e) {
             // Ignore if email failed (SMTP might not be configured on local or test)
             \Illuminate\Support\Facades\Log::error('Failed to send contact email: ' . $e->getMessage());
