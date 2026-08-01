@@ -45,7 +45,7 @@
     </a>
 
     <!-- Kartu 5: Kemitraan & Partai -->
-    <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20untuk%20kerja%20sama%20Kemitraan%20atau%20Pengadaan%20Partai%20Besar." target="_blank" class="group block w-full bg-brand-50 border border-brand-100 rounded-xl p-3 lg:p-4 shadow-sm hover:bg-brand-100 hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
+    <button type="button" x-data @click="$dispatch('open-contact-modal')" class="group block w-full bg-brand-50 border border-brand-100 rounded-xl p-3 lg:p-4 shadow-sm hover:bg-brand-100 hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
         <div class="inline-flex items-center justify-center bg-white text-brand-600 rounded-2xl w-12 h-12 lg:w-10 lg:h-10 mb-2 shadow-sm group-hover:scale-110 transition-transform">
             <i class='bx bx-support text-2xl lg:text-xl'></i>
         </div>
@@ -53,7 +53,7 @@
         <div class="hidden">
             <p>Butuh pengadaan unit dalam jumlah banyak atau kontrak maintenance untuk instansi? Klik di sini untuk penawaran khusus!</p>
         </div>
-    </a>
+    </button>
 
     <!-- Kartu 6: Jasa Pembuatan Website -->
     <a href="/jasa-website" class="group block w-full bg-white border border-gray-100 rounded-xl p-3 lg:p-4 shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center text-center h-full">
