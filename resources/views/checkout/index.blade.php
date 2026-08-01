@@ -88,27 +88,11 @@
                         @endforeach
                     </div>
                 </div>
-                @else
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 flex flex-col items-center justify-center h-full min-h-[300px]">
-                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-5 border border-gray-100">
-                        <i class='bx bx-shopping-bag text-4xl text-gray-400'></i>
-                    </div>
-                    <h2 class="text-xl font-black text-gray-900 mb-2 tracking-tight">Keranjang Kosong</h2>
-                    <p class="text-gray-500 text-center max-w-sm mb-6 text-sm">Belum ada produk yang ditambahkan. Silakan temukan produk favorit Anda dan mulai belanja!</p>
-                    <a href="{{ route('katalog.index') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-sm text-sm">
-                        Mulai Belanja
-                    </a>
-                </div>
-                @endif
-            </div>
-
-            <!-- Right: Checkout Details -->
-            <div class="w-full lg:w-[400px] flex-shrink-0">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
-                    <h2 class="text-lg font-bold text-gray-900 mb-4">Ringkasan & Kontak</h2>
-                    
-                    <!-- Contact Form -->
-                    <div class="space-y-4 mb-6 pb-6 border-b border-gray-100">
+                
+                <!-- Informasi Pembeli & Pengiriman -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Informasi Pembeli & Pengiriman</h2>
+                    <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
                             <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')" :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-colors" placeholder="Contoh: Budi Santoso">
@@ -129,6 +113,25 @@
                             <textarea x-model="formData.address" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm" rows="3" placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
                         </div>
                     </div>
+                </div>
+                @else
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 flex flex-col items-center justify-center h-full min-h-[300px]">
+                    <div class="w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-5 border border-gray-100">
+                        <i class='bx bx-shopping-bag text-4xl text-gray-400'></i>
+                    </div>
+                    <h2 class="text-xl font-black text-gray-900 mb-2 tracking-tight">Keranjang Kosong</h2>
+                    <p class="text-gray-500 text-center max-w-sm mb-6 text-sm">Belum ada produk yang ditambahkan. Silakan temukan produk favorit Anda dan mulai belanja!</p>
+                    <a href="{{ route('katalog.index') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-sm text-sm">
+                        Mulai Belanja
+                    </a>
+                </div>
+                @endif
+            </div>
+
+            <!-- Right: Checkout Details -->
+            <div class="w-full lg:w-[380px] flex-shrink-0">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100">Ringkasan belanja</h2>
 
                     <!-- Inline Error Banner -->
                     <div x-show="showErrorBanner" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 flex gap-3 items-start">
