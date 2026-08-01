@@ -41,7 +41,12 @@
             <div class="w-full lg:flex-1 space-y-4">
                 @if(count($cart) > 0)
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Pesanan Anda</h2>
+                    <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                        <h2 class="text-xl font-bold text-gray-900">Pesanan Anda</h2>
+                        <button type="button" @click.prevent="emptyCart('{{ route('cart.empty') }}')" class="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg">
+                            <i class='bx bx-trash'></i> Kosongkan
+                        </button>
+                    </div>
                     
                     <div class="space-y-6">
                         @foreach($cart as $id => $item)
@@ -66,7 +71,7 @@
                                 </div>
                                 <div class="flex items-center justify-between w-full mt-auto">
                                     <div class="flex items-center border border-gray-200 rounded text-sm bg-white">
-                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] - 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors disabled:opacity-50" {{ $item['quantity'] <= 1 ? 'disabled' : '' }}>
+                                        <button type="button" @click.prevent="updateQuantity({{ $id }}, {{ $item['quantity'] - 1 }})" class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
                                             <i class='bx bx-minus'></i>
                                         </button>
                                         <div class="w-8 h-7 flex items-center justify-center font-bold text-gray-800 border-x border-gray-200 text-xs">
@@ -261,7 +266,10 @@
                 },
 
                 updateQuantity(id, qty) {
-                    if (qty < 1) return;
+                    if (qty < 1) {
+                        this.removeItem('/cart/remove/' + id);
+                        return;
+                    }
                     fetch('/cart/update/' + id, {
                         method: 'POST',
                         headers: {
@@ -290,7 +298,29 @@
                             'Accept': 'application/json'
                         }
                     })
-                    .then(() => window.location.reload())
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(() => window.location.reload());
+                },
+                emptyCart(url) {
+                    if(!confirm('Anda yakin ingin mengosongkan keranjang? Semua produk akan dihapus.')) return;
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            window.location.reload();
+                        }
+                    })
                     .catch(() => window.location.reload());
                 },
 

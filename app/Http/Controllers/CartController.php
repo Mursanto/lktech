@@ -59,14 +59,33 @@ class CartController extends Controller
 
     public function remove(Request $request, $id)
     {
-        $cart = session()->get('cart');
+        $cart = session()->get('cart', []);
 
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
+            
+            if ($request->wantsJson()) {
+                return response()->json(['success' => true]);
+            }
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => false], 404);
         }
 
         return redirect()->back()->with('success', 'Produk dihapus dari keranjang.');
+    }
+
+    public function empty(Request $request)
+    {
+        session()->forget('cart');
+        
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true]);
+        }
+        
+        return redirect()->back()->with('success', 'Keranjang berhasil dikosongkan.');
     }
 
     public function update(Request $request, $id)

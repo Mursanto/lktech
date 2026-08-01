@@ -32,8 +32,9 @@ Route::get('/katalog/{product}', [App\Http\Controllers\PublicCatalogController::
 
 // Cart & Hybrid Checkout Routes
 Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/update/{id}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove/{id}', [App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/empty', [App\Http\Controllers\CartController::class, 'empty'])->name('cart.empty');
+Route::post('/cart/update/{id}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
 Route::get('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout.index');
 Route::post('/checkout/process', [App\Http\Controllers\CartController::class, 'process'])->name('checkout.process');
 Route::get('/checkout/success/{order_id}', [App\Http\Controllers\CartController::class, 'success'])->name('checkout.success');
