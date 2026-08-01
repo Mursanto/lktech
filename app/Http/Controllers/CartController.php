@@ -142,19 +142,21 @@ class CartController extends Controller
 
         $userId = 1;
 
-        $email = $request->email;
-        $phone = $request->phone;
+        $email = strtolower(trim($request->email));
+        $phone = strip_tags(trim($request->phone));
+        $customer_name = strip_tags(trim($request->customer_name));
+        $address = $request->filled('address') ? strip_tags(trim($request->address)) : null;
 
         $customer = \App\Models\Customer::firstOrCreate(
             ['email' => $email],
-            ['name' => $request->customer_name, 'phone' => $phone, 'address' => $request->address]
+            ['name' => $customer_name, 'phone' => $phone, 'address' => $address]
         );
         
         // Update details if it already exists but changed
-        if ($customer->name !== $request->customer_name || $customer->phone !== $phone || ($request->filled('address') && $customer->address !== $request->address)) {
-            $updateData = ['name' => $request->customer_name, 'phone' => $phone];
-            if ($request->filled('address')) {
-                $updateData['address'] = $request->address;
+        if ($customer->name !== $customer_name || $customer->phone !== $phone || ($address && $customer->address !== $address)) {
+            $updateData = ['name' => $customer_name, 'phone' => $phone];
+            if ($address) {
+                $updateData['address'] = $address;
             }
             $customer->update($updateData);
         }
