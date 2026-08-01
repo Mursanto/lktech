@@ -104,7 +104,7 @@
                                 <span class="font-bold text-gray-800">Pilih Semua</span>
                                 <span class="text-xs text-gray-400 font-normal">(<span x-text="selectedItems.length"></span> dipilih)</span>
                             </label>
-                            <button type="button" @click="openDialog('Kosongkan Keranjang', 'Semua produk akan dihapus dari keranjang. Lanjutkan?', doEmptyCart)"
+                            <button type="button" @click="confirmEmpty()"
                                     class="flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors">
                                 <i class='bx bx-trash text-base'></i> Kosongkan
                             </button>
@@ -151,7 +151,7 @@
                                     </div>
 
                                     {{-- Tombol Hapus --}}
-                                    <button type="button" @click="openDialog('Hapus Produk', 'Hapus \"' + item.name + '\" dari keranjang?', () => doRemoveItem(item.id))"
+                                    <button type="button" @click="confirmRemove(item.id, item.name)"
                                             class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                                         <i class='bx bx-trash text-lg'></i>
                                     </button>
@@ -370,6 +370,23 @@
                     this.dialog.message = message;
                     this.dialog.confirm = onConfirm;
                     this.dialog.show    = true;
+                },
+
+                // ---- Dialog Shortcuts (avoid nested quotes in HTML) ----
+                confirmRemove(id, name) {
+                    this.openDialog(
+                        'Hapus Produk',
+                        'Hapus produk ini dari keranjang?',
+                        () => this.doRemoveItem(id)
+                    );
+                },
+
+                confirmEmpty() {
+                    this.openDialog(
+                        'Kosongkan Keranjang',
+                        'Semua produk akan dihapus dari keranjang. Lanjutkan?',
+                        () => this.doEmptyCart()
+                    );
                 },
 
                 // ---- Qty Change ----
