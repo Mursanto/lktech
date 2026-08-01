@@ -65,7 +65,7 @@
                                         <input type="checkbox" :value="item.id" x-model="selectedItems" class="w-5 h-5 text-brand-600 rounded border-gray-300 focus:ring-brand-500 cursor-pointer">
                                     </div>
                                     <div class="w-20 h-20 bg-gray-50 rounded-xl flex-shrink-0 border border-gray-200 overflow-hidden p-2">
-                                        <img :src="item.photo ? '{{ \Illuminate\Support\Facades\Storage::url('') }}' + item.photo : (item.image || 'https://source.unsplash.com/400x400/?laptop')" class="w-full h-full rounded object-cover" onerror="this.src='https://source.unsplash.com/400x400/?laptop';">
+                                        <img :src="item.photo ? '{{ \Illuminate\Support\Facades\Storage::url('') }}' + item.photo : (item.image || 'https://via.placeholder.com/400x400.png?text=No+Image')" class="w-full h-full rounded object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400.png?text=No+Image';">
                                     </div>
                                     <div class="flex-1 min-w-0 flex flex-col justify-between h-[80px]">
                                         <div class="flex justify-between items-start">
@@ -202,7 +202,7 @@
         function checkoutForm(initialCart = []) {
             return {
                 cartItems: initialCart,
-                selectedItems: initialCart.map(item => item.id), // by default select all
+                selectedItems: initialCart.map(item => String(item.id)), // by default select all, use String for x-model compatibility
                 selectAll: true,
                 dynamicSubtotal: 0,
                 
@@ -227,7 +227,7 @@
 
                 toggleAll() {
                     if (this.selectAll) {
-                        this.selectedItems = this.cartItems.map(item => item.id);
+                        this.selectedItems = this.cartItems.map(item => String(item.id));
                     } else {
                         this.selectedItems = [];
                     }
@@ -239,7 +239,7 @@
                     
                     // Calculate subtotal for selected items
                     this.dynamicSubtotal = this.cartItems
-                        .filter(item => this.selectedItems.includes(item.id))
+                        .filter(item => this.selectedItems.includes(String(item.id)))
                         .reduce((total, item) => total + (item.price * item.quantity), 0);
                 },
 
@@ -351,8 +351,8 @@
                     if(!confirm('Hapus produk ini dari keranjang?')) return;
                     
                     // Optimistic Update
-                    this.cartItems = this.cartItems.filter(item => item.id !== id);
-                    this.selectedItems = this.selectedItems.filter(selectedId => selectedId !== id);
+                    this.cartItems = this.cartItems.filter(item => String(item.id) !== String(id));
+                    this.selectedItems = this.selectedItems.filter(selectedId => String(selectedId) !== String(id));
                     this.updateSubtotal();
                     this.showToast('Produk berhasil dihapus dari keranjang');
 
