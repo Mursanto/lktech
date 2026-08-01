@@ -40,7 +40,9 @@ Route::get('/checkout/success/{order_id}', [App\Http\Controllers\CartController:
 
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
-Route::view('/kebijakan-garansi', 'pages.kebijakan-garansi')->name('kebijakan-garansi');
+Route::view('/faq', 'pages.faq')->name('faq');
+// Redirect lama /kebijakan-garansi -> /faq (agar link lama tidak broken)
+Route::redirect('/kebijakan-garansi', '/faq', 301)->name('kebijakan-garansi');
 Route::get('/rakit-pc', [App\Http\Controllers\PublicRakitPcController::class, 'index'])->name('rakit-pc');
 Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-website');
 Route::get('/wifi-voucher', [PageController::class, 'wifiVoucher'])->name('wifi-voucher');

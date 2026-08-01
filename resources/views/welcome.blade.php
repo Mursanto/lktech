@@ -71,16 +71,16 @@
                     <!-- Left: Text (60%) -->
                     <div class="md:col-span-7 space-y-4">
                         <h1 class="text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Solusi IT & Segala Kebutuhanmu!
+                            Solusi IT Lengkap, Terpercaya & Terjangkau!
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
-                                Dari urusan laptop rewel, rakit PC idaman, bikin website kece, sampai pasang WiFi Starlink anti-lelet. Butuh furnitur baru atau sewa mobil buat akhir pekan? Tenang, serahkan aja ke kami. LKTech siap bantu bikin urusanmu makin gampang dan praktis!
+                                Dari laptop second premium berkualitas, servis & perbaikan komputer profesional, rakit PC custom, lisensi software asli, hingga jasa pembuatan website — semua ada di LKTech TN Sereal, solusi IT terpadu Anda di Bogor!
                             </p>
                             <!-- Informasi Layanan Tambahan -->
                             <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm">
                                 <p class="text-sm md:text-base text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap">
-                                    ✅ Gadget & PC | Web & Internet | Furnitur | Sewa Mobil
+                                    ✅ Laptop & PC | 🔧 Servis | 🖥️ Rakit PC | 🌐 Jasa Website | 📦 Tokopedia
                                 </p>
                             </div>
                         </div>
@@ -88,9 +88,9 @@
                             <a href="{{ route('katalog.index') }}" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
                                 Lihat Katalog
                             </a>
-                            <button type="button" x-data @click="$dispatch('open-contact-modal')" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg shadow-sm hover:bg-gray-50 transition flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
-                                <i class='bx bx-envelope text-lg text-gray-500 hidden sm:inline-block'></i> Hubungi Kami
-                            </button>
+                            <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-green-500 border border-green-500 text-white font-extrabold rounded-lg shadow-md hover:bg-green-600 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
+                                <i class='bx bx-store hidden sm:inline-block text-lg'></i> Beli di Tokopedia
+                            </a>
                         </div>
                     </div>
                     

@@ -15,21 +15,40 @@
                 <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('home') ? 'text-brand-600' : '' }}">Beranda</a>
                 <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
                 <div class="relative group flex items-center h-full" x-data="{ open: false }" @mouseleave="open = false">
-                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('martabak-jawara') ? 'text-brand-600' : '' }}">
+                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') ? 'text-brand-600' : '' }}">
                         Layanan <i class='bx bx-chevron-down text-lg'></i>
                     </button>
-                    <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-56 z-50" style="display: none;">
+                    <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-60 z-50" style="display: none;">
                         <div class="bg-white border border-gray-100 rounded-xl shadow-lg py-2 overflow-hidden">
-                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Rakit PC</a>
-                            <a href="{{ route('jasa-website') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Jasa Pembuatan Website</a>
-                            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">WiFi Voucher Starlink</a>
-                            <a href="{{ route('jasa-furniture') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-50">Jasa Furniture</a>
-                            <a href="{{ route('martabak-jawara') }}" class="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors">🍫 Martabak Jawara</a>
+                            <!-- Layanan Utama IT -->
+                            <div class="px-4 py-1.5">
+                                <span class="text-[10px] font-black text-brand-500 uppercase tracking-widest">Layanan Utama</span>
+                            </div>
+                            <a href="{{ route('rakit-pc') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-desktop text-base text-brand-400'></i> Rakit PC Custom
+                            </a>
+                            <a href="{{ route('jasa-website') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-100">
+                                <i class='bx bx-code-alt text-base text-brand-400'></i> Jasa Pembuatan Website
+                            </a>
+                            <!-- Layanan Mitra -->
+                            <div class="px-4 py-1.5">
+                                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Layanan Mitra</span>
+                            </div>
+                            <a href="{{ route('wifi-voucher') }}" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-colors">
+                                <i class='bx bx-wifi text-sm text-gray-400'></i> WiFi Voucher Starlink
+                            </a>
+                            <a href="{{ route('jasa-furniture') }}" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-colors">
+                                <i class='bx bx-chair text-sm text-gray-400'></i> Jasa Furniture
+                            </a>
+                            <a href="{{ route('martabak-jawara') }}" class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-amber-600 hover:bg-amber-50 hover:text-amber-700 transition-colors">
+                                🍫 Martabak Jawara
+                            </a>
                         </div>
                     </div>
                 </div>
                 <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('blog.*') ? 'text-brand-600' : '' }}">Blog & Panduan</a>
                 <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('tentang-kami') ? 'text-brand-600' : '' }}">Tentang Kami</a>
+                <a href="{{ route('faq') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('faq') || request()->routeIs('kebijakan-garansi') ? 'text-brand-600' : '' }}">FAQ</a>
             </div>
 
             <!-- Search Bar (Desktop) -->
@@ -114,19 +133,27 @@
             <a href="{{ route('katalog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Katalog Produk
             </a>
-            <a href="{{ route('rakit-pc') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                Rakit PC
+            <!-- Layanan Utama -->
+            <div class="px-4 py-1">
+                <span class="text-[10px] font-black text-brand-400 uppercase tracking-widest">Layanan Utama IT</span>
+            </div>
+            <a href="{{ route('rakit-pc') }}" class="flex items-center gap-2 px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                <i class='bx bx-desktop text-base text-brand-400'></i> Rakit PC Custom
             </a>
-            <a href="{{ route('jasa-website') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                Jasa Website
+            <a href="{{ route('jasa-website') }}" class="flex items-center gap-2 px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                <i class='bx bx-code-alt text-base text-brand-400'></i> Jasa Website
             </a>
-            <a href="{{ route('wifi-voucher') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                WiFi Voucher Starlink
+            <!-- Layanan Mitra -->
+            <div class="px-4 py-1">
+                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Layanan Mitra</span>
+            </div>
+            <a href="{{ route('wifi-voucher') }}" class="flex items-center gap-2 px-4 py-2.5 text-[13px] font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 rounded-xl transition-colors border-b border-gray-50">
+                <i class='bx bx-wifi text-sm text-gray-400'></i> WiFi Voucher Starlink
             </a>
-            <a href="{{ route('jasa-furniture') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                Jasa Furniture
+            <a href="{{ route('jasa-furniture') }}" class="flex items-center gap-2 px-4 py-2.5 text-[13px] font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-700 rounded-xl transition-colors border-b border-gray-50">
+                <i class='bx bx-chair text-sm text-gray-400'></i> Jasa Furniture
             </a>
-            <a href="{{ route('martabak-jawara') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-amber-50 hover:text-amber-700 rounded-xl transition-colors border-b border-gray-50">
+            <a href="{{ route('martabak-jawara') }}" class="flex items-center gap-2 px-4 py-2.5 text-[13px] font-medium text-amber-600 hover:bg-amber-50 hover:text-amber-700 rounded-xl transition-colors border-b border-gray-50">
                 🍫 Martabak Jawara
             </a>
             <a href="{{ route('blog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
@@ -135,8 +162,8 @@
             <a href="{{ route('tentang-kami') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Tentang Kami
             </a>
-            <a href="{{ route('kebijakan-garansi') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors">
-                Kebijakan Garansi
+            <a href="{{ route('faq') }}" class="flex items-center gap-2 px-4 py-3.5 text-[15px] font-bold text-brand-700 hover:bg-brand-50 rounded-xl transition-colors">
+                <i class='bx bx-help-circle text-lg text-brand-500'></i> FAQ & Bantuan
             </a>
         </div>
     </nav>
