@@ -75,12 +75,12 @@
                         </h1>
                         <div class="space-y-2">
                             <p class="text-gray-600 text-base md:text-lg font-medium">
-                                Dari laptop second premium berkualitas, servis & perbaikan komputer profesional, rakit PC custom, lisensi software asli, hingga jasa pembuatan website — semua ada di LKTech TN Sereal, solusi IT terpadu Anda di Bogor!
+                                Dari laptop second premium berkualitas, servis & perbaikan komputer profesional, rakit PC custom, sewa perangkat IT, manage service IT, lisensi software asli, hingga jasa pembuatan website — semua ada di LKTech TN Sereal, solusi IT terpadu Anda di Bogor!
                             </p>
                             <!-- Informasi Layanan Tambahan -->
-                            <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm">
-                                <p class="text-sm md:text-base text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap">
-                                    ✅ Laptop & PC | 🔧 Servis | 🖥️ Rakit PC | 🌐 Jasa Website | 📦 Tokopedia
+                            <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm w-full md:w-auto overflow-hidden">
+                                <p class="text-[10px] sm:text-[11px] md:text-xs lg:text-sm text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap overflow-hidden text-ellipsis">
+                                    ✅ Laptop & PC | 🔧 Servis | 🤝 Sewa | 🖥️ Rakit PC | 🌐 Jasa Website | 📦 Manage Service IT
                                 </p>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         @endphp
                         
                         @if(count($promoBanners) > 0)
-                            <div class="relative w-4/5 max-w-sm mx-auto group"
+                            <div class="relative w-full max-w-lg mx-auto group"
                                  x-data="{ 
                                     activeSlide: 0, 
                                     slides: {{ count($promoBanners) }},
@@ -118,27 +118,27 @@
                                         if(this.slides > 1) {
                                             setInterval(() => {
                                                 this.activeSlide = this.activeSlide === this.slides - 1 ? 0 : this.activeSlide + 1
-                                            }, 4000);
+                                            }, 8000);
                                         }
                                     }
                                  }">
                                  
-                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-500 aspect-[4/3] bg-white">
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-transparent border border-white/20">
                                     @foreach($promoBanners as $index => $banner)
                                         <div x-show="activeSlide === {{ $index }}" 
-                                             x-transition:enter="transition ease-in-out duration-500"
-                                             x-transition:enter-start="opacity-0 translate-x-8"
-                                             x-transition:enter-end="opacity-100 translate-x-0"
-                                             x-transition:leave="transition ease-in-out duration-500 absolute inset-0"
-                                             x-transition:leave-start="opacity-100 translate-x-0"
-                                             x-transition:leave-end="opacity-0 -translate-x-8"
+                                             x-transition:enter="transition ease-out duration-700"
+                                             x-transition:enter-start="opacity-0 scale-95"
+                                             x-transition:enter-end="opacity-100 scale-100"
+                                             x-transition:leave="transition ease-in duration-700 absolute inset-0"
+                                             x-transition:leave-start="opacity-100 scale-100"
+                                             x-transition:leave-end="opacity-0 scale-105"
                                              class="absolute inset-0 w-full h-full flex items-center justify-center">
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full">
-                                                    <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain">
+                                                    <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                 </a>
                                             @else
-                                                <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain">
+                                                <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
@@ -150,14 +150,14 @@
                                         @foreach($promoBanners as $index => $banner)
                                             <button @click="activeSlide = {{ $index }}" 
                                                     class="w-2 h-2 rounded-full transition-all duration-300"
-                                                    :class="activeSlide === {{ $index }} ? 'bg-brand-600 w-4' : 'bg-brand-300 hover:bg-brand-400'"></button>
+                                                    :class="activeSlide === {{ $index }} ? 'bg-brand-600 w-6' : 'bg-brand-300 hover:bg-brand-400'"></button>
                                         @endforeach
                                     </div>
                                 @endif
                             </div>
                         @else
                             <!-- Placeholder jika belum ada promo -->
-                            <div class="aspect-[4/3] w-4/5 max-w-sm mx-auto rounded-3xl overflow-hidden shadow-2xl border border-gray-200 bg-white transform rotate-2 hover:rotate-0 transition duration-500 hover:scale-105">
+                            <div class="aspect-[16/9] w-full max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-transparent transform rotate-1 hover:rotate-0 transition duration-700 hover:scale-105">
                                 <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop Premium" class="w-full h-full object-cover">
                             </div>
                         @endif

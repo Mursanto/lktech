@@ -27,6 +27,9 @@
                             <a href="{{ route('rakit-pc') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                 <i class='bx bx-desktop text-base text-brand-400'></i> Rakit PC Custom
                             </a>
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20mendapatkan%20informasi%20Sewa%20Perangkat%20IT." target="_blank" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-calendar text-base text-brand-400'></i> Sewa Perangkat IT
+                            </a>
                             <a href="{{ route('jasa-website') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-100">
                                 <i class='bx bx-code-alt text-base text-brand-400'></i> Jasa Pembuatan Website
                             </a>
@@ -139,6 +142,9 @@
             </div>
             <a href="{{ route('rakit-pc') }}" class="flex items-center gap-2 px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 <i class='bx bx-desktop text-base text-brand-400'></i> Rakit PC Custom
+            </a>
+            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20mendapatkan%20informasi%20Sewa%20Perangkat%20IT." target="_blank" class="flex items-center gap-2 px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                <i class='bx bx-calendar text-base text-brand-400'></i> Sewa Perangkat IT
             </a>
             <a href="{{ route('jasa-website') }}" class="flex items-center gap-2 px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 <i class='bx bx-code-alt text-base text-brand-400'></i> Jasa Website

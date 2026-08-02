@@ -55,7 +55,7 @@
                                         <label class="block text-sm font-bold text-natural-900 mb-1.5">Gambar Banner Promo</label>
                                         <input type="file" name="banners[{{ $i }}][image]" accept="image/jpeg,image/png,image/jpg,image/webp" class="w-full bg-white border border-natural-200 text-natural-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-2.5 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 transition-colors">
                                         @if($i == 0)
-                                            <p class="text-[11px] text-natural-500 mt-2">Format: JPG, PNG, WEBP. Maks 5MB. Otomatis di-resize max 1200px.</p>
+                                            <p class="text-[11px] text-natural-500 mt-2">Format: JPG, PNG, WEBP. Maks 5MB. Otomatis di-resize max 1200px. Rekomendasi ukuran: 1200 x 675 pixel (Rasio 16:9) agar gambar tidak terpotong.</p>
                                         @endif
                                         @error("banners.{$i}.image")
                                             <p class="text-rose-500 text-xs mt-1">{{ $message }}</p>
