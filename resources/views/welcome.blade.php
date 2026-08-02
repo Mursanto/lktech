@@ -55,7 +55,7 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-md:pb-24">
+    <main class="flex-grow w-full">
         
         <!-- Hero Section -->
         <!-- Hero Section -->

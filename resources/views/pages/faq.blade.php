@@ -50,7 +50,7 @@
 
     <x-navbar />
 
-    <main class="flex-grow w-full max-md:pb-24">
+    <main class="flex-grow w-full">
 
         <!-- Hero Header -->
         <div class="bg-gradient-to-br from-brand-600 via-blue-700 to-cyan-600 text-white relative overflow-hidden">
