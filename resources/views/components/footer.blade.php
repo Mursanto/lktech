@@ -131,11 +131,11 @@
                     <li><a href="{{ route('jasa-website') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Jasa Website</a></li>
                     <li><a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Blog & Panduan</a></li>
                     <li><a href="{{ route('tentang-kami') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tentang Kami</a></li>
-                    <li><a href="{{ route('faq') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-brand-400"></div> FAQ & Bantuan</a></li>
+                    <li><a href="{{ route('faq') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> FAQ & Bantuan</a></li>
                     <li>
                         <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
-                           class="text-green-600 hover:text-green-700 transition-colors flex items-center gap-1.5 font-semibold">
-                            <div class="w-1.5 h-1.5 rounded-full bg-green-400"></div> Toko Tokopedia
+                           class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Toko Tokopedia
                         </a>
                     </li>
                 </ul>
