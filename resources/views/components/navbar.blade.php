@@ -1,6 +1,6 @@
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false }">
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-14 gap-4">
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false }">
+    <div class="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-14 gap-2 sm:gap-4">
             
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
@@ -8,6 +8,16 @@
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 w-auto">
                     <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
                 </a>
+            </div>
+            
+            <!-- Mobile Search Bar (Always Visible) -->
+            <div class="flex-1 md:hidden px-2">
+                <form action="{{ route('katalog.index') }}" method="GET" class="relative w-full flex items-center">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari..." class="w-full pl-3 pr-8 py-1.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] shadow-inner transition-shadow">
+                    <button type="submit" class="absolute right-0 top-0 h-full px-2.5 flex items-center justify-center text-gray-400 hover:text-brand-600">
+                        <i class='bx bx-search text-base'></i>
+                    </button>
+                </form>
             </div>
 
             <!-- Desktop Navigation Links -->
@@ -67,7 +77,6 @@
                 </div>
                 <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('blog.*') ? 'text-brand-600' : '' }}">Blog & Panduan</a>
                 <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('tentang-kami') ? 'text-brand-600' : '' }}">Tentang Kami</a>
-                <a href="{{ route('faq') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('faq') || request()->routeIs('kebijakan-garansi') ? 'text-brand-600' : '' }}">FAQ</a>
             </div>
 
             <!-- Search Bar (Desktop) -->
@@ -107,14 +116,14 @@
                 @endauth
             </div>
 
-            <!-- Hamburger Button & Cart (Mobile) -->
-            <div class="flex items-center md:hidden gap-3">
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+            <!-- Cart & Hamburger (Mobile) -->
+            <div class="flex items-center md:hidden gap-1">
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>
                 
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-brand-600 focus:outline-none p-2 rounded-lg">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-brand-600 focus:outline-none p-1.5 rounded-lg">
                     <i class='bx bx-menu text-3xl' x-show="!mobileMenuOpen"></i>
                     <i class='bx bx-x text-3xl' x-show="mobileMenuOpen" x-cloak></i>
                 </button>
@@ -123,17 +132,7 @@
         </div>
     </div>
 
-    <!-- Mobile Search Bar (visible only on mobile/tablet) -->
-    <div class="block lg:hidden bg-white border-t border-gray-50">
-        <form action="{{ route('katalog.index') }}" method="GET" class="px-4 pb-3 pt-2">
-            <div class="relative w-full shadow-sm rounded-full">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, merk, atau prosesor..." class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-shadow">
-                <button type="submit" class="absolute right-0 top-0 h-full px-4 flex items-center justify-center text-gray-400 hover:text-brand-600">
-                    <i class='bx bx-search text-lg'></i>
-                </button>
-            </div>
-        </form>
-    </div>
+    
 
     <!-- Mobile Menu Dropdown -->
     <nav x-show="mobileMenuOpen" 
@@ -149,9 +148,7 @@
             <a href="{{ route('home') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Beranda
             </a>
-            <a href="{{ route('katalog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                Katalog Produk
-            </a>
+
             <!-- Layanan Utama (label & Sewa Perangkat IT disembunyikan di mobile agar tidak sesak) -->
             <a href="{{ route('rakit-pc') }}" class="block px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
                 Rakit PC Custom
@@ -187,14 +184,9 @@
                     </a>
                 </div>
             </div>
-            <a href="{{ route('blog.index') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
-                Blog & Panduan
-            </a>
-            <a href="{{ route('tentang-kami') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+
+            <a href="{{ route('tentang-kami') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors">
                 Tentang Kami
-            </a>
-            <a href="{{ route('faq') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors">
-                FAQ & Bantuan
             </a>
         </div>
     </nav>

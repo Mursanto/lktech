@@ -65,32 +65,36 @@
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-cyan-200 opacity-40 blur-3xl"></div>
             <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-200 opacity-40 blur-3xl"></div>
             
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10 relative z-10 w-full">
-                <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-6 lg:gap-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-5 relative z-10 w-full">
+                <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 lg:gap-6">
                     
                     <!-- Left: Text (60%) -->
-                    <div class="md:col-span-7 space-y-4">
-                        <h1 class="text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Solusi IT Lengkap, Terpercaya & Terjangkau!
+                    <div class="md:col-span-7 flex flex-col gap-2">
+                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
+                            Solusi IT Terpercaya untuk Bisnis Modern Anda
                         </h1>
-                        <div class="space-y-2">
-                            <p class="text-gray-600 text-base md:text-lg font-medium">
-                                Dari laptop second premium berkualitas, servis & perbaikan komputer profesional, rakit PC custom, sewa perangkat IT, manage service IT, lisensi software asli, hingga jasa pembuatan website — semua ada di LKTech TN Sereal, solusi IT terpadu Anda di Bogor!
-                            </p>
-                            <!-- Informasi Layanan Tambahan -->
-                            <div class="inline-flex items-center bg-white/60 backdrop-blur-sm border border-brand-100 rounded-lg px-3 py-2 mt-2 shadow-sm w-full md:w-auto overflow-hidden">
-                                <p class="text-[10px] sm:text-[11px] md:text-xs lg:text-sm text-gray-800 font-bold whitespace-normal sm:whitespace-nowrap overflow-hidden text-ellipsis">
-                                    ✅ Laptop & PC | 🔧 Servis | 🤝 Sewa | 🖥️ Rakit PC | 🌐 Jasa Website | 📦 Manage Service IT
-                                </p>
+                        <p class="text-gray-600 text-sm md:text-lg font-medium">
+                            Dari rakit PC, sewa perangkat, hingga pengembangan website - kami dampingi langkah digital Anda.
+                        </p>
+                        <div class="pt-2 flex flex-col w-full gap-3">
+                            <div class="flex flex-row w-full gap-2 sm:gap-4">
+                                <!-- Tombol Utama (Solid) -->
+                                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20Konsultasi%20Gratis." target="_blank" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
+                                    Konsultasi Gratis
+                                </a>
+                                <!-- Tombol Sekunder (Outline) -->
+                                <a href="{{ route('katalog.index') }}" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-transparent border-2 border-brand-600 text-brand-600 font-extrabold rounded-lg hover:bg-brand-50 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
+                                    Lihat Katalog
+                                </a>
                             </div>
-                        </div>
-                        <div class="pt-2 flex flex-row w-full gap-2 sm:gap-4">
-                            <a href="{{ route('katalog.index') }}" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
-                                Lihat Katalog
-                            </a>
-                            <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-green-500 border border-green-500 text-white font-extrabold rounded-lg shadow-md hover:bg-green-600 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
-                                <i class='bx bx-store hidden sm:inline-block text-lg'></i> Beli di Tokopedia
-                            </a>
+                            
+                            <!-- Trust Badges (Marketplace) -->
+                            <div class="flex flex-wrap items-center gap-2 pt-1">
+                                <span class="text-[11px] sm:text-xs font-semibold text-gray-500">Tersedia juga di Marketplace resmi kami:</span>
+                                <div class="flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply">
+                                    <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-8 sm:h-10 w-auto object-contain">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -170,26 +174,23 @@
 
         <!-- 4 Info Cards Section -->
         @if(!request()->has('search'))
-        <div class="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <x-info-cards />
         </div>
         @endif
 
         <!-- Product Grid Section -->
-        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 flex-shrink-0">
+        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 lg:pt-4 lg:pb-8 flex-shrink-0">
             
-            <div class="mb-4 flex flex-wrap justify-between items-end gap-4">
+            <div class="mb-4 flex flex-wrap justify-between items-center gap-4">
+                @if(request()->has('search') && request()->search != '')
                 <div>
-                    @if(request()->has('search') && request()->search != '')
-                        <h2 class="text-xl font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
-                        <p class="text-gray-500 text-xs mt-1">Menampilkan {{ $products->total() }} produk yang sesuai.</p>
-                    @else
-                        <h2 class="text-xl font-bold text-gray-800">Rekomendasi Pilihan</h2>
-                        <p class="text-gray-500 text-xs mt-1">Daftar stok produk premium terbaru pilihan kami yang siap dipinang.</p>
-                    @endif
+                    <h2 class="text-sm font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
+                    <p class="text-gray-500 text-xs mt-1">Menampilkan {{ $products->total() }} produk yang sesuai.</p>
                 </div>
+                @endif
                 
-                <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap items-center gap-3 {{ !request()->has('search') ? 'ml-auto' : '' }}">
                     <form action="{{ route('home') }}" method="GET" class="relative">
                         @if(request()->has('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
