@@ -190,7 +190,7 @@
                 </div>
                 @endif
                 
-                <div class="flex flex-wrap items-center gap-3 {{ !request()->has('search') ? 'ml-auto' : '' }}">
+                <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
                     <form action="{{ route('home') }}" method="GET" class="relative">
                         @if(request()->has('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">

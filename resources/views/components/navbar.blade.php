@@ -80,7 +80,7 @@
             </div>
 
             <!-- Search Bar (Desktop) -->
-            <div class="flex-1 max-w-2xl px-4 lg:px-12 hidden lg:block">
+            <div class="flex-1 max-w-2xl px-4 hidden lg:block">
                 <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, merk, atau prosesor..." 
                            class="w-full pl-4 pr-10 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm">

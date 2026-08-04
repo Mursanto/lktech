@@ -65,9 +65,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full pb-20 md:pb-0">
         
-        <x-inner-page-header title="Katalog Produk & Layanan" subtitle="Jelajahi berbagai perangkat keras premium, paket perakitan, dan solusi IT terbaik dari LKtech." />
-
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 pb-8 flex flex-col md:flex-row gap-8">
         <!-- Sidebar Navigation (Categories) -->
         <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
             <div class="sticky top-20 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
