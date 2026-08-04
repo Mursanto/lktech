@@ -89,10 +89,10 @@
                             </div>
                             
                             <!-- Trust Badges (Marketplace) -->
-                            <div class="flex flex-wrap items-center gap-2 pt-1">
-                                <span class="text-[11px] sm:text-xs font-semibold text-gray-500">Tersedia juga di Marketplace resmi kami:</span>
-                                <div class="flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply">
-                                    <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-8 sm:h-10 w-auto object-contain">
+                            <div class="flex items-center gap-1.5 sm:gap-2 pt-1">
+                                <span class="text-[10px] sm:text-xs font-semibold text-gray-500 whitespace-nowrap">Tersedia juga di Marketplace resmi kami:</span>
+                                <div class="flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply shrink-0">
+                                    <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-4 sm:h-7 w-auto object-contain">
                                 </div>
                             </div>
                         </div>
@@ -207,8 +207,6 @@
 
                     @if(request()->has('search'))
                         <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline">Lihat Semua</a>
-                    @else
-                        <a href="{{ route('katalog.index') }}" class="text-brand-600 text-xs font-bold hover:text-brand-700 bg-brand-50 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">Lihat Semua Katalog <i class='bx bx-right-arrow-alt'></i></a>
                     @endif
                 </div>
             </div>
