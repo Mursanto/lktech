@@ -46,11 +46,7 @@
         <x-inner-page-header title="Rakit PC Impian Anda" subtitle="Mulai dari PC Office hingga PC Gaming & Rendering kelas atas. Perakitan profesional sesuai budget Anda." />
 
         <!-- Packages Grid -->
-        <div id="paket" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="text-center mb-14">
-                <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Pilihan Paket Rakit PC</h2>
-                <p class="text-gray-500 text-sm max-w-xl mx-auto">Tentukan standar performa yang Anda inginkan. Komponen di bawah adalah estimasi referensi yang bisa di-custom sesuai kebutuhan Anda.</p>
-            </div>
+        <div id="paket" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
             @if($packages->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 @foreach($packages as $index => $package)

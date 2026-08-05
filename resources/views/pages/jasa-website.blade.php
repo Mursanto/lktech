@@ -46,63 +46,58 @@
         <x-inner-page-header title="Jasa Pembuatan Website" subtitle="Tingkatkan kredibilitas bisnis Anda dengan website profesional." />
 
         <!-- Mengapa Memilih Kami (Features Grid) -->
-        <div class="bg-white py-20 relative">
+        <div class="bg-white pt-6 pb-12 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Keunggulan Kami</span>
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-4 tracking-tight">Mengapa Memilih Jasa Website LKTech?</h2>
-                    <p class="text-gray-500 text-sm max-w-2xl mx-auto">Kami tidak sekadar membuat website, kami membangun identitas digital bisnis Anda dengan standar performa dan kualitas tinggi.</p>
-                </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Feature 1 -->
-                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
-                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-devices'></i>
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                        <div class="flex items-center gap-3.5 mb-4">
+                            <div class="w-12 h-12 shrink-0 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                                <i class='bx bx-devices'></i>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Desain Modern & Responsif</h3>
                         </div>
-                        <div>
-                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Desain Modern & Responsif</h3>
-                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Tampil sempurna di berbagai perangkat, mulai dari Smartphone, Tablet, hingga Layar Desktop.</p>
-                        </div>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Tampil sempurna di berbagai perangkat, mulai dari Smartphone, Tablet, hingga Layar Desktop.</p>
                     </div>
                     <!-- Feature 2 -->
-                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
-                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-search-alt'></i>
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                        <div class="flex items-center gap-3.5 mb-4">
+                            <div class="w-12 h-12 shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                                <i class='bx bx-search-alt'></i>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">SEO Friendly</h3>
                         </div>
-                        <div>
-                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">SEO Friendly</h3>
-                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur kode dioptimasi agar website Anda lebih mudah terindeks dan ditemukan di halaman pencarian Google.</p>
-                        </div>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur kode dioptimasi agar website Anda lebih mudah terindeks dan ditemukan di halaman pencarian Google.</p>
                     </div>
                     <!-- Feature 3 -->
-                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
-                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-globe'></i>
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                        <div class="flex items-center gap-3.5 mb-4">
+                            <div class="w-12 h-12 shrink-0 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                                <i class='bx bx-globe'></i>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Gratis Domain & Hosting</h3>
                         </div>
-                        <div>
-                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Gratis Domain & Hosting</h3>
-                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Terima beres! Paket kami sudah termasuk gratis pendaftaran Domain (.com) dan Hosting berkecepatan tinggi untuk tahun pertama.</p>
-                        </div>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Terima beres! Paket kami sudah termasuk gratis pendaftaran Domain (.com) dan Hosting berkecepatan tinggi untuk tahun pertama.</p>
                     </div>
                     <!-- Feature 4 -->
-                    <div class="bg-gray-50 rounded-3xl p-4 md:p-8 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group flex flex-row md:flex-col items-start gap-4 md:block">
-                        <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-xl md:text-3xl md:mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-support'></i>
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                        <div class="flex items-center gap-3.5 mb-4">
+                            <div class="w-12 h-12 shrink-0 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                                <i class='bx bx-support'></i>
+                            </div>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Support & Maintenance</h3>
                         </div>
-                        <div>
-                            <h3 class="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-3 font-montserrat">Support & Maintenance</h3>
-                            <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Dukungan teknis penuh setelah website dirilis untuk memastikan semuanya berjalan lancar dan aman.</p>
-                        </div>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Dukungan teknis penuh setelah website dirilis untuk memastikan semuanya berjalan lancar dan aman.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Packages Grid -->
-        <div id="paket" class="bg-gray-50 py-20 border-t border-gray-100">
+        <div id="paket" class="bg-gray-50 pt-10 pb-12 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
+                <div class="text-center mb-8">
                     <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Pilihan Paket Harga</h2>
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Solusi tepat untuk segala skala bisnis. Harga transparan tanpa biaya tersembunyi.</p>
                 </div>
@@ -161,11 +156,11 @@
         </div>
 
         <!-- Alur Kerja (Workflow) -->
-        <div class="bg-white py-20 relative overflow-hidden">
+        <div class="bg-white pt-10 pb-12 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkU4RjAiLz48L3N2Zz4=')] opacity-50"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="text-center mb-16">
+                <div class="text-center mb-8">
                     <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 block bg-brand-50 inline-block px-3 py-1 rounded-full border border-brand-100">Step By Step</span>
                     <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Alur Kerja Kami</h2>
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Proses yang terstruktur untuk memastikan hasil akhir yang memuaskan dan sesuai ekspektasi.</p>
@@ -235,7 +230,7 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="bg-brand-600 py-20 relative overflow-hidden">
+        <div class="bg-brand-600 py-12 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
             <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[150px] opacity-10"></div>
             
