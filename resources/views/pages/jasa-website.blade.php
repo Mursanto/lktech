@@ -164,13 +164,21 @@
             </div>
         </div>
 
+        <style>
+            .hide-scroll::-webkit-scrollbar { display: none; }
+            .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        </style>
         <!-- Template Carousel Section -->
         <div class="bg-gradient-to-br from-blue-50 via-cyan-50/60 to-emerald-50 py-12 border-t border-cyan-100/60"
              x-data="{
-                current: 0,
-                total: 5,
-                prev() { if(this.current > 0) this.current--; else this.current = this.total - 1; },
-                next() { if(this.current < this.total - 1) this.current++; else this.current = 0; },
+                scrollNext() { 
+                    let slider = this.$refs.slider;
+                    slider.scrollBy({left: slider.offsetWidth * 0.8, behavior: 'smooth'});
+                },
+                scrollPrev() { 
+                    let slider = this.$refs.slider;
+                    slider.scrollBy({left: -slider.offsetWidth * 0.8, behavior: 'smooth'});
+                }
              }">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Section Header -->
@@ -181,22 +189,20 @@
                 </div>
 
                 <!-- Carousel Wrapper -->
-                <div class="relative">
+                <div class="relative group">
                     <!-- Prev Button -->
-                    <button @click="prev()"
-                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">
+                    <button @click="scrollPrev()"
+                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all opacity-0 group-hover:opacity-100">
                         <i class='bx bx-chevron-left text-2xl'></i>
                     </button>
 
                     <!-- Carousel Track -->
-                    <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-500 ease-in-out gap-6"
-                             :style="`transform: translateX(calc(-${current} * (100% / 3 + 0.5rem)))`">
+                    <div x-ref="slider" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 pt-2 hide-scroll -mx-4 px-4 sm:mx-0 sm:px-0">
 
                             <!-- Card 1: UMKM -->
-                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                            <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-orange-50">
-                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">UMKM</span>
                                     </div>
@@ -217,10 +223,10 @@
                             </div>
 
                             <!-- Card 2: Perusahaan -->
-                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-brand-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group relative">
+                            <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-brand-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card relative">
                                 <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest z-10">Populer</div>
                                 <div class="relative overflow-hidden h-48 bg-blue-50">
-                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-blue-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Perusahaan</span>
                                     </div>
@@ -241,9 +247,9 @@
                             </div>
 
                             <!-- Card 3: Toko Online -->
-                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                            <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-emerald-50">
-                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-emerald-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Toko Online</span>
                                     </div>
@@ -264,9 +270,9 @@
                             </div>
 
                             <!-- Card 4: Portofolio -->
-                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                            <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-purple-50">
-                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-purple-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Portofolio</span>
                                     </div>
@@ -287,9 +293,9 @@
                             </div>
 
                             <!-- Card 5: Landing Page -->
-                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                            <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-sky-50">
-                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Landing Page</span>
                                     </div>
@@ -309,23 +315,13 @@
                                 </div>
                             </div>
 
-                        </div>
                     </div>
 
                     <!-- Next Button -->
-                    <button @click="next()"
-                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">
+                    <button @click="scrollNext()"
+                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all opacity-0 group-hover:opacity-100">
                         <i class='bx bx-chevron-right text-2xl'></i>
                     </button>
-                </div>
-
-                <!-- Dot Indicators -->
-                <div class="flex justify-center gap-2 mt-6">
-                    <template x-for="i in total" :key="i">
-                        <button @click="current = i - 1"
-                            :class="current === i - 1 ? 'bg-brand-600 w-6' : 'bg-gray-300 w-2'"
-                            class="h-2 rounded-full transition-all duration-300"></button>
-                    </template>
                 </div>
 
                 <!-- CTA -->
