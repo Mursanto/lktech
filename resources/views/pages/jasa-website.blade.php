@@ -43,53 +43,298 @@
     <!-- Main Content -->
     <main class="flex-grow w-full pb-20 md:pb-0">
         <!-- Hero Section -->
-        <x-inner-page-header title="Jasa Pembuatan Website" subtitle="Tingkatkan kredibilitas bisnis Anda dengan website profesional." />
+        <div class="relative bg-gradient-to-r from-blue-50 via-cyan-50/70 to-emerald-50 py-10 px-4 sm:px-6 lg:px-8 text-center border-b border-cyan-100/70 w-full overflow-hidden"
+             x-data="{
+                words: ['Website Company Profile', 'Toko Online UMKM', 'Landing Page Sales', 'Website Profesional'],
+                wordIndex: 0,
+                displayed: '',
+                isDeleting: false,
+                charIndex: 0,
+                typingSpeed: 80,
+                deletingSpeed: 40,
+                pauseMs: 1800,
+                init() {
+                    this.type();
+                },
+                type() {
+                    const current = this.words[this.wordIndex];
+                    if (!this.isDeleting) {
+                        this.displayed = current.substring(0, this.charIndex + 1);
+                        this.charIndex++;
+                        if (this.charIndex === current.length) {
+                            this.isDeleting = true;
+                            setTimeout(() => this.type(), this.pauseMs);
+                            return;
+                        }
+                    } else {
+                        this.displayed = current.substring(0, this.charIndex - 1);
+                        this.charIndex--;
+                        if (this.charIndex === 0) {
+                            this.isDeleting = false;
+                            this.wordIndex = (this.wordIndex + 1) % this.words.length;
+                        }
+                    }
+                    setTimeout(() => this.type(), this.isDeleting ? this.deletingSpeed : this.typingSpeed);
+                }
+             }">
+            <!-- Decorative blobs -->
+            <div class="absolute -top-10 -left-10 w-48 h-48 bg-blue-200/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Pill Badge -->
+            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-200/60 text-blue-600 text-[11px] font-semibold px-4 py-1.5 rounded-full mb-4 select-none">
+                <span class="animate-pulse text-yellow-400 text-sm">✨</span>
+                Solusi Web Profesional &amp; Terpercaya
+            </div>
+
+            <!-- Main Title with Typing Animation -->
+            <h1 class="text-2xl md:text-3xl font-black font-montserrat text-blue-900 mb-2 tracking-tight leading-tight">
+                Jasa Pembuatan
+                <br class="sm:hidden">
+                <!-- Dynamic typed word with gradient shimmer -->
+                <span class="inline-flex items-center gap-0.5 whitespace-nowrap">
+                    <span class="bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent"
+                          style="background-size: 200% auto; animation: shimmer 3s linear infinite;"
+                          x-text="displayed"></span>
+                    <!-- Blinking cursor -->
+                    <span class="inline-block w-0.5 h-[1em] bg-blue-600 ml-0.5 animate-pulse align-middle rounded-sm"></span>
+                </span>
+            </h1>
+
+            <!-- Shimmer keyframes -->
+            <style>
+                @keyframes shimmer {
+                    0%   { background-position: 0% center; }
+                    100% { background-position: 200% center; }
+                }
+            </style>
+
+            <!-- Subtitle -->
+            <p class="text-gray-600 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed mt-2">
+                Tingkatkan kredibilitas bisnis Anda dengan website profesional yang tampil memukau di semua perangkat.
+            </p>
+        </div>
 
         <!-- Mengapa Memilih Kami (Features Grid) -->
         <div class="bg-white pt-6 pb-12 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Feature 1 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
                         <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 shrink-0 bg-blue-100 group-hover:bg-blue-200/70 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-devices'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Tampil Profesional di Semua Gawai</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Tampil Profesional di Semua Gawai</h3>
                         </div>
                         <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Website Anda akan terlihat sempurna baik dilihat dari ponsel, tablet, maupun komputer, sehingga calon pelanggan tidak ragu bertransaksi.</p>
                     </div>
                     <!-- Feature 2 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
                         <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 shrink-0 bg-emerald-100 group-hover:bg-emerald-200/70 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-search-alt'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Mudah Ditemukan Pelanggan Baru</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Mudah Ditemukan Pelanggan Baru</h3>
                         </div>
                         <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur website dirancang dan dioptimasi agar cepat terindeks di Google, membuat usaha Anda lebih mudah ditemukan calon pembeli.</p>
                     </div>
                     <!-- Feature 3 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
                         <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 shrink-0 bg-amber-100 group-hover:bg-amber-200/70 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-globe'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Langsung Online Tanpa Ribet</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Langsung Online Tanpa Ribet</h3>
                         </div>
                         <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami mengurus semua aspek teknis mulai dari domain hingga hosting. Anda tinggal fokus menjalankan dan mengembangkan bisnis.</p>
                     </div>
                     <!-- Feature 4 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
+                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
                         <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 shrink-0 bg-purple-100 group-hover:bg-purple-200/70 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-support'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Kami Siap Bantu Kapan Pun</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Kami Siap Bantu Kapan Pun</h3>
                         </div>
                         <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami memberikan jaminan rasa tenang dengan dukungan teknis yang siap mendampingi Anda kapan saja jika ada kendala pasca rilis.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Template Carousel Section -->
+        <div class="bg-gradient-to-br from-blue-50 via-cyan-50/60 to-emerald-50 py-12 border-t border-cyan-100/60"
+             x-data="{
+                current: 0,
+                total: 5,
+                prev() { if(this.current > 0) this.current--; else this.current = this.total - 1; },
+                next() { if(this.current < this.total - 1) this.current++; else this.current = 0; },
+             }">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-8">
+                    <span class="inline-block bg-brand-50 text-brand-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-brand-100 mb-3">Inspirasi Desain</span>
+                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Pilihan Contoh Template Website</h2>
+                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Beberapa contoh tampilan website yang pernah kami kerjakan. Desain bisa disesuaikan dengan kebutuhan dan identitas bisnis Anda.</p>
+                </div>
+
+                <!-- Carousel Wrapper -->
+                <div class="relative">
+                    <!-- Prev Button -->
+                    <button @click="prev()"
+                        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">
+                        <i class='bx bx-chevron-left text-2xl'></i>
+                    </button>
+
+                    <!-- Carousel Track -->
+                    <div class="overflow-hidden">
+                        <div class="flex transition-transform duration-500 ease-in-out gap-6"
+                             :style="`transform: translateX(calc(-${current} * (100% / 3 + 0.5rem)))`">
+
+                            <!-- Card 1: UMKM -->
+                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                                <div class="relative overflow-hidden h-48 bg-orange-50">
+                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-3 left-3">
+                                        <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">UMKM</span>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-gray-900 font-montserrat mb-1">Template Bisnis UMKM</h3>
+                                    <p class="text-xs text-gray-500 leading-relaxed mb-4">Cocok untuk usaha kuliner, fashion lokal, atau produk rumahan. Desain hangat yang membangun kepercayaan pelanggan.</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex gap-2 flex-wrap">
+                                            <span class="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-orange-100">Starter</span>
+                                            <span class="bg-gray-50 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-100">1 Halaman</span>
+                                        </div>
+                                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Template%20UMKM." target="_blank" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">
+                                            Lihat Demo <i class='bx bx-link-external text-base'></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Perusahaan -->
+                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-brand-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group relative">
+                                <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest z-10">Populer</div>
+                                <div class="relative overflow-hidden h-48 bg-blue-50">
+                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-3 left-3">
+                                        <span class="bg-blue-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Perusahaan</span>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-gray-900 font-montserrat mb-1">Template Perusahaan / CV / PT</h3>
+                                    <p class="text-xs text-gray-500 leading-relaxed mb-4">Tampilan formal dan profesional untuk perusahaan, kontraktor, atau jasa konsultan yang ingin terlihat kredibel.</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex gap-2 flex-wrap">
+                                            <span class="bg-brand-50 text-brand-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-brand-100">Profesional</span>
+                                            <span class="bg-gray-50 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-100">Multi Halaman</span>
+                                        </div>
+                                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Template%20Perusahaan." target="_blank" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">
+                                            Lihat Demo <i class='bx bx-link-external text-base'></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Toko Online -->
+                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                                <div class="relative overflow-hidden h-48 bg-emerald-50">
+                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-3 left-3">
+                                        <span class="bg-emerald-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Toko Online</span>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-gray-900 font-montserrat mb-1">Template Toko Online / E-Commerce</h3>
+                                    <p class="text-xs text-gray-500 leading-relaxed mb-4">Platform jual beli mandiri dengan katalog produk, keranjang belanja, dan sistem pembayaran otomatis.</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex gap-2 flex-wrap">
+                                            <span class="bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-100">E-Commerce</span>
+                                            <span class="bg-gray-50 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-100">Full Fitur</span>
+                                        </div>
+                                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Template%20Toko%20Online." target="_blank" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">
+                                            Lihat Demo <i class='bx bx-link-external text-base'></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Portofolio -->
+                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                                <div class="relative overflow-hidden h-48 bg-purple-50">
+                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-3 left-3">
+                                        <span class="bg-purple-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Portofolio</span>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-gray-900 font-montserrat mb-1">Template Portofolio / Jasa Kreatif</h3>
+                                    <p class="text-xs text-gray-500 leading-relaxed mb-4">Ideal untuk fotografer, desainer, freelancer, atau agensi kreatif yang ingin pamerkan karya terbaik mereka.</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex gap-2 flex-wrap">
+                                            <span class="bg-purple-50 text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-purple-100">Kreatif</span>
+                                            <span class="bg-gray-50 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-100">Galeri</span>
+                                        </div>
+                                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Template%20Portofolio." target="_blank" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">
+                                            Lihat Demo <i class='bx bx-link-external text-base'></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Landing Page -->
+                            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                                <div class="relative overflow-hidden h-48 bg-sky-50">
+                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-3 left-3">
+                                        <span class="bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Landing Page</span>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <h3 class="text-base font-bold text-gray-900 font-montserrat mb-1">Template Landing Page Promosi</h3>
+                                    <p class="text-xs text-gray-500 leading-relaxed mb-4">Dirancang untuk konversi tinggi. Cocok untuk promosi produk, event, atau layanan dengan satu halaman yang persuasif.</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex gap-2 flex-wrap">
+                                            <span class="bg-sky-50 text-sky-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-100">Promosi</span>
+                                            <span class="bg-gray-50 text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-100">1 Halaman</span>
+                                        </div>
+                                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20tertarik%20dengan%20Template%20Landing%20Page." target="_blank" class="flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">
+                                            Lihat Demo <i class='bx bx-link-external text-base'></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Next Button -->
+                    <button @click="next()"
+                        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-20 w-11 h-11 rounded-full bg-white border border-gray-200 shadow-lg items-center justify-center text-gray-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 transition-all">
+                        <i class='bx bx-chevron-right text-2xl'></i>
+                    </button>
+                </div>
+
+                <!-- Dot Indicators -->
+                <div class="flex justify-center gap-2 mt-6">
+                    <template x-for="i in total" :key="i">
+                        <button @click="current = i - 1"
+                            :class="current === i - 1 ? 'bg-brand-600 w-6' : 'bg-gray-300 w-2'"
+                            class="h-2 rounded-full transition-all duration-300"></button>
+                    </template>
+                </div>
+
+                <!-- CTA -->
+                <div class="text-center mt-8">
+                    <p class="text-sm text-gray-500 mb-3">Tidak menemukan template yang cocok? Kami bisa membuat desain custom dari nol!</p>
+                    <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20ingin%20konsultasi%20desain%20website%20custom." target="_blank"
+                       class="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg text-sm">
+                        <i class='bx bxl-whatsapp text-xl'></i> Konsultasi Desain Custom
+                    </a>
                 </div>
             </div>
         </div>
