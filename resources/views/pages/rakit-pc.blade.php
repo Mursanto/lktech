@@ -76,12 +76,6 @@
                     $waText     = urlencode('Halo LKTech, saya ingin memesan paket ' . $package->nama_paket);
                 @endphp
                 <div class="{{ $cardBg }} rounded-3xl {{ $cardBorder }} p-6 sm:p-8 hover:shadow-xl transition-all duration-300 flex flex-col h-full relative overflow-hidden group {{ $cardExtra }}">
-                    @if($isMid)
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest shadow-md z-20 whitespace-nowrap">
-                        🔥 PALING LARIS
-                    </div>
-                    @endif
-
                     <div class="flex-grow">
                         @if($package->foto)
                             <div class="w-full h-48 mb-6 shadow-sm border {{ $dividerClr }} relative z-10 rounded-2xl overflow-hidden bg-gray-50 p-2">
