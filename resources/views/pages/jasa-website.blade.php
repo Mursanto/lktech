@@ -56,9 +56,9 @@
                             <div class="w-12 h-12 shrink-0 bg-blue-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
                                 <i class='bx bx-devices'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Desain Modern & Responsif</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Tampil Profesional di Semua Gawai</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Tampil sempurna di berbagai perangkat, mulai dari Smartphone, Tablet, hingga Layar Desktop.</p>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Website Anda akan terlihat sempurna baik dilihat dari ponsel, tablet, maupun komputer, sehingga calon pelanggan tidak ragu bertransaksi.</p>
                     </div>
                     <!-- Feature 2 -->
                     <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
@@ -66,9 +66,9 @@
                             <div class="w-12 h-12 shrink-0 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
                                 <i class='bx bx-search-alt'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">SEO Friendly</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Mudah Ditemukan Pelanggan Baru</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur kode dioptimasi agar website Anda lebih mudah terindeks dan ditemukan di halaman pencarian Google.</p>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur website dirancang dan dioptimasi agar cepat terindeks di Google, membuat usaha Anda lebih mudah ditemukan calon pembeli.</p>
                     </div>
                     <!-- Feature 3 -->
                     <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
@@ -76,9 +76,9 @@
                             <div class="w-12 h-12 shrink-0 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
                                 <i class='bx bx-globe'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Gratis Domain & Hosting</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Langsung Online Tanpa Ribet</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Terima beres! Paket kami sudah termasuk gratis pendaftaran Domain (.com) dan Hosting berkecepatan tinggi untuk tahun pertama.</p>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami mengurus semua aspek teknis mulai dari domain hingga hosting. Anda tinggal fokus menjalankan dan mengembangkan bisnis.</p>
                     </div>
                     <!-- Feature 4 -->
                     <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 group h-full w-full flex flex-col justify-start">
@@ -86,9 +86,9 @@
                             <div class="w-12 h-12 shrink-0 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 transition-transform">
                                 <i class='bx bx-support'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Support & Maintenance</h3>
+                            <h3 class="text-base md:text-lg font-bold text-gray-900 font-montserrat leading-snug">Kami Siap Bantu Kapan Pun</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Dukungan teknis penuh setelah website dirilis untuk memastikan semuanya berjalan lancar dan aman.</p>
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami memberikan jaminan rasa tenang dengan dukungan teknis yang siap mendampingi Anda kapan saja jika ada kendala pasca rilis.</p>
                     </div>
                 </div>
             </div>
