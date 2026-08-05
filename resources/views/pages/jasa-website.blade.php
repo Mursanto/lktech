@@ -171,6 +171,8 @@
         <!-- Template Carousel Section -->
         <div class="bg-gradient-to-br from-blue-50 via-cyan-50/60 to-emerald-50 py-12 border-t border-cyan-100/60"
              x-data="{
+                isModalOpen: false,
+                modalImage: '',
                 scrollNext() { 
                     let slider = this.$refs.slider;
                     slider.scrollBy({left: slider.offsetWidth * 0.8, behavior: 'smooth'});
@@ -202,7 +204,9 @@
                             <!-- Card 1: UMKM -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-orange-50">
-                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" 
+                                         @click="isModalOpen = true; modalImage = '{{ asset('images/template_umkm.png') }}'"
+                                         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 cursor-zoom-in">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">UMKM</span>
                                     </div>
@@ -226,7 +230,9 @@
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-brand-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card relative">
                                 <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest z-10">Populer</div>
                                 <div class="relative overflow-hidden h-48 bg-blue-50">
-                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" 
+                                         @click="isModalOpen = true; modalImage = '{{ asset('images/template_company.png') }}'"
+                                         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 cursor-zoom-in">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-blue-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Perusahaan</span>
                                     </div>
@@ -249,7 +255,9 @@
                             <!-- Card 3: Toko Online -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-emerald-50">
-                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" 
+                                         @click="isModalOpen = true; modalImage = '{{ asset('images/template_ecommerce.png') }}'"
+                                         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 cursor-zoom-in">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-emerald-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Toko Online</span>
                                     </div>
@@ -272,7 +280,9 @@
                             <!-- Card 4: Portofolio -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-purple-50">
-                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" 
+                                         @click="isModalOpen = true; modalImage = '{{ asset('images/template_portfolio.png') }}'"
+                                         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 cursor-zoom-in">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-purple-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Portofolio</span>
                                     </div>
@@ -295,7 +305,9 @@
                             <!-- Card 5: Landing Page -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-sky-50">
-                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" 
+                                         @click="isModalOpen = true; modalImage = '{{ asset('images/template_landingpage.png') }}'"
+                                         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 cursor-zoom-in">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Landing Page</span>
                                     </div>
@@ -332,6 +344,17 @@
                         <i class='bx bxl-whatsapp text-xl'></i> Konsultasi Desain Custom
                     </a>
                 </div>
+            </div>
+
+            <!-- Modal Lightbox -->
+            <div x-show="isModalOpen" style="display: none;" 
+                 class="fixed inset-0 z-50 flex justify-center items-start bg-black/80 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto" 
+                 @click.self="isModalOpen = false" 
+                 x-transition.opacity.duration.300ms>
+                <button @click="isModalOpen = false" class="fixed top-4 right-4 text-white/70 hover:text-white z-[60] bg-black/50 hover:bg-black/80 rounded-full p-1 transition-all">
+                    <i class='bx bx-x text-3xl'></i>
+                </button>
+                <img :src="modalImage" class="max-w-full lg:max-w-5xl w-full h-auto shadow-2xl mt-8 mb-8 rounded-xl ring-1 ring-white/10" @click.stop>
             </div>
         </div>
 
