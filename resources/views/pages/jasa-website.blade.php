@@ -202,7 +202,7 @@
                             <!-- Card 1: UMKM -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-orange-50">
-                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_umkm.png') }}" alt="Template UMKM" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">UMKM</span>
                                     </div>
@@ -226,7 +226,7 @@
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-brand-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card relative">
                                 <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest z-10">Populer</div>
                                 <div class="relative overflow-hidden h-48 bg-blue-50">
-                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_company.png') }}" alt="Template Perusahaan" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-blue-700 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Perusahaan</span>
                                     </div>
@@ -249,7 +249,7 @@
                             <!-- Card 3: Toko Online -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-emerald-50">
-                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_ecommerce.png') }}" alt="Template Toko Online" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-emerald-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Toko Online</span>
                                     </div>
@@ -272,7 +272,7 @@
                             <!-- Card 4: Portofolio -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-purple-50">
-                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_portfolio.png') }}" alt="Template Portofolio" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-purple-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Portofolio</span>
                                     </div>
@@ -295,7 +295,7 @@
                             <!-- Card 5: Landing Page -->
                             <div class="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-center sm:snap-start bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all overflow-hidden group/card">
                                 <div class="relative overflow-hidden h-48 bg-sky-50">
-                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500">
+                                    <img src="{{ asset('images/template_landingpage.png') }}" alt="Template Landing Page" class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500">
                                     <div class="absolute top-3 left-3">
                                         <span class="bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Landing Page</span>
                                     </div>
