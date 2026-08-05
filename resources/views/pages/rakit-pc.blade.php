@@ -60,38 +60,31 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 @foreach($packages as $index => $package)
                 @php
-                    $isMid   = ($index % 3 == 1);
-                    $isDark  = ($index % 3 == 2);
-                    $checkColor = $isDark ? 'text-purple-400' : 'text-brand-500';
-                    $priceColor = $isDark ? 'text-purple-400' : ($isMid ? 'text-brand-600' : 'text-gray-900');
-                    $textColor  = $isDark ? 'text-white' : 'text-gray-900';
-                    $descColor  = $isDark ? 'text-gray-400' : 'text-gray-500';
-                    $specColor  = $isDark ? 'text-gray-300' : 'text-gray-600';
-                    $iconBg     = $isDark ? 'bg-gray-800' : ($isMid ? 'bg-brand-50' : 'bg-blue-50');
-                    $iconText   = $isDark ? 'text-purple-400' : ($isMid ? 'text-brand-600' : 'text-blue-600');
-                    $dividerClr = $isDark ? 'border-gray-800' : 'border-gray-100';
-                    $cardBg     = $isDark ? 'bg-gray-900' : 'bg-white';
-                    $cardBorder = $isMid  ? 'border-2 border-blue-500' : ($isDark ? 'border border-gray-800' : 'border border-slate-100');
-                    $cardExtra  = $isMid  ? 'shadow-xl lg:-translate-y-2 z-10' : 'shadow-sm';
-                    $btnClass   = $isDark
-                        ? 'w-full mt-4 inline-flex justify-center items-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm rounded-xl transition'
-                        : ($isMid
-                            ? 'w-full mt-4 inline-flex justify-center items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition'
-                            : 'w-full mt-4 inline-flex justify-center items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition');
-                    $waText = urlencode('Halo LKTech, saya ingin memesan paket ' . $package->nama_paket);
+                    $isMid      = ($index % 3 == 1);
+                    $checkColor = 'text-brand-500';
+                    $priceColor = $isMid ? 'text-brand-600' : 'text-gray-900';
+                    $textColor  = 'text-gray-900';
+                    $descColor  = 'text-gray-500';
+                    $specColor  = 'text-gray-600';
+                    $iconBg     = $isMid ? 'bg-brand-50' : 'bg-blue-50';
+                    $iconText   = $isMid ? 'text-brand-600' : 'text-blue-600';
+                    $dividerClr = 'border-gray-100';
+                    $cardBg     = 'bg-white';
+                    $cardBorder = $isMid ? 'border-2 border-blue-500' : 'border border-slate-100';
+                    $cardExtra  = $isMid ? 'shadow-xl lg:-translate-y-2 z-10' : 'shadow-sm';
+                    $btnClass   = 'w-full mt-4 inline-flex justify-center items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition';
+                    $waText     = urlencode('Halo LKTech, saya ingin memesan paket ' . $package->nama_paket);
                 @endphp
                 <div class="{{ $cardBg }} rounded-3xl {{ $cardBorder }} p-6 sm:p-8 hover:shadow-xl transition-all duration-300 flex flex-col h-full relative overflow-hidden group {{ $cardExtra }}">
                     @if($isMid)
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest shadow-md z-20 whitespace-nowrap">
                         🔥 PALING LARIS
                     </div>
-                    @elseif($isDark)
-                    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent pointer-events-none"></div>
                     @endif
 
                     <div class="flex-grow">
                         @if($package->foto)
-                            <div class="w-full h-48 mb-6 shadow-sm border {{ $dividerClr }} relative z-10 rounded-2xl overflow-hidden {{ $isDark ? 'bg-gray-800' : 'bg-gray-50' }} p-2">
+                            <div class="w-full h-48 mb-6 shadow-sm border {{ $dividerClr }} relative z-10 rounded-2xl overflow-hidden bg-gray-50 p-2">
                                 <img src="{{ Storage::url($package->foto) }}" alt="{{ $package->nama_paket }}" class="w-full h-full object-contain">
                             </div>
                         @else
