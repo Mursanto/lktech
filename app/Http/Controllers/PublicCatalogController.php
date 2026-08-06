@@ -219,7 +219,7 @@ class PublicCatalogController extends Controller
             }
 
             if (!$selectedCategoryId && !$request->has('search')) {
-                $products = $query->take(5)->get();
+                $products = $query->take(6)->get();
                 $collectionToTransform = $products;
             } else {
                 $products = $query->paginate(12)->withQueryString();

@@ -130,18 +130,36 @@
                             </div>
                         </div>
 
+                        @php
+                            $isOdd = $category->all_products->count() % 2 !== 0;
+                            $hasMore = $category->total_count > $category->all_products->count();
+                        @endphp
+
                         <!-- CSS Grid for items -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
                                     <x-product-card :product="$product" />
                                 </div>
                             @endforeach
+                            
+                            @if(!isset($selectedCategoryId) && !request()->has('search'))
+                                @if($isOdd)
+                                    <div class="w-full h-full flex md:hidden">
+                                        <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="w-full h-full min-h-[220px] flex flex-col items-center justify-center bg-brand-50 hover:bg-brand-100 border border-brand-100 rounded-xl transition-colors group p-4 text-center">
+                                            <div class="w-10 h-10 rounded-full bg-brand-600 text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm">
+                                                <i class='bx bx-right-arrow-alt text-xl'></i>
+                                            </div>
+                                            <span class="font-bold text-brand-600 text-[13px] leading-tight">Lihat Semua<br>({{ $category->total_count }}) &rarr;</span>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         
-                        @if(!isset($selectedCategoryId) && !request()->has('search') && $category->total_count > 5)
-                            <div class="mt-4 text-right">
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="text-sm font-bold text-brand-600 hover:text-brand-700">
+                        @if(!isset($selectedCategoryId) && !request()->has('search') && $hasMore)
+                            <div class="mt-4 text-center md:text-right {{ $isOdd ? 'hidden md:block' : 'block' }}">
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="inline-block text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 md:bg-transparent px-4 py-2 md:p-0 rounded-lg md:rounded-none transition-colors">
                                     Lihat Semua {{ $category->name }} ({{ $category->total_count }}) &rarr;
                                 </a>
                             </div>
