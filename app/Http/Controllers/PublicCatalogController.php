@@ -85,7 +85,8 @@ class PublicCatalogController extends Controller
         $featuredProducts = \App\Models\Product::with('category')
             ->where(function($q) use ($featuredKeywords) {
                 foreach($featuredKeywords as $keyword) {
-                    $q->orWhere('model_series', 'like', "%{$keyword}%");
+                    $q->orWhere('model_series', 'like', "%{$keyword}%")
+                      ->orWhere('brand', 'like', "%{$keyword}%");
                 }
             })
             ->where('stock', '>', 0)
