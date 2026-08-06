@@ -95,7 +95,61 @@ class PublicCatalogController extends Controller
         }
         $product->all_images = $gallery;
 
-        return view('katalog.show', compact('product'));
+        // Fixed Pinned Product: ID 23 (Microsoft Office LTSC 2024)
+        $pinnedProductId = 23;
+        $pinnedProduct = null;
+
+        if ($product->id != $pinnedProductId) {
+            $pinnedProduct = \App\Models\Product::with('category')
+                ->where('id', $pinnedProductId)
+                ->where('stock', '>', 0)
+                ->where('status', '!=', 'sold')
+                ->first();
+        }
+
+        // Fetch Dynamic Related Products (Same category or accessories)
+        $dynamicProducts = \App\Models\Product::with('category')
+            ->where('id', '!=', $product->id)
+            ->where('id', '!=', $pinnedProductId)
+            ->where(function($q) use ($product) {
+                if ($product->category_id) {
+                    $q->where('category_id', $product->category_id);
+                }
+                $q->orWhereHas('category', function($cat) {
+                    $cat->where('name', 'like', '%Aksesoris%')
+                        ->orWhere('name', 'like', '%Komponen%')
+                        ->orWhere('name', 'like', '%Upgrade%')
+                        ->orWhere('name', 'like', '%Mouse%')
+                        ->orWhere('name', 'like', '%Tas%');
+                });
+            })
+            ->where('stock', '>', 0)
+            ->where('status', '!=', 'sold')
+            ->inRandomOrder()
+            ->take(7)
+            ->get();
+            
+        // Combine pinned product at slot 1, followed by dynamic products
+        $relatedProducts = collect();
+        if ($pinnedProduct) {
+            $relatedProducts->push($pinnedProduct);
+        }
+        foreach ($dynamicProducts as $dp) {
+            $relatedProducts->push($dp);
+        }
+            
+        // Transform images for related products
+        $relatedProducts->transform(function ($rp) {
+            if ($rp->image_path) {
+                $rp->display_image = Storage::url($rp->image_path);
+            } else {
+                $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
+                $rp->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+            }
+            return $rp;
+        });
+
+        return view('katalog.show', compact('product', 'relatedProducts'));
     }
 
     public function katalog(Request $request)

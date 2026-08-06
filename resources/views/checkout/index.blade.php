@@ -85,14 +85,19 @@
             </div>
         </div>
 
-        <div class="mb-6">
-            <h1 class="text-3xl font-black text-gray-900 tracking-tight mb-1">Keranjang & Checkout</h1>
-            <p class="text-gray-500 text-sm">Terdapat <span class="font-bold text-brand-600" x-text="totalQty"></span> item dalam keranjang belanja Anda.</p>
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-black text-gray-900 tracking-tight mb-1">Keranjang & Checkout</h1>
+                <p class="text-gray-500 text-sm">Terdapat <span class="font-bold text-brand-600" x-text="totalQty"></span> item dalam keranjang belanja Anda.</p>
+            </div>
+            <a href="{{ route('katalog.index') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-brand-600 bg-white border-2 border-brand-100 rounded-xl hover:bg-brand-50 hover:border-brand-200 transition-colors shadow-sm whitespace-nowrap">
+                <i class='bx bx-left-arrow-alt text-xl'></i> Tambah Belanjaan
+            </a>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8">
             {{-- LEFT: Daftar Produk --}}
-            <div class="w-full lg:flex-1 space-y-4">
+            <div class="w-full lg:flex-1 space-y-6">
 
                 {{-- DAFTAR PRODUK (tampil jika keranjang tidak kosong) --}}
                 <template x-if="cartItems.length > 0">
@@ -165,35 +170,39 @@
                 <template x-if="cartItems.length > 0">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
                         <h2 class="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
-                                <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')"
-                                       :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                       class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm"
-                                       placeholder="Contoh: Budi Santoso">
-                                <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1"></p>
+                        <div class="space-y-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
+                                    <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')"
+                                           :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           placeholder="Contoh: Budi Santoso">
+                                    <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1.5"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Alamat Email <span class="text-red-500">*</span></label>
+                                    <input type="email" x-model="formData.email" @blur="validateField('email')"
+                                           :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           placeholder="budi@email.com">
+                                    <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1.5"></p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                                    <input type="text" x-model="formData.phone" @blur="validateField('phone')"
+                                           :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           placeholder="08123456789">
+                                    <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1.5"></p>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Email <span class="text-red-500">*</span></label>
-                                <input type="email" x-model="formData.email" @blur="validateField('email')"
-                                       :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                       class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm"
-                                       placeholder="budi@email.com">
-                                <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1"></p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
-                                <input type="text" x-model="formData.phone" @blur="validateField('phone')"
-                                       :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                       class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm"
-                                       placeholder="08123456789">
-                                <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1"></p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
                                 <textarea x-model="formData.address" rows="3"
-                                          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm"
+                                          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
                                           placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
                             </div>
                         </div>
@@ -216,7 +225,7 @@
             </div>
 
             {{-- RIGHT: Ringkasan Belanja --}}
-            <div class="w-full lg:w-[360px] flex-shrink-0">
+            <div class="w-full lg:w-[380px] flex-shrink-0">
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
                     <h2 class="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">Ringkasan Belanja</h2>
 

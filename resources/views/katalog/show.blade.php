@@ -331,6 +331,84 @@
         </div>
     </main>
 
+    <!-- Related Products / Cross-Selling Section -->
+    @if(isset($relatedProducts) && $relatedProducts->count() > 0)
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 mb-4 mt-4 border-t border-gray-100">
+        <div class="mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Lengkapi Kebutuhan Laptop Anda</h2>
+            <p class="text-sm text-gray-500 mt-1">Rekomendasi produk terkait dan aksesori pilihan</p>
+        </div>
+
+        <!-- Horizontal Scrollable Container (Compact Cards) -->
+        <div class="flex overflow-x-auto gap-4 sm:gap-5 pb-4 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
+            @foreach($relatedProducts as $rp)
+                <div class="snap-start flex-shrink-0 w-[150px] sm:w-[180px] lg:w-[220px] bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col relative">
+                    
+                    <!-- Foto Produk (1:1 Ratio) -->
+                    <a href="{{ route('katalog.show', $rp->slug ?? $rp->id) }}" class="block relative aspect-square bg-white border-b border-gray-100 overflow-hidden">
+                        <img src="{{ $rp->display_image }}" alt="{{ $rp->brand }} {{ $rp->model_series }}" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300">
+                    </a>
+
+                    <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                        <!-- Judul Produk -->
+                        <a href="{{ route('katalog.show', $rp->slug ?? $rp->id) }}" class="font-semibold text-gray-800 text-xs sm:text-sm line-clamp-2 mb-2 group-hover:text-brand-600 transition-colors leading-snug" title="{{ $rp->brand }} {{ $rp->model_series }}">
+                            {{ $rp->brand }} {{ $rp->model_series }}
+                        </a>
+                        
+                        <div class="mt-auto pt-2">
+                            <!-- Harga -->
+                            <div class="font-bold text-gray-900 text-sm sm:text-base mb-3">
+                                Rp {{ number_format($rp->selling_price, 0, ',', '.') }}
+                            </div>
+
+                            <!-- Tombol Aksi Cepat (+ Keranjang) -->
+                            <div x-data="{
+                                adding: false,
+                                addRpCart() {
+                                    this.adding = true;
+                                    fetch('{{ route('cart.add') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                            'Accept': 'application/json'
+                                        },
+                                        body: JSON.stringify({ product_id: {{ $rp->id }} })
+                                    })
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        this.adding = false;
+                                        if(data.success) {
+                                            window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
+                                            const toast = document.createElement('div');
+                                            toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-[9999] transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-sm';
+                                            toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-xl'></i> <span>Masuk Keranjang</span>`;
+                                            document.body.appendChild(toast);
+                                            setTimeout(() => {
+                                                toast.classList.add('translate-y-10', 'opacity-0');
+                                                setTimeout(() => toast.remove(), 300);
+                                            }, 3000);
+                                        }
+                                    }).catch(() => { this.adding = false; });
+                                }
+                            }">
+                                <button @click="addRpCart()" :disabled="adding" class="w-full bg-brand-50 hover:bg-brand-600 text-brand-700 hover:text-white border border-brand-200 font-bold py-1.5 sm:py-2 px-2 rounded-xl text-xs transition-all flex justify-center items-center gap-1 disabled:opacity-70 disabled:cursor-wait">
+                                    <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? '...' : '+ Keranjang'"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <style>
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
+    </section>
+    @endif
+
     <!-- Footer -->
     <x-footer />
 
