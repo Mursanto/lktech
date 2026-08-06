@@ -253,6 +253,8 @@
                 @endforeach
             </div>
         </div>
+        @endif
+        
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
