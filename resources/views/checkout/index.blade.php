@@ -49,7 +49,7 @@
         }, $cart));
     @endphp
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 pb-28 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
 
         {{-- Toast Notification --}}
         <div x-show="toast.show"
@@ -85,32 +85,33 @@
             </div>
         </div>
 
-        <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="mb-4 sm:mb-8 flex flex-row items-center justify-between gap-2">
             <div>
-                <h1 class="text-3xl font-black text-gray-900 tracking-tight mb-1">Keranjang & Checkout</h1>
-                <p class="text-gray-500 text-sm">Terdapat <span class="font-bold text-brand-600" x-text="totalQty"></span> item dalam keranjang belanja Anda.</p>
+                <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mb-0.5">Keranjang</h1>
+                <p class="text-gray-500 text-xs sm:text-sm"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
             </div>
-            <a href="{{ route('katalog.index') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-brand-600 bg-white border-2 border-brand-100 rounded-xl hover:bg-brand-50 hover:border-brand-200 transition-colors shadow-sm whitespace-nowrap">
-                <i class='bx bx-left-arrow-alt text-xl'></i> Tambah Belanjaan
+            <a href="{{ route('katalog.index') }}" class="text-brand-600 font-bold text-sm sm:px-5 sm:py-2.5 sm:border-2 sm:border-brand-100 sm:rounded-xl hover:text-brand-700 transition-colors flex items-center gap-1">
+                <span class="sm:hidden text-xs">+ Tambah Barang</span>
+                <span class="hidden sm:inline-flex items-center gap-2"><i class='bx bx-left-arrow-alt text-xl'></i> Tambah Belanjaan</span>
             </a>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-4 sm:gap-8">
             {{-- LEFT: Daftar Produk --}}
-            <div class="w-full lg:flex-1 space-y-6">
+            <div class="w-full lg:flex-1 space-y-4 sm:space-y-6">
 
                 {{-- DAFTAR PRODUK (tampil jika keranjang tidak kosong) --}}
                 <template x-if="cartItems.length > 0">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         {{-- Header --}}
-                        <div class="flex justify-between items-center px-5 py-4 border-b border-gray-100 bg-gray-50/50">
-                            <label class="flex items-center gap-3 cursor-pointer">
+                        <div class="flex justify-between items-center px-4 sm:px-5 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
+                            <label class="flex items-center gap-2 sm:gap-3 cursor-pointer">
                                 <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-5 h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer">
-                                <span class="font-bold text-gray-800">Pilih Semua</span>
-                                <span class="text-xs text-gray-400 font-normal">(<span x-text="selectedItems.length"></span> dipilih)</span>
+                                <span class="font-bold text-gray-800 text-sm sm:text-base">Pilih Semua</span>
+                                <span class="text-xs text-gray-400 font-normal hidden sm:inline">(<span x-text="selectedItems.length"></span> dipilih)</span>
                             </label>
                             <button type="button" @click="confirmEmpty()"
-                                    class="flex items-center gap-1.5 text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors">
+                                    class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 sm:px-3 py-1.5 rounded-lg transition-colors">
                                 <i class='bx bx-trash text-base'></i> Kosongkan
                             </button>
                         </div>
@@ -136,30 +137,28 @@
 
                                     {{-- Info Produk --}}
                                     <div class="flex-1 min-w-0">
-                                        <p class="font-semibold text-gray-900 text-sm line-clamp-2 leading-snug mb-2" x-text="item.name"></p>
-                                        <div class="flex items-center justify-between">
+                                        <p class="font-semibold text-gray-900 text-xs sm:text-sm line-clamp-2 leading-snug mb-1" x-text="item.name"></p>
+                                        <div class="font-bold text-brand-600 text-sm mb-2 whitespace-nowrap" x-text="'Rp ' + formatRp(item.price * item.quantity)"></div>
+                                        <div class="flex items-center justify-end gap-3">
+                                            {{-- Tombol Hapus --}}
+                                            <button type="button" @click="confirmRemove(item.id, item.name)"
+                                                    class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                                <i class='bx bx-trash text-lg'></i>
+                                            </button>
                                             {{-- Kontrol Qty --}}
                                             <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                                                 <button type="button" @click="changeQty(item, -1)"
-                                                        class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
+                                                        class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
                                                     <i class='bx bx-minus'></i>
                                                 </button>
-                                                <span class="w-9 text-center text-sm font-bold text-gray-800 border-x border-gray-200 h-7 flex items-center justify-center" x-text="item.quantity"></span>
+                                                <span class="w-7 sm:w-9 text-center text-xs sm:text-sm font-bold text-gray-800 border-x border-gray-200 h-6 sm:h-7 flex items-center justify-center" x-text="item.quantity"></span>
                                                 <button type="button" @click="changeQty(item, 1)"
-                                                        class="w-8 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
+                                                        class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
                                                     <i class='bx bx-plus'></i>
                                                 </button>
                                             </div>
-                                            {{-- Harga --}}
-                                            <span class="font-bold text-brand-600 text-sm" x-text="'Rp ' + formatRp(item.price * item.quantity)"></span>
                                         </div>
                                     </div>
-
-                                    {{-- Tombol Hapus --}}
-                                    <button type="button" @click="confirmRemove(item.id, item.name)"
-                                            class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                                        <i class='bx bx-trash text-lg'></i>
-                                    </button>
                                 </div>
                             </template>
                         </div>
@@ -168,41 +167,42 @@
 
                 {{-- Formulir Informasi Pembeli (tampil jika ada produk) --}}
                 <template x-if="cartItems.length > 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
-                        <div class="space-y-5">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
+                        <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-4 pb-3 sm:pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
+                        <div class="space-y-4 sm:space-y-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
                                     <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')"
                                            :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
                                            placeholder="Contoh: Budi Santoso">
                                     <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1.5"></p>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Alamat Email <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Alamat Email <span class="text-red-500">*</span></label>
                                     <input type="email" x-model="formData.email" @blur="validateField('email')"
                                            :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
                                            placeholder="budi@email.com">
                                     <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1.5"></p>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Nomor WhatsApp <span class="text-red-500">*</span></label>
                                     <input type="text" x-model="formData.phone" @blur="validateField('phone')"
                                            :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
                                            placeholder="08123456789">
                                     <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1.5"></p>
+                                    <p class="text-[10px] sm:text-xs text-gray-400 mt-1.5 font-medium flex items-start gap-1"><i class='bx bx-info-circle mt-0.5'></i> Konfirmasi ongkir & resi akan dikirim via WhatsApp.</p>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Alamat Pengiriman <span class="text-gray-400 font-normal text-xs">(Opsional)</span></label>
-                                <textarea x-model="formData.address" rows="3"
-                                          class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
+                                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Alamat Pengiriman <span class="text-gray-400 font-normal text-[10px] sm:text-xs">(Opsional)</span></label>
+                                <textarea x-model="formData.address" rows="2"
+                                          class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
                                           placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
                             </div>
                         </div>
@@ -282,7 +282,7 @@
                     {{-- Tombol Bayar --}}
                     <button type="button" @click="processPayment($event)"
                             :disabled="isLoading || cartItems.length === 0 || selectedItems.length === 0"
-                            class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2 text-sm">
+                            class="hidden lg:flex w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md justify-center items-center gap-2 text-sm">
                         <template x-if="isLoading">
                             <i class='bx bx-loader-alt bx-spin text-lg'></i>
                         </template>
@@ -299,9 +299,44 @@
                 </div>
             </div>
         </div>
+
+        {{-- Sticky Bottom Action Bar (Mobile Only) --}}
+        <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 pb-4 flex flex-col z-50 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
+            <div class="flex justify-between items-center w-full mb-3">
+                <div class="flex flex-col">
+                    <span class="text-[11px] text-gray-500 font-semibold mb-0.5">Total Pembayaran</span>
+                    <span class="text-base font-black text-brand-600" x-text="'Rp ' + formatRp(subtotal)"></span>
+                </div>
+                <button type="button" @click="processPayment($event)"
+                        :disabled="isLoading || cartItems.length === 0 || selectedItems.length === 0"
+                        class="bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md flex items-center gap-2 text-sm">
+                    <template x-if="isLoading">
+                        <i class='bx bx-loader-alt bx-spin text-lg'></i>
+                    </template>
+                    <span x-text="isLoading ? 'Proses...' : 'Bayar Sekarang'"></span>
+                </button>
+            </div>
+            <div class="flex items-center justify-center gap-1.5 text-[10px] text-emerald-600 font-semibold bg-emerald-50 py-1.5 rounded-md">
+                <i class='bx bx-check-shield text-sm'></i> Transaksi Aman & Terverifikasi
+            </div>
+        </div>
     </main>
 
-    <x-footer />
+    {{-- Full Footer (Desktop) --}}
+    <div class="hidden md:block">
+        <x-footer />
+    </div>
+
+    {{-- Minimalist Footer (Mobile) --}}
+    <div class="md:hidden bg-gray-50 pb-32 text-center flex flex-col items-center justify-center">
+        <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2">Metode Pembayaran Aman</p>
+        <div class="flex flex-wrap justify-center gap-2 mb-4">
+            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">Transfer Bank</span>
+            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">E-Wallet</span>
+            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">QRIS</span>
+        </div>
+        <p class="text-xs text-gray-400 font-medium">&copy; 2026 LKTech TN SEREAL.</p>
+    </div>
 
     <script>
         const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
