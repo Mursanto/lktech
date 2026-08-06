@@ -72,7 +72,38 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
-        return view('welcome', compact('products', 'latestPosts', 'setting'));
+        // Fetch Featured Products
+        $featuredKeywords = [
+            'Office 365', 
+            'Office LTSC 2024', 
+            'Windows 11 Pro', 
+            'Caddy 12.7mm', 
+            'IFOX', 
+            'Headset'
+        ];
+        
+        $featuredProducts = \App\Models\Product::with('category')
+            ->where(function($q) use ($featuredKeywords) {
+                foreach($featuredKeywords as $keyword) {
+                    $q->orWhere('model_series', 'like', "%{$keyword}%");
+                }
+            })
+            ->where('stock', '>', 0)
+            ->where('status', '!=', 'sold')
+            ->take(6)
+            ->get();
+            
+        $featuredProducts->transform(function ($product) {
+            if ($product->image_path) {
+                $product->display_image = Storage::url($product->image_path);
+            } else {
+                $searchQuery = urlencode($product->brand . ' ' . $product->model_series);
+                $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+            }
+            return $product;
+        });
+
+        return view('welcome', compact('products', 'latestPosts', 'setting', 'featuredProducts'));
     }
 
     public function show(Product $product)
