@@ -8,12 +8,9 @@
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-6 w-auto object-contain">
                     <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
                 </a>
-                <p class="text-sm text-gray-500 leading-relaxed mt-1 text-justify hidden md:block">
-                    {{ $settings->deskripsi_footer ?? 'Penyedia layanan IT terpercaya: Penjualan laptop second berkualitas, servis & maintenance profesional, serta persewaan perangkat IT untuk kebutuhan acara dan instansi Anda.' }}
-                </p>
                 
                 <!-- Google Maps Embed -->
-                <div class="mt-0 md:mt-6 rounded-xl overflow-hidden shadow-sm w-full">
+                <div class="rounded-xl overflow-hidden shadow-sm w-full mt-0">
                     @if(isset($settings) && $settings->maps_iframe)
                         <div class="w-full h-40 md:h-48 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
                             {!! $settings->maps_iframe !!}
