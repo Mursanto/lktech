@@ -6,7 +6,7 @@
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
         <!-- Image Area -->
         <div class="relative w-full h-40 md:h-48 bg-gray-100 overflow-hidden border-b border-gray-100">
-            <img src="{{ $product->display_image }}" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover bg-white p-2 group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover bg-white p-2 group-hover:scale-105 transition-transform duration-500">
             
             <!-- Badges Area (top-right) -->
             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">

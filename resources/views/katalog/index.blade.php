@@ -65,7 +65,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full pb-20 md:pb-0">
         
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-8 flex flex-col md:flex-row gap-8">
         <!-- Sidebar Navigation (Categories) -->
         <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
             <div class="sticky top-20 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
@@ -104,9 +104,9 @@
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         <div class="flex flex-wrap items-center justify-between mb-4 pb-2 border-b-2 border-gray-100 gap-4">
-                            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="hover:text-brand-600 transition-colors">
-                                    <i class='bx bx-category text-brand-500'></i> {{ $category->name }}
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
+                                    <i class='bx bx-category text-brand-500 text-xl'></i> {{ $category->name }}
                                 </a>
                             </h2>
                             <div class="flex items-center gap-3">
@@ -130,8 +130,8 @@
                             </div>
                         </div>
 
-                        <!-- CSS Grid for 5 items -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <!-- CSS Grid for items -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
                                     <x-product-card :product="$product" />
