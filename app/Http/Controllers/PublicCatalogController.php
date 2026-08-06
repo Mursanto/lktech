@@ -264,10 +264,10 @@ class PublicCatalogController extends Controller
             // Sorting
             $sort = $request->sort ?? 'terbaru';
             switch ($sort) {
-                case 'tertinggi':  $query->orderBy('selling_price', 'desc'); break;
-                case 'terendah':   $query->orderBy('selling_price', 'asc');  break;
-                case 'paling_laris': $query->orderBy('sold_count', 'desc')->orderBy('created_at', 'desc'); break;
-                default:           $query->latest();                          break; // 'terbaru' / 'paling_sesuai'
+                case 'tertinggi':    $query->orderBy('selling_price', 'desc'); break;
+                case 'terendah':     $query->orderBy('selling_price', 'asc');  break;
+                case 'terbaru_saja': $query->latest('created_at');             break;
+                default:             $query->latest();                          break; // 'terbaru' / default
             }
 
             if (!$selectedCategoryId && !$request->has('search') && empty($selectedBrands) && $priceMin === null && $priceMax === null) {
