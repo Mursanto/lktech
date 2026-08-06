@@ -132,8 +132,6 @@
         </div>
     </div>
 
-    
-
     <!-- Mobile Menu Dropdown -->
     <nav x-show="mobileMenuOpen" 
          x-transition:enter="transition ease-out duration-200"
@@ -142,26 +140,34 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-2"
-         class="md:hidden bg-white shadow-xl absolute w-full left-0 border-t border-gray-100 pb-2 z-40" 
+         class="md:hidden bg-white shadow-xl absolute w-full left-0 border-t border-gray-100 z-40" 
          x-cloak>
-        <div class="px-4 pt-2 pb-6 space-y-2">
-            <a href="{{ route('home') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+        <div class="flex flex-col px-3 pb-4 pt-1">
+            <a href="{{ route('home') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('home') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                 Beranda
             </a>
 
-            <!-- Layanan Utama (label & Sewa Perangkat IT disembunyikan di mobile agar tidak sesak) -->
-            <a href="{{ route('rakit-pc') }}" class="block px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+            <a href="{{ route('katalog.index') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('katalog.*') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                Katalog
+            </a>
+
+            <a href="{{ route('rakit-pc') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('rakit-pc') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                 Rakit PC Custom
             </a>
-            <a href="{{ route('jasa-website') }}" class="block px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-100">
+
+            <a href="{{ route('jasa-website') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('jasa-website') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                 Jasa Pembuatan Website
             </a>
+
             <!-- Layanan Mitra — accordion -->
-            <div x-data="{ mitraMobileOpen: false }">
+            @php
+                $isMitraActive = request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara');
+            @endphp
+            <div x-data="{ mitraMobileOpen: {{ $isMitraActive ? 'true' : 'false' }} }" class="border-b border-gray-100">
                 <button @click="mitraMobileOpen = !mitraMobileOpen"
-                        class="w-full flex items-center justify-between px-4 py-3 text-[14px] font-bold text-gray-800 hover:bg-gray-50 rounded-xl transition-colors border-b border-gray-50">
+                        class="w-full flex items-center justify-between px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md {{ $isMitraActive ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                     <span>Layanan Mitra</span>
-                    <i class='bx text-base text-gray-400 transition-transform duration-200'
+                    <i class='bx text-lg transition-transform duration-200'
                        :class="mitraMobileOpen ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                 </button>
                 <div x-show="mitraMobileOpen"
@@ -171,21 +177,21 @@
                      x-transition:leave="transition ease-in duration-150"
                      x-transition:leave-start="opacity-100 translate-y-0"
                      x-transition:leave-end="opacity-0 -translate-y-1"
-                     class="pl-4 space-y-0.5 pb-1"
+                     class="pl-6 pb-2 pt-1"
                      x-cloak>
-                    <a href="{{ route('wifi-voucher') }}" class="block px-4 py-2.5 text-[13px] font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                    <a href="{{ route('wifi-voucher') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('wifi-voucher') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                         WiFi Voucher Starlink
                     </a>
-                    <a href="{{ route('jasa-furniture') }}" class="block px-4 py-2.5 text-[13px] font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                    <a href="{{ route('jasa-furniture') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('jasa-furniture') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                         Jasa Furniture
                     </a>
-                    <a href="{{ route('martabak-jawara') }}" class="block px-4 py-2.5 text-[13px] font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors border-b border-gray-50">
+                    <a href="{{ route('martabak-jawara') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md {{ request()->routeIs('martabak-jawara') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                         Martabak Jawara
                     </a>
                 </div>
             </div>
 
-            <a href="{{ route('tentang-kami') }}" class="block px-4 py-3.5 text-[15px] font-bold text-gray-800 hover:bg-brand-50 hover:text-brand-600 rounded-xl transition-colors">
+            <a href="{{ route('tentang-kami') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('tentang-kami') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                 Tentang Kami
             </a>
         </div>
