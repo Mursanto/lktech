@@ -220,13 +220,6 @@
                     </div>
                 </form>
 
-                {{-- Lihat Semua Kategori in same row (mobile only, when in category view) --}}
-                @if(isset($selectedCategoryId))
-                <a href="{{ route('katalog.index') }}" class="shrink-0 text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-2 rounded-lg whitespace-nowrap">
-                    &larr; Semua
-                </a>
-                @endif
-
                 {{-- Bottom Sheet (inline Alpine scope) --}}
                 <div x-show="filterOpen"
                      x-transition:enter="transition ease-out duration-200"
@@ -333,13 +326,21 @@
                             </h2>
 
                             @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
-                                {{-- Preview mode --}}
+                                {{-- Preview mode: Lihat Semua on the right --}}
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
                                    class="shrink-0 ml-3 text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
                                     Lihat Semua ({{ $category->total_count }}) &rarr;
                                 </a>
                             @else
-                                {{-- Detail/Filter mode: Sort dropdown (desktop) --}}
+                                {{-- Detail/Filter mode --}}
+                                {{-- Mobile: show "← Semua" link on right of category header (Row 2) --}}
+                                @if(isset($selectedCategoryId))
+                                <a href="{{ route('katalog.index') }}"
+                                   class="shrink-0 ml-3 text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1.5 rounded-lg whitespace-nowrap md:hidden">
+                                    &larr; Semua
+                                </a>
+                                @endif
+                                {{-- Desktop: Sort dropdown on right --}}
                                 <div class="hidden md:flex items-center gap-2 shrink-0 ml-3">
                                     <form action="{{ route('katalog.index') }}" method="GET" class="relative">
                                         @if(request()->has('category_id'))
