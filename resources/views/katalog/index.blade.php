@@ -63,9 +63,9 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow w-full pb-20 md:pb-0">
+    <main class="flex-grow w-full">
         
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
         <!-- Sidebar Navigation (Categories) -->
         <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
             <div class="sticky top-20 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
@@ -99,72 +99,62 @@
 
 
 
-            <div class="space-y-12">
+            <div class="space-y-8">
                 @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
-                        <div class="flex flex-wrap items-center justify-between mb-4 pb-2 border-b-2 border-gray-100 gap-4">
-                            <h2 class="text-lg font-semibold text-gray-800">
+                        {{-- Category Header: always flex, icon+title left, 'Lihat Semua' right --}}
+                        <div class="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
+                            <h2 class="text-base font-semibold text-gray-800 min-w-0 truncate">
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                    <i class='bx bx-category text-brand-500 text-xl'></i> {{ $category->name }}
+                                    <i class='bx bx-category text-brand-500 text-lg shrink-0'></i>
+                                    <span class="truncate">{{ $category->name }}</span>
                                 </a>
                             </h2>
-                            <div class="flex items-center gap-3">
-                                <form action="{{ route('katalog.index') }}" method="GET" class="relative">
-                                    @if(request()->has('category_id'))
-                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-                                    @endif
-                                    @if(request()->has('search'))
-                                        <input type="hidden" name="search" value="{{ request('search') }}">
-                                    @endif
-                                    <select name="sort" onchange="this.form.submit()" class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
-                                        <option value="terbaru" {{ request('sort') == 'terbaru' || !request()->has('sort') ? 'selected' : '' }}>Urutkan: Paling Sesuai</option>
-                                        <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Urutkan: Harga Tertinggi</option>
-                                        <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Urutkan: Harga Terendah</option>
-                                    </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-                                        <i class='bx bx-chevron-down text-sm'></i>
-                                    </div>
-                                </form>
-                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->total_count }} Produk</span>
-                            </div>
+
+                            @if(!isset($selectedCategoryId) && !request()->has('search'))
+                                {{-- Preview mode: always show 'Lihat Semua' on the right --}}
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
+                                   class="shrink-0 ml-3 text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
+                                    Lihat Semua ({{ $category->total_count }}) &rarr;
+                                </a>
+                            @else
+                                {{-- Category/Search detail mode: show sort dropdown --}}
+                                <div class="flex items-center gap-2 shrink-0 ml-3">
+                                    <form action="{{ route('katalog.index') }}" method="GET" class="relative">
+                                        @if(request()->has('category_id'))
+                                            <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                        @endif
+                                        @if(request()->has('search'))
+                                            <input type="hidden" name="search" value="{{ request('search') }}">
+                                        @endif
+                                        <select name="sort" onchange="this.form.submit()"
+                                                class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
+                                            <option value="terbaru" {{ request('sort') == 'terbaru' || !request()->has('sort') ? 'selected' : '' }}>Paling Sesuai</option>
+                                            <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
+                                            <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                            <i class='bx bx-chevron-down text-sm'></i>
+                                        </div>
+                                    </form>
+                                    <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md hidden sm:inline-block">{{ $category->total_count }} Produk</span>
+                                </div>
+                            @endif
                         </div>
 
-                        @php
-                            $isOdd = $category->all_products->count() % 2 !== 0;
-                            $hasMore = $category->total_count > $category->all_products->count();
-                        @endphp
-
-                        <!-- CSS Grid for items -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4">
+                        {{-- Product Grid: strict 2-col on mobile, 3-col on tablet, 6-col on xl --}}
+                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
                                     <x-product-card :product="$product" />
                                 </div>
                             @endforeach
-                            
-                            @if(!isset($selectedCategoryId) && !request()->has('search'))
-                                @if($isOdd)
-                                    <div class="w-full h-full flex md:hidden">
-                                        <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="w-full h-full min-h-[220px] flex flex-col items-center justify-center bg-brand-50 hover:bg-brand-100 border border-brand-100 rounded-xl transition-colors group p-4 text-center">
-                                            <div class="w-10 h-10 rounded-full bg-brand-600 text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm">
-                                                <i class='bx bx-right-arrow-alt text-xl'></i>
-                                            </div>
-                                            <span class="font-bold text-brand-600 text-[13px] leading-tight">Lihat Semua<br>({{ $category->total_count }}) &rarr;</span>
-                                        </a>
-                                    </div>
-                                @endif
-                            @endif
                         </div>
-                        
-                        @if(!isset($selectedCategoryId) && !request()->has('search') && $hasMore)
-                            <div class="mt-4 text-center md:text-right {{ $isOdd ? 'hidden md:block' : 'block' }}">
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="inline-block text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 md:bg-transparent px-4 py-2 md:p-0 rounded-lg md:rounded-none transition-colors">
-                                    Lihat Semua {{ $category->name }} ({{ $category->total_count }}) &rarr;
-                                </a>
-                            </div>
-                        @elseif(method_exists($category->all_products, 'links'))
-                            <div class="mt-8">
+
+                        {{-- Pagination (only shown in category/search detail view) --}}
+                        @if(method_exists($category->all_products, 'links'))
+                            <div class="mt-6">
                                 {{ $category->all_products->links() }}
                             </div>
                         @endif

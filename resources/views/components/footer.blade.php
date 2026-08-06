@@ -1,4 +1,4 @@
-<footer class="bg-white border-t border-gray-200 mt-auto pt-10 pb-6 max-md:pb-24">
+<footer class="bg-white border-t border-gray-200 mt-auto pt-6 md:pt-10 pb-6 max-md:pb-24">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 items-start">
             
