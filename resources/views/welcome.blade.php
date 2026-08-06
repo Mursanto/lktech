@@ -253,18 +253,16 @@
                 @endforeach
             </div>
         </div>
-        @endif
-
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-            <div class="flex justify-between items-end mb-8">
+            <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">Artikel & Panduan</h2>
-                    <p class="text-gray-500">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
+                    <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-1">Artikel &amp; Panduan</h2>
+                    <p class="text-gray-500 text-sm hidden sm:block">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
                 </div>
-                <a href="{{ route('blog.index') }}" class="hidden sm:flex items-center gap-1 text-brand-600 font-bold hover:text-brand-700 transition-colors">
-                    Lihat Semua <i class='bx bx-right-arrow-alt text-xl'></i>
+                <a href="{{ route('blog.index') }}" class="flex items-center gap-1 text-brand-600 font-medium hover:text-brand-700 transition-colors text-xs sm:text-sm sm:font-bold whitespace-nowrap ml-3">
+                    Lihat Semua <i class='bx bx-right-arrow-alt text-base sm:text-xl'></i>
                 </a>
             </div>
 
@@ -293,11 +291,7 @@
                 </div>
                 @endforeach
             </div>
-            <div class="mt-6 text-center sm:hidden">
-                <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-brand-600 font-bold hover:text-brand-700 bg-brand-50 px-6 py-2.5 rounded-xl">
-                    Lihat Semua Artikel <i class='bx bx-right-arrow-alt'></i>
-                </a>
-            </div>
+
         </div>
         @endif
 
