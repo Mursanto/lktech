@@ -73,17 +73,12 @@ class PublicCatalogController extends Controller
         $setting = \App\Models\WebSetting::first();
 
         // Fetch Featured Products
-        $featuredKeywords = [
-            'Office 365', 
-            'Office LTSC 2024', 
-            'Windows 11 Pro', 
-            'Caddy 12.7mm', 
-            'IFOX', 
-            'Headset'
-        ];
+        $featuredIds = [46, 23, 22, 33, 36];
+        $featuredKeywords = ['Caddy 12.7mm', 'Caddy']; // Fallback since ID 22 was provided twice
         
         $featuredProducts = \App\Models\Product::with('category')
-            ->where(function($q) use ($featuredKeywords) {
+            ->where(function($q) use ($featuredIds, $featuredKeywords) {
+                $q->whereIn('id', $featuredIds);
                 foreach($featuredKeywords as $keyword) {
                     $q->orWhere('model_series', 'like', "%{$keyword}%")
                       ->orWhere('brand', 'like', "%{$keyword}%");
