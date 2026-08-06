@@ -198,6 +198,7 @@ class PublicCatalogController extends Controller
             $displayCategories = $mainCategories->where('id', $selectedCategoryId);
         }
 
+        // Count totals per category (eager loaded)
         foreach($mainCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
             $category->total_count = \App\Models\Product::whereIn('category_id', $categoryIds)
@@ -210,9 +211,22 @@ class PublicCatalogController extends Controller
                                         ->count();
         }
 
+        // Collect all available brands for filter sidebar
+        $availableBrands = \App\Models\Product::where('stock', '>', 0)
+            ->where('status', '!=', 'sold')
+            ->whereNotNull('brand')
+            ->where('brand', '!=', '')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand');
+
+        $selectedBrands = $request->brands ?? [];
+        $priceMin = $request->price_min ? (int) str_replace('.', '', $request->price_min) : null;
+        $priceMax = $request->price_max ? (int) str_replace('.', '', $request->price_max) : null;
+
         foreach($displayCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
-            
+
             $query = \App\Models\Product::with('category')->whereIn('category_id', $categoryIds)
                         ->where(function($q) {
                             $q->where(function($q1) {
@@ -220,7 +234,8 @@ class PublicCatalogController extends Controller
                                    ->where('status', '!=', 'sold');
                             })->orWhereNotNull('image_path');
                         });
-            
+
+            // Search filter
             if ($request->has('search') && $request->search != '') {
                 $search = $request->search;
                 $query->where(function($q) use ($search) {
@@ -233,23 +248,35 @@ class PublicCatalogController extends Controller
                 });
             }
 
-            if ($request->has('sort')) {
-                if ($request->sort == 'tertinggi') {
-                    $query->orderBy('selling_price', 'desc');
-                } elseif ($request->sort == 'terendah') {
-                    $query->orderBy('selling_price', 'asc');
-                } else {
-                    $query->latest();
-                }
-            } else {
-                $query->latest();
+            // Brand filter
+            if (!empty($selectedBrands)) {
+                $query->whereIn('brand', $selectedBrands);
             }
 
-            if (!$selectedCategoryId && !$request->has('search')) {
+            // Price range filter
+            if ($priceMin !== null) {
+                $query->where('selling_price', '>=', $priceMin);
+            }
+            if ($priceMax !== null) {
+                $query->where('selling_price', '<=', $priceMax);
+            }
+
+            // Sorting
+            $sort = $request->sort ?? 'terbaru';
+            switch ($sort) {
+                case 'tertinggi':  $query->orderBy('selling_price', 'desc'); break;
+                case 'terendah':   $query->orderBy('selling_price', 'asc');  break;
+                case 'paling_laris': $query->orderBy('sold_count', 'desc')->orderBy('created_at', 'desc'); break;
+                default:           $query->latest();                          break; // 'terbaru' / 'paling_sesuai'
+            }
+
+            if (!$selectedCategoryId && !$request->has('search') && empty($selectedBrands) && $priceMin === null && $priceMax === null) {
+                // Preview mode: 6 products, no pagination
                 $products = $query->take(6)->get();
                 $collectionToTransform = $products;
             } else {
-                $products = $query->paginate(12)->withQueryString();
+                // Detail/filtered mode: paginate with simplePaginate for performance
+                $products = $query->simplePaginate(12)->withQueryString();
                 $collectionToTransform = $products->getCollection();
             }
 
@@ -262,11 +289,14 @@ class PublicCatalogController extends Controller
                 }
                 return $product;
             });
-            
+
             $category->all_products = $products;
         }
 
-        return view('katalog.index', compact('mainCategories', 'displayCategories', 'selectedCategoryId'));
+        return view('katalog.index', compact(
+            'mainCategories', 'displayCategories', 'selectedCategoryId',
+            'availableBrands', 'selectedBrands', 'priceMin', 'priceMax'
+        ));
     }
 
     public function contact(Request $request)
