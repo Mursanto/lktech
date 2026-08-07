@@ -150,21 +150,66 @@
     {{-- ════════════════════════════════════════════════
          CHECKOUT FOCUS HEADER
          ════════════════════════════════════════════════ --}}
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8 relative">
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8 relative" x-data="{ recentOrders: [] }" x-init="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')" @recent-orders-updated.window="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')">
         <a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
             <i class='bx bx-arrow-back text-xl'></i>
         </a>
         <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight absolute left-1/2 -translate-x-1/2">Status Pembayaran</h1>
-        <a href="{{ route('checkout.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
-            <i class='bx bx-cart text-xl'></i>
-        </a>
+        
+        <div class="flex items-center gap-1">
+            <!-- Recent Orders Dropdown -->
+            <div class="relative" x-data="{ openRecent: false }" @click.away="openRecent = false">
+                <button @click="openRecent = !openRecent" class="relative text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
+                    <i class='bx bx-receipt text-xl'></i>
+                    <span x-show="recentOrders.length > 0" x-text="recentOrders.length" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm"></span>
+                </button>
+                
+                <div x-show="openRecent" x-transition.opacity class="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50 -mr-2 sm:-mr-4" style="display: none;">
+                    <div class="px-4 py-2 border-b border-gray-50 flex justify-between items-center">
+                        <span class="font-bold text-gray-800 text-sm">Riwayat Sesi Ini</span>
+                        <span class="text-xs text-gray-400 font-medium"><span x-text="recentOrders.length"></span> Pesanan</span>
+                    </div>
+                    
+                    <div class="max-h-64 overflow-y-auto">
+                        <template x-if="recentOrders.length === 0">
+                            <div class="px-4 py-6 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
+                                <i class='bx bx-ghost text-3xl text-gray-300'></i>
+                                Belum ada transaksi.
+                            </div>
+                        </template>
+                        <template x-for="order in recentOrders" :key="order.id">
+                            <div class="px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors text-left">
+                                <div class="flex justify-between items-start mb-1.5">
+                                    <span class="text-xs font-mono font-bold text-gray-700" x-text="order.ref"></span>
+                                    <span class="text-[9px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-sm uppercase tracking-wider" x-text="order.status"></span>
+                                </div>
+                                <div class="flex items-center gap-3 mt-2">
+                                    <a :href="order.url" class="text-[11px] font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"><i class='bx bx-link-external'></i> Buka Order</a>
+                                    <a :href="order.pdf_url" class="text-[11px] font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-1"><i class='bx bx-download'></i> PDF</a>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <template x-if="recentOrders.length > 0">
+                        <div class="px-4 pt-3 pb-1 text-center border-t border-gray-50 mt-1">
+                            <button @click="sessionStorage.removeItem('recent_orders'); recentOrders = []; openRecent = false" class="text-[11px] text-red-500 hover:text-red-700 font-bold transition-colors">Kosongkan Riwayat Sesi</button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <a href="{{ route('checkout.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
+                <i class='bx bx-cart text-xl'></i>
+            </a>
+        </div>
     </header>
 
     {{-- ════════════════════════════════════════════════
          ✅ SUCCESS STATE
          ════════════════════════════════════════════════ --}}
     @if($sale->payment_status === 'success')
-    <main class="flex-grow flex items-center justify-center px-4 py-8 pt-24">
+    <main class="flex-grow flex flex-col items-center justify-center px-4 py-8 pt-8">
         <div class="fade-in-up w-full max-w-md text-center">
             <div class="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm">
                 <i class='bx bx-check text-5xl'></i>
@@ -173,22 +218,37 @@
             <p class="text-gray-500 text-sm mb-1">Pesanan atas nama <strong class="text-gray-700">{{ $customerName }}</strong></p>
             <p class="text-xs text-gray-400 font-mono mb-6">Ref: {{ $refId }}</p>
 
-            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-5 text-left">
-                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Langkah Selanjutnya</h2>
-                <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                    Harga yang Anda bayarkan <strong class="text-orange-600">belum termasuk ongkos kirim</strong>.
-                    Silakan hubungi Admin kami via WhatsApp untuk menentukan kurir dan biaya pengiriman.
+            <div class="bg-blue-50 border border-blue-100 text-blue-700 rounded-xl p-4 mb-6 text-sm text-left flex items-start gap-3">
+                <i class='bx bx-envelope text-xl shrink-0 mt-0.5'></i>
+                <p>
+                    <strong>Cek email kamu, invoice sudah kami kirim.</strong><br>
+                    Biar lebih praktis, kamu juga bisa langsung cetak atau simpan PDF-nya di bawah sini. Semoga hari kamu menyenangkan!
                 </p>
-                <a href="https://wa.me/628567354046?text={{ $waSuccessMsg }}" target="_blank"
-                   class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm">
-                    <i class='bx bxl-whatsapp text-xl'></i> Hubungi Admin via WhatsApp
-                </a>
             </div>
 
-            <a href="{{ route('home') }}" class="text-sm text-gray-400 hover:text-brand-600 font-medium transition-colors">
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 mb-5 text-left">
+                <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">SATU LAGI DARI KAMI</h2>
+                <p class="text-sm text-gray-600 leading-relaxed mb-5">
+                    "Mohon diperhatikan, biaya kirim belum kami masukkan ke total tadi. Tenang, Admin kami siap bantu di WA untuk carikan kurir yang pas & infokan tarifnya. Klik tombol di bawah untuk langsung chat!"
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a href="https://wa.me/628567354046?text={{ $waSuccessMsg }}" target="_blank"
+                       class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm">
+                        <i class='bx bxl-whatsapp text-xl'></i> Hubungi via WA
+                    </a>
+                    <a href="{{ route('checkout.invoice', $sale->id) }}"
+                       class="w-full bg-white border-2 border-brand-500 hover:bg-brand-50 text-brand-600 font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm">
+                        <i class='bx bx-download text-xl'></i> Unduh Invoice PDF
+                    </a>
+                </div>
+            </div>
+
+            <a href="{{ route('home') }}" class="text-sm text-gray-400 hover:text-brand-600 font-medium transition-colors inline-block mt-4">
                 ← Kembali ke Beranda
             </a>
+        </div>
 
+        <div class="w-full max-w-6xl text-left">
             <x-payment-recommendations :products="$recommendedProducts" />
         </div>
     </main>
@@ -774,5 +834,28 @@
             }
         }
     </script>
+
+    @if($sale->payment_status === 'success')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderInfo = {
+                id: '{{ $sale->id }}',
+                ref: '{{ $refId }}',
+                status: 'Lunas',
+                url: '{{ route('checkout.success', $sale->id) }}',
+                pdf_url: '{{ route('checkout.invoice', $sale->id) }}'
+            };
+            
+            let recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]');
+            
+            if (!recentOrders.some(order => order.id === orderInfo.id)) {
+                recentOrders.unshift(orderInfo);
+                if (recentOrders.length > 10) recentOrders.pop();
+                sessionStorage.setItem('recent_orders', JSON.stringify(recentOrders));
+                window.dispatchEvent(new CustomEvent('recent-orders-updated'));
+            }
+        });
+    </script>
+    @endif
 </body>
 </html>

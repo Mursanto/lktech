@@ -38,6 +38,7 @@ Route::post('/cart/update/{id}', [App\Http\Controllers\CartController::class, 'u
 Route::get('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout.index');
 Route::post('/checkout/process', [App\Http\Controllers\CartController::class, 'process'])->name('checkout.process');
 Route::get('/checkout/success/{order_id}', [App\Http\Controllers\CartController::class, 'success'])->name('checkout.success');
+Route::get('/checkout/success/{order_id}/invoice', [App\Http\Controllers\CartController::class, 'downloadInvoice'])->name('checkout.invoice');
 
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');

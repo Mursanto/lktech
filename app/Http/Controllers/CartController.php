@@ -338,4 +338,32 @@ class CartController extends Controller
 
         return view('checkout.success', compact('sale', 'paymentInfo', 'recommendedProducts'));
     }
+
+    public function downloadInvoice($order_id)
+    {
+        $sale = Sale::with(['customer', 'saleDetails.product'])->findOrFail($order_id);
+        
+        $data = [
+            'sale' => $sale,
+            'company' => [
+                'name' => 'LKTECH',
+                'address' => 'Jl. Teknologi No. 123, Jakarta, Indonesia',
+                'phone' => '+62 21 1234 5678',
+                'email' => 'info@lktech.com',
+            ],
+            'warranty_terms' => [
+                'Garansi 1 tahun untuk kerusakan hardware (bukan karena human error)',
+                'Garansi tidak berlaku untuk kerusakan akibat jatuh, air, atau modifikasi',
+                'Service garansi hanya berlaku di service center resmi LKTECH',
+                'Baterai dan charger garansi 6 bulan',
+                'Software dan driver tidak termasuk dalam garansi',
+            ],
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('sales.invoice', $data);
+        $pdf->setPaper('A4', 'portrait');
+        $filename = 'Invoice-LKTECH-' . str_pad($sale->id, 6, '0', STR_PAD_LEFT) . '.pdf';
+        
+        return $pdf->download($filename);
+    }
 }

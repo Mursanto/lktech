@@ -1,4 +1,4 @@
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false }">
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false, recentOrders: [] }" x-init="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')" @recent-orders-updated.window="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')">
     <div class="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-14 gap-2 sm:gap-4">
             
@@ -92,6 +92,48 @@
 
             <!-- Auth Navigation (Desktop) -->
             <div class="hidden md:flex flex-shrink-0 items-center gap-3">
+                <!-- Recent Orders Dropdown -->
+                <div class="relative" x-data="{ openRecent: false }" @click.away="openRecent = false">
+                    <button @click="openRecent = !openRecent" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors">
+                        <i class='bx bx-receipt text-2xl'></i>
+                        <span x-show="recentOrders.length > 0" x-text="recentOrders.length" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm"></span>
+                    </button>
+                    
+                    <div x-show="openRecent" x-transition.opacity class="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50" style="display: none;">
+                        <div class="px-4 py-2 border-b border-gray-50 flex justify-between items-center">
+                            <span class="font-bold text-gray-800 text-sm">Riwayat Sesi Ini</span>
+                            <span class="text-xs text-gray-400 font-medium"><span x-text="recentOrders.length"></span> Pesanan</span>
+                        </div>
+                        
+                        <div class="max-h-64 overflow-y-auto">
+                            <template x-if="recentOrders.length === 0">
+                                <div class="px-4 py-6 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
+                                    <i class='bx bx-ghost text-3xl text-gray-300'></i>
+                                    Belum ada transaksi.
+                                </div>
+                            </template>
+                            <template x-for="order in recentOrders" :key="order.id">
+                                <div class="px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                                    <div class="flex justify-between items-start mb-1.5">
+                                        <span class="text-xs font-mono font-bold text-gray-700" x-text="order.ref"></span>
+                                        <span class="text-[9px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-sm uppercase tracking-wider" x-text="order.status"></span>
+                                    </div>
+                                    <div class="flex items-center gap-3 mt-2">
+                                        <a :href="order.url" class="text-[11px] font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"><i class='bx bx-link-external'></i> Buka Order</a>
+                                        <a :href="order.pdf_url" class="text-[11px] font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-1"><i class='bx bx-download'></i> PDF</a>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <template x-if="recentOrders.length > 0">
+                            <div class="px-4 pt-3 pb-1 text-center border-t border-gray-50 mt-1">
+                                <button @click="sessionStorage.removeItem('recent_orders'); recentOrders = []; openRecent = false" class="text-[11px] text-red-500 hover:text-red-700 font-bold transition-colors">Kosongkan Riwayat Sesi</button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
                 <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-2 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
@@ -118,6 +160,48 @@
 
             <!-- Cart & Hamburger (Mobile) -->
             <div class="flex items-center md:hidden gap-1">
+                <!-- Recent Orders Dropdown (Mobile) -->
+                <div class="relative" x-data="{ openRecent: false }" @click.away="openRecent = false">
+                    <button @click="openRecent = !openRecent" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors">
+                        <i class='bx bx-receipt text-2xl'></i>
+                        <span x-show="recentOrders.length > 0" x-text="recentOrders.length" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm"></span>
+                    </button>
+                    
+                    <div x-show="openRecent" x-transition.opacity class="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50 -mr-16 sm:-mr-4" style="display: none;">
+                        <div class="px-4 py-2 border-b border-gray-50 flex justify-between items-center">
+                            <span class="font-bold text-gray-800 text-sm">Riwayat Sesi Ini</span>
+                            <span class="text-xs text-gray-400 font-medium"><span x-text="recentOrders.length"></span> Pesanan</span>
+                        </div>
+                        
+                        <div class="max-h-64 overflow-y-auto">
+                            <template x-if="recentOrders.length === 0">
+                                <div class="px-4 py-6 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
+                                    <i class='bx bx-ghost text-3xl text-gray-300'></i>
+                                    Belum ada transaksi.
+                                </div>
+                            </template>
+                            <template x-for="order in recentOrders" :key="order.id">
+                                <div class="px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                                    <div class="flex justify-between items-start mb-1.5">
+                                        <span class="text-xs font-mono font-bold text-gray-700" x-text="order.ref"></span>
+                                        <span class="text-[9px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-sm uppercase tracking-wider" x-text="order.status"></span>
+                                    </div>
+                                    <div class="flex items-center gap-3 mt-2">
+                                        <a :href="order.url" class="text-[11px] font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"><i class='bx bx-link-external'></i> Buka Order</a>
+                                        <a :href="order.pdf_url" class="text-[11px] font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-1"><i class='bx bx-download'></i> PDF</a>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <template x-if="recentOrders.length > 0">
+                            <div class="px-4 pt-3 pb-1 text-center border-t border-gray-50 mt-1">
+                                <button @click="sessionStorage.removeItem('recent_orders'); recentOrders = []; openRecent = false" class="text-[11px] text-red-500 hover:text-red-700 font-bold transition-colors">Kosongkan Riwayat Sesi</button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
                 <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
