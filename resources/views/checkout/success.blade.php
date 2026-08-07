@@ -191,7 +191,7 @@
         {{-- ══════════════════════════════════════════════
              MOBILE LAYOUT  (lg:hidden)
              ══════════════════════════════════════════════ --}}
-        <div class="lg:hidden mobile-payment-body pt-14">
+        <div class="lg:hidden mobile-payment-body -mt-14">
 
             {{-- ── 1. Timer Card ── --}}
             <div class="bg-amber-50 border-b border-amber-200 px-4 py-3 flex items-center justify-between"
