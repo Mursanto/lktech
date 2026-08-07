@@ -594,10 +594,22 @@
                     </div>
 
                     <div class="fade-in-up w-full max-w-sm">
-                        <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
-                           class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-4 px-4 rounded-2xl transition-all shadow-lg shadow-green-200 flex justify-center items-center gap-2 text-base">
-                            <i class='bx bxl-whatsapp text-2xl'></i> Konfirmasi Pembayaran via WA
-                        </a>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button @click="checkStatus()" :disabled="isCheckingStatus"
+                                    class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-wait text-white font-bold py-3 px-3 rounded-xl transition-all shadow-md shadow-blue-200 flex justify-center items-center gap-2 text-xs">
+                                <template x-if="isCheckingStatus">
+                                    <i class='bx bx-loader-alt bx-spin text-lg'></i>
+                                </template>
+                                <template x-if="!isCheckingStatus">
+                                    <i class='bx bx-refresh text-lg'></i>
+                                </template>
+                                <span x-text="isCheckingStatus ? 'Memeriksa...' : 'Cek Status'"></span>
+                            </button>
+                            <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
+                               class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-3 rounded-xl transition-all shadow-md shadow-emerald-200 flex justify-center items-center gap-1.5 text-xs text-center leading-tight">
+                                <i class='bx bxl-whatsapp text-lg shrink-0'></i> Konfirmasi via WA
+                            </a>
+                        </div>
                     </div>
 
                     @elseif($isVA)

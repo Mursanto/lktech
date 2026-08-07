@@ -226,7 +226,9 @@ class CartController extends Controller
         // Kirim Proforma Invoice
         if ($customer->email) {
             try {
+                \Illuminate\Support\Facades\Log::info('Mencoba mengirim proforma invoice ke: ' . $customer->email);
                 Mail::to($customer->email)->send(new OrderInvoiceMail($sale));
+                \Illuminate\Support\Facades\Log::info('Berhasil mengirim proforma invoice ke: ' . $customer->email);
             } catch (\Exception $e) {
                 Log::error('Gagal mengirim email invoice: ' . $e->getMessage());
             }
@@ -282,7 +284,9 @@ class CartController extends Controller
                         
                         if ($sale->customer && $sale->customer->email) {
                             try {
+                                \Illuminate\Support\Facades\Log::info('Mencoba mengirim proforma invoice ke: ' . $sale->customer->email);
                                 Mail::to($sale->customer->email)->send(new OrderInvoiceMail($sale));
+                                \Illuminate\Support\Facades\Log::info('Berhasil mengirim proforma invoice ke: ' . $sale->customer->email);
                             } catch (\Exception $e) {
                                 Log::error('Gagal mengirim email invoice: ' . $e->getMessage());
                             }

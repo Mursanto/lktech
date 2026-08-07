@@ -122,7 +122,9 @@ class PaymentGatewayController extends Controller
                 // Send Invoice Email
                 if ($record->customer && $record->customer->email) {
                     try {
+                        \Illuminate\Support\Facades\Log::info('Mencoba mengirim invoice lunas ke: ' . $record->customer->email);
                         Mail::to($record->customer->email)->send(new OrderInvoiceMail($record));
+                        \Illuminate\Support\Facades\Log::info('Berhasil mengirim invoice lunas ke: ' . $record->customer->email);
                     } catch (\Exception $e) {
                         Log::error('Gagal mengirim email invoice: ' . $e->getMessage());
                     }

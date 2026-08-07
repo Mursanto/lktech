@@ -32,6 +32,7 @@ class OrderInvoiceMail extends Mailable
         $statusText = $this->sale->payment_status === 'success' ? 'Invoice Lunas' : 'Proforma Invoice (Menunggu Pembayaran)';
         return new Envelope(
             from: new \Illuminate\Mail\Mailables\Address('sales@lktech.online', 'LKTech'),
+            cc: [new \Illuminate\Mail\Mailables\Address('sales@lktech.online')],
             subject: $statusText . ' - ' . ($this->sale->payment_reference_id ?? 'LKTech'),
         );
     }
