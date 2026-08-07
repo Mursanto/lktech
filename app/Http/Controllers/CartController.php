@@ -320,9 +320,10 @@ class CartController extends Controller
             }
         }
 
-        $recommendedProducts = \App\Models\Product::where('status', 'available')
-            ->inRandomOrder()
-            ->limit(4)
+        $recommendedProductIds = [22, 23, 33, 36, 46];
+        $recommendedProducts = \App\Models\Product::whereIn('id', $recommendedProductIds)
+            ->where('status', 'available')
+            ->limit(5)
             ->get();
 
         return view('checkout.success', compact('sale', 'paymentInfo', 'recommendedProducts'));

@@ -80,8 +80,7 @@
         /* Desktop: fill the viewport below the navbar */
         @media (min-width: 1024px) {
             .payment-grid-wrapper {
-                height: calc(100vh - 64px);
-                overflow: hidden;
+                min-height: calc(100vh - 56px); /* 56px is h-14 navbar */
             }
         }
 
@@ -387,11 +386,11 @@
         {{-- ══════════════════════════════════════════════
              DESKTOP LAYOUT  (hidden lg:block)
              ══════════════════════════════════════════════ --}}
-        <div class="hidden lg:flex payment-grid-wrapper flex-col pt-16">
-            <div class="flex-1 grid grid-cols-2 overflow-hidden">
+        <div class="hidden lg:flex payment-grid-wrapper flex-col pt-10">
+            <div class="flex-1 grid grid-cols-2">
 
                 {{-- ─── LEFT — Bill info ─── --}}
-                <div class="flex flex-col justify-center px-10 xl:px-14 py-6 border-r border-gray-100 overflow-y-auto custom-scrollbar">
+                <div class="flex flex-col justify-center px-10 xl:px-14 py-6 border-r border-gray-100">
 
                     <div class="fade-in-up mb-3">
                         <span class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full">
@@ -552,18 +551,17 @@
                         </button>
                     </div>
                     @endif
-
-                    <div class="w-full max-w-sm mt-4">
-                        <x-payment-recommendations :products="$recommendedProducts" />
-                    </div>
-
                 </div>
                 {{-- END RIGHT --}}
 
             </div>
+            
+            {{-- Rekomendasi Produk Terlaris (Desktop Full Width) --}}
+            <div class="px-8 xl:px-14 pb-10 bg-gray-50 border-t border-gray-200">
+                <x-payment-recommendations :products="$recommendedProducts" />
+            </div>
         </div>
         {{-- END DESKTOP LAYOUT --}}
-
 
         {{-- ══════════════════════════════════════════════
              MODALS (shared mobile + desktop)
