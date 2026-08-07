@@ -60,8 +60,8 @@
 </head>
 
 @php
-    /* Countdown deadline: 24 hours from order creation */
-    $deadlineTs     = $sale->created_at->addHours(24)->timestamp;
+    /* Countdown deadline: 1 hour from order creation */
+    $deadlineTs     = $sale->created_at->addHours(1)->timestamp;
     $customerName   = $sale->customer->name ?? 'Pelanggan';
     $refId          = $sale->payment_reference_id ?? ('SALE-' . $sale->id);
     $totalFormatted = 'Rp ' . number_format($sale->total_amount, 0, ',', '.');
@@ -422,8 +422,8 @@
                         String(m).padStart(2, '0') + ':' +
                         String(s).padStart(2, '0');
 
-                    // Turn red/urgent when < 30 minutes remain
-                    this.urgent = diff < 1800;
+                    // Turn red/urgent when < 5 minutes remain
+                    this.urgent = diff < 300;
                 },
 
                 async payNow() {
