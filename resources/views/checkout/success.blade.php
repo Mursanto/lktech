@@ -150,11 +150,11 @@
     {{-- ════════════════════════════════════════════════
          CHECKOUT FOCUS HEADER
          ════════════════════════════════════════════════ --}}
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8">
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8 relative">
         <a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
             <i class='bx bx-arrow-back text-xl'></i>
         </a>
-        <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight">Status Pembayaran</h1>
+        <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight absolute left-1/2 -translate-x-1/2">Status Pembayaran</h1>
         <a href="{{ route('checkout.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
             <i class='bx bx-cart text-xl'></i>
         </a>
@@ -242,7 +242,13 @@
                         <div class="flex items-start justify-between mb-0.5">
                             <div>
                                 <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Total Tagihan</p>
-                                <p class="text-3xl font-black text-brand-600 leading-tight">{{ $totalFormatted }}</p>
+                                <div class="flex items-center gap-2">
+                                    <p class="text-3xl font-black text-brand-600 leading-tight">{{ $totalFormatted }}</p>
+                                    <button onclick="navigator.clipboard.writeText('{{ $sale->total_amount }}').then(()=>{ alert('Nominal disalin!') })"
+                                            class="text-brand-500 hover:text-brand-700 transition-colors" title="Salin Nominal">
+                                        <i class='bx bx-copy text-lg'></i>
+                                    </button>
+                                </div>
                             </div>
                             <button @click="detailOpen = !detailOpen"
                                     class="text-xs font-semibold text-brand-600 flex items-center gap-0.5 mt-1 shrink-0 ml-2">
@@ -420,7 +426,7 @@
                     </div>
 
                     {{-- Order detail card --}}
-                    <div class="fade-in-up bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden mb-4">
+                    <div class="fade-in-up bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden mb-4" x-data="{ detailOpen: false }">
                         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-50 bg-gray-50/60">
                             <div>
                                 <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Nomor Referensi</p>
@@ -432,9 +438,44 @@
                             </div>
                         </div>
                         <div class="px-4 py-4 bg-gradient-to-br from-brand-50 to-white">
-                            <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Total Tagihan</p>
-                            <p class="text-4xl font-black text-brand-600 leading-none">{{ $totalFormatted }}</p>
-                            <p class="text-xs text-gray-400 mt-1">Bayarkan tepat sesuai nominal di atas</p>
+                            <div class="flex items-start justify-between mb-1">
+                                <div>
+                                    <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Total Tagihan</p>
+                                    <div class="flex items-center gap-3">
+                                        <p class="text-4xl font-black text-brand-600 leading-none">{{ $totalFormatted }}</p>
+                                        <button onclick="navigator.clipboard.writeText('{{ $sale->total_amount }}').then(()=>{ alert('Nominal disalin!') })"
+                                                class="text-brand-500 hover:text-brand-700 transition-colors" title="Salin Nominal">
+                                            <i class='bx bx-copy text-2xl'></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button @click="detailOpen = !detailOpen" class="text-xs font-semibold text-brand-600 flex items-center gap-0.5 shrink-0 mt-1">
+                                    <span x-text="detailOpen ? 'Sembunyikan' : 'Lihat Detail'"></span>
+                                    <i class='bx text-sm' :class="detailOpen ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">Bayarkan tepat sesuai nominal di atas</p>
+
+                            {{-- Collapsible order items (Desktop) --}}
+                            <div x-show="detailOpen"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 -translate-y-1"
+                                 x-transition:enter-end="opacity-100 translate-y-0"
+                                 class="mt-4 border-t border-gray-100 pt-4 space-y-3">
+                                @foreach($sale->saleDetails as $detail)
+                                <div class="flex items-center justify-between">
+                                    <div class="min-w-0 flex-1 pr-2">
+                                        <p class="text-sm font-semibold text-gray-700 truncate">
+                                            {{ $detail->product->brand ?? '' }} {{ $detail->product->model_series ?? 'Produk' }}
+                                        </p>
+                                        <p class="text-xs text-gray-400">{{ $detail->quantity }} × Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}</p>
+                                    </div>
+                                    <p class="text-sm font-bold text-gray-900 shrink-0">
+                                        Rp {{ number_format($detail->price_at_transaction * $detail->quantity, 0, ',', '.') }}
+                                    </p>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -481,39 +522,22 @@
                         </p>
                     </div>
 
-                    <div class="fade-in-up bg-white border border-gray-200 rounded-2xl p-4 shadow-md mb-4 inline-block">
-                        <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS LKTech TN Sereal"
-                             class="max-h-64 w-auto object-contain rounded-xl">
-                    </div>
-
-                    <div class="fade-in-up text-center mb-5">
-                        <p class="text-xs text-gray-400 mb-0.5">Nominal yang harus dibayar</p>
-                        <p class="text-2xl font-black text-brand-600">{{ $totalFormatted }}</p>
-                    </div>
-
-                    <div class="fade-in-up w-full max-w-xs">
-                        <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
-                           class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 px-4 rounded-2xl transition-all shadow-lg shadow-green-200 flex justify-center items-center gap-2 text-sm mb-4">
-                            <i class='bx bxl-whatsapp text-xl'></i> Konfirmasi Pembayaran via WA
-                        </a>
-                        <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
-                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 py-2 border-b border-gray-50 bg-gray-50/60">Detail Pesanan</p>
-                            <div class="max-h-32 overflow-y-auto custom-scrollbar">
-                                @foreach($sale->saleDetails as $detail)
-                                <div class="flex items-center justify-between px-3 py-2 border-b border-gray-50 last:border-b-0">
-                                    <div class="min-w-0 flex-1 pr-2">
-                                        <p class="text-[10px] font-semibold text-gray-700 truncate">
-                                            {{ $detail->product->brand ?? '' }} {{ $detail->product->model_series ?? 'Produk' }}
-                                        </p>
-                                        <p class="text-[9px] text-gray-400">× {{ $detail->quantity }}</p>
-                                    </div>
-                                    <p class="text-[10px] font-bold text-gray-800 shrink-0">
-                                        Rp {{ number_format($detail->price_at_transaction * $detail->quantity, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                @endforeach
+                    <div class="fade-in-up bg-white border border-gray-200 rounded-2xl p-4 shadow-sm mb-6 inline-block max-w-sm w-full relative group">
+                        <button @click="showQrisModal = true" class="w-full relative block overflow-hidden rounded-xl bg-gray-50 flex justify-center">
+                            <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS LKTech TN Sereal"
+                                 class="w-full h-auto object-contain rounded-xl max-h-72">
+                            <div class="absolute inset-0 bg-brand-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                                <i class='bx bx-expand text-white text-3xl'></i>
+                                <p class="text-white text-sm font-bold mt-1">Perbesar QRIS</p>
                             </div>
-                        </div>
+                        </button>
+                    </div>
+
+                    <div class="fade-in-up w-full max-w-sm">
+                        <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
+                           class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-4 px-4 rounded-2xl transition-all shadow-lg shadow-green-200 flex justify-center items-center gap-2 text-base">
+                            <i class='bx bxl-whatsapp text-2xl'></i> Konfirmasi Pembayaran via WA
+                        </a>
                     </div>
 
                     @elseif($isVA)

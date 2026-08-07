@@ -6,9 +6,9 @@
         <h2 class="font-bold text-gray-800 text-sm md:text-base tracking-tight">Rekomendasi Produk Terlaris</h2>
         <a href="{{ route('katalog.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 transition-colors">Lihat Semua →</a>
     </div>
-    <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-4 scrollbar-none" style="scrollbar-width: none; -ms-overflow-style: none;">
+    <div class="flex overflow-x-auto lg:grid lg:grid-cols-5 lg:gap-4 lg:overflow-visible snap-x snap-mandatory gap-3 pb-4 scrollbar-none" style="scrollbar-width: none; -ms-overflow-style: none;">
         @foreach($products as $prod)
-            <div class="w-[160px] md:w-[180px] shrink-0 snap-start h-full">
+            <div class="w-[160px] lg:w-full shrink-0 snap-start h-full">
                 <x-product-card :product="$prod" />
             </div>
         @endforeach
