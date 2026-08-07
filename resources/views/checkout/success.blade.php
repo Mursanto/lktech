@@ -61,6 +61,7 @@
                 display: flex; 
                 flex-direction: column;
                 min-height: 100vh;
+                margin-top: 0;
             }
             .mobile-scroll-area {
                 flex: 1;
@@ -191,7 +192,7 @@
         {{-- ══════════════════════════════════════════════
              MOBILE LAYOUT  (lg:hidden)
              ══════════════════════════════════════════════ --}}
-        <div class="lg:hidden mobile-payment-body -mt-14">
+        <div class="lg:hidden mobile-payment-body">
 
             {{-- ── 1. Timer Card ── --}}
             <div class="bg-amber-50 border-b border-amber-200 px-4 py-3 flex items-center justify-between"
