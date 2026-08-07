@@ -23,10 +23,10 @@
                     </div>
                     
                     <div class="grid grid-cols-2 gap-1 text-[9px] font-medium text-blue-50 w-full mt-auto">
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Device: {{ $stokDevice ?? 0 }}</div>
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Part: {{ $stokSparepart ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Laptop & Device: {{ $stokDevice ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Komponen & Sparepart: {{ $stokSparepart ?? 0 }}</div>
                         <div class="bg-white/10 px-1 py-0.5 rounded text-center">Aksesoris: {{ $stokAksesoris ?? 0 }}</div>
-                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Software: {{ $stokSoftware ?? 0 }}</div>
+                        <div class="bg-white/10 px-1 py-0.5 rounded text-center">Lisensi & Software: {{ $stokSoftware ?? 0 }}</div>
                     </div>
                 </div>
                 <div class="bg-black/10 py-1 px-3 text-[9px] font-medium text-center text-blue-100">Real-time</div>
@@ -187,7 +187,7 @@
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-blue-100 text-blue-600 flex items-center justify-center"><i class='bx bx-laptop text-xs'></i></div> 
-                            Unit Device
+                            Laptop & Device
                         </h3>
                     </div>
                     
@@ -217,7 +217,7 @@
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class='bx bx-chip text-xs'></i></div> 
-                            Sparepart / Komponen
+                            Komponen & Sparepart
                         </h3>
                     </div>
                     
@@ -280,7 +280,7 @@
                     <div class="flex justify-between items-center mb-2 border-b border-natural-100 pb-1 shrink-0">
                         <h3 class="text-xs font-bold text-natural-900 flex items-center gap-2">
                             <div class="w-5 h-5 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class='bx bx-code-alt text-xs'></i></div> 
-                            Software / Digital
+                            Lisensi & Software
                         </h3>
                     </div>
                     

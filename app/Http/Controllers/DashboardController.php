@@ -15,11 +15,11 @@ class DashboardController extends Controller
     {
         // 1. Rincian Stok Berdasarkan Kategori
         $stokDevice = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'Unit Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Unit Device'); });
+            $q->where('name', 'Laptop & Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Laptop & Device'); });
         })->sum('stock');
 
         $stokSparepart = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'Sparepart / Komponen')->orWhereHas('parent', function($q2) { $q2->where('name', 'Sparepart / Komponen'); });
+            $q->where('name', 'Komponen & Sparepart')->orWhereHas('parent', function($q2) { $q2->where('name', 'Komponen & Sparepart'); });
         })->sum('stock');
 
         $stokAksesoris = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
@@ -27,7 +27,7 @@ class DashboardController extends Controller
         })->sum('stock');
 
         $stokSoftware = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
-            $q->where('name', 'Software / Digital')->orWhereHas('parent', function($q2) { $q2->where('name', 'Software / Digital'); });
+            $q->where('name', 'Lisensi & Software')->orWhereHas('parent', function($q2) { $q2->where('name', 'Lisensi & Software'); });
         })->sum('stock');
 
         // Total Stok Utama: menjumlahkan seluruh kolom stock dari tabel products yang memiliki status = 'available'
@@ -54,13 +54,13 @@ class DashboardController extends Controller
         // Data Stok Unit Device Menipis (Max 5)
         $lowUnitDevice = \App\Models\Product::with('category')->where('status', 'available')
             ->whereHas('category', function($q) {
-                $q->where('name', 'Unit Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Unit Device'); });
+                $q->where('name', 'Laptop & Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Laptop & Device'); });
             })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(5)->get();
 
         // Data Stok Sparepart Menipis (Max 5)
         $lowSparepart = \App\Models\Product::with('category')->where('status', 'available')
             ->whereHas('category', function($q) {
-                $q->where('name', 'Sparepart / Komponen')->orWhereHas('parent', function($q2) { $q2->where('name', 'Sparepart / Komponen'); });
+                $q->where('name', 'Komponen & Sparepart')->orWhereHas('parent', function($q2) { $q2->where('name', 'Komponen & Sparepart'); });
             })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(5)->get();
 
         // Data Stok Aksesoris Menipis (Max 3)
@@ -72,7 +72,7 @@ class DashboardController extends Controller
         // Data Stok Software Menipis (Max 3)
         $lowSoftware = \App\Models\Product::with('category')->where('status', 'available')
             ->whereHas('category', function($q) {
-                $q->where('name', 'Software / Digital')->orWhereHas('parent', function($q2) { $q2->where('name', 'Software / Digital'); });
+                $q->where('name', 'Lisensi & Software')->orWhereHas('parent', function($q2) { $q2->where('name', 'Lisensi & Software'); });
             })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(3)->get();
 
 

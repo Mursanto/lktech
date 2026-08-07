@@ -54,7 +54,7 @@
 
             <!-- Specs List (Compact) / Conditional Rendering -->
             @php
-                $isUnitDevice = $product->category && strtolower($product->category->name) === 'unit device';
+                $isUnitDevice = $product->category && in_array(strtolower($product->category->name), ['laptop & device', 'unit device']);
                 $isLaptop = $product->category && str_contains(strtolower($product->category->name), 'laptop');
                 $isUltrabook = $product->category && str_contains(strtolower($product->category->name), 'ultrabook');
                 $isPC = $product->category && str_contains(strtolower($product->category->name), 'pc');
