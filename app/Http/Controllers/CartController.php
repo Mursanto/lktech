@@ -325,6 +325,16 @@ class CartController extends Controller
             ->where('status', 'available')
             ->limit(5)
             ->get();
+            
+        $recommendedProducts->transform(function ($rp) {
+            if ($rp->image_path) {
+                $rp->display_image = \Illuminate\Support\Facades\Storage::url($rp->image_path);
+            } else {
+                $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
+                $rp->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+            }
+            return $rp;
+        });
 
         return view('checkout.success', compact('sale', 'paymentInfo', 'recommendedProducts'));
     }
