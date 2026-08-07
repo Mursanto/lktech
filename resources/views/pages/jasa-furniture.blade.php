@@ -143,11 +143,11 @@
     <main class="flex-grow w-full pb-20 md:pb-0">
 
         {{-- ─── HERO ─── --}}
-        <section class="hero-furniture min-h-[68vh] md:min-h-[72vh] flex items-center relative">
+        <section class="hero-furniture min-h-[60vh] md:min-h-[65vh] flex items-center relative">
             <div class="absolute top-0 right-0 w-96 h-96 rounded-full blur-[120px] opacity-20" style="background:#c08040;"></div>
             <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-15" style="background:#d4a96a;"></div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 pb-10 w-full">
                 <div class="max-w-3xl">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6 fade-up">
                         <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
@@ -220,7 +220,7 @@
         </section>
 
         {{-- ─── LAYANAN UNGGULAN ─── --}}
-        <section class="bg-white py-20">
+        <section class="bg-white py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Kategori Layanan</span>
@@ -269,7 +269,7 @@
         </section>
 
         {{-- ─── GALERI ─── --}}
-        <section id="galeri" class="bg-stone-50 py-20"
+        <section id="galeri" class="bg-stone-50 py-10"
             x-data="{
                 activeTab: 'all',
                 lightbox: false,
@@ -374,7 +374,7 @@
         </section>
 
         {{-- ─── KEUNGGULAN ─── --}}
-        <section class="bg-white py-20">
+        <section class="bg-white py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Mengapa Kami?</span>
@@ -383,32 +383,40 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-stone-50 rounded-3xl p-6 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform"><i class='bx bx-ruler'></i></div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Custom Ukuran</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Dibuat sesuai dimensi ruangan dan kebutuhan Anda, tidak ada yang tidak muat.</p>
+                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-ruler'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Custom Ukuran</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Dibuat sesuai dimensi ruangan dan kebutuhan Anda, tidak ada yang tidak muat.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-6 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform"><i class='bx bx-shield-quarter'></i></div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Material Premium</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Menggunakan bahan pilihan berkualitas tinggi untuk ketahanan jangka panjang.</p>
+                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-shield-quarter'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Material Premium</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Menggunakan bahan pilihan berkualitas tinggi untuk ketahanan jangka panjang.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-6 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform"><i class='bx bxs-paint'></i></div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Finishing Rapi</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Proses finishing teliti dan rapi menghasilkan tampilan yang halus dan mewah.</p>
+                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bxs-paint'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Finishing Rapi</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Proses finishing teliti dan rapi menghasilkan tampilan yang halus dan mewah.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-6 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform"><i class='bx bx-time'></i></div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Tepat Waktu</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Pengerjaan sesuai jadwal yang disepakati dengan komunikasi yang transparan.</p>
+                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-time'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Tepat Waktu</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Pengerjaan sesuai jadwal yang disepakati dengan komunikasi yang transparan.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         {{-- ─── INFO TOKO ─── --}}
-        <section class="bg-stone-50 py-20">
+        <section class="bg-stone-50 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Lokasi & Kontak</span>
@@ -493,7 +501,7 @@
         </section>
 
         {{-- ─── PROSES PENGERJAAN ─── --}}
-        <section class="bg-white py-20 relative overflow-hidden">
+        <section class="bg-white py-10 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkQ2QzUiLz48L3N2Zz4=')] opacity-60"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-14">
@@ -538,7 +546,7 @@
         </section>
 
         {{-- ─── CTA ─── --}}
-        <section class="cta-furniture py-24 relative overflow-hidden">
+        <section class="cta-furniture py-12 md:py-16 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-15" style="background:#d4a96a;"></div>
 

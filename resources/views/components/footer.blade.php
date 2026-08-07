@@ -1,5 +1,6 @@
 <footer class="bg-white border-t border-gray-200 mt-auto pt-6 md:pt-10 pb-6 max-md:pb-24">
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        @if(!in_array(Route::currentRouteName(), ['wifi-voucher', 'jasa-furniture', 'martabak-jawara']))
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 items-start">
             
             <!-- Kolom 1: Profil Singkat -->
@@ -141,6 +142,7 @@
             </div>
 
         </div>
+        @endif
 
         <div class="border-t border-gray-100 pt-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="text-xs text-gray-500 font-medium">

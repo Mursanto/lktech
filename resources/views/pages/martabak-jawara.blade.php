@@ -213,7 +213,7 @@
             <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-15" style="background:#d97706;"></div>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[200px] opacity-5" style="background:#fbbf24;"></div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 pb-8 md:pb-12 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {{-- Text Content --}}
                     <div>
@@ -491,7 +491,7 @@
         </section>
 
         {{-- ─── KEUNGGULAN ─── --}}
-        <section class="bg-white py-20">
+        <section class="bg-white py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Mengapa Kami?</span>
@@ -500,24 +500,32 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-amber-50 rounded-3xl p-6 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform">🧀</div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Bahan Premium</h3>
+                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🧀</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Bahan Premium</h3>
+                        </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Keju berlimpah, almond premium, dan cokelat pilihan untuk rasa terbaik.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-6 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform">🍳</div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Freshly Made</h3>
+                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🍳</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Freshly Made</h3>
+                        </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Dimasak segar setiap hari, tidak ada yang dipanaskan ulang.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-6 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform">🛵</div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">Pesan Antar</h3>
+                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🛵</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Pesan Antar</h3>
+                        </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Layanan antar ke rumah Anda di area Muara Enim & sekitarnya.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-6 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-5 shadow-sm group-hover:scale-110 transition-transform">⭐</div>
-                        <h3 class="font-montserrat font-bold text-gray-900 mb-2">15+ Varian Rasa</h3>
+                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">⭐</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">15+ Varian</h3>
+                        </div>
                         <p class="text-gray-500 text-sm leading-relaxed">Pilihan rasa yang beragam untuk semua selera.</p>
                     </div>
                 </div>
@@ -525,7 +533,7 @@
         </section>
 
         {{-- ─── LOKASI & KONTAK ─── --}}
-        <section class="bg-amber-50 py-20">
+        <section class="bg-amber-50 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-100 px-3 py-1 rounded-full border border-amber-200">Lokasi & Kontak</span>
@@ -642,7 +650,7 @@
         </section>
 
         {{-- ─── CTA ─── --}}
-        <section class="cta-martabak py-24 relative overflow-hidden">
+        <section class="cta-martabak py-12 md:py-16 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-15" style="background:#f59e0b;"></div>
 
