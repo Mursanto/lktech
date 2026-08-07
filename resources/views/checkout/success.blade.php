@@ -148,7 +148,18 @@
 
 <body class="bg-gray-50 text-gray-800 antialiased font-sans" style="min-height:100vh">
 
-    <x-navbar />
+    {{-- ════════════════════════════════════════════════
+         CHECKOUT FOCUS HEADER
+         ════════════════════════════════════════════════ --}}
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8">
+        <a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
+            <i class='bx bx-arrow-back text-xl'></i>
+        </a>
+        <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight">Status Pembayaran</h1>
+        <a href="{{ route('checkout.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
+            <i class='bx bx-cart text-xl'></i>
+        </a>
+    </header>
 
     {{-- ════════════════════════════════════════════════
          ✅ SUCCESS STATE
@@ -178,6 +189,8 @@
             <a href="{{ route('home') }}" class="text-sm text-gray-400 hover:text-brand-600 font-medium transition-colors">
                 ← Kembali ke Beranda
             </a>
+
+            <x-payment-recommendations :products="$recommendedProducts" />
         </div>
     </main>
 
@@ -342,6 +355,11 @@
                     <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors">
                         ← Kembali ke Beranda
                     </a>
+                </div>
+
+                {{-- Rekomendasi Produk Terlaris (Mobile) --}}
+                <div class="px-4 pb-4">
+                    <x-payment-recommendations :products="$recommendedProducts" />
                 </div>
             </div>
 
@@ -534,6 +552,10 @@
                         </button>
                     </div>
                     @endif
+
+                    <div class="w-full max-w-sm mt-4">
+                        <x-payment-recommendations :products="$recommendedProducts" />
+                    </div>
 
                 </div>
                 {{-- END RIGHT --}}

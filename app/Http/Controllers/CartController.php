@@ -320,6 +320,11 @@ class CartController extends Controller
             }
         }
 
-        return view('checkout.success', compact('sale', 'paymentInfo'));
+        $recommendedProducts = \App\Models\Product::where('status', 'available')
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        return view('checkout.success', compact('sale', 'paymentInfo', 'recommendedProducts'));
     }
 }
