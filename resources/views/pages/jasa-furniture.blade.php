@@ -678,24 +678,13 @@
                             </div>
                         </div>
 
-                        <div class="mt-auto pt-6 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a href="https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20ingin%20konsultasi%20furniture%20custom."
-                               target="_blank"
-                               class="flex items-center justify-center gap-2 px-5 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all shadow-sm hover:shadow-md text-sm">
-                                <i class='bx bxl-whatsapp text-lg'></i> Chat WhatsApp
-                            </a>
-                            <a href="tel:+6285366114312"
-                               class="flex items-center justify-center gap-2 px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl transition-all text-sm">
-                                <i class='bx bx-phone text-lg'></i> Telepon
-                            </a>
-                        </div>
                     </div>
 
                     <!-- Maps -->
-                    <div class="rounded-3xl overflow-hidden shadow-sm border border-stone-200 min-h-[400px]">
+                    <div class="rounded-3xl overflow-hidden shadow-sm border border-stone-200 h-full min-h-[300px] md:min-h-[400px]">
                         <iframe
                             src="https://maps.google.com/maps?q=Saba+Balau+Sukabumi+Bandar+Lampung&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                            class="w-full h-full min-h-[400px] border-0"
+                            class="w-full h-full border-0"
                             allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
@@ -707,42 +696,31 @@
         </section>
 
         {{-- ─── CTA ─── --}}
-        <section class="cta-furniture py-12 md:py-16 relative overflow-hidden">
+        <section class="cta-furniture py-6 md:py-16 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-15" style="background:#d4a96a;"></div>
 
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span class="text-amber-300 text-xs font-semibold tracking-widest uppercase">Interior S2 Bandar Lampung</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-2 md:mb-6">
+                    <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span class="text-amber-300 text-[9px] md:text-xs font-semibold tracking-widest uppercase">Interior S2 Bandar Lampung</span>
                 </div>
 
-                <h2 class="font-playfair text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    Wujudkan Hunian Impian<br>Anda Bersama Kami
+                <h2 class="font-playfair text-xl md:text-5xl font-bold text-white mb-2 md:mb-6 leading-tight mt-1 md:mt-0">
+                    Wujudkan Hunian Impian<br class="md:hidden"> Anda Bersama Kami
                 </h2>
 
-                <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                <p class="text-white/70 text-[11px] md:text-lg mb-4 md:mb-10 max-w-2xl mx-auto leading-[1.35] md:leading-relaxed px-2 md:px-0">
                     Konsultasikan kebutuhan furniture Anda sekarang. Tim kami siap membantu menciptakan ruang yang indah, fungsional, dan sesuai anggaran.
                 </p>
 
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20ingin%20konsultasi%20furniture%20custom%20untuk%20rumah%20saya."
-                       target="_blank"
-                       class="inline-flex items-center gap-2 px-10 py-4 bg-white hover:bg-gray-50 text-amber-800 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                        <i class='bx bxl-whatsapp text-2xl text-green-500'></i> Chat WhatsApp Sekarang
-                    </a>
-                    <a href="tel:+6285366114312"
-                       class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-full font-bold text-lg border border-white/20 transition-all hover:-translate-y-1">
-                        <i class='bx bx-phone text-xl'></i> 0853-6611-4312
-                    </a>
-                </div>
-
-                <div class="mt-12 flex flex-wrap justify-center gap-6 text-white/60 text-sm">
-                    <div class="flex items-center gap-2">
+                <div class="flex flex-wrap justify-center gap-2 md:gap-6 text-white/60 text-[10px] md:text-sm mt-2 md:mt-12">
+                    <div class="flex items-center gap-1.5 md:gap-2">
                         <i class='bx bx-map text-amber-400'></i>
                         <span>Jl. Terusan Pulau Singkep, Saba Balau, Sukabumi, Bandar Lampung</span>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <span class="hidden md:inline">•</span>
+                    <div class="flex items-center gap-1.5 md:gap-2">
                         <i class='bx bx-time-five text-amber-400'></i>
                         <span>Buka 09.00 – 17.00 WIB</span>
                     </div>

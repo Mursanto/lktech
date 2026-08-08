@@ -578,25 +578,13 @@
                                 </a>
                             </div>
                         </div>
-
-                        <div class="mt-auto pt-4 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20ingin%20pesan%20martabak."
-                               target="_blank"
-                               class="flex items-center justify-center gap-2 px-5 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all shadow-sm hover:shadow-md text-sm">
-                                <i class='bx bxl-whatsapp text-lg'></i> Chat WhatsApp
-                            </a>
-                            <a href="https://maps.app.goo.gl/GhJ1yEj7cviTwbkz5" target="_blank"
-                               class="flex items-center justify-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-sm hover:shadow-md text-sm">
-                                <i class='bx bx-map text-lg'></i> Buka Maps
-                            </a>
-                        </div>
                     </div>
 
                     {{-- Google Maps Embed --}}
-                    <div class="rounded-3xl overflow-hidden shadow-sm border border-amber-100 min-h-[400px]">
+                    <div class="rounded-3xl overflow-hidden shadow-sm border border-amber-100 h-full min-h-[400px]">
                         <iframe
                             src="https://maps.google.com/maps?q=Teras+Alfamart+Talang+Jawa+Atas+Jl+Jenderal+Sudirman+Muara+Enim&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                            class="w-full h-full min-h-[400px] border-0"
+                            class="w-full h-full border-0"
                             allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
@@ -608,84 +596,62 @@
         </section>
 
         {{-- ─── CTA ─── --}}
-        <section class="cta-martabak py-12 md:py-16 relative overflow-hidden">
+        <section class="cta-martabak py-6 md:py-16 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-15" style="background:#f59e0b;"></div>
 
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span class="text-amber-300 text-xs font-semibold tracking-widest uppercase">Martabak Jawara – Muara Enim</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-2 md:mb-6">
+                    <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span class="text-amber-300 text-[9px] md:text-xs font-semibold tracking-widest uppercase">Martabak Jawara – Muara Enim</span>
                 </div>
 
-                <h2 class="font-playfair text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                <h2 class="font-playfair text-2xl md:text-5xl font-bold text-white mb-2 md:mb-6 leading-tight mt-1 md:mt-0">
                     Lapar? Yuk Order<br>Martabak Sekarang!
                 </h2>
 
-                <p class="text-white/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                <p class="text-white/70 text-[11px] md:text-lg mb-4 md:mb-10 max-w-2xl mx-auto leading-[1.35] md:leading-relaxed px-2 md:px-0">
                     Pesan sekarang via WhatsApp atau GrabFood — diantar hangat ke tempat Anda di area Muara Enim & sekitarnya.
                 </p>
 
                 {{-- Unified Order Hub Bottom --}}
-                <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-10">
+                <div class="grid grid-cols-2 gap-2 md:gap-3 max-w-md mx-auto mb-5 md:mb-10">
                     <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20ingin%20pesan%20martabak." target="_blank"
-                       class="flex items-center justify-center gap-2 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
-                        <i class='bx bxl-whatsapp text-lg'></i> WhatsApp
+                       class="flex items-center justify-center gap-1.5 md:gap-2 py-2 px-2 md:py-3 md:px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-lg md:rounded-xl transition-all shadow-md text-[11px] md:text-sm">
+                        <i class='bx bxl-whatsapp text-sm md:text-lg'></i> WhatsApp
                     </a>
                     <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA" target="_blank"
-                       class="flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
-                        <i class='bx bx-car text-lg'></i> GrabFood
+                       class="flex items-center justify-center gap-1.5 md:gap-2 py-2 px-2 md:py-3 md:px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg md:rounded-xl transition-all shadow-md text-[11px] md:text-sm">
+                        <i class='bx bx-car text-sm md:text-lg'></i> GrabFood
                     </a>
                     <a href="https://shopee.co.id/universal-link/now-food/shop/22505814?deep_and_deferred=1&shareChannel=whatsapp" target="_blank"
-                       class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
-                        <i class='bx bx-shopping-bag text-lg'></i> ShopeeFood
+                       class="flex items-center justify-center gap-1.5 md:gap-2 py-2 px-2 md:py-3 md:px-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg md:rounded-xl transition-all shadow-md text-[11px] md:text-sm">
+                        <i class='bx bx-shopping-bag text-sm md:text-lg'></i> ShopeeFood
                     </a>
                     <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20pesan%20antar%20ke%20alamat%20saya." target="_blank"
-                       class="flex items-center justify-center gap-2 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
-                        <i class='bx bx-cycling text-lg'></i> Pesan Antar
+                       class="flex items-center justify-center gap-1.5 md:gap-2 py-2 px-2 md:py-3 md:px-4 bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold rounded-lg md:rounded-xl transition-all shadow-md text-[11px] md:text-sm">
+                        <i class='bx bx-cycling text-sm md:text-lg'></i> Pesan Antar
                     </a>
                 </div>
 
                 {{-- Info strip --}}
-                <div class="flex flex-wrap justify-center gap-6 text-white/60 text-sm">
-                    <div class="flex items-center gap-2">
+                <div class="flex flex-wrap justify-center gap-3 md:gap-6 text-white/60 text-[10px] md:text-sm">
+                    <div class="flex items-center gap-1.5 md:gap-2">
                         <i class='bx bx-map text-amber-400'></i>
-                        <span>Teras Alfamart Talang Jawa Atas, Jl. Jend. Sudirman, Muara Enim</span>
+                        <span>Teras Alfamart Talang Jawa Atas, Muara Enim</span>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <span class="hidden md:inline">•</span>
+                    <div class="flex items-center gap-1.5 md:gap-2">
                         <i class='bx bx-time-five text-amber-400'></i>
                         <span>Buka 14.00 – 22.00 WIB</span>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <span class="hidden md:inline">•</span>
+                    <div class="flex items-center gap-1.5 md:gap-2">
                         <i class='bx bx-phone text-amber-400'></i>
                         <span>0856-6492-8097</span>
                     </div>
                 </div>
 
-                {{-- Social icons at bottom --}}
-                <div class="flex justify-center gap-4 mt-10">
-                    <a href="https://www.instagram.com/martabak_jawara45/" target="_blank"
-                       class="w-12 h-12 rounded-full flex items-center justify-center text-white text-2xl transition-all hover:scale-110"
-                       style="background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);"
-                       title="Instagram @martabak_jawara45">
-                        <i class='bx bxl-instagram'></i>
-                    </a>
-                    <a href="https://www.facebook.com/watch/?v=493969459997047" target="_blank"
-                       class="w-12 h-12 rounded-full bg-[#1877F2] hover:bg-[#0d6edf] flex items-center justify-center text-white text-2xl transition-all hover:scale-110"
-                       title="Facebook Martabak Jawara">
-                        <i class='bx bxl-facebook'></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@martabak.jawara/video/7632982188920704264" target="_blank"
-                       class="w-12 h-12 rounded-full bg-black hover:bg-gray-800 flex items-center justify-center text-white text-2xl transition-all hover:scale-110"
-                       title="TikTok Martabak Jawara">
-                        <i class='bx bxl-tiktok'></i>
-                    </a>
-                    <a href="https://wa.me/6285664928097" target="_blank"
-                       class="w-12 h-12 rounded-full bg-[#25d366] hover:bg-[#1ebe5a] flex items-center justify-center text-white text-2xl transition-all hover:scale-110"
-                       title="WhatsApp Martabak Jawara">
-                        <i class='bx bxl-whatsapp'></i>
-                    </a>
-                </div>
             </div>
         </section>
 
