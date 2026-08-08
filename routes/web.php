@@ -40,6 +40,10 @@ Route::post('/checkout/process', [App\Http\Controllers\CartController::class, 'p
 Route::get('/checkout/success/{order_id}', [App\Http\Controllers\CartController::class, 'success'])->name('checkout.success');
 Route::get('/checkout/success/{order_id}/invoice', [App\Http\Controllers\CartController::class, 'downloadInvoice'])->name('checkout.invoice');
 
+// Orders History & Polling API
+Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+Route::get('/api/check-order-status/{id}', [App\Http\Controllers\OrderController::class, 'checkStatus']);
+
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');
 Route::view('/faq', 'pages.faq')->name('faq');

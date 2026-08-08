@@ -234,6 +234,22 @@ class CartController extends Controller
             }
         }
         
+        // Kosongkan Item yang Dibayar dari Session Cart
+        $cartData = session()->get('cart', []);
+        foreach ($selectedItems as $itemId) {
+            unset($cartData[$itemId]);
+            // Also check string version just in case
+            unset($cartData[(string)$itemId]);
+        }
+        session()->put('cart', $cartData);
+
+        // Simpan ID pesanan ke session untuk pelacakan tamu
+        $userOrders = session()->get('user_orders', []);
+        if (!in_array($sale->id, $userOrders)) {
+            $userOrders[] = $sale->id;
+            session()->put('user_orders', $userOrders);
+        }
+
         return response()->json([
             'snap_token' => 'mock-bypass-' . uniqid(),
             'order_id' => $sale->id

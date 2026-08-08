@@ -117,10 +117,83 @@
             border-radius: 4px;
             margin: 0 auto 16px;
         }
+
+        /* STYLING NOTICE BOX */
+        .user-notice-box {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          background-color: #eff6ff; /* Warna biru muda lembut (Blue-50) */
+          border: 1px solid #bfdbfe; /* Border biru soft */
+          border-radius: 10px;
+          padding: 12px 16px;
+          margin-top: 16px;
+          margin-bottom: 16px;
+        }
+
+        .notice-icon {
+          font-size: 1.25rem;
+          line-height: 1;
+        }
+
+        .notice-content {
+          font-size: 0.85rem;
+          color: #1e3a8a; /* Warna teks navy */
+        }
+
+        .notice-title {
+          font-weight: 700;
+          margin-bottom: 2px;
+        }
+
+        .notice-desc {
+          margin: 0;
+          line-height: 1.4;
+          color: #1e40af;
+        }
+
+        /* STYLING FOOTER ACTIONS */
+        .checkout-footer-actions {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 20px;
+          justify-content: center;
+        }
+
+        .btn-secondary-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: #2563eb;
+          font-weight: 600;
+          font-size: 0.875rem;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+
+        .btn-secondary-link:hover {
+          color: #1d4ed8;
+          text-decoration: underline;
+        }
+
+        @keyframes pulseBadge {
+          0% { transform: scale(1) translate(25%, -25%); }
+          50% { transform: scale(1.15) translate(25%, -25%); }
+          100% { transform: scale(1) translate(25%, -25%); }
+        }
     </style>
 </head>
 
 @php
+    $pendingOrdersCount = 0;
+    $userOrderIds = session()->get('user_orders', []);
+    if (!empty($userOrderIds)) {
+        $pendingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
+            ->where('payment_status', 'pending')
+            ->count();
+    }
+
     /* ── PHP computed values ── */
     $deadlineTs   = $sale->created_at->addHours(1)->timestamp;
     $customerName = $sale->customer->name ?? 'Pelanggan';
@@ -157,47 +230,13 @@
         <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight absolute left-1/2 -translate-x-1/2">Status Pembayaran</h1>
         
         <div class="flex items-center gap-1">
-            <!-- Recent Orders Dropdown -->
-            <div class="relative" x-data="{ openRecent: false }" @click.away="openRecent = false">
-                <button @click="openRecent = !openRecent" class="relative text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
-                    <i class='bx bx-receipt text-xl'></i>
-                    <span x-show="recentOrders.length > 0" x-text="recentOrders.length" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm"></span>
-                </button>
-                
-                <div x-show="openRecent" x-transition.opacity class="absolute top-full right-0 mt-2 w-72 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50 -mr-2 sm:-mr-4" style="display: none;">
-                    <div class="px-4 py-2 border-b border-gray-50 flex justify-between items-center">
-                        <span class="font-bold text-gray-800 text-sm">Riwayat Sesi Ini</span>
-                        <span class="text-xs text-gray-400 font-medium"><span x-text="recentOrders.length"></span> Pesanan</span>
-                    </div>
-                    
-                    <div class="max-h-64 overflow-y-auto">
-                        <template x-if="recentOrders.length === 0">
-                            <div class="px-4 py-6 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
-                                <i class='bx bx-ghost text-3xl text-gray-300'></i>
-                                Belum ada transaksi.
-                            </div>
-                        </template>
-                        <template x-for="order in recentOrders" :key="order.id">
-                            <div class="px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors text-left">
-                                <div class="flex justify-between items-start mb-1.5">
-                                    <span class="text-xs font-mono font-bold text-gray-700" x-text="order.ref"></span>
-                                    <span class="text-[9px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-sm uppercase tracking-wider" x-text="order.status"></span>
-                                </div>
-                                <div class="flex items-center gap-3 mt-2">
-                                    <a :href="order.url" class="text-[11px] font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"><i class='bx bx-link-external'></i> Buka Order</a>
-                                    <a :href="order.pdf_url" class="text-[11px] font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-1"><i class='bx bx-download'></i> PDF</a>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                    
-                    <template x-if="recentOrders.length > 0">
-                        <div class="px-4 pt-3 pb-1 text-center border-t border-gray-50 mt-1">
-                            <button @click="sessionStorage.removeItem('recent_orders'); recentOrders = []; openRecent = false" class="text-[11px] text-red-500 hover:text-red-700 font-bold transition-colors">Kosongkan Riwayat Sesi</button>
-                        </div>
-                    </template>
-                </div>
-            </div>
+            <!-- Riwayat Pesanan Link -->
+            <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors" title="Riwayat Pesanan">
+                <i class='bx bx-receipt text-xl'></i>
+                @if($pendingOrdersCount > 0)
+                    <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
+                @endif
+            </a>
 
             <a href="{{ route('checkout.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
                 <i class='bx bx-cart text-xl'></i>
@@ -284,6 +323,17 @@
 
             {{-- ── 2. Scrollable content ── --}}
             <div class="mobile-scroll-area px-4 py-4 space-y-3">
+
+                <!-- BANNER INFORMASI USER-FRIENDLY -->
+                <div class="user-notice-box fade-in-up">
+                  <div class="notice-icon">💡</div>
+                  <div class="notice-content">
+                    <p class="notice-title">Ingin lanjut memilih barang lain?</p>
+                    <p class="notice-desc">
+                      Tenang, transaksi ini sudah tersimpan aman. Anda bisa lanjut berbelanja dan mengecek status pembayaran kapan saja melalui ikon <strong>Riwayat Pesanan (📋)</strong> di bagian atas.
+                    </p>
+                  </div>
+                </div>
 
                 {{-- Main Payment Card --}}
                 <div class="fade-in-up bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -415,10 +465,17 @@
                     </div>
                 </div>
 
-                {{-- Back link --}}
-                <div class="text-center pb-2">
+                {{-- TOMBOL NAVIGASI LANJUTAN (Bawah Kiri) --}}
+                <div class="checkout-footer-actions pb-2">
                     <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors">
                         ← Kembali ke Beranda
+                    </a>
+                    <a href="{{ route('katalog.index') }}" class="btn-secondary-link text-xs">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Lanjut Belanja
                     </a>
                 </div>
 
@@ -483,6 +540,17 @@
                             <p class="text-[10px] font-semibold opacity-70 uppercase tracking-wider leading-none mb-0.5">Bayar sebelum {{ $deadlineLabel }}</p>
                             <p class="font-mono font-black text-2xl leading-tight" x-text="displayTime">--:--:--</p>
                         </div>
+                    </div>
+
+                    <!-- BANNER INFORMASI USER-FRIENDLY -->
+                    <div class="user-notice-box fade-in-up">
+                      <div class="notice-icon">💡</div>
+                      <div class="notice-content">
+                        <p class="notice-title">Ingin lanjut memilih barang lain?</p>
+                        <p class="notice-desc">
+                          Tenang, transaksi ini sudah tersimpan aman. Anda bisa lanjut berbelanja dan mengecek status pembayaran kapan saja melalui ikon <strong>Riwayat Pesanan (📋)</strong> di bagian atas.
+                        </p>
+                      </div>
                     </div>
 
                     {{-- Order detail card --}}
@@ -564,9 +632,17 @@
                     </div>
                     @endif
 
-                    <div class="mt-1">
+                    {{-- TOMBOL NAVIGASI LANJUTAN (Bawah Kiri) --}}
+                    <div class="checkout-footer-actions justify-start mt-2">
                         <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors">
                             ← Kembali ke Beranda
+                        </a>
+                        <a href="{{ route('katalog.index') }}" class="btn-secondary-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            Lanjut Belanja Produk Lain
                         </a>
                     </div>
                 </div>
@@ -770,6 +846,19 @@
                 startCountdown() {
                     this._tick();
                     this._timer = setInterval(() => this._tick(), 1000);
+                    
+                    // Auto-Check Status (Polling) every 5 seconds
+                    setInterval(() => {
+                        if (this.isCheckingStatus) return; // Don't overlap with manual check
+                        fetch('/api/check-order-status/{{ $sale->id }}')
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'paid' || data.payment_status === 'success') {
+                                    window.location.reload();
+                                }
+                            })
+                            .catch(err => console.error('Polling check failed:', err));
+                    }, 5000);
                 },
 
                 _tick() {
