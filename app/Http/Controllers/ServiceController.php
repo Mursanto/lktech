@@ -404,6 +404,55 @@ class ServiceController extends Controller
             ->with('success', 'Service deleted successfully.');
     }
 
+    /**
+     * Cancel a pending/process service and restore stock.
+     */
+    public function cancel(Service $service)
+    {
+        if (in_array($service->status, ['done', 'cancelled'])) {
+            return back()->with('error', 'Hanya servis dengan status Pending atau Process yang dapat dibatalkan.');
+        }
+
+        try {
+            DB::transaction(function () use ($service) {
+                $service->update(['status' => 'cancelled']);
+
+                // Restore stock for used spareparts
+                foreach ($service->items as $oldItem) {
+                    if (!empty($oldItem->spareparts)) {
+                        foreach ($oldItem->spareparts as $part) {
+                            if (!empty($part['product_id'])) {
+                                $product = \App\Models\Product::find($part['product_id']);
+                                if ($product) {
+                                    $product->increment('stock');
+                                    if ($product->stock > 0 && $product->status === 'sold') {
+                                        $product->update(['status' => 'available']);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Log activity
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'service_cancelled',
+                'model_type' => Service::class,
+                'model_id' => $service->id,
+                'old_values' => ['status' => $service->status], // old status
+                'new_values' => ['status' => 'cancelled'],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ]);
+
+            return back()->with('success', 'Servis berhasil dibatalkan dan stok sparepart telah dikembalikan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal membatalkan servis: ' . $e->getMessage());
+        }
+    }
+
     public function print(Service $service)
     {
         $service->load(['customer', 'technician']);

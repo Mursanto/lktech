@@ -35,7 +35,7 @@ class RentalController extends Controller
             'return_date' => 'required|date|after_or_equal:rental_date',
             'daily_price' => 'required|numeric|min:0',
             'total_price' => 'required|numeric|min:0',
-            'status'      => 'required|in:active,completed,overdue',
+            'status'      => 'required|in:active,completed,overdue,cancelled',
             'notes'       => 'nullable|string',
             'manual_sn'   => 'nullable|string',
         ];
@@ -118,7 +118,7 @@ class RentalController extends Controller
             'return_date'    => 'required|date|after_or_equal:rental_date',
             'daily_price'    => 'nullable|numeric|min:0',
             'total_price'    => 'required|numeric|min:0',
-            'status'         => 'required|in:active,completed,overdue',
+            'status'         => 'required|in:active,completed,overdue,cancelled',
             'notes'          => 'nullable|string',
             'manual_sn'      => 'nullable|string',
         ]);
@@ -166,10 +166,38 @@ class RentalController extends Controller
             ->with('success', 'Data sewa laptop berhasil dihapus.');
     }
 
+    /**
+     * Cancel an active rental and restore stock.
+     */
+    public function cancel(Rental $rental)
+    {
+        if (in_array($rental->status, ['completed', 'cancelled'])) {
+            return back()->with('error', 'Penyewaan yang sudah selesai atau batal tidak dapat dibatalkan.');
+        }
+
+        try {
+            $rental->update(['status' => 'cancelled']);
+
+            // Restore stock
+            $product = $rental->serial_number
+                ? Product::where('serial_number', $rental->serial_number)->first()
+                : Product::whereRaw("CONCAT(brand, ' ', model_series) LIKE ?", ['%' . trim($rental->laptop_name) . '%'])->first();
+
+            if ($product) {
+                $product->increment('stock');
+                if ($product->stock > 0 && $product->status === 'rented') {
+                    $product->update(['status' => 'available']);
+                }
+            }
+
+            return back()->with('success', 'Data sewa laptop berhasil dibatalkan dan stok telah dikembalikan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal membatalkan penyewaan: ' . $e->getMessage());
+        }
+    }
+
     public function export()
     {
         return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\RentalsExport, 'sewa_laptop.xlsx');
     }
 }
-
-

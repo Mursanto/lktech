@@ -92,12 +92,15 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify
 Route::middleware(['auth', 'role:Admin|Staff'])->group(function () {
     Route::post('/sales/{sale}/mark-paid', [SaleController::class, 'markAsPaid'])->name('sales.mark-paid');
+    Route::patch('/sales/{sale}/cancel', [SaleController::class, 'cancel'])->name('sales.cancel');
     Route::resource('sales', SaleController::class)->except(['index', 'show']);
+    Route::patch('/rentals/{rental}/cancel', [RentalController::class, 'cancel'])->name('rentals.cancel');
     Route::resource('rentals', RentalController::class)->except(['index', 'show']);
 });
 
 // 3. AKSES SERVIS (Admin & Teknisi & Staff) - Bisa Modify
 Route::middleware(['auth', 'role:Admin|Teknisi|Staff'])->group(function () {
+    Route::patch('/services/{service}/cancel', [ServiceController::class, 'cancel'])->name('services.cancel');
     Route::resource('services', ServiceController::class)->except(['index', 'show']);
 });
 

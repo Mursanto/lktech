@@ -271,27 +271,51 @@
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="no-print mt-6 flex justify-center gap-2">
+                    <div class="no-print mt-6 flex justify-center flex-wrap gap-2">
                         <a href="{{ route('services.index') }}" class="px-3 py-1.5 bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-left-arrow-alt text-base mr-1'></i> Kembali
                         </a>
-                        @role('Admin')
-                        <a href="{{ route('services.edit', $service->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                            <i class='bx bx-edit text-sm mr-1'></i> Edit
-                        </a>
-                        <form action="{{ route('services.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data service ini?')" class="inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                                <i class='bx bx-trash text-sm mr-1'></i> Hapus
+
+                        @if($service->status === 'pending' || $service->status === 'process')
+                            @role('Admin')
+                            <a href="{{ route('services.edit', $service->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                <i class='bx bx-edit text-sm mr-1'></i> Edit
+                            </a>
+                            @endrole
+
+                            <form action="{{ route('services.cancel', $service->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan servis ini? Stok sparepart akan dikembalikan.')" class="inline">
+                                @csrf @method('PATCH')
+                                <button type="submit" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-x-circle text-sm mr-1'></i> Batalkan Servis
+                                </button>
+                            </form>
+
+                            @role('Admin')
+                            <form action="{{ route('services.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data service ini?')" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="px-3 py-1.5 bg-white border border-red-500 text-red-600 hover:bg-red-50 text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-trash text-sm mr-1'></i> Hapus
+                                </button>
+                            </form>
+                            @endrole
+
+                            @if(!$service->isPaid())
+                            <button type="button" onclick="payWithSnap('service', {{ $service->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
+                                <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
                             </button>
-                        </form>
-                        @endrole
-                        @if(!$service->isPaid())
-                        <button type="button" onclick="payWithSnap('service', {{ $service->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
-                            <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
-                        </button>
+                            @endif
+                        @else
+                            @role('Admin')
+                            <form action="{{ route('services.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data service ini?')" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="px-3 py-1.5 bg-white border border-red-500 text-red-600 hover:bg-red-50 text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-trash text-sm mr-1'></i> Hapus
+                                </button>
+                            </form>
+                            @endrole
                         @endif
-                        <button onclick="window.print()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+
+                        <button onclick="window.print()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-printer text-sm mr-1'></i> Cetak
                         </button>
                     </div>

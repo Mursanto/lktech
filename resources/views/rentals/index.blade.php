@@ -21,6 +21,39 @@
     </x-slot>
 
     <div class="flex flex-col h-full space-y-4">
+        <!-- Filter Bar -->
+        <form id="filterForm" action="{{ route('rentals.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Filter Tanggal</label>
+                    <input type="date" name="date" value="{{ request('date') }}" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Metode Bayar</label>
+                    <select name="payment_method" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
+                        <option value="">Semua Metode</option>
+                        <option value="cash" {{ request('payment_method') == 'cash' ? 'selected' : '' }}>Tunai (Cash)</option>
+                        <option value="transfer" {{ request('payment_method') == 'transfer' ? 'selected' : '' }}>Transfer Bank</option>
+                        <option value="qris" {{ request('payment_method') == 'qris' ? 'selected' : '' }}>QRIS / E-Wallet</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Status Pembayaran</label>
+                    <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
+                        <option value="">Semua Status</option>
+                        <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Lunas / Sukses</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
+                        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="relative flex-grow max-w-xs">
+                <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-lg'></i>
+                <input type="text" name="search" value="{{ request('search') }}" oninput="debounceSubmit()" placeholder="Cari No. Kontrak atau Pelanggan..." 
+                       class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
+            </div>
+        </form>
+
         <!-- Dashboard Sewa Mini -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 shrink-0">
             <div class="bg-white p-4 rounded-3xl border border-natural-100 shadow-sm flex items-center gap-4">
@@ -61,6 +94,8 @@
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Kontrak</th>
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Penyewa</th>
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Unit</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
+                            <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status Pembayaran</th>
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Tgl Kembali</th>
                             <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -69,7 +104,14 @@
                         @forelse($rentals as $rental)
                         <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
                             <td class="px-4 py-2 whitespace-nowrap">
-                                <p class="text-xs font-semibold text-gray-900">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
+                                <div class="flex items-center gap-1.5 mb-1">
+                                    <p class="text-xs font-semibold text-gray-900">#{{ $rental->rental_number ?? 'RW-'.str_pad($rental->id, 4, '0', STR_PAD_LEFT) }}</p>
+                                    @if(strtolower($rental->payment_method) == 'cash' || $rental->payment_status === 'success')
+                                        <span class="text-[8px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200" title="Kasir POS Direct">🏪 Toko</span>
+                                    @else
+                                        <span class="text-[8px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200" title="Pesanan dari website">🌐 Web</span>
+                                    @endif
+                                </div>
                                 <p class="text-[10px] text-gray-500 font-medium">Tgl: {{ $rental->created_at->format('d/m/y') }}</p>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap">
@@ -89,6 +131,30 @@
                                 </div>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-[10px] font-bold rounded border uppercase tracking-wider {{ strtolower($rental->payment_method) == 'cash' ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200' }}">
+                                    {{ $rental->payment_method ?? 'Cash' }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-2 whitespace-nowrap text-center">
+                                @if($rental->payment_status === 'success')
+                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider">
+                                        ✓ LUNAS
+                                    </span>
+                                @elseif($rental->payment_status === 'pending')
+                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider">
+                                        ⏳ PENDING
+                                    </span>
+                                @elseif($rental->payment_status === 'failed' || $rental->payment_status === 'cancelled')
+                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider">
+                                        🚫 BATAL
+                                    </span>
+                                @else
+                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-wider">
+                                        EXPIRED
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-2 whitespace-nowrap">
                                 @php
                                     $isLate = ($rental->status == 'active' && now()->startOfDay() > $rental->return_date) || $rental->status == 'overdue';
                                     $isDone = $rental->status == 'completed';
@@ -103,9 +169,35 @@
                                     <a href="{{ route('rentals.show', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
                                         <i class='bx bx-show text-base'></i>
                                     </a>
-                                    <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Kembalikan / Update">
-                                        <i class='bx bx-redo text-base'></i>
-                                    </a>
+                                    
+                                    @if($rental->payment_status === 'pending')
+                                        <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
+                                            <i class='bx bx-edit-alt text-base'></i>
+                                        </a>
+                                    @endif
+                                    
+                                    @if($rental->payment_status === 'success')
+                                        <a href="{{ route('rentals.show', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">
+                                            <i class='bx bx-printer text-base'></i>
+                                        </a>
+                                    @endif
+                                    
+                                    @if($rental->status == 'active' && $rental->payment_status === 'success')
+                                        <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Kembalikan Unit">
+                                            <i class='bx bx-redo text-base'></i>
+                                        </a>
+                                    @endif
+                                    
+                                    @role('Admin')
+                                    @if($rental->payment_status === 'failed' || $rental->payment_status === 'cancelled')
+                                    <form action="{{ route('rentals.destroy', $rental->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus penyewaan ini?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="p-1 text-xs text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
+                                            <i class='bx bx-trash text-base'></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                    @endrole
                                 </div>
                             </td>
                         </tr>
