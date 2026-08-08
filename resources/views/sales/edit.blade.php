@@ -178,6 +178,15 @@
                                     </select>
                                 </div>
                                 <div>
+                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Status Pesanan</label>
+                                    <select name="order_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500">
+                                        <option value="menunggu_pembayaran" {{ $sale->order_status == 'menunggu_pembayaran' ? 'selected' : '' }}>Menunggu Pembayaran</option>
+                                        <option value="diproses" {{ $sale->order_status == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                                        <option value="selesai" {{ $sale->order_status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                                        <option value="batal" {{ $sale->order_status == 'batal' ? 'selected' : '' }}>Batal</option>
+                                    </select>
+                                </div>
+                                <div>
                                     <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Catatan</label>
                                     <textarea name="notes" rows="2" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Catatan tambahan...">{{ $sale->notes }}</textarea>
                                 </div>

@@ -111,7 +111,11 @@
                 <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
                     @if($pendingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
+                    @elseif($processingOrdersCount > 0)
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-blue-500 rounded-full shadow-sm border-2 border-white">{{ $processingOrdersCount }}</span>
+                    @elseif($hasOrderHistory)
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center w-[10px] h-[10px] transform translate-x-0 -translate-y-1/4 bg-gray-400 border border-white rounded-circle rounded-full"></span>
                     @endif
                 </a>
 
@@ -145,7 +149,11 @@
                 <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
                     @if($pendingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
+                    @elseif($processingOrdersCount > 0)
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-blue-500 rounded-full shadow-sm border-2 border-white">{{ $processingOrdersCount }}</span>
+                    @elseif($hasOrderHistory)
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center w-[10px] h-[10px] transform translate-x-0 -translate-y-1/4 bg-gray-400 border border-white rounded-circle rounded-full"></span>
                     @endif
                 </a>
 

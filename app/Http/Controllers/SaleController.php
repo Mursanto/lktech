@@ -333,13 +333,19 @@ class SaleController extends Controller
                 }
 
                 // 5. Update Faktur Induk
-                $sale->update([
+                $saleUpdateData = [
                     'customer_id' => $customerId,
                     'total_amount' => $grandTotal,
                     'profit_amount' => $totalProfit,
                     'payment_method' => $request->payment_method,
                     'notes' => $request->notes,
-                ]);
+                ];
+
+                if ($request->has('order_status')) {
+                    $saleUpdateData['order_status'] = $request->order_status;
+                }
+
+                $sale->update($saleUpdateData);
             });
 
             return redirect()->route('sales.index')->with('success', 'Transaksi berhasil diperbarui.');
@@ -502,7 +508,10 @@ class SaleController extends Controller
         try {
             DB::transaction(function () use ($sale) {
                 // Update status
-                $sale->update(['payment_status' => 'success']);
+                $sale->update([
+                    'payment_status' => 'success',
+                    'order_status' => 'diproses'
+                ]);
 
                 // Deduct stock
                 foreach ($sale->saleDetails as $detail) {
@@ -530,4 +539,56 @@ class SaleController extends Controller
             return back()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Cancel a pending sale and restore stock.
+     */
+    public function cancel(Sale $sale)
+    {
+        if ($sale->payment_status !== 'pending') {
+            return back()->with('error', 'Hanya transaksi dengan status Pending yang dapat dibatalkan.');
+        }
+
+        try {
+            DB::transaction(function () use ($sale) {
+                $sale->update([
+                    'payment_status' => 'failed',
+                    'order_status' => 'batal'
+                ]); // Use 'failed' to denote cancelled in this system
+
+                // Restore stock
+                foreach ($sale->saleDetails as $detail) {
+                    $product = Product::lockForUpdate()->find($detail->product_id);
+                    if ($product) {
+                        $product->increment('stock', $detail->quantity);
+                        if ($product->stock > 0 && $product->status === 'Sold') {
+                            $product->update(['status' => 'available']);
+                        }
+                    }
+                }
+            });
+
+            return back()->with('success', 'Transaksi berhasil dibatalkan dan stok produk telah dikembalikan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal membatalkan transaksi: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Mark sale as completed (Barang sudah disiapkan/dikirim)
+     */
+    public function completeOrder(Sale $sale)
+    {
+        if ($sale->order_status !== 'diproses') {
+            return back()->with('error', 'Hanya pesanan yang sedang diproses yang dapat diselesaikan.');
+        }
+
+        try {
+            $sale->update(['order_status' => 'selesai']);
+            return back()->with('success', 'Pesanan berhasil diselesaikan. Status pelanggan telah diperbarui menjadi Selesai.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menyelesaikan pesanan: ' . $e->getMessage());
+        }
+    }
 }
+

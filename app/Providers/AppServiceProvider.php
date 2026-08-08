@@ -41,14 +41,21 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
             $userOrderIds = session()->get('user_orders', []);
             $pendingCount = 0;
+            $processingCount = 0;
+            $hasHistory = false;
             
             if (!empty($userOrderIds)) {
-                $pendingCount = \App\Models\Sale::whereIn('id', $userOrderIds)
-                                     ->where('payment_status', 'pending')
-                                     ->count();
+                $orders = \App\Models\Sale::whereIn('id', $userOrderIds)->get();
+                $pendingCount = $orders->where('order_status', 'menunggu_pembayaran')->count();
+                $processingCount = $orders->where('order_status', 'diproses')->count();
+                $hasHistory = $orders->count() > 0;
             }
 
-            $view->with('pendingOrdersCount', $pendingCount);
+            $view->with([
+                'pendingOrdersCount' => $pendingCount,
+                'processingOrdersCount' => $processingCount,
+                'hasOrderHistory' => $hasHistory
+            ]);
         });
     }
 }

@@ -158,9 +158,14 @@
                                 </div>
                                 <div class="flex justify-between items-center pt-0.5">
                                     <span class="font-medium">Status:</span>
-                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->isPaid() ? 'bg-green-100 text-green-800 border-green-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200' }} border">
-                                        {{ $sale->isPaid() ? '✓ LUNAS' : '⌛ PENDING' }}
-                                    </span>
+                                    <div class="flex gap-1">
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->payment_status === 'success' ? 'bg-green-100 text-green-800 border-green-200' : ($sale->payment_status === 'failed' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200') }} border">
+                                            {{ strtoupper($sale->payment_status === 'success' ? 'LUNAS' : ($sale->payment_status === 'failed' ? 'BATAL' : 'PENDING')) }}
+                                        </span>
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->order_status === 'selesai' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : ($sale->order_status === 'batal' ? 'bg-red-100 text-red-800 border-red-200' : ($sale->order_status === 'diproses' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-orange-100 text-orange-800 border-orange-200')) }} border">
+                                            {{ strtoupper(str_replace('_', ' ', $sale->order_status)) }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -237,33 +242,66 @@
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="no-print mt-6 flex justify-center gap-2">
+                    <div class="no-print mt-6 flex justify-center flex-wrap gap-2">
                         <a href="{{ route('sales.index') }}" class="px-3 py-1.5 bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-left-arrow-alt text-base mr-1'></i> Kembali
                         </a>
-                        @role('Admin')
-                        <a href="{{ route('sales.edit', $sale->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                            <i class='bx bx-edit text-sm mr-1'></i> Edit
-                        </a>
-                        <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini? Data stok akan dikembalikan.')" class="inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                                <i class='bx bx-trash text-sm mr-1'></i> Hapus
+
+                        @if($sale->payment_status === 'pending')
+                            @role('Admin')
+                            <a href="{{ route('sales.edit', $sale->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                <i class='bx bx-edit text-sm mr-1'></i> Edit
+                            </a>
+                            @endrole
+
+                            <form action="{{ route('sales.cancel', $sale->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan transaksi ini? Stok barang akan dikembalikan.')" class="inline">
+                                @csrf @method('PATCH')
+                                <button type="submit" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-x-circle text-sm mr-1'></i> Batalkan Transaksi
+                                </button>
+                            </form>
+
+                            @role('Admin')
+                            <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini secara permanen? Data stok akan dikembalikan.')" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="px-3 py-1.5 bg-white border border-red-500 text-red-600 hover:bg-red-50 text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-trash text-sm mr-1'></i> Hapus
+                                </button>
+                            </form>
+                            @endrole
+
+                            <form action="{{ route('sales.mark-paid', $sale->id) }}" method="POST" onsubmit="return confirm('Konfirmasi Lunas dan mulai proses pesanan ini? Stok akan dipotong dan Invoice otomatis dikirim ke pelanggan.')" class="inline">
+                                @csrf
+                                <button type="submit" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-check-circle text-sm mr-1'></i> Konfirmasi Lunas & Proses
+                                </button>
+                            </form>
+                            <button type="button" onclick="payWithSnap('sale', {{ $sale->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
+                                <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
                             </button>
-                        </form>
-                        @endrole
-                        @if(!$sale->isPaid())
-                        <form action="{{ route('sales.mark-paid', $sale->id) }}" method="POST" onsubmit="return confirm('Tandai pesanan ini sebagai LUNAS? Stok akan dipotong dan Invoice otomatis dikirim ke pelanggan.')" class="inline">
-                            @csrf
-                            <button type="submit" class="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                                <i class='bx bx-check-circle text-sm mr-1'></i> Tandai Lunas
-                            </button>
-                        </form>
-                        <button type="button" onclick="payWithSnap('sale', {{ $sale->id }})" id="pay-button" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded flex items-center shadow-sm transition-colors duration-200">
-                            <i class='bx bx-credit-card text-sm mr-1'></i> Bayar Sekarang
-                        </button>
                         @endif
-                        <button onclick="window.print()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+
+                        @if($sale->payment_status === 'failed' || $sale->payment_status === 'success')
+                            @role('Admin')
+                            <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini secara permanen?')" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="px-3 py-1.5 bg-white border border-red-500 text-red-600 hover:bg-red-50 text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-trash text-sm mr-1'></i> Hapus
+                                </button>
+                            </form>
+                            @endrole
+                        @endif
+
+                        @if($sale->order_status === 'diproses')
+                            <form action="{{ route('sales.complete', $sale->id) }}" method="POST" onsubmit="return confirm('Selesaikan pesanan ini? Status barang akan berubah menjadi Selesai di sisi pelanggan.')" class="inline">
+                                @csrf
+                                <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                                    <i class='bx bx-package text-sm mr-1'></i> Selesaikan Pesanan
+                                </button>
+                            </form>
+                        @endif
+
+                        <button onclick="window.print()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-printer text-sm mr-1'></i> Cetak
                         </button>
                     </div>

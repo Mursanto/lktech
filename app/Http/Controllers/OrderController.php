@@ -24,13 +24,10 @@ class OrderController extends Controller
             ->get();
 
         // Categorize
-        $pendingOrders = $orders->where('payment_status', 'pending');
-        // Treat success as 'Diproses' if there's no shipping status yet, or we just put it there.
-        // Assuming success means paid.
-        $processingOrders = $orders->where('payment_status', 'success'); 
-        // For 'Selesai', we don't have a distinct status yet in Sale unless we add one, we'll leave it empty for now
-        $completedOrders = collect();
-        $cancelledOrders = $orders->where('payment_status', 'failed');
+        $pendingOrders = $orders->where('order_status', 'menunggu_pembayaran');
+        $processingOrders = $orders->where('order_status', 'diproses');
+        $completedOrders = $orders->where('order_status', 'selesai');
+        $cancelledOrders = $orders->where('order_status', 'batal');
 
         return view('orders.index', compact(
             'pendingOrders', 

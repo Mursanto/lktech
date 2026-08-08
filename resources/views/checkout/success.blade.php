@@ -374,6 +374,19 @@
         .qris-img-trigger:hover {
           transform: scale(1.02);
         }
+
+        /* Penyesuaian Tombol Sejajar di Mobile */
+        @media (max-width: 576px) {
+          .btn-mobile-action {
+            font-size: 0.78rem !important; /* Ukuran font lebih proporsional untuk 2 kolom */
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            white-space: nowrap; /* Mencegah teks melipat ke bawah */
+          }
+          .btn-mobile-action i {
+            font-size: 0.9rem !important; /* Ukuran ikon disesuaikan */
+          }
+        }
     </style>
 </head>
 
@@ -408,7 +421,7 @@
          CHECKOUT FOCUS HEADER
          ════════════════════════════════════════════════ --}}
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between px-4 h-14 lg:px-8 relative" x-data="{ recentOrders: [] }" x-init="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')" @recent-orders-updated.window="recentOrders = JSON.parse(sessionStorage.getItem('recent_orders') || '[]')">
-        <a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
+        <a href="{{ route('orders.index') }}" class="text-gray-600 hover:text-brand-600 flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors">
             <i class='bx bx-arrow-back text-xl'></i>
         </a>
         <h1 class="font-bold text-gray-800 text-sm md:text-base tracking-tight absolute left-1/2 -translate-x-1/2">Status Pembayaran</h1>
@@ -427,6 +440,44 @@
             </a>
         </div>
     </header>
+
+    <!-- BREADCRUMB DESKTOP (Hidden on Mobile) -->
+    <div class="hidden lg:block max-w-[1080px] w-full mx-auto px-5 mt-6 -mb-2">
+        <nav aria-label="breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                <li>
+                    <a href="/" class="hover:text-brand-600 flex items-center gap-1 transition-colors">
+                        <i class="bx bx-home"></i> Home
+                    </a>
+                </li>
+                <li><span class="text-gray-400">/</span></li>
+                <li>
+                    <a href="/katalog" class="hover:text-brand-600 transition-colors">Katalog</a>
+                </li>
+                <li><span class="text-gray-400">/</span></li>
+                <li class="font-semibold text-gray-900" aria-current="page">Status Pembayaran</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- BREADCRUMB MOBILE (Hidden on Desktop) -->
+    <div class="block lg:hidden px-4 mt-3 mb-1">
+        <nav aria-label="breadcrumb">
+            <ol class="flex items-center space-x-1.5 text-xs text-gray-500">
+                <li>
+                    <a href="/" class="hover:text-brand-600 flex items-center gap-1">
+                        <i class="bx bx-home"></i> Home
+                    </a>
+                </li>
+                <li><span class="text-gray-400">/</span></li>
+                <li>
+                    <a href="/katalog" class="hover:text-brand-600">Katalog</a>
+                </li>
+                <li><span class="text-gray-400">/</span></li>
+                <li class="font-semibold text-gray-900">Status Pembayaran</li>
+            </ol>
+        </nav>
+    </div>
 
     {{-- ════════════════════════════════════════════════
          ✅ SUCCESS STATE
@@ -454,21 +505,26 @@
                 <p class="text-sm text-gray-600 leading-relaxed mb-5">
                     "Mohon diperhatikan, biaya kirim belum kami masukkan ke total tadi. Tenang, Admin kami siap bantu di WA untuk carikan kurir yang pas & infokan tarifnya. Klik tombol di bawah untuk langsung chat!"
                 </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-2 mt-2">
                     <a href="https://wa.me/628567354046?text={{ $waSuccessMsg }}" target="_blank"
-                       class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm">
-                        <i class='bx bxl-whatsapp text-xl'></i> Hubungi via WA
+                       class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-2 rounded-xl transition-all shadow-sm flex justify-center items-center gap-1 btn-mobile-action">
+                        <i class='bx bxl-whatsapp text-lg'></i> Hubungi WA
                     </a>
                     <a href="{{ route('checkout.invoice', $sale->id) }}"
-                       class="w-full bg-white border-2 border-brand-500 hover:bg-brand-50 text-brand-600 font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex justify-center items-center gap-2 text-sm">
-                        <i class='bx bx-download text-xl'></i> Unduh Invoice PDF
+                       class="w-full bg-white border-2 border-brand-500 hover:bg-brand-50 text-brand-600 font-bold py-2 rounded-xl transition-all shadow-sm flex justify-center items-center gap-1 btn-mobile-action">
+                        <i class='bx bx-download text-lg'></i> Invoice PDF
                     </a>
                 </div>
             </div>
 
-            <a href="{{ route('home') }}" class="text-sm text-gray-400 hover:text-brand-600 font-medium transition-colors inline-block mt-4">
-                ← Kembali ke Beranda
-            </a>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
+                <a href="{{ route('katalog.index') }}" class="w-full sm:w-auto px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 text-sm">
+                    <i class='bx bx-shopping-bag text-lg'></i> Belanja Lagi di Katalog
+                </a>
+                <a href="{{ route('orders.index') }}" class="w-full sm:w-auto px-5 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 text-sm">
+                    <i class='bx bx-receipt text-lg'></i> Lihat Pesanan Saya
+                </a>
+            </div>
         </div>
 
         <div class="w-full max-w-6xl text-left">
@@ -649,17 +705,12 @@
                     </div>
                 </div>
 
-                {{-- TOMBOL NAVIGASI LANJUTAN (Bawah Kiri) --}}
-                <div class="checkout-footer-actions pb-2">
-                    <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors">
-                        ← Kembali ke Beranda
+                <div class="grid grid-cols-2 gap-2 mt-3 px-4 pb-4 lg:hidden">
+                    <a href="{{ route('katalog.index') }}" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 rounded-xl transition-all shadow-sm flex justify-center items-center gap-1 btn-mobile-action">
+                        <i class='bx bx-shopping-bag text-lg'></i> Ke Katalog
                     </a>
-                    <a href="{{ route('katalog.index') }}" class="btn-secondary-link text-xs">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                        Lanjut Belanja
+                    <a href="{{ route('orders.index') }}" class="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2 rounded-xl transition-all shadow-sm flex justify-center items-center gap-1 btn-mobile-action">
+                        <i class='bx bx-receipt text-lg'></i> Cek Pesanan
                     </a>
                 </div>
                 
@@ -830,17 +881,12 @@
                     </div>
                     @endif
 
-                    {{-- TOMBOL NAVIGASI LANJUTAN (Bawah Kiri) --}}
-                    <div class="checkout-footer-actions justify-start mt-2">
-                        <a href="{{ route('home') }}" class="text-xs text-gray-400 hover:text-brand-600 font-medium transition-colors">
-                            ← Kembali ke Beranda
+                    <div class="flex items-center gap-3 mt-4">
+                        <a href="{{ route('katalog.index') }}" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 text-sm">
+                            <i class='bx bx-shopping-bag text-lg'></i> Belanja Lagi di Katalog
                         </a>
-                        <a href="{{ route('katalog.index') }}" class="btn-secondary-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="19" y1="12" x2="5" y2="12"></line>
-                                <polyline points="12 19 5 12 12 5"></polyline>
-                            </svg>
-                            Lanjut Belanja Produk Lain
+                        <a href="{{ route('orders.index') }}" class="px-5 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 text-sm">
+                            <i class='bx bx-receipt text-lg'></i> Lihat Pesanan Saya
                         </a>
                     </div>
                     
