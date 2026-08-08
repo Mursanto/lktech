@@ -43,6 +43,7 @@ Route::get('/checkout/success/{order_id}/invoice', [App\Http\Controllers\CartCon
 // Orders History & Polling API
 Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
 Route::get('/api/check-order-status/{id}', [App\Http\Controllers\OrderController::class, 'checkStatus']);
+Route::patch('/checkout/cancel/{id}', [App\Http\Controllers\OrderController::class, 'cancelOrder'])->name('checkout.cancel');
 
 // Static Pages
 Route::view('/tentang-kami', 'pages.tentang-kami')->name('tentang-kami');

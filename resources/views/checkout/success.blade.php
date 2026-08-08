@@ -331,6 +331,29 @@
           }
         }
 
+        /* PEMBATALAN PESANAN */
+        .cancel-order-wrapper {
+          background-color: #f8fafc;
+          border: 1px dashed #cbd5e1;
+          border-radius: 10px;
+          padding: 12px;
+        }
+
+        .btn-cancel-order {
+          background: none;
+          border: none;
+          color: #dc2626; /* Merah soft */
+          font-weight: 600;
+          font-size: 0.85rem;
+          cursor: pointer;
+          text-decoration: underline;
+          transition: color 0.2s;
+        }
+
+        .btn-cancel-order:hover {
+          color: #991b1b;
+        }
+
         /* ANIMASI POP-UP */
         @keyframes fadeIn {
           from { opacity: 0; }
@@ -355,14 +378,6 @@
 </head>
 
 @php
-    $pendingOrdersCount = 0;
-    $userOrderIds = session()->get('user_orders', []);
-    if (!empty($userOrderIds)) {
-        $pendingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
-            ->where('payment_status', 'pending')
-            ->count();
-    }
-
     /* ── PHP computed values ── */
     $deadlineTs   = $sale->created_at->addHours(1)->timestamp;
     $customerName = $sale->customer->name ?? 'Pelanggan';
@@ -647,6 +662,21 @@
                         Lanjut Belanja
                     </a>
                 </div>
+                
+                <!-- BANNER / AKSES BANTUAN DAN PEMBATALAN (MOBILE) -->
+                <div class="cancel-order-wrapper mt-4 text-center">
+                  <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px;">
+                    Salah pilih produk atau ingin ubah alamat pengiriman?
+                  </p>
+                  
+                  <form action="{{ route('checkout.cancel', $sale->id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn-cancel-order" onclick="return confirmCancel(event)">
+                      🚫 Batalkan Pesanan Ini
+                    </button>
+                  </form>
+                </div>
 
                 {{-- Rekomendasi Produk Terlaris (Mobile) --}}
                 <div class="px-4 pb-4">
@@ -812,6 +842,21 @@
                             </svg>
                             Lanjut Belanja Produk Lain
                         </a>
+                    </div>
+                    
+                    <!-- BANNER / AKSES BANTUAN DAN PEMBATALAN (DESKTOP) -->
+                    <div class="cancel-order-wrapper mt-4 text-center">
+                      <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 6px;">
+                        Salah pilih produk atau ingin ubah alamat pengiriman?
+                      </p>
+                      
+                      <form action="{{ route('checkout.cancel', $sale->id) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn-cancel-order" onclick="return confirmCancel(event)">
+                          🚫 Batalkan Pesanan Ini
+                        </button>
+                      </form>
                     </div>
                 </div>
 
@@ -1128,6 +1173,15 @@
                 closeQrisModalDirect();
             }
         });
+        
+        // Konfirmasi Pembatalan Pesanan
+        function confirmCancel(event) {
+            if(!confirm('Apakah Anda yakin ingin membatalkan pesanan ini? Stok produk akan dikembalikan dan pesanan tidak dapat dilanjutkan.')) {
+                event.preventDefault();
+                return false;
+            }
+            return true;
+        }
     </script>
 
     @if($sale->payment_status === 'success')

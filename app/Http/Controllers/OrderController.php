@@ -55,4 +55,33 @@ class OrderController extends Controller
             'payment_status' => $sale->payment_status
         ]);
     }
+
+    public function cancelOrder(Request $request, $id)
+    {
+        $sale = Sale::with('saleDetails.product')->findOrFail($id);
+
+        $userOrderIds = session()->get('user_orders', []);
+        
+        // Cek otorisasi
+        if (!in_array($sale->id, $userOrderIds)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        if ($sale->payment_status !== 'pending') {
+            return redirect()->back()->with('error', 'Pesanan tidak dapat dibatalkan.');
+        }
+
+        // 1. Ubah status pesanan menjadi dibatalkan
+        $sale->payment_status = 'failed'; 
+        $sale->save();
+
+        // 2. Kembalikan stok produk jika saat checkout stok berkurang
+        foreach ($sale->saleDetails as $item) {
+            if ($item->product) {
+                $item->product->increment('stock', $item->quantity);
+            }
+        }
+
+        return redirect()->route('katalog.index')->with('success', 'Pesanan berhasil dibatalkan dan stok telah dikembalikan.');
+    }
 }

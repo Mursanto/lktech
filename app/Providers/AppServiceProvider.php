@@ -37,5 +37,18 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             // Ignore if DB is not ready
         }
+
+        \Illuminate\Support\Facades\View::composer('*', function ($view) {
+            $userOrderIds = session()->get('user_orders', []);
+            $pendingCount = 0;
+            
+            if (!empty($userOrderIds)) {
+                $pendingCount = \App\Models\Sale::whereIn('id', $userOrderIds)
+                                     ->where('payment_status', 'pending')
+                                     ->count();
+            }
+
+            $view->with('pendingOrdersCount', $pendingCount);
+        });
     }
 }
