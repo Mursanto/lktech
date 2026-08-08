@@ -329,10 +329,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <div class="flex justify-between items-end mb-6">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-black text-gray-900 font-montserrat tracking-tight mb-1 flex items-center gap-2">
-                        <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris & Aksesoris
+                    <h2 class="text-xl sm:text-2xl font-black text-gray-900 font-montserrat tracking-tight mb-1 flex items-center gap-2 whitespace-nowrap">
+                        <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris
                     </h2>
-                    <p class="text-gray-500 text-sm">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
+                    <p class="text-gray-500 text-xs sm:text-sm">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
                 </div>
             </div>
 
