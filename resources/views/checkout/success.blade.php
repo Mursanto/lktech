@@ -207,6 +207,101 @@
           position: sticky;
           top: 90px;
         }
+
+        /* OVERLAY MODAL (Latar Belakang Gelap) */
+        .qris-modal-overlay {
+          display: none; /* Default Tersembunyi */
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.75); /* Effect Dimmer Gelap */
+          backdrop-filter: blur(4px); /* Efek Blur di belakang pop-up */
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          animation: fadeIn 0.25s ease-out;
+        }
+
+        /* KOTAK KONTEN MODAL */
+        .qris-modal-content {
+          background: #ffffff;
+          border-radius: 16px;
+          max-width: 420px;
+          width: 100%;
+          padding: 24px;
+          position: relative;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+          text-align: center;
+          animation: scaleUp 0.25s ease-out;
+        }
+
+        /* TOMBOL CLOSE (X) */
+        .qris-modal-close {
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          font-size: 28px;
+          font-weight: bold;
+          color: #64748b;
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+
+        .qris-modal-close:hover {
+          color: #0f172a;
+        }
+
+        /* GAMBAR QRIS BESAR */
+        .qris-large-img {
+          width: 100%;
+          max-width: 320px;
+          height: auto;
+          border-radius: 12px;
+          border: 1px solid #e2e8f0;
+          margin: 12px 0;
+        }
+
+        .btn-modal-done {
+          width: 100%;
+          padding: 12px;
+          background-color: #f1f5f9;
+          color: #475569;
+          border: none;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          margin-top: 8px;
+          transition: background-color 0.2s;
+        }
+
+        .btn-modal-done:hover {
+          background-color: #e2e8f0;
+        }
+
+        /* ANIMASI POP-UP */
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+          from { transform: scale(0.85); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Cursor Pointer untuk Indikasi Bisa Diklik */
+        .qris-img-trigger {
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .qris-img-trigger:hover {
+          transform: scale(1.02);
+        }
     </style>
 </head>
 
@@ -423,8 +518,8 @@
                     @if($isQris)
                     <div class="px-4 pb-4 flex items-center gap-3 border-t border-gray-50 pt-3">
                         {{-- Mini QRIS thumbnail, tap to open modal --}}
-                        <button @click="showQrisModal = true"
-                                class="relative shrink-0 w-[100px] h-[100px] bg-white border-2 border-dashed border-brand-200 rounded-xl overflow-hidden flex items-center justify-center group">
+                        <button type="button" onclick="openQrisModal()"
+                                class="relative shrink-0 w-[100px] h-[100px] bg-white border-2 border-dashed border-brand-200 rounded-xl overflow-hidden flex items-center justify-center group qris-img-trigger">
                             <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS"
                                  class="w-full h-full object-cover rounded-lg opacity-90 group-hover:opacity-100 transition-opacity">
                             <div class="absolute inset-0 bg-brand-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
@@ -435,8 +530,8 @@
                         <div class="flex-1 min-w-0">
                             <p class="text-xs font-bold text-gray-700 mb-1">Bayar via QRIS</p>
                             <p class="text-[10px] text-gray-500 leading-relaxed">Tap gambar untuk memperbesar kode QR agar mudah di-scan</p>
-                            <button @click="showQrisModal = true"
-                                    class="mt-2 text-xs font-bold text-brand-600 flex items-center gap-1">
+                            <button type="button" onclick="openQrisModal()"
+                                    class="mt-2 text-xs font-bold text-brand-600 flex items-center gap-1 btn-qris-modal">
                                 <i class='bx bx-qr-scan'></i> Tampilkan QR Code
                             </button>
                         </div>
@@ -683,7 +778,7 @@
                     </div>
 
                     <div class="fade-in-up bg-white border border-gray-200 rounded-2xl p-4 shadow-sm mb-6 inline-block max-w-sm w-full relative group">
-                        <button @click="showQrisModal = true" class="w-full relative block overflow-hidden rounded-xl bg-gray-50 flex justify-center">
+                        <button type="button" onclick="openQrisModal()" class="w-full relative block overflow-hidden rounded-xl bg-gray-50 flex justify-center qris-img-trigger">
                             <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS LKTech TN Sereal"
                                  class="w-full h-auto object-contain rounded-xl max-h-72">
                             <div class="absolute inset-0 bg-brand-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
@@ -763,41 +858,30 @@
              MODALS (shared mobile + desktop)
              ══════════════════════════════════════════════ --}}
 
-        {{-- Modal: QRIS Full Screen --}}
-        <div x-show="showQrisModal"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             @click.self="showQrisModal = false"
-             class="modal-backdrop"
-             style="display:none">
-            <div class="modal-sheet slide-up">
-                <div class="modal-handle lg:hidden"></div>
-                <div class="flex items-center justify-between mb-4">
-                    <p class="font-black text-gray-900 text-base flex items-center gap-2">
-                        <i class='bx bx-qr-scan text-brand-500 text-xl'></i> Scan QRIS
-                    </p>
-                    <button @click="showQrisModal = false" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
-                        <i class='bx bx-x text-lg'></i>
-                    </button>
-                </div>
-
-                <div class="bg-gray-50 rounded-2xl p-4 flex justify-center mb-4">
-                    <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS LKTech" class="max-h-72 w-auto object-contain rounded-xl">
-                </div>
-
-                <div class="text-center mb-4">
-                    <p class="text-xs text-gray-400 mb-0.5">Bayarkan tepat</p>
-                    <p class="text-2xl font-black text-brand-600">{{ $totalFormatted }}</p>
-                </div>
-
-                <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
-                   class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3 px-4 rounded-2xl transition-all shadow-md shadow-green-200 flex justify-center items-center gap-2 text-sm">
-                    <i class='bx bxl-whatsapp text-xl'></i> Konfirmasi via WhatsApp
-                </a>
-
-                <p class="text-[10px] text-center text-gray-400 mt-3">Kirim bukti pembayaran ke Admin untuk konfirmasi manual</p>
+        {{-- B. STRUKTUR MODAL POP-UP (Vanilla JS) --}}
+        <div id="qrisModal" class="qris-modal-overlay" onclick="closeQrisModal(event)">
+          <div class="qris-modal-content">
+            <button class="qris-modal-close" onclick="closeQrisModalDirect()">&times;</button>
+            <div class="qris-modal-header mb-4">
+              <h4 class="font-black text-gray-900 text-lg flex items-center justify-center gap-2">
+                <i class='bx bx-qr-scan text-brand-500'></i> Scan QRIS Pembayaran
+              </h4>
+              <p class="text-sm text-gray-500 mt-1">LKTech TN SEREAL</p>
             </div>
+            
+            <div class="qris-modal-body flex justify-center">
+              <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS Besar" class="qris-large-img">
+            </div>
+            
+            <div class="qris-modal-footer mt-4">
+              <p class="text-gray-700 text-sm mb-4">Bayarkan tepat <strong>{{ $totalFormatted }}</strong></p>
+              <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
+                 class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md shadow-green-200 flex justify-center items-center gap-2 text-sm mb-2">
+                  <i class='bx bxl-whatsapp text-xl'></i> Konfirmasi via WhatsApp
+              </a>
+              <button class="btn-modal-done" onclick="closeQrisModalDirect()">Tutup Jendela Ini</button>
+            </div>
+          </div>
         </div>
 
         {{-- Modal: Cara Bayar --}}
@@ -863,7 +947,6 @@
                 isCheckingStatus:   false,
                 displayTime:        '--:--:--',
                 urgent:             false,
-                showQrisModal:      false,
                 showCaraBayarModal: false,
                 _timer:             null,
 
@@ -958,6 +1041,40 @@
                 }
             }
         }
+    </script>
+    
+    <script>
+        // Fungsi Membuka Modal QRIS (Vanilla JS)
+        function openQrisModal() {
+            const modal = document.getElementById('qrisModal');
+            if(modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Mencegah background di-scroll
+            }
+        }
+
+        // Fungsi Menutup Modal Tombol (X) atau Selesai
+        function closeQrisModalDirect() {
+            const modal = document.getElementById('qrisModal');
+            if(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Mengembalikan fungsi scroll
+            }
+        }
+
+        // Fungsi Menutup Modal saat Klik di Luar Kotak (Overlay Area)
+        function closeQrisModal(event) {
+            if (event.target.id === 'qrisModal') {
+                closeQrisModalDirect();
+            }
+        }
+
+        // Menutup dengan tombol 'ESC' pada keyboard (Desktop UX)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeQrisModalDirect();
+            }
+        });
     </script>
 
     @if($sale->payment_status === 'success')
