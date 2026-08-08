@@ -126,18 +126,7 @@
             box-shadow: 0 4px 14px rgba(180,83,9,0.35);
         }
 
-        /* Lightbox */
-        .lightbox-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .lightbox-overlay img {
-            max-width: 92vw; max-height: 90vh;
-            border-radius: 12px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-        }
+
 
         /* CTA gradient */
         .cta-martabak {
@@ -217,40 +206,45 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {{-- Text Content --}}
                     <div>
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6 fade-up">
-                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse pulse-gold"></span>
-                            <span class="text-amber-300 text-xs font-semibold tracking-widest uppercase">Muara Enim, Sumatera Selatan</span>
+                        <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
+                            <span class="flex items-center gap-1"><i class='bx bx-map text-amber-400 text-sm'></i> Muara Enim</span>
+                            <span class="text-white/30">•</span>
+                            <span class="flex items-center gap-1"><i class='bx bx-time-five text-amber-400 text-sm'></i> Buka 14.00 – 22.00 WIB</span>
                         </div>
 
-                        <h1 class="font-dancing text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight mb-4 fade-up delay-1">
-                            Martabak<br>
-                            <span class="badge-shimmer">Jawara</span>
+                        <h1 class="text-3xl md:text-5xl font-black font-montserrat text-white leading-tight mb-3 tracking-tight fade-up delay-1">
+                            Martabak <span class="badge-shimmer">Jawara</span>
                         </h1>
 
-                        <p class="text-white/80 text-base md:text-lg leading-relaxed mb-4 fade-up delay-2">
-                            Martabak Jawara hadir dengan 3 senjata pamungkas: Manis, Pizza, dan Tipker. Dibuat fresh setiap hari dari bahan pilihan, teksturnya di jamin lembut,serta tipker yang cruncy bikin nagih dan lagi.
-                            <br><br>
+                        <p class="text-white/90 text-sm leading-relaxed mb-6 fade-up delay-2 max-w-xl">
+                            Martabak Jawara hadir dengan 3 senjata pamungkas: Manis, Pizza, dan Tipker. Dibuat fresh setiap hari dari bahan pilihan, teksturnya dijamin lembut serta tipker yang crunchy bikin nagih.
+                            <br class="hidden md:inline">
                             <span class="font-bold text-amber-300">Satu gigitan, langsung kecanduan. Siap buktikan?</span>
                         </p>
 
-                        {{-- Jam buka badge --}}
-                        <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-400/40 rounded-full text-amber-200 text-sm font-semibold mb-8 fade-up delay-2">
-                            <i class='bx bx-time-five text-amber-400'></i>
-                            Buka setiap hari: <strong class="text-amber-300">14.00 – 22.00 WIB</strong>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3 fade-up delay-3">
-                            <a href="#menu"
-                               class="inline-flex items-center gap-2 px-7 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-amber-500/40 hover:-translate-y-0.5 text-sm">
-                                <i class='bx bx-food-menu text-lg'></i> Lihat Menu
-                            </a>
+                        {{-- Unified Order Hub --}}
+                        <div class="grid grid-cols-2 gap-3 max-w-md mb-6 fade-up delay-3">
                             <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20ingin%20pesan%20martabak." target="_blank"
-                               class="inline-flex items-center gap-2 px-7 py-3.5 bg-green-500 hover:bg-green-400 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5 text-sm">
-                                <i class='bx bxl-whatsapp text-lg'></i> Pesan via WA
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                                <i class='bx bxl-whatsapp text-lg'></i> WhatsApp
                             </a>
                             <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA" target="_blank"
-                               class="inline-flex items-center gap-2 px-7 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-full border border-white/25 transition-all hover:-translate-y-0.5 text-sm">
-                                <i class='bx bx-car text-lg text-green-400'></i> GrabFood
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                                <i class='bx bx-car text-lg'></i> GrabFood
+                            </a>
+                            <a href="https://shopee.co.id/universal-link/now-food/shop/22505814?deep_and_deferred=1&shareChannel=whatsapp" target="_blank"
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                                <i class='bx bx-shopping-bag text-lg'></i> ShopeeFood
+                            </a>
+                            <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20pesan%20antar%20ke%20alamat%20saya." target="_blank"
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                                <i class='bx bx-cycling text-lg'></i> Pesan Antar
+                            </a>
+                        </div>
+
+                        <div class="fade-up delay-4 mb-4 flex items-center gap-2">
+                            <a href="#menu" class="text-amber-300 hover:text-amber-200 text-xs font-semibold flex items-center gap-1">
+                                <i class='bx bx-down-arrow-alt animate-bounce text-sm'></i> Lihat Menu Spesial Kami
                             </a>
                         </div>
                     </div>
@@ -342,108 +336,86 @@
             </div>
         </section>
 
-        {{-- ─── ORDER PLATFORM ─── --}}
-        <section class="bg-white py-16">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Tersedia Di</span>
-                <h2 class="font-montserrat text-2xl md:text-3xl font-black text-gray-900 mb-3 tracking-tight">Pesan Sekarang Via</h2>
-                <p class="text-gray-500 text-sm mb-10">Nikmati kemudahan memesan martabak favoritmu melalui berbagai platform.</p>
 
-                <div class="flex flex-wrap justify-center gap-4">
-                    {{-- WhatsApp --}}
-                    <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20ingin%20pesan%20martabak." target="_blank"
-                       class="flex items-center gap-3 px-7 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-2xl transition-all shadow-md hover:shadow-green-500/40 hover:-translate-y-1 text-sm">
-                        <i class='bx bxl-whatsapp text-2xl'></i>
-                        <div class="text-left">
-                            <p class="text-[10px] font-medium opacity-80 leading-none">Pesan via</p>
-                            <p class="font-black text-base leading-tight">WhatsApp</p>
-                        </div>
-                    </a>
-                    {{-- GrabFood --}}
-                    <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA" target="_blank"
-                       class="flex items-center gap-3 px-7 py-4 grab-btn text-white font-bold rounded-2xl transition-all shadow-md hover:shadow-green-500/30 hover:-translate-y-1 text-sm">
-                        <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="white"/><path d="M20 8C13.4 8 8 13.4 8 20s5.4 12 12 12 12-5.4 12-12S26.6 8 20 8zm0 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S10 25.5 10 20 14.5 10 20 10z" fill="#00b14f"/><text x="20" y="26" font-family="Arial" font-size="10" font-weight="bold" fill="#00b14f" text-anchor="middle">GRAB</text></svg>
-                        <div class="text-left">
-                            <p class="text-[10px] font-medium opacity-80 leading-none">Pesan via</p>
-                            <p class="font-black text-base leading-tight">GrabFood</p>
-                        </div>
-                    </a>
-                    {{-- ShopeeFood --}}
-                    <a href="https://shopee.co.id/universal-link/now-food/shop/22505814?deep_and_deferred=1&shareChannel=whatsapp" target="_blank"
-                       class="flex items-center gap-3 px-7 py-4 shopee-btn text-white font-bold rounded-2xl transition-all shadow-md hover:shadow-orange-500/30 hover:-translate-y-1 text-sm">
-                        <i class='bx bx-shopping-bag text-2xl'></i>
-                        <div class="text-left">
-                            <p class="text-[10px] font-medium opacity-80 leading-none">Pesan via</p>
-                            <p class="font-black text-base leading-tight">ShopeeFood</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
 
         {{-- ─── MENU / GALLERY ─── --}}
-        <section id="menu" class="bg-amber-50 py-20"
+        <section id="menu" class="bg-amber-50 py-16"
             x-data="{
                 activeTab: 'all',
                 lightbox: false,
                 lightboxSrc: '',
-                lightboxCaption: '',
-                openLightbox(src, caption) { this.lightboxSrc = src; this.lightboxCaption = caption; this.lightbox = true; document.body.style.overflow = 'hidden'; },
-                closeLightbox() { this.lightbox = false; document.body.style.overflow = ''; }
+                lightboxTitle: '',
+                lightboxDesc: '',
+                lightboxPrice: '',
+                openLightbox(src, title, desc, price) {
+                    this.lightboxSrc = src;
+                    this.lightboxTitle = title;
+                    this.lightboxDesc = desc;
+                    this.lightboxPrice = price;
+                    this.lightbox = true;
+                    document.body.style.overflow = 'hidden';
+                },
+                closeLightbox() {
+                    this.lightbox = false;
+                    document.body.style.overflow = '';
+                }
             }">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-100 px-3 py-1 rounded-full border border-amber-200">Menu Spesial Kami</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Pilihan Menu Martabak</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Dari martabak klasik hingga kreasi premium kekinian — semua tersedia di sini!</p>
+                <div class="text-center mb-10">
+                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-2 bg-amber-100 px-3 py-1 rounded-full border border-amber-200">Menu Spesial Kami</span>
+                    <h2 class="font-montserrat text-2xl md:text-3xl font-black text-gray-900 mb-2 tracking-tight">Pilihan Menu Martabak</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto">Tap foto menu untuk melihat detail, deskripsi, harga, dan melakukan pemesanan.</p>
                 </div>
 
                 {{-- Filter Tabs --}}
-                <div class="flex flex-wrap justify-center gap-3 mb-10">
-                    <button @click="activeTab='all'"        :class="activeTab==='all'        ? 'active' : ''" class="tab-btn">Semua</button>
-                    <button @click="activeTab='original'"   :class="activeTab==='original'   ? 'active' : ''" class="tab-btn">Original</button>
-                    <button @click="activeTab='blackforest'" :class="activeTab==='blackforest' ? 'active' : ''" class="tab-btn">Black Forest</button>
-                    <button @click="activeTab='tipker'"     :class="activeTab==='tipker'     ? 'active' : ''" class="tab-btn">Tipker</button>
-                    <button @click="activeTab='pizza'"      :class="activeTab==='pizza'      ? 'active' : ''" class="tab-btn">Pizza</button>
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button @click="activeTab='all'"        :class="activeTab==='all'        ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Semua</button>
+                    <button @click="activeTab='original'"   :class="activeTab==='original'   ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Original</button>
+                    <button @click="activeTab='blackforest'" :class="activeTab==='blackforest' ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Black Forest</button>
+                    <button @click="activeTab='tipker'"     :class="activeTab==='tipker'     ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Tipker</button>
+                    <button @click="activeTab='pizza'"      :class="activeTab==='pizza'      ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Pizza</button>
                 </div>
 
-                {{-- Masonry Gallery --}}
-                <div class="gallery-grid">
+                {{-- Grid Gallery --}}
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     @php
                     $menus = [
                         /* Original */
-                        ['src'=>'images/martabak-jawara/Martabak -Keju-Berlimpah.webp',                   'alt'=>'Martabak Original Keju Berlimpah',           'tag'=>'original',    'label'=>'Original'],
-                        ['src'=>'images/martabak-jawara/Martabak Original Choco Cruncy.webp',             'alt'=>'Martabak Original Choco Crunchy',            'tag'=>'original',    'label'=>'Original'],
-                        ['src'=>'images/martabak-jawara/Martabak Original Oreo.webp',                     'alt'=>'Martabak Original Oreo',                     'tag'=>'original',    'label'=>'Original'],
-                        ['src'=>'images/martabak-jawara/Martabak Kacang Keju Meses.webp',                 'alt'=>'Martabak Kacang Keju Meses',                 'tag'=>'original',    'label'=>'Original'],
-                        ['src'=>'images/martabak-jawara/Martabak-Almond- Keju-Kacang.webp',               'alt'=>'Martabak Almond Keju Kacang',                'tag'=>'original',    'label'=>'Original'],
+                        ['src'=>'images/martabak-jawara/Martabak -Keju-Berlimpah.webp',                   'alt'=>'Martabak Original Keju Berlimpah',           'tag'=>'original',    'label'=>'Original', 'price'=>'Rp 28.000', 'desc'=>'Keju kraft berlimpah dipadu susu kental manis dan mentega premium.'],
+                        ['src'=>'images/martabak-jawara/Martabak Original Choco Cruncy.webp',             'alt'=>'Martabak Original Choco Crunchy',            'tag'=>'original',    'label'=>'Original', 'price'=>'Rp 26.000', 'desc'=>'Cokelat crunchy yang renyah dan lumer di setiap gigitan.'],
+                        ['src'=>'images/martabak-jawara/Martabak Original Oreo.webp',                     'alt'=>'Martabak Original Oreo',                     'tag'=>'original',    'label'=>'Original', 'price'=>'Rp 25.000', 'desc'=>'Taburan biskuit Oreo premium yang melimpah dan krim susu manis.'],
+                        ['src'=>'images/martabak-jawara/Martabak Kacang Keju Meses.webp',                 'alt'=>'Martabak Kacang Keju Meses',                 'tag'=>'original',    'label'=>'Original', 'price'=>'Rp 27.000', 'desc'=>'Kombinasi klasik kacang tanah sangrai, keju parut gurih, dan meses cokelat.'],
+                        ['src'=>'images/martabak-jawara/Martabak-Almond- Keju-Kacang.webp',               'alt'=>'Martabak Almond Keju Kacang',                'tag'=>'original',    'label'=>'Original', 'price'=>'Rp 30.000', 'desc'=>'Topping irisan almond panggang renyah berpadu keju gurih dan kacang tanah.'],
                         /* Black Forest */
-                        ['src'=>'images/martabak-jawara/Martabak Black Forest - Almond - Keju - Meses.webp','alt'=>'Martabak Black Forest Almond Keju Meses',  'tag'=>'blackforest', 'label'=>'Black Forest'],
-                        ['src'=>'images/martabak-jawara/Martabak Black Forest Ketan Keju.webp',           'alt'=>'Martabak Black Forest Ketan Keju',           'tag'=>'blackforest', 'label'=>'Black Forest'],
-                        ['src'=>'images/martabak-jawara/Martabak Black Forest Meses.webp',                'alt'=>'Martabak Black Forest Meses',                'tag'=>'blackforest', 'label'=>'Black Forest'],
+                        ['src'=>'images/martabak-jawara/Martabak Black Forest - Almond - Keju - Meses.webp','alt'=>'Martabak Black Forest Almond Keju Meses',  'tag'=>'blackforest', 'label'=>'Black Forest', 'price'=>'Rp 32.000', 'desc'=>'Adonan khas Black Forest dengan topping kacang almond premium, keju, dan meses.'],
+                        ['src'=>'images/martabak-jawara/Martabak Black Forest Ketan Keju.webp',           'alt'=>'Martabak Black Forest Ketan Keju',           'tag'=>'blackforest', 'label'=>'Black Forest', 'price'=>'Rp 30.000', 'desc'=>'Kombinasi lembut ketan hitam manis pilihan dengan parutan keju melimpah.'],
+                        ['src'=>'images/martabak-jawara/Martabak Black Forest Meses.webp',                'alt'=>'Martabak Black Forest Meses',                'tag'=>'blackforest', 'label'=>'Black Forest', 'price'=>'Rp 28.000', 'desc'=>'Adonan Black Forest premium beraroma cokelat dipadu taburan meses melimpah.'],
                         /* Tipker */
-                        ['src'=>'images/martabak-jawara/Martabak Tipker Chocomalltine.webp',              'alt'=>'Martabak Tipker Chocomaltine',               'tag'=>'tipker',      'label'=>'Tipker'],
-                        ['src'=>'images/martabak-jawara/Martabak Tipker Kacang Wijen.webp',               'alt'=>'Martabak Tipker Kacang Wijen',               'tag'=>'tipker',      'label'=>'Tipker'],
-                        ['src'=>'images/martabak-jawara/Martabak Tipker-Kacang-Wijen.webp',               'alt'=>'Martabak Tipker Kacang Wijen Premium',       'tag'=>'tipker',      'label'=>'Tipker'],
-                        ['src'=>'images/martabak-jawara/Martabak-Tipker-Kacang.webp',                     'alt'=>'Martabak Tipker Kacang',                     'tag'=>'tipker',      'label'=>'Tipker'],
+                        ['src'=>'images/martabak-jawara/Martabak Tipker Chocomalltine.webp',              'alt'=>'Martabak Tipker Chocomaltine',               'tag'=>'tipker',      'label'=>'Tipker', 'price'=>'Rp 22.000', 'desc'=>'Martabak tipis kering yang super renyah dengan olesan Chocomaltine premium.'],
+                        ['src'=>'images/martabak-jawara/Martabak Tipker Kacang Wijen.webp',               'alt'=>'Martabak Tipker Kacang Wijen',               'tag'=>'tipker',      'label'=>'Tipker', 'price'=>'Rp 18.000', 'desc'=>'Tipker renyah dengan taburan kacang tanah sangrai dan wijen sangrai yang harum.'],
+                        ['src'=>'images/martabak-jawara/Martabak Tipker-Kacang-Wijen.webp',               'alt'=>'Martabak Tipker Kacang Wijen Premium',       'tag'=>'tipker',      'label'=>'Tipker', 'price'=>'Rp 20.000', 'desc'=>'Tipker kacang wijen ekstra mentega premium menghasilkan rasa lebih gurih.'],
+                        ['src'=>'images/martabak-jawara/Martabak-Tipker-Kacang.webp',                     'alt'=>'Martabak Tipker Kacang',                     'tag'=>'tipker',      'label'=>'Tipker', 'price'=>'Rp 18.000', 'desc'=>'Tipker super tipis dan garing dengan taburan kacang tanah gurih.'],
                         /* Pizza */
-                        ['src'=>'images/martabak-jawara/Martabak Pizza - Basic.webp',                     'alt'=>'Martabak Pizza Basic',                       'tag'=>'pizza',       'label'=>'Pizza'],
-                        ['src'=>'images/martabak-jawara/Martabak Pizza Ulitimate.webp',                   'alt'=>'Martabak Pizza Ultimate',                    'tag'=>'pizza',       'label'=>'Pizza'],
-                        ['src'=>'images/martabak-jawara/Martabak-Pizza-Pro.webp',                         'alt'=>'Martabak Pizza Pro',                         'tag'=>'pizza',       'label'=>'Pizza'],
+                        ['src'=>'images/martabak-jawara/Martabak Pizza - Basic.webp',                     'alt'=>'Martabak Pizza Basic',                       'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 35.000', 'desc'=>'Martabak manis dibentuk pizza dengan 4-8 pilihan topping standar favorit.'],
+                        ['src'=>'images/martabak-jawara/Martabak Pizza Ulitimate.webp',                   'alt'=>'Martabak Pizza Ultimate',                    'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 45.000', 'desc'=>'Martabak pizza mewah dengan kombinasi topping premium terlengkap dan melimpah.'],
+                        ['src'=>'images/martabak-jawara/Martabak-Pizza-Pro.webp',                         'alt'=>'Martabak Pizza Pro',                         'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 40.000', 'desc'=>'Pilihan rasa kekinian pro yang cocok dinikmati bersama teman atau keluarga.'],
                     ];
                     @endphp
 
                     @foreach($menus as $item)
-                    <div class="gallery-item"
+                    <div class="relative overflow-hidden rounded-2xl cursor-pointer aspect-square group shadow-sm hover:shadow-md transition-all duration-300"
                          x-show="activeTab==='all' || activeTab==='{{ $item['tag'] }}'"
+                         @click="openLightbox('{{ asset($item['src']) }}', '{{ $item['alt'] }}', '{{ $item['desc'] }}', '{{ $item['price'] }}')"
                          x-transition:enter="transition ease-out duration-300"
                          x-transition:enter-start="opacity-0 scale-95"
                          x-transition:enter-end="opacity-100 scale-100">
-                        <img src="{{ asset($item['src']) }}" alt="{{ $item['alt'] }}" loading="lazy">
-                        <div class="overlay" @click="openLightbox('{{ asset($item['src']) }}', '{{ $item['alt'] }} — Martabak Jawara')">
-                            <div>
-                                <p class="text-white font-semibold text-sm">{{ $item['alt'] }}</p>
-                                <p class="text-white/60 text-xs">{{ $item['label'] }} • Martabak Jawara</p>
+                        <img src="{{ asset($item['src']) }}" alt="{{ $item['alt'] }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        {{-- Overlay --}}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-3">
+                            <p class="text-white font-bold text-xs sm:text-sm leading-snug line-clamp-2">{{ $item['alt'] }}</p>
+                            <div class="flex items-center justify-between mt-1">
+                                <span class="text-amber-400 font-extrabold text-[10px] sm:text-xs">{{ $item['price'] }}</span>
+                                <span class="text-white/60 text-[9px] sm:text-[10px] bg-white/10 px-1.5 py-0.5 rounded">{{ $item['label'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -451,44 +423,30 @@
                 </div>
             </div>
 
-            {{-- Lightbox --}}
-            <div x-show="lightbox" class="lightbox-overlay" @click.self="closeLightbox()" @keydown.escape.window="closeLightbox()" x-cloak>
-                <div class="relative">
-                    <img :src="lightboxSrc" :alt="lightboxCaption">
-                    <p class="text-white/70 text-sm text-center mt-3" x-text="lightboxCaption"></p>
-                    <button @click="closeLightbox()" class="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm flex items-center justify-center text-white transition-all">
-                        <i class='bx bx-x text-xl'></i>
-                    </button>
+            {{-- Lightbox Modal --}}
+            <div x-show="lightbox" class="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 overflow-y-auto" @click.self="closeLightbox()" @keydown.escape.window="closeLightbox()" x-cloak>
+                <div class="relative bg-amber-950/95 border border-amber-900/50 rounded-3xl overflow-hidden max-w-sm w-full shadow-2xl flex flex-col scale-100 transition-all duration-300 my-auto max-h-[90vh]">
+                    <div class="relative aspect-square w-full shrink-0">
+                        <img :src="lightboxSrc" :alt="lightboxTitle" class="w-full h-full object-cover">
+                        <button @click="closeLightbox()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center text-white transition-all shadow-md z-10">
+                            <i class='bx bx-x text-2xl'></i>
+                        </button>
+                    </div>
+                    <div class="p-5 flex-grow overflow-y-auto">
+                        <span class="text-amber-400 font-extrabold text-base block mb-1" x-text="lightboxPrice"></span>
+                        <h3 class="text-white font-black text-lg mb-2 font-montserrat" x-text="lightboxTitle"></h3>
+                        <p class="text-amber-100/70 text-xs sm:text-sm leading-relaxed mb-5" x-text="lightboxDesc"></p>
+
+                        <a :href="'https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20pesan%20' + encodeURIComponent(lightboxTitle) + '.'" target="_blank"
+                           class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-lg text-sm">
+                            <i class='bx bxl-whatsapp text-lg'></i> Pesan Varian Ini via WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        {{-- ─── DELIVERY BANNER ─── --}}
-        <section class="delivery-banner py-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-3xl">
-                            🛵
-                        </div>
-                        <div>
-                            <h3 class="font-montserrat font-black text-white text-xl">Layanan Pesan Antar</h3>
-                            <p class="text-green-100 text-sm">Tersedia untuk area Muara Enim & sekitarnya</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap gap-3 justify-center">
-                        <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20pesan%20antar%20ke%20alamat%20saya." target="_blank"
-                           class="inline-flex items-center gap-2 px-6 py-3 bg-white text-green-800 font-black rounded-xl hover:bg-green-50 transition-all shadow-md hover:-translate-y-0.5 text-sm">
-                            <i class='bx bxl-whatsapp text-xl text-green-600'></i> Order Sekarang
-                        </a>
-                        <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA" target="_blank"
-                           class="inline-flex items-center gap-2 px-6 py-3 bg-[#00b14f] text-white font-black rounded-xl hover:bg-[#009e46] transition-all shadow-md hover:-translate-y-0.5 text-sm">
-                            <i class='bx bx-car text-xl'></i> GrabFood
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         {{-- ─── KEUNGGULAN ─── --}}
         <section class="bg-white py-10">
@@ -499,34 +457,34 @@
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Kami berkomitmen menghadirkan martabak terbaik dengan bahan premium dan rasa yang selalu konsisten.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🧀</div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Bahan Premium</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform">🧀</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Bahan Premium</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Keju berlimpah, almond premium, dan cokelat pilihan untuk rasa terbaik.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Keju berlimpah, almond premium, & cokelat pilihan.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🍳</div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Freshly Made</h3>
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform">🍳</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Freshly Made</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Dimasak segar setiap hari, tidak ada yang dipanaskan ulang.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Dimasak segar setiap hari, tanpa dipanaskan ulang.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">🛵</div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">Pesan Antar</h3>
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform">🛵</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Pesan Antar</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Layanan antar ke rumah Anda di area Muara Enim & sekitarnya.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Layanan antar langsung ke rumah Anda di Muara Enim.</p>
                     </div>
-                    <div class="bg-amber-50 rounded-3xl p-5 border border-amber-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform">⭐</div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight">15+ Varian</h3>
+                    <div class="bg-amber-50 rounded-2xl p-4 border border-amber-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform">⭐</div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">15+ Varian</h3>
                         </div>
-                        <p class="text-gray-500 text-sm leading-relaxed">Pilihan rasa yang beragam untuk semua selera.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Pilihan rasa manis, pizza, dan tipker berlimpah.</p>
                     </div>
                 </div>
             </div>
@@ -668,16 +626,23 @@
                     Pesan sekarang via WhatsApp atau GrabFood — diantar hangat ke tempat Anda di area Muara Enim & sekitarnya.
                 </p>
 
-                <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20order%20martabak%20dan%20minta%20dikirim%20ke%20alamat%20saya."
-                       target="_blank"
-                       class="inline-flex items-center gap-2 px-10 py-4 bg-white hover:bg-gray-50 text-amber-800 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                        <i class='bx bxl-whatsapp text-2xl text-green-500'></i> Pesan via WhatsApp
+                {{-- Unified Order Hub Bottom --}}
+                <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-10">
+                    <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20ingin%20pesan%20martabak." target="_blank"
+                       class="flex items-center justify-center gap-2 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                        <i class='bx bxl-whatsapp text-lg'></i> WhatsApp
                     </a>
-                    <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA"
-                       target="_blank"
-                       class="inline-flex items-center gap-2 px-8 py-4 bg-[#00b14f] hover:bg-[#009e46] text-white rounded-full font-bold text-lg transition-all shadow-xl hover:-translate-y-1">
-                        <i class='bx bx-car text-xl'></i> GrabFood
+                    <a href="https://r.grab.com/g/2-1-6-C6XJJJVCLA4YAA" target="_blank"
+                       class="flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                        <i class='bx bx-car text-lg'></i> GrabFood
+                    </a>
+                    <a href="https://shopee.co.id/universal-link/now-food/shop/22505814?deep_and_deferred=1&shareChannel=whatsapp" target="_blank"
+                       class="flex items-center justify-center gap-2 py-3 px-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                        <i class='bx bx-shopping-bag text-lg'></i> ShopeeFood
+                    </a>
+                    <a href="https://wa.me/6285664928097?text=Halo%20Martabak%20Jawara%2C%20saya%20mau%20pesan%20antar%20ke%20alamat%20saya." target="_blank"
+                       class="flex items-center justify-center gap-2 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold rounded-xl transition-all shadow-md text-xs sm:text-sm">
+                        <i class='bx bx-cycling text-lg'></i> Pesan Antar
                     </a>
                 </div>
 

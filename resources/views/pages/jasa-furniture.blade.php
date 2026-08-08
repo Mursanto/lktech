@@ -149,28 +149,29 @@
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 pb-10 w-full">
                 <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-6 fade-up">
-                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                        <span class="text-amber-300 text-xs font-semibold tracking-widest uppercase">Interior S2 Bandar Lampung</span>
+                    <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
+                        <span class="flex items-center gap-1"><i class='bx bx-map text-amber-400 text-sm'></i> Bandar Lampung</span>
+                        <span class="text-white/30">•</span>
+                        <span class="flex items-center gap-1"><i class='bx bx-time-five text-amber-400 text-sm'></i> Sen-Sab: 09.00 - 17.00 WIB</span>
                     </div>
 
-                    <h1 class="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 fade-up delay-1">
-                        Furniture Custom<br>
-                        <span class="badge-shimmer">Berkualitas Tinggi</span>
+                    <h1 class="font-montserrat text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 tracking-tight fade-up delay-1">
+                        Furniture Custom<br class="hidden sm:inline">
+                        <span class="badge-shimmer">Bandar Lampung</span>
                     </h1>
 
-                    <p class="text-white/70 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl fade-up delay-2">
-                        Kami menghadirkan solusi furniture interior impian Anda — dari kitchen set modern, kamar set elegan, hingga backdrop TV yang memukau. Dikerjakan dengan penuh presisi dan keahlian.
+                    <p class="text-white/90 text-sm leading-relaxed mb-6 max-w-xl fade-up delay-2">
+                        Wujudkan interior impian Anda dengan presisi. Kami memproduksi kitchen set, kamar set, hingga backdrop TV berkualitas tinggi yang didesain khusus sesuai ruangan Anda.
                     </p>
 
-                    <div class="flex flex-wrap gap-4 fade-up delay-3">
-                        <a href="#galeri"
-                           class="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-amber-500/40 hover:-translate-y-0.5 text-sm">
-                            <i class='bx bx-images text-lg'></i> Lihat Galeri
-                        </a>
+                    <div class="grid grid-cols-2 gap-3 max-w-md fade-up delay-3">
                         <a href="https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20ingin%20konsultasi%20mengenai%20furniture%20custom." target="_blank"
-                           class="inline-flex items-center gap-2 px-8 py-3.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-full border border-white/25 transition-all hover:-translate-y-0.5 text-sm">
-                            <i class='bx bxl-whatsapp text-lg text-green-400'></i> Konsultasi Gratis
+                           class="flex items-center justify-center gap-1.5 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
+                            <i class='bx bxl-whatsapp text-lg'></i> Konsultasi WA
+                        </a>
+                        <a href="#galeri"
+                           class="flex items-center justify-center gap-1.5 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
+                            <i class='bx bx-images text-lg'></i> Lihat Portofolio
                         </a>
                     </div>
                 </div>
@@ -222,153 +223,183 @@
         {{-- ─── LAYANAN UNGGULAN ─── --}}
         <section class="bg-white py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-14">
-                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Kategori Layanan</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Layanan Furniture Kami</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto leading-relaxed">Interior S2 menghadirkan beragam solusi furniture berkualitas tinggi untuk melengkapi hunian dan ruang usaha Anda.</p>
+                <div class="text-center mb-10">
+                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-2 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Kategori Layanan</span>
+                    <h2 class="font-montserrat text-2xl md:text-3xl font-black text-gray-900 mb-2 tracking-tight">Layanan Furniture Kami</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">Interior S2 menghadirkan beragam solusi furniture berkualitas tinggi untuk melengkapi hunian Anda.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
-                    <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="{{ asset('images/furniture/kitchen-set/kitchen-1.webp') }}" alt="Kitchen Set Custom Interior S2 Bandar Lampung" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-xs font-bold text-amber-300 uppercase tracking-widest mb-1 block">Kitchen Set</span>
-                            <h3 class="font-montserrat font-bold text-white text-xl mb-2">Kitchen Set Custom</h3>
-                            <p class="text-white/70 text-sm leading-relaxed">Dapur impian Anda dengan desain modern dan material berkualitas tinggi, disesuaikan dengan ukuran dan selera.</p>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {{-- Kitchen Set --}}
+                    <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 aspect-square">
+                        <img src="{{ asset('images/furniture/kitchen-set/kitchen-1.webp') }}" alt="Kitchen Set Custom" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-3.5">
+                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-widest leading-none">Dapur Modern</span>
+                            <h3 class="font-montserrat font-bold text-white text-xs sm:text-sm mt-1">Kitchen Set</h3>
                         </div>
                     </div>
 
-                    <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="{{ asset('images/furniture/kamar-set/kamar-2.webp') }}" alt="Kamar Set Elegan Interior S2 Bandar Lampung" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-xs font-bold text-amber-300 uppercase tracking-widest mb-1 block">Kamar Set</span>
-                            <h3 class="font-montserrat font-bold text-white text-xl mb-2">Kamar Set Elegan</h3>
-                            <p class="text-white/70 text-sm leading-relaxed">Furniture kamar tidur lengkap — tempat tidur, lemari, meja rias — dengan sentuhan desain mewah dan fungsional.</p>
+                    {{-- Kamar Set --}}
+                    <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 aspect-square">
+                        <img src="{{ asset('images/furniture/kamar-set/kamar-2.webp') }}" alt="Kamar Set Elegan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-3.5">
+                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-widest leading-none">Kamar Utama</span>
+                            <h3 class="font-montserrat font-bold text-white text-xs sm:text-sm mt-1">Kamar Set</h3>
                         </div>
                     </div>
 
-                    <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="{{ asset('images/furniture/backdrop-tv/backdrop-1.webp') }}" alt="Backdrop TV Premium Interior S2 Bandar Lampung" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                    {{-- Backdrop TV --}}
+                    <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 aspect-square">
+                        <img src="{{ asset('images/furniture/backdrop-tv/backdrop-1.webp') }}" alt="Backdrop TV Premium" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-3.5">
+                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-widest leading-none">Panel Dinding</span>
+                            <h3 class="font-montserrat font-bold text-white text-xs sm:text-sm mt-1">Backdrop TV</h3>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="text-xs font-bold text-amber-300 uppercase tracking-widest mb-1 block">Backdrop TV</span>
-                            <h3 class="font-montserrat font-bold text-white text-xl mb-2">Backdrop TV Premium</h3>
-                            <p class="text-white/70 text-sm leading-relaxed">Backdrop TV yang menambah keindahan ruang tamu, dengan pilihan material dan finishing yang beragam.</p>
+                    </div>
+
+                    {{-- Interior Custom --}}
+                    <div class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 aspect-square">
+                        <img src="{{ asset('images/furniture/kamar-set/kamar-4.webp') }}" alt="Lemari & Interior Custom" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-3.5">
+                            <span class="text-[9px] font-black text-amber-400 uppercase tracking-widest leading-none">Solusi Ruang</span>
+                            <h3 class="font-montserrat font-bold text-white text-xs sm:text-sm mt-1">Interior Custom</h3>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        {{-- ─── GALERI ─── --}}
-        <section id="galeri" class="bg-stone-50 py-10"
+                </div>
+         {{-- ─── GALERI ─── --}}
+        <section id="galeri" class="bg-stone-50 py-16"
             x-data="{
                 activeTab: 'all',
                 lightbox: false,
                 lightboxSrc: '',
-                lightboxCaption: '',
-                openLightbox(src, caption) { this.lightboxSrc = src; this.lightboxCaption = caption; this.lightbox = true; document.body.style.overflow = 'hidden'; },
-                closeLightbox() { this.lightbox = false; document.body.style.overflow = ''; }
+                lightboxTitle: '',
+                lightboxDesc: '',
+                lightboxMaterial: '',
+                openLightbox(src, title, desc, material) {
+                    this.lightboxSrc = src;
+                    this.lightboxTitle = title;
+                    this.lightboxDesc = desc;
+                    this.lightboxMaterial = material;
+                    this.lightbox = true;
+                    document.body.style.overflow = 'hidden';
+                },
+                closeLightbox() {
+                    this.lightbox = false;
+                    document.body.style.overflow = '';
+                }
             }">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Portofolio Kami</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Galeri Hasil Karya</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Setiap karya adalah bukti komitmen kami terhadap kualitas dan keindahan.</p>
+                <div class="text-center mb-10">
+                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-2 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Portofolio Kami</span>
+                    <h2 class="font-montserrat text-2xl md:text-3xl font-black text-gray-900 mb-2 tracking-tight">Galeri Hasil Karya</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto">Tap foto untuk melihat detail bahan, spesifikasi, dan konsultasi harga langsung.</p>
                 </div>
 
-                <!-- Filter Tabs -->
-                <div class="flex flex-wrap justify-center gap-3 mb-10">
-                    <button @click="activeTab='all'"      :class="activeTab==='all'      ? 'active' : ''" class="tab-btn">Semua</button>
-                    <button @click="activeTab='kitchen'"  :class="activeTab==='kitchen'  ? 'active' : ''" class="tab-btn">Kitchen Set</button>
-                    <button @click="activeTab='kamar'"    :class="activeTab==='kamar'    ? 'active' : ''" class="tab-btn">Kamar Set</button>
-                    <button @click="activeTab='backdrop'" :class="activeTab==='backdrop' ? 'active' : ''" class="tab-btn">Backdrop TV</button>
+                <!-- Filter Tabs (Horizontal Scrollable on Mobile) -->
+                <div class="flex overflow-x-auto whitespace-nowrap gap-2 pb-3 mb-8 no-scrollbar scroll-smooth justify-start md:justify-center">
+                    <button @click="activeTab='all'"      :class="activeTab==='all'      ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Semua</button>
+                    <button @click="activeTab='kitchen'"  :class="activeTab==='kitchen'  ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Kitchen Set</button>
+                    <button @click="activeTab='kamar'"    :class="activeTab==='kamar'    ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Kamar Set</button>
+                    <button @click="activeTab='backdrop'" :class="activeTab==='backdrop' ? 'active' : ''" class="tab-btn py-1.5 px-4 text-xs">Backdrop TV</button>
                 </div>
 
-                <!-- Masonry Gallery -->
-                <div class="gallery-grid">
+                <!-- Grid Gallery -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     @php
                         $kitchenImages = [
-                            ['src'=>'images/furniture/kitchen-set/kitchen-1.webp','alt'=>'Kitchen Set Custom 1'],
-                            ['src'=>'images/furniture/kitchen-set/kitchen-2.webp','alt'=>'Kitchen Set Custom 2'],
-                            ['src'=>'images/furniture/kitchen-set/kitchen-3.webp','alt'=>'Kitchen Set Custom 3'],
+                            ['src'=>'images/furniture/kitchen-set/kitchen-1.webp','alt'=>'Kitchen Set Custom Minimalis', 'desc'=>'Dapur modern dengan cabinet multifungsi dan meja bar kompak.', 'material'=>'Multiplex 18mm & HPL Taco Premium'],
+                            ['src'=>'images/furniture/kitchen-set/kitchen-2.webp','alt'=>'Kitchen Set Clean White', 'desc'=>'Dapur bernuansa putih bersih dengan finishing anti gores dan laci soft-close.', 'material'=>'Blockboard Melamin & HPL Glossy'],
+                            ['src'=>'images/furniture/kitchen-set/kitchen-3.webp','alt'=>'Kitchen Set Classic Modern', 'desc'=>'Sentuhan profil mewah dengan perpaduan warna abu-abu elegan dan top table marmer.', 'material'=>'Multiplex 18mm & Cat Duco Polyurethane'],
                         ];
                         $kamarImages = [
-                            ['src'=>'images/furniture/kamar-set/kamar-1.webp', 'alt'=>'Kamar Set Custom 1'],
-                            ['src'=>'images/furniture/kamar-set/kamar-2.webp', 'alt'=>'Kamar Set Custom 2'],
-                            ['src'=>'images/furniture/kamar-set/kamar-3.webp', 'alt'=>'Kamar Set Custom 3'],
-                            ['src'=>'images/furniture/kamar-set/kamar-4.webp', 'alt'=>'Kamar Set Custom 4'],
-                            ['src'=>'images/furniture/kamar-set/kamar-5.webp', 'alt'=>'Kamar Set Custom 5'],
-                            ['src'=>'images/furniture/kamar-set/kamar-6.webp', 'alt'=>'Kamar Set Custom 6'],
-                            ['src'=>'images/furniture/kamar-set/kamar-7.webp', 'alt'=>'Kamar Set Custom 7'],
-                            ['src'=>'images/furniture/kamar-set/kamar-8.webp', 'alt'=>'Kamar Set Custom 8'],
-                            ['src'=>'images/furniture/kamar-set/kamar-9.webp', 'alt'=>'Kamar Set Custom 9'],
-                            ['src'=>'images/furniture/kamar-set/kamar-10.webp','alt'=>'Kamar Set Custom 10'],
-                            ['src'=>'images/furniture/kamar-set/kamar-11.webp','alt'=>'Kamar Set Custom 11'],
-                            ['src'=>'images/furniture/kamar-set/kamar-12.webp','alt'=>'Kamar Set Custom 12'],
+                            ['src'=>'images/furniture/kamar-set/kamar-1.webp', 'alt'=>'Kamar Set Minimalis Cozy', 'desc'=>'Tempat tidur dengan storage laci bawah dipadu lemari pakaian sliding pintu kaca.', 'material'=>'Multiplex & Finishing HPL Serat Kayu'],
+                            ['src'=>'images/furniture/kamar-set/kamar-2.webp', 'alt'=>'Kamar Set Luxury Master', 'desc'=>'Kamar tidur utama dengan headboard busa tinggi, list stainless gold, dan nakas gantung.', 'material'=>'Multiplex, Busa Velvet & Finishing HPL'],
+                            ['src'=>'images/furniture/kamar-set/kamar-3.webp', 'alt'=>'Kamar Set Anak Multifungsi', 'desc'=>'Ranjang tingkat anak dengan tangga laci dan meja belajar terintegrasi.', 'material'=>'Multiplex & Finishing HPL Colorful'],
+                            ['src'=>'images/furniture/kamar-set/kamar-4.webp', 'alt'=>'Wardrobe Walk-in Closet', 'desc'=>'Lemari pakaian besar tanpa pintu dengan gantungan hanger dan rak aksesoris.', 'material'=>'Multiplex & HPL Premium'],
+                            ['src'=>'images/furniture/kamar-set/kamar-5.webp', 'alt'=>'Tempat Tidur Platform Minimalis', 'desc'=>'Ranjang kayu rendah dengan panel dinding kisi-kisi dan lampu tidur tersembunyi.', 'material'=>'Multiplex & HPL Motif Kayu'],
+                            ['src'=>'images/furniture/kamar-set/kamar-6.webp', 'alt'=>'Lemari Pakaian Tanam (Built-in)', 'desc'=>'Lemari pakaian full plafon menyatu dengan dinding kamar secara rapi.', 'material'=>'Blockboard & HPL Soft Touch'],
+                            ['src'=>'images/furniture/kamar-set/kamar-7.webp', 'alt'=>'Nakas Kamar Gantung', 'desc'=>'Meja samping tempat tidur minimalis melayang dengan laci penyimpanan.', 'material'=>'Multiplex & Finishing HPL'],
+                            ['src'=>'images/furniture/kamar-set/kamar-8.webp', 'alt'=>'Meja Rias Custom LED Mirror', 'desc'=>'Meja rias dengan cermin bulat lampu LED dan laci organizer kosmetik.', 'material'=>'Multiplex & Finishing HPL Matte'],
+                            ['src'=>'images/furniture/kamar-set/kamar-9.webp', 'alt'=>'Kamar Set Klasik Mewah', 'desc'=>'Detail ukiran profil klasik dengan finishing cat duco broken white.', 'material'=>'Kayu Mahoni & Cat Duco Semi Gloss'],
+                            ['src'=>'images/furniture/kamar-set/kamar-10.webp','alt'=>'Daybed Storage Multifungsi', 'desc'=>'Ranjang santai di sudut jendela dengan laci penyimpanan selimut di bawahnya.', 'material'=>'Multiplex & Finishing HPL'],
+                            ['src'=>'images/furniture/kamar-set/kamar-11.webp','alt'=>'Lemari Pakaian Sliding Glass', 'desc'=>'Lemari pakaian dengan pintu geser kaca tempered hitam yang maskulin.', 'material'=>'Multiplex, Alumunium Frame & Kaca Tinted'],
+                            ['src'=>'images/furniture/kamar-set/kamar-11.webp','alt'=>'Headboard Panel Kisi-kisi', 'desc'=>'Panel dinding dekoratif bermotif kisi-kisi kayu di belakang tempat tidur.', 'material'=>'Multiplex & HPL Serat Kayu'],
                         ];
                         $backdropImages = [
-                            ['src'=>'images/furniture/backdrop-tv/backdrop-1.webp','alt'=>'Backdrop TV 1'],
-                            ['src'=>'images/furniture/backdrop-tv/backdrop-2.webp','alt'=>'Backdrop TV 2'],
-                            ['src'=>'images/furniture/backdrop-tv/backdrop-3.webp','alt'=>'Backdrop TV 3'],
-                            ['src'=>'images/furniture/backdrop-tv/backdrop-4.webp','alt'=>'Backdrop TV 4'],
+                            ['src'=>'images/furniture/backdrop-tv/backdrop-1.webp','alt'=>'Backdrop TV Minimalis LED', 'desc'=>'Panel TV gantung dengan ambalan pajangan dan lampu LED strip hangat.', 'material'=>'Multiplex & Finishing HPL'],
+                            ['src'=>'images/furniture/backdrop-tv/backdrop-2.webp','alt'=>'Backdrop TV Luxury Marmer', 'desc'=>'Desain mewah menggunakan kombinasi PVC sheet motif marmer dan list gold.', 'material'=>'Multiplex, PVC Board & List Gold Stainless'],
+                            ['src'=>'images/furniture/backdrop-tv/backdrop-3.webp','alt'=>'Backdrop TV Sekat Ruangan', 'desc'=>'Backdrop TV dua sisi yang berfungsi ganda sebagai penyekat ruang tamu dan ruang keluarga.', 'material'=>'Multiplex & Finishing HPL Serat Kayu'],
+                            ['src'=>'images/furniture/backdrop-tv/backdrop-4.webp','alt'=>'Backdrop TV Gantung Modern', 'desc'=>'Cabinet TV melayang dengan desain laci minimalis dan lubang kabel rapi.', 'material'=>'Multiplex & HPL Matte White & Wood'],
                         ];
                     @endphp
 
                     @foreach($kitchenImages as $img)
-                    <div class="gallery-item" x-show="activeTab==='all'||activeTab==='kitchen'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
-                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy">
-                        <div class="overlay" @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }} — Interior S2 Bandar Lampung')">
-                            <div>
-                                <p class="text-white font-semibold text-sm">{{ $img['alt'] }}</p>
-                                <p class="text-white/60 text-xs">Kitchen Set • Interior S2</p>
-                            </div>
+                    <div class="relative overflow-hidden rounded-2xl cursor-pointer aspect-square group shadow-sm hover:shadow-md transition-all duration-300"
+                         x-show="activeTab==='all'||activeTab==='kitchen'"
+                         @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }}', '{{ $img['desc'] }}', '{{ $img['material'] }}')"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100">
+                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-3">
+                            <p class="text-white font-bold text-xs sm:text-sm leading-snug line-clamp-2">{{ $img['alt'] }}</p>
+                            <span class="text-white/60 text-[9px] sm:text-[10px] mt-0.5">Kitchen Set • Interior S2</span>
                         </div>
                     </div>
                     @endforeach
 
                     @foreach($kamarImages as $img)
-                    <div class="gallery-item" x-show="activeTab==='all'||activeTab==='kamar'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
-                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy">
-                        <div class="overlay" @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }} — Interior S2 Bandar Lampung')">
-                            <div>
-                                <p class="text-white font-semibold text-sm">{{ $img['alt'] }}</p>
-                                <p class="text-white/60 text-xs">Kamar Set • Interior S2</p>
-                            </div>
+                    <div class="relative overflow-hidden rounded-2xl cursor-pointer aspect-square group shadow-sm hover:shadow-md transition-all duration-300"
+                         x-show="activeTab==='all'||activeTab==='kamar'"
+                         @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }}', '{{ $img['desc'] }}', '{{ $img['material'] }}')"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100">
+                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-3">
+                            <p class="text-white font-bold text-xs sm:text-sm leading-snug line-clamp-2">{{ $img['alt'] }}</p>
+                            <span class="text-white/60 text-[9px] sm:text-[10px] mt-0.5">Kamar Set • Interior S2</span>
                         </div>
                     </div>
                     @endforeach
 
                     @foreach($backdropImages as $img)
-                    <div class="gallery-item" x-show="activeTab==='all'||activeTab==='backdrop'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
-                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy">
-                        <div class="overlay" @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }} — Interior S2 Bandar Lampung')">
-                            <div>
-                                <p class="text-white font-semibold text-sm">{{ $img['alt'] }}</p>
-                                <p class="text-white/60 text-xs">Backdrop TV • Interior S2</p>
-                            </div>
+                    <div class="relative overflow-hidden rounded-2xl cursor-pointer aspect-square group shadow-sm hover:shadow-md transition-all duration-300"
+                         x-show="activeTab==='all'||activeTab==='backdrop'"
+                         @click="openLightbox('{{ asset($img['src']) }}', '{{ $img['alt'] }}', '{{ $img['desc'] }}', '{{ $img['material'] }}')"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100">
+                        <img src="{{ asset($img['src']) }}" alt="{{ $img['alt'] }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-3">
+                            <p class="text-white font-bold text-xs sm:text-sm leading-snug line-clamp-2">{{ $img['alt'] }}</p>
+                            <span class="text-white/60 text-[9px] sm:text-[10px] mt-0.5">Backdrop TV • Interior S2</span>
                         </div>
                     </div>
                     @endforeach
                 </div>
             </div>
 
-            <!-- Lightbox -->
-            <div x-show="lightbox" class="lightbox-overlay" @click.self="closeLightbox()" @keydown.escape.window="closeLightbox()" x-cloak>
-                <div class="relative">
-                    <img :src="lightboxSrc" :alt="lightboxCaption">
-                    <p class="text-white/70 text-sm text-center mt-3" x-text="lightboxCaption"></p>
-                    <button @click="closeLightbox()" class="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm flex items-center justify-center text-white transition-all">
-                        <i class='bx bx-x text-xl'></i>
-                    </button>
+            {{-- Lightbox Modal --}}
+            <div x-show="lightbox" class="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4 overflow-y-auto" @click.self="closeLightbox()" @keydown.escape.window="closeLightbox()" x-cloak>
+                <div class="relative bg-stone-900 border border-stone-850 rounded-3xl overflow-hidden max-w-sm w-full shadow-2xl my-auto">
+                    <div class="relative h-48 sm:h-64 w-full shrink-0">
+                        <img :src="lightboxSrc" :alt="lightboxTitle" class="w-full h-full object-cover">
+                        <button @click="closeLightbox()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center text-white transition-all shadow-md z-10">
+                            <i class='bx bx-x text-2xl'></i>
+                        </button>
+                    </div>
+                    <div class="p-5 text-left">
+                        <span class="text-amber-400 font-extrabold text-xs block mb-1 uppercase tracking-wider" x-text="lightboxMaterial"></span>
+                        <h3 class="text-white font-black text-lg mb-2 font-montserrat" x-text="lightboxTitle"></h3>
+                        <p class="text-stone-300 text-xs sm:text-sm leading-relaxed mb-5" x-text="lightboxDesc"></p>
+
+                        <a :href="'https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20tertarik%20dengan%20model%20' + encodeURIComponent(lightboxTitle) + '%20dan%20ingin%20tanya%20estimasi%20harganya.'" target="_blank"
+                           class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-lg text-sm">
+                            <i class='bx bxl-whatsapp text-lg'></i> Tanya Estimasi Harga via WA
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -382,34 +413,98 @@
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Kepuasan pelanggan adalah prioritas utama kami dalam setiap proyek furniture.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-ruler'></i></div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Custom Ukuran</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-stone-50 rounded-2xl p-4 border border-stone-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform"><i class='bx bx-ruler'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Custom Ukuran</h3>
                         </div>
-                        <p class="text-gray-600 text-sm leading-relaxed">Dibuat sesuai dimensi ruangan dan kebutuhan Anda, tidak ada yang tidak muat.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Dibuat sesuai dimensi ruangan Anda agar pas dan fungsional.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-shield-quarter'></i></div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Material Premium</h3>
+                    <div class="bg-stone-50 rounded-2xl p-4 border border-stone-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform"><i class='bx bx-shield-quarter'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Bahan Premium</h3>
                         </div>
-                        <p class="text-gray-600 text-sm leading-relaxed">Menggunakan bahan pilihan berkualitas tinggi untuk ketahanan jangka panjang.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Multiplex tebal dan finishing HPL berkualitas anti gores.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bxs-paint'></i></div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Finishing Rapi</h3>
+                    <div class="bg-stone-50 rounded-2xl p-4 border border-stone-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform"><i class='bx bxs-paint'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Finishing Rapi</h3>
                         </div>
-                        <p class="text-gray-600 text-sm leading-relaxed">Proses finishing teliti dan rapi menghasilkan tampilan yang halus dan mewah.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Pengerjaan detil, edging rapi, dan engsel soft-close awet.</p>
                     </div>
-                    <div class="bg-stone-50 rounded-3xl p-5 border border-stone-100 hover:shadow-xl transition-all hover:-translate-y-1 group">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl shadow-sm shrink-0 group-hover:scale-110 transition-transform"><i class='bx bx-time'></i></div>
-                            <h3 class="font-montserrat font-bold text-gray-900 leading-tight text-base">Tepat Waktu</h3>
+                    <div class="bg-stone-50 rounded-2xl p-4 border border-stone-100 hover:shadow-lg transition-all hover:-translate-y-0.5 group">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg shadow-sm shrink-0 group-hover:scale-105 transition-transform"><i class='bx bx-time'></i></div>
+                            <h3 class="font-montserrat font-bold text-gray-900 text-xs sm:text-sm leading-tight">Tepat Waktu</h3>
                         </div>
-                        <p class="text-gray-600 text-sm leading-relaxed">Pengerjaan sesuai jadwal yang disepakati dengan komunikasi yang transparan.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs leading-relaxed">Proses produksi teratur sesuai jadwal kesepakatan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- ─── PROSES PENGERJAAN ─── --}}
+        <section class="bg-white py-10 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkQ2QzUiLz48L3N2Zz4=')] opacity-60"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Cara Kerja</span>
+                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Proses Pengerjaan</h2>
+                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Kami memastikan setiap langkah berjalan transparan dan sesuai harapan Anda.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 relative">
+                    <div class="hidden lg:block absolute top-10 left-[10%] right-[10%] h-0.5 z-0" style="background: linear-gradient(90deg, #e8c99a, #a0612a, #e8c99a);"></div>
+
+                    {{-- Step 1 --}}
+                    <div class="relative z-10 flex lg:flex-col items-center gap-3 lg:gap-0 p-3 lg:p-0 bg-stone-50 lg:bg-transparent rounded-2xl lg:rounded-none border lg:border-none border-stone-100">
+                        <div class="w-9 h-9 lg:w-16 lg:h-16 shrink-0 lg:mx-auto bg-amber-100 lg:bg-white border-2 lg:border-4 border-amber-300 text-amber-800 rounded-full flex items-center justify-center text-sm lg:text-2xl font-black shadow-sm lg:mb-4">1</div>
+                        <div class="text-left lg:text-center">
+                            <h4 class="font-bold text-gray-900 text-xs lg:text-base leading-tight lg:mb-2">Konsultasi</h4>
+                            <p class="text-[11px] lg:text-xs text-gray-500 leading-tight">Ukur ruangan, diskusikan desain, & pilih material.</p>
+                        </div>
+                    </div>
+
+                    {{-- Step 2 --}}
+                    <div class="relative z-10 flex lg:flex-col items-center gap-3 lg:gap-0 p-3 lg:p-0 bg-stone-50 lg:bg-transparent rounded-2xl lg:rounded-none border lg:border-none border-stone-100">
+                        <div class="w-9 h-9 lg:w-16 lg:h-16 shrink-0 lg:mx-auto bg-amber-100 lg:bg-white border-2 lg:border-4 border-amber-300 text-amber-800 rounded-full flex items-center justify-center text-sm lg:text-2xl font-black shadow-sm lg:mb-4">2</div>
+                        <div class="text-left lg:text-center">
+                            <h4 class="font-bold text-gray-900 text-xs lg:text-base leading-tight lg:mb-2">Desain 3D</h4>
+                            <p class="text-[11px] lg:text-xs text-gray-500 leading-tight">Sketsa konsep dan gambar layout 3D presisi.</p>
+                        </div>
+                    </div>
+
+                    {{-- Step 3 --}}
+                    <div class="relative z-10 flex lg:flex-col items-center gap-3 lg:gap-0 p-3 lg:p-0 bg-stone-50 lg:bg-transparent rounded-2xl lg:rounded-none border lg:border-none border-stone-100">
+                        <div class="w-9 h-9 lg:w-16 lg:h-16 shrink-0 lg:mx-auto bg-amber-100 lg:bg-white border-2 lg:border-4 border-amber-300 text-amber-800 rounded-full flex items-center justify-center text-sm lg:text-2xl font-black shadow-sm lg:mb-4">3</div>
+                        <div class="text-left lg:text-center">
+                            <h4 class="font-bold text-gray-900 text-xs lg:text-base leading-tight lg:mb-2">Produksi</h4>
+                            <p class="text-[11px] lg:text-xs text-gray-500 leading-tight">Fabrikasi oleh tukang kayu ahli berpengalaman.</p>
+                        </div>
+                    </div>
+
+                    {{-- Step 4 --}}
+                    <div class="relative z-10 flex lg:flex-col items-center gap-3 lg:gap-0 p-3 lg:p-0 bg-stone-50 lg:bg-transparent rounded-2xl lg:rounded-none border lg:border-none border-stone-100">
+                        <div class="w-9 h-9 lg:w-16 lg:h-16 shrink-0 lg:mx-auto bg-amber-100 lg:bg-white border-2 lg:border-4 border-amber-300 text-amber-800 rounded-full flex items-center justify-center text-sm lg:text-2xl font-black shadow-sm lg:mb-4">4</div>
+                        <div class="text-left lg:text-center">
+                            <h4 class="font-bold text-gray-900 text-xs lg:text-base leading-tight lg:mb-2">Quality Control</h4>
+                            <p class="text-[11px] lg:text-xs text-gray-500 leading-tight">Pemeriksaan detail finishing dan kelayakan fungsi.</p>
+                        </div>
+                    </div>
+
+                    {{-- Step 5 --}}
+                    <div class="relative z-10 flex lg:flex-col items-center gap-3 lg:gap-0 p-3 lg:p-0 bg-stone-50 lg:bg-transparent rounded-2xl lg:rounded-none border lg:border-none border-stone-100">
+                        <div class="w-9 h-9 lg:w-16 lg:h-16 shrink-0 lg:mx-auto text-white rounded-full flex items-center justify-center text-sm lg:text-2xl font-black shadow-md"
+                             style="background: linear-gradient(135deg, #7a4520, #a0612a); box-shadow: 0 0 12px rgba(160,97,42,0.3);">
+                            <i class='bx bx-check text-base lg:text-3xl'></i>
+                        </div>
+                        <div class="text-left lg:text-center">
+                            <h4 class="font-bold text-amber-800 text-xs lg:text-base leading-tight lg:mb-2">Instalasi</h4>
+                            <p class="text-[11px] lg:text-xs text-gray-500 leading-tight">Pemasangan dan penyetelan rapi di lokasi Anda.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -495,51 +590,6 @@
                             referrerpolicy="no-referrer-when-downgrade"
                             title="Lokasi Interior S2 Bandar Lampung">
                         </iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- ─── PROSES PENGERJAAN ─── --}}
-        <section class="bg-white py-10 relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkQ2QzUiLz48L3N2Zz4=')] opacity-60"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="text-center mb-14">
-                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Cara Kerja</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Proses Pengerjaan</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Kami memastikan setiap langkah berjalan transparan dan sesuai harapan Anda.</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center relative">
-                    <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 z-0" style="background: linear-gradient(90deg, #e8c99a, #a0612a, #e8c99a);"></div>
-
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-amber-100 text-amber-700 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 hover:bg-amber-700 hover:text-white transition-colors duration-300">1</div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Konsultasi</h4>
-                        <p class="hidden md:block text-xs text-gray-500 px-2">Diskusi ukuran, desain, dan material sesuai kebutuhan.</p>
-                    </div>
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-amber-100 text-amber-700 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 hover:bg-amber-700 hover:text-white transition-colors duration-300">2</div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Desain</h4>
-                        <p class="hidden md:block text-xs text-gray-500 px-2">Pembuatan sketsa atau gambar 3D desain furniture.</p>
-                    </div>
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-amber-100 text-amber-700 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 hover:bg-amber-700 hover:text-white transition-colors duration-300">3</div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Produksi</h4>
-                        <p class="hidden md:block text-xs text-gray-500 px-2">Pengerjaan oleh tenaga ahli berpengalaman.</p>
-                    </div>
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-amber-100 text-amber-700 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 hover:bg-amber-700 hover:text-white transition-colors duration-300">4</div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Quality Check</h4>
-                        <p class="hidden md:block text-xs text-gray-500 px-2">Pengecekan kualitas sebelum pengiriman.</p>
-                    </div>
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100 col-span-2 md:col-span-1">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto text-white rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-lg mb-2 md:mb-4"
-                             style="background: linear-gradient(135deg, #7a4520, #a0612a); box-shadow: 0 0 20px rgba(160,97,42,0.4);">
-                            <i class='bx bx-check'></i>
-                        </div>
-                        <h4 class="font-bold text-amber-700 text-xs md:text-base leading-tight md:mb-2">Instalasi</h4>
-                        <p class="hidden md:block text-xs text-gray-500 px-2">Pemasangan di lokasi Anda hingga selesai dan rapi.</p>
                     </div>
                 </div>
             </div>

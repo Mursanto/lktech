@@ -43,45 +43,115 @@
     <!-- Main Content -->
     <main class="flex-grow w-full pb-20 md:pb-0">
         <!-- Hero Section -->
-        <x-inner-page-header title="Solusi WiFi Voucher Starlink" subtitle="Konektivitas Internet Tanpa Batas untuk Desa & Kawasan Wisata." />
+        <section class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-[70vh] flex items-center pt-24 pb-12 overflow-hidden"
+                 x-data="{ topologyModal: false }">
+            {{-- Decorative blobs --}}
+            <div class="absolute top-0 right-0 w-96 h-96 rounded-full blur-[130px] opacity-20" style="background:#2563eb;"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-15" style="background:#1d4ed8;"></div>
 
-        <!-- Banner Image -->
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <img src="{{ asset('images/wifi_voucer.webp') }}" alt="WiFi Voucher Starlink" class="w-full h-auto rounded-3xl shadow-xl border border-gray-100">
-        </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    {{-- Text content --}}
+                    <div class="lg:col-span-7">
+                        <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-4 text-[10px] font-bold text-brand-300 uppercase tracking-widest">
+                            <span>🛰️ Internet Satelit Desa & Wisata</span>
+                        </div>
+
+                        <h1 class="text-3xl md:text-5xl font-black font-montserrat text-white leading-tight mb-3 tracking-tight">
+                            Solusi WiFi Voucher <span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Starlink</span>
+                        </h1>
+
+                        <p class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6 max-w-xl">
+                            LKtech menghadirkan konektivitas internet satelit Starlink berkecepatan tinggi tanpa batas untuk desa, kawasan wisata, dan wilayah blankspot. Dilengkapi sistem voucher pintar yang mudah dikelola.
+                        </p>
+
+                        {{-- Action buttons --}}
+                        <div class="grid grid-cols-2 gap-3 max-w-sm mb-6">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20WiFi%20Voucher%20Starlink." target="_blank"
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md text-xs">
+                                <i class='bx bxl-whatsapp text-base'></i> Konsultasi WA
+                            </a>
+                            <a href="#omzet"
+                               class="flex items-center justify-center gap-2 py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition-all shadow-md text-xs">
+                                <i class='bx bx-line-chart text-base'></i> Cek Omzet
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Image topologi diagram --}}
+                    <div class="lg:col-span-5">
+                        <div class="relative group cursor-pointer" @click="topologyModal = true">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                            <div class="relative bg-slate-950/80 border border-white/10 rounded-2xl p-2 shadow-2xl">
+                                <img src="{{ asset('images/wifi_voucer.webp') }}" alt="Diagram Topologi WiFi Voucher Starlink" class="w-full h-auto rounded-xl">
+                                <div class="absolute inset-0 bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-xs font-bold text-white flex items-center gap-1.5 shadow-lg">
+                                        <i class='bx bx-zoom-in text-base animate-pulse'></i> Perbesar Topologi
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Interactive Lightbox Modal for Topology Diagram --}}
+            <div x-show="topologyModal" class="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4"
+                 @click.self="topologyModal = false" @keydown.escape.window="topologyModal = false" x-cloak>
+                <div class="relative max-w-4xl w-full max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl p-3 flex flex-col items-center justify-center">
+                    <button @click="topologyModal = false" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center text-white transition-all shadow-md z-10">
+                        <i class='bx bx-x text-2xl'></i>
+                    </button>
+                    <img src="{{ asset('images/wifi_voucer.webp') }}" alt="Topologi Jaringan Starlink" class="max-w-full max-h-[80vh] object-contain rounded-2xl">
+                    <p class="text-gray-400 text-xs mt-3 text-center">Diagram Topologi Jaringan WiFi Voucher Starlink LKTech</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Latar Belakang -->
-        <div class="bg-white py-20 relative">
+        <div class="bg-white py-12 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
+                <div class="text-center mb-10">
                     <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Latar Belakang</span>
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-4 tracking-tight">Mengapa WiFi Voucher Dibutuhkan?</h2>
-                    <p class="text-gray-500 text-sm max-w-2xl mx-auto">Membawa internet ke tempat yang tidak terjangkau jaringan konvensional.</p>
+                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Mengapa WiFi Voucher Dibutuhkan?</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm max-w-2xl mx-auto">Solusi internet cepat untuk daerah yang tidak terjangkau jaringan kabel konvensional.</p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all group text-center">
-                        <div class="w-16 h-16 mx-auto bg-red-100 text-red-600 rounded-full flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-signal-1'></i>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {{-- Card 1 --}}
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
+                        <div class="w-10 h-10 bg-red-100 text-red-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                            <i class='bx bx-wifi-off'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Sinyal GSM Lemah</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Banyak wilayah pedesaan dan kawasan wisata tidak terjangkau sinyal GSM yang memadai untuk akses internet.</p>
+                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Sinyal GSM Lemah</h3>
+                        <p class="text-[11px] text-gray-500 leading-normal">Banyak daerah pedesaan dan wisata terisolasi dari sinyal GSM.</p>
                     </div>
                     
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all group text-center">
-                        <div class="w-16 h-16 mx-auto bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-group'></i>
+                    {{-- Card 2 --}}
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
+                        <div class="w-10 h-10 bg-blue-100 text-blue-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                            <i class='bx bx-message-rounded-dots'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Kebutuhan Komunikasi</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Warga desa dan wisatawan membutuhkan internet untuk komunikasi, transaksi digital, dan akses informasi.</p>
+                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Kebutuhan Komunikasi</h3>
+                        <p class="text-[11px] text-gray-500 leading-normal">Kebutuhan penting untuk transaksi digital dan komunikasi sehari-hari.</p>
                     </div>
                     
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all group text-center">
-                        <div class="w-16 h-16 mx-auto bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-3xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
-                            <i class='bx bx-plug'></i>
+                    {{-- Card 3 --}}
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
+                        <div class="w-10 h-10 bg-orange-100 text-orange-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                            <i class='bx bx-git-branch'></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-montserrat">Keterbatasan Infrastruktur</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">Pemasangan jaringan kabel (fiber/copper) ke daerah terpencil membutuhkan biaya sangat besar dan waktu lama.</p>
+                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Infrastruktur Terbatas</h3>
+                        <p class="text-[11px] text-gray-500 leading-normal">Penarikan kabel fiber optik ke daerah pelosok sangat mahal & lambat.</p>
+                    </div>
+
+                    {{-- Card 4 --}}
+                    <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
+                        <div class="w-10 h-10 bg-green-100 text-green-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                            <i class='bx bx-line-chart'></i>
+                        </div>
+                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Peluang Revenue</h3>
+                        <p class="text-[11px] text-gray-500 leading-normal">Hasilkan profit tambahan dari penjualan voucher WiFi di lokasi Anda.</p>
                     </div>
                 </div>
             </div>
@@ -206,14 +276,76 @@
         </div>
 
         <!-- Estimasi Pendapatan -->
-        <div class="bg-white py-20 border-t border-gray-100">
+        <div id="omzet" class="bg-white py-16 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Estimasi Omzet Penjualan</h2>
-                    <p class="text-gray-500 text-sm">Simulasi potensi pendapatan dari penjualan voucher WiFi di lokasi Anda.</p>
+                <div class="text-center mb-10">
+                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Simulasi Omzet</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Estimasi Omzet Penjualan</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm">Simulasi potensi pendapatan harian dari penjualan voucher WiFi di lokasi Anda.</p>
                 </div>
 
-                <div class="overflow-x-auto bg-white rounded-3xl shadow-xl border border-gray-100">
+                <!-- Mobile Card Stack View (< 640px) -->
+                <div class="block sm:hidden space-y-4">
+                    {{-- Card 1 --}}
+                    <div class="bg-white rounded-2xl p-5 border border-gray-150 shadow-sm">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bold text-gray-900 text-sm flex items-center gap-1.5"><i class='bx bx-cloud text-gray-400 text-base'></i> Hari Biasa (Sepi)</span>
+                            <span class="bg-gray-100 text-gray-700 text-[10px] font-black px-2 py-0.5 rounded-full">20 User</span>
+                        </div>
+                        <div class="space-y-1.5 text-xs text-gray-600 border-t border-gray-100 pt-3">
+                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 147.000 <span class="text-[10px] text-gray-400 font-normal">(14 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 94.500 <span class="text-[10px] text-gray-400 font-normal">(6 user)</span></span></div>
+                            <div class="flex justify-between font-bold text-gray-900 border-t border-dashed border-gray-200 pt-2 text-sm">
+                                <span>Potensi Omzet:</span>
+                                <span class="text-brand-600">Rp 241.500 / hari</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Card 2 --}}
+                    <div class="bg-white rounded-2xl p-5 border border-gray-150 shadow-sm">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bold text-gray-900 text-sm flex items-center gap-1.5"><i class='bx bx-sun text-orange-400 text-base'></i> Hari Biasa (Ramai)</span>
+                            <span class="bg-gray-100 text-gray-700 text-[10px] font-black px-2 py-0.5 rounded-full">50 User</span>
+                        </div>
+                        <div class="space-y-1.5 text-xs text-gray-600 border-t border-gray-100 pt-3">
+                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 367.500 <span class="text-[10px] text-gray-400 font-normal">(35 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 236.250 <span class="text-[10px] text-gray-400 font-normal">(15 user)</span></span></div>
+                            <div class="flex justify-between font-bold text-gray-900 border-t border-dashed border-gray-200 pt-2 text-sm">
+                                <span>Potensi Omzet:</span>
+                                <span class="text-brand-600">Rp 603.750 / hari</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Card 3 --}}
+                    <div class="bg-brand-50/50 rounded-2xl p-5 border border-brand-100 shadow-sm">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bold text-brand-900 text-sm flex items-center gap-1.5"><i class='bx bxs-hot text-red-500 text-base'></i> Hari Libur / Weekend</span>
+                            <span class="bg-brand-100 text-brand-700 text-[10px] font-black px-2 py-0.5 rounded-full">100 User</span>
+                        </div>
+                        <div class="space-y-1.5 text-xs text-gray-600 border-t border-brand-100 pt-3">
+                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 735.000 <span class="text-[10px] text-gray-400 font-normal">(70 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 472.500 <span class="text-[10px] text-gray-400 font-normal">(30 user)</span></span></div>
+                            <div class="flex justify-between font-bold text-gray-905 border-t border-dashed border-brand-200 pt-2 text-sm">
+                                <span>Potensi Omzet:</span>
+                                <span class="text-brand-700">Rp 1.207.500 / hari</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Total Card --}}
+                    <div class="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md">
+                        <div class="text-center">
+                            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Estimasi Total Omzet / Bulan</p>
+                            <p class="text-xl font-black text-brand-400">± Rp 18.957.750</p>
+                            <p class="text-[10px] text-slate-400 mt-2 font-medium">Asumsi: 22 hari biasa + 8 hari weekend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Table View (>= 640px) -->
+                <div class="hidden sm:block overflow-x-auto bg-white rounded-3xl shadow-xl border border-gray-100">
                     <table class="w-full text-sm text-left">
                         <thead class="bg-gradient-to-r from-brand-600 to-brand-700 text-white font-bold uppercase text-[11px]">
                             <tr>
