@@ -81,13 +81,23 @@
         }
     }">
         
-        <!-- Breadcrumbs -->
-        <nav class="flex text-sm text-gray-500 mb-6 font-medium">
-            <a href="{{ route('home') }}" class="hover:text-brand-600">Home</a>
-            <span class="mx-2">/</span>
-            <span class="text-gray-400 cursor-default">Katalog</span>
-            <span class="mx-2">/</span>
-            <span class="text-gray-800">{{ $product->brand }} {{ $product->model_series }}</span>
+        <!-- Breadcrumb Navigasi (Posisi Kiri) -->
+        <nav aria-label="breadcrumb" class="mb-4 sm:mb-6">
+            <ol class="flex items-center text-[13px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <li class="flex items-center shrink-0">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
+                        <i class="bx bx-home-alt"></i> Home
+                    </a>
+                </li>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 hover:underline transition-colors">Katalog</a>
+                </li>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <span class="text-gray-800 font-semibold truncate max-w-[150px] sm:max-w-[250px]" aria-current="page">{{ $product->brand }} {{ $product->model_series }}</span>
+                </li>
+            </ol>
         </nav>
 
         <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
@@ -333,14 +343,25 @@
 
     <!-- Related Products / Cross-Selling Section -->
     @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 mb-4 mt-4 border-t border-gray-100">
-        <div class="mb-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Lengkapi Kebutuhan Laptop Anda</h2>
-            <p class="text-sm text-gray-500 mt-1">Rekomendasi produk terkait dan aksesori pilihan</p>
+    <section x-data class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 mb-4 mt-4 border-t border-gray-100">
+        <div class="flex items-center justify-between mb-4 md:mb-6 gap-4 overflow-hidden">
+            <h3 class="text-sm sm:text-lg font-medium text-gray-900 leading-snug truncate">
+                Rekomendasi produk terkait
+            </h3>
+            
+            <!-- Tombol Panah Navigasi Slider -->
+            <div class="flex gap-2 shrink-0">
+                <button type="button" id="btnSlideLeft" onclick="document.getElementById('productSlider').scrollBy({ left: -260, behavior: 'smooth' })" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-full shadow-sm transition-colors relative z-10" aria-label="Slide Kiri">
+                    <i class="bx bx-chevron-left text-xl"></i>
+                </button>
+                <button type="button" id="btnSlideRight" onclick="document.getElementById('productSlider').scrollBy({ left: 260, behavior: 'smooth' })" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-brand-600 hover:bg-brand-50 rounded-full shadow-sm transition-colors relative z-10" aria-label="Slide Kanan">
+                    <i class="bx bx-chevron-right text-xl"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Horizontal Scrollable Container (Compact Cards) -->
-        <div class="flex overflow-x-auto gap-4 sm:gap-5 pb-4 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <div id="productSlider" class="flex overflow-x-auto gap-4 sm:gap-5 pb-4 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
             @foreach($relatedProducts as $rp)
                 <div class="snap-start flex-shrink-0 w-[150px] sm:w-[180px] lg:w-[220px] bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow group flex flex-col relative">
                     
@@ -409,8 +430,9 @@
     </section>
     @endif
 
+
     <!-- Footer -->
     <x-footer />
-
+    
 </body>
 </html>
