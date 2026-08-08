@@ -134,6 +134,90 @@
         .delay-3 { animation-delay: 0.3s; }
 
         [x-cloak] { display: none !important; }
+
+        /* ── Hero Visual Showcase ── */
+        .hero-visual-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .hero-image-frame {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 6px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: floatAnim 4s ease-in-out infinite;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image-frame:hover .hero-img {
+            transform: scale(1.08);
+        }
+
+        .floating-badge {
+            position: absolute;
+            background: #ffffff;
+            color: #1e293b;
+            padding: 8px 16px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .badge-top {
+            top: 20px;
+            right: -10px;
+            background: #fef08a;
+            color: #854d0e;
+            animation: floatAnim 3s ease-in-out infinite reverse;
+        }
+
+        .badge-bottom {
+            bottom: 25px;
+            left: -10px;
+            background: #ffffff;
+            animation: floatAnim 3.5s ease-in-out infinite 0.5s;
+        }
+
+        .badge-bottom small {
+            display: block;
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: normal;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50%      { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 1023px) {
+            .hero-visual-wrapper {
+                margin-top: 40px;
+            }
+            .hero-image-frame {
+                width: 260px;
+                height: 260px;
+            }
+        }
     </style>
 </head>
 <body class="bg-stone-50 text-gray-800 antialiased flex flex-col min-h-screen">
@@ -148,31 +232,58 @@
             <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-15" style="background:#d4a96a;"></div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 pb-10 w-full">
-                <div class="max-w-3xl">
-                    <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
-                        <span class="flex items-center gap-1"><i class='bx bx-map text-amber-400 text-sm'></i> Bandar Lampung</span>
-                        <span class="text-white/30">•</span>
-                        <span class="flex items-center gap-1"><i class='bx bx-time-five text-amber-400 text-sm'></i> Sen-Sab: 09.00 - 17.00 WIB</span>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    {{-- Text content --}}
+                    <div class="lg:col-span-7">
+                        <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
+                            <span class="flex items-center gap-1"><i class='bx bx-map text-amber-400 text-sm'></i> Bandar Lampung</span>
+                            <span class="text-white/30">•</span>
+                            <span class="flex items-center gap-1"><i class='bx bx-time-five text-amber-400 text-sm'></i> Sen-Sab: 09.00 - 17.00 WIB</span>
+                        </div>
+
+                        <h1 class="font-montserrat text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 tracking-tight fade-up delay-1">
+                            Furniture Custom<br class="hidden sm:inline">
+                            <span class="badge-shimmer">Bandar Lampung</span>
+                        </h1>
+
+                        <p class="text-white/90 text-sm leading-relaxed mb-6 max-w-xl fade-up delay-2">
+                            Wujudkan interior impian Anda dengan presisi. Kami memproduksi kitchen set, kamar set, hingga backdrop TV berkualitas tinggi yang didesain khusus sesuai ruangan Anda.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3 max-w-md fade-up delay-3">
+                            <a href="https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20ingin%20konsultasi%20mengenai%20furniture%20custom." target="_blank"
+                               class="flex items-center justify-center gap-1.5 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
+                                <i class='bx bxl-whatsapp text-lg'></i> Konsultasi WA
+                            </a>
+                            <a href="#galeri"
+                               class="flex items-center justify-center gap-1.5 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
+                                <i class='bx bx-images text-lg'></i> Lihat Portofolio
+                            </a>
+                        </div>
                     </div>
 
-                    <h1 class="font-montserrat text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 tracking-tight fade-up delay-1">
-                        Furniture Custom<br class="hidden sm:inline">
-                        <span class="badge-shimmer">Bandar Lampung</span>
-                    </h1>
+                    {{-- Visual Showcase --}}
+                    <div class="lg:col-span-5 flex justify-center fade-up delay-2">
+                        <div class="hero-visual-wrapper">
+                            <!-- Badge Melayang Atas Kanan -->
+                            <div class="floating-badge badge-top">
+                                <span>✨ Free Desain 3D</span>
+                            </div>
 
-                    <p class="text-white/90 text-sm leading-relaxed mb-6 max-w-xl fade-up delay-2">
-                        Wujudkan interior impian Anda dengan presisi. Kami memproduksi kitchen set, kamar set, hingga backdrop TV berkualitas tinggi yang didesain khusus sesuai ruangan Anda.
-                    </p>
+                            <!-- Foto Utama Dalam Frame Melingkar -->
+                            <div class="hero-image-frame">
+                                <img src="{{ asset('images/furniture/kitchen-set/kitchen-1.webp') }}" alt="Furniture Custom Bandar Lampung" class="hero-img">
+                            </div>
 
-                    <div class="grid grid-cols-2 gap-3 max-w-md fade-up delay-3">
-                        <a href="https://wa.me/6285366114312?text=Halo%20Interior%20S2%2C%20saya%20ingin%20konsultasi%20mengenai%20furniture%20custom." target="_blank"
-                           class="flex items-center justify-center gap-1.5 py-3 px-4 bg-green-500 hover:bg-green-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
-                            <i class='bx bxl-whatsapp text-lg'></i> Konsultasi WA
-                        </a>
-                        <a href="#galeri"
-                           class="flex items-center justify-center gap-1.5 py-3 px-4 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl transition-all shadow-md hover:-translate-y-0.5 text-xs sm:text-sm">
-                            <i class='bx bx-images text-lg'></i> Lihat Portofolio
-                        </a>
+                            <!-- Badge Melayang Bawah Kiri -->
+                            <div class="floating-badge badge-bottom">
+                                <div class="badge-icon">🛠️</div>
+                                <div class="badge-text">
+                                    <strong>100+ Project</strong>
+                                    <small>Interior Terpasang</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
