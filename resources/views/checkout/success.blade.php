@@ -182,6 +182,31 @@
           50% { transform: scale(1.15) translate(25%, -25%); }
           100% { transform: scale(1) translate(25%, -25%); }
         }
+
+        /* Container Utama Layout Status Pembayaran */
+        .payment-status-container {
+          max-width: 1080px;
+          margin: 30px auto;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: 1fr 400px;
+          gap: 28px;
+          align-items: start;
+          width: 100%;
+        }
+
+        /* Kolom Kiri */
+        .payment-main-content {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        /* Kolom Kanan (Sticky QRIS) */
+        .payment-sidebar {
+          position: sticky;
+          top: 90px;
+        }
     </style>
 </head>
 
@@ -509,11 +534,10 @@
         {{-- ══════════════════════════════════════════════
              DESKTOP LAYOUT  (hidden lg:block)
              ══════════════════════════════════════════════ --}}
-        <div class="hidden lg:flex payment-grid-wrapper flex-col pt-10">
-            <div class="flex-1 grid grid-cols-2">
+        <div class="hidden lg:flex payment-status-container">
 
-                {{-- ─── LEFT — Bill info ─── --}}
-                <div class="flex flex-col justify-center px-10 xl:px-14 py-6 border-r border-gray-100">
+            {{-- ─── LEFT — Bill info ─── --}}
+            <div class="payment-main-content px-6 py-6 border border-gray-100 rounded-2xl bg-white shadow-sm">
 
                     <div class="fade-in-up mb-3">
                         <span class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full">
@@ -648,7 +672,7 @@
                 </div>
 
                 {{-- ─── RIGHT — Payment action ─── --}}
-                <div class="flex flex-col items-center justify-center px-8 xl:px-14 py-8 bg-gradient-to-b from-gray-50 to-white">
+                <div class="payment-sidebar bg-white border border-gray-100 rounded-2xl p-6 shadow-sm text-center">
 
                     @if($isQris)
                     <div class="fade-in-up text-center mb-4">
@@ -669,8 +693,8 @@
                         </button>
                     </div>
 
-                    <div class="fade-in-up w-full max-w-sm">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="fade-in-up w-full">
+                        <div class="grid grid-cols-1 gap-3">
                             <button @click="checkStatus()" :disabled="isCheckingStatus"
                                     class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-wait text-white font-bold py-3 px-3 rounded-xl transition-all shadow-md shadow-blue-200 flex justify-center items-center gap-2 text-xs">
                                 <template x-if="isCheckingStatus">
@@ -696,7 +720,7 @@
                         <p class="text-sm font-bold text-gray-700 mb-1">Transfer ke Virtual Account</p>
                         <p class="text-3xl font-black text-brand-600">{{ $totalFormatted }}</p>
                     </div>
-                    <div class="fade-in-up w-full max-w-sm bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
+                    <div class="fade-in-up w-full bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-3">Nomor VA — {{ $paymentInfo['bank'] }}</p>
                         <div class="flex items-center justify-center gap-2 mb-3">
                             <span class="text-2xl font-black text-gray-900 tracking-widest font-mono">{{ $paymentInfo['va_number'] }}</span>
@@ -712,9 +736,9 @@
                         <div class="w-20 h-20 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                             <i class='bx bx-credit-card text-4xl'></i>
                         </div>
-                        <p class="text-sm text-gray-500 mb-6 max-w-xs">Jika Anda belum menyelesaikan pembayaran atau halaman tertutup, klik tombol di bawah.</p>
+                        <p class="text-sm text-gray-500 mb-6">Jika Anda belum menyelesaikan pembayaran atau halaman tertutup, klik tombol di bawah.</p>
                     </div>
-                    <div class="fade-in-up w-full max-w-xs">
+                    <div class="fade-in-up w-full">
                         <button type="button" @click.prevent="payNow()" :disabled="isLoading"
                                 class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-2xl transition-all shadow-md shadow-blue-200 flex justify-center items-center gap-2">
                             <template x-if="isLoading"><i class='bx bx-loader-alt bx-spin text-xl'></i></template>
@@ -729,7 +753,7 @@
             </div>
             
             {{-- Rekomendasi Produk Terlaris (Desktop Full Width) --}}
-            <div class="px-8 xl:px-14 pb-10 bg-gray-50 border-t border-gray-200">
+            <div class="col-span-full pb-10">
                 <x-payment-recommendations :products="$recommendedProducts" />
             </div>
         </div>
