@@ -1,0 +1,142 @@
+erDiagram
+    %% ============================================
+    %% ERD (Entity Relationship Diagram)
+    %% Sistem LKTech
+    %% Fokus: Entitas, Atribut, Relasi & Kardinalitas
+    %% TANPA tipe data (hanya nama atribut + PK/FK)
+    %% ============================================
+
+    %% === RELATIONSHIPS (dengan label & kardinalitas) ===
+    customers ||--o{ services : "has"
+    customers ||--o{ rentals : "has"
+    customers ||--o{ sales : "has"
+    users ||--o{ sales : "creates"
+    users ||--o{ services : "assigned as technician"
+    users ||--o{ activity_logs : "generates"
+    categories ||--o{ products : "contains"
+    categories ||--o{ categories : "parent of"
+    sales ||--o{ sale_details : "contains"
+    products ||--o{ sale_details : "sold in"
+    services ||--o{ service_parts : "uses"
+    products ||--o{ service_parts : "used in"
+
+    %% === ENTITIES (tanpa tipe data - hanya atribut) ===
+
+    customers {
+        id id PK
+        string name
+        string phone
+        string email
+        string address
+        timestamp created_at
+    }
+
+    users {
+        id id PK
+        string name
+        string email
+        string password
+        string role
+        timestamp created_at
+    }
+
+    categories {
+        id id PK
+        id parent_id FK "Self-reference"
+        string name
+        string type_category
+        string description
+    }
+
+    products {
+        id id PK
+        id category_id FK
+        string brand
+        string model_series
+        string serial_number
+        string processor
+        string ram
+        string storage
+        decimal screen_size
+        string condition
+        decimal purchase_price
+        decimal selling_price
+        string status
+        integer stock
+        string image_path
+    }
+
+    sales {
+        id id PK
+        id user_id FK
+        id customer_id FK
+        string payment_method
+        decimal total_amount
+        decimal profit_amount
+        decimal operational_cost
+        date transaction_date
+        string payment_status
+        string notes
+    }
+
+    sale_details {
+        id id PK
+        id sale_id FK
+        id product_id FK
+        string manual_sn
+        integer quantity
+        decimal price_at_transaction
+        decimal purchase_price
+        decimal profit
+    }
+
+    services {
+        id id PK
+        id customer_id FK
+        id technician_id FK "References users"
+        string device_name
+        string serial_number
+        string service_type
+        string complaint
+        string status
+        decimal service_fee
+        decimal estimated_parts_cost
+        decimal total_amount
+        string payment_status
+        string payment_method
+    }
+
+    service_parts {
+        id id PK
+        id service_id FK
+        id product_id FK
+        integer quantity
+        decimal price
+    }
+
+    rentals {
+        id id PK
+        id customer_id FK
+        string customer_name
+        string customer_phone
+        string laptop_name
+        string serial_number
+        date rental_date
+        date return_date
+        decimal daily_price
+        decimal total_price
+        string status
+        string payment_status
+    }
+
+    activity_logs {
+        id id PK
+        id user_id FK
+        string action
+        string model_type
+        id model_id
+        json old_values
+        json new_values
+        string ip_address
+        string user_agent
+    }

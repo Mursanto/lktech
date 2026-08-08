@@ -1,0 +1,562 @@
+PENGEMBANGAN SISTEM INFORMASI INVENTORI DAN PENJUALAN BERBASIS WEB MENGGUNAKAN LARAVEL DENGAN PENERAPAN KEAMANAN AUTENTIKASI
+PADA LKTECH
+SKRIPSI
+Diajukan untuk memenuhi salah satu syarat kelulusan Program Sarjana
+Mursanto
+NIM : 19252417
+Program Studi Sistem Informasi
+Fakultas Teknik dan Informatika
+Universitas Bina Sarana Informatika
+2026
+PEDOMAN PENGGUNAAN HAK CIPTA
+Skripsi Sarjana yang berjudul “Pengembangan Sistem Informasi Inventori dan Penjualan Berbasis Web Menggunakan Laravel dengan Penerapan Keamanan Autentikasi Pada LKtech” adalah hasil karya tulis asli Mursanto dan bukan hasil terbitan sehingga peredaran karya tulis hanya berlaku dilingkungan akademik saja, serta memiliki hak cipta. Oleh karena itu, dilarang keras untuk menggandakan baik sebagian maupun seluruhnya karya tulis ini, tanpa seizin penulis.
+Referensi kepustakaan diperkenankan untuk dicatat tetapi pengutipan atau peringkasan isi tulisan hanya dapat dilakukan dengan seizin penulis dan disertai ketentuan pengutipan secara ilmiah dengan menyebutkan sumbernya.
+Untuk keperluan perizinan pada pemilik dapat menghubungi informasi yang tertera di bawah ini:
+PERSEMBAHAN
+Karya sederhana yang lahir dari dedikasi dan perjuangan panjang ini sepenuhnya kupersembahkan kepada:
+Ayah dan Ibu tercinta, beserta Kakak dan Adik-adikku, pelita dan penyemangat hidupku. Terima kasih atas setiap butir doa tulus yang senantiasa dilangitkan, serta kasih sayang keluarga yang tak terhingga. Kehadiran kalian menjadi kekuatan luar biasa bagi setiap langkah dan keputusan yang kuambil.
+Istriku tersayang dan kedua buah hatiku, alasan terbesarku untuk tidak pernah berhenti berjuang. Terima kasih telah menjadi oase di tengah lelahku membagi waktu antara tanggung jawab profesional di Telkomsat, mengelola usaha, dan menuntaskan pendidikan ini. Kesabaran dan senyum kalian adalah energi yang menyempurnakan perjalanan ini.
+Rekan-rekan keluarga besar SubDit IT & Cyber Security Operation PT. TELKOMSAT serta Tim Development, yang telah memberikan lingkungan suportif bagi pertumbuhan karier dan akademis saya, serta ruang diskusi yang senantiasa terbuka.
+Rekan-rekan seperjuangan mahasiswa kelas 19.8AG.00 UBSI Kramat 98. Terima kasih telah menjadi bagian dari napas perjuangan ini. Di saat langkah terasa berat dan waktu kian sempit, dukungan kalian memastikan saya tidak menyerah hingga akhirnya kita sampai di garis akhir ini bersama-sama.
+Pelanggan setia LKTech, yang secara tidak langsung menjadi inspirasi utama di balik pengembangan sistem informasi ini.
+Biarlah karya ini menjadi bukti nyata bahwa seberat apa pun tantangan dan keterbatasan yang menghadang, semangat yang menolak untuk menyerah akan selalu mengantarkan kita pada garis akhir perjuangan.
+KATA PENGANTAR
+Puji syukur ke hadirat Allah SWT atas segala rahmat-Nya sehingga penulis dapat menyelesaikan skripsi berjudul "Pengembangan Sistem Informasi Inventori dan Penjualan Berbasis Web Menggunakan Laravel dengan Penerapan Keamanan Autentikasi pada LKTech". Karya ini disusun sebagai salah satu persyaratan akademis untuk memperoleh gelar Sarjana pada Program Studi Sistem Informasi di Universitas Bina Sarana Informatika.
+Penulis menyadari bahwa keberhasilan transformasi ide dari perancangan arsitektur hingga menjadi sebuah sistem yang fungsional ini tidak lepas dari bimbingan, dukungan teknis, serta fasilitas dari berbagai pihak. Oleh karena itu, penulis menyampaikan apresiasi formal kepada:
+Ibu Siti Marlina, selaku Dosen Pembimbing I, serta Bapak Abdul Latif, selaku Dosen Pembimbing II, yang telah memberikan bimbingan intelektual dan arahan teknis yang sangat mendalam selama proses pengembangan sistem ini.
+Segenap staf pengajar Universitas Bina Sarana Informatika, khususnya di kampus Kramat 98, yang telah membekali penulis dengan fondasi keilmuan sistem informasi.
+Manajemen LKTech yang telah memberikan izin penelitian serta akses data operasional untuk diintegrasikan ke dalam perancangan sistem inventori ini.
+Rekan-rekan di SubDit IT & Cyber Security Operation PT. TELKOMSAT serta Tim Development, atas ruang diskusi profesional dan sinergi teknis yang senantiasa memotivasi penulis dalam mengimplementasikan standar keamanan pada aplikasi ini.
+Semoga skripsi ini dapat memberikan kontribusi nyata bagi pengembangan ilmu pengetahuan, khususnya dalam bidang rekayasa perangkat lunak dan keamanan informasi.
+Bogor, 05 Mei 2026
+Mursanto
+ABSTRAK
+Mursanto (19252417), Pengembangan Sistem Informasi Inventori dan Penjualan Berbasis Web Menggunakan Laravel dengan Penerapan Keamanan Autentikasi pada LKTech.
+Pengelolaan data inventori dan transaksi penjualan di LKTech masih beroperasi secara terfragmentasi dan konvensional, yang memicu inefisiensi rekapitulasi data, anomali stok persediaan barang, serta rentannya arsitektur aplikasi terhadap ancaman siber akibat sistem autentikasi kata sandi tunggal. Untuk mengatasi permasalahan tersebut, penelitian ini bertujuan merancang dan mengimplementasikan sistem informasi inventori dan Point of Sale (POS) berbasis web menggunakan framework Laravel dengan pendekatan metode Waterfall. Sistem ini dikembangkan menggunakan pola arsitektur Model-View-Controller (MVC), pengelolaan basis data MariaDB atau MySQL dengan metode FIFO (First-In, First-Out), serta penguatan kontrol akses berlapis melalui integrasi Two-Factor Authentication (2FA) berbasis Google Authenticator dan Activity Log. Hasil implementasi dan pengujian menunjukkan bahwa arsitektur sistem ini berhasil menyentralisasi alur sirkulasi barang, transaksi kasir, dan administrasi layanan teknis (servis). Penerapan protokol keamanan 2FA secara empiris mampu memitigasi risiko peretasan dan melindungi integritas data, sehingga operasional bisnis manajemen LKTech menjadi lebih efisien, sistematis, dan aman.
+Kata Kunci: Inventori, Laravel, Penjualan, Two-Factor Authentication, Waterfall
+ABSTRACT
+Mursanto (19252417), Web-Based Inventory and Sales Information System Development Using Laravel with Authentication Security Implementation at LKTech.
+The management of inventory data and sales transactions at LKTech still operates in a fragmented and conventional manner, leading to inefficient data recapitulation, stock anomalies, and application architecture vulnerabilities to cyber threats due to a single-password authentication system. To address these issues, this study aims to design and implement a web-based inventory and Point of Sale (POS) information system using the Laravel framework with the Waterfall method approach. This system is developed using the Model-View-Controller (MVC) architectural pattern, MariaDB atau MySQL database management with the FIFO (First-In, First-Out) method, and multi-layered access control reinforcement through the integration of Google Authenticator-based Two-Factor Authentication (2FA) and Activity Logs. The implementation and testing results indicate that this system's architecture successfully centralizes the flow of goods circulation, cashier transactions, and technical service administration. The empirical application of the 2FA security protocol effectively mitigates hacking risks and protects data integrity, thereby making LKTech's business operations more efficient, systematic, and secure.
+Keywords: Inventory, Laravel, Sales, Two-Factor Authentication, Waterfall
+DAFTAR ISI
+PERSEMBAHAN	vii
+KATA PENGANTAR	viii
+ABSTRAK	ix
+BAB I	1
+1.1	Latar Belakang Ide Perangkat Lunak	1
+1.2	Analisis Masalah dan Solusi	3
+1.3	Tujuan dan Manfaat Perangkat Lunak	5
+1.4	Batasan Perangkat Lunak	7
+BAB II	7
+2.1	Konsep Dasar Sistem	8
+2.1.1	Sistem Informasi	8
+2.1.2	Sistem	9
+2.1.3	Website	9
+2.1.4	Laravel	10
+2.1.5	Database	11
+2.1.6	Waterfall	12
+2.2	Teori Pendukung	13
+2.2.1	ERD	13
+2.2.2	LRS	14
+2.2.3	UML	15
+2.3	Keamanan Autentikasi	16
+2.3.1	Keamanan Sistem Informasi	16
+2.3.2	Authentication dan Authorization	17
+2.3.3	Two-Factor Authentication (2FA)	17
+2.3.4	Time-Based One-Time Password (TOTP)	18
+2.3.5	Google Authenticator	19
+2.4	Kajian Penelitian	22
+2.4.1	Penelitian Terdahulu	22
+2.4.2	Persamaan dengan Penelitian Sebelumnya	25
+2.4.3	Perbedaan dengan Penelitian Sebelumnya	26
+BAB III	28
+3.1	Metode Pengembangan Perangkat Lunak	28
+3.2	Tahapan Pengembangan Perangkat Lunak	29
+3.2.1	Profil dan Sejarah Usaha LKTech	30
+3.2.2	Struktur Organisasi dan Fungsi	31
+3.3	Analisis Kebutuhan Sistem	32
+3.4	Desain Arsitektur Data dan Alur Sistem	35
+3.4.1	Rancangan Use Case	36
+3.4.2	Activity Diagram	38
+3.4.3	Sequence Diagram	39
+3.4.4	Class Diagram	42
+3.4.5	Entity Relationship Diagram (ERD)	43
+3.4.6	Logical Record Structure (LRS)	44
+3.4.7	Spesifikasi File (Basis Data)	45
+3.5	Analisis Keamanan Sistem Lama	52
+3.6	Implementasi Keamanan	55
+3.7	Implementasi Sistem	59
+3.8	Pengujian Sistem	65
+3.9	Pemeliharaan (Maintenance)	70
+BAB IV	70
+4.1	Kesimpulan	72
+4.2	Saran	74
+DAFTAR PUSTAKA	72
+DAFTAR RIWAYAT HIDUP	80
+BUKTI HASIL PENGECEKAN PLAGIARISME	81
+SURAT KETERANGAN RISET	83
+LAMPIRAN	84
+DAFTAR SIMBOL
+Simbol Use Case Diagram
+Simbol Activity Diagram
+Simbol Sequence Diagram
+Simbol Class Diagram
+Simbol Entity Relationship Diagram (ERD) & Logical Record Structure (LRS)
+DAFTAR GAMBAR
+Gambar II.1 Komponen Utama Sistem Informasi	8
+Gambar II.2 Arsitektur Dasar Aplikasi Berbasis Web	10
+Gambar II.3Aliran Arsitektur MVC pada Pengembangan Sistem dengan Laravel	11
+Gambar II.4 Tahapan Model Pengembangan Waterfall	13
+Gambar II.5 Contoh Notasi ERD pada Sistem LKTech	14
+Gambar II.6 Contoh Representasi LRS	15
+Gambar II.7 Mekanisme Kerja Two-Factor Authentication	18
+Gambar II.8 Antarmuka Aplikasi Google Authenticator	22
+Gambar III.1 Struktur Organisasi LKTech	31
+Gambar III.2 Use Case Diagram Sistem Informasi LKTech	36
+Gambar III.3 Activity Diagram — Alur Login dan Verifikasi 2FA	38
+Gambar III.4 Activity Diagram — Alur Transaksi Penjualan (Kasir)	39
+Gambar III.5 Sequence Diagram — Autentikasi Login dengan 2FA	40
+Gambar III.6 Sequence Diagram — Transaksi Penjualan (POS)	41
+Gambar III.7 Class Diagram Model Sistem LKTech	Error! Bookmark not defined.
+Gambar III.8. Entity Relationship Diagram (ERD) Sistem LKTech	43
+Gambar III.9 Logial Record Structure (LRS) Sistem LKTech	44
+Gambar III.10 Tampilan Halaman Landing Page Publik (lktech.online)	59
+Gambar III.11 Tampilan Halaman Login Sistem	60
+Gambar III.12 Tampilan Halaman Setup dan Verifikasi 2FA	61
+Gambar III.13 Tampilan Dashboard Super Admin	61
+Gambar III.14 Tampilan Halaman Manajemen Inventori	62
+Gambar III.15 Tampilan Halaman Point of Sale (POS)	63
+Gambar III.16 Tampilan Halaman Modul Servis	64
+Gambar III.17 Tampilan Activity Log (Log Aktivitas Pengguna	64
+DAFTAR TABEL
+Tabel II.1 Ringkasan Penelitian Terdahulu	22
+Tabel III.1 Kebutuhan Fungsional Sistem LKTech	33
+Tabel III.2 Kebutuhan Non-Fungsional Sistem LKTech	34
+Tabel III.3 Skenario Use Case — Login & Verifikasi 2FA 	37
+Tabel III.4 Spesifikasi Tabel Users — Menyimpan data pengguna aplikasi	45
+Tabel III.5 Spesifikasi Tabel Categories — Menyimpan kategori produk	46
+Tabel III.6 Spesifikasi Tabel Products — Menyimpan data inventori barang	46
+Tabel III.7 Spesifikasi Tabel Customer — Menyimpan data pelanggan	47
+Tabel III.8 Spesifikasi Tabel Sales — Menyimpan header transaksi penjualan	48
+Tabel III.9 Spesifikasi Tabel sale_details — Rincian produk per transaksi	49
+Tabel III.10 Spesifikasi Tabel Services — Data tiket servis pelanggan	49
+Tabel III.11 Spesifikasi Tabel service_parts — Sparepart yang digunakan	50
+Tabel III.12 Spesifikasi Tabel rentals — Data transaksi penyewaan laptop	51
+Tabel III.13 Spesifikasi Tabel activity_logs — Jejak audit aktivitas pengguna	52
+Tabel III.14 Perbandingan Keamanan Sistem Lama dan Sistem Baru LKTech	54
+Tabel III.15 Hasil Evaluasi Implementasi Keamanan Sistem LKTech	57
+Tabel III.16 Matriks Pengujian Black-Box Sistem Informasi LKTech	65
+Tabel IV.1 Pencapaian Tujuan Penelitian	73
+DAFTAR LAMPIRAN
+Lampiran 1 BAST	84
+Lampiran 2 Sertifikasi Apresiasi	86
+BAB I
+PENDAHULUAN
+Latar Belakang Ide Perangkat Lunak
+Dalam lanskap digital yang terus mengalami percepatan, kehadiran transformasi teknologi tidak lagi bersifat opsional, melainkan telah menjadi fondasi strategis bagi keberlangsungan Usaha Mikro, Kecil, dan Menengah (UMKM) (Oktavian & Susena, 2025). Dari sudut pandang arsitektural, pengembangan tata kelola teknologi informasi (TI) yang matang berperan sebagai kerangka dasar untuk mewujudkan efisiensi operasional, ketepatan pengelolaan stok, transparansi laba, sekaligus peningkatan kepuasan pelanggan (Wahyu Kurniawan, 2024).
+Namun, kondisi ideal tersebut kerap tidak sejalan dengan praktik operasional di lapangan. LKTech merupakan usaha kecil mikro yang bergerak di bidang penjualan unit perangkat komputer dan laptop (seperti seri ThinkPad dan EliteBook), komponen (SSD, HDD, RAM, LCD), aksesori, perangkat lunak digital, serta layanan penyewaan dan servis laptop. Dalam memasarkan produk dan jasanya melalui berbagai platform digital seperti Facebook, WhatsApp, dan Tokopedia, LKTech hingga saat ini masih bergantung pada pencatatan stok secara manual. Dari sudut pandang pengembangan sistem, pendekatan konvensional seperti ini menimbulkan sejumlah persoalan pada tata kelola logistik dan keuangan, misalnya sering terjadi ketidaksesuaian jumlah barang antara catatan administrasi dengan fisik di gudang, serta lemahnya rekam jejak transaksi penjualan. Akibatnya, dokumentasi laba rugi usaha tidak dapat disusun
+secara akurat. Kondisi ini semakin kompleks karena adanya potongan biaya administrasi dari pihak marketplace yang tergolong besar, yakni mencapai hampir 10% dari setiap transaksi penawaran produk.
+Dari rentetan permasalahan yang telah diuraikan, stabilitas serta laju pertumbuhan bisnis LKTech turut terkena imbas yang tidak bisa diabaikan. Ketidakakuratan data inventori, misalnya, memicu potensi kehabisan stok barang tanpa terdeteksi secara dini, suatu kondisi yang pada gilirannya mampu mengecewakan konsumen sekaligus menggerus loyalitas pelanggan. Di lain pihak, tekanan terhadap margin keuntungan yang kian tipis, akibat besarnya potongan komisi penjual di marketplace, mendorong LKTech untuk mengembangkan sistem tata kelola mandiri yang lebih efisien demi menjaga profitabilitas usaha tetap berkelanjutan.
+Tak hanya persoalan operasional, proses migrasi manajemen ke ranah digital berbasis web juga membawa tantangan baru pada aspek keamanan siber (cyber security). Tanpa kendali akses yang dikembangkan secara kokoh, data transaksi, laporan keuangan, maupun informasi inventori yang terpusat menjadi rentan terhadap ancaman pengambilalihan akun (account takeover) oleh pihak yang tidak memiliki otoritas.
+Sebagai upaya merespons berbagai persoalan tersebut, sejumlah kajian terdahulu menunjukkan efektivitas solusi yang bertumpu pada sistem informasi terintegrasi. Dalam penelitiannya, (Kurnia et al., 2025) menemukan bahwa optimalisasi manajemen stok menggunakan framework Laravel mampu menekan persentase selisih fisik gudang secara bermakna. Lebih jauh, kompleksitas pengelolaan operasional pada usaha ritel memang menuntut kehadiran solusi digital yang terpusat , di mana penerapan sistem Point of Sale (POS) yang terkomputerisasi terbukti dapat merekam pergerakan inventori secara real time sekaligus mengurangi risiko kekeliruan pencatatan keuangan (Rahmatuloh et al., 2024). Dari sisi pengamanan akses, guna memitigasi anomali login pada platform berbasis web, pengembangan arsitektur keamanan dengan Multi-Factor Authentication (MFA) dinilai sangat efektif dalam melindungi hak akses pengguna (Alvansyah et al., 2025). Tambahan lapisan keamanan yang menerapkan Two-Factor Authentication (2FA) melalui Google Authenticator dapat menjadi solusi esensial bagi LKTech. Melalui skema ini, verifikasi identitas pengguna baik Admin, Kasir, maupun Teknisi tidak lagi hanya bertumpu pada kata sandi statis, melainkan juga pada kode sandi sekali pakai berbasis waktu (Time-Based One-Time Password atau TOTP) yang dihasilkan secara dinamis.
+Berdasarkan urgensi kebutuhan operasional dan perlindungan data yang telah dipaparkan, LKTech memerlukan sebuah aplikasi daring mandiri yang dikembangkan untuk memantau pergerakan transaksi penjualan dan inventori serta layanan penunjang seperti layanan servis, penyewaan laptop, dan penyusunan laporan bulanan secara real-time serta terjamin keamanannya. Berangkat dari tuntutan tersebut, penelitian ini difokuskan pada pembangunan sistem dengan judul "Pengembangan Sistem Informasi Inventori dan Penjualan Berbasis Web Menggunakan Laravel serta Peningkatan Keamanan Autentikasi pada LKTech". Melalui pengembangan ini, diharapkan hadir sebuah solusi yang tidak hanya mendorong peningkatan efisiensi bisnis, tetapi juga mampu menjaga integritas data operasional LKTech dari beragam potensi risiko keamanan.
+Analisis Masalah dan Solusi
+Berdasarkan uraian pada latar belakang, terdapat beberapa permasalahan utama yang ditemukan dalam kegiatan operasional LKTech, yaitu sebagai berikut:
+Pencatatan data operasional LKTech masih dilakukan menggunakan Microsoft Excel, sehingga data inventori, penjualan, servis, dan penyewaan belum terintegrasi dalam satu sistem informasi yang terpusat.
+Data inventori belum menjadi pusat informasi utama bagi seluruh proses bisnis. Hal ini menyebabkan data stok barang belum terhubung secara langsung dengan proses penjualan, penggunaan suku cadang (sparepart) pada layanan servis, serta ketersediaan unit untuk penyewaan.
+Proses pencarian data, pemantauan stok, dan rekapitulasi transaksi masih membutuhkan pengecekan manual, sehingga kerap menghambat efisiensi kerja Admin, Kasir, dan Teknisi.
+Ketergantungan pada platform marketplace pihak ketiga untuk penjualan daring menimbulkan beban potongan biaya administrasi yang cukup besar, yakni mencapai hampir 10% dari setiap transaksi, sehingga menggerus margin keuntungan operasional LKTech.
+Belum tersedia sistem berbasis web dengan pembagian hak akses (Role-Based Access Control) dan keamanan autentikasi yang memadai untuk melindungi data operasional, rekam transaksi, serta mencegah anomali aktivitas pengguna.
+Berdasarkan permasalahan tersebut, solusi yang diusulkan dalam penelitian ini adalah sebagai berikut:
+Mengembangkan sistem informasi berbasis web yang mengintegrasikan seluruh data inventori, penjualan, servis, dan penyewaan ke dalam satu basis data (database) terpusat.
+Menjadikan modul inventori sebagai pusat data utama yang saling terhubung dengan modul penjualan, servis, dan sewa. Dengan demikian, setiap perubahan kuantitas barang akibat transaksi penjualan, penggunaan sparepart, maupun penyewaan unit dapat tercatat secara otomatis dan terstruktur.
+Menyediakan fitur pencarian data, pemantauan stok real-time, serta otomatisasi laporan transaksi agar Admin, Kasir, dan Teknisi dapat memperoleh informasi operasional secara lebih cepat dan akurat.
+Menyediakan platform sistem mandiri yang dapat diakses secara online sebagai saluran utama penjualan langsung (direct selling). Solusi ini bertujuan untuk meminimalkan ketergantungan usaha pada marketplace pihak ketiga, sehingga LKTech dapat mempertahankan margin keuntungan yang lebih optimal.
+Menerapkan pembagian hak akses pengguna berdasarkan peran operasional (Admin, Kasir, dan Teknisi), serta menambahkan mekanisme lapisan keamanan login menggunakan Two-Factor Authentication (2FA) dan pencatatan aktivitas (activity log). Penerapan Multi-Factor Authentication terbukti mampu memperkuat proses autentikasi, sedangkan activity logging dapat meningkatkan visibilitas sistem dan mendukung kemudahan proses audit keamanan (Ristra & Nurulfadhlia, 2026).
+Tujuan dan Manfaat Perangkat Lunak
+Tujuan dari penelitian ini adalah sebagai berikut:
+Mengembangkan dan membangun sistem informasi inventori dan penjualan berbasis web di LKTech menggunakan framework Laravel sebagai pusat data operasional.
+Mengembangkan halaman publik (landing page) terintegrasi yang berfungsi sebagai platform penjualan langsung (direct selling) untuk menampilkan katalog produk secara real-time sekaligus memutus ketergantungan operasional usaha pada marketplace pihak ketiga.
+Menerapkan Role-Based Access Control (RBAC) untuk memisahkan wewenang fungsional secara sistematis antara Super Admin, Kasir, dan Teknisi.
+Mengimplementasikan keamanan Two-Factor Authentication (2FA) menggunakan Google Authenticator guna melindungi kredensial akses pengguna dan menjaga integritas data dari ancaman peretasan.
+Manfaat yang diharapkan dari hasil penelitian yang dilakukan ini adalah sebagai berikut:
+Bagi LKTech (Aspek Bisnis dan Operasional): Membantu pengelolaan data inventori, penjualan, servis, dan penyewaan secara lebih terpusat dan terdokumentasi. Selain itu, tersedianya platform transaksi mandiri ini dapat menghilangkan beban potongan biaya administrasi yang sebelumnya mencapai hampir 10% di marketplace, sehingga margin keuntungan (profit) LKTech dapat dipertahankan secara maksimal.
+Bagi Pelanggan: Memudahkan calon pelanggan untuk melihat katalog produk, ketersediaan stok barang, maupun unit sewa secara mandiri dan real-time melalui landing page yang dinamis.
+Bagi Staff Operasional (Kasir dan Teknisi): Memperlancar alur kerja harian karena sistem disesuaikan dengan peran masing-masing; Kasir dapat berfokus pada pencatatan transaksi jual-sewa yang akurat, sementara Teknisi dapat mengelola pembaruan status layanan servis tanpa risiko tumpang tindih data.
+Bagi Keamanan Sistem: Meningkatkan perlindungan aset digital melalui pembagian hak akses yang tegas, autentikasi tambahan (2FA), dan pencatatan riwayat aktivitas (activity log), sehingga seluruh data operasional dan transaksi lebih terlindungi dari risiko manipulasi internal maupun serangan siber.
+Batasan Perangkat Lunak
+Agar pembahasan dalam penelitian ini lebih terarah, fokus, dan tidak meluas dari tujuan yang telah ditetapkan, maka penulis menetapkan batasan-batasan masalah sebagai berikut:
+Ruang lingkup sistem difokuskan pada pengelolaan inventori dan pencatatan transaksi penjualan langsung, serta ditambahkan fitur sebagai penunjang yakni manajemen penyewaan unit, administrasi layanan servis, serta penyediaan katalog produk yang dinamis pada halaman utama (landing page) bagi pengunjung publik.
+Penerapan pembagian hak akses atau Role-Based Access Control (RBAC) di dalam sistem hanya dibatasi untuk tiga entitas pengguna utama, yaitu: Super Admin, Kasir (termasuk staf sales), dan Teknisi.
+Peningkatan keamanan sistem berfokus pada perlindungan autentikasi akses masuk pengguna menggunakan Two-Factor Authentication (2FA) melalui aplikasi Google Authenticator. Penelitian ini tidak mencakup pengujian keamanan jaringan pada tingkat perangkat keras (hardware security) maupun infrastruktur server.
+Sistem informasi ini dibangun menggunakan arsitektur berbasis web dengan framework Laravel (berbasis bahasa pemrograman PHP) dan menggunakan sistem manajemen basis data (database) MySQL.
+BAB II
+LANDASAN TEORI
+Konsep Dasar Sistem
+Sistem Informasi
+Sistem informasi merupakan sekumpulan komponen yang saling terhubung dan berfungsi secara kolaboratif untuk mengumpulkan, memproses, menyimpan, dan mendistribusikan informasi guna mendukung pengambilan keputusan dan pengendalian dalam suatu organisasi. Prabowo mendefinisikan sistem informasi sebagai suatu sistem di dalam organisasi yang mempertemukan kebutuhan pengolahan transaksi harian dengan kebutuhan strategis manajemen, sehingga menghasilkan informasi yang relevan, akurat, dan tepat waktu (Prabowo, 2020).
+(Sumber: Diadaptasi dari Prabowo, 2020)
+Gambar II.
+Komponen Utama Sistem Informasi
+Dalam konteks pengembangan sistem untuk LKTech, sistem informasi yang dibangun dirancang untuk mengintegrasikan seluruh alur data operasional dengan fokus utama pada pergerakan inventori dan pencatatan transaksi penjualan, serta ditunjang fitur pendukung berupa penyewaan dan servis—dalam satu platform yang dapat diakses secara terpusat. Keberadaan sistem informasi yang terstruktur ini menjadi fondasi utama bagi manajemen LKTech dalam membuat keputusan berbasis data yang akurat dan efisien.
+Sistem
+Sistem dapat dipahami sebagai suatu kesatuan yang terdiri atas elemen-elemen yang saling berinteraksi dan terintegrasi untuk mencapai tujuan bersama yang telah ditetapkan. Dalam lingkup teknologi informasi, sistem merujuk pada harmoni antara perangkat keras (hardware), perangkat lunak (software), dan sumber daya manusia (brainware) yang bekerja sinergis dalam mengumpulkan, memproses, dan mendistribusikan data (Wau K, 2022). Setiap sistem yang dikembangkan dengan baik harus memiliki batasan yang jelas, masukan (input) yang terstruktur, mekanisme pemrosesan yang terukur, serta keluaran (output) yang memberikan nilai guna bagi penggunanya. Dalam pengembangan sistem LKTech, pendekatan ini diimplementasikan melalui integrasi modul-modul fungsional yang saling berkaitan dengan modul inti inventori dan penjualan (kasir) sebagai fokus utama, ditunjang modul pendukung penyewaan dan servis—dalam satu ekosistem digital yang kohesif.
+Website
+Website adalah sekumpulan halaman informasi yang terhubung satu sama lain dan dapat diakses melalui jaringan internet menggunakan peramban web. (Ariansyah & Imaduddin, 2026) memperkuat hal ini dengan menunjukkan bahwa pengembangan sistem informasi persediaan berbasis website memberikan kemudahan akses dan fleksibilitas yang jauh melebihi sistem berbasis desktop. Dalam pengembangan sistem LKTech, website berperan ganda: sebagai antarmuka pengelolaan internal bagi operator sistem dan sebagai laman publik (lktech.online) yang memungkinkan pelanggan memantau ketersediaan produk secara mandiri.
+(Sumber: Olahan Peneliti, diadaptasi dari Sari, 2024)
+Gambar II.
+Arsitektur Dasar Aplikasi Berbasis Web
+Laravel
+Laravel merupakan kerangka kerja (framework) PHP sumber terbuka yang dirancang untuk mempercepat dan menyederhanakan proses pengembangan aplikasi web modern secara profesional. Framework ini mengadopsi pola arsitektur Model-View-Controller (MVC) yang memisahkan logika bisnis, antarmuka pengguna, dan penanganan permintaan secara terstruktur. (Maulana, 2026) dalam kajian mereka tentang arsitektur MVC menggunakan Laravel 12 menegaskan bahwa pemisahan concern ini secara signifikan meningkatkan keterbacaan kode dan kemudahan pemeliharaan sistem dalam jangka panjang. Sementara itu, (Wahyu Kurniawan, 2024) membuktikan secara empiris bahwa pengembangan sistem manajemen inventori menggunakan Laravel menghasilkan peningkatan efisiensi yang terukur. Ekosistem Laravel dilengkapi dengan Eloquent ORM, sistem autentikasi terintegrasi, Artisan CLI, migrasi basis data, serta Blade templating engine—seluruh fitur ini menjadikan Laravel pilihan yang tepat untuk pengembangan sistem informasi LKTech.
+Tiga komponen inti dalam arsitektur MVC yang diimplementasikan pada pengembangan sistem LKTech:
+Model: Bertanggung jawab atas seluruh komunikasi dengan basis data dan merepresentasikan logika bisnis dari entitas-entitas sistem, seperti Product, Sale, User, dan Rental.
+View: Mengelola presentasi antarmuka pengguna yang ditampilkan di browser melalui Blade template engine, memisahkan logika tampilan dari logika bisnis.
+Controller: Berfungsi sebagai orkestrator yang menerima permintaan dari browser, mendelegasikan pemrosesan ke Model, dan mengarahkan hasilnya ke View yang sesuai.
+Sumber: Olahan Peneliti, Diadaptasi dari (Maulana, 2026)
+Gambar II.
+Aliran Arsitektur MVC pada Pengembangan Sistem dengan Laravel
+Database
+Basis data (database) adalah kumpulan data yang terorganisir secara sistematis dan tersimpan secara elektronis, sehingga dapat diakses, dikelola, dan diperbarui dengan mudah menggunakan perangkat lunak Database Management System (DBMS). Dalam pengembangan aplikasi web berbasis PHP, MySQL merupakan pilihan RDBMS (Relational Database Management System) yang paling kompatibel dan andal, menggunakan Structured Query Language (SQL) sebagai bahasa standar untuk manipulasi dan definisi data (Supardi, 2024). Pada sistem LKTech yang dikembangkan, seluruh rekaman data mulai dari kredensial pengguna, data inventori, riwayat transaksi, log servis, hingga informasi pelanggan dikelola dalam basis data MySQL yang terstruktur dan saling berelasi. Keandalan MySQL dalam menangani transaksi basis data secara konkuren menjadikannya fondasi penyimpanan data yang tepat bagi sistem dengan tingkat transaksi yang tinggi seperti sistem kasir LKTech.
+Waterfall
+Metode Waterfall merupakan salah satu model pengembangan perangkat lunak yang paling mapan dan terstruktur dalam paradigma rekayasa perangkat lunak. Model ini bercirikan alur pengembangan yang sekuensial dan linier, di mana setiap tahapan harus diselesaikan secara tuntas sebelum melanjutkan ke tahapan berikutnya. Metode Waterfall merupakan pendekatan sistematis yang menjamin setiap fase menghasilkan luaran (deliverable) yang jelas dan tervalidasi sebelum fase selanjutnya dimulai (Ardhana et al., 2025). Penerapan metode Waterfall pada pengembangan sistem informasi persediaan gudang menghasilkan produk yang sesuai spesifikasi dan lebih terstruktur dalam proses pengembangannya (Wau K, 2022). Dalam penelitian ini, Waterfall diterapkan melalui lima tahapan utama:
+Analisis Kebutuhan: Mengidentifikasi dan mendokumentasikan seluruh kebutuhan fungsional dan non-fungsional sistem LKTech dengan fokus utama pada modul inventori dan penjualan (kasir) serta mekanisme keamanan autentikasi (2FA), yang ditunjang oleh modul pendukung penyewaan dan servis.
+Desain Sistem: Mengembangkan arsitektur sistem secara komprehensif, meliputi pemodelan UML, perancangan antarmuka pengguna (UI atau UX), dan skema basis data relasional.
+Implementasi: Menerjemahkan seluruh hasil perancangan ke dalam kode program menggunakan framework Laravel, mencakup pembangunan modul-modul fungsional inti inventori dan penjualan (kasir) beserta fitur pendukungnya, serta penerapan mekanisme keamanan autentikasi berlapis seperti 2FA berbasis TOTP.
+Pengujian: Melakukan validasi fungsional melalui metode black-box testing untuk memastikan setiap fitur bekerja sesuai spesifikasi yang telah ditetapkan.
+Pemeliharaan: Mencakup proses deployment ke server live (lktech.online) serta penanganan gangguan dan pembaruan sistem pasca-penerapan.
+(Sumber: Diadaptasi dari Ardhana et al., 2025)
+Gambar II.
+Tahapan Model Pengembangan Waterfall
+Teori Pendukung
+ERD
+Entity Relationship Diagram (ERD) adalah model representasi konseptual yang digunakan untuk menggambarkan hubungan antar entitas dalam basis data secara visual sebelum pengembangan basis data dilaksanakan. ERD mendeskripsikan objek-objek data utama (entitas), atribut-atribut yang dimiliki setiap entitas, serta relasi dan kardinalitas yang menghubungkan satu entitas dengan lainnya. Penyusunan ERD yang cermat sebelum tahap implementasi merupakan praktik terbaik dalam pengembangan sistem berbasis web, karena ERD memberikan peta konseptual yang komprehensif bagi seluruh tim pengembang. Dalam pengembangan sistem LKTech, ERD digunakan untuk memodelkan relasi antar entitas utama—seperti Product, Category, Sale, SaleDetail, Customer, User, RentalItem, dan ServiceRecord—beserta seluruh kardinalitas relasinya, sehingga implementasi basis data dapat dilakukan dengan akurat dan konsisten (Kusumawardani et al., 2023).
+(Sumber: Olahan Peneliti, 2026)
+Gambar II.
+Contoh Notasi ERD pada Sistem LKTech
+LRS
+Logical Record Structure (LRS) merupakan representasi lanjutan dari ERD yang menggambarkan struktur rekaman dari tabel-tabel yang terbentuk setelah transformasi diagram hubungan entitas dilakukan. LRS dibentuk berdasarkan spesifikasi atribut dan relasi yang telah dideskripsikan dalam ERD, dengan menambahkan kunci utama (primary key) dan kunci tamu (foreign key) yang mendefinisikan hubungan referensial antar tabel secara eksplisit. Dalam konteks pengembangan sistem LKTech, LRS digunakan untuk memvalidasi bahwa setiap tabel dalam basis data seperti tabel products, sales, sale_details, rentals, dan services—telah memiliki struktur kolom dan relasi kunci yang benar sebelum perintah migrasi basis data dijalankan melalui Artisan CLI Laravel. Proses ini memastikan integritas referensial data terjaga sejak tahap awal pengembangan sistem.
+(Sumber: Olahan Peneliti, 2026)
+Gambar II.
+Contoh Representasi LRS
+UML
+Unified Modeling Language (UML) adalah bahasa pemodelan standar industri yang digunakan secara luas untuk memvisualisasikan, merancang, dan mendokumentasikan artefak sistem perangkat lunak. UML menyediakan seperangkat notasi grafis yang komprehensif untuk merepresentasikan berbagai aspek sistem. (Rahmatuloh et al., 2024) menekankan bahwa penggunaan UML dalam pengembangan sistem informasi sangat membantu meminimalkan ambiguitas dan memfasilitasi komunikasi yang efektif antara pengembang dengan pemangku kepentingan. Dalam pengembangan sistem LKTech, beberapa jenis diagram UML dimanfaatkan secara strategis:
+Use Case Diagram: Menggambarkan interaksi antara pengguna (aktor) dengan sistem dari sudut pandang fungsional, mencakup seluruh kasus penggunaan yang tersedia bagi Super Admin, Kasir, dan Teknisi.
+Activity Diagram: Merepresentasikan alur kerja dari setiap proses bisnis dalam sistem, mulai dari login dengan 2FA hingga alur transaksi penjualan dan pengelolaan inventori.
+Sequence Diagram: Mengilustrasikan urutan interaksi antar komponen sistem dalam skenario spesifik, seperti proses verifikasi TOTP pada saat login.
+Class Diagram: Menggambarkan struktur arsitektur sistem secara statis, mencakup kelas-kelas utama, atribut, metode, dan hubungan antar kelas dalam implementasi Laravel.
+Keamanan Autentikasi
+Keamanan Sistem Informasi
+Keamanan sistem informasi merupakan disiplin yang mencakup kebijakan, prosedur, dan mekanisme teknis yang dirancang untuk melindungi integritas, kerahasiaan (confidentiality), dan ketersediaan (availability) aset informasi dari ancaman yang tidak sah. Dalam era digital, sistem informasi berbasis web menjadi sasaran berbagai jenis serangan siber. (Ristra & Nurulfadhlia, 2026) menunjukkan bahwa analisis keamanan berbasis dashboard menggunakan Security Information and Event Management (SIEM) merupakan pendekatan proaktif yang efektif dalam mendeteksi ancaman keamanan pada sistem web. Sementara itu, (Amalia et al., 2026) mengidentifikasi berbagai vektor risiko keamanan siber yang mengancam aplikasi berbasis web, termasuk kelemahan pada lapisan autentikasi dan manajemen sesi. Temuan-temuan ini memperkuat urgensi pengembangan sistem LKTech dengan lapisan keamanan autentikasi yang kokoh dan berlapis.
+Authentication dan Authorization
+Dalam arsitektur keamanan sistem informasi, autentikasi (authentication) dan otorisasi (authorization) merupakan dua konsep yang saling melengkapi namun secara fundamental berbeda. Autentikasi adalah proses verifikasi identitas pengguna—memastikan bahwa entitas yang mencoba mengakses sistem adalah benar-benar pihak yang diklaim. Otorisasi, di sisi lain, menentukan hak akses yang diberikan kepada pengguna yang telah terautentikasi. Pada pengembangan sistem LKTech, otorisasi diimplementasikan melalui mekanisme Role-Based Access Control (RBAC) yang membatasi akses setiap pengguna sesuai dengan perannya. Keamanan kata sandi diperkuat menggunakan algoritma hashing Bcrypt melalui middleware autentikasi bawaan Laravel. (Aji et al., n.d.) membuktikan bahwa Bcrypt merupakan algoritma hashing yang sangat andal dalam melindungi kredensial dari serangan dictionary attack maupun brute-force, menjadikannya pilihan yang tepat untuk pengamanan password pada sistem berbasis web.
+Two-Factor Authentication (2FA)
+Two-Factor Authentication (2FA) adalah mekanisme keamanan yang memperkuat proses autentikasi konvensional dengan mewajibkan pengguna menyediakan dua bentuk verifikasi independen sebelum diberikan akses ke sistem. Prinsipnya adalah bahwa meskipun penyerang berhasil mencuri kata sandi, mereka tetap tidak mampu mengakses sistem tanpa menguasai perangkat fisik kedua milik pengguna. (Komang Gede Jaya Wira Buana, 2025) dalam kajian implementasi Multi-Factor Authentication pada aplikasi web membuktikan bahwa 2FA secara drastis mengurangi risiko akses tidak sah dibandingkan autentikasi satu faktor.
+(Sumber: Diadaptasi dari Alvansyah et al., 2025)
+Gambar II.
+Mekanisme Kerja Two-Factor Authentication (2FA)
+MFA merupakan komponen inti dari arsitektur Zero Trust Security yang efektif dalam menangkal anomali login. Dalam pengembangan sistem LKTech, 2FA diterapkan secara khusus untuk melindungi akses panel manajemen dari pengguna dengan peran Super Admin, Kasir, dan Teknisi (Alvansyah et al., 2025).
+Time-Based One-Time Password (TOTP)
+Time-Based One-Time Password (TOTP) adalah algoritma komputasi yang menghasilkan kata sandi satu kali (one-time password) berdasarkan kombinasi kunci rahasia (secret key) bersama dan waktu sistem saat ini. TOTP merupakan standar industri yang didefinisikan dalam RFC 6238 dan menjadi ekstensi dari algoritma HMAC-based One-Time Password (HOTP). Karakteristik kunci TOTP adalah periode validitasnya yang sangat singkat—umumnya 30 detik—sehingga kode yang dihasilkan secara otomatis kedaluwarsa setelah jendela waktu berakhir. (Sukma & Solichin, 2025) membuktikan bahwa TOTP menjamin setiap kode OTP yang dihasilkan bersifat unik, tidak dapat diprediksi, dan tidak dapat digunakan ulang (non-replayable), sehingga secara signifikan mengurangi efektivitas serangan penangkapan sesi (session hijacking) dan serangan replay. Dalam pengembangan sistem LKTech, server Laravel menggunakan library pragmaRX atau google2fa untuk menghasilkan secret key unik bagi setiap pengguna dan memvalidasi kode TOTP yang dimasukkan.
+Google Authenticator
+Google Authenticator adalah aplikasi otentikator berbasis perangkat mobile yang dikembangkan oleh Google, tersedia secara gratis pada platform Android dan iOS. Aplikasi ini mengimplementasikan algoritma TOTP (RFC 6238) secara lokal pada perangkat pengguna—artinya, kode OTP dihasilkan tanpa memerlukan koneksi internet setelah konfigurasi awal dilakukan. Proses konfigurasi melibatkan pemindaian QR Code yang mengandung secret key terenkripsi yang disediakan oleh server aplikasi. (Asyhar et al., 2026) dalam kajian implementasi autentikasi berbasis JWT mengemukakan bahwa integrasi token-based authentication dengan mekanisme OTP merupakan kombinasi yang sangat efektif dalam mengamankan akses sistem berbasis web modern. (Sukma & Solichin, 2025) secara spesifik membuktikan bahwa implementasi Google Authenticator sebagai faktor kedua autentikasi meningkatkan keamanan akses sistem secara signifikan tanpa memerlukan infrastruktur tambahan. Dalam pengembangan sistem LKTech, pengguna yang telah memasukkan kata sandi yang benar akan diminta memasukkan kode 6-digit dari Google Authenticator sebelum akses penuh diberikan oleh sistem.
+2.3.6 Role-Based Access Control (RBAC)
+Role-Based Access Control (RBAC) adalah model otorisasi yang mengatur hak akses pengguna berdasarkan peran (role) yang diembannya di dalam sistem, bukan berdasarkan identitas individu secara langsung. Dengan pendekatan ini, setiap peran didefinisikan beserta sekumpulan izin (permission) tertentu, sehingga pengguna hanya dapat mengakses fungsi dan data yang relevan dengan tanggung jawabnya. Penerapan RBAC mendukung prinsip least privilege, yakni pembatasan akses seminimal mungkin sesuai kebutuhan, sehingga memperkecil permukaan serangan sekaligus risiko penyalahgunaan wewenang. Dalam pengembangan sistem LKTech, RBAC diimplementasikan melalui middleware Laravel dengan tiga hierarki peran utama—Super Admin, Kasir, dan Teknisi—yang masing-masing memiliki batasan akses berbeda terhadap modul inti inventori dan penjualan serta fitur pendukung penyewaan dan servis. Mekanisme ini memastikan pemisahan tugas (separation of duties) yang jelas sekaligus menjaga integritas data operasional.
+2.3.7 Activity Log (Audit Trail)
+Activity Log atau audit trail merupakan mekanisme pencatatan otomatis terhadap seluruh aktivitas penting yang terjadi di dalam sistem, mencakup informasi mengenai pengguna yang melakukan aksi, jenis aksi, objek yang terpengaruh, serta waktu kejadiannya. Catatan ini berfungsi sebagai instrumen akuntabilitas dan audit keamanan yang memungkinkan penelusuran kembali (traceability) atas setiap perubahan data maupun upaya akses yang mencurigakan. Keberadaan activity log menjadi komponen penting dalam tata kelola keamanan sistem informasi karena mendukung deteksi anomali, investigasi insiden, serta pemenuhan aspek anti-penyangkalan (non-repudiation). Dalam pengembangan sistem LKTech, activity log dirancang untuk merekam aktivitas pengguna secara otomatis—seperti proses login (termasuk verifikasi 2FA), transaksi penjualan, perubahan data inventori, hingga pengelolaan akun—sehingga seluruh jejak operasional terdokumentasi dan dapat diaudit oleh Super Admin.
+2.3.8 Keamanan Aplikasi Pendukung
+Selain lapisan keamanan autentikasi, sistem berbasis web modern memerlukan mekanisme keamanan pendukung pada lapisan aplikasi untuk menangkal serangan yang menyasar celah pada pemrosesan input dan sesi pengguna. Mekanisme ini bersifat melengkapi fokus utama keamanan autentikasi dan ditujukan untuk menjaga integritas serta kerahasiaan data selama proses transaksi berlangsung. Dalam pengembangan sistem LKTech, beberapa mekanisme keamanan pendukung diterapkan secara berlapis:
+Cross-Site Request Forgery (CSRF): dicegah melalui penggunaan CSRF token bawaan Laravel pada setiap permintaan form, sehingga sistem dapat memastikan bahwa permintaan benar-benar berasal dari pengguna yang sah.
+Cross-Site Scripting (XSS): diredam melalui escaping otomatis pada Blade templating engine, yang mencegah penyisipan skrip berbahaya ke dalam halaman yang ditampilkan kepada pengguna.
+SQL Injection: dicegah dengan pemanfaatan Eloquent ORM dan query builder Laravel yang menerapkan prepared statement secara otomatis, sehingga input pengguna tidak dieksekusi sebagai bagian dari perintah SQL.
+(Sumber: Diadaptasi dari Sukma & Solichin, 2025)
+Gambar II.
+Antarmuka Aplikasi Google Authenticator
+Kajian Penelitian
+Penelitian Terdahulu
+Kajian terhadap penelitian-penelitian terdahulu yang relevan menjadi pijakan penting dalam memposisikan penelitian ini di tengah lanskap keilmuan yang ada. Lima penelitian terdahulu berikut dipilih karena memiliki keterkaitan langsung dengan tema pengembangan sistem informasi berbasis Laravel, manajemen inventori dan penjualan, serta implementasi keamanan autentikasi (Tabel 2.1)
+Tabel II.1
+Ringkasan Penelitian Terdahulu
+Sumber: Olahan Peneliti, 2026
+Berdasarkan kajian terhadap kelima penelitian terdahulu yang dirangkum dalam Tabel 2.1 di atas, dapat diidentifikasi hubungan, persamaan, perbedaan, dan kebaruan yang membedakan penelitian ini dari penelitian sebelumnya.
+Persamaan dengan Penelitian Sebelumnya
+Penelitian ini memiliki beberapa persamaan mendasar dengan penelitian-penelitian terdahulu. Pertama, penelitian ini sama-sama menggunakan framework Laravel sebagai teknologi pengembangan utama, selaras dengan pendekatan yang digunakan oleh (Wahyu Kurniawan, 2024) dalam membangun sistem manajemen inventori. Kedua, penelitian ini mengadopsi metode Waterfall sebagai pendekatan pengembangan perangkat lunak, konsisten dengan (Rahmatuloh et al., 2024) dan (Wau K, 2022) yang terbukti menghasilkan sistem yang terstruktur dan sesuai spesifikasi. Ketiga, fokus pada pengurangan human error dan otomatisasi proses bisnis menjadi tujuan bersama yang ditemukan pula dalam penelitian (Rahmatuloh et al., 2024). Keempat, implementasi mekanisme Two-Factor Authentication (2FA) berbasis TOTP dan Google Authenticator pada penelitian ini memiliki kesamaan teknis yang kuat dengan penelitian (Sukma & Solichin, 2025) dan (Alvansyah et al., 2025).
+Perbedaan dengan Penelitian Sebelumnya
+Meskipun terdapat kesamaan dalam beberapa aspek, penelitian ini memiliki sejumlah perbedaan signifikan dari penelitian-penelitian terdahulu. Penelitian (Wahyu Kurniawan, 2024) dan (Rahmatuloh et al., 2024) berfokus pada satu aspek tunggal (inventori atau POS) tanpa mengintegrasikan modul keamanan autentikasi yang mendalam. Penelitian (Wau K, 2022) hanya membahas sistem persediaan gudang sederhana tanpa mekanisme kontrol akses berbasis peran (RBAC) maupun 2FA. Sementara itu, penelitian (Sukma & Solichin, 2025) dan (Alvansyah et al., 2025) berfokus pada aspek keamanan autentikasi secara parsial, tanpa mengintegrasikannya ke dalam sistem informasi bisnis yang utuh. Penelitian ini berbeda karena mengintegrasikan modul inti inventori dan penjualan dengan keamanan autentikasi berlapis yang ditunjang fitur pendukung penyewaan dan servis—dalam satu platform terpadu.
+Kebaruan utama penelitian ini terletak pada integrasi holistik antara sistem informasi bisnis berbasis inventori dan penjualan sebagai fokus utama—yang ditunjang fitur pendukung penyewaan dan servis dengan mekanisme keamanan autentikasi berlapis yang komprehensif pada satu platform terpadu. Secara lebih spesifik, novelty penelitian ini mencakup: (1) integrasi wajib Two-Factor Authentication (2FA) berbasis Google Authenticator sebagai lapisan keamanan mandatory bagi seluruh pengguna internal, bukan opsional; (2) implementasi Role-Based Access Control (RBAC) dengan tiga hierarki peran (Super Admin, Kasir, Teknisi) yang diintegrasikan dengan middleware Laravel; (3) pencatatan Activity Log otomatis untuk seluruh aktivitas pengguna sebagai instrumen audit keamanan; dan (4) penerapan keamanan berlapis yang mencakup hash Bcrypt, CSRF token, proteksi XSS via Blade, dan pencegahan SQL Injection via Eloquent ORM, dalam sebuah sistem informasi UMKM yang bersifat end-to-end. Kombinasi ini belum ditemukan secara utuh dalam satu penelitian sebelumnya, sehingga penelitian ini memberikan kontribusi orisinal bagi pengembangan sistem informasi berbasis Laravel dengan penekanan pada keamanan autentikasi yang komprehensif.
+BAB III
+PEMBAHASAN
+Metode Pengembangan Perangkat Lunak
+Model Waterfall merupakan salah satu metodologi klasik dalam rekayasa perangkat lunak yang bersifat sekuensial dan sistematis, di mana sebuah fase baru hanya dimulai setelah fase sebelumnya selesai secara tuntas. Pendekatan ini menekankan perencanaan dan dokumentasi yang matang pada setiap tahap, sehingga paling sesuai untuk proyek dengan kebutuhan yang telah terdefinisi jelas dan relatif stabil — karakteristik yang sesuai dengan kebutuhan operasional LKTech.
+Secara umum, model Waterfall terdiri atas lima fase yang dikerjakan berurutan, yaitu analisis kebutuhan (requirements analysis), desain (design), implementasi (implementation), pengujian (testing), dan pemeliharaan (maintenance). Penjabaran implementasi masing-masing fase pada pengembangan sistem LKTech diuraikan pada subbab-subbab berikut.
+Analisis Kebutuhan (Requirements Analysis)
+Fase ini diawali dengan wawancara mendalam bersama pihak pengelola LKTech untuk mendokumentasikan permasalahan pada sistem konvensional, terutama kerentanan human error dalam pencatatan inventori, ketiadaan pemisahan peran antar staf operasional, serta lemahnya keamanan akses login. Hasilnya dikonversi menjadi daftar kebutuhan fungsional dan non-fungsional.
+Desain (Design)
+Fase ini merupakan upaya merepresentasikan arsitektur dan alur logika perangkat lunak ke dalam bentuk visual. Sistem dimodelkan menggunakan Unified Modeling
+Language (UML) seperti Use Case, Activity, Sequence, dan Class Diagram. Pemodelan basis data dilakukan melalui Entity Relationship Diagram (ERD) dan Logical Record Structure (LRS). Pada fase ini juga ditetapkan stack technology: framework Laravel 13, MySQL, serta library Google Authenticator.
+Implementasi (Implementation)
+Pada fase ini, seluruh desain logis diterjemahkan ke dalam implementasi baris kode pemrograman aktual (konstruksi). Pembangunan sistem menggunakan framework Laravel versi 13. Fitur-fitur esensial yang dibangun berfokus utama pada modul Inventori dan Penjualan (Point of Sale), yang kemudian diintegrasikan dengan fitur pendukung (Servis dan Penyewaan). Selain itu, dilakukan integrasi Two-Factor Authentication (2FA) dan Role-Based Access Control (RBAC).
+Pengujian (Testing)
+Sistem yang telah dibangun dievaluasi secara menyeluruh menggunakan metode Black-Box Testing. Pengujian difokuskan pada validasi fungsionalitas modul inventori, akurasi perhitungan POS, serta keandalan skenario keamanan login menggunakan OTP 2FA.
+Pemeliharaan (Maintenance)
+Dilakukan setelah sistem berhasil diluncurkan ke server produksi, mencakup pemantauan kinerja, pencadangan data berkala, dan pembaruan keamanan. Uraian teknis tahap ini dijelaskan lebih lanjut pada subbab 3.9.
+Tahapan Pengembangan Perangkat Lunak
+Sub bab ini menguraikan implementasi nyata dari setiap tahapan metode Waterfall yang telah dipaparkan pada sub bab 3.1. Penjabaran diawali dengan pemaparan profil serta struktur organisasi LKTech sebagai konteks bisnis, kemudian dilanjutkan dengan realisasi tiap tahapan sebagai berikut:
+Analisis Kebutuhan — diwujudkan melalui identifikasi dan klasifikasi kebutuhan fungsional serta non-fungsional sistem (dibahas pada sub bab Analisis Kebutuhan Sistem).
+Desain — direalisasikan melalui pemodelan sistem menggunakan Use Case, Activity, Sequence, dan Class Diagram, serta perancangan basis data melalui ERD, LRS, dan Spesifikasi File (dibahas pada sub bab Desain Arsitektur Data dan Alur Sistem).
+Implementasi — diwujudkan dalam penerapan lapisan keamanan sistem (Implementasi Keamanan) serta pembangunan antarmuka dan fitur menggunakan framework Laravel 13 (Implementasi Sistem).
+Pengujian — dilakukan melalui Black-Box Testing untuk memvalidasi seluruh fungsionalitas sistem (dibahas pada sub bab Pengujian Sistem).
+Pemeliharaan — dilaksanakan setelah sistem di-deploy ke server produksi, mencakup pemantauan kinerja, pencadangan basis data berkala, penerapan security patch, perbaikan bug, serta pemantauan Activity Log.
+Profil dan Sejarah Usaha LKTech
+LKTech berdiri sebagai usaha mikro (UMKM) yang bergerak di bidang teknologi informasi. Pada awalnya, kegiatan usaha LKTech berfokus pada penjualan unit laptop dan komponen hardware untuk memenuhi kebutuhan pelanggan akan perangkat komputasi yang andal. Seiring berkembangnya usaha dan bertambahnya kebutuhan pelanggan, LKTech kemudian memperluas layanannya dengan menghadirkan penyewaan laptop serta jasa servis perangkat sebagai lini pendukung.
+Perkembangan tersebut turut meningkatkan volume transaksi harian yang harus dikelola. Pada kondisi ini, pencatatan operasional yang sebelumnya masih mengandalkan berkas Excel dan pembukuan manual mulai dirasa kurang memadai, karena menimbulkan kendala berupa ketidakakuratan data stok, kesulitan penelusuran transaksi, serta risiko terhadap keamanan data. Kondisi inilah yang mendorong pengelola LKTech untuk membenahi infrastruktur pencatatan operasionalnya, sekaligus menjadi latar belakang pengembangan sistem informasi inventori dan penjualan berbasis web dalam penelitian ini.
+Struktur Organisasi dan Fungsi
+Dalam menjalankan roda operasionalnya, LKTech memiliki beberapa entitas organisasi utama yang menjadi basis penentuan Role-Based Access Control (RBAC) pada sistem. Struktur ini memastikan bahwa setiap pengguna sistem hanya dapat mengakses fitur dan data yang relevan dengan tanggung jawab pekerjaannya, sebagaimana ditunjukkan pada Gambar 3.1 berikut.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Struktur Organisasi LKTech
+Super Admin
+Memegang kendali penuh atas seluruh konfigurasi sistem, mengelola akun pengguna dan hak akses, mengawasi sistem melalui Activity Log, mengakses laporan keuangan dan performa bisnis, serta mengelola seluruh modul data produk dan pengaturan sistem.
+Kasir atau Sales
+Bertanggung jawab atas pelaksanaan transaksi penjualan melalui antarmuka Point of Sales (POS), mengelola data arus masuk atau keluar inventori yang berkaitan dengan penjualan, melaksanakan administrasi data penyewaan laptop, dan mencetak invoice kepada pelanggan.
+Teknisi
+Bertanggung jawab penuh atas pencatatan keluhan dan diagnosis perangkat pelanggan, mendokumentasikan riwayat perbaikan, memperbarui status pengerjaan servis secara real-time, dan mengelola penggunaan komponen sparepart dari inventori.
+Pengunjung (Publik atau Guest)
+Dapat mengakses halaman landing page publik di lktech.online tanpa memerlukan akun untuk memantau ketersediaan katalog produk, stok, informasi layanan, dan kontak.
+Analisis Kebutuhan Sistem
+Proses analisis kebutuhan dilakukan melalui wawancara langsung dengan pihak manajemen LKTech dan observasi terhadap alur kerja operasional yang sedang berjalan. Hasil analisis ini kemudian diklasifikasikan ke dalam dua kategori utama:
+Kebutuhan Fungsional
+Kebutuhan fungsional (functional requirements) adalah kebutuhan yang berisi layanan atau fungsi utama yang wajib disediakan oleh sistem, yakni proses-proses yang harus dapat dijalankan sistem untuk memenuhi kebutuhan pengguna. Pada Sistem Informasi LKTech, kebutuhan fungsional mencakup antara lain: autentikasi pengguna dengan verifikasi Two-Factor Authentication (2FA); pengelolaan hak akses berbasis peran (RBAC) untuk Super Admin, Kasir, dan Teknisi; pengelolaan data inventori atau produk; pemrosesan transaksi penjualan melalui Point of Sales (POS) yang secara otomatis mengurangi stok; pengelolaan modul servis beserta sparepart; pengelolaan transaksi penyewaan; pencatatan Activity Log; serta penyajian katalog produk dan stok pada landing page publik.
+Tabel III.1
+Kebutuhan Fungsional Sistem LKTech
+(Sumber: Olahan Peneliti, 2026)
+Kebutuhan Non-Fungsional
+Kebutuhan non-fungsional (non-functional requirements) adalah kebutuhan yang menitikberatkan pada batasan dan atribut kualitas yang harus dipenuhi sistem, bukan pada fungsi spesifiknya. Kebutuhan non-fungsional Sistem Informasi LKTech mencakup antara lain: aspek keamanan (hash password Bcrypt, 2FA, serta proteksi terhadap CSRF, XSS, dan SQL Injection); ketersediaan sistem yang dapat diakses secara daring melalui domain lktech.online; kemudahan penggunaan melalui antarmuka yang intuitif; serta keandalan data melalui mekanisme pencadangan (backup) basis data secara berkala.
+Tabel III.2
+Kebutuhan Non-Fungsional Sistem LKTech
+(Sumber: Olahan Peneliti, 2026)
+Desain Arsitektur Data dan Alur Sistem
+Tahap desain dituangkan ke dalam beberapa bentuk pemodelan yang saling melengkapi untuk merepresentasikan arsitektur dan alur logika sistem, yaitu:
+Use Case Diagram — menggambarkan interaksi antara aktor (Super Admin, Kasir, Teknisi, dan Pengunjung) dengan fungsi-fungsi yang disediakan sistem.
+Activity Diagram — memvisualisasikan alur aktivitas atau proses bisnis suatu skenario dari awal hingga akhir, termasuk percabangan pengambilan keputusan.
+Sequence Diagram — menggambarkan urutan pertukaran pesan (message) antar objek atau komponen sistem secara kronologis pada sisi back-end.
+Class Diagram — merepresentasikan struktur kelas (Model) berbasis Object-Oriented beserta atribut, operasi, dan relasi antar kelasnya.
+Entity Relationship Diagram (ERD) — memodelkan keterkaitan konseptual antar entitas data beserta kardinalitas hubungannya.
+Logical Record Structure (LRS) — transformasi lanjutan dari ERD yang menunjukkan pemetaan Primary Key (PK) dan Foreign Key (FK) sebagai dasar integritas referensial antar tabel.
+Spesifikasi File (Basis Data) — dokumentasi fisik dari struktur tabel hasil transformasi ERD dan LRS, mencakup nama field, tipe data, ukuran, dan peran kunci (PK atau FK) tiap tabel.
+Rancangan Use Case
+Diagram Use Case berikut memetakan secara menyeluruh interaksi yang terjadi antara empat aktor utama sistem—Super Admin, Kasir, Teknisi, dan Pengunjung (tamu publik)—dengan fungsionalitas-fungsionalitas yang tersedia pada Sistem Informasi LKTech.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Use Case Diagram Sistem Informasi LKTech
+Dari Use Case Diagram di atas, dapat diidentifikasi bahwa setiap aktor internal (Super Admin, Kasir, dan Teknisi) wajib melalui proses Login Sistem yang di dalamnya secara mandatory menyertakan Verifikasi OTP 2FA (relasi <<include>>). Berikut adalah skenario use case untuk proses autentikasi:
+Tabel III.3
+Skenario Use Case — Login & Verifikasi 2FA
+(Sumber: Olahan Peneliti, 2026)
+Activity Diagram
+Diagram aktivitas memvisualisasikan alur proses dari skenario-skenario krusial dalam sistem. Berikut disajikan dua Activity Diagram utama yang menggambarkan alur paling kritis dalam operasional sistem LKTech.
+Activity Diagram — Alur Login dan Verifikasi 2FA
+Alur dimulai saat aktor mengakses halaman login dan memasukkan kredensial. Sistem memvalidasi kredensial; jika tidak valid, sistem menampilkan pesan error. Jika valid, sistem memeriksa status 2FA akun. Jika belum aktif, aktor diarahkan ke halaman Setup QR Code. Jika sudah aktif, sistem menampilkan form input kode OTP. Aktor membuka Google Authenticator dan memasukkan kode enam digit. Sistem memvalidasi kode; jika valid, aktor diarahkan ke dashboard sesuai perannya disertai pencatatan pada Activity Log; jika tidak valid, sistem menampilkan notifikasi error OTP.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Activity Diagram — Alur Login dan Verifikasi 2FA
+Activity Diagram — Alur Transaksi Penjualan (Kasir)
+Alur transaksi diawali saat Kasir membuka menu Point of Sales (POS). Kasir memilih produk dan sistem memeriksa ketersediaan stok; jika habis, sistem menampilkan peringatan. Jika tersedia, produk ditambahkan ke keranjang dengan kalkulasi total otomatis. Kasir memasukkan data pelanggan dan memilih metode pembayaran. Sistem memvalidasi nominal; jika kurang, proses dikembalikan. Jika cukup, sistem menyimpan transaksi ke tabel sales dan sale_details, mengurangi stok secara otomatis (auto-deduct), menghitung profit, dan menampilkan invoice untuk dicetak.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Activity Diagram - Alur Transaksi Penjualan (Kasir)
+Sequence Diagram
+Diagram sekuensial mengilustrasikan pertukaran pesan (message) antar objek-objek dalam sistem yang terjadi secara terurut di sisi back-end selama proses utama berlangsung.
+Sequence Diagram 1 — Autentikasi Login dengan 2FA
+Proses dimulai ketika pengguna melalui View (halaman login) mengirimkan kredensial ke AuthController. Controller meneruskan kueri ke Database untuk mencari data pengguna. Database mengembalikan data pengguna beserta hash kata sandi. Controller memverifikasi kata sandi menggunakan Hash::check(); jika tidak cocok, Controller mengirimkan respons gagal ke View. Jika cocok, Controller mengarahkan ke form verifikasi 2FA. Pengguna memasukkan kode OTP yang diteruskan ke TwoFactorController. Controller mengambil google2fa_secret dari Database, lalu memvalidasi kode OTP menggunakan library Google 2FA (TOTP). Jika valid, Controller memperbarui session, mencatat activity log, dan mengarahkan ke dashboard sesuai peran. Jika tidak valid, Controller mengembalikan pesan error ke View.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Sequence Diagram — Autentikasi Login dengan 2FA
+Sequence Diagram 2 — Transaksi Penjualan (POS)
+Kasir memilih produk dan kuantitas melalui antarmuka POS. View meneruskan permintaan ke SaleController. Controller memeriksa ketersediaan stok ke Model Product; jika tidak mencukupi, Controller mengembalikan error ke View. Jika stok mencukupi, Controller memulai transaksi database (BEGIN TRANSACTION), menyimpan data ke Model Sale sebagai header transaksi, menyimpan detail item ke Model SaleDetail, dan mengurangi stok produk secara atomik di Model Product (decrement). Setelah semua operasi berhasil, Controller melakukan COMMIT TRANSACTION, mencatat activity log, dan mengembalikan data invoice ke View untuk ditampilkan kepada Kasir.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.
+Sequence Diagram — Transaksi Penjualan (POS)
+Class Diagram
+Class Diagram berikut memvisualisasikan arsitektur berbasis Object-Oriented dari keseluruhan Model yang membentuk fondasi sistem LKTech dalam konteks framework Laravel. Setiap class merepresentasikan sebuah tabel dalam basis data beserta atribut dan operasi yang dimilikinya.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.7
+Class Diagram Model Sistem LKTech
+Model-model utama yang diidentifikasi meliputi: User (mengelola autentikasi dan peran), Category (kelompok produk dengan dukungan hierarki), Product (inventori barang), Customer (data pelanggan), Sale (header transaksi penjualan), SaleDetail (rincian item per transaksi), Service (data pesanan servis), ServicePart (komponen sparepart yang digunakan dalam servis), Rental (data transaksi penyewaan), dan ActivityLog (jejak audit aktivitas pengguna). Relasi antar class mencerminkan kardinalitas hubungan di basis data, misalnya seorang User dapat memproses banyak Sale (relasi satu-ke-banyak), dan satu Sale terdiri atas satu atau lebih SaleDetail (relasi wajib).
+Entity Relationship Diagram (ERD)
+Entity Relationship Diagram (ERD) berikut merepresentasikan keterkaitan konseptual antar entitas dalam basis data sistem LKTech, memetakan relasi dan kardinalitas di antara setiap tabel utama. ERD ini menjadi landasan utama dalam perancangan skema basis data sebelum proses implementasi migrasi dijalankan.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.8.
+Entity Relationship Diagram (ERD) Sistem LKTech
+Relasi utama yang terbentuk: USERS memproses banyak SALES dan menangani banyak SERVICES; CATEGORIES mengklasifikasi banyak PRODUCTS; CUSTOMERS melakukan banyak SALES, mengajukan banyak SERVICES dan RENTALS; SALES terdiri atas satu atau lebih SALE_DETAILS; PRODUCTS masuk dalam banyak SALE_DETAILS dan digunakan sebagai sparepart melalui SERVICE_PARTS.
+Logical Record Structure (LRS)
+Logical Record Structure (LRS) merupakan transformasi lanjutan dari ERD yang secara spesifik menunjukkan pemetaan Primary Key (PK) dan Foreign Key (FK) yang menjadi dasar integritas referensial antar tabel dalam basis data MySQL LKTech. Pada LRS, setiap relasi kardinalitas direpresentasikan secara eksplisit melalui kolom kunci tabel.
+(Sumber: Olahan Peneliti, 2026)
+Gambar III.9
+Logical Record Structure (LRS) Sistem LKTech
+Spesifikasi File (Basis Data)
+Spesifikasi file merupakan dokumentasi fisik dari hasil transformasi ERD dan LRS ke dalam struktur tabel basis data yang sesungguhnya pada MySQL. Bagian ini mendefinisikan secara rinci setiap atribut (field), tipe data, ukuran, dan peran (Primary Key atau Foreign Key) dari masing-masing tabel utama di dalam sistem LKTech.
+Tabel III.4
+Spesifikasi Tabel users — Menyimpan data pengguna aplikasi.
+(Sumber: Olahan Peneliti, 2026)
+Penetapan panjang 255 karakter pada field email dan password mengikuti konvensi standar framework Laravel — 255 karakter mengakomodasi panjang maksimum alamat email sesuai standar serta memberi ruang bagi algoritma hashing kata sandi. Panjang 100 karакter pada remember_token mengikuti konvensi standar Laravel untuk menyimpan token autentikasi 'Ingat Saya'.
+Tabel III.5
+Spesifikasi Tabel categories — Menyimpan kategori produk.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.6
+Spesifikasi Tabel products — Menyimpan data inventori barang.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.7
+Spesifikasi Tabel customers — Menyimpan data pelanggan.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.8
+Spesifikasi Tabel sales — Menyimpan header transaksi penjualan.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.9
+Spesifikasi Tabel sale_details — Rincian produk per transaksi.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.10
+Spesifikasi Tabel services — Data tiket servis pelanggan.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.11
+Spesifikasi Tabel service_parts — Sparepart yang digunakan dalam servis.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.12
+Spesifikasi Tabel rentals — Data transaksi penyewaan laptop.
+(Sumber: Olahan Peneliti, 2026)
+Tabel III.13
+Spesifikasi Tabel activity_logs — Jejak audit aktivitas pengguna.
+(Sumber: Olahan Peneliti, 2026)
+Analisis Keamanan Sistem Lama
+Sebelum sistem baru dikembangkan, seluruh proses operasional LKTech — termasuk pencatatan stok dan transaksi — dikelola secara manual menggunakan berkas Microsoft Excel dan pembukuan konvensional, tanpa mekanisme keamanan yang memadai. Analisis terhadap kondisi tersebut menemukan sejumlah kerentanan yang menjadi dasar kebutuhan penerapan keamanan pada sistem baru, sebagaimana diuraikan berikut.
+Tidak Ada Mekanisme Autentikasi yang Memadai
+Pengelolaan data pada sistem lama tidak dilengkapi mekanisme autentikasi. Berkas Excel dapat dibuka oleh siapa saja yang memiliki akses ke perangkat atau file tersebut, tanpa verifikasi identitas. Akibatnya, bila perangkat atau berkas jatuh ke pihak yang tidak berwenang, seluruh data dapat langsung diakses tanpa hambatan.
+Tidak Ada Pemisahan Hak Akses
+Sistem lama tidak menerapkan mekanisme Role-Based Access Control (RBAC). Seluruh pengguna yang memiliki akses yang sama terhadap semua data dan fungsi sistem, termasuk laporan keuangan dan data sensitif pelanggan. Kondisi ini rentan terhadap penyalahgunaan hak akses oleh karyawan yang tidak berwenang.
+Tidak Ada Pencatatan Aktivitas
+Tidak terdapat pencatatan riwayat perubahan data. Ketika terjadi kesalahan atau manipulasi pada berkas, tidak ada jejak yang menunjukkan siapa yang melakukan perubahan dan kapan, sehingga penelusuran insiden sulit dilakukan.
+Data Tidak Terlindungi dengan Baik
+Data operasional yang tersimpan dalam berkas Excel tidak dilindungi mekanisme enkripsi atau kata sandi yang memadai. Apabila berkas tersalin atau diakses oleh pihak yang tidak berwenang, seluruh isinya berpotensi langsung terbaca dan disalahgunakan.
+Tabel III.14
+Perbandingan Keamanan Sistem Lama dan Sistem Baru LKTech
+(Sumber: Olahan Peneliti, 2026)
+Implementasi Keamanan
+Berdasarkan analisis kerentanan sistem lama yang telah dipaparkan, sistem informasi LKTech yang baru dikembangkan mengimplementasikan lima lapisan keamanan yang terintegrasi. Berikut adalah uraian teknis implementasi keamanan yang diterapkan pada sistem.
+Hash Password Bcrypt
+Seluruh kata sandi pengguna disimpan dalam basis data menggunakan algoritma hash Bcrypt melalui fungsi Hash::make() milik Laravel. Bcrypt merupakan algoritma hashing adaptif yang menggunakan work factor untuk mempersulit serangan brute-force. Kata sandi tidak pernah disimpan dalam bentuk teks biasa (plain text) sehingga meskipun basis data bocor, kredensial pengguna tetap terlindungi. Selain itu, ketika sebuah akun dihapus, sistem menimpa (overwrite) nilai kata sandi lama dengan string acak sepanjang 40 karakter sebelum data dihapus. Mekanisme ini bertujuan memastikan hash kata sandi asli tidak dapat dipulihkan atau disalahgunakan meskipun sisa data akun sempat terekspos, sehingga menutup celah pemulihan kredensial pasca-penghapusan.
+Middleware Role-Based Access Control (RBAC)
+Sistem mengimplementasikan kontrol akses berbasis peran menggunakan library spatie atau laravel-permission yang diintegrasikan dengan middleware Laravel. Tiga hierarki peran ditetapkan: Super Admin (akses penuh ke semua modul), Kasir (akses modul penjualan dan inventori), dan Teknisi (akses modul servis dan sparepart). Setiap rute dilindungi oleh middleware role() yang memvalidasi peran pengguna sebelum mengizinkan akses. Sistem menolak akses dan menampilkan pesan "User does not have the right roles" dengan kode status 403.
+Two-Factor Authentication via Google Authenticator
+Sistem mengimplementasikan autentikasi dua faktor (2FA) wajib untuk seluruh pengguna internal menggunakan library pragmaRX atau google2fa. Middleware Ensure2faSetup.php memastikan bahwa pengguna dengan peran Admin, Kasir, dan Teknisi diwajibkan mengaktifkan 2FA sebelum dapat mengakses sistem. Proses autentikasi melibatkan: (1) verifikasi email dan password (hash Bcrypt), (2) jika berhasil, sistem memeriksa status 2FA akun, (3) pengguna memasukkan kode TOTP 6-digit dari Google Authenticator yang berlaku selama 30 detik, (4) sistem memvalidasi kode menggunakan fungsi verifyCode() dan memberikan akses penuh jika valid.
+Activity Log (Jejak Audit)
+Sistem mencatat seluruh aktivitas pengguna secara otomatis ke dalam tabel activity_logs. Setiap aksi yang dilakukan (login, penambahan atau pengeditan atau penghapusan data, transaksi) dicatat beserta timestamp, identitas pengguna, dan deskripsi aksi. Data Activity Log hanya dapat diakses oleh Super Admin untuk keperluan audit keamanan dan pemantauan perilaku pengguna. Mekanisme ini memungkinkan investigasi insiden keamanan secara efektif.
+Keamanan Sesi dan Proteksi Web (CSRF, XSS, SQLi)
+Sistem mengimplementasikan proteksi berlapis terhadap ancaman web umum: (1) CSRF Protection melalui middleware VerifyCsrfToken dan direktif @csrf pada setiap form HTML yang mencegah serangan Cross-Site Request Forgery; (2) XSS Prevention melalui Blade Template Engine yang secara otomatis melakukan HTML Entity Encoding pada output {{ }} sehingga mencegah injeksi skrip berbahaya; (3) SQL Injection Prevention melalui penggunaan Eloquent ORM dan Query Builder yang memanfaatkan PDO Prepared Statements, sehingga input pengguna diperlakukan sebagai data dan bukan sebagai bagian dari perintah SQL.
+Tabel III.15
+Hasil Evaluasi Implementasi Keamanan Sistem LKTech
+(Sumber: Olahan Peneliti, 2026)
+Implementasi Sistem
+Implementasi sistem merupakan tahap realisasi antarmuka pengguna (User Interface) dan logika bisnis yang telah dirancang ke dalam lingkungan web yang sesungguhnya, baik di lingkungan pengembangan lokal (localhost via Laragon) maupun di lingkungan produksi yang dapat diakses publik melalui domain lktech.online. Berikut adalah dokumentasi setiap halaman utama yang diimplementasikan, dikelompokkan berdasarkan alur penggunaan sistem dari setiap peran pengguna.
+Halaman Landing Page Dinamis (Publik)
+Halaman ini merupakan tampilan muka utama sistem LKTech yang dapat diakses secara bebas oleh siapapun tanpa memerlukan kredensial login. Halaman ini secara dinamis menampilkan katalog produk yang tersedia dengan foto, spesifikasi, dan harga; ketersediaan stok terkini yang ditarik langsung dari basis data; informasi layanan yang ditawarkan; serta kontak dan lokasi perusahaan. Tujuan utama halaman ini adalah memberikan transparansi kepada calon pelanggan mengenai ketersediaan barang secara real-time.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.10
+Tampilan Halaman Landing Page Publik (lktech.online)
+Halaman Login Sistem
+Halaman login merupakan gerbang akses utama bagi seluruh pengguna sistem internal (Super Admin, Kasir, Teknisi). Formulir login meminta input berupa alamat email dan kata sandi. Sistem kemudian memvalidasi kredensial; jika valid, proses secara otomatis diteruskan ke tahap verifikasi Two-Factor Authentication. Halaman ini juga menampilkan pesan error yang informatif apabila kredensial yang dimasukkan tidak valid.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.11
+Tampilan Halaman Login Sistem
+Halaman Setup dan Verifikasi 2FA
+Halaman Setup & Verifikasi 2FA: Antarmuka di mana QR Code rahasia ditampilkan untuk proses pemindaian menggunakan Google Authenticator pada gawai pengguna, dilanjutkan dengan formulir pengisian kode token 6 digit.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.12
+Tampilan Halaman Setup dan Verifikasi 2FA
+Halaman Dashboard Super Admin
+Dashboard Super Admin merupakan pusat kendali sistem yang menyajikan ringkasan data high-level secara visual, meliputi grafik penjualan harian atau bulanan, total pendapatan dan keuntungan bersih, jumlah total produk dan pelanggan, ringkasan tiket servis berdasarkan status, notifikasi stok mendekati habis, dan log aktivitas pengguna terkini.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.13
+Tampilan Dashboard Super Admin
+Halaman Manajemen Inventori
+Halaman ini menyajikan data keseluruhan stok produk dalam format tabel yang dapat dicari dan difilter. Pengguna dapat melihat detail setiap produk, melakukan pembaruan informasi, serta memantau ketersediaan stok secara real-time. Hak akses untuk melihat kolom harga beli dan harga jual dibatasi hanya untuk Super Admin dan Kasir, sementara Teknisi hanya dapat mengakses informasi stok fisik dan spesifikasi produk.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.14
+Tampilan Halaman Manajemen Inventori
+Halaman Point of Sale (POS) — Kasir
+Antarmuka POS dirancang agar Kasir dapat memproses transaksi penjualan secara cepat dan intuitif. Kasir dapat menambahkan produk ke keranjang belanja dengan memilih dari daftar inventori, mengatur kuantitas, dan sistem secara otomatis menghitung subtotal serta total keseluruhan secara real-time. Setelah pembayaran dikonfirmasi, sistem menyimpan transaksi dan mengurangi stok secara otomatis (auto-deduct).
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.15
+Tampilan Halaman Point of Sale (POS)
+Halaman Modul Servis — Teknisi
+Halaman Modul Servis merupakan antarmuka khusus bagi Teknisi untuk mengelola seluruh alur pekerjaan servis perangkat pelanggan. Melalui halaman ini, Teknisi dapat mencatat tiket servis baru beserta keluhan dan hasil diagnosis perangkat, memperbarui status pengerjaan secara real-time (menunggu, dalam pengerjaan, hingga selesai), mendokumentasikan riwayat perbaikan, serta mencatat penggunaan komponen sparepart yang secara otomatis mengurangi stok inventori. Data servis disajikan dalam format tabel yang dapat dicari dan difilter sehingga memudahkan pemantauan progres setiap pesanan.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.16
+Tampilan Halaman Modul Servis
+Halaman Activity Log (Log Aktivitas Pengguna)
+Fitur Activity Log merekam secara kronologis setiap tindakan signifikan yang dilakukan oleh semua pengguna di dalam sistem, termasuk waktu login, jenis aksi yang dilakukan (tambah, ubah, hapus data), informasi detail tentang data yang dimodifikasi, serta alamat IP dan informasi perangkat yang digunakan. Fitur ini sangat vital bagi Super Admin untuk melakukan audit keamanan dan memantau aktivitas yang mencurigakan.
+(Sumber: Dokumentasi Pengujian, 2026)
+Gambar III.17
+Tampilan Activity Log (Log Aktivitas Pengguna)
+Pengujian Sistem
+Tahap pengujian sistem dilaksanakan secara sistematis dan menyeluruh guna memvalidasi bahwa seluruh fungsionalitas yang diimplementasikan berjalan sesuai spesifikasi. Metode yang digunakan adalah Black-Box Testing, yaitu pengujian yang berfokus pada pemeriksaan fungsionalitas sistem dari sisi masukan (input) dan keluaran (output) dari perspektif pengguna, tanpa memeriksa struktur internal kode program (source code). Setiap fitur diuji dengan memberikan sejumlah masukan tertentu, lalu keluarannya dibandingkan dengan hasil yang diharapkan; sebuah skenario dinyatakan valid apabila keluaran sistem sesuai ekspektasi. Pengujian difokuskan pada validasi modul inventori, akurasi perhitungan transaksi POS, serta keandalan mekanisme keamanan login menggunakan OTP 2FA.
+Tabel III.16
+Matriks Pengujian Black-Box Sistem Informasi LKTech
+(Sumber: Olahan Peneliti, 2026)
+Berdasarkan hasil pengujian pada keseluruhan 13 skenario di atas, seluruh fungsionalitas sistem memberikan keluaran (output) yang sesuai dengan hasil yang diharapkan. Tidak ditemukan satu pun skenario yang menghasilkan keluaran menyimpang dari spesifikasi yang telah ditetapkan. Hal ini mengindikasikan bahwa sistem informasi LKTech telah dibangun dengan kualitas yang memenuhi standar dan siap untuk dioperasikan pada lingkungan produksi secara penuh. Pengujian black-box yang mencakup 13 skenario dan seluruhnya dinyatakan valid ini mendukung klaim bahwa sistem telah berjalan sesuai kebutuhan. Dokumen ini menyimpulkan bahwa seluruh skenario pengujian menghasilkan keluaran (output) yang sesuai dengan hasil yang diharapkan.
+Pemeliharaan (Maintenance)
+Tahap pengujian sistem dilaksanakan secara sistematis dan menyeluruh guna memvalidasi bahwa seluruh fungsionalitas yang diimplementasikan berjalan sesuai spesifikasi. Metode yang digunakan adalah Black-Box Testing, yaitu pengujian yang berfokus pada pemeriksaan fungsionalitas sistem dari sisi masukan (input) dan keluaran (output) dari perspektif pengguna, tanpa memeriksa struktur internal kode program (source code). Setiap fitur diuji dengan memberikan sejumlah masukan tertentu, lalu keluarannya dibandingkan dengan hasil yang diharapkan; sebuah skenario dinyatakan valid apabila keluaran sistem sesuai ekspektasi. Pengujian difokuskan pada validasi modul inventori, akurasi perhitungan transaksi POS, serta keandalan mekanisme keamanan login menggunakan OTP 2FA.
+Setelah sistem beroperasi, kegiatan pemeliharaan difokuskan pada keberlangsungan operasional sistem, yang meliputi:
+Pemantauan kinerja — memantau stabilitas dan performa sistem secara berkala.
+Pencadangan data — melakukan backup basis data secara rutin untuk mencegah kehilangan data.
+Pembaruan keamanan — menerapkan security patch pada framework Laravel beserta library pendukung.
+Perbaikan bug (corrective maintenance) — memperbaiki kesalahan yang ditemukan selama masa pakai.
+Pemantauan keamanan — meninjau Activity Log untuk mendeteksi aktivitas mencurigakan demi menjaga keamanan autentikasi secara berkelanjutan.
+BAB IV
+PENUTUP
+Kesimpulan
+Berdasarkan hasil penelitian, perancangan, implementasi, dan pengujian yang telah dilaksanakan terhadap Sistem Informasi Inventori dan Penjualan Berbasis Web dengan Peningkatan Keamanan Autentikasi pada LKTech, dapat ditarik beberapa kesimpulan sebagai berikut:
+Sistem informasi inventori dan penjualan berbasis web untuk LKTech berhasil dikembangkan menggunakan framework Laravel (PHP 8.2) dan basis data MySQL. Sistem ini mengintegrasikan modul inventori dan penjualan (Point of Sale/POS) beserta fitur penunjang penyewaan dan servis dalam satu platform terpadu yang menggantikan pencatatan manual berbasis Microsoft Excel, sehingga seluruh data operasional kini terpusat dan terintegrasi.
+Penerapan kontrol akses berbasis peran (Role-Based Access Control/RBAC) berhasil memisahkan hak akses pengguna sesuai perannya—Super Admin, Kasir, dan Teknisi—sehingga setiap pengguna hanya dapat mengakses modul yang sesuai dengan tanggung jawab kerjanya. Upaya akses ke fungsi yang tidak diizinkan secara otomatis ditolak dengan respons kode kesalahan 403 (akses ditolak).
+Peningkatan keamanan autentikasi melalui penerapan Two-Factor Authentication (2FA) berbasis Google Authenticator berhasil diterapkan secara wajib bagi seluruh pengguna internal sistem. Mekanisme ini meningkatkan perlindungan
+login dari ancaman pencurian kredensial dan akses tidak sah, karena setiap pengguna memerlukan kode OTP dinamis di samping kata sandi yang benar.
+Sistem telah menerapkan keamanan berlapis, meliputi hashing kata sandi (Bcrypt) serta proteksi terhadap CSRF, XSS, dan SQL Injection. Kombinasi lapisan keamanan ini menjadikan sistem LKTech memenuhi standar keamanan aplikasi web modern untuk melindungi data operasional UMKM.
+Fitur Activity Log berhasil merekam aktivitas pengguna secara otomatis—mencakup waktu login, jenis aksi (tambah, ubah, hapus), data yang dimodifikasi, serta alamat IP dan perangkat—sebagai instrumen audit dan pemantauan keamanan. Data ini hanya dapat diakses oleh Super Admin dan menjadi fondasi investigasi insiden keamanan.
+Berdasarkan pengujian Black-Box terhadap 13 skenario yang mencakup autentikasi 2FA, pengelolaan inventori, transaksi POS dengan auto-deduct stok, penyewaan, pencatatan tiket servis, hingga validasi hak akses berbasis peran, seluruh skenario yang diuji memperoleh hasil yang valid dan sesuai dengan spesifikasi. Dengan demikian, sistem dinyatakan layak untuk dioperasikan pada lingkungan produksi.
+Tabel IV.1
+Pencapaian Tujuan Penelitian
+(Sumber: Olahan Peneliti, 2026)
+Saran
+Meskipun sistem informasi LKTech telah berhasil dibangun dan dinyatakan lolos pengujian, terdapat beberapa rekomendasi perbaikan dan pengembangan lanjutan yang perlu dipertimbangkan untuk meningkatkan kapabilitas, keamanan, dan keberlanjutan sistem di masa mendatang:
+Implementasi Auto-Logout Berbasis Idle Session: menambahkan session timeout otomatis (maksimal 10–15 menit tidak aktif) untuk mengurangi risiko keamanan pada perangkat kasir yang sering ditinggalkan di area publik, disertai notifikasi peringatan sebelum sesi berakhir.
+Pengembangan Dashboard Monitoring Activity Log yang Interaktif: melengkapi Activity Log dengan visualisasi grafik tren aktivitas, filter pencarian berdasarkan pengguna dan jenis aksi, serta notifikasi otomatis kepada Super Admin saat terdeteksi anomali seperti percobaan login gagal berulang.
+Implementasi Backup Basis Data Terjadwal: menjadwalkan pencadangan otomatis basis data MySQL ke cloud storage minimal satu kali sehari agar pemulihan data dapat dilakukan dengan cepat bila terjadi kegagalan server.
+Penyusunan SOP Keamanan Sistem: melengkapi keamanan teknis dengan prosedur administratif terkait pengelolaan kredensial akses, aktivasi 2FA bagi staf baru, penggantian kata sandi secara berkala, serta tanggap darurat ketika terjadi insiden keamanan.
+Penambahan Notifikasi Stok Minimum (Low Stock Alert): menambahkan peringatan otomatis kepada Super Admin dan Kasir ketika stok produk mendekati batas minimum, sehingga pengadaan barang dapat dilakukan secara proaktif sebelum stok habis.
+Pengembangan Modul Laporan Keuangan: memperluas laporan yang ada dengan laporan laba rugi, analisis tren penjualan per kategori, dan utilisasi unit sewa, yang dapat diekspor ke PDF dan Excel untuk keperluan evaluasi.
+Pertimbangan Pengembangan Aplikasi Mobile (PWA): mengembangkan Progressive Web App agar Teknisi dapat mengakses dan memperbarui status tiket servis di lapangan, termasuk secara offline, kemudian melakukan sinkronisasi ketika koneksi kembali tersedia.
+Demikian kesimpulan dan saran yang dapat penulis sampaikan berdasarkan hasil penelitian ini. Penulis berharap bahwa sistem informasi yang telah dikembangkan dapat memberikan manfaat yang nyata bagi operasional LKTech dan menjadi kontribusi yang berarti bagi pengembangan keilmuan di bidang sistem informasi, khususnya dalam hal integrasi mekanisme keamanan autentikasi pada sistem informasi bisnis berbasis web skala UMKM. Penelitian ini diharapkan pula dapat menjadi referensi bagi peneliti-peneliti berikutnya yang ingin mengembangkan sistem serupa dengan cakupan fungsionalitas yang lebih luas dan mekanisme keamanan yang lebih komprehensif.
+DAFTAR PUSTAKA
+Aji, N. D., Sujaka, T. T., Asroni, O., & Latif, K. A. (n.d.). Analisis dan Implementasi Algoritma Bcrypt dengan Affine Cipher untuk Pengamanan Password pada Aplikasi Web.
+Alvansyah, O., Kiswanto, D., Nasution, A. N., & Zulfi, M. F. (2025). IMPLEMENTASI ZERO TRUST ARCHITECTURE DENGAN MULTI-FACTOR AUTHENTICATION DAN CONTINUOUS VERIFICATION PADA SISTEM LOGIN BERBASIS WEB.
+Amalia, R. F., Maliyah, K., Tsania, N., & Arundati, A. (2026). Analisis Risiko Keamanan Siber pada Aplikasi Belanja Online dengan Fitur Promo dan Diskon. 2(1).
+Ardhana, V. Y. P., Rahma, D. W., Baun, H. M., Satrinia, D., Widiati, I. S., Yuliana, A., Muftikhali, Q. E., & Fajriyah, S. Z. (2025). Rekayasa Perangkat Lunak: Teori dan Konsep. MEGA PRESS NUSANTARA. https: atau  atau books.google.co.id atau books?id=fZJdEQAAQBAJ
+Ariansyah, S. P., & Imaduddin, H. (2026). RANCANG BANGUN SISTEM INFORMASI PERSEDIAAN STOK BARANG BERBASIS WEBSITE (STUDI KASUS: PT. PERDANA SAKTI INDONESIA). 9.
+Asyhar, U., Hartono, B., & Putra, T. W. A. (2026). IMPLEMENTASI ALGORITMA BASE64 PADA SISTEM LOGIN MENGGUNAKAN JSON WEB TOKEN (JWT) UNTUK AUTENTIKASI WEB. 17(1).
+Komang Gede Jaya Wira Buana, L. W. (2025). Analisis dan Implementasi Keamanan Authentication Menggunakan Multi Factor Authentication (MFA) Pada Aplikasi Web.
+Kurnia, R. Z., Aryani, D., & Unggul, U. E. (2025). Rancang Bangun Aplikasi Stok Barang Dan Point Of Sales Berbasis Web Menggunakan Framework Laravel. 14.
+Kusumawardani, D. M., Astiti, S., Fathoni, M. Y., Sunardi, D., Fernandez, S., & Juansa, A. (2023). WEB DASAR Menggunakan HTML, CSS, JS, PHP dan Studi Kasus. PT. Sonpedia Publishing Indonesia. https: atau  atau books.google.co.id atau books?id=o8a1EAAAQBAJ
+Maulana, M. G. (2026). ANALISIS ARSITEKTUR MODEL-VIEW-CONTROLLER (MVC) MENGGUNAKAN FRAMEWORK LARAVEL 12 DALAM PENGEMBANGAN SISTEM INFORMASI. 1(1).
+Oktavian, I., & Susena, E. (2025). Pengembangan Sistem E-Commerce Berbasis Web untuk Meningkatkan Daya Saing UMKM di Pasar Digital.
+Prabowo, M. (2020). METODOLOGI PENGEMBANGAN SISTEM INFORMASI. LP2M Press IAIN Salatiga. https: atau  atau books.google.co.id atau books?id=UI8dEAAAQBAJ
+Rahmatuloh, M., Kamil, M. F. A., & Nirwan, S. (2024). RANCANG BANGUN APLIKASI POINT OF SALE TOKO FASHION BERBASIS WEBSITE. 16(3).
+Ristra, P. & Nurulfadhlia. (2026). ANALISIS KEAMANAN APPLICATION LOG WEBSITE BERBASIS DASHBOARD MENGGUNAKAN SECURITY INFORMATION AND EVENT MANAGEMENT. 11(1).
+Sukma, I. N., & Solichin, A. (2025). PENERAPAN AUTENTIKASI DUA FAKTOR MENGGUNAKAN TIME- BASED ONE TIME PASSWORD (TOTP) BERBASIS EMAIL DAN GOOGLE AUTHENTICATOR PADA APLIKASI MANAJEMEN PERANGKAT MIKROTIK. 4.
+Wahyu Kurniawan, A. N. W. (2024). IMPLEMENTASI SISTEM MANAJEMEN INVENTORY UNTUK MENINGKATKAN EFISIENSI STOK BARANG DI PT INTERNUSA MASTER NIAGA.
+Wau K, C.-A. (2022). Pengembangan Sistem Informasi Persediaan Gudang Berbasis Website Dengan Metode Waterfall.
+DAFTAR RIWAYAT HIDUP
+BUKTI HASIL PENGECEKAN PLAGIARISME
+BUKTI SUBMIT JURNAL
+BUKTI HASIL PENGECEKAN PLAGIARISME JURNAL
+SURAT KETERANGAN RISET
+LAMPIRAN
+Lampiran 1 BAST
+Lampiran 2 Sertifikasi Apresiasi

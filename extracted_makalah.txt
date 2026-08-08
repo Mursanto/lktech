@@ -1,0 +1,612 @@
+MAKALAH
+ 
+ARSITEKTUR ENTERPRISE
+LAPORAN PERANCANGAN ARSITEKTUR ENTERPRISE
+MENGGUNAKAN KERANGKA KERJA TOGAF ADM
+STUDI KASUS SISTEM INFORMASI MANAJEMEN LKTECH
+ 
+  
+Dosen Pengampu: Yuri Yuliani, 
+M.Kom
+ 
+Disusun oleh:
+19251913 - Catur Yudha Yunandar
+19252417 - Mursanto  
+19252397 - Hafid Robbi A
+19252111 - Imas Wulansari
+19251909 - Sarah Nurlianah
+Program Studi Sistem Informasi
+Fakultas Teknik dan Informatika
+Universitas Bina Sarana Informatika
+2026
+DAFTAR ISI
+BAB I
+1
+PENDAHULUAN
+1
+1.1.
+Latar Belakang Masalah
+1
+1.2.
+Identifikasi Permasalahan
+2
+1.3.
+Ruang Lingkup
+2
+1.4.
+Metode Penelitian
+3
+BAB II
+4
+LANDASAN TEORI
+4
+2.1.
+Arsitektur 
+Enterprise
+4
+2.2.
+Kerangka Kerja TOGAF ADM
+4
+BAB III
+6
+PERANCANGAN DAN PEMBAHASAN
+6
+3.1.
+Preliminary Phase
+ (Fase Persiapan)
+6
+3.2.
+Phase A - Architecture Vision
+ (Visi Arsitektur)
+6
+3.2.1.
+Visi dan Misi Arsitektur
+6
+3.2.2.
+Pemetaan Konsep Arsitektur
+7
+3.3.
+Phase B - Business Architecture (Arsitektur Bisnis)
+8
+3.3.1.
+Value Chain Diagram 
+(Rantai Nilai)
+8
+3.3.2.
+Pemodelan Alur Bisnis (BPMN)
+9
+3.4.
+Phase C – Information System Architecture
+ (Arsitektur Sistem Informasi)
+9
+3.4.1.
+Arsitektur Data (ArchiMate Data Object Diagram)
+9
+3.4.2.
+Arsitektur Aplikasi (
+ArchiMate Application Component Diagram
+)
+10
+3.5.
+Phase C - Information System Architecture
+ (Arsitektur Sistem Informasi)
+11
+3.6.
+Phase
+ E -
+ 
+Opportunities and Solutions
+ (Peluang dan Solusi)
+12
+3.7.
+Phase
+ F - 
+Migration Planning
+ (Perencanaan Migrasi)
+12
+3.8.
+Phase
+ 
+ G – Implementation Governance
+ (Tata Kelola Implementasi)
+14
+3.9.
+Phase
+ H - Architecture Change Management (Manajemen Perubahan Arsitektur)
+14
+BAB IV
+16
+PENUTUP
+16
+4.1.
+Kesimpulan
+16
+4.2.
+Saran
+17
+BAB I
+PENDAHULUAN
+Latar Belakang Masalah
+Perkembangan teknologi informasi yang pesat di era digitalisasi telah mendorong transformasi secara masif pada berbagai skala organisasi, tidak terkecuali pada sektor Usaha Mikro, Kecil, dan Menengah (UMKM) (Faddillah & Selawati, 2022). Adaptasi terhadap teknologi bukan lagi sekadar keunggulan kompetitif, melainkan sebuah kebutuhan esensial untuk mempertahankan kelangsungan operasional bisnis. LKTech merupakan salah satu contoh UMKM ritel berbasis teknologi yang bergerak secara dinamis di bidang penjualan perangkat komputasi, komponen keras (
+hardware
+), penyewaan laptop, serta layanan perbaikan (
+service
+).
+Dalam menjalankan operasional hariannya, LKTech telah berhasil mengembangkan dan mengoperasikan sebuah Sistem Informasi Manajemen Terintegrasi berbasis 
+web
+ yang di-
+hosting
+ secara 
+live
+. Sistem ini menaungi berbagai modul fungsional yang krusial, di antaranya modul 
+Point of Sales
+ (POS) untuk transaksi kasir, manajemen inventori untuk pergerakan stok, layanan pencatatan servis pelanggan, serta pelaporan keuangan yang dapat dipantau secara 
+real-time
+. Namun, seiring dengan berjalannya sistem tersebut di 
+environment
+ produksi, tantangan baru muncul terkait dengan tata kelola, keamanan data, serta rencana pengembangan sistem di masa depan.
+Agar sistem yang sudah berjalan ini tidak menjadi 
+legacy system
+ yang sulit dikembangkan, serta untuk menjamin bahwa operasional TI selalu selaras dengan tujuan strategis bisnis perusahaan, diperlukan sebuah kerangka kerja arsitektur 
+enterprise
+ yang terstandarisasi. Oleh karena itu, penelitian ini 
+menggunakan TOGAF
+ 
+ADM
+ 
+ (
+The Open Group Architecture Framework Architecture Development Method
+) sebagai metodologi yang sistematis, holistik, dan komprehensif untuk merancang, mengelola, serta memastikan implementasi arsitektur informasi terintegrasi secara optimal.
+Identifikasi Permasalahan
+Penelitian ini dilaksanakan dengan tujuan utama sebagai berikut:
+Memodelkan secara komprehensif arsitektur 
+enterprise
+ sistem informasi LKTech yang saat ini telah berjalan menggunakan metodologi standar TOGAF
+ 
+ADM, mencakup seluruh siklus mulai dari 
+Preliminary Phase
+ hingga 
+Phase H
+.
+Mengidentifikasi berbagai kesenjangan (
+gap
+) serta kerentanan arsitektural antara kondisi sistem eksisting dengan arsitektur target, terutama pada aspek pengamanan akses dan cadangan data.
+Merumuskan rencana migrasi dan tata kelola implementasi yang terstruktur guna mencapai sistem informasi terintegrasi yang lebih matang, aman, dan dapat diskalakan di masa depan.
+Ruang Lingkup
+Untuk menjaga fokus analisis agar tetap terarah dan mendalam, pemodelan arsitektur 
+enterprise
+ ini dibatasi pada aspek-aspek berikut:
+Pemetaan alur proses bisnis operasional inti toko LKTech, yang mencakup layanan POS, perputaran Inventori, penanganan Servis, dan pencatatan Keuangan menggunakan notasi 
+Business Process Model and Notation
+ (BPMN).
+Dokumentasi konseptual arsitektur sistem informasi (Arsitektur Data dan Aplikasi) menggunakan standar notasi 
+ArchiMate
+.
+Hak akses sistem berdasarkan hierarki peran pengguna (
+Role-Based Access Control
+), yang mencakup level 
+Super Admin
+, Kasir, Teknisi, dan Pelanggan publik.
+Analisis infrastruktur penerapan arsitektur teknologi yang saat ini berada pada layanan 
+Cloud Hosting
+.
+Metode Penelitian
+Pendekatan yang digunakan dalam penelitian ini adalah metode deskriptif kualitatif yang difokuskan pada studi kasus penerapan sistem informasi di LKTech. Pengumpulan data dilakukan melalui triangulasi teknik, yaitu:
+Wawancara Mendalam: Dilakukan kepada pemangku kepentingan utama (
+stakeholder
+), termasuk pemilik toko (
+Super Admin
+), staf kasir, dan teknisi.
+Observasi Langsung: Meninjau antarmuka (
+User Interface
+) dan alur kerja fungsionalitas sistem yang saat ini sudah berjalan 
+live
+.
+Studi Dokumentasi: Melakukan ulasan terhadap dokumen spesifikasi teknis dan alur bisnis yang telah ada.
+BAB II
+LANDASAN TEORI
+ 
+Arsitektur 
+Enterprise
+Arsitektur 
+enterprise
+ adalah sebuah disiplin proaktif dan holistik untuk merespon dan memberikan arahan terhadap perubahan yang mendisrupsi 
+enterprise
+ dengan mengidentifikasi dan menganalisis eksekusi visi menuju hasil bisnis yang diinginkan (Sari & Hakim, 2023). Secara praktis, arsitektur 
+enterprise
+ menerjemahkan visi bisnis menjadi cetak biru (
+blueprint
+) TI yang mencakup empat pilar utama, yaitu: Arsitektur Bisnis, Arsitektur Data, Arsitektur Aplikasi, dan Arsitektur Teknologi. Dengan pemetaan ini, organisasi dapat meminimalkan redundansi sistem, mengurangi biaya operasional, dan meningkatkan agilitas dalam menghadapi dinamika pasar.
+ 
+Kerangka Kerja TOGAF ADM
+TOGAF (
+The Open Group Architecture Framework
+) adalah salah satu kerangka kerja arsitektur 
+enterprise
+ yang paling banyak diakui dan diimplementasikan secara global (The Open Group, 2022). Inti utama dari TOGAF adalah ADM (
+Architecture Development Method
+), yang menyediakan sebuah proses yang telah diuji untuk mengembangkan arsitektur. Siklus ADM bersifat iteratif (berulang) dan terdiri dari serangkaian tahapan logis mulai dari 
+Preliminary
+ hingga fase pemeliharaan (Kurniawan & Syahputra, 2024). Seluruh fase dalam ADM selalu terhubung dan dikoordinasikan oleh sebuah tahap inti yang disebut Manajemen Kebutuhan (
+Requirements Management
+), memastikan bahwa setiap perubahan teknis tetap menjawab kebutuhan bisnis organisasi.
+Gambar II.1
+Siklus Togaf ADM
+BAB III
+PERANCANGAN DAN PEMBAHASAN
+Preliminary Phase
+ (Fase Persiapan)
+Fase ini mendefinisikan "di mana, apa, mengapa, siapa, dan bagaimana" dari upaya arsitektur ini. Pada kasus LKTech, persiapan awal mencakup penyamaan persepsi antara manajemen (pemilik) dengan tim pengembang IT. Disepakati bahwa metodologi yang digunakan adalah TOGAF ADM karena pendekatannya yang luwes untuk UMKM. Prinsip arsitektur yang ditetapkan pada fase awal ini meliputi: integrasi penuh antarmodul, ketersediaan tinggi (
+High Availability
+) untuk melayani transaksi 
+real-time
+, kemudahan navigasi pengguna (
+User-friendly
+), dan penerapan standar keamanan autentikasi yang ketat. Bahasa pemodelan yang disepakati untuk menjembatani sisi bisnis dan teknis adalah 
+ArchiMate
+ dan BPMN.
+Phase A - Architecture Vision
+ (Visi Arsitektur)
+Fase ini mendefinisikan ruang lingkup proyek, merumuskan visi arsitektur tingkat tinggi, memetakan para pemangku kepentingan (
+stakeholders
+), dan mengonfirmasi persetujuan manajemen untuk mengeksekusi inisiatif arsitektur (The Open Group, 2022).
+Visi dan Misi Arsitektur
+Visi Arsitektur LKTech adalah menciptakan infrastruktur TI UMKM yang terintegrasi, tangguh, dan sangat responsif guna mendukung efisiensi operasional harian serta memfasilitasi pengambilan keputusan bisnis yang berbasis pada data akurat.
+Misi Arsitektur LKTech adalah mewujudkan satu pintu gerbang digital terpadu berbasis 
+web
+ yang mensinergikan proses manajemen inventori, perakitan teknis, transaksi kasir, dan audit keuangan. Seluruh misi operasional ini dirancang untuk dilindungi oleh arsitektur keamanan berlapis, meliputi Autentikasi Dua Faktor (
+Two-Factor Authentication
+ / 2FA) dan kontrol akses berbasis peran (
+Role-Based Access Control
+ / RBAC).
+Pemetaan Konsep Arsitektur
+Konsep arsitektur (
+Architecture Vision
+) ini memberikan representasi visual tentang bagaimana solusi yang dirancang memfasilitasi komunikasi antara berbagai tipe pengguna dengan sistem ERP pusat LKTech.
+Gambar III.1.
+Architecture Vision Diagram
+Phase B - Business Architecture (Arsitektur Bisnis)
+Arsitektur bisnis menjelaskan fondasi fundamental operasional perusahaan. TOGAF merekomendasikan penggunaan notasi yang mudah dipahami oleh pemangku kepentingan bisnis, seperti 
+Value Chain
+ untuk level strategis dan BPMN (
+Business Process Model and Notation
+) untuk level operasional.
+Value Chain Diagram 
+(Rantai Nilai)
+Model 
+Value Chain
+ LKTech memisahkan aktivitas pendukung yang bertugas menjaga perusahaan tetap beroperasi, dengan aktivitas utama yang bersentuhan langsung dengan siklus hidup produk dan nilai tambah bagi konsumen (Wicaksono & Rahayu, 2022).
+Gambar III.2.
+Value Chain Diagram
+Pemodelan Alur Bisnis (BPMN)
+Alur operasional di LKTech dipetakan menggunakan BPMN untuk menggambarkan interaksi kolaboratif antara aktor bisnis dan sistem ERP.
+Gambar III.3.
+Bpmn Transaksi Penjualan
+Phase C – Information System Architecture
+ (Arsitektur Sistem Informasi)
+Pada level 
+Enterprise Architecture
+, fase ini menggunakan bahasa pemodelan 
+ArchiMate
+ untuk menyajikan gambaran konseptual arsitektur aplikasi dan arsitektur data tanpa terperangkap dalam bahasa pemrograman yang terlalu teknis dan mendalam.
+Arsitektur Data (ArchiMate Data Object Diagram)
+Berbeda dengan 
+Entity Relationship Diagram
+ (ERD) relasional yang bersifat spesifik, TOGAF memodelkan aset informasi sebagai 
+Business Objects
+ atau 
+Data Objects
+ untuk menunjukkan hubungan informasi strategis antar entitas bisnis.
+Gambar III.4.
+Archimate Data Object Diagram
+Arsitektur Aplikasi (
+ArchiMate Application Component Diagram
+)
+Fungsi logis dari kerangka kerja LKTech digambarkan sebagai kolaborasi komponen aplikasi (
+Application Components
+) yang saling menyediakan layanan (
+Application Services
+).
+Gambar III.5.
+Archimate Application Component Diagram
+Phase C - Information System Architecture
+ (Arsitektur Sistem Informasi)
+Fase ini mendefinisikan ekosistem perangkat keras logis serta 
+environment
+ jaringan yang menopang arsitektur aplikasi agar dapat diakses dari lokasi toko fisik maupun melalui internet oleh pelanggan. Infrastruktur dibangun di atas komputasi awan untuk menopang 
+Application Components
+ dari 
+Phase C
+.
+Spesifikasi teknis arsitektur teknologi LKTech adalah sebagai berikut:
+Tabel III.1.
+Spesifikasi teknis arsitektur teknologi LKTech
+Komponen
+Spesifikasi
+Frontend & Presentasi
+HTML/CSS, 
+Tailwind CSS
+, 
+AlpineJS
+Backend & Logika Bisnis
+PHP versi 8.2 dengan kerangka kerja 
+Laravel
+Database
+RDBMS 
+MySQL
+ / 
+MariaDB
+Infrastruktur Server
+Nginx HTTP Server
+ di atas 
+cPanel Cloud Hosting
+Gambar III.6.
+Topologi Jaringan
+Phase
+ E -
+ 
+Opportunities and Solutions
+ (Peluang dan Solusi)
+Setelah memetakan sistem eksisting dari 
+Phase A
+ hingga 
+D
+, ditemukan beberapa celah keamanan dan prosedur pemeliharaan yang memiliki risiko tinggi terhadap keberlangsungan operasional sistem.
+Tabel III.2
+Analisis Kesenjangan (
+Gap Analysis
+) & Prioritas Solusi
+Kondisi Sistem Saat Ini (
+As-Is
+)
+Solusi Arsitektural Target (
+To-Be
+)
+Tingkat Prioritas
+Potensi Dampak Positif
+Keamanan sesi 
+login
+ (sesi 
+idle
+ kasir/
+admin
+) tidak memiliki batas waktu mati otomatis.
+Pembangunan algoritma modul 
+auto-logout
+ yang mendeteksi ketiadaan aktivitas pengguna (batas 10 menit).
+Tinggi (Kritis)
+Mencegah penyalahgunaan terminal POS dan pencurian data oleh pihak tidak bertanggung jawab saat perangkat ditinggalkan.
+Pencadangan (
+backup
+) basis data SQL masih bergantung pada campur tangan manual secara insidental.
+Implementasi dan aktivasi perintah penjadwalan otomatis (
+CRON Job
+) untuk 
+backup
+ harian ke penyimpanan eksternal.
+Tinggi (Kritis)
+Mitigasi total terhadap ancaman 
+Ransomware
+ atau hilangnya data transaksional permanen jika server mengalami kegagalan.
+Tersedia 
+log
+ aktivitas pengguna di 
+database
+, namun tidak terpresentasikan secara visual.
+Pengembangan 
+Dashboard
+ Monitoring Anomali (
+Event Log
+) pada antarmuka 
+Super Admin
+.
+Menengah
+Mempercepat proses audit jika terjadi selisih pencatatan uang fisik dan data inventori di sistem.
+Phase
+ F - 
+Migration Planning
+ (Perencanaan Migrasi)
+Fase Perencanaan Migrasi memastikan bahwa transisi untuk menambal kelemahan dari 
+Phase E
+ dapat dieksekusi secara berurutan dan aman, tanpa menyebabkan gangguan pada transaksi harian di toko LKTech.
+Rencana tindak lanjut disusun dengan peta jalan (
+Roadmap
+) kuartalan sebagai berikut:
+Kuartal 3 Tahun Berjalan (Fase Stabilisasi Keamanan Dasar):
+Fokus utama dialokasikan pada aktivasi fungsi 
+CRON Job Backup
+ dan penyesuaian logika 
+Session Timeout
+ (10 menit).
+Kedua langkah ini dapat diterapkan segera karena risiko 
+downtime
+ sangat minim.
+Kuartal 4 Tahun Berjalan (Fase Pengembangan Visibilitas):
+Pembuatan grafik interaktif untuk fitur 
+Dashboard Monitoring
+ khusus peran 
+Super Admin
+.
+Sosialisasi dan penyusunan Dokumen SOP Keamanan.
+Kuartal 1 Tahun Berikutnya (Fase Kematangan Tata Kelola):
+Pemenuhan kewajiban pelatihan SOP keamanan operasional bagi semua staf toko.
+Gambar III.7.
+Migration Roadmap
+ / 
+Gantt Chart
+Phase
+ 
+ G
+ – Implementation Governance
+ (Tata Kelola Implementasi)
+Oleh karena sistem LKTech telah berstatus operasional secara 
+live
+ di server 
+cloud
+, fase 
+Implementation Governance
+ berfungsi sebagai pagar pembatas tata kelola yang ketat. Segala bentuk pembaruan kode aplikasi untuk fitur baru (berdasarkan 
+roadmap Phase F
+) harus melalui uji coba di server pengembangan (
+staging
+) sebelum di-
+deploy
+ ke server 
+production
+.
+Kontrol ketat diberlakukan agar penambahan skrip modul baru tidak merusak fungsi 
+ArchiMate Application Component
+ pada modul Inventori dan Kasir. Setiap perubahan kode wajib melalui proses 
+code review
+ dan pengujian fungsionalitas (
+regression testing
+) sebelum dirilis ke lingkungan produksi.
+Gambar III.8.
+Governance Flowchart
+Phase
+ H - Architecture Change Management (Manajemen Perubahan Arsitektur)
+Pada fase akhir dari siklus TOGAF ini, manajemen menyadari bahwa arsitektur teknologi bukanlah sesuatu yang statis. Lingkungan bisnis LKTech akan terus berevolusi seiring dengan pertumbuhan usaha dan perkembangan teknologi.
+Oleh karena itu, 
+Phase H
+ menetapkan prosedur evaluasi berkala di mana setiap perubahan masif, seperti rencana 
+upgrade
+ versi PHP, pembaruan kerangka kerja 
+Laravel
+ ke versi terbaru, atau migrasi 
+vendor cloud
+, akan dievaluasi dampaknya 
+terhadap 
+Business Architecture
+ (
+Phase B
+). Jika dampak perubahan tersebut merubah cara bisnis bekerja secara fundamental, maka siklus TOGAF ADM akan diputar kembali ke 
+Preliminary Phase
+ untuk dikaji kelayakannya secara menyeluruh.
+Gambar III.9.
+Change Management Cycle
+BAB IV
+PENUTUP
+4.1.
+Kesimpulan
+Berdasarkan pemodelan arsitektur 
+enterprise
+ yang telah dilakukan pada Sistem Informasi LKTech menggunakan kerangka kerja TOGAF ADM, dapat ditarik kesimpulan sebagai berikut:
+Kerangka kerja TOGAF ADM dengan kombinasi bahasa pemodelan BPMN dan 
+ArchiMate
+ terbukti memberikan perspektif tingkat eksekutif yang jelas dan terstruktur. Pendekatan ini mampu menjembatani komunikasi antara pemangku kepentingan bisnis dan tim teknis tanpa terperangkap dalam kerumitan teknis 
+koding
+.
+Analisis komprehensif dari 
+Phase A
+ hingga 
+Phase H
+ berhasil memetakan 
+blueprint
+ arsitektur bisnis operasional yang ditopang oleh kolaborasi komponen aplikasi yang rasional dan arsitektur data yang terstruktur. Pemetaan ini memberikan fondasi yang kuat bagi pengembangan sistem di masa depan.
+Identifikasi kesenjangan (
+gap analysis
+) melalui 
+Phase E
+ telah memformulasikan mitigasi terhadap dua risiko kritis, yaitu sistem penghentian sesi otomatis (
+auto-logout
+) dan pencadangan data periodik berbasis 
+cloud
+ (
+CRON Job backup
+). Kedua solusi ini memiliki prioritas tinggi karena berdampak langsung pada keamanan dan keberlangsungan data bisnis.
+Keseluruhan fase dalam siklus TOGAF ADM memastikan bahwa investasi TI LKTech tidak hanya melayani kebutuhan fungsional hari ini secara aman, 
+namun juga memiliki pondasi arsitektural yang matang untuk dikembangkan dan dikelola perubahannya di masa depan.
+4.2.
+Saran
+Berdasarkan hasil analisis arsitektural yang telah diuraikan, terdapat beberapa saran strategis yang dapat dipertimbangkan oleh manajemen LKTech:
+Eksekusi Peta Jalan (
+Roadmap
+) Segera
+Implementasi 
+CRON Job Backup
+ otomatis dan fitur 
+Auto-Logout
+ harus segera dieksekusi pada kuartal terdekat, mengingat sifat kerentanannya yang tergolong kritis terhadap kelangsungan data bisnis.
+Penguatan Budaya Keamanan TI
+Manajemen perlu merutinkan pelatihan 
+Security Awareness
+ (Kesadaran Keamanan) bagi staf kasir dan teknisi. Sebagus apapun arsitektur sistem yang dirancang, kerentanan tertinggi seringkali berasal dari kelalaian manusia (
+human error
+) yang bersifat teknis maupun non-teknis.
+Penyusunan Dokumen 
+Service Level Agreement
+ (SLA)
+LKTech disarankan untuk memiliki dokumen kesepakatan tertulis dengan pihak 
+vendor cloud hosting
+ guna menjamin ketersediaan 
+uptime
+ server minimal 99,9%. Hal ini penting untuk mencegah kerugian finansial akibat kelumpuhan 
+website
+ pada jam operasional puncak.
+Dokumentasi Arsitektur Berkelanjutan
+Seluruh artefak pemodelan yang telah dihasilkan dalam penelitian ini (diagram BPMN, 
+ArchiMate
+, dan 
+roadmap
+) sebaiknya dikelola sebagai dokumen hidup (
+living document
+) yang diperbarui secara berkala seiring dengan perubahan sistem dan kebutuhan bisnis.
+DAFTAR PUSTAKA
+Faddillah, U., & Selawati. (2022). Transformasi digital pada usaha mikro, kecil, dan menengah (UMKM): Tantangan dan peluang di era disrupsi. Jurnal Sistem Informasi Bisnis, *12*(1), 45–56.
+Kurniawan, A., & Syahputra, R. (2024). Analisis siklus Architecture Development Method (ADM) pada implementasi TOGAF untuk sistem informasi manajemen terpadu. Jurnal Teknologi dan Manajemen Informatika, *9*(2), 112–124.
+Sari, D. P., & Hakim, L. (2023). Pendekatan holistik arsitektur enterprise dalam menyelaraskan strategi bisnis dan TI pada perusahaan ritel. Jurnal Rekayasa Sistem dan Teknologi Informasi (RESTI), *7*(3), 231–245.
+The Open Group. (2022). The TOGAF® Standard, 10th Edition. The Open Group.
+Wicaksono, B., & Rahayu, S. (2022). Pemodelan rantai nilai (Value Chain) dalam mendukung keunggulan kompetitif operasional bisnis berbasis cloud. Jurnal Manajemen dan Bisnis Digital, *5*(4), 88–102.
+PEMBAGIAN TUGAS
+Berdasarkan struktur makalah yang berjudul "Pemodelan Arsitektur Enterprise Sistem Informasi Manajemen LKTech Menggunakan Kerangka Kerja TOGAF ADM", berikut adalah rancangan pembagian peran yang disusun secara proporsional. Pembagian ini mengacu pada siklus Architecture Development Method (ADM) TOGAF, sehingga setiap anggota kelompok memperoleh porsi kerja yang setara serta saling terintegrasi dalam satu kesatuan alur pemodelan.
+NIM
+Nama Mahasiswa
+Rincian Tugas dan Capaian Pekerjaan (Deliverables)
+19251913
+Catur Yudha Yunandar
+Koordinasi Penyusunan Kerangka Awal dan Penutup (Bab I, II, & IV)
+1. Menyusun latar belakang masalah, rumusan identifikasi permasalahan, batasan ruang lingkup, serta metodologi penelitian yang digunakan (Bab I).
+2. Merumuskan landasan teori yang mencakup konsep Arsitektur Enterprise dan tinjauan mendalam terhadap kerangka TOGAF ADM (Bab II).
+3. Merancang kesimpulan akhir dan rekomendasi strategis (Bab IV), serta bertanggung jawab atas sinkronisasi gaya penulisan dan finalisasi tata letak dokumen secara keseluruhan.
+19252417
+Mursanto
+Fase Persiapan dan Perumusan Visi Arsitektur (Preliminary Phase & Phase A)
+1. Mengidentifikasi dan mendokumentasikan prinsip-prinsip arsitektur (
+Architecture Principles
+) yang menjadi pedoman proyek.
+2. Menentukan ruang lingkup proyek pemodelan serta menyusun pernyataan Visi dan Misi 
+Arsitektur sistem LKTech.
+3. Membuat pemodelan visual 
+Architecture Vision
+ yang menggambarkan relasi antara tipe pengguna (Admin, Kasir, Teknisi, Sales) dengan fungsionalitas sistem ERP terpusat.
+19252397
+Hafid Robbi A
+Perancangan Arsitektur Bisnis (Phase B - Business Architecture)
+1. Menganalisis struktur operasional fundamental perusahaan untuk mendukung proses bisnis inti.
+2. Merancang diagram rantai nilai (
+Value Chain Diagram
+) guna memetakan aktivitas utama dan pendukung LKTech.
+3. Memodelkan alur kolaborasi transaksi bisnis secara rinci menggunakan notasi standar BPMN (
+Business Process Model and Notation
+).
+19252111
+Imas Wulansari
+Perancangan Arsitektur Sistem Informasi (Phase C - Information System Architecture)
+1. Menganalisis dan menyusun Arsitektur Data dengan mendesain 
+ArchiMate Data Object Diagram
+ untuk memetakan entitas dan relasi data.
+2. Merancang Arsitektur Aplikasi, mencakup pemetaan fungsi-fungsi logis layanan serta ketergantungan antar modul aplikasi melalui 
+ArchiMate Application Component Diagram
+.
+19251909
+Sarah Nurlianah
+Arsitektur Teknologi dan Perencanaan Transisi (Phase D s.d. Phase H)
+1. Menyusun spesifikasi infrastruktur teknologi serta mendesain topologi jaringan 
+Cloud Hosting
+ untuk lingkungan deployment (Phase D).
+2. Melakukan analisis kesenjangan (
+Gap Analysis
+) serta merumuskan peluang dan solusi arsitektur (Phase E).
+3. Menyusun peta jalan migrasi (
+Roadmap
+) bertahap (Phase F), serta merumuskan tata kelola implementasi dan strategi manajemen perubahan organisasi (Phase G & H).

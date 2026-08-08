@@ -1,0 +1,41 @@
+erDiagram
+    USERS {
+        int id PK
+        string name
+        string email
+        string role
+        string password
+    }
+    PRODUCTS {
+        int id PK
+        string brand
+        string model_series
+        string serial_number "Diisi dari bagian kosong"
+        int stock
+        decimal selling_price
+        string status
+    }
+    CATEGORIES {
+        int id PK
+        string name
+        string type_category
+    }
+    CUSTOMERS {
+        int id PK
+        string name
+        string phone
+        string email
+        string address
+    }
+    SALES {
+        int id PK
+        int customer_id FK
+        decimal total_amount
+        string payment_method
+        date transaction_date
+    }
+
+    USERS ||--o{ SALES : "melakukan"
+    SALES }|--|{ PRODUCTS : "melibatkan"
+    PRODUCTS }o--|| CATEGORIES : "termasuk"
+    CUSTOMERS ||--o{ SALES : "membuat"

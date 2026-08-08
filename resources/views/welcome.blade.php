@@ -46,6 +46,93 @@
         }
         [x-cloak] { display: none !important; }
 
+        /* ==========================================
+           RESET CONTAINER UNTUK MENCEGAH SPACE KOSONG
+           ========================================== */
+        .hero-section,
+        .hero-container,
+        .hero-content {
+          height: auto !important;
+          min-height: 0 !important;
+          padding-bottom: 0 !important;
+        }
+
+        /* Styling Judul Utama Baru */
+        .hero-title {
+          font-size: 2rem;
+          line-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+          color: #0f172a;
+          margin-top: 0;
+          margin-bottom: 10px;
+        }
+
+        /* ==========================================
+           PENYESUAIAN TAMPILAN WEB MOBILE (< 640px)
+           ========================================== */
+        @media (max-width: 639px) {
+          .hero-section {
+            padding: 12px 16px 8px 16px !important;
+            background-color: #f0f9ff;
+          }
+
+          .hero-badge {
+            font-size: 0.7rem !important;
+            padding: 4px 10px !important;
+            margin-bottom: 6px !important;
+          }
+
+          .hero-title {
+            font-size: 1.35rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 8px !important;
+          }
+
+          .hero-description {
+            font-size: 0.78rem !important;
+            line-height: 1.35 !important;
+            margin-bottom: 10px !important;
+          }
+
+          .hero-buttons {
+            gap: 8px !important;
+            margin-bottom: 10px !important;
+          }
+
+          .hero-buttons .btn {
+            padding: 8px 12px !important;
+            font-size: 0.8rem !important;
+          }
+
+          .hero-trust-bar {
+            display: flex !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 4px !important;
+            font-size: 0.68rem !important;
+            color: #475569 !important;
+            padding-top: 6px !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+            overflow-x: auto !important;
+            white-space: nowrap !important;
+          }
+
+          .hero-trust-bar .divider {
+            color: #cbd5e1 !important;
+            margin: 0 2px !important;
+          }
+
+          .mp-label {
+            font-weight: 500 !important;
+          }
+
+          .mp-icons img {
+            height: 14px !important;
+            width: auto !important;
+          }
+        }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen" x-data="{ loginModalOpen: {{ $errors->any() || session('showLoginPopup') ? 'true' : 'false' }} }" :class="loginModalOpen ? 'overflow-hidden' : ''">
@@ -58,42 +145,36 @@
     <main class="flex-grow w-full">
         
         <!-- Hero Section -->
-        <!-- Hero Section -->
         @if(!request()->has('search'))
-        <div class="bg-gradient-to-br from-white via-brand-50 to-cyan-50 text-gray-900 border-b border-gray-200 relative overflow-hidden">
+        <section class="hero-section bg-gradient-to-br from-white via-brand-50 to-cyan-50 text-gray-900 border-b border-gray-200 relative overflow-hidden">
             <!-- Subtle abstract shapes -->
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-cyan-200 opacity-40 blur-3xl"></div>
             <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-200 opacity-40 blur-3xl"></div>
             
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-5 relative z-10 w-full">
+            <div class="hero-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-5 relative z-10 w-full">
                 <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 lg:gap-6">
                     
                     <!-- Left: Text (60%) -->
-                    <div class="md:col-span-7 flex flex-col gap-2">
-                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm">
-                            Solusi IT Terpercaya untuk Bisnis Modern Anda
-                        </h1>
-                        <p class="text-gray-600 text-sm md:text-lg font-medium">
-                            Dari rakit PC, sewa perangkat, hingga pengembangan website - kami dampingi langkah digital Anda.
+                    <div class="hero-content md:col-span-7 flex flex-col">
+                        <!-- Judul & Deskripsi Ringkas -->
+                        <h1 class="hero-title font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm mb-3">SOLUSI IT INTEGRATED & TERPERCAYA</h1>
+                        <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4">
+                            Spesialis laptop bekas premium bergaransi, didukung layanan rakit PC, sewa, dan website untuk bisnis modern.
                         </p>
-                        <div class="pt-2 flex flex-col w-full gap-3">
-                            <div class="flex flex-row w-full gap-2 sm:gap-4">
-                                <!-- Tombol Utama (Solid) -->
-                                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20Konsultasi%20Gratis." target="_blank" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
-                                    Konsultasi Gratis
-                                </a>
-                                <!-- Tombol Sekunder (Outline) -->
-                                <a href="{{ route('katalog.index') }}" class="flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-3 bg-transparent border-2 border-brand-600 text-brand-600 font-extrabold rounded-lg hover:bg-brand-50 transition text-sm sm:text-base flex items-center gap-1 sm:gap-2">
-                                    Lihat Katalog
-                                </a>
-                            </div>
-                            
-                            <!-- Trust Badges (Marketplace) -->
-                            <div class="flex items-center gap-1.5 sm:gap-2 pt-1">
-                                <span class="text-[10px] sm:text-xs font-semibold text-gray-500 whitespace-nowrap">Tersedia juga di Marketplace resmi kami:</span>
-                                <div class="flex items-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 mix-blend-multiply shrink-0">
-                                    <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-4 sm:h-7 w-auto object-contain">
-                                </div>
+
+                        <!-- Tombol CTA -->
+                        <div class="hero-buttons flex flex-row w-full gap-2 sm:gap-4 mb-4">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20Konsultasi%20Gratis." target="_blank" class="btn btn-primary flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-2.5 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">Konsultasi Gratis</a>
+                            <a href="{{ route('katalog.index') }}" class="btn btn-outline flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-2.5 bg-transparent border-2 border-brand-600 text-brand-600 font-extrabold rounded-lg hover:bg-brand-50 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">Lihat Katalog</a>
+                        </div>
+
+                        <!-- Marketplace & Rating Bar (Rapat & 1 Baris di Mobile) -->
+                        <div class="hero-trust-bar flex flex-row items-center flex-nowrap overflow-x-auto gap-2 pt-1.5 text-[10px] sm:text-xs text-gray-500 border-t border-gray-150 mt-1 whitespace-nowrap w-full scrollbar-none">
+                            <span class="rating-text flex items-center gap-0.5 font-bold text-gray-800 shrink-0">⭐ <strong>4.9</strong> <span class="font-normal text-gray-500 text-[9px] sm:text-[10px]">(Rating Toko)</span></span>
+                            <span class="divider text-gray-300 shrink-0 hidden sm:inline">•</span>
+                            <span class="mp-label font-semibold shrink-0 hidden sm:inline">Tersedia juga di Marketplace resmi kami:</span>
+                            <div class="mp-icons flex items-center hover:opacity-90 transition-opacity duration-300 mix-blend-multiply shrink-0">
+                                <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-4.5 sm:h-7 w-auto object-contain">
                             </div>
                         </div>
                     </div>
@@ -149,11 +230,21 @@
                                 </div>
                                 
                                 @if(count($promoBanners) > 1)
-                                    <!-- Dots Indicators -->
-                                    <div class="absolute -bottom-6 left-0 right-0 flex justify-center gap-2">
+                                    <!-- Left/Right Arrow Buttons (Manual navigation) -->
+                                    <button @click="activeSlide = activeSlide === 0 ? slides - 1 : activeSlide - 1" 
+                                            class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20">
+                                        <i class='bx bx-chevron-left text-xl'></i>
+                                    </button>
+                                    <button @click="activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1" 
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20">
+                                        <i class='bx bx-chevron-right text-xl'></i>
+                                    </button>
+
+                                    <!-- Dots Indicators (Proper margin-top) -->
+                                    <div class="flex justify-center gap-2 mt-4">
                                         @foreach($promoBanners as $index => $banner)
                                             <button @click="activeSlide = {{ $index }}" 
-                                                    class="w-2 h-2 rounded-full transition-all duration-300"
+                                                    class="w-2.5 h-2.5 rounded-full transition-all duration-300"
                                                     :class="activeSlide === {{ $index }} ? 'bg-brand-600 w-6' : 'bg-brand-300 hover:bg-brand-400'"></button>
                                         @endforeach
                                     </div>

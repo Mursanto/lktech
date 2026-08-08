@@ -1,0 +1,96 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#f0f9ff",
+    "primaryBorderColor": "#0ea5e9",
+    "primaryTextColor": "#0f172a",
+    "lineColor": "#64748b",
+    "tertiaryColor": "#bae6fd",
+    "fontFamily": "Arial, sans-serif", "fontSize": "24px"
+  }
+}}%%
+erDiagram
+    USERS {
+        bigint id PK
+        string name
+        string email
+        string password
+        string role
+    }
+    CUSTOMERS {
+        bigint id PK
+        string name
+        string phone
+        string email
+        text address
+    }
+    CATEGORIES {
+        bigint id PK
+        string name
+        string type_category
+    }
+    PRODUCTS {
+        bigint id PK
+        bigint category_id FK
+        string brand
+        string model_series
+        string serial_number
+        int stock
+        decimal selling_price
+        string status
+    }
+    SALES {
+        bigint id PK
+        bigint user_id FK
+        bigint customer_id FK
+        decimal total_amount
+        string payment_method
+    }
+    SALE_DETAILS {
+        bigint id PK
+        bigint sale_id FK
+        bigint product_id FK
+        int quantity
+        decimal unit_price
+    }
+    RENTALS {
+        bigint id PK
+        bigint customer_id FK
+        bigint user_id FK
+        date rental_date
+        date return_date
+        decimal daily_price
+        string status
+    }
+    SERVICES {
+        bigint id PK
+        bigint customer_id FK
+        bigint user_id FK
+        date service_date
+        string service_type
+        decimal cost
+    }
+    SERVICE_PARTS {
+        bigint id PK
+        bigint service_id FK
+        bigint product_id FK
+        int quantity
+        decimal price
+    }
+
+    USERS ||--o{ SALES : "memproses"
+    USERS ||--o{ RENTALS : "mengelola"
+    USERS ||--o{ SERVICES : "menangani"
+    
+    CUSTOMERS ||--o{ SALES : "melakukan"
+    CUSTOMERS ||--o{ RENTALS : "menyewa"
+    CUSTOMERS ||--o{ SERVICES : "meminta"
+
+    CATEGORIES ||--o{ PRODUCTS : "mengelompokkan"
+
+    SALES ||--|{ SALE_DETAILS : "mencakup"
+    PRODUCTS ||--o{ SALE_DETAILS : "termasuk"
+
+    SERVICES ||--o{ SERVICE_PARTS : "membutuhkan"
+    PRODUCTS ||--o{ SERVICE_PARTS : "digunakan"
+

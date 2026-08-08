@@ -75,12 +75,11 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('blog.*') ? 'text-brand-600' : '' }}">Blog & Panduan</a>
                 <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('tentang-kami') ? 'text-brand-600' : '' }}">Tentang Kami</a>
             </div>
 
             <!-- Search Bar (Desktop) -->
-            <div class="flex-1 max-w-2xl px-4 hidden lg:block">
+            <div class="flex-1 max-w-3xl px-4 hidden lg:block">
                 <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, merk, atau prosesor..." 
                            class="w-full pl-4 pr-10 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm">

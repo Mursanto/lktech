@@ -1,0 +1,431 @@
+ 
+ 
+ 
+LAPORAN HASIL AUDIT SISTEM INFORMASI  
+[Nama Sistem Informasi- contoh: SISFO Akademik (SIAKAD)] 
+ 
+Organisasi: [Nama Organisasi/Unit] 
+Periode Audit: [Tanggal Mulai] – [Tanggal Selesai] 
+Versi Dokumen: v1.0 
+Disusun oleh:  
+[NIM - Nama Tim Audit]  
+[NIM - Nama Tim Audit],  
+[NIM - Nama Tim Audit],  
+[NIM - Nama Tim Audit], 
+[NIM - Nama Tim Audit] 
+Diverifikasi oleh: [Nama Dosen] 
+ 
+ 
+DAFTAR ISI 
+1. Executive Summary 
+2. Latar Belakang & Tujuan 
+3. Ruang Lingkup Audit 
+4. Metodologi Audit 
+5. Gambaran Objek Audit (Sisfo) 
+6. Hasil Penilaian Capability (Per Proses/Praktik/Aktivitas) 
+7. Hasil Perhitungan Maturity  
+8. Temuan Audit & Analisis Risiko  Opsional 
+9.  Analisis Gap (Current vs Target) 
+10.  Rekomendasi & Rencana Tindak Lanjut  Opsional 
+11. Roadmap Peningkatan  Opsional 
+12. Kesimpulan 
+13. Lampiran 
+ 
+ 
+ 
+ 
+1. Executive Summary 
+Executive summary diisi setelah bagian Gambaran Objek Audit (Sisfo), Penilaian Capability, 
+Perhitungan Maturity, Temuan Audit & Analisis Risiko, Analisis Gap dan Action Plan terisi 
+1.1 Ringkasan Tujuan Audit:  
+Contoh: Menilai kapabilitas proses DSS02 (penanganan permintaan layanan & insiden) 
+pada SIAKAD dan memastikan mekanisme eskalasi, pelacakan status, dan pelaporan 
+berjalan efektif. 
+1.2 Ringkasan Ruang Lingkup:  
+Contoh: Proses COBIT yang dinilai: DSS02. Aktivitas fokus: DSS02.07 (Track status & 
+produce reports) dan aktivitas monitoring eskalasi/resolusi. Periode bukti: Okt–Des 
+2025. 
+1.3 Ringkasan Hasil (Highlight):  
+Contoh: Current capability DSS02 = Level 2 (Managed). DSS02.07 = Level 2. Maturity 
+domain DSS (agregasi 6 proses) = 2,33 (Level 2). Terdapat 2 temuan High, 3 Medium, 2 
+Low. Prioritas perbaikan: standardisasi laporan, dan analisis tren insiden. 
+1.4 Kesimpulan Eksekutif:  
+Contoh: Proses penanganan insiden sudah berjalan dan dipantau, namun belum 
+konsisten terukur dan prediktif. Pelaporan status insiden ada tetapi belum standar dan 
+belum menyajikan tren/indikator kuantitatif. Rekomendasi utama adalah menetapkan 
+KPI/SLA eskalasi, memperkuat tata kelola pelaporan (format & frekuensi), dan 
+membangun review bulanan berbasis data untuk perbaikan berkelanjutan. 
+2. Latar Belakang & Tujuan 
+2.1 Latar Belakang:  
+Contoh: Selama semester ganjil 2025/2026 terdapat peningkatan tiket keluhan 
+SIAKAD saat periode KRS. Beberapa insiden mengalami keterlambatan eskalasi 
+sehingga berdampak pada layanan akademik (KRS, KHS, dan pembayaran). 
+2.2 Tujuan Audit:  
+Contoh: 
+Detail poin dari tujuan audit  
+(1) Mengukur capability level DSS02 dan aktivitas kunci DSS02.07.  
+(2) Mengidentifikasi gap terhadap target Level 3. →(diperoleh melalui wawancara)  
+(3) Menyusun rencana tindak lanjut perbaikan proses dan kontrol. 
+ 
+2.3 Kriteria/Standar/Acuan: COBIT 2019 
+ 
+ 
+3. Ruang Lingkup Audit 
+3.1 Objek Audit:  
+Contoh: SIAKAD (web) dengan modul KRS/KHS, integrasi SSO dan payment 
+gateway. Pemilik sistem: UPT TIK. Pengguna utama: mahasiswa, dosen, BAAK. 
+3.2 Proses COBIT yang Dinilai:  
+Contoh: DSS02 – Managed Service Requests and Incidents, dengan fokus DSS02.07 
+(Track status and produce reports). →(ditentukan berdasar hasil hitung design factor)   
+4. Metodologi Audit 
+4.1 Pendekatan dan Teknik Audit:  
+Contoh:  
+Wawancara (5 responden, sebutkan asal nama tim/bagian/divisi/departremen),  
+review dokumen (SOP, SLA, laporan),  
+observasi dashboard ticketing, dan sampling 30 tiket insiden periode KRS. 
+ 
+4.2 Model Penilaian Capability (0–5):  
+Contoh: Penilaian menggunakan kuesioner Guttman YA/TIDAK per level 0–5 dan 
+validasi bukti. Level ditetapkan jika seluruh indikator level terpenuhi. →(lihat 
+materi minggu ke-9) 
+4.3 Skema Rating :  
+Fully (>85%), Largely (50–85%), Partially (15–50%), Not (<15%). →(lihat materi 
+minggu ke-9) 
+4.5 Aturan Agregasi Responden (jika >1 responden):  
+Contoh: Untuk peran yang sama (mis. 2 responden R), digunakan aturan konservatif 
+(AND) dan perbedaan jawaban diverifikasi dengan bukti ticketing/log. →(lihat 
+materi minggu ke-9) 
+5. Gambaran Objek Audit (Sisfo) 
+5.1 Deskripsi Singkat Sistem:  
+Contoh: SIAKAD melayani proses akademik inti (KRS, KHS, jadwal kuliah) dengan 
+rata-rata 7.000 pengguna aktif/bulan. 
+5.2 Alur Proses Bisnis Utama: Contoh: Registrasi→KRS→Validasi→Pembayaran→KHS 
+ 
+ 
+ 
+6. Hasil Penilaian Capability (Per Proses/Praktik/Aktivitas) 
+Rekap Capability Level (isi tabel berikut): →(lihat materi minggu ke-10) 
+Proses/Praktik Current 
+Capability 
+(0–5) 
+Target 
+Capability 
+Gap 
+Dokumen 
+DSS02 – 
+Managed 
+Service 
+Requests and 
+Incidents 
+2 
+3 
+-1 
+Monitoring ada, tapi belum 
+lengkap 
+DSS02.07 – 
+Track status & 
+produce reports 
+2 
+3 
+-1 
+Format laporan belum standar 
+[mis. DSS02 / 
+DSS02.07] 
+[x] 
+[y] 
+[x–y] 
+[Catatan singkat] 
+[mis. DSS02 / 
+DSS02.07] 
+[x] 
+[y] 
+[x–y] 
+[Catatan singkat] 
+ 
+Current Capability Level 2 (Managed) biasanya berarti proses sudah dijalankan dan 
+dikelola (ada perencanaan dasar, pelaksanaan rutin, dan sebagian monitoring), tetapi 
+masih bergantung pada praktik tim/individu, belum sepenuhnya distandardisasi. 
+Pada DSS02, target utamanya adalah respon efektif & tepat waktu terhadap permintaan 
+pengguna dan resolusi insiden, termasuk pencatatan, klasifikasi, eskalasi, dan penyelesaian. 
+Jika monitoring “belum lengkap”, metrik belum menyeluruh, pelaporan belum 
+rutin/seragam, atau tidak semua tiket/insiden tercatat dengan baik. 
+Pada DSS02.07, laporan sudah ada tetapi “seadanya” (berbeda format per petugas/periode). 
+Untuk mencapai Level 3, laporan harus terstandar (template baku, definisi istilah baku, 
+jadwal baku, dan sumber data baku). 
+ 
+ 
+ 
+ 
+ 
+7. Hasil Perhitungan Maturity 
+Rekap Maturity per Domain/Area: Contoh: Maturity domain DSS = 2,33 (Level 2 – 
+Managed). Target maturity 3 pada 2027. →(lihat materi minggu ke-10) 
+Tabel 7.1 Rekap Maturity (contoh): 
+Domain/Area 
+Metode 
+Nilai (0–5) 
+Level 
+Catatan 
+DSS 
+Rata-rata 
+2,33 
+Level 2 
+Perlu 
+peningkatan 
+standard 
+DSS (khusus 
+layanan 
+SIAKAD) 
+Berbobot 
+2,50 
+Level 2 
+Bobot lebih 
+tinggi pada 
+DSS02 & DSS04 
+Keseluruhan 
+(scope audit) 
+Rata-rata 
+2,40 
+Level 2 
+Target 3 pada 
+2027 
+ 
+Contoh deskripsi analisis maturity level domain DSS:  
+Berdasarkan perhitungan maturity, domain DSS berada pada Level 2 (Managed) dengan 
+nilai 2,33 (rata-rata). Hal ini menunjukkan proses layanan TI telah berjalan dan dikelola, 
+namun belum sepenuhnya distandardisasi dan belum konsisten lintas unit.  Pada layanan 
+SIAKAD, maturity berbobot mencapai 2,50 (Level 2) karena prioritas lebih tinggi pada 
+DSS02 dan DSS04, yang mengindikasikan kapabilitas layanan inti relatif lebih baik 
+dibanding rata-rata domain. Maturity keseluruhan scope audit sebesar 2,40 (Level 2) 
+menegaskan perlunya program standardisasi artefak proses, pelaporan berbasis metrik, 
+dan governance rutin agar organisasi dapat mencapai Target Level 3 (Established) pada 
+2027 
+8. Temuan Audit & Analisis Risiko  Optional 
+Tabel 8.1 Rekap Temuan: 
+No 
+Temuan 
+Risiko 
+Severity 
+Proses/Objektif 
+COBIT 
+1 
+Laporan status insiden 
+tidak standar 
+(format/frekuensi) 
+Manajemen tidak 
+mendapat visibilitas 
+Medium 
+DSS02.07 
+2 
+Major incident review 
+tidak dilakukan 
+konsisten 
+Insiden berulang 
+Medium 
+DSS02.05 
+3 
+Klasifikasi prioritas 
+tiket tidak konsisten 
+Salah prioritas eskalasi 
+Low 
+DSS02.02 
+4 
+…. 
+ 
+ 
+ 
+ 
+9. Analisis Gap (Current vs Target) 
+Isi gap analysis berikut: →(lihat materi minggu ke-10) 
+Proses/ 
+Aktivitas 
+Current 
+Target 
+Gap 
+Dampak 
+Prioritas 
+DSS02 – 
+Proses 
+keseluruhan 
+2 
+3 
+1 
+Kualitas layanan 
+turun saat peak 
+5 
+DSS02.05 – 
+Resolusi & 
+recovery 
+2 
+3 
+1 
+Insiden berulang, 
+recovery tidak 
+terukur 
+4 
+DSS02.02 – 
+Klasifikasi & 
+prioritas 
+1 
+2 
+1 
+Prioritas tidak 
+sesuai dampak 
+3 
+[mis. 
+DSS02.07] 
+[x] 
+[y] 
+[y-x] 
+[Dampak] 
+[1–5] 
+10. Rekomendasi & Rencana Tindak Lanjut  Opsional 
+Tabel 10.1 Action Plan: →(lihat materi minggu ke-10) 
+N
+o 
+Rekomenda
+si 
+Output/Deliverabl
+e 
+PIC 
+Timelin
+e 
+Indikator 
+Sukses 
+Priorita
+s 
+1 
+Standardisasi 
+laporan 
+status 
+insiden 
+mingguan 
+Template laporan + 
+jadwal distribusi 
+Service Desk 
+Lead 
+Feb 
+2027 
+100% 
+laporan 
+terkirim 
+tepat 
+waktu 
+Medium 
+2 
+Laksanakan 
+major 
+incident 
+review (post-
+incident) 
+bulanan 
+Notulen PIR + 
+daftar action item 
+Incident 
+Manager 
+Apr 
+2027 
+>80% 
+action 
+item 
+selesai 
+Medium 
+3 
+Perbaiki 
+skema 
+klasifikasi & 
+prioritas 
+tiket 
+Katalog klasifikasi 
+& SOP update 
+Service Desk 
+Lead 
+Mar 
+2027 
+Konsisten
+si 
+prioritas 
+>90% 
+Low 
+4 
+[Rekomenda
+si] 
+[SOP/KPI/Dashboa
+rd] 
+[Nama/Jabata
+n] 
+[Tangga
+l] 
+[KPI] 
+[H/M/L
+] 
+11. Roadmap Peningkatan  Opsional  
+Roadmap →(lihat materi minggu ke-10) dibuat dalam Tiga tahap: Pendek, Menengah dan 
+Jangka Panjang disusun berdasarkan analisis SWOT, disajikan dapat berupa uraian atau 
+poin seperti contoh. 
+S – Strengths (Kekuatan) 
+1. Proses insiden dan permintaan layanan sudah berjalan secara rutin (Level 2 – 
+Managed). 
+2. Sistem monitoring sudah ada, walaupun belum lengkap. 
+3. Pencatatan insiden sudah dilakukan melalui ticketing (menunjukkan proses dasar 
+sudah berfungsi). 
+4. Ada kesadaran akan standar pelaporan, ditunjukkan dengan temuan bahwa laporan 
+perlu distandardisasi. 
+5. Tim operasional sudah terbiasa merespon insiden, sehingga implementasi 
+perbaikan relatif mudah diterima. 
+ 
+ 
+W – Weaknesses (Kelemahan) 
+1. Monitoring belum lengkap, sehingga tidak ada tracking yang menutup seluruh 
+siklus DSS02 (log → classify → prioritize → escalate → resolve → close). 
+2. Format laporan belum standar, menyebabkan data sulit dibandingkan antar 
+periode. 
+3. Dokumentasi & SOP belum distandardisasi, sehingga proses belum repeatable di 
+seluruh staf. 
+O – Opportunities (Peluang) 
+1. Peningkatan maturity TI institusi: menaikkan capability ke Level 3 akan 
+meningkatkan kredibilitas layanan TI. 
+2. Standarisasi laporan akan membuka peluang:  
+o 
+analisis tren yang lebih akurat 
+o 
+prediksi beban insiden 
+3. Penerapan dashboard dapat meningkatkan transparansi TI kepada manajemen, 
+fakultas, dan pengguna. 
+4. Integrasi otomatis ticketing–reporting untuk meminimalkan pekerjaan manual. 
+T – Threats (Ancaman) 
+1. Keterlambatan eskalasi yang tidak terdeteksi dapat menyebabkan insiden besar 
+(major incident), terutama saat puncak layanan (mis. KRS). 
+2. Manajemen tidak mendapat informasi akurat karena laporan tidak standar → 
+berisiko salah mengambil keputusan. 
+3. Kepuasan pengguna menurun jika tidak diukur atau dipenuhi. 
+4. Kebergantungan pada staf tertentu karena proses belum distandardisasi 
+membuat continuity service terganggu saat staf tidak hadir. 
+ 
+Roadmap:  
+Jangka pendek (0–3 bulan): Contoh: Template laporan status, dan pelatihan klasifikasi 
+prioritas. 
+Jangka menengah (3–12 bulan): Contoh: Otomasi dashboard, review bulanan tren, 
+dan PIR terjadwal. 
+Jangka panjang (>12 bulan): Contoh: Penerapan analitik prediktif untuk volume 
+insiden dan perbaikan berkelanjutan. 
+12. Kesimpulan 
+Kesimpulan memuat poin inti berupa Ringkasan capability & maturity, Risiko utama dan 
+Rekomendasi prioritas yang disajikan dapat berupa uraian atau poin seperti contoh. 
+Ringkasan capability & maturity: Current DSS02 = Level 2; DSS02.07 = Level 2; 
+maturity domain DSS = 2,33 (Level 2). 
+Risiko utama: keterlambatan eskalasi insiden saat puncak layanan dapat menyebabkan 
+downtime layanan akademik dan penurunan kepuasan pengguna. 
+Rekomendasi prioritas: tetapkan standardisasi laporan status insiden mingguan, serta 
+review bulanan berbasis tren untuk perbaikan berkelanjutan. 
+LAMPIRAN 
+• 
+Lampiran A. Daftar Responden & RACI  Wajib ada 
+• 
+Lampiran B. Instrumen Kuesioner (Guttman/CPM)  Wajib ada 
+• 
+Lampiran C. Evidence Register (Daftar Bukti)  Optional 
+• 
+Lampiran D. Rekap Perhitungan Capability & Maturity  Wajib ada 
+• 
+Lampiran E. Bukti Pendukung (Screenshot/Log/Notulen)  Optional 

@@ -1,0 +1,186 @@
+erDiagram
+    %% ============================================
+    %% LRS (Logical Record Structure)
+    %% Sistem LKTech
+    %% Fokus: Struktur Record dengan TIPE DATA lengkap
+    %% DENGAN tipe data spesifik (BIGINT, VARCHAR(255), DECIMAL(10,2), dll)
+    %% ============================================
+
+    %% === FK CONNECTIONS (tanpa label - hanya referensi FK) ===
+    customers ||--o{ services : "FK"
+    customers ||--o{ rentals : "FK"
+    customers ||--o{ sales : "FK"
+    users ||--o{ sales : "FK"
+    users ||--o{ services : "FK"
+    users ||--o{ activity_logs : "FK"
+    categories ||--o{ products : "FK"
+    categories ||--o{ categories : "FK"
+    sales ||--o{ sale_details : "FK"
+    products ||--o{ sale_details : "FK"
+    services ||--o{ service_parts : "FK"
+    products ||--o{ service_parts : "FK"
+
+    %% === ENTITIES (dengan tipe data lengkap) ===
+
+    customers {
+        BIGINT_UNSIGNED id PK
+        VARCHAR_255 name
+        VARCHAR_255 phone
+        VARCHAR_255 email
+        TEXT address
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    users {
+        BIGINT_UNSIGNED id PK
+        VARCHAR_255 name
+        VARCHAR_255 email
+        VARCHAR_255 password
+        VARCHAR_255 role
+        VARCHAR_255 google2fa_secret
+        VARCHAR_255 otp_code
+        BOOLEAN otp_enabled
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    categories {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED parent_id FK "Self-reference"
+        VARCHAR_255 name
+        ENUM type_category "hardware-peripheral-software-service"
+        TEXT description
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    products {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED category_id FK
+        VARCHAR_255 brand
+        VARCHAR_255 model_series
+        VARCHAR_255 serial_number
+        VARCHAR_255 processor
+        VARCHAR_255 ram
+        VARCHAR_255 storage
+        DECIMAL_8_2 screen_size
+        INTEGER battery_health
+        DECIMAL_8_2 battery_runtime
+        TEXT condition
+        DECIMAL_10_2 purchase_price
+        DECIMAL_10_2 selling_price
+        DECIMAL_15_2 operational_cost
+        ENUM status "available-sold-booked"
+        VARCHAR_20 tipe_stok "ready_stock-open_order"
+        INTEGER stock
+        VARCHAR_255 image_path
+        TEXT description
+        JSON gallery_images
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    sales {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED user_id FK
+        BIGINT_UNSIGNED customer_id FK
+        VARCHAR_255 payment_method
+        DECIMAL_10_2 total_amount
+        DECIMAL_10_2 profit_amount
+        DECIMAL_15_2 operational_cost
+        DATE transaction_date
+        VARCHAR_255 payment_status "pending-success-expired-failed"
+        VARCHAR_255 payment_reference_id
+        TEXT notes
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    sale_details {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED sale_id FK
+        BIGINT_UNSIGNED product_id FK
+        VARCHAR_255 manual_sn
+        INTEGER quantity
+        DECIMAL_10_2 price_at_transaction
+        DECIMAL_15_2 purchase_price
+        DECIMAL_15_2 profit
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    services {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED customer_id FK
+        BIGINT_UNSIGNED technician_id FK "References users.id"
+        VARCHAR_255 device_name
+        VARCHAR_255 serial_number
+        TEXT equipment_details
+        JSON devices
+        VARCHAR_255 service_type
+        TEXT description
+        VARCHAR_255 device_brand
+        VARCHAR_255 device_model
+        VARCHAR_255 device_serial
+        TEXT issue_description
+        TEXT complaint
+        ENUM status "pending-process-done-cancelled"
+        DECIMAL_10_2 estimated_cost
+        DECIMAL_10_2 actual_cost
+        DECIMAL_15_2 service_fee
+        DECIMAL_15_2 estimated_parts_cost
+        DECIMAL_15_2 total_amount
+        DATE completion_date
+        TEXT notes
+        VARCHAR_255 payment_status
+        VARCHAR_255 payment_method
+        VARCHAR_255 payment_reference_id
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    service_parts {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED service_id FK "ON DELETE CASCADE"
+        BIGINT_UNSIGNED product_id FK
+        INTEGER quantity
+        DECIMAL_15_2 price
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    rentals {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED customer_id FK
+        VARCHAR_255 customer_name
+        VARCHAR_255 customer_phone
+        VARCHAR_255 laptop_name
+        VARCHAR_255 serial_number
+        VARCHAR_255 manual_sn
+        DATE rental_date
+        DATE return_date
+        DECIMAL_15_2 daily_price
+        DECIMAL_15_2 total_price
+        VARCHAR_255 status "active-completed-overdue"
+        TEXT notes
+        VARCHAR_255 payment_status
+        VARCHAR_255 payment_method
+        VARCHAR_255 payment_reference_id
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    activity_logs {
+        BIGINT_UNSIGNED id PK
+        BIGINT_UNSIGNED user_id FK "ON DELETE CASCADE"
+        VARCHAR_255 action
+        VARCHAR_255 model_type
+        BIGINT_UNSIGNED model_id
+        JSON old_values
+        JSON new_values
+        VARCHAR_255 ip_address
+        VARCHAR_255 user_agent
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
