@@ -208,78 +208,127 @@
           top: 90px;
         }
 
-        /* OVERLAY MODAL (Latar Belakang Gelap) */
+        /* OVERLAY MODAL */
         .qris-modal-overlay {
-          display: none; /* Default Tersembunyi */
+          display: none;
           position: fixed;
           z-index: 9999;
           top: 0;
           left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.75); /* Effect Dimmer Gelap */
-          backdrop-filter: blur(4px); /* Efek Blur di belakang pop-up */
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.65);
+          backdrop-filter: blur(4px);
           align-items: center;
           justify-content: center;
           padding: 16px;
+          box-sizing: border-box;
           animation: fadeIn 0.25s ease-out;
         }
 
-        /* KOTAK KONTEN MODAL */
+        /* KOTAK KONTEN MODAL (Maksimal Lebar & Tinggi Dibatasi Ringkas) */
         .qris-modal-content {
           background: #ffffff;
           border-radius: 16px;
-          max-width: 420px;
           width: 100%;
-          padding: 24px;
+          max-width: 340px; /* Dikecilkan agar pas & rapi di desktop */
+          max-height: 90vh; /* Agar tidak melebihi tinggi layar */
+          overflow-y: auto;  /* Scroll otomatis jika layar sangat pendek */
           position: relative;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+          padding: 16px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+          box-sizing: border-box;
           text-align: center;
           animation: scaleUp 0.25s ease-out;
         }
 
-        /* TOMBOL CLOSE (X) */
+        /* TOMBOL CLOSE (X) STICKY DI KANAN ATAS */
         .qris-modal-close {
           position: absolute;
-          top: 12px;
-          right: 16px;
-          font-size: 28px;
-          font-weight: bold;
+          top: 10px;
+          right: 12px;
+          z-index: 10;
+          width: 28px;
+          height: 28px;
+          background-color: #f1f5f9;
           color: #64748b;
-          background: none;
           border: none;
+          border-radius: 50%;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
+          transition: all 0.2s;
         }
 
         .qris-modal-close:hover {
-          color: #0f172a;
+          background-color: #ef4444;
+          color: #ffffff;
         }
 
-        /* GAMBAR QRIS BESAR */
+        /* GAMBAR QRIS PRESISI DAN TIDAK KEBESARAN */
+        .qris-modal-body {
+          margin: 10px 0;
+          display: flex;
+          justify-content: center;
+        }
+
         .qris-large-img {
           width: 100%;
-          max-width: 320px;
-          height: auto;
-          border-radius: 12px;
+          max-width: 220px; /* Ukuran gambar ideal agar mudah di-scan tapi tetap kompak */
+          max-height: 40vh; /* Membatasi tinggi gambar mengikuti resolusi layar */
+          object-fit: contain;
+          border-radius: 10px;
           border: 1px solid #e2e8f0;
-          margin: 12px 0;
         }
 
-        .btn-modal-done {
+        /* TOMBOL & TEKS FOOTER MODAL */
+        .qris-modal-footer {
+          margin-top: 10px;
+        }
+
+        .qris-modal-footer p {
+          font-size: 0.85rem;
+          margin-bottom: 8px;
+          color: #334155;
+        }
+
+        .btn-wa-modal {
+          display: block;
           width: 100%;
-          padding: 12px;
-          background-color: #f1f5f9;
-          color: #475569;
-          border: none;
-          border-radius: 12px;
+          padding: 10px;
+          background-color: #25d366;
+          color: #ffffff;
+          border-radius: 8px;
           font-weight: 600;
-          cursor: pointer;
-          margin-top: 8px;
-          transition: background-color 0.2s;
+          font-size: 0.85rem;
+          text-decoration: none;
+          box-sizing: border-box;
         }
 
-        .btn-modal-done:hover {
-          background-color: #e2e8f0;
+        .btn-close-text {
+          background: none;
+          border: none;
+          color: #64748b;
+          font-size: 0.8rem;
+          margin-top: 8px;
+          cursor: pointer;
+          text-decoration: underline;
+        }
+
+        /* KHUSUS PENYESUAIAN MOBILE LAYAR KECIL (< 480px) */
+        @media (max-width: 480px) {
+          .qris-modal-content {
+            max-width: 300px;
+            padding: 14px;
+          }
+          
+          .qris-large-img {
+            max-width: 190px;
+          }
         }
 
         /* ANIMASI POP-UP */
@@ -861,26 +910,30 @@
         {{-- B. STRUKTUR MODAL POP-UP (Vanilla JS) --}}
         <div id="qrisModal" class="qris-modal-overlay" onclick="closeQrisModal(event)">
           <div class="qris-modal-content">
-            <button class="qris-modal-close" onclick="closeQrisModalDirect()">&times;</button>
-            <div class="qris-modal-header mb-4">
-              <h4 class="font-black text-gray-900 text-lg flex items-center justify-center gap-2">
-                <i class='bx bx-qr-scan text-brand-500'></i> Scan QRIS Pembayaran
-              </h4>
-              <p class="text-sm text-gray-500 mt-1">LKTech TN SEREAL</p>
-            </div>
             
+            <!-- Tombol Close X -->
+            <button type="button" class="qris-modal-close" onclick="closeQrisModalDirect()">&times;</button>
+            
+            <!-- Header -->
+            <div style="margin-top: 4px;">
+              <h4 style="margin: 0; font-size: 0.95rem; color: #0f172a; font-weight: 800;"><i class='bx bx-qr-scan text-brand-500'></i> Scan QRIS Pembayaran</h4>
+              <span style="font-size: 0.75rem; color: #64748b;">LKTech TN SEREAL</span>
+            </div>
+
+            <!-- Gambar QRIS Ringkas -->
             <div class="qris-modal-body flex justify-center">
-              <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS Besar" class="qris-large-img">
+              <img src="{{ asset('images/Qris.jpeg') }}" alt="QRIS Pembayaran" class="qris-large-img">
             </div>
-            
-            <div class="qris-modal-footer mt-4">
-              <p class="text-gray-700 text-sm mb-4">Bayarkan tepat <strong>{{ $totalFormatted }}</strong></p>
-              <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" target="_blank"
-                 class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md shadow-green-200 flex justify-center items-center gap-2 text-sm mb-2">
-                  <i class='bx bxl-whatsapp text-xl'></i> Konfirmasi via WhatsApp
+
+            <!-- Footer -->
+            <div class="qris-modal-footer">
+              <p>Bayarkan tepat <strong>{{ $totalFormatted }}</strong></p>
+              <a href="https://wa.me/628567354046?text={{ $waConfirmMsg }}" class="btn-wa-modal flex justify-center items-center gap-1.5" target="_blank">
+                <i class='bx bxl-whatsapp text-lg'></i> Konfirmasi via WhatsApp
               </a>
-              <button class="btn-modal-done" onclick="closeQrisModalDirect()">Tutup Jendela Ini</button>
+              <button type="button" class="btn-close-text block w-full mt-2" onclick="closeQrisModalDirect()">Tutup Jendela Ini</button>
             </div>
+
           </div>
         </div>
 
