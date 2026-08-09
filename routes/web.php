@@ -59,16 +59,6 @@ Route::view('/martabak-jawara', 'pages.martabak-jawara')->name('martabak-jawara'
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
-
-// Temporary Migration Route
-Route::get('/run-migrations', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return 'Migrasi berhasil dijalankan! Output: ' . \Illuminate\Support\Facades\Artisan::output();
-    } catch (\Exception $e) {
-        return 'Gagal menjalankan migrasi: ' . $e->getMessage();
-    }
-});
 Route::get('/blog/{slug}', [App\Http\Controllers\PublicBlogController::class, 'show'])->name('blog.show');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
