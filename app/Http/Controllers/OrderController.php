@@ -14,21 +14,20 @@ class OrderController extends Controller
 
     public function getGuestOrders(Request $request)
     {
+        $references = $request->input('references');
+        $searchQuery = $request->input('search_query');
+        
         $query = Sale::with(['saleDetails.product', 'customer']);
 
-        if ($request->has('search_query')) {
-            $search = $request->input('search_query');
+        if (!empty($searchQuery)) {
+            $search = trim($searchQuery);
             $query->where(function($q) use ($search) {
                 $q->where('payment_reference_id', $search);
                 if (preg_match('/^SALE-(\d+)(?:-.*)?$/', $search, $matches)) {
                     $q->orWhere('id', $matches[1]);
                 }
-                $q->orWhereHas('customer', function($subQ) use ($search) {
-                    $subQ->where('phone', 'like', '%' . $search . '%');
-                });
             });
-        } elseif ($request->has('references') && is_array($request->input('references'))) {
-            $references = $request->input('references');
+        } elseif (!empty($references) && is_array($references)) {
             $query->where(function($q) use ($references) {
                 $q->whereIn('payment_reference_id', $references);
                 $ids = [];
@@ -42,7 +41,10 @@ class OrderController extends Controller
                 }
             });
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Invalid parameters'], 400);
+            return response()->json([
+                'status' => 'success',
+                'data' => []
+            ]);
         }
 
         $orders = $query->orderBy('created_at', 'desc')->get();

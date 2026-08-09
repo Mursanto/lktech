@@ -73,7 +73,7 @@
         <!-- FORM PENCARIAN CADANGAN -->
         <div class="bg-white p-3 rounded-xl border border-gray-200 mb-6 shadow-sm">
             <form @submit.prevent="searchOrders" class="flex gap-2">
-                <input type="text" x-model="searchQuery" class="flex-1 rounded-lg border-gray-300 border px-3 py-2 text-sm focus:ring-brand-500 focus:border-brand-500" placeholder="Cari via Kode Pesanan / No. WA..." required>
+                <input type="text" x-model="searchQuery" class="flex-1 rounded-lg border-gray-300 border px-3 py-2 text-sm focus:ring-brand-500 focus:border-brand-500" placeholder="Cari Kode Pesanan (Contoh: SALE-74-17...)" required>
                 <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
                     <i class='bx bx-search'></i> 
                     <span class="hidden sm:inline">Cari Pesanan</span>
