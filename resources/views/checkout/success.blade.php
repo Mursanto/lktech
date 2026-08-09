@@ -1252,5 +1252,20 @@
         });
     </script>
     @endif
+
+    <!-- Script to save order reference for Guest Orders (LocalStorage) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentOrderRef = "{{ $refId }}"; 
+
+            if (currentOrderRef) {
+                let storedOrders = JSON.parse(localStorage.getItem("lktech_guest_orders")) || [];
+                if (!storedOrders.includes(currentOrderRef)) {
+                    storedOrders.unshift(currentOrderRef);
+                    localStorage.setItem("lktech_guest_orders", JSON.stringify(storedOrders));
+                }
+            }
+        });
+    </script>
 </body>
 </html>

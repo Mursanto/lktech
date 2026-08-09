@@ -9,33 +9,55 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $userOrderIds = session()->get('user_orders', []);
-        
-        // Include orders from logged-in user if available
-        if (auth()->check()) {
-            // Usually tied to customer or user_id. For now, rely on session or user_id
-            $userId = auth()->id();
-            // Optional: retrieve past orders by user_id if needed, but since guest is supported, session is primary
+        return view('orders.index');
+    }
+
+    public function getGuestOrders(Request $request)
+    {
+        $query = Sale::with(['saleDetails.product', 'customer']);
+
+        if ($request->has('search_query')) {
+            $search = $request->input('search_query');
+            $query->where('payment_reference_id', $search)
+                  ->orWhereHas('customer', function($q) use ($search) {
+                      $q->where('phone', 'like', '%' . $search . '%');
+                  });
+        } elseif ($request->has('references') && is_array($request->input('references'))) {
+            $references = $request->input('references');
+            $query->whereIn('payment_reference_id', $references);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Invalid parameters'], 400);
         }
 
-        $orders = Sale::with(['saleDetails.product', 'customer'])
-            ->whereIn('id', $userOrderIds)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $orders = $query->orderBy('created_at', 'desc')->get();
 
-        // Categorize
-        $pendingOrders = $orders->where('order_status', 'menunggu_pembayaran');
-        $processingOrders = $orders->where('order_status', 'diproses');
-        $completedOrders = $orders->where('order_status', 'selesai');
-        $cancelledOrders = $orders->where('order_status', 'batal');
+        $formattedOrders = $orders->map(function ($order) {
+            $details = $order->saleDetails->map(function ($detail) {
+                return [
+                    'product_name' => ($detail->product->brand ?? '') . ' ' . ($detail->product->model_series ?? 'Produk'),
+                    'quantity' => $detail->quantity,
+                    'price_formatted' => number_format($detail->price_at_transaction, 0, ',', '.'),
+                    'image_url' => $detail->product && $detail->product->image_path ? \Illuminate\Support\Facades\Storage::url($detail->product->image_path) : null,
+                ];
+            });
 
-        return view('orders.index', compact(
-            'pendingOrders', 
-            'processingOrders', 
-            'completedOrders', 
-            'cancelledOrders', 
-            'orders'
-        ));
+            return [
+                'id' => $order->id,
+                'reference_number' => $order->payment_reference_id ?? 'SALE-' . $order->id,
+                'created_at_formatted' => $order->created_at->format('d M Y, H:i'),
+                'order_status' => $order->order_status,
+                'payment_status' => $order->payment_status,
+                'total_amount' => $order->total_amount,
+                'total_formatted' => number_format($order->total_amount, 0, ',', '.'),
+                'details' => $details,
+                'details_count' => $order->saleDetails->count(),
+            ];
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $formattedOrders
+        ]);
     }
 
     public function checkStatus($id)
