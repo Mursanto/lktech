@@ -396,9 +396,9 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.status === 'success') {
+                            let hasNew = false;
                             if (payload.search_query && data.data.length > 0) {
                                 let storedOrders = JSON.parse(localStorage.getItem("lktech_guest_orders")) || [];
-                                let hasNew = false;
                                 data.data.forEach(order => {
                                     if (!storedOrders.includes(order.reference_number)) {
                                         storedOrders.unshift(order.reference_number);
@@ -414,9 +414,10 @@
                                     return;
                                 }
                             }
-                            // If it's a search but no new unique orders were found, just display current data
-                            // Or if it's initial load, display fetched orders
-                            if (!payload.search_query || !hasNew) {
+                            
+                            if (payload.search_query && data.data.length === 0) {
+                                alert('Pesanan tidak ditemukan.');
+                            } else if (!payload.search_query || !hasNew) {
                                 this.orders = data.data;
                             }
                         } else {

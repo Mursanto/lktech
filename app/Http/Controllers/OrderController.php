@@ -18,13 +18,29 @@ class OrderController extends Controller
 
         if ($request->has('search_query')) {
             $search = $request->input('search_query');
-            $query->where('payment_reference_id', $search)
-                  ->orWhereHas('customer', function($q) use ($search) {
-                      $q->where('phone', 'like', '%' . $search . '%');
-                  });
+            $query->where(function($q) use ($search) {
+                $q->where('payment_reference_id', $search);
+                if (preg_match('/^SALE-(\d+)(?:-.*)?$/', $search, $matches)) {
+                    $q->orWhere('id', $matches[1]);
+                }
+                $q->orWhereHas('customer', function($subQ) use ($search) {
+                    $subQ->where('phone', 'like', '%' . $search . '%');
+                });
+            });
         } elseif ($request->has('references') && is_array($request->input('references'))) {
             $references = $request->input('references');
-            $query->whereIn('payment_reference_id', $references);
+            $query->where(function($q) use ($references) {
+                $q->whereIn('payment_reference_id', $references);
+                $ids = [];
+                foreach ($references as $ref) {
+                    if (preg_match('/^SALE-(\d+)(?:-.*)?$/', $ref, $matches)) {
+                        $ids[] = $matches[1];
+                    }
+                }
+                if (!empty($ids)) {
+                    $q->orWhereIn('id', $ids);
+                }
+            });
         } else {
             return response()->json(['status' => 'error', 'message' => 'Invalid parameters'], 400);
         }
@@ -34,7 +50,7 @@ class OrderController extends Controller
         $formattedOrders = $orders->map(function ($order) {
             $details = $order->saleDetails->map(function ($detail) {
                 return [
-                    'product_name' => ($detail->product->brand ?? '') . ' ' . ($detail->product->model_series ?? 'Produk'),
+                    'product_name' => ($detail->product?->brand ?? '') . ' ' . ($detail->product?->model_series ?? 'Produk'),
                     'quantity' => $detail->quantity,
                     'price_formatted' => number_format($detail->price_at_transaction, 0, ',', '.'),
                     'image_url' => $detail->product && $detail->product->image_path ? \Illuminate\Support\Facades\Storage::url($detail->product->image_path) : null,
