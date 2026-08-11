@@ -100,10 +100,27 @@ class PublicCatalogController extends Controller
         });
 
         // Fetch Google Reviews
-        $googleReviews = \App\Models\GoogleReview::where('is_featured', true)
+        $allReviews = \App\Models\GoogleReview::where('is_featured', true)
             ->where('star_rating', '>=', 4)
-            ->latest('review_created_at')
             ->get();
+            
+        $priorityNames = [
+            'sarah nurlianah',
+            'buchori ahmad',
+            'suwandi irawan',
+            'harjico budiman',
+            'koko sudiyatmoko'
+        ];
+        
+        // Shuffle first so the non-priority ones are random
+        $allReviews = $allReviews->shuffle();
+        
+        // Sort by priority names
+        $googleReviews = $allReviews->sortBy(function($review) use ($priorityNames) {
+            $name = strtolower(trim($review->reviewer_name));
+            $index = array_search($name, $priorityNames);
+            return $index !== false ? $index : count($priorityNames) + 1;
+        })->values();
 
         return view('welcome', compact('products', 'latestPosts', 'setting', 'featuredProducts', 'googleReviews'));
     }
