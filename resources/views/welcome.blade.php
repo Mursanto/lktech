@@ -348,13 +348,13 @@
         
         <!-- Google Reviews Section -->
         @if(isset($googleReviews) && $googleReviews->count() > 0 && !request()->has('search'))
-        <div id="google-reviews" class="bg-[#F8FAFC] py-8 lg:py-12 border-y border-gray-100">
+        <div id="google-reviews" class="bg-[#F8FAFC] py-6 lg:py-8 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 gap-4">
                     <div>
-                        <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2 flex items-center gap-2">
-                            <i class='bx bxs-star text-yellow-400'></i> Ulasan Pelanggan
+                        <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">
+                            Ulasan Pelanggan
                         </h2>
                         <p class="text-gray-500 text-sm hidden sm:block">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
                     </div>
@@ -451,19 +451,13 @@
 
                     <!-- Navigation Controls -->
                     <template x-if="totalPages > 1">
-                        <div class="flex justify-center items-center gap-3 mt-6">
-                            <button @click="prev()" class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
-                                <i class='bx bx-chevron-left text-xl'></i>
+                        <div class="flex justify-center items-center gap-4 mt-2 md:mt-4">
+                            <button @click="prev()" class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
+                                <i class='bx bx-chevron-left text-2xl'></i>
                             </button>
-                            <div class="flex gap-1.5">
-                                <template x-for="i in totalPages" :key="i">
-                                    <button @click="activeSlide = i - 1" 
-                                            class="h-2 rounded-full transition-all duration-300"
-                                            :class="activeSlide === i - 1 ? 'w-6 bg-[#1E56A0]' : 'w-2 bg-gray-300 hover:bg-gray-400'"></button>
-                                </template>
-                            </div>
-                            <button @click="next()" class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
-                                <i class='bx bx-chevron-right text-xl'></i>
+                            <!-- Dots removed per request -->
+                            <button @click="next()" class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
+                                <i class='bx bx-chevron-right text-2xl'></i>
                             </button>
                         </div>
                     </template>
