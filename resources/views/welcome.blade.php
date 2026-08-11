@@ -329,10 +329,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <div class="flex justify-between items-end mb-6">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-black text-gray-900 font-montserrat tracking-tight mb-1 flex items-center gap-2 whitespace-nowrap">
+                    <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-1 flex items-center gap-2 whitespace-nowrap">
                         <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris
                     </h2>
-                    <p class="text-gray-500 text-xs sm:text-sm">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
+                    <p class="text-gray-500 text-xs sm:text-sm hidden sm:block">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
                 </div>
             </div>
 
@@ -353,10 +353,10 @@
                 
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                     <div>
-                        <h2 class="text-xl sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2 flex items-center gap-2">
-                            <i class='bx bxs-star text-yellow-400'></i> Ulasan &amp; Kebahagiaan Pelanggan
+                        <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2 flex items-center gap-2">
+                            <i class='bx bxs-star text-yellow-400'></i> Ulasan Pelanggan
                         </h2>
-                        <p class="text-gray-500 text-sm">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
+                        <p class="text-gray-500 text-sm hidden sm:block">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
                     </div>
                     
                     <div class="flex items-center bg-white p-3 rounded-2xl shadow-sm border border-gray-100 shrink-0">

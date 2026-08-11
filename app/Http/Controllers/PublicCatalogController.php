@@ -103,7 +103,6 @@ class PublicCatalogController extends Controller
         $googleReviews = \App\Models\GoogleReview::where('is_featured', true)
             ->where('star_rating', '>=', 4)
             ->latest('review_created_at')
-            ->take(8)
             ->get();
 
         return view('welcome', compact('products', 'latestPosts', 'setting', 'featuredProducts', 'googleReviews'));
