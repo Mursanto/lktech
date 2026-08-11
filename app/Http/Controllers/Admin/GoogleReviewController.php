@@ -54,4 +54,34 @@ class GoogleReviewController extends Controller
 
         return back()->with('success', 'Balasan ulasan berhasil disimpan.');
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'reviewer_name' => 'required|string|max:255',
+            'star_rating' => 'required|integer|min:1|max:5',
+            'review_comment' => 'nullable|string',
+            'is_featured' => 'boolean'
+        ]);
+
+        $googleReviewId = 'manual_' . uniqid();
+
+        \App\Models\GoogleReview::create([
+            'google_review_id' => $googleReviewId,
+            'reviewer_name' => $request->reviewer_name,
+            'star_rating' => $request->star_rating,
+            'review_comment' => $request->review_comment,
+            'is_featured' => $request->has('is_featured'),
+            'review_created_at' => \Carbon\Carbon::now(),
+            'reviewer_photo_url' => 'https://ui-avatars.com/api/?name=' . urlencode($request->reviewer_name) . '&background=random'
+        ]);
+
+        return back()->with('success', 'Ulasan manual berhasil ditambahkan.');
+    }
+
+    public function destroy(\App\Models\GoogleReview $googleReview)
+    {
+        $googleReview->delete();
+        return back()->with('success', 'Ulasan berhasil dihapus.');
+    }
 }

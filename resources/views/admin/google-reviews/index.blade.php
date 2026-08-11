@@ -10,7 +10,10 @@
                 <p class="text-xs text-natural-500 mt-1">Kelola dan sinkronisasi ulasan pelanggan dari Google Maps.</p>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="alert('Fitur Sinkronisasi API Google sedang dalam pengembangan untuk production.')" class="btn btn-primary flex items-center gap-2 text-sm bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl transition">
+                <button onclick="document.getElementById('modal-add-review').classList.remove('hidden')" class="btn btn-primary flex items-center gap-2 text-sm bg-white hover:bg-natural-50 text-natural-700 border border-natural-200 px-4 py-2 rounded-xl transition shadow-sm">
+                    <i class='bx bx-plus'></i> Tambah Manual
+                </button>
+                <button onclick="alert('Fitur Sinkronisasi API Google sedang dalam pengembangan untuk production.')" class="btn btn-primary flex items-center gap-2 text-sm bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl transition shadow-sm">
                     <i class='bx bx-sync'></i> Direct Sync Google API
                 </button>
             </div>
@@ -175,6 +178,14 @@
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors tooltip-trigger" title="Balas Ulasan">
                                     <i class='bx bx-reply text-base'></i>
                                 </button>
+                                
+                                <form action="{{ route('google-reviews.destroy', $review->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus ulasan ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors tooltip-trigger" title="Hapus Ulasan">
+                                        <i class='bx bx-trash text-base'></i>
+                                    </button>
+                                </form>
 
                                 <!-- Reply Modal -->
                                 <div id="modal-reply-{{ $review->id }}" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-natural-900/50 backdrop-blur-sm">
@@ -226,6 +237,58 @@
             @endif
         </div>
 
+    </div>
+
+    <!-- Modal Tambah Ulasan Manual -->
+    <div id="modal-add-review" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-natural-900/50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-xl relative text-left">
+            <div class="flex justify-between items-center mb-6 border-b border-natural-100 pb-4">
+                <h3 class="font-bold text-lg text-natural-800 flex items-center gap-2">
+                    <i class='bx bx-plus-circle text-brand-600'></i> Tambah Ulasan Manual
+                </h3>
+                <button onclick="document.getElementById('modal-add-review').classList.add('hidden')" class="text-natural-400 hover:text-natural-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-natural-100 transition-colors">
+                    <i class='bx bx-x text-2xl'></i>
+                </button>
+            </div>
+            
+            <form action="{{ route('google-reviews.store') }}" method="POST">
+                @csrf
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-natural-700 mb-1">Nama Pengulas <span class="text-rose-500">*</span></label>
+                        <input type="text" name="reviewer_name" required class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white" placeholder="Misal: Satria Merah">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-natural-700 mb-1">Jumlah Bintang (Rating) <span class="text-rose-500">*</span></label>
+                        <select name="star_rating" required class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Bintang)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 Bintang)</option>
+                            <option value="3">⭐⭐⭐ (3 Bintang)</option>
+                            <option value="2">⭐⭐ (2 Bintang)</option>
+                            <option value="1">⭐ (1 Bintang)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-natural-700 mb-1">Teks Komentar / Ulasan</label>
+                        <textarea name="review_comment" rows="4" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white" placeholder="Tuliskan ulasan asli dari pelanggan di sini..."></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-2 bg-brand-50 p-3 rounded-xl border border-brand-100 mt-2">
+                        <input type="checkbox" name="is_featured" value="1" checked id="is_featured_checkbox" class="w-4 h-4 text-brand-600 border-natural-300 rounded focus:ring-brand-500">
+                        <label for="is_featured_checkbox" class="text-xs font-medium text-brand-800 cursor-pointer">Langsung tampilkan di Landing Page</label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-natural-100">
+                    <button type="button" onclick="document.getElementById('modal-add-review').classList.add('hidden')" class="px-5 py-2.5 text-sm font-medium text-natural-600 hover:bg-natural-100 rounded-xl transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition shadow-sm flex items-center gap-2">
+                        <i class='bx bx-save'></i> Simpan Ulasan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
 </x-app-layout>
