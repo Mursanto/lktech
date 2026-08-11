@@ -153,6 +153,13 @@
                 <i class='bx bx-history text-lg {{ request()->routeIs('activity-logs.*') ? 'text-slate-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Log Aktivitas</span>
             </a>
+
+            <a href="{{ route('google-reviews.index') }}" 
+               class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('google-reviews.*') ? 'bg-yellow-50 text-yellow-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
+               :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Ulasan Google">
+                <i class='bx bx-star text-lg {{ request()->routeIs('google-reviews.*') ? 'text-yellow-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
+                <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Ulasan Google</span>
+            </a>
             @endif
             
             @if(auth()->user()->hasPermissionTo('access_settings'))

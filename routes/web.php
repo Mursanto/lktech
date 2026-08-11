@@ -87,7 +87,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::resource('users', UserController::class)->except(['show']);
     Route::resource('categories', App\Http\Controllers\CategoryController::class);
-
+    
+    // Google Reviews
+    Route::get('google-reviews', [App\Http\Controllers\Admin\GoogleReviewController::class, 'index'])->name('google-reviews.index');
+    Route::post('google-reviews/{googleReview}/toggle', [App\Http\Controllers\Admin\GoogleReviewController::class, 'toggleFeatured'])->name('google-reviews.toggle');
+    Route::post('google-reviews/{googleReview}/reply', [App\Http\Controllers\Admin\GoogleReviewController::class, 'reply'])->name('google-reviews.reply');
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify

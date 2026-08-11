@@ -346,6 +346,126 @@
         </div>
         @endif
         
+        <!-- Google Reviews Section -->
+        @if(isset($googleReviews) && $googleReviews->count() > 0 && !request()->has('search'))
+        <div id="google-reviews" class="bg-[#F8FAFC] py-8 lg:py-12 border-y border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2 flex items-center gap-2">
+                            <i class='bx bxs-star text-yellow-400'></i> Ulasan &amp; Kebahagiaan Pelanggan
+                        </h2>
+                        <p class="text-gray-500 text-sm">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
+                    </div>
+                    
+                    <div class="flex items-center bg-white p-3 rounded-2xl shadow-sm border border-gray-100 shrink-0">
+                        <div class="flex flex-col mr-4">
+                            <div class="flex items-center gap-1 text-yellow-400 text-lg">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
+                            </div>
+                            <p class="text-xs font-bold text-gray-800 mt-1">5.0 / 5.0 Rata-rata</p>
+                            <p class="text-[10px] text-gray-500">{{ $googleReviews->count() }}+ Ulasan Terverifikasi</p>
+                        </div>
+                        <a href="https://g.page/r/CaM75CZX1cbpEAI/review" target="_blank" class="btn btn-primary text-xs sm:text-sm bg-[#1E56A0] hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-xl shadow-sm flex items-center gap-2 transition-colors">
+                            Tulis Ulasan <i class='bx bx-link-external'></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Carousel -->
+                <div class="relative w-full" 
+                     x-data="{ 
+                        activeSlide: 0, 
+                        slides: {{ count($googleReviews) }},
+                        itemsPerSlide: window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1),
+                        get totalPages() { return Math.ceil(this.slides / this.itemsPerSlide); },
+                        next() { this.activeSlide = this.activeSlide === this.totalPages - 1 ? 0 : this.activeSlide + 1; },
+                        prev() { this.activeSlide = this.activeSlide === 0 ? this.totalPages - 1 : this.activeSlide - 1; },
+                        init() {
+                            window.addEventListener('resize', () => {
+                                this.itemsPerSlide = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+                                this.activeSlide = 0;
+                            });
+                            if(this.totalPages > 1) {
+                                setInterval(() => this.next(), 6000);
+                            }
+                        }
+                     }">
+                     
+                    <div class="overflow-hidden">
+                        <div class="flex transition-transform duration-500 ease-in-out" 
+                             :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+                            
+                            @foreach($googleReviews as $review)
+                                <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-2 sm:px-3">
+                                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 h-full flex flex-col hover:shadow-md transition-shadow">
+                                        <!-- Header Card -->
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold overflow-hidden shrink-0">
+                                                    @if($review->reviewer_photo_url)
+                                                        <img src="{{ $review->reviewer_photo_url }}" alt="{{ $review->reviewer_name }}" class="w-full h-full object-cover">
+                                                    @else
+                                                        {{ substr($review->reviewer_name, 0, 1) }}
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-bold text-gray-800 text-sm leading-tight">{{ $review->reviewer_name }}</h4>
+                                                    <p class="text-[10px] text-gray-500 mt-0.5">{{ $review->review_created_at ? $review->review_created_at->diffForHumans() : '' }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="w-6 h-6 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-3.5 h-3.5">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Rating -->
+                                        <div class="flex text-yellow-400 text-sm mb-2">
+                                            @for($i=1; $i<=5; $i++)
+                                                @if($i <= $review->star_rating)
+                                                    <i class='bx bxs-star'></i>
+                                                @else
+                                                    <i class='bx bx-star text-gray-300'></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        
+                                        <!-- Content -->
+                                        <div class="text-sm text-gray-600 italic leading-relaxed line-clamp-4 flex-grow">
+                                            "{{ $review->review_comment }}"
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <template x-if="totalPages > 1">
+                        <div class="flex justify-center items-center gap-3 mt-6">
+                            <button @click="prev()" class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
+                                <i class='bx bx-chevron-left text-xl'></i>
+                            </button>
+                            <div class="flex gap-1.5">
+                                <template x-for="i in totalPages" :key="i">
+                                    <button @click="activeSlide = i - 1" 
+                                            class="h-2 rounded-full transition-all duration-300"
+                                            :class="activeSlide === i - 1 ? 'w-6 bg-[#1E56A0]' : 'w-2 bg-gray-300 hover:bg-gray-400'"></button>
+                                </template>
+                            </div>
+                            <button @click="next()" class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
+                                <i class='bx bx-chevron-right text-xl'></i>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+                
+            </div>
+        </div>
+        @endif
+
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
