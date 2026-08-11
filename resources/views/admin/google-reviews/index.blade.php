@@ -275,6 +275,12 @@
                         <textarea name="review_comment" rows="4" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white" placeholder="Tuliskan ulasan asli dari pelanggan di sini..."></textarea>
                     </div>
 
+                    <div>
+                        <label class="block text-xs font-bold text-natural-700 mb-1">Tanggal Ulasan (Opsional)</label>
+                        <input type="date" name="review_date" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
+                        <p class="text-[10px] text-natural-500 mt-1">Biarkan kosong untuk menggunakan waktu saat ini.</p>
+                    </div>
+
                     <div class="flex items-center gap-2 bg-brand-50 p-3 rounded-xl border border-brand-100 mt-2">
                         <input type="checkbox" name="is_featured" value="1" checked id="is_featured_checkbox" class="w-4 h-4 text-brand-600 border-natural-300 rounded focus:ring-brand-500">
                         <label for="is_featured_checkbox" class="text-xs font-medium text-brand-800 cursor-pointer">Langsung tampilkan di Landing Page</label>
