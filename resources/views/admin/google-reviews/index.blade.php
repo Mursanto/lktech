@@ -126,7 +126,7 @@
                                 </p>
                             </td>
                             <td class="px-5 py-3 align-top whitespace-nowrap text-natural-500">
-                                {{ $review->review_created_at ? $review->review_created_at->format('d M Y') : '-' }}
+                                {{ $review->review_time_text ?? ($review->review_created_at ? $review->review_created_at->format('d M Y') : '-') }}
                             </td>
                             <td class="px-5 py-3 align-top">
                                 @if($review->review_reply)
@@ -276,9 +276,9 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-natural-700 mb-1">Tanggal Ulasan (Opsional)</label>
-                        <input type="date" name="review_date" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
-                        <p class="text-[10px] text-natural-500 mt-1">Biarkan kosong untuk menggunakan waktu saat ini.</p>
+                        <label class="block text-xs font-bold text-natural-700 mb-1">Tanggal/Waktu Ulasan (Opsional)</label>
+                        <input type="text" name="review_time_text" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white" placeholder="Misal: 5 hari lalu, seminggu lalu, Agustus 2026">
+                        <p class="text-[10px] text-natural-500 mt-1">Biarkan kosong untuk menggunakan waktu otomatis ("baru saja").</p>
                     </div>
 
                     <div class="flex items-center gap-2 bg-brand-50 p-3 rounded-xl border border-brand-100 mt-2">

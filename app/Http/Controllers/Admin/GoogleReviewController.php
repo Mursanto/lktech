@@ -62,14 +62,10 @@ class GoogleReviewController extends Controller
             'star_rating' => 'required|integer|min:1|max:5',
             'review_comment' => 'nullable|string',
             'is_featured' => 'boolean',
-            'review_date' => 'nullable|date'
+            'review_time_text' => 'nullable|string|max:100'
         ]);
 
         $googleReviewId = 'manual_' . uniqid();
-        
-        $reviewDate = $request->filled('review_date') 
-            ? \Carbon\Carbon::parse($request->review_date) 
-            : \Carbon\Carbon::now();
 
         \App\Models\GoogleReview::create([
             'google_review_id' => $googleReviewId,
@@ -77,7 +73,8 @@ class GoogleReviewController extends Controller
             'star_rating' => $request->star_rating,
             'review_comment' => $request->review_comment,
             'is_featured' => $request->has('is_featured'),
-            'review_created_at' => $reviewDate,
+            'review_created_at' => \Carbon\Carbon::now(),
+            'review_time_text' => $request->review_time_text,
             'reviewer_photo_url' => null // Set to null so the frontend uses the initials feature
         ]);
 

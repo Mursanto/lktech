@@ -16,8 +16,9 @@ class GoogleReview extends Model
         'star_rating',
         'review_comment',
         'review_created_at',
-        'review_reply',
+        'review_time_text',
         'is_featured',
+        'review_reply',
     ];
 
     protected $casts = [

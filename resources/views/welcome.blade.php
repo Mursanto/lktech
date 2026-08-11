@@ -412,7 +412,9 @@
                                                 </div>
                                                 <div>
                                                     <h4 class="font-bold text-gray-800 text-sm leading-tight">{{ $review->reviewer_name }}</h4>
-                                                    <p class="text-[10px] text-gray-500 mt-0.5">{{ $review->review_created_at ? $review->review_created_at->diffForHumans() : '' }}</p>
+                                                    <p class="text-[10px] text-gray-500 mt-0.5">
+                                                        {{ $review->review_time_text ?? ($review->review_created_at ? $review->review_created_at->diffForHumans() : '') }}
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="w-6 h-6 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
