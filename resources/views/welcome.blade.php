@@ -377,6 +377,7 @@
                 <div class="relative w-full" 
                      x-data="{ 
                         activeSlide: 0, 
+                        isHovered: false,
                         slides: {{ count($googleReviews) }},
                         itemsPerSlide: window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1),
                         get totalPages() { return Math.ceil(this.slides / this.itemsPerSlide); },
@@ -388,13 +389,19 @@
                                 this.activeSlide = 0;
                             });
                             if(this.totalPages > 1) {
-                                setInterval(() => this.next(), 6000);
+                                setInterval(() => {
+                                    if(!this.isHovered) {
+                                        this.next();
+                                    }
+                                }, 6000);
                             }
                         }
-                     }">
+                     }"
+                     @mouseenter="isHovered = true"
+                     @mouseleave="isHovered = false">
                      
                     <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-500 ease-in-out" 
+                        <div class="flex transition-transform duration-1000 ease-in-out" 
                              :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
                             
                             @foreach($googleReviews as $review)
