@@ -91,6 +91,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     // Google Reviews
     Route::get('google-reviews', [App\Http\Controllers\Admin\GoogleReviewController::class, 'index'])->name('google-reviews.index');
     Route::post('google-reviews', [App\Http\Controllers\Admin\GoogleReviewController::class, 'store'])->name('google-reviews.store');
+    Route::put('google-reviews/{googleReview}', [App\Http\Controllers\Admin\GoogleReviewController::class, 'update'])->name('google-reviews.update');
     Route::delete('google-reviews/{googleReview}', [App\Http\Controllers\Admin\GoogleReviewController::class, 'destroy'])->name('google-reviews.destroy');
     Route::post('google-reviews/{googleReview}/toggle', [App\Http\Controllers\Admin\GoogleReviewController::class, 'toggleFeatured'])->name('google-reviews.toggle');
     Route::post('google-reviews/{googleReview}/reply', [App\Http\Controllers\Admin\GoogleReviewController::class, 'reply'])->name('google-reviews.reply');

@@ -81,6 +81,27 @@ class GoogleReviewController extends Controller
         return back()->with('success', 'Ulasan manual berhasil ditambahkan.');
     }
 
+    public function update(Request $request, \App\Models\GoogleReview $googleReview)
+    {
+        $request->validate([
+            'reviewer_name' => 'required|string|max:255',
+            'star_rating' => 'required|integer|min:1|max:5',
+            'review_comment' => 'nullable|string',
+            'is_featured' => 'boolean',
+            'review_time_text' => 'nullable|string|max:100'
+        ]);
+
+        $googleReview->update([
+            'reviewer_name' => $request->reviewer_name,
+            'star_rating' => $request->star_rating,
+            'review_comment' => $request->review_comment,
+            'is_featured' => $request->has('is_featured'),
+            'review_time_text' => $request->review_time_text,
+        ]);
+
+        return back()->with('success', 'Ulasan berhasil diperbarui.');
+    }
+
     public function destroy(\App\Models\GoogleReview $googleReview)
     {
         $googleReview->delete();

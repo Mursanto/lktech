@@ -174,6 +174,11 @@
                                 </div>
                             </td>
                             <td class="px-5 py-3 align-top text-right whitespace-nowrap">
+                                <button onclick="document.getElementById('modal-edit-{{ $review->id }}').classList.remove('hidden')" 
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors tooltip-trigger mr-1" title="Edit Ulasan">
+                                    <i class='bx bx-edit text-base'></i>
+                                </button>
+                                
                                 <button onclick="document.getElementById('modal-reply-{{ $review->id }}').classList.remove('hidden')" 
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors tooltip-trigger" title="Balas Ulasan">
                                     <i class='bx bx-reply text-base'></i>
@@ -211,6 +216,64 @@
                                             <div class="flex justify-end gap-2">
                                                 <button type="button" onclick="document.getElementById('modal-reply-{{ $review->id }}').classList.add('hidden')" class="px-4 py-2 text-sm font-medium text-natural-600 hover:bg-natural-100 rounded-xl transition">Batal</button>
                                                 <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition shadow-sm">Simpan Balasan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Edit Modal -->
+                                <div id="modal-edit-{{ $review->id }}" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-natural-900/50 backdrop-blur-sm p-4">
+                                    <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-xl relative text-left whitespace-normal">
+                                        <div class="flex justify-between items-center mb-6 border-b border-natural-100 pb-4">
+                                            <h3 class="font-bold text-lg text-natural-800 flex items-center gap-2">
+                                                <i class='bx bx-edit text-amber-500'></i> Edit Ulasan Manual
+                                            </h3>
+                                            <button onclick="document.getElementById('modal-edit-{{ $review->id }}').classList.add('hidden')" class="text-natural-400 hover:text-natural-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-natural-100 transition-colors">
+                                                <i class='bx bx-x text-2xl'></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <form action="{{ route('google-reviews.update', $review->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="space-y-4">
+                                                <div>
+                                                    <label class="block text-xs font-bold text-natural-700 mb-1">Nama Pengulas <span class="text-rose-500">*</span></label>
+                                                    <input type="text" name="reviewer_name" value="{{ $review->reviewer_name }}" required class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
+                                                </div>
+                                                
+                                                <div>
+                                                    <label class="block text-xs font-bold text-natural-700 mb-1">Jumlah Bintang (Rating) <span class="text-rose-500">*</span></label>
+                                                    <select name="star_rating" required class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">
+                                                        <option value="5" {{ $review->star_rating == 5 ? 'selected' : '' }}>⭐⭐⭐⭐⭐ (5 Bintang)</option>
+                                                        <option value="4" {{ $review->star_rating == 4 ? 'selected' : '' }}>⭐⭐⭐⭐ (4 Bintang)</option>
+                                                        <option value="3" {{ $review->star_rating == 3 ? 'selected' : '' }}>⭐⭐⭐ (3 Bintang)</option>
+                                                        <option value="2" {{ $review->star_rating == 2 ? 'selected' : '' }}>⭐⭐ (2 Bintang)</option>
+                                                        <option value="1" {{ $review->star_rating == 1 ? 'selected' : '' }}>⭐ (1 Bintang)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-xs font-bold text-natural-700 mb-1">Teks Komentar / Ulasan</label>
+                                                    <textarea name="review_comment" rows="4" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white">{{ $review->review_comment }}</textarea>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-xs font-bold text-natural-700 mb-1">Tanggal/Waktu Ulasan (Opsional)</label>
+                                                    <input type="text" name="review_time_text" value="{{ $review->review_time_text }}" class="w-full p-2.5 border border-natural-200 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 bg-white" placeholder="Misal: 5 hari lalu, seminggu lalu, Agustus 2026">
+                                                </div>
+
+                                                <div class="flex items-center gap-2 bg-brand-50 p-3 rounded-xl border border-brand-100 mt-2">
+                                                    <input type="checkbox" name="is_featured" value="1" {{ $review->is_featured ? 'checked' : '' }} id="edit_is_featured_{{ $review->id }}" class="w-4 h-4 text-brand-600 border-natural-300 rounded focus:ring-brand-500">
+                                                    <label for="edit_is_featured_{{ $review->id }}" class="text-xs font-medium text-brand-800 cursor-pointer">Langsung tampilkan di Landing Page</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-natural-100">
+                                                <button type="button" onclick="document.getElementById('modal-edit-{{ $review->id }}').classList.add('hidden')" class="px-5 py-2.5 text-sm font-medium text-natural-600 hover:bg-natural-100 rounded-xl transition">Batal</button>
+                                                <button type="submit" class="px-5 py-2.5 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl transition shadow-sm flex items-center gap-2">
+                                                    <i class='bx bx-save'></i> Simpan Perubahan
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
