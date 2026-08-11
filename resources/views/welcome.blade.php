@@ -351,7 +351,7 @@
         <div id="google-reviews" class="bg-[#F8FAFC] py-6 lg:py-8 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 gap-4 px-2 sm:px-3">
                     <div>
                         <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">
                             Ulasan Pelanggan
