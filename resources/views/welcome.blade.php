@@ -380,7 +380,7 @@
                             <div class="flex items-center gap-1 text-yellow-400 text-lg">
                                 <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
                             </div>
-                            <p class="text-xs font-bold text-gray-800 mt-1">5.0 / 5.0 Rata-rata</p>
+                            <p class="text-xs font-bold text-gray-800 mt-1">4.9 / 5.0 Rata-rata</p>
                             <p class="text-[10px] text-gray-500">{{ $googleReviews->count() }}+ Ulasan Terverifikasi</p>
                         </div>
                         <a href="https://g.page/r/CaM75CZX1cbpEAI/review" target="_blank" class="btn btn-primary text-xs sm:text-sm bg-[#1E56A0] hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-xl shadow-sm flex items-center gap-2 transition-colors">
