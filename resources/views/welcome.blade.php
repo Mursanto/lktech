@@ -657,8 +657,8 @@
     @if($activeVideo)
     <div id="floatingVideoWidget" 
          class="fixed z-[9999] bg-black rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600 
-                bottom-[75px] left-3 w-[130px] h-[160px] 
-                sm:bottom-6 sm:left-6 sm:w-[200px] sm:h-[210px] transition-all duration-300">
+                top-1/2 -translate-y-1/2 left-3 w-[130px] h-[220px] 
+                sm:left-6 sm:w-[150px] sm:h-[260px] transition-all duration-300">
         
         <div class="absolute top-1.5 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
             
@@ -694,7 +694,7 @@
         @endif
 
         <video id="promoVideo" 
-               class="w-full h-full object-contain bg-black" 
+               class="w-full h-full object-cover bg-black" 
                controls 
                preload="metadata" 
                playsinline>
