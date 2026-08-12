@@ -654,27 +654,30 @@
     @if($activeVideo)
     <div id="floatingVideoWidget" class="floating-video-box">
         <!-- Overlay Badge Promo & Close Button (Di dalam area video) -->
-        <div class="video-overlay-header">
+        <div class="video-overlay-header" style="gap: 4px;">
             @if($activeVideo->target_url)
                 <a href="{{ $activeVideo->target_url }}" 
                    target="_blank" 
-                   class="promo-badge pointer-events-auto" style="display: flex; align-items: center; gap: 4px; text-decoration: none;">
-                    <i class="bx bx-bxs-hot"></i> PROMO <span style="font-size: 8px;">➔</span>
+                   title="{{ $activeVideo->title }}"
+                   class="promo-badge pointer-events-auto" style="display: flex; align-items: center; gap: 4px; text-decoration: none; max-width: 80%; transition: all 0.3s ease;">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🔥 {{ $activeVideo->title }}</span>
+                    <span style="font-size: 8px; flex-shrink: 0;">➔</span>
                 </a>
             @else
-                <span class="promo-badge"><i class="bx bx-bxs-hot"></i> PROMO</span>
+                <span class="promo-badge" style="max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;">🔥 {{ $activeVideo->title }}</span>
             @endif
-            <button onclick="closeVideoWidget()" class="close-video-btn" title="Tutup">&times;</button>
+            <button onclick="closeVideoWidget()" class="close-video-btn" title="Tutup" style="flex-shrink: 0;">&times;</button>
         </div>
 
         @if($activeVideo->target_url)
         <!-- Tombol CTA Lihat Produk (Di Atas Kontrol Video) -->
-        <div style="position: absolute; bottom: 35px; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 20;">
+        <div style="position: absolute; bottom: 35px; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 20; padding: 0 8px;">
             <a href="{{ $activeVideo->target_url }}" 
                target="_blank" 
-               class="pointer-events-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition transform hover:scale-105"
-               style="font-size: 10px; padding: 4px 8px; text-decoration: none;">
-                🛒 Lihat Produk ↗
+               class="pointer-events-auto inline-flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition transform hover:scale-105"
+               style="font-size: 10px; padding: 4px 8px; text-decoration: none; background: rgba(37, 99, 235, 0.9); backdrop-filter: blur(4px);">
+                <span>🛒 Lihat Produk</span>
+                <span style="font-size: 8px;">↗</span>
             </a>
         </div>
         @endif
