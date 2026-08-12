@@ -677,15 +677,31 @@
     /* Container Floating Box Video */
     .floating-video-box {
         position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 220px; /* Ukuran ringkas untuk Desktop */
+        z-index: 9999;
         background: #000;
         border-radius: 12px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        z-index: 9999;
         overflow: hidden;
         border: 2px solid #2563eb;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- TAMPILAN DESKTOP (Min-width: 641px) --- */
+    @media (min-width: 641px) {
+        .floating-video-box {
+            bottom: 24px;
+            left: 24px;
+            width: 200px;           /* Lebar tetap proporsional */
+            height: 210px;          /* Tinggi DIKURANGI (sebelumnya 260px) */
+        }
+
+        .promo-video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;    /* Memastikan seluruh video & tombol kontrol muat sempurna */
+            background: #000;
+        }
     }
 
     /* Header Overlay (In-Video) */
@@ -776,20 +792,21 @@
         transform: scale(1.1);
     }
 
-    /* Responsif untuk Layar HP / Mobile */
+    /* --- TAMPILAN MOBILE (HP) --- */
     @media (max-width: 640px) {
         .floating-video-box {
-            width: 120px;          /* Lebar disesuaikan agar rasio video pas */
-            bottom: 75px;          /* Mengambang tepat di atas Bottom Navigation */
+            bottom: 75px;           /* Mengambang di atas bottom navigation bar */
             left: 12px;
-            border-radius: 12px;   /* Lengkungan sudut disamakan dengan card produk */
+            width: 130px;           /* Lebar proporsional di HP */
+            height: 160px;          /* Tinggi DISAMAKAN persis dengan kartu foto produk di HP */
+            border-radius: 10px;
         }
 
         .promo-video-player {
-            /* Samakan tinggi maksimal video dengan tinggi kartu foto produk */
-            height: 150px;         
-            max-height: 150px;
-            object-fit: cover;    /* Memastikan video terpotong rapi tanpa distorsi */
+            width: 100%;
+            height: 100%;
+            object-fit: contain;    /* Seluruh bagian video & tombol kontrol dipastikan terlihat */
+            background: #000;
         }
 
         /* Ukuran Icon Play Tengah disesuaikan agar lebih kecil & pas */
@@ -799,16 +816,16 @@
             font-size: 20px;
         }
 
-        /* Badge Promo & Tombol Close dibuat lebih ringkas */
+        /* Penyesuaian Tombol Close & Badge Promo di HP */
         .promo-badge {
-            font-size: 8px;
-            padding: 2px 6px;
+            font-size: 8px !important;
+            padding: 2px 6px !important;
         }
-        
+
         .close-video-btn {
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+            width: 18px !important;
+            height: 18px !important;
+            font-size: 11px !important;
         }
     }
     </style>
