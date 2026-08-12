@@ -24,6 +24,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">File Video (MP4)</label>
                     <input type="file" name="video" accept="video/mp4,video/webm" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <p class="mt-1 text-xs text-gray-500">Maksimal 20MB. Rekomendasi rasio vertikal (9:16 atau 4:5), durasi singkat (10-15 detik).</p>
                 </div>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-sm transition">
                     + Unggah & Simpan Video
@@ -123,6 +124,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Ganti File Video (Biarkan kosong jika tidak ingin mengganti video)</label>
                     <input type="file" name="video" accept="video/mp4,video/webm" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <p class="mt-1 text-xs text-gray-500">Maksimal 20MB. Rekomendasi rasio vertikal (9:16 atau 4:5), durasi singkat (10-15 detik).</p>
                 </div>
 
                 <div class="flex items-center space-x-2">
