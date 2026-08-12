@@ -672,29 +672,40 @@
     /* Container Utama (Desktop) */
     .floating-video-container {
         position: fixed;
-        bottom: 20px;
-        left: 20px; /* Atur di kiri bawah seperti contoh detik.com */
-        width: 260px; /* Ukuran ideal Desktop */
+        bottom: 24px;
+        left: 24px;
+        width: 180px; /* Diperkecil agar lebih proporsional */
         background: #000;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        border-radius: 16px; /* Lebih membulat agar lebih friendly */
+        box-shadow: 0 12px 30px rgba(0,0,0,0.25);
         z-index: 9999;
         overflow: hidden;
         touch-action: none;
-        border: 2px solid #2563eb;
+        border: 3px solid #3b82f6; /* Warna biru yang lebih cerah dan tebal */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transisi dinamis */
+    }
+
+    .floating-video-container:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 16px 40px rgba(59, 130, 246, 0.4);
     }
 
     /* Drag Bar Header */
     .drag-header {
-        background: #1e293b;
+        background: linear-gradient(135deg, #1e293b, #0f172a);
         color: #fff;
-        padding: 6px 12px;
-        cursor: move;
+        padding: 8px 12px;
+        cursor: grab;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 11px;
-        font-weight: bold;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    
+    .drag-header:active {
+        cursor: grabbing;
     }
 
     .close-btn {
@@ -702,13 +713,20 @@
         color: white;
         border: none;
         border-radius: 50%;
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         cursor: pointer;
         line-height: 1;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 14px;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    
+    .close-btn:hover {
+        background: #dc2626;
+        transform: scale(1.1);
     }
 
     .video-link video {
@@ -721,9 +739,22 @@
     /* Responsif Layar HP (Mobile) */
     @media (max-width: 640px) {
         .floating-video-container {
-            width: 160px; /* Diperkecil agar tidak menutupi layar HP */
-            bottom: 15px;
-            left: 15px;
+            width: 120px; /* Jauh lebih kecil di HP agar tidak menutupi konten */
+            bottom: 80px; /* Diangkat sedikit agar tidak menabrak bottom navigation */
+            left: 16px;
+            border-radius: 12px;
+            border-width: 2px;
+        }
+        
+        .drag-header {
+            padding: 6px 10px;
+            font-size: 10px;
+        }
+        
+        .close-btn {
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
         }
     }
     </style>
