@@ -732,6 +732,8 @@
     .video-link video {
         width: 100%;
         height: auto;
+        aspect-ratio: 4 / 5; /* Memotong tinggi video agar tidak terlalu memanjang ke bawah (9:16) */
+        max-height: 240px; /* Batasan tinggi maksimal di desktop */
         display: block;
         object-fit: cover;
     }
@@ -755,6 +757,10 @@
             width: 18px;
             height: 18px;
             font-size: 12px;
+        }
+        
+        .video-link video {
+            max-height: 160px; /* Batasan tinggi untuk layar HP */
         }
     }
     </style>
