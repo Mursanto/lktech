@@ -178,48 +178,7 @@
                             </div>
                         </div>
 
-                        <!-- Video Promo Widget (Hero Section) -->
-                        @php
-                            $activeVideo = \App\Models\PromoVideo::where('is_active', true)->latest()->first();
-                        @endphp
-                        @if($activeVideo)
-                        <div id="floatingVideoWidget" class="hero-video-box mt-4 animate-bounce-once">
-                            <!-- Overlay Badge Promo & Close Button (Di dalam area video) -->
-                            <div class="video-overlay-header" style="gap: 4px;">
-                                @if($activeVideo->target_url)
-                                    <a href="{{ $activeVideo->target_url }}" 
-                                       target="_blank" 
-                                       title="{{ $activeVideo->title }}"
-                                       class="promo-badge pointer-events-auto" style="display: flex; align-items: center; gap: 4px; text-decoration: none; max-width: 80%; transition: all 0.3s ease;">
-                                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🔥 {{ $activeVideo->title }}</span>
-                                        <span style="font-size: 8px; flex-shrink: 0;">➔</span>
-                                    </a>
-                                @else
-                                    <span class="promo-badge" style="max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;">🔥 {{ $activeVideo->title }}</span>
-                                @endif
-                                <button onclick="closeVideoWidget()" class="close-video-btn" title="Tutup" style="flex-shrink: 0;">&times;</button>
-                            </div>
 
-                            @if($activeVideo->target_url)
-                            <!-- Tombol CTA Lihat Produk (Di Atas Kontrol Video) -->
-                            <div style="position: absolute; bottom: 35px; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 20; padding: 0 8px;">
-                                <a href="{{ $activeVideo->target_url }}" 
-                                   target="_blank" 
-                                   class="pointer-events-auto inline-flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition transform hover:scale-105"
-                                   style="font-size: 10px; padding: 4px 8px; text-decoration: none; background: rgba(37, 99, 235, 0.9); backdrop-filter: blur(4px);">
-                                    <span>🛒 Lihat Produk</span>
-                                    <span style="font-size: 8px;">↗</span>
-                                </a>
-                            </div>
-                            @endif
-
-                            <!-- Video Element dengan Kontrol Asli -->
-                            <video id="promoVideo" class="promo-video-player" controls preload="metadata" playsinline>
-                                <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
-                                Browser Anda tidak mendukung video.
-                            </video>
-                        </div>
-                        @endif
 
                     </div>
                     
@@ -690,137 +649,58 @@
     <!-- Mobile Bottom Navigation -->
     <x-mobile-bottom-nav />
 
-    <!-- Styles and Scripts for Video Widget -->
+    <!-- Floating Video Widget -->
+    @php
+        $activeVideo = \App\Models\PromoVideo::where('is_active', true)->latest()->first();
+    @endphp
+
     @if($activeVideo)
-    <style>
-    /* Container Box Video in Hero */
-    .hero-video-box {
-        position: relative;
-        background: #000;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        overflow: hidden;
-        border: 2px solid #2563eb;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 250px;       /* Ukuran maksimal standar Desktop */
-        height: 210px;
-    }
+    <div id="floatingVideoWidget" 
+         class="fixed z-[9999] bg-black rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600 
+                bottom-[75px] left-3 w-[130px] h-[160px] 
+                sm:bottom-6 sm:left-6 sm:w-[200px] sm:h-[210px] transition-all duration-300">
+        
+        <div class="absolute top-1.5 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
+            
+            @if($activeVideo->target_url)
+                <a href="{{ $activeVideo->target_url }}" 
+                   target="_blank" 
+                   title="{{ $activeVideo->title }}"
+                   class="pointer-events-auto bg-red-600 hover:bg-red-700 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow flex items-center gap-1 max-w-[80%] truncate transition">
+                    <span class="truncate">🔥 {{ $activeVideo->title }}</span>
+                    <span class="text-[8px] sm:text-[9px] shrink-0">➔</span>
+                </a>
+            @else
+                <span class="bg-red-600/90 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow max-w-[80%] truncate">
+                    🔥 {{ $activeVideo->title }}
+                </span>
+            @endif
 
-    @keyframes bounceOnce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
-    }
-    
-    .animate-bounce-once {
-        animation: bounceOnce 1.2s ease-in-out;
-    }
+            <button onclick="closeVideoWidget()" 
+                    class="pointer-events-auto bg-black/60 hover:bg-red-600 text-white rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs transition-colors shrink-0">
+                ✕
+            </button>
+        </div>
 
-    /* --- TAMPILAN DESKTOP (Min-width: 641px) --- */
-    @media (min-width: 641px) {
-        .hero-video-box {
-            width: 200px;           /* Lebar proporsional */
-            height: 210px;          /* Tinggi */
-        }
+        @if($activeVideo->target_url)
+        <div class="absolute bottom-8 left-0 right-0 z-20 text-center pointer-events-none px-2">
+            <a href="{{ $activeVideo->target_url }}" 
+               target="_blank" 
+               class="pointer-events-auto inline-flex items-center justify-center gap-1 bg-blue-600/90 hover:bg-blue-700 text-white text-[9px] sm:text-[11px] font-semibold px-2.5 py-1 rounded-md shadow-md backdrop-blur-sm transition transform hover:scale-105">
+                <span>🛒 Lihat Produk</span>
+                <span class="text-[8px] sm:text-[9px]">↗</span>
+            </a>
+        </div>
+        @endif
 
-        .promo-video-player {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;    /* Memastikan seluruh video & tombol kontrol muat sempurna */
-            background: #000;
-        }
-    }
-
-    /* Header Overlay (In-Video) */
-    .video-overlay-header {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        right: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 10;
-        pointer-events: none; /* Agar tidak menghalangi klik pada video */
-    }
-
-    .promo-badge {
-        background: rgba(239, 68, 68, 0.9); /* Merah Promo */
-        color: #fff;
-        font-size: 10px;
-        font-weight: bold;
-        padding: 3px 8px;
-        border-radius: 20px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    .close-video-btn {
-        pointer-events: auto; /* Tombol X tetap bisa diklik */
-        background: rgba(0, 0, 0, 0.6);
-        color: #fff;
-        border: 1px solid rgba(255,255,255,0.4);
-        border-radius: 50%;
-        width: 22px;
-        height: 22px;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-    }
-
-    .close-video-btn:hover {
-        background: rgba(239, 68, 68, 1);
-    }
-
-    /* Player Video */
-    .promo-video-player {
-        width: 100%;
-        max-height: 280px;
-        object-fit: cover;
-        display: block;
-        border-radius: 10px;
-    }
-
-    /* --- TAMPILAN MOBILE (HP) --- */
-    @media (max-width: 640px) {
-        .hero-video-box {
-            width: 160px;           /* Lebar proporsional di HP */
-            height: 180px;          /* Tinggi proporsional */
-            border-radius: 10px;
-        }
-
-        .promo-video-player {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;    /* Seluruh bagian video & tombol kontrol dipastikan terlihat */
-            background: #000;
-        }
-
-        /* Ukuran Icon Play Tengah disesuaikan agar lebih kecil & pas */
-        .play-icon-circle {
-            width: 32px;
-            height: 32px;
-            font-size: 20px;
-        }
-
-        /* Penyesuaian Tombol Close & Badge Promo di HP */
-        .promo-badge {
-            font-size: 8px !important;
-            padding: 2px 6px !important;
-        }
-
-        .close-video-btn {
-            width: 18px !important;
-            height: 18px !important;
-            font-size: 11px !important;
-        }
-    }
-    </style>
+        <video id="promoVideo" 
+               class="w-full h-full object-contain bg-black" 
+               controls 
+               preload="metadata" 
+               playsinline>
+            <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
+        </video>
+    </div>
 
     <script>
     // Fungsi Tutup Widget
