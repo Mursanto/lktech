@@ -691,7 +691,7 @@
     <x-mobile-bottom-nav />
 
     <!-- Styles and Scripts for Video Widget -->
-
+    @if($activeVideo)
     <style>
     /* Container Box Video in Hero */
     .hero-video-box {
@@ -786,8 +786,6 @@
         border-radius: 10px;
     }
 
-
-
     /* --- TAMPILAN MOBILE (HP) --- */
     @media (max-width: 640px) {
         .hero-video-box {
@@ -825,11 +823,10 @@
     </style>
 
     <script>
-
-
     // Fungsi Tutup Widget
     function closeVideoWidget() {
         const widget = document.getElementById('floatingVideoWidget');
+        const promoVideo = document.getElementById('promoVideo');
         if (widget) {
             if (promoVideo) promoVideo.pause();
             widget.style.display = 'none';
@@ -841,71 +838,6 @@
         if (sessionStorage.getItem('promo_closed') === 'true') {
             const widget = document.getElementById('floatingVideoWidget');
             if (widget) widget.style.display = 'none';
-        }
-
-        // Fitur Drag & Drop (Mouse & Touch Screen HP)
-        const widget = document.getElementById("floatingVideoWidget");
-        // Kita jadikan area video overlay header sebagai handle untuk drag (karena bar atas hilang)
-        const dragHeader = document.querySelector(".video-overlay-header");
-
-        if (widget && dragHeader) {
-            let isDragging = false;
-            let currentX, currentY, initialX, initialY;
-            let xOffset = 0, yOffset = 0;
-
-            // Supaya dragHeader punya cursor yang tepat (kita tambah class sementara)
-            dragHeader.style.cursor = 'grab';
-            
-            // Karena pointer-events: none di CSS tadi agar klik tidak terhalang, kita harus aktifkan khusus elemen ini:
-            dragHeader.style.pointerEvents = 'auto';
-
-            dragHeader.addEventListener("mousedown", dragStart);
-            document.addEventListener("mouseup", dragEnd);
-            document.addEventListener("mousemove", drag);
-
-            dragHeader.addEventListener("touchstart", dragStart, {passive: false});
-            document.addEventListener("touchend", dragEnd);
-            document.addEventListener("touchmove", drag, {passive: false});
-
-            function dragStart(e) {
-                if (e.type === "touchstart") {
-                    initialX = e.touches[0].clientX - xOffset;
-                    initialY = e.touches[0].clientY - yOffset;
-                } else {
-                    initialX = e.clientX - xOffset;
-                    initialY = e.clientY - yOffset;
-                }
-                if (e.target.classList.contains('close-video-btn')) return;
-                isDragging = true;
-                dragHeader.style.cursor = 'grabbing';
-            }
-
-            function dragEnd() {
-                initialX = currentX;
-                initialY = currentY;
-                isDragging = false;
-                dragHeader.style.cursor = 'grab';
-            }
-
-            function drag(e) {
-                if (isDragging) {
-                    e.preventDefault();
-                    if (e.type === "touchmove") {
-                        currentX = e.touches[0].clientX - initialX;
-                        currentY = e.touches[0].clientY - initialY;
-                    } else {
-                        currentX = e.clientX - initialX;
-                        currentY = e.clientY - initialY;
-                    }
-                    xOffset = currentX;
-                    yOffset = currentY;
-                    setTranslate(currentX, currentY, widget);
-                }
-            }
-
-            function setTranslate(xPos, yPos, el) {
-                el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-            }
         }
     });
     </script>
