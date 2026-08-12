@@ -652,126 +652,187 @@
     @endphp
 
     @if($activeVideo)
-    <div id="floatingVideoWidget" class="floating-video-container">
-        <!-- Header Drag Bar & Close -->
-        <div id="videoDragHeader" class="drag-header">
-            <span class="drag-title">PROMO</span>
-            <button onclick="closeVideoWidget()" class="close-btn">&times;</button>
+    <div id="floatingVideoWidget" class="floating-video-box">
+        <!-- Overlay Badge Promo & Close Button (Di dalam area video) -->
+        <div class="video-overlay-header">
+            <span class="promo-badge"><i class="bx bx-bxs-hot"></i> PROMO</span>
+            <button onclick="closeVideoWidget()" class="close-video-btn" title="Tutup">&times;</button>
         </div>
 
-        <!-- Video Player -->
-        <a href="{{ $activeVideo->target_url ?? '#' }}" class="video-link">
-            <video id="promoVideo" autoplay muted loop playsinline>
-                <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
-                Browser Anda tidak mendukung tag video.
-            </video>
-        </a>
+        <!-- Tombol Play Besar di Tengah (Muncul sebelum video diputar) -->
+        <div id="playOverlay" class="play-overlay" onclick="togglePlayVideo()">
+            <div class="play-icon-circle">
+                <i class="bx bx-play"></i>
+            </div>
+        </div>
+
+        <!-- Video Element dengan Kontrol Asli -->
+        <video id="promoVideo" class="promo-video-player" controls preload="metadata" playsinline>
+            <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
+            Browser Anda tidak mendukung video.
+        </video>
     </div>
 
     <style>
-    /* Container Utama (Desktop) */
-    .floating-video-container {
+    /* Container Floating Box Video */
+    .floating-video-box {
         position: fixed;
-        bottom: 24px;
-        left: 24px;
-        width: 180px; /* Diperkecil agar lebih proporsional */
+        bottom: 20px;
+        left: 20px;
+        width: 220px; /* Ukuran ringkas untuk Desktop */
         background: #000;
-        border-radius: 16px; /* Lebih membulat agar lebih friendly */
-        box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         z-index: 9999;
         overflow: hidden;
-        touch-action: none;
-        border: 3px solid #3b82f6; /* Warna biru yang lebih cerah dan tebal */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transisi dinamis */
+        border: 2px solid #2563eb;
     }
 
-    .floating-video-container:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 16px 40px rgba(59, 130, 246, 0.4);
-    }
-
-    /* Drag Bar Header */
-    .drag-header {
-        background: linear-gradient(135deg, #1e293b, #0f172a);
-        color: #fff;
-        padding: 8px 12px;
-        cursor: grab;
+    /* Header Overlay (In-Video) */
+    .video-overlay-header {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-    
-    .drag-header:active {
-        cursor: grabbing;
+        z-index: 10;
+        pointer-events: none; /* Agar tidak menghalangi klik pada video */
     }
 
-    .close-btn {
-        background: #ef4444;
-        color: white;
-        border: none;
+    .promo-badge {
+        background: rgba(239, 68, 68, 0.9); /* Merah Promo */
+        color: #fff;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 3px 8px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .close-video-btn {
+        pointer-events: auto; /* Tombol X tetap bisa diklik */
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.4);
         border-radius: 50%;
         width: 22px;
         height: 22px;
+        font-size: 14px;
         cursor: pointer;
-        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    .close-video-btn:hover {
+        background: rgba(239, 68, 68, 1);
+    }
+
+    /* Player Video */
+    .promo-video-player {
+        width: 100%;
+        max-height: 280px;
+        object-fit: cover;
+        display: block;
+        border-radius: 10px;
+    }
+
+    /* Overlay Tombol Play Besar di Tengah */
+    .play-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 35px); /* Menyoroti area tengah di atas kontrol bar */
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 14px;
-        transition: background 0.2s ease, transform 0.2s ease;
+        background: rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+        z-index: 5;
+        transition: opacity 0.3s ease;
     }
-    
-    .close-btn:hover {
-        background: #dc2626;
+
+    .play-icon-circle {
+        width: 50px;
+        height: 50px;
+        background: rgba(37, 99, 235, 0.9); /* Biru LKTech */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 32px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        transition: transform 0.2s ease;
+    }
+
+    .play-overlay:hover .play-icon-circle {
         transform: scale(1.1);
     }
 
-    .video-link video {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 4 / 5; /* Memotong tinggi video agar tidak terlalu memanjang ke bawah (9:16) */
-        max-height: 240px; /* Batasan tinggi maksimal di desktop */
-        display: block;
-        object-fit: cover;
-    }
-
-    /* Responsif Layar HP (Mobile) */
+    /* Responsif untuk Layar HP / Mobile */
     @media (max-width: 640px) {
-        .floating-video-container {
-            width: 120px; /* Jauh lebih kecil di HP agar tidak menutupi konten */
-            bottom: 80px; /* Diangkat sedikit agar tidak menabrak bottom navigation */
-            left: 16px;
-            border-radius: 12px;
-            border-width: 2px;
+        .floating-video-box {
+            width: 160px; /* Sangat compact di HP */
+            bottom: 75px; /* Mengambang di atas menu navigasi bawah HP */
+            left: 12px;
         }
         
-        .drag-header {
-            padding: 6px 10px;
-            font-size: 10px;
+        .promo-video-player {
+            max-height: 200px;
         }
-        
-        .close-btn {
-            width: 18px;
-            height: 18px;
-            font-size: 12px;
-        }
-        
-        .video-link video {
-            max-height: 160px; /* Batasan tinggi untuk layar HP */
+
+        .play-icon-circle {
+            width: 40px;
+            height: 40px;
+            font-size: 26px;
         }
     }
     </style>
 
     <script>
-    // Fitur Close
+    const promoVideo = document.getElementById('promoVideo');
+    const playOverlay = document.getElementById('playOverlay');
+
+    // Fungsi untuk Play video via Klik Overlay
+    function togglePlayVideo() {
+        if (promoVideo && promoVideo.paused) {
+            promoVideo.muted = false; // Mengaktifkan suara saat di-klik Play
+            promoVideo.play();
+            playOverlay.style.opacity = '0';
+            setTimeout(() => playOverlay.style.display = 'none', 300);
+        }
+    }
+
+    // Menampilkan kembali tombol play jika video selesai atau di-pause
+    if (promoVideo) {
+        promoVideo.addEventListener('pause', function() {
+            if(playOverlay) {
+                playOverlay.style.display = 'flex';
+                playOverlay.style.opacity = '1';
+            }
+        });
+
+        promoVideo.addEventListener('play', function() {
+            if(playOverlay) {
+                playOverlay.style.opacity = '0';
+                setTimeout(() => playOverlay.style.display = 'none', 300);
+            }
+        });
+    }
+
+    // Fungsi Tutup Widget
     function closeVideoWidget() {
         const widget = document.getElementById('floatingVideoWidget');
         if (widget) {
+            if (promoVideo) promoVideo.pause();
             widget.style.display = 'none';
-            // Simpan status di SessionStorage agar tidak muncul lagi saat refresh halaman yang sama
             sessionStorage.setItem('promo_closed', 'true');
         }
     }
@@ -784,12 +845,19 @@
 
         // Fitur Drag & Drop (Mouse & Touch Screen HP)
         const widget = document.getElementById("floatingVideoWidget");
-        const dragHeader = document.getElementById("videoDragHeader");
+        // Kita jadikan area video overlay header sebagai handle untuk drag (karena bar atas hilang)
+        const dragHeader = document.querySelector(".video-overlay-header");
 
         if (widget && dragHeader) {
             let isDragging = false;
             let currentX, currentY, initialX, initialY;
             let xOffset = 0, yOffset = 0;
+
+            // Supaya dragHeader punya cursor yang tepat (kita tambah class sementara)
+            dragHeader.style.cursor = 'grab';
+            
+            // Karena pointer-events: none di CSS tadi agar klik tidak terhalang, kita harus aktifkan khusus elemen ini:
+            dragHeader.style.pointerEvents = 'auto';
 
             dragHeader.addEventListener("mousedown", dragStart);
             document.addEventListener("mouseup", dragEnd);
@@ -807,16 +875,16 @@
                     initialX = e.clientX - xOffset;
                     initialY = e.clientY - yOffset;
                 }
-                if (e.target === dragHeader || dragHeader.contains(e.target)) {
-                    if (e.target.classList.contains('close-btn')) return;
-                    isDragging = true;
-                }
+                if (e.target.classList.contains('close-video-btn')) return;
+                isDragging = true;
+                dragHeader.style.cursor = 'grabbing';
             }
 
             function dragEnd() {
                 initialX = currentX;
                 initialY = currentY;
                 isDragging = false;
+                dragHeader.style.cursor = 'grab';
             }
 
             function drag(e) {
