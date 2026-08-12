@@ -95,6 +95,10 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::delete('google-reviews/{googleReview}', [App\Http\Controllers\Admin\GoogleReviewController::class, 'destroy'])->name('google-reviews.destroy');
     Route::post('google-reviews/{googleReview}/toggle', [App\Http\Controllers\Admin\GoogleReviewController::class, 'toggleFeatured'])->name('google-reviews.toggle');
     Route::post('google-reviews/{googleReview}/reply', [App\Http\Controllers\Admin\GoogleReviewController::class, 'reply'])->name('google-reviews.reply');
+
+    // Promo Video
+    Route::get('promo-video', [App\Http\Controllers\Admin\PromoVideoController::class, 'index'])->name('admin.promo-video.index');
+    Route::post('promo-video', [App\Http\Controllers\Admin\PromoVideoController::class, 'store'])->name('admin.promo-video.store');
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify
