@@ -657,8 +657,8 @@
     @if($activeVideo)
     <div id="floatingVideoWidget" 
          class="fixed z-[9999] bg-black rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600 
-                top-1/2 -translate-y-1/2 left-3 w-[130px] h-[220px] 
-                sm:left-6 sm:w-[150px] sm:h-[260px] transition-all duration-300">
+                top-1/2 -translate-y-1/2 left-3 w-[135px] h-[240px] 
+                sm:left-6 sm:w-[180px] sm:h-[320px] transition-all duration-300">
         
         <div class="absolute top-1.5 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
             
@@ -682,19 +682,10 @@
             </button>
         </div>
 
-        @if($activeVideo->target_url)
-        <div class="absolute bottom-8 left-0 right-0 z-20 text-center pointer-events-none px-2">
-            <a href="{{ $activeVideo->target_url }}" 
-               target="_blank" 
-               class="pointer-events-auto inline-flex items-center justify-center gap-1 bg-blue-600/90 hover:bg-blue-700 text-white text-[9px] sm:text-[11px] font-semibold px-2.5 py-1 rounded-md shadow-md backdrop-blur-sm transition transform hover:scale-105">
-                <span>🛒 Lihat Produk</span>
-                <span class="text-[8px] sm:text-[9px]">↗</span>
-            </a>
-        </div>
-        @endif
+
 
         <video id="promoVideo" 
-               class="w-full h-full object-cover bg-black" 
+               class="w-full h-full object-contain bg-black" 
                controls 
                preload="metadata" 
                playsinline>
