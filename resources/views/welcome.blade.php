@@ -47,6 +47,36 @@
         [x-cloak] { display: none !important; }
 
         /* ==========================================
+           PIANO WAVE ANIMATION UNTUK SERVICE CARDS
+           ========================================== */
+        @keyframes pianoWave {
+          0%, 100% {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+          }
+          50% {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25);
+            border-color: #93c5fd;
+          }
+        }
+
+        .service-card {
+          animation: pianoWave 4s infinite ease-in-out;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.0s; }
+        .service-card:nth-child(2) { animation-delay: 0.4s; }
+        .service-card:nth-child(3) { animation-delay: 0.8s; }
+        .service-card:nth-child(4) { animation-delay: 1.2s; }
+        .service-card:nth-child(5) { animation-delay: 1.6s; }
+        .service-card:nth-child(6) { animation-delay: 2.0s; }
+
+        .service-card:hover {
+          animation-play-state: paused;
+        }
+
+        /* ==========================================
            RESET CONTAINER UNTUK MENCEGAH SPACE KOSONG
            ========================================== */
         .hero-section,
@@ -274,35 +304,18 @@
         @endif
 
         <!-- Product Grid Section -->
-        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6 lg:pt-4 lg:pb-8 flex-shrink-0">
+        <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-6 lg:pt-2 lg:pb-8 flex-shrink-0">
             
-            <div class="mb-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="mb-2 flex flex-wrap justify-between items-center gap-4">
                 @if(request()->has('search') && request()->search != '')
-                <div>
-                    <h2 class="text-sm font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
-                    <p class="text-gray-500 text-xs mt-1">Menampilkan {{ $products->total() }} produk yang sesuai.</p>
+                <div class="flex items-center gap-4 w-full">
+                    <div>
+                        <h2 class="text-sm font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
+                        <p class="text-gray-500 text-xs mt-1">Menampilkan {{ $products->total() }} produk yang sesuai.</p>
+                    </div>
+                    <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-100 ml-auto">Lihat Semua</a>
                 </div>
                 @endif
-                
-                <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-                    <form action="{{ route('home') }}" method="GET" class="relative">
-                        @if(request()->has('search'))
-                            <input type="hidden" name="search" value="{{ request('search') }}">
-                        @endif
-                        <select name="sort" onchange="this.form.submit()" class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
-                            <option value="terbaru" {{ request('sort') == 'terbaru' || !request()->has('sort') ? 'selected' : '' }}>Urutkan: Paling Sesuai</option>
-                            <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Urutkan: Harga Tertinggi</option>
-                            <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Urutkan: Harga Terendah</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-                            <i class='bx bx-chevron-down text-sm'></i>
-                        </div>
-                    </form>
-
-                    @if(request()->has('search'))
-                        <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline">Lihat Semua</a>
-                    @endif
-                </div>
             </div>
 
             <!-- Precision Grid (Compact Design) -->
@@ -655,9 +668,9 @@
 
     @if($activeVideo)
     <div id="floatingVideoWidget" 
-         class="fixed z-[9999] bg-black rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600 
+         class="fixed z-[9999] bg-black rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600 pointer-events-none
                 top-[65%] -translate-y-1/2 left-3 w-[140px] h-[180px] 
-                sm:left-6 sm:w-[180px] sm:h-[240px] transition-all duration-300">
+                sm:left-6 sm:w-[180px] sm:h-[190px] transition-all duration-300">
         
         <div class="absolute top-1.5 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
             
@@ -690,7 +703,7 @@
 
 
         <video id="promoVideo" 
-               class="w-full h-full object-cover bg-black" 
+               class="w-full h-full object-cover bg-black pointer-events-auto" 
                controls 
                preload="metadata" 
                playsinline>
