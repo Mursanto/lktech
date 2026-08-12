@@ -25,6 +25,16 @@ use App\Http\Controllers\PageController;
 |
 */
 
+Route::get('/run-migration-live', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        return "Migration and Storage Link successful! You can now access the web normally.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
 Route::get('/', [App\Http\Controllers\PublicCatalogController::class, 'index'])->name('home');
 Route::get('/katalog', [App\Http\Controllers\PublicCatalogController::class, 'katalog'])->name('katalog.index');
 Route::post('/katalog/contact', [App\Http\Controllers\PublicCatalogController::class, 'contact'])->name('katalog.contact');
