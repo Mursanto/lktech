@@ -655,16 +655,29 @@
     <div id="floatingVideoWidget" class="floating-video-box">
         <!-- Overlay Badge Promo & Close Button (Di dalam area video) -->
         <div class="video-overlay-header">
-            <span class="promo-badge"><i class="bx bx-bxs-hot"></i> PROMO</span>
+            @if($activeVideo->target_url)
+                <a href="{{ $activeVideo->target_url }}" 
+                   target="_blank" 
+                   class="promo-badge pointer-events-auto" style="display: flex; align-items: center; gap: 4px; text-decoration: none;">
+                    <i class="bx bx-bxs-hot"></i> PROMO <span style="font-size: 8px;">➔</span>
+                </a>
+            @else
+                <span class="promo-badge"><i class="bx bx-bxs-hot"></i> PROMO</span>
+            @endif
             <button onclick="closeVideoWidget()" class="close-video-btn" title="Tutup">&times;</button>
         </div>
 
-        <!-- Tombol Play Besar di Tengah (Muncul sebelum video diputar) -->
-        <div id="playOverlay" class="play-overlay" onclick="togglePlayVideo()">
-            <div class="play-icon-circle">
-                <i class="bx bx-play"></i>
-            </div>
+        @if($activeVideo->target_url)
+        <!-- Tombol CTA Lihat Produk (Di Atas Kontrol Video) -->
+        <div style="position: absolute; bottom: 35px; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 20;">
+            <a href="{{ $activeVideo->target_url }}" 
+               target="_blank" 
+               class="pointer-events-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md transition transform hover:scale-105"
+               style="font-size: 10px; padding: 4px 8px; text-decoration: none;">
+                🛒 Lihat Produk ↗
+            </a>
         </div>
+        @endif
 
         <!-- Video Element dengan Kontrol Asli -->
         <video id="promoVideo" class="promo-video-player" controls preload="metadata" playsinline>
@@ -758,39 +771,7 @@
         border-radius: 10px;
     }
 
-    /* Overlay Tombol Play Besar di Tengah */
-    .play-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: calc(100% - 35px); /* Menyoroti area tengah di atas kontrol bar */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgba(0, 0, 0, 0.35);
-        cursor: pointer;
-        z-index: 5;
-        transition: opacity 0.3s ease;
-    }
 
-    .play-icon-circle {
-        width: 50px;
-        height: 50px;
-        background: rgba(37, 99, 235, 0.9); /* Biru LKTech */
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 32px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        transition: transform 0.2s ease;
-    }
-
-    .play-overlay:hover .play-icon-circle {
-        transform: scale(1.1);
-    }
 
     /* --- TAMPILAN MOBILE (HP) --- */
     @media (max-width: 640px) {
@@ -831,35 +812,7 @@
     </style>
 
     <script>
-    const promoVideo = document.getElementById('promoVideo');
-    const playOverlay = document.getElementById('playOverlay');
 
-    // Fungsi untuk Play video via Klik Overlay
-    function togglePlayVideo() {
-        if (promoVideo && promoVideo.paused) {
-            promoVideo.muted = false; // Mengaktifkan suara saat di-klik Play
-            promoVideo.play();
-            playOverlay.style.opacity = '0';
-            setTimeout(() => playOverlay.style.display = 'none', 300);
-        }
-    }
-
-    // Menampilkan kembali tombol play jika video selesai atau di-pause
-    if (promoVideo) {
-        promoVideo.addEventListener('pause', function() {
-            if(playOverlay) {
-                playOverlay.style.display = 'flex';
-                playOverlay.style.opacity = '1';
-            }
-        });
-
-        promoVideo.addEventListener('play', function() {
-            if(playOverlay) {
-                playOverlay.style.opacity = '0';
-                setTimeout(() => playOverlay.style.display = 'none', 300);
-            }
-        });
-    }
 
     // Fungsi Tutup Widget
     function closeVideoWidget() {
