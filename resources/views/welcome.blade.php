@@ -351,10 +351,10 @@
         
         <!-- Google Reviews Section -->
         @if(isset($googleReviews) && $googleReviews->count() > 0 && !request()->has('search'))
-        <div id="google-reviews" class="bg-[#F8FAFC] py-6 lg:py-8 border-y border-gray-100">
+        <div id="google-reviews" class="bg-[#F8FAFC] py-4 lg:py-5 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 gap-4 px-2 sm:px-3">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 md:mb-4 gap-4 px-2 sm:px-3">
                     <div>
                         <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">
                             Ulasan Pelanggan
@@ -377,18 +377,18 @@
                 </div>
 
                 <!-- Carousel -->
-                <div class="relative w-full" 
+                <div class="relative w-full group px-0 sm:px-2" 
                      x-data="{ 
                         activeSlide: 0, 
                         isHovered: false,
                         slides: {{ count($googleReviews) }},
-                        itemsPerSlide: window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1),
+                        itemsPerSlide: window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 2 : 1),
                         get totalPages() { return Math.ceil(this.slides / this.itemsPerSlide); },
                         next() { this.activeSlide = this.activeSlide === this.totalPages - 1 ? 0 : this.activeSlide + 1; },
                         prev() { this.activeSlide = this.activeSlide === 0 ? this.totalPages - 1 : this.activeSlide - 1; },
                         init() {
                             window.addEventListener('resize', () => {
-                                this.itemsPerSlide = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+                                this.itemsPerSlide = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 2 : 1);
                                 this.activeSlide = 0;
                             });
                             if(this.totalPages > 1) {
@@ -408,12 +408,12 @@
                              :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
                             
                             @foreach($googleReviews as $review)
-                                <div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-2 sm:px-3">
-                                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 h-full flex flex-col hover:shadow-md transition-shadow">
+                                <div class="w-full sm:w-1/2 lg:w-1/4 shrink-0 px-2 sm:px-2.5">
+                                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 h-full flex flex-col hover:shadow-md transition-shadow">
                                         <!-- Header Card -->
-                                        <div class="flex items-start justify-between mb-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold overflow-hidden shrink-0">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold overflow-hidden shrink-0 text-[11px]">
                                                     @if($review->reviewer_photo_url)
                                                         <img src="{{ $review->reviewer_photo_url }}" alt="{{ $review->reviewer_name }}" class="w-full h-full object-cover">
                                                     @else
@@ -421,14 +421,14 @@
                                                     @endif
                                                 </div>
                                                 <div>
-                                                    <h4 class="font-bold text-gray-800 text-sm leading-tight">{{ $review->reviewer_name }}</h4>
-                                                    <p class="text-[10px] text-gray-500 mt-0.5">
+                                                    <h4 class="font-bold text-gray-800 text-[13px] leading-tight">{{ $review->reviewer_name }}</h4>
+                                                    <p class="text-[9px] text-gray-500 mt-0.5">
                                                         {{ $review->review_time_text ?? ($review->review_created_at ? $review->review_created_at->diffForHumans() : '') }}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="w-6 h-6 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
-                                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <div class="w-5 h-5 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
+                                                <svg class="w-3 h-3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
                                                     <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z"/>
                                                     <path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29c-.8 1.6-1.29 3.41-1.29 5.39s.49 3.79 1.29 5.39l3.99-3.15z"/>
@@ -438,7 +438,7 @@
                                         </div>
                                         
                                         <!-- Rating -->
-                                        <div class="flex text-yellow-400 text-sm mb-2">
+                                        <div class="flex text-yellow-400 text-xs mb-1.5">
                                             @for($i=1; $i<=5; $i++)
                                                 @if($i <= $review->star_rating)
                                                     <i class='bx bxs-star'></i>
@@ -449,7 +449,7 @@
                                         </div>
                                         
                                         <!-- Content -->
-                                        <div class="text-sm text-gray-600 italic leading-relaxed line-clamp-4 flex-grow">
+                                        <div class="text-[12px] sm:text-[13px] text-gray-600 italic leading-relaxed line-clamp-3 flex-grow">
                                             "{{ $review->review_comment }}"
                                         </div>
                                     </div>
@@ -460,14 +460,13 @@
                     </div>
 
                     <!-- Navigation Controls -->
-                    <template x-if="totalPages > 1">
-                        <div class="flex justify-center items-center gap-4 mt-2 md:mt-4">
-                            <button @click="prev()" class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
-                                <i class='bx bx-chevron-left text-2xl'></i>
+                    <template x-if="totalPages >= 1">
+                        <div>
+                            <button @click="prev()" class="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
+                                <i class='bx bx-chevron-left text-xl sm:text-2xl'></i>
                             </button>
-                            <!-- Dots removed per request -->
-                            <button @click="next()" class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-[#1E56A0] flex items-center justify-center transition-colors">
-                                <i class='bx bx-chevron-right text-2xl'></i>
+                            <button @click="next()" class="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
+                                <i class='bx bx-chevron-right text-xl sm:text-2xl'></i>
                             </button>
                         </div>
                     </template>
