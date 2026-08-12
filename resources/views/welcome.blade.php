@@ -779,19 +779,36 @@
     /* Responsif untuk Layar HP / Mobile */
     @media (max-width: 640px) {
         .floating-video-box {
-            width: 160px; /* Sangat compact di HP */
-            bottom: 75px; /* Mengambang di atas menu navigasi bawah HP */
+            width: 120px;          /* Lebar disesuaikan agar rasio video pas */
+            bottom: 75px;          /* Mengambang tepat di atas Bottom Navigation */
             left: 12px;
-        }
-        
-        .promo-video-player {
-            max-height: 200px;
+            border-radius: 12px;   /* Lengkungan sudut disamakan dengan card produk */
         }
 
+        .promo-video-player {
+            /* Samakan tinggi maksimal video dengan tinggi kartu foto produk */
+            height: 150px;         
+            max-height: 150px;
+            object-fit: cover;    /* Memastikan video terpotong rapi tanpa distorsi */
+        }
+
+        /* Ukuran Icon Play Tengah disesuaikan agar lebih kecil & pas */
         .play-icon-circle {
-            width: 40px;
-            height: 40px;
-            font-size: 26px;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
+        }
+
+        /* Badge Promo & Tombol Close dibuat lebih ringkas */
+        .promo-badge {
+            font-size: 8px;
+            padding: 2px 6px;
+        }
+        
+        .close-video-btn {
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
         }
     }
     </style>
