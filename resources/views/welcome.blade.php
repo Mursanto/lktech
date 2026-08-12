@@ -666,14 +666,20 @@
                 <a href="{{ $activeVideo->target_url }}" 
                    target="_blank" 
                    title="{{ $activeVideo->title }}"
-                   class="pointer-events-auto bg-red-600 hover:bg-red-700 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow flex items-center gap-1 max-w-[80%] truncate transition">
-                    <span class="truncate">🔥 {{ $activeVideo->title }}</span>
+                   class="pointer-events-auto bg-red-600 hover:bg-red-700 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow flex items-center gap-1 max-w-[70%] transition">
+                    <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span class="truncate">{{ $activeVideo->title }}</span>
                     <span class="text-[8px] sm:text-[9px] shrink-0">➔</span>
                 </a>
             @else
-                <span class="bg-red-600/90 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow max-w-[80%] truncate">
-                    🔥 {{ $activeVideo->title }}
-                </span>
+                <div class="bg-red-600/90 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow flex items-center gap-1 max-w-[70%]">
+                    <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span class="truncate">{{ $activeVideo->title }}</span>
+                </div>
             @endif
 
             <button onclick="closeVideoWidget()" 
