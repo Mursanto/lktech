@@ -342,13 +342,13 @@
 
         <!-- Featured Products Section -->
         @if(isset($featuredProducts) && $featuredProducts->count() > 0 && !request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-            <div class="flex justify-between items-end mb-6">
-                <div>
-                    <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-1 flex items-center gap-2 whitespace-nowrap">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
+            <div class="flex justify-between items-end mb-3">
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 flex items-center gap-2 truncate">
                         <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris
                     </h2>
-                    <p class="text-gray-500 text-xs sm:text-sm hidden sm:block">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
+                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
                 </div>
             </div>
 
@@ -361,18 +361,77 @@
             </div>
         </div>
         @endif
+
+        <!-- Cara Order Section -->
+        @if(!request()->has('search'))
+        <div class="bg-white py-3 lg:py-4 border-y border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-left mb-3 min-w-0">
+                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
+                        Alur Pemesanan &amp; Transaksi
+                    </h2>
+                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email otomatis untuk memastikan kenyamanan dan keamanan transaksi Anda.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative">
+                    <!-- Garis Penghubung (Hanya Desktop) -->
+                    <div class="hidden lg:block absolute top-7 lg:top-8 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-gray-100 via-brand-200 to-gray-100 z-0"></div>
+
+                    <!-- Step 1 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
+                            <i class='bx bx-cart-add text-3xl sm:text-4xl text-brand-500'></i>
+                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">1</div>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Pilih &amp; Checkout</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Pilih produk di katalog kami, masukkan ke keranjang, dan selesaikan form checkout.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
+                            <i class='bx bx-envelope-open text-3xl sm:text-4xl text-brand-500'></i>
+                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">2</div>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Proforma Invoice</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Sistem otomatis mengirimkan tagihan awal (Proforma Invoice) beserta detail pesanan ke email Anda.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
+                            <i class='bx bxs-file-pdf text-3xl sm:text-4xl text-brand-500'></i>
+                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">3</div>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Bayar &amp; Unduh Invoice</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Setelah pembayaran dikonfirmasi, Anda mendapat email lunas (Paid) dan file <b>PDF Invoice</b> resmi.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
+                            <i class='bx bx-target-lock text-3xl sm:text-4xl text-brand-500'></i>
+                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">4</div>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Tracking Pesanan</h3>
+                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Lacak status proses atau pengiriman barang menggunakan <b>Nomor Unik</b> yang dikirimkan ke email Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         
         <!-- Google Reviews Section -->
         @if(isset($googleReviews) && $googleReviews->count() > 0 && !request()->has('search'))
-        <div id="google-reviews" class="bg-[#F8FAFC] py-4 lg:py-5 border-y border-gray-100">
+        <div id="google-reviews" class="bg-[#F8FAFC] py-3 lg:py-4 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 md:mb-4 gap-4 px-2 sm:px-3">
-                    <div>
-                        <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-2">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 md:mb-3 gap-3 px-2 sm:px-3">
+                    <div class="min-w-0 flex-1">
+                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
                             Ulasan Pelanggan
                         </h2>
-                        <p class="text-gray-500 text-sm hidden sm:block">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
                     </div>
                     
                     <div class="flex items-center bg-white p-3 rounded-2xl shadow-sm border border-gray-100 shrink-0">
@@ -491,11 +550,11 @@
 
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h2 class="text-lg sm:text-2xl sm:text-3xl font-black text-gray-900 font-montserrat tracking-tight mb-1">Artikel &amp; Panduan</h2>
-                    <p class="text-gray-500 text-sm hidden sm:block">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
+            <div class="flex items-center justify-between mb-3">
+                <div class="min-w-0 flex-1">
+                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">Artikel &amp; Panduan</h2>
+                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
                 </div>
                 <a href="{{ route('blog.index') }}" class="flex items-center gap-1 text-brand-600 font-medium hover:text-brand-700 transition-colors text-xs sm:text-sm sm:font-bold whitespace-nowrap ml-3">
                     Lihat Semua <i class='bx bx-right-arrow-alt text-base sm:text-xl'></i>
@@ -672,7 +731,12 @@
                 top-[65%] -translate-y-1/2 left-3 w-[140px] h-[180px] 
                 sm:left-6 sm:w-[180px] sm:h-[190px] transition-all duration-300">
         
-        <div class="absolute top-1.5 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
+        <!-- Area Drag (Geser) -->
+        <div id="dragHandle" class="absolute top-0 left-0 w-full h-10 z-20 cursor-move pointer-events-auto bg-gradient-to-b from-black/50 to-transparent" title="Geser Video">
+            <div class="absolute top-0.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-white/50 rounded-full"></div>
+        </div>
+
+        <div class="absolute top-2 left-1.5 right-1.5 flex justify-between items-center z-30 pointer-events-none gap-1">
             
             @if($activeVideo->target_url)
                 <a href="{{ $activeVideo->target_url }}" 
@@ -727,6 +791,77 @@
         if (sessionStorage.getItem('promo_closed') === 'true') {
             const widget = document.getElementById('floatingVideoWidget');
             if (widget) widget.style.display = 'none';
+        }
+
+        // Logika Drag Widget
+        const widget = document.getElementById('floatingVideoWidget');
+        const dragHandle = document.getElementById('dragHandle');
+
+        if (widget && dragHandle) {
+            let isDragging = false;
+            let startX, startY, initialLeft, initialTop;
+
+            const onDragStart = (e) => {
+                if (e.target.closest('a') || e.target.closest('button')) return;
+                isDragging = true;
+                
+                const rect = widget.getBoundingClientRect();
+                
+                // Hapus class tailwind yang bisa konflik dengan inline style
+                widget.classList.remove('top-[65%]', '-translate-y-1/2', 'left-3', 'sm:left-6', 'transition-all');
+                
+                widget.style.left = rect.left + 'px';
+                widget.style.top = rect.top + 'px';
+
+                const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+                startX = clientX;
+                startY = clientY;
+                initialLeft = parseInt(widget.style.left || 0, 10);
+                initialTop = parseInt(widget.style.top || 0, 10);
+
+                document.addEventListener('mousemove', onDragMove);
+                document.addEventListener('mouseup', onDragEnd);
+                document.addEventListener('touchmove', onDragMove, { passive: false });
+                document.addEventListener('touchend', onDragEnd);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+
+                let newLeft = initialLeft + dx;
+                let newTop = initialTop + dy;
+
+                const maxX = window.innerWidth - widget.offsetWidth;
+                const maxY = window.innerHeight - widget.offsetHeight;
+
+                if (newLeft < 0) newLeft = 0;
+                if (newLeft > maxX) newLeft = maxX;
+                if (newTop < 0) newTop = 0;
+                if (newTop > maxY) newTop = maxY;
+
+                widget.style.left = newLeft + 'px';
+                widget.style.top = newTop + 'px';
+            };
+
+            const onDragEnd = () => {
+                isDragging = false;
+                document.removeEventListener('mousemove', onDragMove);
+                document.removeEventListener('mouseup', onDragEnd);
+                document.removeEventListener('touchmove', onDragMove);
+                document.removeEventListener('touchend', onDragEnd);
+            };
+
+            dragHandle.addEventListener('mousedown', onDragStart);
+            dragHandle.addEventListener('touchstart', onDragStart, { passive: false });
         }
     });
     </script>
