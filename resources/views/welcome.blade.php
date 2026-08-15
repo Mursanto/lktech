@@ -348,7 +348,7 @@
                     <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 flex items-center gap-2 truncate">
                         <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris
                     </h2>
-                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Lisensi software, sparepart, dan aksesoris terfavorit pilihan pelanggan.</p>
+                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Lisensi software, sparepart, dan aksesoris terfavorit.</p>
                 </div>
             </div>
 
@@ -369,9 +369,9 @@
                 <div class="flex items-center justify-between mb-3 min-w-0">
                     <div class="text-left min-w-0 flex-1">
                         <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
-                            Alur Pemesanan &amp; Transaksi
+                            Alur Pemesanan
                         </h2>
-                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email otomatis untuk memastikan kenyamanan dan keamanan transaksi Anda.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email</p>
                     </div>
                     <!-- Geser Indicator (Mobile Only) -->
                     <div class="flex sm:hidden items-center gap-1 text-gray-400 text-[10px] font-bold shrink-0 ml-2 bg-gray-50 px-2 py-1 rounded-full animate-pulse">
@@ -447,7 +447,7 @@
                         <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
                             Ulasan Pelanggan
                         </h2>
-                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Ulasan asli langsung dari Google Maps bisnis LKTech TN SEREAL.</p>
+                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Ulasan asli langsung dari Google Maps bisnis LKTech</p>
                     </div>
                     
                     <div class="flex items-center bg-white p-3 rounded-2xl shadow-sm border border-gray-100 shrink-0">
