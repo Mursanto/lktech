@@ -366,55 +366,71 @@
         @if(!request()->has('search'))
         <div class="bg-white py-3 lg:py-4 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-left mb-3 min-w-0">
-                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
-                        Alur Pemesanan &amp; Transaksi
-                    </h2>
-                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email otomatis untuk memastikan kenyamanan dan keamanan transaksi Anda.</p>
+                <div class="flex items-center justify-between mb-3 min-w-0">
+                    <div class="text-left min-w-0 flex-1">
+                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
+                            Alur Pemesanan &amp; Transaksi
+                        </h2>
+                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email otomatis untuk memastikan kenyamanan dan keamanan transaksi Anda.</p>
+                    </div>
+                    <!-- Geser Indicator (Mobile Only) -->
+                    <div class="flex sm:hidden items-center gap-1 text-gray-400 text-[10px] font-bold shrink-0 ml-2 bg-gray-50 px-2 py-1 rounded-full animate-pulse">
+                        <i class='bx bx-chevron-left'></i>
+                        <span>Geser</span>
+                        <i class='bx bx-chevron-right'></i>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative">
+                <div class="flex overflow-x-auto sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 relative pb-4 pt-1 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-4 px-4 sm:mx-0 sm:px-0">
                     <!-- Garis Penghubung (Hanya Desktop) -->
-                    <div class="hidden lg:block absolute top-7 lg:top-8 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-gray-100 via-brand-200 to-gray-100 z-0"></div>
+                    <div class="hidden lg:block absolute top-10 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-gray-100 via-brand-200 to-gray-100 z-0"></div>
 
                     <!-- Step 1 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
-                            <i class='bx bx-cart-add text-3xl sm:text-4xl text-brand-500'></i>
-                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">1</div>
+                    <div class="relative z-10 flex flex-row items-start text-left group w-[85vw] sm:w-auto snap-center shrink-0 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm gap-3 sm:gap-4 transition-all hover:shadow-md hover:border-brand-100 h-full">
+                        <div class="w-12 h-12 bg-brand-50 rounded-full flex items-center justify-center shrink-0 relative group-hover:scale-105 transition-transform duration-300">
+                            <i class='bx bx-cart-add text-2xl text-brand-500'></i>
+                            <div class="absolute -top-1 -right-1 w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm border border-white">1</div>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Pilih &amp; Checkout</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Pilih produk di katalog kami, masukkan ke keranjang, dan selesaikan form checkout.</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Pilih &amp; Checkout</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-snug whitespace-normal break-words">Pilih produk di katalog kami, masukkan ke keranjang, dan selesaikan form checkout.</p>
+                        </div>
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
-                            <i class='bx bx-envelope-open text-3xl sm:text-4xl text-brand-500'></i>
-                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">2</div>
+                    <div class="relative z-10 flex flex-row items-start text-left group w-[85vw] sm:w-auto snap-center shrink-0 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm gap-3 sm:gap-4 transition-all hover:shadow-md hover:border-brand-100 h-full">
+                        <div class="w-12 h-12 bg-brand-50 rounded-full flex items-center justify-center shrink-0 relative group-hover:scale-105 transition-transform duration-300">
+                            <i class='bx bx-envelope-open text-2xl text-brand-500'></i>
+                            <div class="absolute -top-1 -right-1 w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm border border-white">2</div>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Proforma Invoice</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Sistem otomatis mengirimkan tagihan awal (Proforma Invoice) beserta detail pesanan ke email Anda.</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Proforma Invoice</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-snug whitespace-normal break-words">Sistem otomatis mengirim tagihan awal beserta detail pesanan ke email Anda.</p>
+                        </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
-                            <i class='bx bxs-file-pdf text-3xl sm:text-4xl text-brand-500'></i>
-                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">3</div>
+                    <div class="relative z-10 flex flex-row items-start text-left group w-[85vw] sm:w-auto snap-center shrink-0 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm gap-3 sm:gap-4 transition-all hover:shadow-md hover:border-brand-100 h-full">
+                        <div class="w-12 h-12 bg-brand-50 rounded-full flex items-center justify-center shrink-0 relative group-hover:scale-105 transition-transform duration-300">
+                            <i class='bx bxs-file-pdf text-2xl text-brand-500'></i>
+                            <div class="absolute -top-1 -right-1 w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm border border-white">3</div>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Bayar &amp; Unduh Invoice</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Setelah pembayaran dikonfirmasi, Anda mendapat email lunas (Paid) dan file <b>PDF Invoice</b> resmi.</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Bayar &amp; Unduh Invoice</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-snug whitespace-normal break-words">Setelah dibayar, Anda mendapat email lunas dan file <b>PDF Invoice</b> resmi.</p>
+                        </div>
                     </div>
 
                     <!-- Step 4 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow-sm border border-gray-100 flex items-center justify-center mb-3 group-hover:-translate-y-1 transition-transform duration-300 relative">
-                            <i class='bx bx-target-lock text-3xl sm:text-4xl text-brand-500'></i>
-                            <div class="absolute -top-0.5 -right-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shadow-md border border-white">4</div>
+                    <div class="relative z-10 flex flex-row items-start text-left group w-[85vw] sm:w-auto snap-center shrink-0 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm gap-3 sm:gap-4 transition-all hover:shadow-md hover:border-brand-100 h-full">
+                        <div class="w-12 h-12 bg-brand-50 rounded-full flex items-center justify-center shrink-0 relative group-hover:scale-105 transition-transform duration-300">
+                            <i class='bx bx-target-lock text-2xl text-brand-500'></i>
+                            <div class="absolute -top-1 -right-1 w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm border border-white">4</div>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Tracking Pesanan</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-500 px-2 leading-relaxed">Lacak status proses atau pengiriman barang menggunakan <b>Nomor Unik</b> yang dikirimkan ke email Anda.</p>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 mb-1 text-[13px] sm:text-[14px]">Tracking Pesanan</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-snug whitespace-normal break-words">Lacak status pesanan Anda dengan mudah menggunakan <b>Nomor Unik</b> dari email.</p>
+                        </div>
                     </div>
                 </div>
             </div>

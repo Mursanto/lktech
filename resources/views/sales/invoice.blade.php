@@ -407,7 +407,7 @@
                 <td class="footer-terms">
                     <div class="terms-title">Ketentuan Garansi</div>
                     <div class="terms-content">
-                        <div>1. Garansi 1 bln hardware. Segel utuh wajib.</div>
+                        <div>1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
                         <div>2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
                         <div>3. Preorder estimasi pengirman 1-2 Minggu</div>
                     </div>

@@ -232,7 +232,7 @@
                         <div class="footer w-2/3">
                             <h4 class="font-semibold text-gray-900 text-[10px] mb-0.5">Ketentuan Garansi</h4>
                             <div class="text-gray-600 text-[9px]" style="line-height: 1.2;">
-                                <div>1. Garansi 1 bln hardware. Segel utuh wajib.</div>
+                                <div>1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
                                 <div>2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
                             </div>
                         </div>

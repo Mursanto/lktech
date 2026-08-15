@@ -128,7 +128,7 @@
                      {
                          id: 9, cat: 'garansi',
                          q: 'Berapa lama masa garansi produk dari LKTech?',
-                         a: 'Kami memberikan jaminan garansi yang transparan:\n\n• Garansi Mesin: 1 (satu) bulan sejak tanggal pembelian\n• Garansi Software: 1 (satu) minggu sejak tanggal pembelian\n\nMasa garansi dihitung dari tanggal yang tertera di nota/struk pembelian. Simpan nota Anda baik-baik ya! 📋'
+                         a: 'Kami memberikan jaminan garansi yang transparan:\n\n• Garansi Mesin: 2 (dua) minggu sejak tanggal pembelian\n• Garansi Software: 1 (satu) bulan sejak tanggal pembelian\n\nMasa garansi dihitung dari tanggal yang tertera di nota/struk pembelian. Simpan nota Anda baik-baik ya! 📋'
                      },
                      {
                          id: 10, cat: 'garansi',
@@ -184,6 +184,36 @@
                          id: 20, cat: 'lainnya',
                          q: 'Apakah LKTech menerima kerjasama atau pengadaan partai besar?',
                          a: 'Sangat welcome! Kami terbuka untuk:\n\n🤝 Pengadaan laptop/komputer untuk instansi, sekolah, atau perusahaan (dalam jumlah besar)\n🏢 Kontrak maintenance IT berkala untuk kantor atau instansi\n🔄 Program reseller dan kemitraan distribusi\n\nHubungi kami langsung via WhatsApp untuk mendapatkan penawaran harga khusus dan negosiasi lebih lanjut. Kami senang membangun kemitraan jangka panjang! 📊'
+                     },
+                     {
+                         id: 21, cat: 'pembelian',
+                         q: 'Bagaimana cara melakukan order atau pembelian langsung di website LKTech?',
+                         a: 'Sangat mudah! Pilih produk yang Anda inginkan dari halaman Katalog, lalu klik tombol &quot;Beli / Pesan&quot;. Masukkan produk ke keranjang, isi formulir data diri beserta alamat pengiriman dengan lengkap. Setelah itu, selesaikan pesanan (Checkout). Sistem akan otomatis memproses pesanan Anda. 🛒'
+                     },
+                     {
+                         id: 22, cat: 'pembelian',
+                         q: 'Apakah saya akan mendapatkan tagihan dan Invoice untuk pesanan saya?',
+                         a: 'Tentu saja! Setelah Anda menyelesaikan form checkout, sistem kami akan otomatis mengirimkan tagihan awal (Proforma Invoice) ke alamat email Anda.\n\nSetelah Anda melakukan pembayaran dan kami konfirmasi, Anda akan menerima email bukti lunas beserta lampiran file PDF Invoice resmi yang dapat Anda unduh dan simpan. 📄'
+                     },
+                     {
+                         id: 23, cat: 'pembelian',
+                         q: 'Bagaimana cara melacak pesanan (tracking) yang sudah saya beli?',
+                         a: 'Setiap pesanan yang berhasil dibuat akan mendapatkan Nomor Unik (Nomor Pesanan) yang akan dikirimkan ke email Anda.\n\nAnda dapat menggunakan nomor unik tersebut untuk melakukan tracking atau mengecek status proses maupun resi pengiriman barang secara langsung dengan menghubungi admin kami via WhatsApp. 📍'
+                     },
+                     {
+                         id: 24, cat: 'pembelian',
+                         q: 'Kemana saya harus melakukan konfirmasi pembayaran setelah transfer?',
+                         a: 'Setelah melakukan transfer pembayaran sesuai dengan nominal tagihan di Proforma Invoice, Anda dapat mengonfirmasi pembayaran dengan cara mengirimkan bukti transfer/struk langsung ke nomor WhatsApp admin kami di +62 856-7354-046 agar pesanan Anda dapat langsung kami proses ke tahap pengiriman! 📲'
+                     },
+                     {
+                         id: 25, cat: 'pembelian',
+                         q: 'Apakah bisa melakukan pembayaran menggunakan Kartu Kredit?',
+                         a: 'Bisa banget! Anda dapat membayar pesanan menggunakan Kartu Kredit dengan dua cara yang sangat mudah:\n\n1. Melakukan scan QRIS di toko atau dari tagihan kami (Pastikan aplikasi Mobile Banking Anda mendukung pembayaran QRIS dengan sumber dana dari Kartu Kredit).\n2. Melakukan pembelian melalui toko resmi kami di Tokopedia (Anda dapat menggunakan Kartu Kredit untuk pembayaran lunas maupun menikmati fasilitas cicilan 0%).\n\nPilih metode yang paling nyaman untuk Anda! 💳'
+                     },
+                     {
+                         id: 26, cat: 'garansi',
+                         q: 'Apakah pembelian software berlisensi seperti Windows atau Office juga mendapat garansi?',
+                         a: 'Tentu saja! Khusus untuk setiap pembelian software berlisensi original seperti Microsoft Office LTSC, Microsoft Windows 10 Pro, dan Windows 11 Pro, LKTech memberikan **Garansi Lifetime (Seumur Hidup)**!\n\nLisensi dijamin aktif secara permanen. Jika ada kendala aktivasi kapan pun di masa depan, Anda bisa langsung menghubungi kami untuk mendapatkan bantuan penuh. 🛡️'
                      },
                  ],
                  get filteredFaqs() {
@@ -278,7 +308,7 @@
                         <h3 class="font-bold text-amber-800 mb-1">📋 Kebijakan Garansi Resmi LKTech</h3>
                         <p class="text-amber-700 text-sm leading-relaxed">
                             Syarat dan ketentuan garansi dibuat untuk melindungi hak Anda sebagai pembeli dan menjaga transparansi setiap transaksi di LKTech.
-                            Garansi mesin berlaku <strong>1 bulan</strong>, garansi software <strong>1 minggu</strong> sejak tanggal pembelian.
+                            Garansi mesin berlaku <strong>2 minggu</strong>, garansi software <strong>1 bulan</strong> sejak tanggal pembelian.
                             Klaim garansi wajib disertai nota pembelian & segel garansi yang masih utuh.
                         </p>
                     </div>
