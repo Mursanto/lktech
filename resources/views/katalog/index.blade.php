@@ -304,14 +304,6 @@
                 </div>
             </div>
 
-            @if(isset($selectedCategoryId))
-            <div class="mb-4 hidden md:flex justify-end">
-                <a href="{{ route('katalog.index') }}" class="text-sm font-bold text-brand-600 hover:text-brand-700 bg-brand-50 px-4 py-2 rounded-lg transition-colors">
-                    &larr; Lihat Semua Kategori
-                </a>
-            </div>
-            @endif
-
             <div class="space-y-8">
                 @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
@@ -340,8 +332,14 @@
                                     &larr; Semua
                                 </a>
                                 @endif
-                                {{-- Desktop: Sort dropdown on right --}}
+                                {{-- Desktop: Action buttons on right --}}
                                 <div class="hidden md:flex items-center gap-2 shrink-0 ml-3">
+                                    @if(isset($selectedCategoryId))
+                                    <a href="{{ route('katalog.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors border border-brand-100/50 whitespace-nowrap">
+                                        &larr; Lihat Semua Kategori
+                                    </a>
+                                    @endif
+                                    
                                     <form action="{{ route('katalog.index') }}" method="GET" class="relative">
                                         @if(request()->has('category_id'))
                                             <input type="hidden" name="category_id" value="{{ request('category_id') }}">
