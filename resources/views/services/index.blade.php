@@ -63,6 +63,7 @@
                             <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Pengerjaan</th>
                             <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
                             <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status Bayar</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
                             <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
@@ -124,6 +125,13 @@
                                     <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-wider">
                                         EXPIRED
                                     </span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-2 whitespace-nowrap text-right">
+                                @php $nominal = $service->actual_cost > 0 ? $service->actual_cost : ($service->estimated_cost ?? 0); @endphp
+                                <p class="text-sm font-black {{ $service->payment_status === 'success' ? 'text-emerald-600' : 'text-gray-800' }}">Rp {{ number_format($nominal, 0, ',', '.') }}</p>
+                                @if($service->actual_cost <= 0 && $service->estimated_cost > 0)
+                                    <p class="text-[9px] text-amber-500 font-medium">estimasi</p>
                                 @endif
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-right">

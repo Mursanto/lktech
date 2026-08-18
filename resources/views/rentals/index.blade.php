@@ -97,6 +97,7 @@
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
                             <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status Pembayaran</th>
                             <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Tgl Kembali</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
                             <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
@@ -163,6 +164,10 @@
                                 <p class="text-[9px] font-medium uppercase {{ $isLate ? 'text-red-400' : ($isDone ? 'text-emerald-400' : 'text-gray-500') }}">
                                     {{ $isLate ? 'Terlambat!' : ($isDone ? 'Selesai' : 'Estimasi Kembali') }}
                                 </p>
+                            </td>
+                            <td class="px-4 py-2 whitespace-nowrap text-right">
+                                <p class="text-sm font-black {{ $rental->payment_status === 'success' ? 'text-emerald-600' : 'text-gray-800' }}">Rp {{ number_format($rental->total_price ?? 0, 0, ',', '.') }}</p>
+                                <p class="text-[9px] text-gray-400 font-medium">{{ $rental->daily_price > 0 ? 'Rp '.number_format($rental->daily_price,0,',','.').' / hari' : '' }}</p>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
