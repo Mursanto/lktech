@@ -128,15 +128,15 @@
                 </div>
             </div>
 
-            {{-- Card: Pendapatan Jasa Service (fee only) --}}
+            {{-- Card: Laba Bersih Service (fee - parts cost) --}}
             <div class="bg-white p-4 rounded-3xl border border-violet-100 shadow-sm flex items-center gap-4">
                 <div class="w-11 h-11 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center text-xl shrink-0">
                     <i class='bx bx-coin-stack'></i>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-[9px] font-bold text-violet-400 uppercase tracking-wider">Service · Pendapatan Jasa</p>
+                    <p class="text-[9px] font-bold text-violet-400 uppercase tracking-wider">Service · Laba Bersih Jasa</p>
                     <p class="text-lg font-black text-violet-700 truncate">Rp {{ number_format($totalLabaService, 0, ',', '.') }}</p>
-                    <p class="text-[10px] text-natural-400 mt-0.5 font-medium">biaya jasa (tanpa sparepart)</p>
+                    <p class="text-[10px] text-natural-400 mt-0.5 font-medium">pendapatan jasa − biaya sparepart</p>
                 </div>
             </div>
 

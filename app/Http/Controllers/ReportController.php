@@ -15,9 +15,11 @@ class ReportController extends Controller
         $endDate   = $request->input('end_date');
 
         // =====================================================
-        // SALES DATA
+        // SALES DATA — hanya yang sudah LUNAS (payment_status = success)
         // =====================================================
-        $salesQuery = \App\Models\Sale::with('saleDetails.product')->orderBy('created_at', 'desc');
+        $salesQuery = \App\Models\Sale::with('saleDetails.product')
+            ->where('payment_status', 'success')
+            ->orderBy('created_at', 'desc');
 
         if ($startDate && $endDate) {
             $salesQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
@@ -36,9 +38,11 @@ class ReportController extends Controller
         $totalModal            = $totalPenjualan - $totalLabaKotor;
 
         // =====================================================
-        // SERVICE DATA
+        // SERVICE DATA — hanya yang sudah LUNAS (payment_status = success)
         // =====================================================
-        $serviceQuery = \App\Models\Service::with('customer')->orderBy('created_at', 'desc');
+        $serviceQuery = \App\Models\Service::with('customer')
+            ->where('payment_status', 'success')
+            ->orderBy('created_at', 'desc');
 
         if ($startDate && $endDate) {
             $serviceQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
@@ -49,14 +53,18 @@ class ReportController extends Controller
 
         $services = $serviceQuery->get();
 
-        // Service Totals (total_amount = biaya jasa + sparepart, service_fee = biaya jasa murni)
-        $totalPendapatanService = $services->sum('total_amount');
-        $totalLabaService       = $services->sum('service_fee');
+        // Service Totals:
+        // - total_pendapatan = actual_cost (biaya servis sesungguhnya yang dibayar)
+        // - laba_service = actual_cost - estimated_parts_cost (biaya jasa murni)
+        $totalPendapatanService = $services->sum('actual_cost');
+        $totalLabaService       = $services->sum(fn($s) => ($s->actual_cost ?? 0) - ($s->estimated_parts_cost ?? 0));
 
         // =====================================================
-        // RENTAL DATA
+        // RENTAL DATA — hanya yang sudah LUNAS (payment_status = success)
         // =====================================================
-        $rentalQuery = \App\Models\Rental::with('customer')->orderBy('created_at', 'desc');
+        $rentalQuery = \App\Models\Rental::with('customer')
+            ->where('payment_status', 'success')
+            ->orderBy('created_at', 'desc');
 
         if ($startDate && $endDate) {
             $rentalQuery->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
@@ -71,11 +79,13 @@ class ReportController extends Controller
         $totalPendapatanSewa = $rentals->sum('total_price');
 
         // =====================================================
-        // MONTH-OVER-MONTH (MoM) — SALES
+        // MONTH-OVER-MONTH (MoM) — SALES (hanya yang lunas)
         // =====================================================
-        $currentMonthSales  = \App\Models\Sale::whereMonth('created_at', now()->month)
+        $currentMonthSales  = \App\Models\Sale::where('payment_status', 'success')
+                                              ->whereMonth('created_at', now()->month)
                                               ->whereYear('created_at', now()->year)->get();
-        $previousMonthSales = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)
+        $previousMonthSales = \App\Models\Sale::where('payment_status', 'success')
+                                              ->whereMonth('created_at', now()->subMonth()->month)
                                               ->whereYear('created_at', now()->subMonth()->year)->get();
 
         $cmPendapatan = $currentMonthSales->sum('total_amount');
@@ -91,23 +101,27 @@ class ReportController extends Controller
         $growthLaba       = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
 
         // =====================================================
-        // MONTH-OVER-MONTH (MoM) — SERVICE
+        // MONTH-OVER-MONTH (MoM) — SERVICE (hanya yang lunas)
         // =====================================================
-        $currentMonthServices  = \App\Models\Service::whereMonth('created_at', now()->month)
+        $currentMonthServices  = \App\Models\Service::where('payment_status', 'success')
+                                                    ->whereMonth('created_at', now()->month)
                                                     ->whereYear('created_at', now()->year)->get();
-        $previousMonthServices = \App\Models\Service::whereMonth('created_at', now()->subMonth()->month)
+        $previousMonthServices = \App\Models\Service::where('payment_status', 'success')
+                                                    ->whereMonth('created_at', now()->subMonth()->month)
                                                     ->whereYear('created_at', now()->subMonth()->year)->get();
 
-        $cmService    = $currentMonthServices->sum('total_amount');
-        $pmService    = $previousMonthServices->sum('total_amount');
+        $cmService    = $currentMonthServices->sum('actual_cost');
+        $pmService    = $previousMonthServices->sum('actual_cost');
         $growthService = $pmService > 0 ? (($cmService - $pmService) / $pmService) * 100 : ($cmService > 0 ? 100 : 0);
 
         // =====================================================
-        // MONTH-OVER-MONTH (MoM) — RENTAL
+        // MONTH-OVER-MONTH (MoM) — RENTAL (hanya yang lunas)
         // =====================================================
-        $currentMonthRentals  = \App\Models\Rental::whereMonth('created_at', now()->month)
+        $currentMonthRentals  = \App\Models\Rental::where('payment_status', 'success')
+                                                  ->whereMonth('created_at', now()->month)
                                                   ->whereYear('created_at', now()->year)->get();
-        $previousMonthRentals = \App\Models\Rental::whereMonth('created_at', now()->subMonth()->month)
+        $previousMonthRentals = \App\Models\Rental::where('payment_status', 'success')
+                                                  ->whereMonth('created_at', now()->subMonth()->month)
                                                   ->whereYear('created_at', now()->subMonth()->year)->get();
 
         $cmRental    = $currentMonthRentals->sum('total_price');
