@@ -24,30 +24,32 @@
 
     <div class="flex flex-col h-full space-y-4">
         <!-- Status Filter Bar -->
-        <form id="filterForm" action="{{ route('services.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+        <form id="filterForm" action="{{ route('services.index') }}" method="GET" class="bg-white px-4 py-3 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center gap-3">
             <input type="hidden" name="status" id="statusInput" value="{{ request('status', 'all') }}">
-            <div class="flex flex-wrap items-center gap-3">
-                <div class="flex items-center gap-2">
-                    <button type="button" onclick="document.getElementById('statusInput').value='all'; this.form.submit()" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all border {{ request('status', 'all') == 'all' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Semua Pengerjaan</button>
-                    <button type="button" onclick="document.getElementById('statusInput').value='pending'; this.form.submit()" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all border {{ request('status') == 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Pending</button>
-                    <button type="button" onclick="document.getElementById('statusInput').value='process'; this.form.submit()" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all border {{ request('status') == 'process' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Proses</button>
-                    <button type="button" onclick="document.getElementById('statusInput').value='done'; this.form.submit()" class="px-4 py-2 rounded-2xl text-xs font-bold transition-all border {{ request('status') == 'done' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Selesai</button>
-                </div>
-                
-                <div class="flex flex-col border-l border-natural-200 pl-3">
-                    <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Status Pembayaran</label>
-                    <select name="payment_status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
-                        <option value="">Semua Status Bayar</option>
-                        <option value="success" {{ request('payment_status') == 'success' ? 'selected' : '' }}>Lunas / Sukses</option>
-                        <option value="pending" {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
-                        <option value="cancelled" {{ request('payment_status') == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
-                    </select>
-                </div>
+
+            {{-- Tab Filter Pengerjaan --}}
+            <div class="flex items-center gap-1.5">
+                <button type="button" onclick="document.getElementById('statusInput').value='all'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status', 'all') == 'all' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Semua Pengerjaan</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='pending'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Pending</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='process'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'process' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Proses</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='done'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'done' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Selesai</button>
             </div>
-            <div class="relative flex-grow max-w-xs">
-                <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-lg'></i>
-                <input type="text" name="search" value="{{ request('search') }}" oninput="debounceSubmit()" placeholder="Cari Nota / Perangkat / Pelanggan..." 
-                       class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
+
+            {{-- Divider + Status Bayar --}}
+            <div class="flex items-center border-l border-natural-200 pl-3">
+                <select name="payment_status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-[11px] py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-semibold min-w-[130px]">
+                    <option value="">Semua Status Bayar</option>
+                    <option value="success" {{ request('payment_status') == 'success' ? 'selected' : '' }}>Lunas / Sukses</option>
+                    <option value="pending" {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
+                    <option value="cancelled" {{ request('payment_status') == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+                </select>
+            </div>
+
+            {{-- Search — pojok kanan --}}
+            <div class="relative ml-auto">
+                <i class='bx bx-search absolute left-3 top-1/2 -translate-y-1/2 text-natural-400 text-sm'></i>
+                <input type="text" name="search" value="{{ request('search') }}" oninput="debounceSubmit()" placeholder="Cari Nota / Perangkat / Pelanggan..."
+                       class="pl-8 pr-3 py-1.5 bg-natural-50 border-none rounded-xl text-[11px] focus:ring-2 focus:ring-brand-500/20 transition-all w-56">
             </div>
         </form>
 
