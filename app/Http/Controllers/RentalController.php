@@ -61,6 +61,8 @@ class RentalController extends Controller
             'daily_price' => 'required|numeric|min:0',
             'total_price' => 'required|numeric|min:0',
             'status'      => 'required|in:active,completed,overdue,cancelled',
+            'payment_status' => 'nullable|in:pending,success,failed,cancelled',
+            'payment_method' => 'nullable|string|max:50',
             'notes'       => 'nullable|string',
             'manual_sn'   => 'nullable|string',
         ];
@@ -108,6 +110,8 @@ class RentalController extends Controller
             'daily_price'    => $request->daily_price,
             'total_price'    => $request->total_price,
             'status'         => $request->status,
+            'payment_status' => $request->payment_status ?? 'pending',
+            'payment_method' => $request->payment_method ?? 'Cash',
             'notes'          => $request->notes,
             'manual_sn'      => $request->manual_sn,
         ]);

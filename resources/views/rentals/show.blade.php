@@ -227,10 +227,11 @@
                             <i class='bx bx-left-arrow-alt text-base mr-1'></i> Kembali
                         </a>
                         
+                        <a href="{{ route('rentals.edit', $rental->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                            <i class='bx bx-edit text-sm mr-1'></i> Edit
+                        </a>
+
                         @if($rental->status !== 'completed' && $rental->status !== 'cancelled')
-                            <a href="{{ route('rentals.edit', $rental->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                                <i class='bx bx-edit text-sm mr-1'></i> Edit
-                            </a>
                             
                             <form action="{{ route('rentals.cancel', $rental->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan penyewaan ini? Stok laptop akan dikembalikan.')" class="inline">
                                 @csrf @method('PATCH')
