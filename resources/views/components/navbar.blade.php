@@ -4,6 +4,15 @@
   50% { transform: scale(1.15) translate(25%, -25%); }
   100% { transform: scale(1) translate(25%, -25%); }
 }
+
+@keyframes blueGoldRadiate {
+  0% { color: #1e3a8a; text-shadow: 0 0 2px rgba(30,58,138,0.2); }
+  50% { color: #fbbf24; text-shadow: 0 0 6px rgba(251,191,36,0.6); }
+  100% { color: #1e3a8a; text-shadow: 0 0 2px rgba(30,58,138,0.2); }
+}
+.tagline-radiate-bluegold {
+  animation: blueGoldRadiate 4s infinite ease-in-out;
+}
 </style>
 <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false }">
     @php
@@ -21,8 +30,13 @@
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 w-auto">
-                    <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 hidden sm:block">LKTech TN SEREAL</span>
+                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 sm:h-8 w-auto">
+                    <div class="hidden sm:flex flex-col">
+                        <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 leading-none">LKTech TN SEREAL</span>
+                        <span class="text-[6.5px] font-bold uppercase tracking-widest mt-1 tagline-radiate-bluegold w-full text-center">
+                            Hardware Andal. Software Profesional. Satu Integrasi.
+                        </span>
+                    </div>
                 </a>
             </div>
             

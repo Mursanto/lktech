@@ -187,7 +187,7 @@
                     <!-- Left: Text (60%) -->
                     <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
-                        <h1 class="hero-title font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm mb-3">SOLUSI IT INTEGRATED & TERPERCAYA</h1>
+                        <h1 class="hero-title font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm mb-3">SOLUSI IT TANPA RIBET</h1>
                         <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4">
                             Spesialis laptop bekas premium bergaransi, didukung layanan rakit PC, sewa, dan website untuk bisnis modern.
                         </p>
