@@ -276,12 +276,13 @@
                             <i class='bx bx-left-arrow-alt text-base mr-1'></i> Kembali
                         </a>
 
+                        @hasanyrole('Admin|Teknisi')
+                        <a href="{{ route('services.edit', $service->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
+                            <i class='bx bx-edit text-sm mr-1'></i> Edit
+                        </a>
+                        @endhasanyrole
+
                         @if($service->status === 'pending' || $service->status === 'process')
-                            @role('Admin')
-                            <a href="{{ route('services.edit', $service->id) }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
-                                <i class='bx bx-edit text-sm mr-1'></i> Edit
-                            </a>
-                            @endrole
 
                             <form action="{{ route('services.cancel', $service->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan servis ini? Stok sparepart akan dikembalikan.')" class="inline">
                                 @csrf @method('PATCH')

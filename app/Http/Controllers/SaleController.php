@@ -263,6 +263,7 @@ class SaleController extends Controller
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
             'payment_method' => 'required',
+            'payment_status' => 'nullable|in:pending,success,failed,cancelled',
         ]);
 
         try {
@@ -343,6 +344,10 @@ class SaleController extends Controller
 
                 if ($request->has('order_status')) {
                     $saleUpdateData['order_status'] = $request->order_status;
+                }
+
+                if ($request->has('payment_status')) {
+                    $saleUpdateData['payment_status'] = $request->payment_status;
                 }
 
                 $sale->update($saleUpdateData);

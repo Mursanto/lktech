@@ -9,9 +9,34 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rentals = Rental::with(['customer', 'product'])->latest()->paginate(10);
+        $query = Rental::with(['customer', 'product']);
+
+        $query->when($request->search, function ($q) use ($request) {
+            $search = trim($request->search);
+            $q->where(function ($sub) use ($search) {
+                $sub->where('customer_name', 'LIKE', "%{$search}%")
+                    ->orWhere('laptop_name', 'LIKE', "%{$search}%")
+                    ->orWhereHas('customer', function ($cust) use ($search) {
+                        $cust->where('name', 'LIKE', "%{$search}%");
+                    });
+            });
+        });
+
+        $query->when($request->date, function ($q) use ($request) {
+            $q->whereDate('rental_date', $request->date);
+        });
+
+        $query->when($request->payment_method, function ($q) use ($request) {
+            $q->where('payment_method', $request->payment_method);
+        });
+
+        $query->when($request->status, function ($q) use ($request) {
+            $q->where('payment_status', $request->status);
+        });
+
+        $rentals = $query->latest()->paginate(10)->appends($request->all());
         return view('rentals.index', compact('rentals'));
     }
 
@@ -119,6 +144,8 @@ class RentalController extends Controller
             'daily_price'    => 'nullable|numeric|min:0',
             'total_price'    => 'required|numeric|min:0',
             'status'         => 'required|in:active,completed,overdue,cancelled',
+            'payment_status' => 'nullable|in:pending,success,failed,cancelled',
+            'payment_method' => 'nullable|string|max:50',
             'notes'          => 'nullable|string',
             'manual_sn'      => 'nullable|string',
         ]);
@@ -140,7 +167,7 @@ class RentalController extends Controller
             'customer_id', 'customer_name', 'customer_phone',
             'laptop_name', 'serial_number',
             'rental_date', 'return_date', 'daily_price', 'total_price',
-            'status', 'notes', 'manual_sn',
+            'status', 'notes', 'manual_sn', 'payment_status', 'payment_method',
         ]));
 
         // Kembalikan stok jika status berubah menjadi selesai

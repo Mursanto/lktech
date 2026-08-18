@@ -41,6 +41,10 @@ class ServiceController extends Controller
             }
         });
 
+        $query->when($request->payment_status, function ($q) use ($request) {
+            $q->where('payment_status', $request->payment_status);
+        });
+
         $services = $query->orderBy('created_at', 'desc')->paginate(20)->appends($request->all());
             
         return view('services.index', compact('services'));
@@ -254,11 +258,14 @@ class ServiceController extends Controller
             'items.*.spareparts.*.price'         => 'required_with:items.*.spareparts|numeric|min:0',
             'technician_id' => 'required|exists:users,id',
             'status' => 'required|in:pending,process,done,cancelled',
+            'payment_status' => 'nullable|in:pending,success,failed,cancelled',
+            'payment_method' => 'nullable|string|max:50',
             'completion_date' => 'nullable|date',
             'notes' => 'nullable|string',
         ]);
 
         $oldStatus = $service->status;
+        $oldPaymentStatus = $service->payment_status;
 
         // Update customer details directly from the form
         $customer = \App\Models\Customer::find($request->customer_id);
@@ -289,6 +296,10 @@ class ServiceController extends Controller
             return collect($item['spareparts'] ?? [])->sum('price');
         });
 
+        $paymentStatus = $request->payment_status ?? 'pending';
+        $paymentMethod = $request->payment_method ?? 'Cash';
+        $actualCost = $request->actual_cost ?? ($request->status === 'done' ? ($serviceFee + $estimatedPartsCost) : 0);
+
         // Update data beserta fallback kolom lama agar tidak error
         $service->update([
             'customer_id' => $request->customer_id,
@@ -302,11 +313,13 @@ class ServiceController extends Controller
             'service_fee' => $serviceFee,
             'estimated_parts_cost' => $estimatedPartsCost,
             'estimated_cost' => $serviceFee + $estimatedPartsCost, // Fallback legacy
-            'actual_cost' => $request->actual_cost ?? 0,
+            'actual_cost' => $actualCost,
             'completion_date' => $request->completion_date,
             'notes' => $request->notes,
             'description' => $firstItem['complaint'], // Fallback legacy
             'issue_description' => $firstItem['complaint'], // Fallback legacy
+            'payment_status' => $paymentStatus,
+            'payment_method' => $paymentMethod,
         ]);
 
         // Revert old stock before deleting old items
@@ -353,16 +366,22 @@ class ServiceController extends Controller
             }
         }
 
-        // If status changed to 'done' and has payment, create/update sale record
-        if ($service->status === 'done' && $request->actual_cost > 0 && $oldStatus !== 'done') {
-            \App\Models\Sale::create([
-                'user_id' => Auth::id(),
-                'customer_id' => $service->customer_id,
-                'total_amount' => $request->actual_cost,
-                'profit_amount' => $request->actual_cost - ($service->service_fee ?? 0),
-                'operational_cost' => 0,
-                'transaction_date' => now(),
-            ]);
+        // If status changed to 'done' (or was already done but now paid), create/update sale record
+        if ($service->status === 'done' && $actualCost > 0) {
+            // Because we don't have service_id field in sales table, we can identify sale via a dynamic link or just query by customer & amount, 
+            // but to keep it simple and match their previous logic, let's create a Sale when it shifts to done.
+            if ($oldStatus !== 'done' || ($oldPaymentStatus !== 'success' && $paymentStatus === 'success')) {
+                \App\Models\Sale::create([
+                    'user_id' => Auth::id(),
+                    'customer_id' => $service->customer_id,
+                    'total_amount' => $actualCost,
+                    'profit_amount' => $actualCost - $estimatedPartsCost,
+                    'operational_cost' => 0,
+                    'transaction_date' => now(),
+                    'payment_status' => $paymentStatus,
+                    'payment_method' => $paymentMethod,
+                ]);
+            }
         }
 
         // Log activity

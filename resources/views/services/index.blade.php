@@ -132,13 +132,11 @@
                                         <i class='bx bx-show text-base'></i>
                                     </a>
                                     
-                                    @if($service->status !== 'done' && $service->status !== 'cancelled')
-                                        @hasanyrole('Admin|Teknisi')
-                                        <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Update Status">
-                                            <i class='bx bx-refresh text-base'></i>
-                                        </a>
-                                        @endhasanyrole
-                                    @endif
+                                    @hasanyrole('Admin|Teknisi')
+                                    <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Update Status">
+                                        <i class='bx bx-refresh text-base'></i>
+                                    </a>
+                                    @endhasanyrole
                                     
                                     @if($service->payment_status === 'success')
                                         <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">

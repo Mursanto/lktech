@@ -178,6 +178,15 @@
                                     </select>
                                 </div>
                                 <div>
+                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Status Pembayaran</label>
+                                    <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 font-bold focus:ring-1 focus:ring-emerald-500">
+                                        <option value="pending" {{ $sale->payment_status == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                                        <option value="success" {{ $sale->payment_status == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
+                                        <option value="cancelled" {{ $sale->payment_status == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                                        <option value="failed" {{ $sale->payment_status == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
+                                    </select>
+                                </div>
+                                <div>
                                     <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Status Pesanan</label>
                                     <select name="order_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500">
                                         <option value="menunggu_pembayaran" {{ $sale->order_status == 'menunggu_pembayaran' ? 'selected' : '' }}>Menunggu Pembayaran</option>

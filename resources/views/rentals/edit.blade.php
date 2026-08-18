@@ -80,6 +80,25 @@
                             </select>
                         </div>
 
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Pembayaran</label>
+                            <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold">
+                                <option value="pending" {{ old('payment_status', $rental->payment_status) == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                                <option value="success" {{ old('payment_status', $rental->payment_status) == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
+                                <option value="cancelled" {{ old('payment_status', $rental->payment_status) == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                                <option value="failed" {{ old('payment_status', $rental->payment_status) == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Metode Pembayaran</label>
+                            <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
+                                <option value="CASH" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'CASH' ? 'selected' : '' }}>CASH</option>
+                                <option value="TRANSFER" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
+                                <option value="QRIS" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                            </select>
+                        </div>
+
                         <!-- Notes -->
                         <div class="flex-grow">
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Catatan Tambahan</label>

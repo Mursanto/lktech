@@ -146,13 +146,11 @@
                                         <i class='bx bx-show text-lg'></i>
                                     </a>
                                     
-                                    @if($sale->payment_status === 'pending')
-                                        @hasanyrole('Admin|Staff')
-                                        <a href="{{ route('sales.edit', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
-                                            <i class='bx bx-edit-alt text-lg'></i>
-                                        </a>
-                                        @endhasanyrole
-                                    @endif
+                                    @hasanyrole('Admin|Staff')
+                                    <a href="{{ route('sales.edit', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
+                                        <i class='bx bx-edit-alt text-lg'></i>
+                                    </a>
+                                    @endhasanyrole
                                     
                                     @if($sale->payment_status === 'success')
                                         <a href="{{ route('sales.print', $sale->id) }}" target="_blank" class="p-1.5 text-sm text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">

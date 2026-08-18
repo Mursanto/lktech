@@ -170,11 +170,9 @@
                                         <i class='bx bx-show text-base'></i>
                                     </a>
                                     
-                                    @if($rental->payment_status === 'pending')
-                                        <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
-                                            <i class='bx bx-edit-alt text-base'></i>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('rentals.edit', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
+                                        <i class='bx bx-edit-alt text-base'></i>
+                                    </a>
                                     
                                     @if($rental->payment_status === 'success')
                                         <a href="{{ route('rentals.show', $rental->id) }}" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">

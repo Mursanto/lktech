@@ -254,6 +254,23 @@
                                         <option value="cancelled" {{ $service->status == 'cancelled'  ? 'selected' : '' }}>❌ Dibatalkan</option>
                                     </select>
                                 </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Status Bayar</label>
+                                    <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 font-bold focus:ring-1 focus:ring-emerald-500">
+                                        <option value="pending" {{ $service->payment_status == 'pending' || !$service->payment_status ? 'selected' : '' }}>⏳ Pending</option>
+                                        <option value="success" {{ $service->payment_status == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
+                                        <option value="cancelled" {{ $service->payment_status == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                                        <option value="failed" {{ $service->payment_status == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Metode Bayar</label>
+                                    <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500">
+                                        <option value="CASH" {{ strtoupper($service->payment_method ?? '') == 'CASH' ? 'selected' : '' }}>CASH</option>
+                                        <option value="TRANSFER" {{ strtoupper($service->payment_method ?? '') == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
+                                        <option value="QRIS" {{ strtoupper($service->payment_method ?? '') == 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
