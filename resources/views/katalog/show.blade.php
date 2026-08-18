@@ -67,19 +67,22 @@
     <x-navbar />
 
     <!-- Main Product Layout (Tokopedia Style 3 Columns) -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4" x-data="{ 
-        activeImage: '{{ $product->all_images[0] }}',
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4" x-data="{
+        images: {{ json_encode($product->all_images) }},
+        currentIndex: 0,
+        get activeImage() { return this.images[this.currentIndex]; },
         zoomActive: false,
         zoomX: 50,
         zoomY: 50,
+        prev() { this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length; },
+        next() { this.currentIndex = (this.currentIndex + 1) % this.images.length; },
+        goTo(idx) { this.currentIndex = idx; },
         updateZoom(e) {
             const rect = e.target.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            this.zoomX = x;
-            this.zoomY = y;
+            this.zoomX = ((e.clientX - rect.left) / rect.width) * 100;
+            this.zoomY = ((e.clientY - rect.top) / rect.height) * 100;
         }
-    }">
+    }" @keydown.arrow-left.window="prev()" @keydown.arrow-right.window="next()">
         
         <!-- Breadcrumb Navigasi (Posisi Kiri) -->
         <nav aria-label="breadcrumb" class="mb-4 sm:mb-6">
@@ -107,27 +110,81 @@
                 
                 <!-- Main Sticky Wrapper to keep images in view while scrolling description -->
                 <div class="sticky top-24">
-                    <!-- Main Image with Click/Hover to Zoom -->
-                    <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-4" 
-                         @mousemove="updateZoom" 
-                         @mouseenter="zoomActive = true" 
-                         @mouseleave="zoomActive = false">
-                        <img :src="activeImage" 
-                             alt="{{ $product->brand }} {{ $product->model_series }}" 
-                             class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white"
-                             :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%` : 'transform-origin: center center'">
+
+                    <!-- ─── Main Image + Prev/Next Arrows ─── -->
+                    <div class="relative group">
+
+                        <!-- Main Image -->
+                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-3 rounded-xl"
+                             @mousemove="updateZoom"
+                             @mouseenter="zoomActive = true"
+                             @mouseleave="zoomActive = false">
+                            <img :src="activeImage"
+                                 alt="{{ $product->brand }} {{ $product->model_series }}"
+                                 class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white transition-opacity duration-300"
+                                 :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%` : 'transform-origin: center center'"
+                                 x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
+                        </div>
+
+                        <!-- PREV Arrow -->
+                        <button @click="prev()"
+                                x-show="images.length > 1"
+                                class="absolute left-2 top-1/2 -translate-y-1/2 z-10
+                                       w-9 h-9 flex items-center justify-center
+                                       bg-white/90 hover:bg-white
+                                       shadow-md rounded-full border border-gray-200
+                                       text-gray-600 hover:text-brand-600
+                                       opacity-0 group-hover:opacity-100
+                                       transition-all duration-200 cursor-pointer
+                                       focus:outline-none focus:ring-2 focus:ring-brand-400"
+                                style="margin-top: -1.5rem;"
+                                title="Foto sebelumnya">
+                            <i class="bx bx-chevron-left text-xl"></i>
+                        </button>
+
+                        <!-- NEXT Arrow -->
+                        <button @click="next()"
+                                x-show="images.length > 1"
+                                class="absolute right-2 top-1/2 -translate-y-1/2 z-10
+                                       w-9 h-9 flex items-center justify-center
+                                       bg-white/90 hover:bg-white
+                                       shadow-md rounded-full border border-gray-200
+                                       text-gray-600 hover:text-brand-600
+                                       opacity-0 group-hover:opacity-100
+                                       transition-all duration-200 cursor-pointer
+                                       focus:outline-none focus:ring-2 focus:ring-brand-400"
+                                style="margin-top: -1.5rem;"
+                                title="Foto selanjutnya">
+                            <i class="bx bx-chevron-right text-xl"></i>
+                        </button>
+
+                        <!-- Image Counter Badge -->
+                        <div x-show="images.length > 1"
+                             class="absolute bottom-4 right-4 bg-black/50 text-white text-xs font-semibold
+                                    px-2 py-0.5 rounded-full pointer-events-none">
+                            <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
+                        </div>
                     </div>
 
-                    <!-- Thumbnails Row -->
-                    <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                    <!-- ─── Thumbnails Row ─── -->
+                    <div class="flex gap-2 overflow-x-auto pb-1 pt-1 scrollbar-hide">
                         @foreach($product->all_images as $idx => $img)
-                            <button @click="activeImage = '{{ $img }}'" 
-                                    class="relative w-16 h-16 xl:w-[72px] xl:h-[72px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white"
-                                    :class="activeImage === '{{ $img }}' ? 'border-brand-500 ring-2 ring-brand-200' : 'border-transparent hover:border-brand-300'">
-                                <img src="{{ $img }}" class="absolute inset-0 w-full h-full object-contain p-1">
+                            <button @click="goTo({{ $idx }})"
+                                    class="relative w-16 h-16 xl:w-[70px] xl:h-[70px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white"
+                                    :class="currentIndex === {{ $idx }} ? 'border-brand-500 ring-2 ring-brand-200 scale-105' : 'border-gray-200 hover:border-brand-300'"
+                                    title="Foto {{ $idx + 1 }}">
+                                <img src="{{ $img }}"
+                                     class="absolute inset-0 w-full h-full object-contain p-1"
+                                     x-on:error="$event.target.src = 'https://placehold.co/80x80/f3f4f6/9ca3af?text=?'">
                             </button>
                         @endforeach
                     </div>
+
+                    <!-- Keyboard hint -->
+                    <p class="text-center text-[10px] text-gray-400 mt-2" x-show="images.length > 1">
+                        <i class="bx bx-keyboard"></i> Gunakan tombol ← → untuk navigasi foto
+                    </p>
+
                 </div>
             </div>
 
