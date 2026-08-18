@@ -366,23 +366,7 @@ class ServiceController extends Controller
             }
         }
 
-        // If status changed to 'done' (or was already done but now paid), create/update sale record
-        if ($service->status === 'done' && $actualCost > 0) {
-            // Because we don't have service_id field in sales table, we can identify sale via a dynamic link or just query by customer & amount, 
-            // but to keep it simple and match their previous logic, let's create a Sale when it shifts to done.
-            if ($oldStatus !== 'done' || ($oldPaymentStatus !== 'success' && $paymentStatus === 'success')) {
-                \App\Models\Sale::create([
-                    'user_id' => Auth::id(),
-                    'customer_id' => $service->customer_id,
-                    'total_amount' => $actualCost,
-                    'profit_amount' => $actualCost - $estimatedPartsCost,
-                    'operational_cost' => 0,
-                    'transaction_date' => now(),
-                    'payment_status' => $paymentStatus,
-                    'payment_method' => $paymentMethod,
-                ]);
-            }
-        }
+
 
         // Log activity
         ActivityLog::create([

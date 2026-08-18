@@ -47,8 +47,18 @@ class DashboardController extends Controller
         for ($i = 2; $i >= 0; $i--) {
             $month = now()->subMonths($i);
             $trendLabels[] = $month->translatedFormat('M Y');
-            $salesTrend[] = \App\Models\Sale::whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('total_amount');
-            $profitTrend[] = \App\Models\Sale::whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('profit_amount');
+            
+            $saleSum = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('total_amount');
+            $serviceSum = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('actual_cost');
+            $rentalSum = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('total_price');
+            $salesTrend[] = $saleSum + $serviceSum + $rentalSum;
+            
+            $saleProfit = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('profit_amount');
+            $serviceProfit = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->get()->sum(function($s) {
+                return $s->actual_cost - $s->estimated_parts_cost;
+            });
+            $rentalProfit = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', $month->month)->whereYear('created_at', $month->year)->sum('total_price');
+            $profitTrend[] = $saleProfit + $serviceProfit + $rentalProfit;
         }
 
         // Data Stok Unit Device Menipis (Max 5)
@@ -75,8 +85,6 @@ class DashboardController extends Controller
                 $q->where('name', 'Lisensi & Software')->orWhereHas('parent', function($q2) { $q2->where('name', 'Lisensi & Software'); });
             })->where('stock', '>', 0)->orderBy('stock', 'asc')->limit(3)->get();
 
-
-
         // 4. Data Sewa Laptop
         $totalSewa = 0;
         $sewaAktif = 0;
@@ -96,11 +104,29 @@ class DashboardController extends Controller
         }
 
         // 5. Perbandingan Omzet & Laba (Bulan Ini vs Bulan Lalu)
-        $omzetBulanIni = \App\Models\Sale::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_amount');
-        $omzetBulanLalu = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_amount');
+        $saleOmzetBulanIni = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_amount');
+        $serviceOmzetBulanIni = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('actual_cost');
+        $rentalOmzetBulanIni = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_price');
+        $omzetBulanIni = $saleOmzetBulanIni + $serviceOmzetBulanIni + $rentalOmzetBulanIni;
+
+        $saleOmzetBulanLalu = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_amount');
+        $serviceOmzetBulanLalu = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('actual_cost');
+        $rentalOmzetBulanLalu = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_price');
+        $omzetBulanLalu = $saleOmzetBulanLalu + $serviceOmzetBulanLalu + $rentalOmzetBulanLalu;
         
-        $labaBulanIni = \App\Models\Sale::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
-        $labaBulanLalu = \App\Models\Sale::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
+        $saleLabaBulanIni = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
+        $serviceLabaBulanIni = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->get()->sum(function($s) {
+            return $s->actual_cost - $s->estimated_parts_cost;
+        });
+        $rentalLabaBulanIni = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_price');
+        $labaBulanIni = $saleLabaBulanIni + $serviceLabaBulanIni + $rentalLabaBulanIni;
+
+        $saleLabaBulanLalu = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
+        $serviceLabaBulanLalu = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->get()->sum(function($s) {
+            return $s->actual_cost - $s->estimated_parts_cost;
+        });
+        $rentalLabaBulanLalu = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_price');
+        $labaBulanLalu = $saleLabaBulanLalu + $serviceLabaBulanLalu + $rentalLabaBulanLalu;
 
         // Pertumbuhan Persentase MoM
         $omzetGrowth = $omzetBulanLalu > 0 ? (($omzetBulanIni - $omzetBulanLalu) / $omzetBulanLalu) * 100 : ($omzetBulanIni > 0 ? 100 : 0);
