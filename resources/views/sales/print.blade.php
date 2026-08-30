@@ -3,404 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - {{ $sale->invoice_number ?? 'INV-' . str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</title>
+    <title>Invoice - {{ str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</title>
     <style>
-        @page {
-            margin: 20mm;
-            size: A4;
-        }
-        
+        @page { margin: 10mm; size: A4; }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
         body {
-            font-family: 'Arial', sans-serif;
-            font-size: 12px;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
             line-height: 1.4;
-            color: #333;
+            color: #1f2937;
             margin: 0;
             padding: 0;
-        }
-        
-        .invoice-container {
-            max-width: 800px;
-            margin: 0 auto;
             background: white;
-            padding: 20px;
         }
-        
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+
+        .invoice-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 16px;
+            background: white;
         }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 5px;
-        }
-        
-        .company-info {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .invoice-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin: 20px 0 10px 0;
-        }
-        
-        .invoice-info {
+
+        /* Header */
+        .inv-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            align-items: flex-start;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
         }
-        
-        .info-section {
-            width: 48%;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 5px;
-        }
-        
-        .info-value {
-            margin-bottom: 10px;
-        }
-        
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        
-        .items-table th {
-            background-color: #1e3a8a;
-            color: white;
-            text-align: left;
-            padding: 10px;
-            font-weight: bold;
-            border: 1px solid #1e3a8a;
-        }
-        
-        .items-table td {
-            padding: 8px 10px;
-            border: 1px solid #ddd;
-        }
-        
-        .items-table .text-right {
-            text-align: right;
-        }
-        
-        .total-section {
-            margin-top: 20px;
-            text-align: right;
-        }
-        
-        .total-row {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 5px;
-        }
-        
-        .total-label {
-            width: 150px;
-            text-align: right;
-            padding-right: 20px;
-            font-weight: bold;
-        }
-        
-        .total-value {
-            width: 120px;
-            text-align: right;
-            font-weight: bold;
-        }
-        
-        .grand-total {
-            border-top: 2px solid #1e3a8a;
-            padding-top: 5px;
-            font-size: 14px;
-            color: #1e3a8a;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            text-align: center;
-            font-size: 11px;
-            color: #666;
-        }
-        
-        .signature-section {
-            margin-top: 30px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .signature-box {
-            width: 200px;
-            text-align: center;
-        }
-        
-        .signature-line {
-            border-bottom: 1px solid #333;
-            margin-bottom: 5px;
-            height: 40px;
-        }
-        
-        .signature-title {
-            font-size: 11px;
-            color: #666;
-        }
-        
-        .no-print {
-            display: block;
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .print-button {
-            background-color: #1e3a8a;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            margin: 0 5px;
-        }
-        
-        .print-button:hover {
-            background-color: #2563eb;
-        }
-        
+        .company-left { display: flex; align-items: flex-start; gap: 10px; }
+        .company-left img { height: 40px; width: auto; }
+        .company-name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: #111827; margin-bottom: 2px; }
+        .company-detail { font-size: 10px; color: #4b5563; line-height: 1.4; }
+        .company-detail a { color: #2563eb; text-decoration: none; }
+        .inv-title { font-size: 22px; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: .1em; }
+
+        /* 2-col grid */
+        .info-grid { display: flex; gap: 12px; margin-bottom: 12px; }
+        .info-box { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 8px 10px; }
+        .info-box-title { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #475569; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 6px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 3px; margin-bottom: 3px; font-size: 10px; }
+        .info-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .info-row .lbl { font-weight: 600; color: #374151; }
+        .info-row .val { font-weight: 700; color: #111827; }
+        .customer-name { font-size: 13px; font-weight: 800; color: #111827; margin-bottom: 4px; }
+        .customer-detail { font-size: 10px; color: #374151; margin-bottom: 2px; }
+
+        /* Badges */
+        .badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; font-weight: 800; border: 1px solid; }
+        .badge-success  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .badge-pending  { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
+        .badge-failed   { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+        .badge-selesai  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .badge-diproses { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+        .badge-batal    { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+        .badge-menunggu { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
+
+        /* Product table */
+        .prod-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; }
+        .prod-table thead tr { background: #f9fafb; }
+        .prod-table th { padding: 5px 8px; text-align: left; font-size: 8px; font-weight: 800; color: #374151; text-transform: uppercase; letter-spacing: .06em; border: 1px solid #e5e7eb; border-bottom: 2px solid #d1d5db; }
+        .prod-table th.right { text-align: right; }
+        .prod-table td { padding: 5px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 10px; }
+        .prod-table td.right { text-align: right; font-weight: 700; }
+        .prod-name { font-weight: 700; color: #111827; }
+        .prod-cat  { font-size: 9px; color: #6b7280; }
+        .prod-spec { font-size: 9px; color: #4b5563; background: #f9fafb; padding: 1px 4px; border-radius: 3px; display: inline-block; margin-top: 2px; line-height: 1.3; }
+        .prod-sn   { font-size: 9px; font-family: monospace; color: #1e40af; margin-top: 2px; }
+        .badge-preorder { display:inline-block; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; margin-left:4px; }
+        .badge-ready    { display:inline-block; padding:1px 5px; border-radius:3px; font-size:7px; font-weight:700; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; margin-left:4px; }
+        .total-tr td { padding: 6px 8px; font-weight: 800; font-size: 11px; color: #111827; background: #f3f4f6; border-bottom: 1px solid #e5e7eb; }
+
+        /* Footer */
+        .inv-footer { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #e5e7eb; padding-top: 8px; margin-top: 8px; }
+        .warranty-title { font-size: 10px; font-weight: 700; color: #111827; margin-bottom: 3px; }
+        .warranty-item  { font-size: 9px; color: #4b5563; line-height: 1.5; }
+        .thankyou { font-size: 9px; color: #374151; font-style: italic; text-align: right; }
+
+        /* Signature */
+        .sig-section { display: flex; justify-content: space-between; margin-top: 30px; }
+        .sig-box { width: 200px; text-align: center; }
+        .sig-line { border-bottom: 1px solid #374151; height: 40px; margin-bottom: 4px; }
+        .sig-label { font-size: 10px; color: #4b5563; }
+
+        /* Controls */
+        .no-print { text-align: center; margin: 20px 0; }
+        .no-print button { background: #1e3a8a; color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 13px; margin: 0 4px; }
+        .no-print button:hover { background: #2563eb; }
+
         @media print {
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            
-            .no-print {
-                display: none !important;
-            }
-            
-            .invoice-container {
-                margin: 0;
-                padding: 0;
-                max-width: 100%;
-            }
-            
-            .header {
-                margin-bottom: 20px;
-            }
-            
-            .footer {
-                margin-top: 20px;
-            }
+            .no-print { display: none !important; }
+            body { margin: 0; padding: 0; }
+            .invoice-wrap { padding: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="invoice-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="flex items-start justify-between">
-                <div class="text-left">
-                    <div class="logo">LK Tech TN SEREAL</div>
-                    <div class="company-info">
-                        Alamat: Villa Mutiara 1 Sektor 2 BLOK i-18 No.03, RT.03/RW.12,<br>
-                        Mekarwangi, Tanah Sereal, Kota Bogor, Jawa Barat 16168<br>
-                        Telepon: 0856-7354-046<br>
-                        Website: <a href="https://lktech.online/" style="color: #1e3a8a; text-decoration: none;">https://lktech.online/</a>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <img src="{{ asset('images/lktech-logo.png') }}" alt="LK Tech Logo" class="h-16 w-auto">
+<div class="invoice-wrap">
+
+    {{-- HEADER --}}
+    <div class="inv-header">
+        <div class="company-left">
+            <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech Logo">
+            <div>
+                <div class="company-name">LK Tech TN SEREAL</div>
+                <div class="company-detail">
+                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
+                    Mekarwangi, Tanah Sereal, Bogor 16168<br>
+                    Telp: 0856-7354-046<br>
+                    Website: <a href="https://lktech.online/">https://lktech.online/</a>
                 </div>
             </div>
         </div>
+        <div class="inv-title">Invoice</div>
+    </div>
 
-        <!-- Invoice Title -->
-        <div class="invoice-title">FAKTUR PENJUALAN</div>
-
-        <!-- Invoice Information -->
-        <div class="invoice-info">
-            <div class="info-section">
-                <div class="info-label">Nomor Faktur</div>
-                <div class="info-value">{{ $sale->invoice_number ?? 'FAK-' . str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</div>
-                
-                <div class="info-label">Tanggal Transaksi</div>
-                <div class="info-value">{{ \Carbon\Carbon::parse($sale->transaction_date)->format('d F Y') }}</div>
-                
-                <div class="info-label">Metode Pembayaran</div>
-                <div class="info-value">{{ ucfirst($sale->payment_method ?? 'Tunai') }}</div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-label">Nama Pelanggan</div>
-                <div class="info-value">{{ $sale->customer_name ?? 'Pelanggan Umum' }}</div>
-                
-                <div class="info-label">Telepon</div>
-                <div class="info-value">{{ $sale->customer_phone ?? '-' }}</div>
-                
-                <div class="info-label">Email</div>
-                <div class="info-value">{{ $sale->customer_email ?? '-' }}</div>
-            </div>
-        </div>
-
-        <!-- Items Table (Merged Columns with Conditional Specs) -->
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th style="width: 50%">Produk</th>
-                    <th style="width: 25%">Nomor Seri</th>
-                    <th style="width: 25%" class="text-right">Harga</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if($sale->saleDetails && $sale->saleDetails->count() > 0)
-                    @php $totalAmount = 0; @endphp
-                    @foreach($sale->saleDetails as $index => $detail)
-                        @php $totalAmount += $detail->price_at_transaction; @endphp
-                        <tr>
-                            <td style="width: 50%">
-                                <div>
-                                    <div style="font-weight: bold;">{{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}</div>
-                                    <div style="color: #666; font-size: 11px;">{{ $detail->product->category->name ?? 'Barang Umum' }}</div>
-                                    
-                                    {{-- Tampilkan Spek HANYA jika isi datanya valid (bukan strip atau kosong) --}}
-                                    @if((!empty($detail->product->processor) && $detail->product->processor != '-') || 
-                                        (!empty($detail->product->ram) && $detail->product->ram != '-') || 
-                                        (!empty($detail->product->storage) && $detail->product->storage != '-'))
-                                        <div style="font-size: 10px; color: #666; margin-top: 2px; background: #f9fafb; padding: 2px 4px; border-radius: 3px; display: inline-block;">
-                                            @if(!empty($detail->product->processor) && $detail->product->processor != '-') Proc: {{ $detail->product->processor }} @endif
-                                            @if(!empty($detail->product->ram) && $detail->product->ram != '-') | RAM: {{ $detail->product->ram }} @endif
-                                            @if(!empty($detail->product->storage) && $detail->product->storage != '-') | Storage: {{ $detail->product->storage }} @endif
-                                        </div>
-                                    @endif
-
-                                    {{-- Serial Number di bawahnya --}}
-                                    <div style="font-size: 10px; font-family: monospace; color: #1e40af; margin-top: 2px;">
-                                        SN / Batch: {{ $detail->serial_number ?? $detail->product->serial_number ?? 'BATCH-xxx' }}
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="width: 25%">
-                                <div>{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</div>
-                                @if($detail->manual_sn)
-                                <div style="font-size: 10px; color: #4b5563; margin-top: 2px;">SN/Key: {{ $detail->manual_sn }}</div>
-                                @endif
-                            </td>
-                            <td style="width: 25%" class="text-right">Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}</td>
-                        </tr>
-                    @endforeach
-                @else
-                    @php $totalAmount = $sale->total_amount ?? 0; @endphp
-                    <tr>
-                        <td style="width: 50%">
-                            <div>
-                                <div style="font-weight: bold;">{{ $sale->product->brand ?? '' }} {{ $sale->product->model_series ?? '' }}</div>
-                                <div style="color: #666; font-size: 11px;">{{ $sale->product->category->name ?? 'Barang Umum' }}</div>
-                                
-                                {{-- Tampilkan Spek HANYA jika isi datanya valid (bukan strip atau kosong) --}}
-                                @if((!empty($sale->product->processor) && $sale->product->processor != '-') || 
-                                    (!empty($sale->product->ram) && $sale->product->ram != '-') || 
-                                    (!empty($sale->product->storage) && $sale->product->storage != '-'))
-                                    <div style="font-size: 10px; color: #666; margin-top: 2px; background: #f9fafb; padding: 2px 4px; border-radius: 3px; display: inline-block;">
-                                        @if(!empty($sale->product->processor) && $sale->product->processor != '-') Proc: {{ $sale->product->processor }} @endif
-                                        @if(!empty($sale->product->ram) && $sale->product->ram != '-') | RAM: {{ $sale->product->ram }} @endif
-                                        @if(!empty($sale->product->storage) && $sale->product->storage != '-') | Storage: {{ $sale->product->storage }} @endif
-                                    </div>
-                                @endif
-
-                                {{-- Serial Number di bawahnya --}}
-                                <div style="font-size: 10px; font-family: monospace; color: #1e40af; margin-top: 2px;">
-                                    SN / Batch: {{ $sale->product->serial_number ?? 'BATCH-xxx' }}
-                                </div>
-                            </div>
-                        </td>
-                        <td style="width: 25%">
-                            <div>{{ $sale->product->serial_number ?? '-' }}</div>
-                            @if($sale->manual_sn)
-                            <div style="font-size: 10px; color: #4b5563; margin-top: 2px;">SN/Key: {{ $sale->manual_sn }}</div>
-                            @endif
-                        </td>
-                        <td style="width: 25%" class="text-right">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-
-        <!-- Total Section -->
-        <div class="total-section">
-            <div class="total-row">
-                <div class="total-label">Subtotal:</div>
-                <div class="total-value">Rp {{ number_format($totalAmount, 0, ',', '.') }}</div>
-            </div>
-            @if($sale->tax_amount > 0)
-            <div class="total-row">
-                <div class="total-label">PPN (11%):</div>
-                <div class="total-value">Rp {{ number_format($sale->tax_amount, 0, ',', '.') }}</div>
+    {{-- 2-COLUMN INFO --}}
+    <div class="info-grid">
+        {{-- Ditagihkan Kepada --}}
+        <div class="info-box">
+            <div class="info-box-title">Ditagihkan Kepada</div>
+            <div class="customer-name">{{ $sale->customer->name ?? 'Pelanggan Umum' }}</div>
+            @if($sale->customer && $sale->customer->phone)
+            <div class="customer-detail"><strong>Telp:</strong> {{ $sale->customer->phone }}</div>
+            @endif
+            @if($sale->customer && $sale->customer->email)
+            <div class="customer-detail"><strong>Email:</strong> {{ $sale->customer->email }}</div>
+            @endif
+            @if($sale->customer && $sale->customer->address)
+            <div class="customer-detail" style="margin-top:4px;">
+                <strong>Alamat:</strong><br>{{ $sale->customer->address }}
             </div>
             @endif
-            @if($sale->discount_amount > 0)
-            <div class="total-row">
-                <div class="total-label">Diskon:</div>
-                <div class="total-value">-Rp {{ number_format($sale->discount_amount, 0, ',', '.') }}</div>
-            </div>
-            @endif
-            <div class="total-row grand-total">
-                <div class="total-label">TOTAL PEMBAYARAN:</div>
-                <div class="total-value">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</div>
-            </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <p><strong>Garansi Produk:</strong> Semua produk bergaransi 1 tahun untuk kerusakan hardware (bukan karena human error)</p>
-            <p><strong>Kebijakan Pengembalian:</strong> Pengembalian produk dapat dilakukan dalam 7 hari dengan kondisi produk masih baik</p>
-            <p><strong>Terima kasih telah berbelanja di LKtech TN SEREAL!</strong></p>
-        </div>
-
-        <!-- Signature Section -->
-        <div class="signature-section">
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div class="signature-title">Penjual</div>
+        {{-- Detail Faktur --}}
+        <div class="info-box">
+            <div class="info-box-title">Detail Faktur</div>
+            <div class="info-row">
+                <span class="lbl">No. Faktur:</span>
+                <span class="val">{{ str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</span>
             </div>
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div class="signature-title">Pembeli</div>
+            <div class="info-row">
+                <span class="lbl">Tanggal:</span>
+                <span class="val">{{ \Carbon\Carbon::parse($sale->transaction_date)->format('d M Y, H:i') }}</span>
             </div>
-        </div>
-
-        <!-- Print Controls (No Print Class) -->
-        <div class="no-print print:hidden">
-            <button onclick="window.print()" class="print-button">Cetak Faktur</button>
-            <button onclick="window.close()" class="print-button">Tutup</button>
+            <div class="info-row">
+                <span class="lbl">Sales:</span>
+                <span class="val">{{ $sale->user->name ?? '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="lbl">Status:</span>
+                <span>
+                    @php $ps = $sale->payment_status; $os = $sale->order_status; @endphp
+                    <span class="badge {{ $ps==='success'?'badge-success':($ps==='failed'?'badge-failed':'badge-pending') }}">
+                        {{ strtoupper($ps==='success'?'LUNAS':($ps==='failed'?'BATAL':'PENDING')) }}
+                    </span>
+                    &nbsp;
+                    <span class="badge {{ $os==='selesai'?'badge-selesai':($os==='batal'?'badge-batal':($os==='diproses'?'badge-diproses':'badge-menunggu')) }}">
+                        {{ strtoupper(str_replace('_',' ',$os)) }}
+                    </span>
+                </span>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Auto print when page loads
-        window.onload = function() {
-            setTimeout(function() {
-                window.print();
-            }, 500);
-        };
-        
-        // Close window after printing
-        window.onafterprint = function() {
-            setTimeout(function() {
-                window.close();
-            }, 1000);
-        };
-    </script>
+    {{-- PRODUCT TABLE --}}
+    <table class="prod-table">
+        <thead>
+            <tr>
+                <th style="width:50%">Produk</th>
+                <th style="width:25%">Nomor Seri</th>
+                <th style="width:25%" class="right">Harga</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($sale->saleDetails as $detail)
+            <tr style="background:#fff;">
+                <td style="width:50%">
+                    <div class="prod-name">
+                        {{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}
+                        @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
+                            <span class="badge-preorder">Pre-Order</span>
+                        @else
+                            <span class="badge-ready">Ready</span>
+                        @endif
+                    </div>
+                    <div class="prod-cat">{{ $detail->product->category->name ?? 'Umum' }}</div>
+                    @if((!empty($detail->product->processor) && $detail->product->processor != '-') ||
+                        (!empty($detail->product->ram) && $detail->product->ram != '-') ||
+                        (!empty($detail->product->storage) && $detail->product->storage != '-'))
+                    <div class="prod-spec">
+                        @if(!empty($detail->product->processor) && $detail->product->processor != '-')Proc: {{ $detail->product->processor }}@endif
+                        @if(!empty($detail->product->ram) && $detail->product->ram != '-') | RAM: {{ $detail->product->ram }}@endif
+                        @if(!empty($detail->product->storage) && $detail->product->storage != '-') | Storage: {{ $detail->product->storage }}@endif
+                    </div>
+                    @endif
+                </td>
+                <td style="width:25%">
+                    <div>{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</div>
+                    @if($detail->manual_sn)
+                    <div class="prod-sn">SN/Key: {{ $detail->manual_sn }}</div>
+                    @endif
+                </td>
+                <td style="width:25%" class="right">
+                    Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}
+                </td>
+            </tr>
+            @endforeach
+            <tr class="total-tr">
+                <td colspan="2" style="text-align:right;">TOTAL BAYAR</td>
+                <td style="text-align:right;">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{-- FOOTER --}}
+    <div class="inv-footer">
+        <div style="width:66%">
+            <div class="warranty-title">Ketentuan Garansi</div>
+            <div class="warranty-item">1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
+            <div class="warranty-item">2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
+        </div>
+        <div class="thankyou" style="width:33%;">
+            Terima kasih telah berbelanja di LKtech!
+        </div>
+    </div>
+
+    {{-- SIGNATURE --}}
+    <div class="sig-section">
+        <div class="sig-box">
+            <div class="sig-line"></div>
+            <div class="sig-label">Penjual</div>
+        </div>
+        <div class="sig-box">
+            <div class="sig-line"></div>
+            <div class="sig-label">Pembeli</div>
+        </div>
+    </div>
+
+    {{-- PRINT CONTROLS --}}
+    <div class="no-print">
+        <button onclick="window.print()">🖨 Cetak</button>
+        <button onclick="window.close()">✕ Tutup</button>
+    </div>
+
+</div>
+<script>
+    window.onload = function() {
+        setTimeout(function() { window.print(); }, 400);
+    };
+    window.onafterprint = function() {
+        setTimeout(function() { window.close(); }, 800);
+    };
+</script>
 </body>
 </html>
