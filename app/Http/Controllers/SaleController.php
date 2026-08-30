@@ -100,10 +100,15 @@ class SaleController extends Controller
                 // 1. Tentukan ID Pelanggan
                 $customerId = null;
                 if ($request->is_new_customer == '1') {
-                    $customer = \App\Models\Customer::firstOrCreate(
-                        ['phone' => $request->new_customer_phone],
-                        ['name' => $request->new_customer_name, 'email' => $request->new_customer_email, 'address' => $request->new_customer_address ?? '']
-                    );
+                    // Selalu buat pelanggan BARU — jangan pakai firstOrCreate
+                    // karena jika nomor HP sudah terdaftar, firstOrCreate akan
+                    // mengembalikan data pelanggan lama (bukan yang baru diinput).
+                    $customer = \App\Models\Customer::create([
+                        'name'    => $request->new_customer_name,
+                        'phone'   => $request->new_customer_phone,
+                        'email'   => $request->new_customer_email,
+                        'address' => $request->new_customer_address ?? '',
+                    ]);
                     $customerId = $customer->id;
                 } elseif ($request->filled('customer_id')) {
                     $customerId = $request->customer_id;
