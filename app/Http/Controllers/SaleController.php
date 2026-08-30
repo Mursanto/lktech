@@ -100,16 +100,16 @@ class SaleController extends Controller
                 // 1. Tentukan ID Pelanggan
                 $customerId = null;
                 if ($request->is_new_customer == '1') {
-                    // Cari pelanggan dengan kombinasi PERSIS sama (nama+HP+email).
-                    // Jika sudah ada (beli ulang) → pakai data lama.
-                    // Jika berbeda satupun → buat entri baru.
-                    $customer = \App\Models\Customer::firstOrCreate(
+                    // Cari berdasarkan NOMOR HP (kunci utama identifikasi pelanggan).
+                    // Jika nomor sudah ada → UPDATE nama, email, alamat dengan data terbaru.
+                    // Jika nomor belum ada → buat pelanggan baru.
+                    $customer = \App\Models\Customer::updateOrCreate(
                         [
-                            'name'  => $request->new_customer_name,
                             'phone' => $request->new_customer_phone,
-                            'email' => $request->new_customer_email,
                         ],
                         [
+                            'name'    => $request->new_customer_name,
+                            'email'   => $request->new_customer_email,
                             'address' => $request->new_customer_address ?? '',
                         ]
                     );
