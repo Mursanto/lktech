@@ -234,17 +234,6 @@
         </div>
     </div>
 
-    {{-- SIGNATURE --}}
-    <div class="sig-section">
-        <div class="sig-box">
-            <div class="sig-line"></div>
-            <div class="sig-label">Penjual</div>
-        </div>
-        <div class="sig-box">
-            <div class="sig-line"></div>
-            <div class="sig-label">Pembeli</div>
-        </div>
-    </div>
 
     {{-- PRINT CONTROLS --}}
     <div class="no-print">
