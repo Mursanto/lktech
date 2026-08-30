@@ -111,12 +111,17 @@ class SaleController extends Controller
 
                 // 2. Buat "Faktur Induk" (Tabel Sales) DULU dengan nilai 0
                 // Ingat: Tabel sales TIDAK punya kolom quantity dan product_id
+                // Gunakan tanggal dari form (support backdate), fallback ke sekarang
+                $transactionDate = $request->filled('transaction_date')
+                    ? \Carbon\Carbon::parse($request->transaction_date)
+                    : now();
+
                 $sale = \App\Models\Sale::create([
                     'customer_id' => $customerId,
                     'total_amount' => 0,
                     'profit_amount' => 0,
                     'user_id' => auth()->id() ?? 1,
-                    'transaction_date' => now(),
+                    'transaction_date' => $transactionDate,
                     'payment_method' => $request->input('payment_method', 'cash'),
                     'notes' => $request->input('notes')
                 ]);
