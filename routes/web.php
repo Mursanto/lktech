@@ -171,6 +171,38 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profit-audit', [ProfitAuditController::class, 'auditAndRecalculateAll'])->name('profit.audit');
         Route::get('/profit-validate', [ProfitAuditController::class, 'validateDashboardCalculations'])->name('profit.validate');
         Route::post('/profit-recalculate/{saleId}', [ProfitAuditController::class, 'recalculateSaleProfit'])->name('profit.recalculate');
+
+        // Route sementara: Hapus constraint unique di tabel customers (khusus Admin)
+        Route::get('/admin/fix-customer-constraint', function () {
+            try {
+                // Cek apakah index ada
+                $indexExists = \DB::select("
+                    SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS 
+                    WHERE TABLE_SCHEMA = DATABASE() 
+                      AND TABLE_NAME = 'customers' 
+                      AND INDEX_NAME = 'customers_unique_fields'
+                ");
+
+                if (empty($indexExists)) {
+                    return response()->json([
+                        'status' => 'already_done',
+                        'message' => 'Index customers_unique_fields sudah tidak ada.'
+                    ]);
+                }
+
+                \DB::statement('ALTER TABLE `customers` DROP INDEX `customers_unique_fields`');
+                
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Constraint customers_unique_fields berhasil dihapus!'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+        });
     }); // tutup: role:Admin group (baris 170)
 }); // tutup: auth group (baris 154)
 

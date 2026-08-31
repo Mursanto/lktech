@@ -300,12 +300,15 @@ class SaleController extends Controller
                 // 3. Update Identitas Pelanggan (jika ada)
                 $customerId = $sale->customer_id;
                 if ($request->is_new_customer == '1') {
-                    $customer = Customer::create([
-                        'name' => $request->new_customer_name,
-                        'phone' => $request->new_customer_phone,
-                        'email' => $request->new_customer_email,
-                        'address' => $request->new_customer_address ?? ''
-                    ]);
+                    // updateOrCreate by phone: update data jika nomor sudah ada, buat baru jika belum
+                    $customer = Customer::updateOrCreate(
+                        ['phone' => $request->new_customer_phone],
+                        [
+                            'name'    => $request->new_customer_name,
+                            'email'   => $request->new_customer_email,
+                            'address' => $request->new_customer_address ?? '',
+                        ]
+                    );
                     $customerId = $customer->id;
                 } elseif ($request->filled('customer_id')) {
                     $customerId = $request->customer_id;
