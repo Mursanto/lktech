@@ -208,7 +208,8 @@ Route::middleware(['auth'])->group(function () {
                 ], 500);
             }
         })->name('admin.run-migrate');
-});
+    }); // tutup: role:Admin group (baris 170)
+}); // tutup: auth group (baris 154)
 
 // RBAC Permissions Routes
 Route::middleware(['auth', 'permission:access_blog'])->group(function () {
