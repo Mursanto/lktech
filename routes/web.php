@@ -171,43 +171,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profit-audit', [ProfitAuditController::class, 'auditAndRecalculateAll'])->name('profit.audit');
         Route::get('/profit-validate', [ProfitAuditController::class, 'validateDashboardCalculations'])->name('profit.validate');
         Route::post('/profit-recalculate/{saleId}', [ProfitAuditController::class, 'recalculateSaleProfit'])->name('profit.recalculate');
-
-        // Route sementara: jalankan migration dari browser (khusus Admin)
-        Route::get('/admin/run-migrate', function () {
-            try {
-                // Cek tipe kolom saat ini
-                $colType = \DB::select("
-                    SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-                    WHERE TABLE_SCHEMA = DATABASE()
-                      AND TABLE_NAME   = 'sales'
-                      AND COLUMN_NAME  = 'transaction_date'
-                ")[0]->DATA_TYPE ?? 'unknown';
-
-                if ($colType === 'datetime') {
-                    return response()->json([
-                        'status'  => 'already_done',
-                        'message' => 'Kolom transaction_date sudah bertipe DATETIME. Tidak ada yang perlu diubah.',
-                        'time'    => now()->format('d M Y, H:i:s'),
-                    ]);
-                }
-
-                // Ubah DATE → DATETIME menggunakan raw SQL (tidak butuh doctrine/dbal)
-                \DB::statement('ALTER TABLE `sales` MODIFY COLUMN `transaction_date` DATETIME NOT NULL');
-
-                return response()->json([
-                    'status'  => 'success',
-                    'message' => 'Berhasil! Kolom transaction_date diubah dari DATE → DATETIME. Jam transaksi kini tersimpan dengan benar.',
-                    'was'     => $colType,
-                    'now'     => 'datetime',
-                    'time'    => now()->format('d M Y, H:i:s'),
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => $e->getMessage(),
-                ], 500);
-            }
-        })->name('admin.run-migrate');
     }); // tutup: role:Admin group (baris 170)
 }); // tutup: auth group (baris 154)
 
