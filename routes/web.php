@@ -175,13 +175,30 @@ Route::middleware(['auth'])->group(function () {
         // Route sementara: jalankan migration dari browser (khusus Admin)
         Route::get('/admin/run-migrate', function () {
             try {
-                // Fix kolom transaction_date: date → datetime
-                \Illuminate\Support\Facades\Schema::table('sales', function ($table) {
-                    $table->dateTime('transaction_date')->change();
-                });
+                // Cek tipe kolom saat ini
+                $colType = \DB::select("
+                    SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_SCHEMA = DATABASE()
+                      AND TABLE_NAME   = 'sales'
+                      AND COLUMN_NAME  = 'transaction_date'
+                ")[0]->DATA_TYPE ?? 'unknown';
+
+                if ($colType === 'datetime') {
+                    return response()->json([
+                        'status'  => 'already_done',
+                        'message' => 'Kolom transaction_date sudah bertipe DATETIME. Tidak ada yang perlu diubah.',
+                        'time'    => now()->format('d M Y, H:i:s'),
+                    ]);
+                }
+
+                // Ubah DATE → DATETIME menggunakan raw SQL (tidak butuh doctrine/dbal)
+                \DB::statement('ALTER TABLE `sales` MODIFY COLUMN `transaction_date` DATETIME NOT NULL');
+
                 return response()->json([
                     'status'  => 'success',
-                    'message' => 'Kolom transaction_date berhasil diubah ke DATETIME. Jam transaksi kini akan tersimpan dengan benar.',
+                    'message' => 'Berhasil! Kolom transaction_date diubah dari DATE → DATETIME. Jam transaksi kini tersimpan dengan benar.',
+                    'was'     => $colType,
+                    'now'     => 'datetime',
                     'time'    => now()->format('d M Y, H:i:s'),
                 ]);
             } catch (\Exception $e) {
