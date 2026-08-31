@@ -481,6 +481,27 @@ class SaleController extends Controller
     }
 
     
+    
+    /**
+     * Update tanggal & jam transaksi (untuk koreksi data lama yang jamnya 00:00).
+     */
+    public function updateDate(Request $request, Sale $sale)
+    {
+        $request->validate([
+            'transaction_date' => 'required|date',
+        ]);
+
+        try {
+            $newDate = \Carbon\Carbon::parse($request->transaction_date);
+            $sale->update(['transaction_date' => $newDate]);
+
+            return redirect()->route('sales.show', $sale->id)
+                ->with('success', 'Tanggal transaksi berhasil diperbarui: ' . $newDate->format('d M Y, H:i'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memperbarui tanggal: ' . $e->getMessage());
+        }
+    }
+
     /**
      * Print the specified sale.
      */

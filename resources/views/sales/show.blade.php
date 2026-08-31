@@ -150,7 +150,16 @@
                                 </div>
                                 <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
                                     <span class="font-medium">Tanggal:</span>
-                                    <span class="text-slate-900">{{ $sale->transaction_date->format('d M Y, H:i') }}</span>
+                                    <span class="flex items-center gap-1.5">
+                                        <span class="text-slate-900">{{ $sale->transaction_date->format('d M Y, H:i') }}</span>
+                                        @role('Admin')
+                                        <button type="button" onclick="document.getElementById('modal-edit-date').classList.remove('hidden')"
+                                            class="no-print inline-flex items-center px-1.5 py-0.5 bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded text-[9px] font-bold transition-colors"
+                                            title="Edit Tanggal Transaksi">
+                                            ✏️ Edit
+                                        </button>
+                                        @endrole
+                                    </span>
                                 </div>
                                 <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
                                     <span class="font-medium">Sales:</span>
@@ -307,6 +316,52 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{-- ═══════════════════════════════════════════════════════════════ --}}
+    {{-- MODAL: Edit Tanggal Transaksi                                   --}}
+    {{-- ═══════════════════════════════════════════════════════════════ --}}
+    <div id="modal-edit-date" class="hidden fixed inset-0 z-50 flex items-center justify-center no-print">
+        {{-- Backdrop --}}
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+             onclick="document.getElementById('modal-edit-date').classList.add('hidden')"></div>
+
+        {{-- Panel --}}
+        <div class="relative z-10 bg-white rounded-xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden">
+            {{-- Header --}}
+            <div class="bg-blue-600 px-5 py-3 flex items-center justify-between">
+                <h3 class="text-white font-bold text-sm flex items-center gap-2">
+                    📅 Edit Tanggal Transaksi
+                </h3>
+                <button type="button" onclick="document.getElementById('modal-edit-date').classList.add('hidden')"
+                    class="text-white/70 hover:text-white text-xl leading-none">✕</button>
+            </div>
+
+            {{-- Body --}}
+            <form action="{{ route('sales.update-date', $sale->id) }}" method="POST" class="p-5">
+                @csrf @method('PATCH')
+
+                <p class="text-xs text-gray-500 mb-3">
+                    Faktur <strong>#{{ str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</strong> —
+                    Tanggal saat ini:
+                    <strong class="text-blue-700">{{ $sale->transaction_date->format('d M Y, H:i') }}</strong>
+                </p>
+
+                <label class="block text-xs font-semibold text-gray-700 mb-1">Tanggal &amp; Jam Baru</label>
+                <input type="datetime-local" name="transaction_date"
+                    value="{{ $sale->transaction_date->format('Y-m-d\TH:i') }}"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+
+                <div class="mt-4 flex gap-2 justify-end">
+                    <button type="button"
+                        onclick="document.getElementById('modal-edit-date').classList.add('hidden')"
+                        class="px-4 py-1.5 text-xs font-bold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg">Batal</button>
+                    <button type="submit"
+                        class="px-4 py-1.5 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg">💾 Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 
