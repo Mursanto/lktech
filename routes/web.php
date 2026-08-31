@@ -171,7 +171,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profit-audit', [ProfitAuditController::class, 'auditAndRecalculateAll'])->name('profit.audit');
         Route::get('/profit-validate', [ProfitAuditController::class, 'validateDashboardCalculations'])->name('profit.validate');
         Route::post('/profit-recalculate/{saleId}', [ProfitAuditController::class, 'recalculateSaleProfit'])->name('profit.recalculate');
-    });
+
+        // Route sementara: jalankan migration dari browser (khusus Admin)
+        Route::get('/admin/run-migrate', function () {
+            try {
+                // Fix kolom transaction_date: date → datetime
+                \Illuminate\Support\Facades\Schema::table('sales', function ($table) {
+                    $table->dateTime('transaction_date')->change();
+                });
+                return response()->json([
+                    'status'  => 'success',
+                    'message' => 'Kolom transaction_date berhasil diubah ke DATETIME. Jam transaksi kini akan tersimpan dengan benar.',
+                    'time'    => now()->format('d M Y, H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        })->name('admin.run-migrate');
 });
 
 // RBAC Permissions Routes
