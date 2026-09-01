@@ -6,9 +6,9 @@
 }
 
 @keyframes blueGoldRadiate {
-  0% { color: #1e3a8a; text-shadow: 0 0 2px rgba(30,58,138,0.2); }
-  50% { color: #fbbf24; text-shadow: 0 0 6px rgba(251,191,36,0.6); }
-  100% { color: #1e3a8a; text-shadow: 0 0 2px rgba(30,58,138,0.2); }
+  0%   { color: #1e3a8a; text-shadow: 0 0 3px rgba(30,58,138,0.3); }
+  50%  { color: #0d9488; text-shadow: 0 0 7px rgba(13,148,136,0.65); }
+  100% { color: #1e3a8a; text-shadow: 0 0 3px rgba(30,58,138,0.3); }
 }
 .tagline-radiate-bluegold {
   animation: blueGoldRadiate 4s infinite ease-in-out;
@@ -32,9 +32,9 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 sm:h-8 w-auto">
                     <div class="hidden sm:flex flex-col">
-                        <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 leading-none">LKTech TN SEREAL</span>
+                        <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 leading-none">LKTech Indonesia</span>
                         <span class="text-[6.5px] font-bold uppercase tracking-widest mt-1 tagline-radiate-bluegold w-full text-center">
-                            Hardware Andal. Software Profesional. Satu Integrasi.
+                            LKTech TN Sereal By Laras & Kenzi Technology
                         </span>
                     </div>
                 </a>
