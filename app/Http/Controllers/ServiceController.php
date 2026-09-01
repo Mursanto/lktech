@@ -61,7 +61,7 @@ class ServiceController extends Controller
         
         $categories = \App\Models\Category::all();
         
-        // Ambil produk untuk sparepart
+        // Ambil produk untuk sparepart (grouped untuk fallback)
         $groupedProducts = \App\Models\Product::with('category')
             ->whereHas('category', function($q) {
                 $q->whereIn('type_category', ['peripheral', 'service']);
@@ -77,7 +77,28 @@ class ServiceController extends Controller
                 return $data->category->name ?? 'Lainnya';
             });
 
-        return view('services.create', compact('customers', 'technicians', 'categories', 'groupedProducts'));
+        // Flat list untuk JS fast-search dropdown (sama seperti di SaleController)
+        $sparepartsJson = \App\Models\Product::with('category')
+            ->whereHas('category', function($q) {
+                $q->whereIn('type_category', ['peripheral', 'service']);
+            })
+            ->where(function ($q) {
+                $q->where('stock', '>', 0)
+                  ->orWhereHas('category', function($cat) {
+                      $cat->where('type_category', 'service');
+                  });
+            })
+            ->get()
+            ->map(fn($p) => [
+                'id'       => $p->id,
+                'text'     => ($p->brand ?? '') . ' ' . ($p->model_series ?? '') . ' — SKU-' . str_pad($p->id, 5, '0', STR_PAD_LEFT) . ' (Stok: ' . $p->stock . ')',
+                'price'    => (float)($p->selling_price ?? 0),
+                'stock'    => (int)$p->stock,
+                'category' => $p->category->name ?? 'Lainnya',
+                'name'     => trim(($p->brand ?? '') . ' ' . ($p->model_series ?? '')),
+            ]);
+
+        return view('services.create', compact('customers', 'technicians', 'categories', 'groupedProducts', 'sparepartsJson'));
     }
 
     public function show(Service $service)

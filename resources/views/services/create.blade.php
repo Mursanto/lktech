@@ -20,6 +20,66 @@
         </div>
     </x-slot>
 
+    <style>
+        /* ============================================================
+           Fast-Search Sparepart Dropdown (Service Form)
+        ============================================================ */
+        .sp-search-wrap { position: relative; }
+        .sp-search-input {
+            width: 100%; border: 1.5px solid #d1d5db; border-radius: 6px;
+            padding: 4px 24px 4px 8px; font-size: 10px; color: #374151;
+            background: #fff; outline: none; transition: border-color .15s, box-shadow .15s;
+            cursor: text;
+        }
+        .sp-search-input:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,.15); }
+        .sp-search-input.has-value { border-color: #10b981; background: #f0fdf4; font-weight: 600; }
+        .sp-clear-btn {
+            position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: #9ca3af;
+            font-size: 13px; line-height: 1; padding: 0; display: none;
+        }
+        .sp-clear-btn:hover { color: #ef4444; }
+        .sp-dropdown {
+            position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+            background: #fff; border: 1.5px solid #10b981; border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.12); z-index: 9999;
+            max-height: 200px; overflow-y: auto; display: none;
+        }
+        .sp-dropdown.open { display: block; }
+        .sp-dropdown-search {
+            position: sticky; top: 0; background: #fff; padding: 5px 7px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .sp-dropdown-search input {
+            width: 100%; border: 1px solid #d1d5db; border-radius: 4px;
+            padding: 3px 7px; font-size: 10px; outline: none;
+            background: #f9fafb;
+        }
+        .sp-dropdown-search input:focus { border-color: #10b981; background: #fff; }
+        .sp-option {
+            padding: 5px 9px; font-size: 10px; cursor: pointer;
+            border-bottom: 1px solid #f9fafb; color: #374151;
+            transition: background .1s;
+        }
+        .sp-option:last-child { border-bottom: none; }
+        .sp-option:hover, .sp-option.active { background: #ecfdf5; color: #065f46; }
+        .sp-option .sp-highlight { color: #059669; font-weight: 700; }
+        .sp-option .sp-badge {
+            display: inline-block; font-size: 8px; padding: 1px 4px;
+            border-radius: 999px; margin-left: 3px; font-weight: 700;
+        }
+        .sp-badge-stock { background: #dcfce7; color: #166534; }
+        .sp-badge-lowstock { background: #fef9c3; color: #854d0e; }
+        .sp-badge-nostock { background: #fee2e2; color: #991b1b; }
+        .sp-badge-service { background: #ede9fe; color: #5b21b6; }
+        .sp-empty { padding: 10px; text-align: center; color: #9ca3af; font-size: 10px; }
+        .sp-category-header {
+            padding: 3px 9px; font-size: 8px; font-weight: 800; letter-spacing: .08em;
+            text-transform: uppercase; color: #6b7280; background: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
+        }
+    </style>
+
     <div class="py-4 h-[calc(100vh-65px)] overflow-hidden">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 h-full flex flex-col">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex-grow flex flex-col overflow-hidden">
@@ -167,25 +227,15 @@
                                         </div>
                                         <template x-for="(part, pIndex) in item.spareparts" :key="pIndex">
                                             <div class="flex items-center gap-2 mb-1">
-                                                <select :name="'items['+index+'][spareparts]['+pIndex+'][product_id]'" 
-                                                        x-model="part.product_id" 
-                                                        required 
-                                                        @change="let opt = $event.target.options[$event.target.selectedIndex]; part.price = parseInt(opt.dataset.price || 0); part.name = opt.dataset.name || ''"
-                                                        class="flex-grow border border-gray-300 rounded px-2 py-1 text-[10px] bg-white focus:ring-1 focus:ring-emerald-500">
-                                                    <option value="">-- Pilih Produk --</option>
-                                                    @foreach($groupedProducts as $category => $products)
-                                                        <optgroup label="{{ $category }}">
-                                                            @foreach($products as $product)
-                                                                <option value="{{ $product->id }}" 
-                                                                    data-price="{{ $product->selling_price ?? 0 }}"
-                                                                    data-name="{{ trim($product->brand . ' ' . $product->model_series) }}">
-                                                                    {{ $product->brand }} {{ $product->model_series }} — Rp {{ number_format($product->selling_price ?? 0, 0, ',', '.') }} (Sisa: {{ $product->stock }})
-                                                                </option>
-                                                            @endforeach
-                                                        </optgroup>
-                                                    @endforeach
-                                                </select>
+                                                {{-- Hidden native inputs untuk form submission --}}
+                                                <input type="hidden" :name="'items['+index+'][spareparts]['+pIndex+'][product_id]'" x-model="part.product_id">
                                                 <input type="hidden" :name="'items['+index+'][spareparts]['+pIndex+'][name]'" x-model="part.name">
+                                                {{-- Custom fast-search wrapper (diisi JS) --}}
+                                                <div class="flex-grow sp-search-wrap"
+                                                     :data-item-index="index"
+                                                     :data-part-index="pIndex"
+                                                     x-init="$nextTick(() => buildSpSearch($el, item, part))"
+                                                ></div>
                                                 <div class="relative w-1/3">
                                                     <span class="absolute left-2 top-1 text-[10px] text-gray-400">Rp</span>
                                                     <input type="number" :name="'items['+index+'][spareparts]['+pIndex+'][price]'" x-model.number="part.price" required min="0" class="w-full border border-gray-300 rounded pl-6 pr-2 py-1 text-[10px] text-right font-bold bg-white focus:ring-1 focus:ring-emerald-500">
@@ -293,8 +343,179 @@
     @endif
 
     <script>
+    (function() {
+        // =============================================
+        // DATA: Sparepart list dari PHP
+        // =============================================
+        const SPAREPARTS = @json($sparepartsJson);
+
+        // =============================================
+        // Helper: escape HTML & highlight
+        // =============================================
+        function escHtml(str) {
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+        function regEsc(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        function spHighlight(text, query) {
+            if (!query) return escHtml(text);
+            const re = new RegExp('(' + regEsc(query) + ')', 'gi');
+            return escHtml(text).replace(re, '<span class="sp-highlight">$1</span>');
+        }
+
+        // =============================================
+        // Multi-word filter
+        // =============================================
+        function filterSp(query) {
+            if (!query || !query.trim()) return SPAREPARTS;
+            const terms = query.trim().toLowerCase().split(/\s+/);
+            return SPAREPARTS.filter(p => {
+                const hay = p.text.toLowerCase();
+                return terms.every(t => hay.includes(t));
+            });
+        }
+
+        // =============================================
+        // Build custom fast-search dropdown untuk sparepart
+        // Dipanggil dari Alpine x-init
+        // =============================================
+        window.buildSpSearch = function(wrapEl, item, part) {
+            // Bersihkan wrapper jika sudah ada isinya
+            wrapEl.innerHTML = '';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'sp-search-input w-full';
+            input.placeholder = 'Ketik nama / merk produk...';
+            input.autocomplete = 'off';
+
+            const clearBtn = document.createElement('button');
+            clearBtn.type = 'button';
+            clearBtn.className = 'sp-clear-btn';
+            clearBtn.innerHTML = '<i class="bx bx-x"></i>';
+            clearBtn.title = 'Hapus pilihan';
+
+            const dropdown = document.createElement('div');
+            dropdown.className = 'sp-dropdown';
+
+            const ddSearchWrap = document.createElement('div');
+            ddSearchWrap.className = 'sp-dropdown-search';
+            const ddSearch = document.createElement('input');
+            ddSearch.type = 'text';
+            ddSearch.placeholder = '\uD83D\uDD0D Cari produk sparepart...';
+            ddSearch.autocomplete = 'off';
+            ddSearchWrap.appendChild(ddSearch);
+            dropdown.appendChild(ddSearchWrap);
+
+            const listWrap = document.createElement('div');
+            dropdown.appendChild(listWrap);
+
+            wrapEl.appendChild(input);
+            wrapEl.appendChild(clearBtn);
+            wrapEl.appendChild(dropdown);
+
+            // Jika sudah ada nilai (misal saat edit), tampilkan nama
+            if (part.product_id && part.name) {
+                input.value = part.name;
+                input.classList.add('has-value');
+                clearBtn.style.display = 'block';
+            }
+
+            function renderList(query) {
+                listWrap.innerHTML = '';
+                const results = filterSp(query);
+                if (results.length === 0) {
+                    listWrap.innerHTML = '<div class="sp-empty">Produk tidak ditemukan</div>';
+                    return;
+                }
+                const groups = {};
+                results.forEach(p => {
+                    const cat = p.category || 'Lainnya';
+                    if (!groups[cat]) groups[cat] = [];
+                    groups[cat].push(p);
+                });
+                Object.keys(groups).forEach(cat => {
+                    const hdr = document.createElement('div');
+                    hdr.className = 'sp-category-header';
+                    hdr.textContent = cat;
+                    listWrap.appendChild(hdr);
+                    groups[cat].forEach(p => {
+                        const opt = document.createElement('div');
+                        opt.className = 'sp-option';
+                        opt.dataset.id = p.id;
+                        let stockBadge = '';
+                        if (p.stock === 0) {
+                            stockBadge = '<span class="sp-badge sp-badge-service">Jasa</span>';
+                        } else if (p.stock > 5) {
+                            stockBadge = '<span class="sp-badge sp-badge-stock">Stok: ' + p.stock + '</span>';
+                        } else {
+                            stockBadge = '<span class="sp-badge sp-badge-lowstock">Stok: ' + p.stock + '</span>';
+                        }
+                        const displayText = p.text.replace(/\(Stok: \d+\)/, '').trim();
+                        opt.innerHTML = spHighlight(displayText, query) + stockBadge;
+                        opt.addEventListener('mousedown', function(e) {
+                            e.preventDefault();
+                            selectProduct(p);
+                        });
+                        listWrap.appendChild(opt);
+                    });
+                });
+            }
+
+            function openDropdown() {
+                renderList(ddSearch.value || '');
+                dropdown.classList.add('open');
+                ddSearch.value = '';
+                ddSearch.focus();
+            }
+            function closeDropdown() {
+                dropdown.classList.remove('open');
+            }
+            function selectProduct(p) {
+                input.value = p.name;
+                input.classList.add('has-value');
+                clearBtn.style.display = 'block';
+                // Update Alpine reactive data
+                part.product_id = p.id;
+                part.name       = p.name;
+                part.price      = p.price;
+                closeDropdown();
+            }
+            function clearSelection() {
+                input.value = '';
+                input.classList.remove('has-value');
+                clearBtn.style.display = 'none';
+                part.product_id = '';
+                part.name       = '';
+                part.price      = 0;
+            }
+
+            input.addEventListener('click', openDropdown);
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeDropdown();
+                else if (!dropdown.classList.contains('open')) openDropdown();
+            });
+            ddSearch.addEventListener('input', function() { renderList(this.value); });
+            ddSearch.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') { closeDropdown(); }
+                if (e.key === 'Enter') {
+                    const first = listWrap.querySelector('.sp-option');
+                    if (first) first.dispatchEvent(new MouseEvent('mousedown'));
+                }
+            });
+            clearBtn.addEventListener('click', clearSelection);
+            document.addEventListener('mousedown', function(e) {
+                if (!wrapEl.contains(e.target)) closeDropdown();
+            }, true);
+
+            renderList('');
+        };
+
+        // =============================================
+        // Customer Toggle
+        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
-            // ---- Customer Toggle ----
             const toggleNew   = document.getElementById('new_customer_toggle');
             const existArea   = document.getElementById('existing_customer_area');
             const newArea     = document.getElementById('new_customer_area');
@@ -323,5 +544,6 @@
                 document.getElementById('customer_email').value   = sel.getAttribute('data-email')   || '';
             });
         });
+    })();
     </script>
 </x-app-layout>

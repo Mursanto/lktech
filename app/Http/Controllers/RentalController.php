@@ -47,7 +47,18 @@ class RentalController extends Controller
             ->whereHas('category', function($q) {
                 $q->where('type_category', 'hardware');
             })->get();
-        return view('rentals.create', compact('customers', 'products'));
+
+        // Flat list untuk JS fast-search dropdown
+        $productsJson = $products->map(fn($p) => [
+            'id'    => $p->id,
+            'text'  => ($p->brand ?? '') . ' ' . ($p->model_series ?? '') . ' — SN: ' . ($p->serial_number ?? 'N/A') . ' (Stok: ' . $p->stock . ')',
+            'price' => (float)($p->selling_price ?? 0),
+            'stock' => (int)$p->stock,
+            'name'  => trim(($p->brand ?? '') . ' ' . ($p->model_series ?? '')),
+            'sn'    => $p->serial_number ?? 'N/A',
+        ]);
+
+        return view('rentals.create', compact('customers', 'products', 'productsJson'));
     }
 
     public function store(Request $request)

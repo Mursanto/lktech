@@ -12,6 +12,59 @@
         </div>
     </x-slot>
 
+    <style>
+        /* ============================================================
+           Fast-Search Laptop Dropdown (Rental Form)
+        ============================================================ */
+        .rnt-search-wrap { position: relative; }
+        .rnt-search-input {
+            width: 100%; border: 1.5px solid #d1d5db; border-radius: 6px;
+            padding: 5px 28px 5px 8px; font-size: 11px; color: #374151;
+            background: #fff; outline: none; transition: border-color .15s, box-shadow .15s;
+            cursor: text;
+        }
+        .rnt-search-input:focus { border-color: #0d9488; box-shadow: 0 0 0 2px rgba(13,148,136,.15); }
+        .rnt-search-input.has-value { border-color: #0d9488; background: #f0fdfa; font-weight: 600; }
+        .rnt-clear-btn {
+            position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: #9ca3af;
+            font-size: 14px; line-height: 1; padding: 0; display: none;
+        }
+        .rnt-clear-btn:hover { color: #ef4444; }
+        .rnt-dropdown {
+            position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+            background: #fff; border: 1.5px solid #0d9488; border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.12); z-index: 9999;
+            max-height: 220px; overflow-y: auto; display: none;
+        }
+        .rnt-dropdown.open { display: block; }
+        .rnt-dropdown-search {
+            position: sticky; top: 0; background: #fff; padding: 6px 8px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .rnt-dropdown-search input {
+            width: 100%; border: 1px solid #d1d5db; border-radius: 4px;
+            padding: 4px 8px; font-size: 11px; outline: none;
+            background: #f9fafb;
+        }
+        .rnt-dropdown-search input:focus { border-color: #0d9488; background: #fff; }
+        .rnt-option {
+            padding: 6px 10px; font-size: 11px; cursor: pointer;
+            border-bottom: 1px solid #f9fafb; color: #374151;
+            transition: background .1s;
+        }
+        .rnt-option:last-child { border-bottom: none; }
+        .rnt-option:hover, .rnt-option.active { background: #f0fdfa; color: #134e4a; }
+        .rnt-option .rnt-highlight { color: #0d9488; font-weight: 700; }
+        .rnt-option .rnt-badge {
+            display: inline-block; font-size: 9px; padding: 1px 5px;
+            border-radius: 999px; margin-left: 4px; font-weight: 700;
+        }
+        .rnt-badge-stock    { background: #ccfbf1; color: #115e59; }
+        .rnt-badge-lowstock { background: #fef9c3; color: #854d0e; }
+        .rnt-empty { padding: 12px; text-align: center; color: #9ca3af; font-size: 11px; }
+    </style>
+
     <div class="py-4 h-[calc(100vh-65px)] overflow-hidden">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 h-full flex flex-col">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex-grow flex flex-col overflow-hidden">
@@ -137,15 +190,18 @@
                         <!-- Pilih Unit -->
                         <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Pilih Unit Laptop *</label>
+                            {{-- Hidden native select untuk form submission & validasi required --}}
                             <select name="product_id" id="product_id" required
-                                class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-teal-500">
+                                style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;">
                                 <option value="">-- Cari & Pilih Unit --</option>
                                 @foreach($products as $product)
                                     <option value="{{ $product->id }}" {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                        {{ $product->brand }} {{ $product->model_series }} — SN: {{ $product->serial_number ?? 'N/A' }} (Stok: {{ $product->stock }})
+                                        {{ $product->brand }} {{ $product->model_series }} — SN: {{ $product->serial_number ?? 'N/A' }}
                                     </option>
                                 @endforeach
                             </select>
+                            {{-- Custom fast-search wrapper (diisi JS) --}}
+                            <div id="laptop-search-wrap" class="rnt-search-wrap"></div>
                         </div>
 
                         <!-- Manual SN -->
@@ -231,77 +287,236 @@
     @endif
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ---- New Customer Toggle ----
-        const toggle         = document.getElementById('new_customer_toggle');
-        const existingArea   = document.getElementById('existing_customer_area');
-        const newArea        = document.getElementById('new_customer_area');
-        const hiddenInput    = document.getElementById('is_new_customer_input');
-        const customerSel    = document.getElementById('customer_id');
-        const newNameInp     = document.getElementById('new_customer_name');
-        const newPhoneInp    = document.getElementById('new_customer_phone');
+    (function() {
+        // =============================================
+        // DATA: Laptop list dari PHP
+        // =============================================
+        const LAPTOPS = @json($productsJson);
 
-        toggle.addEventListener('change', function() {
-            if (this.checked) {
-                existingArea.classList.add('hidden');
-                newArea.classList.remove('hidden');
-                hiddenInput.value = '1';
-                customerSel.removeAttribute('required');
-                newNameInp.setAttribute('required', 'true');
-                newPhoneInp.setAttribute('required', 'true');
-            } else {
-                existingArea.classList.remove('hidden');
-                newArea.classList.add('hidden');
-                hiddenInput.value = '0';
-                customerSel.setAttribute('required', 'true');
-                newNameInp.removeAttribute('required');
-                newPhoneInp.removeAttribute('required');
+        // =============================================
+        // Helper: escape HTML & highlight
+        // =============================================
+        function escHtml(str) {
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+        function regEsc(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        function rntHighlight(text, query) {
+            if (!query) return escHtml(text);
+            const re = new RegExp('(' + regEsc(query) + ')', 'gi');
+            return escHtml(text).replace(re, '<span class="rnt-highlight">$1</span>');
+        }
+
+        // =============================================
+        // Multi-word filter
+        // =============================================
+        function filterLaptops(query) {
+            if (!query || !query.trim()) return LAPTOPS;
+            const terms = query.trim().toLowerCase().split(/\s+/);
+            return LAPTOPS.filter(p => {
+                const hay = p.text.toLowerCase();
+                return terms.every(t => hay.includes(t));
+            });
+        }
+
+        // =============================================
+        // Build custom fast-search dropdown untuk laptop
+        // =============================================
+        function buildLaptopSearch() {
+            const wrapEl    = document.getElementById('laptop-search-wrap');
+            const nativeSel = document.getElementById('product_id');
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'rnt-search-input';
+            input.placeholder = 'Ketik merk / model / SN laptop...';
+            input.autocomplete = 'off';
+            input.id = 'laptop-search-input';
+
+            const clearBtn = document.createElement('button');
+            clearBtn.type = 'button';
+            clearBtn.className = 'rnt-clear-btn';
+            clearBtn.innerHTML = '<i class="bx bx-x"></i>';
+            clearBtn.title = 'Hapus pilihan';
+
+            const dropdown = document.createElement('div');
+            dropdown.className = 'rnt-dropdown';
+
+            const ddSearchWrap = document.createElement('div');
+            ddSearchWrap.className = 'rnt-dropdown-search';
+            const ddSearch = document.createElement('input');
+            ddSearch.type = 'text';
+            ddSearch.placeholder = '\uD83D\uDD0D Cari unit laptop...';
+            ddSearch.autocomplete = 'off';
+            ddSearchWrap.appendChild(ddSearch);
+            dropdown.appendChild(ddSearchWrap);
+
+            const listWrap = document.createElement('div');
+            dropdown.appendChild(listWrap);
+
+            wrapEl.appendChild(input);
+            wrapEl.appendChild(clearBtn);
+            wrapEl.appendChild(dropdown);
+
+            // Jika ada old value (validasi gagal), restore tampilan
+            if (nativeSel.value) {
+                const selOpt = nativeSel.options[nativeSel.selectedIndex];
+                if (selOpt && selOpt.value) {
+                    input.value = selOpt.textContent.trim();
+                    input.classList.add('has-value');
+                    clearBtn.style.display = 'block';
+                }
             }
-        });
 
-        // ---- Existing Customer Auto-fill ----
-        const displayName  = document.getElementById('display_name');
-        const displayPhone = document.getElementById('display_phone');
+            function renderList(query) {
+                listWrap.innerHTML = '';
+                const results = filterLaptops(query);
+                if (results.length === 0) {
+                    listWrap.innerHTML = '<div class="rnt-empty">Unit laptop tidak ditemukan</div>';
+                    return;
+                }
+                results.forEach(p => {
+                    const opt = document.createElement('div');
+                    opt.className = 'rnt-option';
+                    opt.dataset.id = p.id;
+                    let stockBadge = '';
+                    if (p.stock > 3) {
+                        stockBadge = '<span class="rnt-badge rnt-badge-stock">Stok: ' + p.stock + '</span>';
+                    } else {
+                        stockBadge = '<span class="rnt-badge rnt-badge-lowstock">Stok: ' + p.stock + '</span>';
+                    }
+                    const displayText = p.text.replace(/\(Stok: \d+\)/, '').trim();
+                    opt.innerHTML = rntHighlight(displayText, query) + stockBadge;
+                    opt.addEventListener('mousedown', function(e) {
+                        e.preventDefault();
+                        selectLaptop(p);
+                    });
+                    listWrap.appendChild(opt);
+                });
+            }
 
-        customerSel.addEventListener('change', function() {
-            const sel = this.options[this.selectedIndex];
-            displayName.value  = sel.getAttribute('data-name')  || '';
-            displayPhone.value = sel.getAttribute('data-phone') || '';
-        });
-        if (customerSel.value) customerSel.dispatchEvent(new Event('change'));
+            function openDropdown() {
+                renderList(ddSearch.value || '');
+                dropdown.classList.add('open');
+                ddSearch.value = '';
+                ddSearch.focus();
+            }
+            function closeDropdown() {
+                dropdown.classList.remove('open');
+            }
+            function selectLaptop(p) {
+                input.value = p.text.replace(/\(Stok: \d+\)/, '').trim();
+                input.classList.add('has-value');
+                clearBtn.style.display = 'block';
+                nativeSel.value = p.id;
+                closeDropdown();
+            }
+            function clearSelection() {
+                input.value = '';
+                input.classList.remove('has-value');
+                clearBtn.style.display = 'none';
+                nativeSel.value = '';
+            }
 
-        // ---- Date Calc ----
-        const rentalDate   = document.getElementById('rental_date');
-        const returnDate   = document.getElementById('return_date');
-        const dailyPrice   = document.getElementById('daily_price');
-        const totalPrice   = document.getElementById('total_price');
-        const totalDisplay = document.getElementById('total-display');
-        const durationDays = document.getElementById('duration-days');
+            input.addEventListener('click', openDropdown);
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeDropdown();
+                else if (!dropdown.classList.contains('open')) openDropdown();
+            });
+            ddSearch.addEventListener('input', function() { renderList(this.value); });
+            ddSearch.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') { closeDropdown(); }
+                if (e.key === 'Enter') {
+                    const first = listWrap.querySelector('.rnt-option');
+                    if (first) first.dispatchEvent(new MouseEvent('mousedown'));
+                }
+            });
+            clearBtn.addEventListener('click', clearSelection);
+            document.addEventListener('mousedown', function(e) {
+                if (!wrapEl.contains(e.target)) closeDropdown();
+            }, true);
 
-        function getDays() {
-            const d1 = new Date(rentalDate.value);
-            const d2 = new Date(returnDate.value);
-            if (isNaN(d1) || isNaN(d2) || d2 < d1) return 1;
-            return Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+            renderList('');
         }
 
-        function recalc() {
-            const days  = getDays();
-            const price = parseFloat(dailyPrice.value) || 0;
-            const total = days * price;
-            durationDays.textContent = days;
-            totalPrice.value = total;
-            totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
-        }
+        // =============================================
+        // DOM Ready
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            buildLaptopSearch();
 
-        rentalDate.addEventListener('change', recalc);
-        returnDate.addEventListener('change', recalc);
-        dailyPrice.addEventListener('input', recalc);
-        totalPrice.addEventListener('input', function() {
-            totalDisplay.textContent = 'Rp ' + (parseFloat(this.value) || 0).toLocaleString('id-ID');
+            // ---- New Customer Toggle ----
+            const toggle         = document.getElementById('new_customer_toggle');
+            const existingArea   = document.getElementById('existing_customer_area');
+            const newArea        = document.getElementById('new_customer_area');
+            const hiddenInput    = document.getElementById('is_new_customer_input');
+            const customerSel    = document.getElementById('customer_id');
+            const newNameInp     = document.getElementById('new_customer_name');
+            const newPhoneInp    = document.getElementById('new_customer_phone');
+
+            toggle.addEventListener('change', function() {
+                if (this.checked) {
+                    existingArea.classList.add('hidden');
+                    newArea.classList.remove('hidden');
+                    hiddenInput.value = '1';
+                    customerSel.removeAttribute('required');
+                    newNameInp.setAttribute('required', 'true');
+                    newPhoneInp.setAttribute('required', 'true');
+                } else {
+                    existingArea.classList.remove('hidden');
+                    newArea.classList.add('hidden');
+                    hiddenInput.value = '0';
+                    customerSel.setAttribute('required', 'true');
+                    newNameInp.removeAttribute('required');
+                    newPhoneInp.removeAttribute('required');
+                }
+            });
+
+            // ---- Existing Customer Auto-fill ----
+            const displayName  = document.getElementById('display_name');
+            const displayPhone = document.getElementById('display_phone');
+
+            customerSel.addEventListener('change', function() {
+                const sel = this.options[this.selectedIndex];
+                displayName.value  = sel.getAttribute('data-name')  || '';
+                displayPhone.value = sel.getAttribute('data-phone') || '';
+            });
+            if (customerSel.value) customerSel.dispatchEvent(new Event('change'));
+
+            // ---- Date Calc ----
+            const rentalDate   = document.getElementById('rental_date');
+            const returnDate   = document.getElementById('return_date');
+            const dailyPrice   = document.getElementById('daily_price');
+            const totalPrice   = document.getElementById('total_price');
+            const totalDisplay = document.getElementById('total-display');
+            const durationDays = document.getElementById('duration-days');
+
+            function getDays() {
+                const d1 = new Date(rentalDate.value);
+                const d2 = new Date(returnDate.value);
+                if (isNaN(d1) || isNaN(d2) || d2 < d1) return 1;
+                return Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+            }
+
+            function recalc() {
+                const days  = getDays();
+                const price = parseFloat(dailyPrice.value) || 0;
+                const total = days * price;
+                durationDays.textContent = days;
+                totalPrice.value = total;
+                totalDisplay.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            }
+
+            rentalDate.addEventListener('change', recalc);
+            returnDate.addEventListener('change', recalc);
+            dailyPrice.addEventListener('input', recalc);
+            totalPrice.addEventListener('input', function() {
+                totalDisplay.textContent = 'Rp ' + (parseFloat(this.value) || 0).toLocaleString('id-ID');
+            });
+
+            recalc();
         });
-
-        recalc();
-    });
+    })();
     </script>
 </x-app-layout>
