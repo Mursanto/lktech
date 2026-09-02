@@ -56,26 +56,14 @@
 
             <!-- Specs List (Compact) / Conditional Rendering -->
             @php
-                $catName = strtolower($product->category ? $product->category->name : '');
+                // Cek apakah data spesifikasi benar-benar diisi (bukan sekadar tanda '-' atau 'N/A' atau kosong)
+                $hasValidProcessor = !empty($product->processor) && !in_array(strtolower(trim($product->processor)), ['-', 'n/a', 'none', 'na', '']);
+                $hasValidRam = !empty($product->ram) && !in_array(strtolower(trim($product->ram)), ['-', 'n/a', 'none', 'na', '']);
+                $hasValidStorage = !empty($product->storage) && !in_array(strtolower(trim($product->storage)), ['-', 'n/a', 'none', 'na', '']);
                 
-                // Kategori yang TIDAK BOLEH menampilkan icon spek processor/ram/ssd
-                $isNonDevice = str_contains($catName, 'komponen') || 
-                               str_contains($catName, 'sparepart') || 
-                               str_contains($catName, 'aksesoris') || 
-                               str_contains($catName, 'lisensi') || 
-                               str_contains($catName, 'software') ||
-                               str_contains($catName, 'jasa') ||
-                               str_contains($catName, 'periferal');
-                
-                if ($isNonDevice) {
-                    $showSpecs = false;
-                } else {
-                    $isUnitDevice = in_array($catName, ['laptop & device', 'unit device']);
-                    $isLaptop = str_contains($catName, 'laptop');
-                    $isUltrabook = str_contains($catName, 'ultrabook');
-                    $isPC = str_contains($catName, 'pc') || str_contains($catName, 'desktop');
-                    $showSpecs = $isUnitDevice || $isLaptop || $isUltrabook || $isPC;
-                }
+                // Tampilkan blok spesifikasi HANYA JIKA setidaknya salah satu spesifikasi utama (CPU/RAM/SSD) diisi dengan benar.
+                // Ini sangat akurat untuk menyembunyikan spek pada Baterai, Sparepart, dan Aksesoris tanpa mempedulikan nama kategorinya.
+                $showSpecs = $hasValidProcessor || $hasValidRam || $hasValidStorage;
             @endphp
 
             @if($showSpecs)
