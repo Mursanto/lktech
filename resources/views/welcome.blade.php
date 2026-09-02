@@ -96,6 +96,20 @@
           margin-bottom: 10px;
         }
 
+        /* Shimmer Animation for Premium Text */
+        @keyframes shimmer {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .text-shimmer {
+            background: linear-gradient(to right, #2563eb 20%, #93c5fd 40%, #93c5fd 60%, #2563eb 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
         /* ==========================================
            PENYESUAIAN TAMPILAN WEB MOBILE (< 640px)
            ========================================== */
@@ -186,8 +200,8 @@
                     <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
                         <h1 class="hero-title text-2xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-3 text-justify sm:text-left">
-                            Laptop Bekas <span class="text-brand-600">Berkualitas</span><br class="block sm:hidden"> 
-                            <span class="text-brand-600">Premium</span> untuk Produktivitas<br class="block sm:hidden"> 
+                            Laptop Bekas <span class="text-shimmer">Berkualitas</span><br class="block sm:hidden"> 
+                            <span class="text-shimmer">Premium</span> untuk Produktivitas<br class="block sm:hidden"> 
                             Tanpa Batas
                         </h1>
                         <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4 text-justify">
