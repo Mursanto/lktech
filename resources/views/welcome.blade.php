@@ -360,7 +360,16 @@
             </div>
 
             @if(isset($softwareProducts) && $softwareProducts->count() > 0)
-            <div class="mb-8">
+            <div class="mb-8" x-data="{ 
+                get visibleCount() { 
+                    if (window.innerWidth >= 1280) return 6;
+                    if (window.innerWidth >= 1024) return 5;
+                    if (window.innerWidth >= 768) return 4;
+                    if (window.innerWidth >= 640) return 3;
+                    return 2; 
+                },
+                count: 6
+            }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
                 <div class="flex justify-between items-end mb-3">
                     <div class="min-w-0 flex-1 border-l-4 border-brand-500 pl-2">
                         <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
@@ -368,9 +377,9 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
-                    @foreach($softwareProducts as $product)
-                        <div class="w-full">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                    @foreach($softwareProducts as $index => $product)
+                        <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
                         </div>
                     @endforeach
@@ -379,7 +388,16 @@
             @endif
 
             @if(isset($accessoriesProducts) && $accessoriesProducts->count() > 0)
-            <div class="mb-8">
+            <div class="mb-8" x-data="{ 
+                get visibleCount() { 
+                    if (window.innerWidth >= 1280) return 6;
+                    if (window.innerWidth >= 1024) return 5;
+                    if (window.innerWidth >= 768) return 4;
+                    if (window.innerWidth >= 640) return 3;
+                    return 2; 
+                },
+                count: 6
+            }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
                 <div class="flex justify-between items-end mb-3">
                     <div class="min-w-0 flex-1 border-l-4 border-amber-500 pl-2">
                         <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
@@ -387,9 +405,9 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
-                    @foreach($accessoriesProducts as $product)
-                        <div class="w-full">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                    @foreach($accessoriesProducts as $index => $product)
+                        <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
                         </div>
                     @endforeach
@@ -398,7 +416,16 @@
             @endif
 
             @if(isset($sparepartProducts) && $sparepartProducts->count() > 0)
-            <div class="mb-6">
+            <div class="mb-6" x-data="{ 
+                get visibleCount() { 
+                    if (window.innerWidth >= 1280) return 6;
+                    if (window.innerWidth >= 1024) return 5;
+                    if (window.innerWidth >= 768) return 4;
+                    if (window.innerWidth >= 640) return 3;
+                    return 2; 
+                },
+                count: 6
+            }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
                 <div class="flex justify-between items-end mb-3">
                     <div class="min-w-0 flex-1 border-l-4 border-emerald-500 pl-2">
                         <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
@@ -406,9 +433,9 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
-                    @foreach($sparepartProducts as $product)
-                        <div class="w-full">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                    @foreach($sparepartProducts as $index => $product)
+                        <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
                         </div>
                     @endforeach
