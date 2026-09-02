@@ -315,6 +315,15 @@
                     </div>
                     <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-100 ml-auto">Lihat Semua</a>
                 </div>
+                @else
+                <div class="flex items-center gap-4 w-full mb-2">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 flex items-center gap-2">
+                            <i class='bx bx-laptop text-brand-500'></i> Produk & Device
+                        </h2>
+                        <p class="text-gray-500 text-[11px] sm:text-xs mt-0.5">Berbagai pilihan laptop dan device terbaik.</p>
+                    </div>
+                </div>
                 @endif
             </div>
 
@@ -340,25 +349,72 @@
             
         </div>
 
-        <!-- Featured Products Section -->
-        @if(isset($featuredProducts) && $featuredProducts->count() > 0 && !request()->has('search'))
+        <!-- Produk Terlaris Section -->
+        @if(!request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
-            <div class="flex justify-between items-end mb-3">
-                <div class="min-w-0 flex-1">
-                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 flex items-center gap-2 truncate">
-                        <i class='bx bxs-hot text-brand-500'></i> Produk Terlaris
-                    </h2>
-                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Lisensi software, sparepart, dan aksesoris terfavorit.</p>
-                </div>
+            <div class="mb-5 border-b border-gray-100 pb-3">
+                <h2 class="text-lg sm:text-xl font-black text-gray-900 font-montserrat tracking-tight mb-0 flex items-center gap-2">
+                    <i class='bx bxs-hot text-orange-500'></i> Produk Terlaris
+                </h2>
+                <p class="text-gray-500 text-xs sm:text-sm mt-1">Lisensi software, aksesoris, dan sparepart terfavorit.</p>
             </div>
 
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
-                @foreach($featuredProducts as $product)
-                    <div class="w-full">
-                        <x-product-card :product="$product" />
+            @if(isset($softwareProducts) && $softwareProducts->count() > 0)
+            <div class="mb-8">
+                <div class="flex justify-between items-end mb-3">
+                    <div class="min-w-0 flex-1 border-l-4 border-brand-500 pl-2">
+                        <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
+                            Lisensi & Software
+                        </h3>
                     </div>
-                @endforeach
+                </div>
+                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
+                    @foreach($softwareProducts as $product)
+                        <div class="w-full">
+                            <x-product-card :product="$product" />
+                        </div>
+                    @endforeach
+                </div>
             </div>
+            @endif
+
+            @if(isset($accessoriesProducts) && $accessoriesProducts->count() > 0)
+            <div class="mb-8">
+                <div class="flex justify-between items-end mb-3">
+                    <div class="min-w-0 flex-1 border-l-4 border-amber-500 pl-2">
+                        <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
+                            Aksesoris
+                        </h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
+                    @foreach($accessoriesProducts as $product)
+                        <div class="w-full">
+                            <x-product-card :product="$product" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+            @if(isset($sparepartProducts) && $sparepartProducts->count() > 0)
+            <div class="mb-6">
+                <div class="flex justify-between items-end mb-3">
+                    <div class="min-w-0 flex-1 border-l-4 border-emerald-500 pl-2">
+                        <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
+                            Komponen & Sparepart
+                        </h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 sm:gap-4">
+                    @foreach($sparepartProducts as $product)
+                        <div class="w-full">
+                            <x-product-card :product="$product" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
         @endif
 

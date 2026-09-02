@@ -11,14 +11,13 @@ class PublicCatalogController extends Controller
     public function index(Request $request)
     {
         $query = Product::with('category')
+                    ->whereIn('category_id', \App\Models\Category::where('id', 1)->orWhere('parent_id', 1)->pluck('id'))
                     ->where(function($q) {
                         $q->where(function($q1) {
                             $q1->where('stock', '>', 0)
                                ->where('status', '!=', 'sold');
                         })->orWhereNotNull('image_path');
                     });
-
-        // Removed category filter to show all in-stock products on the landing page
 
         // Sort Filter
         if ($request->has('sort')) {
@@ -72,32 +71,32 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
-        // Fetch Featured Products
-        $featuredIds = [46, 23, 22, 33, 36];
-        $featuredKeywords = ['Caddy 12.7mm', 'Caddy']; // Fallback since ID 22 was provided twice
-        
-        $featuredProducts = \App\Models\Product::with('category')
-            ->where(function($q) use ($featuredIds, $featuredKeywords) {
-                $q->whereIn('id', $featuredIds);
-                foreach($featuredKeywords as $keyword) {
-                    $q->orWhere('model_series', 'like', "%{$keyword}%")
-                      ->orWhere('brand', 'like', "%{$keyword}%");
-                }
-            })
-            ->where('stock', '>', 0)
-            ->where('status', '!=', 'sold')
-            ->take(12)
-            ->get();
-            
-        $featuredProducts->transform(function ($product) {
-            if ($product->image_path) {
-                $product->display_image = Storage::url($product->image_path);
-            } else {
-                $searchQuery = urlencode($product->brand . ' ' . $product->model_series);
-                $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
-            }
-            return $product;
-        });
+        // 1. Lisensi & Software (ID: 15)
+        $softwareProducts = \App\Models\Product::with('category')
+            ->whereIn('category_id', \App\Models\Category::where('id', 15)->orWhere('parent_id', 15)->pluck('id'))
+            ->where('stock', '>', 0)->where('status', '!=', 'sold')
+            ->take(6)->get()->transform(function ($product) {
+                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?software";
+                return $product;
+            });
+
+        // 2. Aksesoris (ID: 11)
+        $accessoriesProducts = \App\Models\Product::with('category')
+            ->whereIn('category_id', \App\Models\Category::where('id', 11)->orWhere('parent_id', 11)->pluck('id'))
+            ->where('stock', '>', 0)->where('status', '!=', 'sold')
+            ->take(6)->get()->transform(function ($product) {
+                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?accessories";
+                return $product;
+            });
+
+        // 3. Komponen & Sparepart (ID: 6)
+        $sparepartProducts = \App\Models\Product::with('category')
+            ->whereIn('category_id', \App\Models\Category::where('id', 6)->orWhere('parent_id', 6)->pluck('id'))
+            ->where('stock', '>', 0)->where('status', '!=', 'sold')
+            ->take(6)->get()->transform(function ($product) {
+                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?sparepart";
+                return $product;
+            });
 
         // Fetch Google Reviews
         $allReviews = \App\Models\GoogleReview::where('is_featured', true)
@@ -122,7 +121,7 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        return view('welcome', compact('products', 'latestPosts', 'setting', 'featuredProducts', 'googleReviews'));
+        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews'));
     }
 
     public function show(Product $product)
