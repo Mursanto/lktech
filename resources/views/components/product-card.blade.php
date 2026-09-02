@@ -56,11 +56,26 @@
 
             <!-- Specs List (Compact) / Conditional Rendering -->
             @php
-                $isUnitDevice = $product->category && in_array(strtolower($product->category->name), ['laptop & device', 'unit device']);
-                $isLaptop = $product->category && str_contains(strtolower($product->category->name), 'laptop');
-                $isUltrabook = $product->category && str_contains(strtolower($product->category->name), 'ultrabook');
-                $isPC = $product->category && str_contains(strtolower($product->category->name), 'pc');
-                $showSpecs = $isUnitDevice || $isLaptop || $isUltrabook || $isPC;
+                $catName = strtolower($product->category ? $product->category->name : '');
+                
+                // Kategori yang TIDAK BOLEH menampilkan icon spek processor/ram/ssd
+                $isNonDevice = str_contains($catName, 'komponen') || 
+                               str_contains($catName, 'sparepart') || 
+                               str_contains($catName, 'aksesoris') || 
+                               str_contains($catName, 'lisensi') || 
+                               str_contains($catName, 'software') ||
+                               str_contains($catName, 'jasa') ||
+                               str_contains($catName, 'periferal');
+                
+                if ($isNonDevice) {
+                    $showSpecs = false;
+                } else {
+                    $isUnitDevice = in_array($catName, ['laptop & device', 'unit device']);
+                    $isLaptop = str_contains($catName, 'laptop');
+                    $isUltrabook = str_contains($catName, 'ultrabook');
+                    $isPC = str_contains($catName, 'pc') || str_contains($catName, 'desktop');
+                    $showSpecs = $isUnitDevice || $isLaptop || $isUltrabook || $isPC;
+                }
             @endphp
 
             @if($showSpecs)
