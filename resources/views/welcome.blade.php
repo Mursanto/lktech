@@ -89,9 +89,7 @@
 
         /* Styling Judul Utama Baru */
         .hero-title {
-          font-size: 2rem;
           line-weight: 800;
-          text-transform: uppercase;
           letter-spacing: -0.02em;
           color: #0f172a;
           margin-top: 0;
@@ -187,9 +185,11 @@
                     <!-- Left: Text (60%) -->
                     <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
-                        <h1 class="hero-title font-montserrat font-black leading-tight tracking-tight text-blue-900 drop-shadow-sm mb-3">Kalo bisa beli bekas berkualitas, kenapa musti beli baru? #mikir 🤔</h1>
+                        <h1 class="hero-title text-2xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-3">
+                            Laptop Bekas <span class="text-brand-600">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
+                        </h1>
                         <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4">
-                            Spesialis laptop bekas premium lolos QC & bergaransi, didukung layanan rakit PC, sewa, service dan website untuk bisnis modern.
+                            Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 
                         <!-- Tombol CTA -->
@@ -328,7 +328,7 @@
             </div>
 
             <!-- Precision Grid (Compact Design) -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                 @forelse($products as $product)
                 <x-product-card :product="$product" />
                 @empty
@@ -360,7 +360,7 @@
             </div>
 
             @if(isset($softwareProducts) && $softwareProducts->count() > 0)
-            <div class="mb-8" x-data="{ 
+            <div class="mb-5 sm:mb-8" x-data="{ 
                 get visibleCount() { 
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
@@ -377,7 +377,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                     @foreach($softwareProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
@@ -388,7 +388,7 @@
             @endif
 
             @if(isset($accessoriesProducts) && $accessoriesProducts->count() > 0)
-            <div class="mb-8" x-data="{ 
+            <div class="mb-5 sm:mb-8" x-data="{ 
                 get visibleCount() { 
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
@@ -405,7 +405,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                     @foreach($accessoriesProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
@@ -416,7 +416,7 @@
             @endif
 
             @if(isset($sparepartProducts) && $sparepartProducts->count() > 0)
-            <div class="mb-6" x-data="{ 
+            <div class="mb-4 sm:mb-6" x-data="{ 
                 get visibleCount() { 
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
@@ -433,7 +433,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                     @foreach($sparepartProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
