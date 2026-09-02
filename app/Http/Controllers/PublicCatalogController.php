@@ -46,7 +46,7 @@ class PublicCatalogController extends Controller
             $products = $query->paginate(12)->withQueryString();
             $collectionToTransform = $products->getCollection();
         } else {
-            $products = $query->take(12)->get();
+            $products = $query->take(30)->get();
             $collectionToTransform = $products;
         }
 
@@ -86,7 +86,7 @@ class PublicCatalogController extends Controller
             })
             ->where('stock', '>', 0)
             ->where('status', '!=', 'sold')
-            ->take(6)
+            ->take(12)
             ->get();
             
         $featuredProducts->transform(function ($product) {
@@ -294,12 +294,12 @@ class PublicCatalogController extends Controller
             }
 
             if (!$selectedCategoryId && !$request->has('search') && empty($selectedBrands) && $priceMin === null && $priceMax === null) {
-                // Preview mode: 6 products, no pagination
-                $products = $query->take(6)->get();
+                // Preview mode: 12 products, no pagination
+                $products = $query->take(12)->get();
                 $collectionToTransform = $products;
             } else {
                 // Detail/filtered mode: paginate with simplePaginate for performance
-                $products = $query->simplePaginate(12)->withQueryString();
+                $products = $query->simplePaginate(24)->withQueryString();
                 $collectionToTransform = $products->getCollection();
             }
 
