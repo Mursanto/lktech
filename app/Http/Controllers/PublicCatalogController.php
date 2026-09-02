@@ -293,8 +293,18 @@ class PublicCatalogController extends Controller
             }
 
             if (!$selectedCategoryId && !$request->has('search') && empty($selectedBrands) && $priceMin === null && $priceMax === null) {
-                // Preview mode: 12 products, no pagination
-                $products = $query->take(12)->get();
+                // Preview mode: limit products to avoid empty grid spaces
+                $catNameLower = strtolower($category->name);
+                
+                if (str_contains($catNameLower, 'komponen') || str_contains($catNameLower, 'aksesoris') || str_contains($catNameLower, 'lisensi') || str_contains($catNameLower, 'software') || str_contains($catNameLower, 'sparepart')) {
+                    $limit = 6; // 1 baris penuh (desktop)
+                } elseif (str_contains($catNameLower, 'laptop & device') || str_contains($catNameLower, 'laptop') || str_contains($catNameLower, 'device')) {
+                    $limit = 30; // 5 baris penuh (desktop)
+                } else {
+                    $limit = 12; // Default 2 baris penuh (desktop)
+                }
+                
+                $products = $query->take($limit)->get();
                 $collectionToTransform = $products;
             } else {
                 // Detail/filtered mode: paginate with simplePaginate for performance
