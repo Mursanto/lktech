@@ -40,7 +40,7 @@
 
         <!-- Catalog Grid Container -->
         <div class="flex-grow overflow-y-auto pr-1 custom-scrollbar">
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] sm:grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
                 @forelse($products as $product)
                 <div class="bg-white rounded-3xl shadow-sm border border-natural-100/50 overflow-hidden group hover:shadow-md transition-all duration-300">
                     <!-- Image Thumbnail -->
