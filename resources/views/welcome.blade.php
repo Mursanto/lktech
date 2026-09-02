@@ -332,7 +332,7 @@
                     <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-100 ml-auto">Lihat Semua</a>
                 </div>
                 @else
-                <div class="flex items-center gap-4 w-full mb-2">
+                <div class="hidden md:flex items-center gap-4 w-full mb-2">
                     <div>
                         <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 flex items-center gap-2">
                             <i class='bx bx-laptop text-brand-500'></i> Produk & Device
