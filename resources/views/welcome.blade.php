@@ -112,7 +112,7 @@
           }
 
           .hero-title {
-            font-size: 1.35rem !important;
+            font-size: 1.18rem !important;
             line-height: 1.25 !important;
             margin-bottom: 8px !important;
           }
@@ -185,10 +185,12 @@
                     <!-- Left: Text (60%) -->
                     <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
-                        <h1 class="hero-title text-2xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-3">
-                            Laptop Bekas <span class="text-brand-600">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
+                        <h1 class="hero-title text-2xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-3 text-justify sm:text-left">
+                            Laptop Bekas <span class="text-brand-600">Berkualitas</span><br class="block sm:hidden"> 
+                            <span class="text-brand-600">Premium</span> untuk Produktivitas<br class="block sm:hidden"> 
+                            Tanpa Batas
                         </h1>
-                        <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4">
+                        <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4 text-justify">
                             Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 
@@ -567,7 +569,7 @@
                                     if(!this.isHovered) {
                                         this.next();
                                     }
-                                }, 6000);
+                                }, 8000);
                             }
                         }
                      }"
@@ -575,7 +577,7 @@
                      @mouseleave="isHovered = false">
                      
                     <div class="overflow-hidden">
-                        <div class="flex transition-transform duration-1000 ease-in-out" 
+                        <div class="flex transition-transform duration-[2000ms] ease-in-out" 
                              :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
                             
                             @foreach($googleReviews as $review)
