@@ -3,18 +3,18 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="font-bold text-xl text-natural-800 leading-tight flex items-center gap-2">
+                <h2 class="font-bold text-base text-natural-800 leading-tight flex items-center gap-2">
                     <i class='bx bx-star text-brand-600'></i>
                     Manajemen Ulasan Google
                 </h2>
-                <p class="text-xs text-natural-500 mt-1">Kelola dan sinkronisasi ulasan pelanggan dari Google Maps.</p>
+                <p class="text-[9px] text-natural-500 mt-1">Kelola dan sinkronisasi ulasan pelanggan dari Google Maps.</p>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="document.getElementById('modal-add-review').classList.remove('hidden')" class="btn btn-primary flex items-center gap-2 text-sm bg-white hover:bg-natural-50 text-natural-700 border border-natural-200 px-4 py-2 rounded-xl transition shadow-sm">
-                    <i class='bx bx-plus'></i> Tambah Manual
+                <button onclick="document.getElementById('modal-add-review').classList.remove('hidden')" class="btn btn-primary flex items-center gap-1.5 text-[11px] bg-white hover:bg-natural-50 text-natural-700 border border-natural-200 px-3 py-1.5 rounded-lg transition shadow-sm font-bold">
+                    <i class='bx bx-plus text-base'></i> Tambah Manual
                 </button>
-                <button onclick="alert('Fitur Sinkronisasi API Google sedang dalam pengembangan untuk production.')" class="btn btn-primary flex items-center gap-2 text-sm bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl transition shadow-sm">
-                    <i class='bx bx-sync'></i> Direct Sync Google API
+                <button onclick="alert('Fitur Sinkronisasi API Google sedang dalam pengembangan untuk production.')" class="btn btn-primary flex items-center gap-1.5 text-[11px] bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg transition shadow-sm font-bold">
+                    <i class='bx bx-sync text-base'></i> Direct Sync Google API
                 </button>
             </div>
         </div>
@@ -25,57 +25,57 @@
         <!-- Top Stats Bar -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="bg-white rounded-2xl p-4 border border-natural-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0">
                     <i class='bx bx-message-square-detail'></i>
                 </div>
                 <div>
-                    <p class="text-[11px] text-natural-500 font-medium mb-0.5">Total Ulasan</p>
-                    <h4 class="text-xl font-black text-natural-800 leading-none">{{ $totalReviews }}</h4>
+                    <p class="text-[10px] text-natural-500 font-medium mb-0.5">Total Ulasan</p>
+                    <h4 class="text-base font-black text-natural-800 leading-none">{{ $totalReviews }}</h4>
                 </div>
             </div>
             
             <div class="bg-white rounded-2xl p-4 border border-natural-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-500 flex items-center justify-center text-2xl shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-500 flex items-center justify-center text-xl shrink-0">
                     <i class='bx bxs-star'></i>
                 </div>
                 <div>
-                    <p class="text-[11px] text-natural-500 font-medium mb-0.5">Rata-rata Rating</p>
-                    <h4 class="text-xl font-black text-natural-800 leading-none">{{ number_format($avgRating, 1) }} ⭐</h4>
+                    <p class="text-[10px] text-natural-500 font-medium mb-0.5">Rata-rata Rating</p>
+                    <h4 class="text-base font-black text-natural-800 leading-none">{{ number_format($avgRating, 1) }} ⭐</h4>
                 </div>
             </div>
 
             <div class="bg-white rounded-2xl p-4 border border-natural-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
                     <i class='bx bx-show'></i>
                 </div>
                 <div>
-                    <p class="text-[11px] text-natural-500 font-medium mb-0.5">Tampil di Web</p>
-                    <h4 class="text-xl font-black text-natural-800 leading-none">{{ $displayedReviews }}</h4>
+                    <p class="text-[10px] text-natural-500 font-medium mb-0.5">Tampil di Web</p>
+                    <h4 class="text-base font-black text-natural-800 leading-none">{{ $displayedReviews }}</h4>
                 </div>
             </div>
 
             <div class="bg-white rounded-2xl p-4 border border-natural-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0">
                     <i class='bx bx-message-rounded-x'></i>
                 </div>
                 <div>
-                    <p class="text-[11px] text-natural-500 font-medium mb-0.5">Belum Dibalas</p>
-                    <h4 class="text-xl font-black text-natural-800 leading-none">{{ $unrepliedReviews }}</h4>
+                    <p class="text-[10px] text-natural-500 font-medium mb-0.5">Belum Dibalas</p>
+                    <h4 class="text-base font-black text-natural-800 leading-none">{{ $unrepliedReviews }}</h4>
                 </div>
             </div>
         </div>
 
         <!-- Data Table -->
         <div class="bg-white rounded-3xl border border-natural-100 shadow-sm overflow-hidden flex flex-col">
-            <div class="p-5 border-b border-natural-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-natural-50/50">
-                <h3 class="font-bold text-natural-800 text-sm flex items-center gap-2">
-                    <i class='bx bx-list-ul text-brand-500'></i> Daftar Ulasan
+            <div class="p-4 border-b border-natural-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-natural-50/50">
+                <h3 class="font-bold text-natural-800 text-xs flex items-center gap-2">
+                    <i class='bx bx-list-ul text-brand-500 text-base'></i> Daftar Ulasan
                 </h3>
                 
                 <form action="{{ route('google-reviews.index') }}" method="GET" class="w-full sm:w-72">
                     <div class="relative">
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama pengulas atau komentar..." 
-                               class="w-full pl-9 pr-4 py-2 border border-natural-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all bg-white shadow-sm">
+                               class="w-full pl-9 pr-3 py-1.5 border border-natural-200 rounded-xl text-[11px] focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all bg-white shadow-sm">
                         <i class='bx bx-search text-natural-400 absolute left-3 top-1/2 -translate-y-1/2 text-base'></i>
                     </div>
                 </form>
@@ -85,21 +85,21 @@
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr class="bg-natural-50/80 text-[10px] uppercase tracking-widest text-natural-500 border-b border-natural-100">
-                            <th class="px-5 py-3 font-semibold">Pengulas</th>
-                            <th class="px-5 py-3 font-semibold">Rating</th>
-                            <th class="px-5 py-3 font-semibold">Komentar</th>
-                            <th class="px-5 py-3 font-semibold">Tanggal</th>
-                            <th class="px-5 py-3 font-semibold">Status Balasan</th>
-                            <th class="px-5 py-3 font-semibold text-center">Tampil di Web</th>
-                            <th class="px-5 py-3 font-semibold text-right">Aksi</th>
+                            <th class="px-4 py-2 font-semibold">Pengulas</th>
+                            <th class="px-4 py-2 font-semibold">Rating</th>
+                            <th class="px-4 py-2 font-semibold">Komentar</th>
+                            <th class="px-4 py-2 font-semibold">Tanggal</th>
+                            <th class="px-4 py-2 font-semibold">Status Balasan</th>
+                            <th class="px-4 py-2 font-semibold text-center">Tampil di Web</th>
+                            <th class="px-4 py-2 font-semibold text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="text-xs text-natural-700 divide-y divide-natural-50">
+                    <tbody class="text-[11px] text-natural-700 divide-y divide-natural-50">
                         @forelse($reviews as $review)
                         <tr class="hover:bg-natural-50/50 transition-colors group">
-                            <td class="px-5 py-3 align-top">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0 overflow-hidden">
+                            <td class="px-4 py-2 align-top">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold shrink-0 overflow-hidden text-[10px]">
                                         @if($review->reviewer_photo_url)
                                             <img src="{{ $review->reviewer_photo_url }}" alt="{{ $review->reviewer_name }}" class="w-full h-full object-cover">
                                         @else
@@ -109,8 +109,8 @@
                                     <span class="font-bold text-natural-800">{{ $review->reviewer_name }}</span>
                                 </div>
                             </td>
-                            <td class="px-5 py-3 align-top">
-                                <div class="flex text-yellow-400 text-sm">
+                            <td class="px-4 py-2 align-top">
+                                <div class="flex text-yellow-400 text-xs">
                                     @for($i=1; $i<=5; $i++)
                                         @if($i <= $review->star_rating)
                                             <i class='bx bxs-star'></i>
@@ -120,26 +120,26 @@
                                     @endfor
                                 </div>
                             </td>
-                            <td class="px-5 py-3 align-top max-w-xs">
-                                <p class="text-natural-600 line-clamp-2" title="{{ $review->review_comment }}">
+                            <td class="px-4 py-2 align-top max-w-xs">
+                                <p class="text-natural-600 line-clamp-2 leading-relaxed" title="{{ $review->review_comment }}">
                                     {{ $review->review_comment ?: '-' }}
                                 </p>
                             </td>
-                            <td class="px-5 py-3 align-top whitespace-nowrap text-natural-500">
+                            <td class="px-4 py-2 align-top whitespace-nowrap text-natural-500 font-medium">
                                 {{ $review->review_time_text ?? ($review->review_created_at ? $review->review_created_at->format('d M Y') : '-') }}
                             </td>
-                            <td class="px-5 py-3 align-top">
+                            <td class="px-4 py-2 align-top">
                                 @if($review->review_reply)
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-100">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[9px] font-bold border border-emerald-100">
                                         <i class='bx bx-check'></i> Dibalas
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-rose-50 text-rose-700 text-[10px] font-bold border border-rose-100">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-rose-50 text-rose-700 text-[9px] font-bold border border-rose-100">
                                         <i class='bx bx-time'></i> Menunggu
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-5 py-3 align-top text-center">
+                            <td class="px-4 py-2 align-top text-center">
                                 <!-- Toggle Button Alpine Component -->
                                 <div x-data="{ 
                                         isFeatured: {{ $review->is_featured ? 'true' : 'false' }}, 
@@ -166,29 +166,29 @@
                                         }
                                     }">
                                     <button @click="toggle()" :disabled="loading" 
-                                        class="relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none"
+                                        class="relative inline-flex h-4 w-7 items-center rounded-full transition-colors focus:outline-none"
                                         :class="isFeatured ? 'bg-brand-500' : 'bg-natural-200'">
-                                        <span class="inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform"
-                                              :class="isFeatured ? 'translate-x-4.5' : 'translate-x-1'"></span>
+                                        <span class="inline-block h-3 w-3 transform rounded-full bg-white transition-transform"
+                                              :class="isFeatured ? 'translate-x-3.5' : 'translate-x-0.5'"></span>
                                     </button>
                                 </div>
                             </td>
-                            <td class="px-5 py-3 align-top text-right whitespace-nowrap">
+                            <td class="px-4 py-2 align-top text-right whitespace-nowrap">
                                 <button onclick="document.getElementById('modal-edit-{{ $review->id }}').classList.remove('hidden')" 
-                                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors tooltip-trigger mr-1" title="Edit Ulasan">
-                                    <i class='bx bx-edit text-base'></i>
+                                    class="inline-flex items-center justify-center w-6 h-6 rounded bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors tooltip-trigger mr-1" title="Edit Ulasan">
+                                    <i class='bx bx-edit text-sm'></i>
                                 </button>
                                 
                                 <button onclick="document.getElementById('modal-reply-{{ $review->id }}').classList.remove('hidden')" 
-                                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors tooltip-trigger" title="Balas Ulasan">
-                                    <i class='bx bx-reply text-base'></i>
+                                    class="inline-flex items-center justify-center w-6 h-6 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors tooltip-trigger mr-1" title="Balas Ulasan">
+                                    <i class='bx bx-reply text-sm'></i>
                                 </button>
                                 
                                 <form action="{{ route('google-reviews.destroy', $review->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus ulasan ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors tooltip-trigger" title="Hapus Ulasan">
-                                        <i class='bx bx-trash text-base'></i>
+                                    <button type="submit" class="inline-flex items-center justify-center w-6 h-6 rounded bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors tooltip-trigger" title="Hapus Ulasan">
+                                        <i class='bx bx-trash text-sm'></i>
                                     </button>
                                 </form>
 
