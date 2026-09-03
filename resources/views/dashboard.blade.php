@@ -2,8 +2,8 @@
     <x-slot name="header">
         <div class="flex items-center justify-between w-full">
             <div>
-                <h2 class="text-xl font-bold text-natural-900 tracking-tight leading-none">Dashboard Overview</h2>
-                <p class="text-natural-500 text-[10px] mt-0.5">Selamat datang kembali, <span class="font-semibold text-brand-600">{{ auth()->user()->name ?? 'Admin User' }}</span>!</p>
+                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Dashboard Overview</h2>
+                <p class="text-natural-500 text-[9px] mt-1">Selamat datang kembali, <span class="font-bold text-brand-600">{{ auth()->user()->name ?? 'Admin User' }}</span>!</p>
             </div>
         </div>
     </x-slot>
