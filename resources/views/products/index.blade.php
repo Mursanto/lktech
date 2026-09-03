@@ -2,19 +2,19 @@
     <x-slot name="header">
         <div class="flex items-center justify-between w-full">
             <div>
-                <h2 class="text-xl font-bold text-natural-900 tracking-tight leading-none">Inventaris Produk</h2>
+                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Inventaris Produk</h2>
                 <p class="text-natural-500 text-[10px] mt-0.5">Kelola stok laptop, part, dan aksesoris sistem.</p>
             </div>
             <div class="flex items-center gap-2">
                 @role('Admin')
-                <a href="{{ route('products.export') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-natural-200 rounded-xl text-natural-600 text-xs font-bold hover:bg-natural-50 transition-all shadow-sm">
-                    <i class='bx bx-export text-lg'></i>
+                <a href="{{ route('products.export') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-natural-200 rounded-lg text-natural-600 text-[11px] font-bold hover:bg-natural-50 transition-all shadow-sm">
+                    <i class='bx bx-export text-base'></i>
                     Export Excel
                 </a>
                 @endrole
                 @role('Admin')
-                <a href="{{ route('products.create') }}" class="flex items-center gap-2 px-4 py-2 bg-brand-600 rounded-xl text-white text-xs font-bold hover:bg-brand-700 transition-all shadow-md">
-                    <i class='bx bx-plus text-lg'></i>
+                <a href="{{ route('products.create') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-brand-600 rounded-lg text-white text-[11px] font-bold hover:bg-brand-700 transition-all shadow-md">
+                    <i class='bx bx-plus text-base'></i>
                     Tambah Produk
                 </a>
                 @endrole
@@ -24,14 +24,14 @@
 
     <div class="flex flex-col h-full space-y-4">
         <!-- Search & Filter Bar -->
-        <form id="filterForm" action="{{ route('products.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+        <form id="filterForm" action="{{ route('products.index') }}" method="GET" class="bg-white p-3 rounded-2xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-3">
             <div class="relative flex-grow max-w-md">
-                <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-xl'></i>
+                <i class='bx bx-search absolute left-3 top-1/2 -translate-y-1/2 text-natural-400 text-lg'></i>
                 <input type="text" name="search" value="{{ request('search') }}" id="productSearch" oninput="debounceSubmit()" placeholder="Cari nama laptop, brand, atau kode..." 
-                       class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
+                       class="w-full pl-9 pr-3 py-1.5 bg-natural-50 border-none rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 transition-all">
             </div>
             <div class="flex items-center gap-2">
-                <select name="category_id" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                <select name="category_id" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                     <option value="">Semua Kategori</option>
                     @foreach($categories as $parentCat)
                         <option value="{{ $parentCat->id }}" class="font-bold" {{ request('category_id') == $parentCat->id ? 'selected' : '' }}>{{ $parentCat->name }}</option>
@@ -40,12 +40,12 @@
                         @endforeach
                     @endforeach
                 </select>
-                <select name="tipe_stok" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                <select name="tipe_stok" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                     <option value="">Semua Tipe Stok</option>
                     <option value="ready_stock" {{ request('tipe_stok') == 'ready_stock' ? 'selected' : '' }}>Ready Stock</option>
                     <option value="open_order" {{ request('tipe_stok') == 'open_order' ? 'selected' : '' }}>Open Order</option>
                 </select>
-                <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2.5 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                     <option value="all" {{ request('status', 'all') == 'all' ? 'selected' : '' }}>Semua Status</option>
                     <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Tersedia</option>
                     <option value="sold" {{ request('status') == 'sold' ? 'selected' : '' }}>Habis (Terjual)</option>
@@ -59,17 +59,17 @@
                 <table class="w-full border-collapse text-left">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Info Produk</th>
-                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Kategori</th>
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Stok</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Info Produk</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Kategori</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Stok</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Harga Beli</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Harga Beli</th>
                             @endhasanyrole
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Harga Jual</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Harga Jual</th>
                             @hasanyrole('Admin|Owner')
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Persentase</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Persentase</th>
                             @endhasanyrole
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
