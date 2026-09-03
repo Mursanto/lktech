@@ -2,19 +2,19 @@
     <x-slot name="header">
         <div class="flex items-center justify-between w-full">
             <div>
-                <h2 class="text-xl font-bold text-natural-900 tracking-tight leading-none">Riwayat Servis</h2>
+                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Riwayat Servis</h2>
                 <p class="text-natural-500 text-[10px] mt-0.5">Pantau status perbaikan perangkat pelanggan secara real-time.</p>
             </div>
             <div class="flex items-center gap-2">
                 @role('Admin')
-                <a href="{{ route('services.export') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-natural-200 rounded-xl text-natural-600 text-xs font-bold hover:bg-natural-50 transition-all shadow-sm">
-                    <i class='bx bx-export text-lg'></i>
+                <a href="{{ route('services.export') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-natural-200 rounded-lg text-natural-600 text-[11px] font-bold hover:bg-natural-50 transition-all shadow-sm">
+                    <i class='bx bx-export text-base'></i>
                     Export Excel
                 </a>
                 @endrole
                 @hasanyrole('Admin|Teknisi')
-                <a href="{{ route('services.create') }}" class="flex items-center gap-2 px-4 py-2 bg-amber-500 rounded-xl text-white text-xs font-bold hover:bg-amber-600 transition-all shadow-md">
-                    <i class='bx bx-plus text-lg'></i>
+                <a href="{{ route('services.create') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 rounded-lg text-white text-[11px] font-bold hover:bg-amber-600 transition-all shadow-md">
+                    <i class='bx bx-plus text-base'></i>
                     Input Servis Baru
                 </a>
                 @endhasanyrole
@@ -24,20 +24,20 @@
 
     <div class="flex flex-col h-full space-y-4">
         <!-- Status Filter Bar -->
-        <form id="filterForm" action="{{ route('services.index') }}" method="GET" class="bg-white px-4 py-3 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center gap-3">
+        <form id="filterForm" action="{{ route('services.index') }}" method="GET" class="bg-white px-3 py-2.5 rounded-2xl shadow-sm border border-natural-100/50 flex flex-wrap items-center gap-2">
             <input type="hidden" name="status" id="statusInput" value="{{ request('status', 'all') }}">
 
             {{-- Tab Filter Pengerjaan --}}
-            <div class="flex items-center gap-1.5">
-                <button type="button" onclick="document.getElementById('statusInput').value='all'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status', 'all') == 'all' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Semua Pengerjaan</button>
-                <button type="button" onclick="document.getElementById('statusInput').value='pending'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Pending</button>
-                <button type="button" onclick="document.getElementById('statusInput').value='process'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'process' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Proses</button>
-                <button type="button" onclick="document.getElementById('statusInput').value='done'; this.form.submit()" class="px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all border {{ request('status') == 'done' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Selesai</button>
+            <div class="flex items-center gap-1">
+                <button type="button" onclick="document.getElementById('statusInput').value='all'; this.form.submit()" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all border {{ request('status', 'all') == 'all' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Semua Pengerjaan</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='pending'; this.form.submit()" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all border {{ request('status') == 'pending' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Pending</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='process'; this.form.submit()" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all border {{ request('status') == 'process' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Proses</button>
+                <button type="button" onclick="document.getElementById('statusInput').value='done'; this.form.submit()" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all border {{ request('status') == 'done' ? 'bg-amber-50 text-amber-700 border-amber-100' : 'bg-natural-50 text-natural-500 border-natural-100 hover:bg-natural-100' }}">Selesai</button>
             </div>
 
             {{-- Divider + Status Bayar --}}
-            <div class="flex items-center border-l border-natural-200 pl-3">
-                <select name="payment_status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-[11px] py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-semibold min-w-[130px]">
+            <div class="flex items-center border-l border-natural-200 pl-2">
+                <select name="payment_status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-lg text-[10px] py-1 px-2 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-semibold min-w-[120px]">
                     <option value="">Semua Status Bayar</option>
                     <option value="success" {{ request('payment_status') == 'success' ? 'selected' : '' }}>Lunas / Sukses</option>
                     <option value="pending" {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
@@ -47,9 +47,9 @@
 
             {{-- Search — pojok kanan --}}
             <div class="relative ml-auto">
-                <i class='bx bx-search absolute left-3 top-1/2 -translate-y-1/2 text-natural-400 text-sm'></i>
+                <i class='bx bx-search absolute left-2 top-1/2 -translate-y-1/2 text-natural-400 text-xs'></i>
                 <input type="text" name="search" value="{{ request('search') }}" oninput="debounceSubmit()" placeholder="Cari Nota / Perangkat / Pelanggan..."
-                       class="pl-8 pr-3 py-1.5 bg-natural-50 border-none rounded-xl text-[11px] focus:ring-2 focus:ring-brand-500/20 transition-all w-56">
+                       class="pl-7 pr-2 py-1 bg-natural-50 border-none rounded-lg text-[10px] focus:ring-2 focus:ring-brand-500/20 transition-all w-52">
             </div>
         </form>
 
@@ -59,14 +59,14 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">No. Nota</th>
-                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
-                            <th class="px-4 py-2 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Perangkat</th>
-                            <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Pengerjaan</th>
-                            <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
-                            <th class="px-4 py-2 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status Bayar</th>
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
-                            <th class="px-4 py-2 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">No. Nota</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
+                            <th class="px-4 py-2 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Perangkat</th>
+                            <th class="px-4 py-2 bg-gray-50 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pengerjaan</th>
+                            <th class="px-4 py-2 bg-gray-50 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Metode</th>
+                            <th class="px-4 py-2 bg-gray-50 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status Bayar</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
+                            <th class="px-4 py-2 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
@@ -74,22 +74,22 @@
                         <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
                             <td class="px-4 py-2 whitespace-nowrap">
                                 <div class="flex items-center gap-1.5 mb-1">
-                                    <p class="text-xs font-semibold text-gray-900">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                    <p class="text-[11px] font-semibold text-gray-900">#{{ $service->service_number ?? str_pad($service->id, 5, '0', STR_PAD_LEFT) }}</p>
                                     @if(strtolower($service->payment_method) == 'cash' || $service->payment_status === 'success')
-                                        <span class="text-[8px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200" title="Kasir POS Direct">🏪 Toko</span>
+                                        <span class="text-[7px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200" title="Kasir POS Direct">🏪 Toko</span>
                                     @else
-                                        <span class="text-[8px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200" title="Pesanan dari website">🌐 Web</span>
+                                        <span class="text-[7px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200" title="Pesanan dari website">🌐 Web</span>
                                     @endif
                                 </div>
-                                <p class="text-[10px] text-gray-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
+                                <p class="text-[9px] text-gray-500 font-medium">{{ $service->created_at->format('d M Y') }}</p>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap">
-                                <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $service->customer->name ?? 'Unknown' }}</p>
-                                <p class="text-[10px] text-gray-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
+                                <p class="text-[11px] font-semibold text-gray-900 whitespace-normal line-clamp-2">{{ $service->customer->name ?? 'Unknown' }}</p>
+                                <p class="text-[9px] text-gray-500 font-medium">{{ $service->customer->phone ?? '-' }}</p>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap">
-                                <p class="text-xs font-semibold text-gray-900 whitespace-normal line-clamp-2 max-w-[150px] truncate" title="{{ $service->device_name }}">{{ $service->device_name }}</p>
-                                <p class="text-[9px] text-amber-600 font-medium uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
+                                <p class="text-[11px] font-semibold text-gray-900 whitespace-normal line-clamp-2 max-w-[150px] truncate" title="{{ $service->device_name }}">{{ $service->device_name }}</p>
+                                <p class="text-[8px] text-amber-600 font-medium uppercase tracking-tighter">{{ $service->problem_type ?? 'Hardware' }}</p>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-center">
                                 @php
@@ -101,56 +101,56 @@
                                         default => 'bg-gray-50 text-gray-700'
                                     };
                                 @endphp
-                                <span class="px-2 py-0.5 rounded-full {{ $statusClass }} text-[9px] font-semibold uppercase tracking-wider">
+                                <span class="px-1.5 py-0.5 rounded-full {{ $statusClass }} text-[8px] font-bold uppercase tracking-wider">
                                     {{ $service->status }}
                                 </span>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-center">
-                                <span class="px-2.5 py-1 text-[10px] font-bold rounded border uppercase tracking-wider {{ strtolower($service->payment_method) == 'cash' ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200' }}">
+                                <span class="px-2 py-0.5 text-[8px] font-bold rounded border uppercase tracking-wider {{ strtolower($service->payment_method) == 'cash' ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200' }}">
                                     {{ $service->payment_method ?? 'Cash' }}
                                 </span>
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-center">
                                 @if($service->payment_status === 'success')
-                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider">
+                                    <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-widest">
                                         ✓ LUNAS
                                     </span>
                                 @elseif($service->payment_status === 'pending' || !$service->payment_status)
-                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider">
+                                    <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-widest">
                                         ⏳ PENDING
                                     </span>
                                 @elseif($service->payment_status === 'failed' || $service->payment_status === 'cancelled')
-                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider">
+                                    <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-widest">
                                         🚫 BATAL
                                     </span>
                                 @else
-                                    <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-wider">
+                                    <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-widest">
                                         EXPIRED
                                     </span>
                                 @endif
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-right">
                                 @php $nominal = $service->actual_cost > 0 ? $service->actual_cost : ($service->estimated_cost ?? 0); @endphp
-                                <p class="text-sm font-black {{ $service->payment_status === 'success' ? 'text-emerald-600' : 'text-gray-800' }}">Rp {{ number_format($nominal, 0, ',', '.') }}</p>
+                                <p class="text-[11px] font-bold {{ $service->payment_status === 'success' ? 'text-emerald-600' : 'text-gray-800' }}">Rp {{ number_format($nominal, 0, ',', '.') }}</p>
                                 @if($service->actual_cost <= 0 && $service->estimated_cost > 0)
-                                    <p class="text-[9px] text-amber-500 font-medium">estimasi</p>
+                                    <p class="text-[8px] text-amber-500 font-medium">estimasi</p>
                                 @endif
                             </td>
                             <td class="px-4 py-2 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
-                                        <i class='bx bx-show text-base'></i>
+                                    <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded transition-all" title="Detail">
+                                        <i class='bx bx-show text-sm'></i>
                                     </a>
                                     
                                     @hasanyrole('Admin|Teknisi')
-                                    <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all" title="Update Status">
-                                        <i class='bx bx-refresh text-base'></i>
+                                    <a href="{{ route('services.edit', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded transition-all" title="Update Status">
+                                        <i class='bx bx-refresh text-sm'></i>
                                     </a>
                                     @endhasanyrole
                                     
                                     @if($service->payment_status === 'success')
-                                        <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">
-                                            <i class='bx bx-printer text-base'></i>
+                                        <a href="{{ route('services.show', $service->id) }}" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-all" title="Cetak Struk">
+                                            <i class='bx bx-printer text-sm'></i>
                                         </a>
                                     @endif
                                     
@@ -158,8 +158,8 @@
                                     @if($service->payment_status === 'failed' || $service->payment_status === 'cancelled')
                                     <form action="{{ route('services.destroy', $service->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus antrian servis ini?')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="p-1 text-xs text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Hapus">
-                                            <i class='bx bx-trash text-base'></i>
+                                        <button type="submit" class="p-1 text-xs text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-all" title="Hapus">
+                                            <i class='bx bx-trash text-sm'></i>
                                         </button>
                                     </form>
                                     @endif
