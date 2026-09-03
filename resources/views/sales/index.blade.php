@@ -2,19 +2,19 @@
     <x-slot name="header">
         <div class="flex items-center justify-between w-full">
             <div>
-                <h2 class="text-xl font-bold text-natural-900 tracking-tight leading-none">Riwayat Penjualan</h2>
+                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Riwayat Penjualan</h2>
                 <p class="text-natural-500 text-[10px] mt-0.5">Pantau seluruh transaksi keluar dan performa penjualan.</p>
             </div>
             <div class="flex items-center gap-2">
                 @role('Admin')
-                <a href="{{ route('sales.export') }}" class="flex items-center gap-2 px-4 py-2 bg-white border border-natural-200 rounded-xl text-natural-600 text-xs font-bold hover:bg-natural-50 transition-all shadow-sm">
-                    <i class='bx bx-export text-lg'></i>
+                <a href="{{ route('sales.export') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-natural-200 rounded-lg text-natural-600 text-[11px] font-bold hover:bg-natural-50 transition-all shadow-sm">
+                    <i class='bx bx-export text-base'></i>
                     Export Excel
                 </a>
                 @endrole
                 @hasanyrole('Admin|Staff')
-                <a href="{{ route('sales.create') }}" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 rounded-xl text-white text-xs font-bold hover:bg-emerald-700 transition-all shadow-md">
-                    <i class='bx bx-plus text-lg'></i>
+                <a href="{{ route('sales.create') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 rounded-lg text-white text-[11px] font-bold hover:bg-emerald-700 transition-all shadow-md">
+                    <i class='bx bx-plus text-base'></i>
                     Input Penjualan
                 </a>
                 @endhasanyrole
@@ -24,15 +24,15 @@
 
     <div class="flex flex-col h-full space-y-4">
         <!-- Filter Bar -->
-        <form id="filterForm" action="{{ route('sales.index') }}" method="GET" class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-4">
+        <form id="filterForm" action="{{ route('sales.index') }}" method="GET" class="bg-white p-3 rounded-2xl shadow-sm border border-natural-100/50 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
                 <div class="flex flex-col">
                     <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Filter Tanggal</label>
-                    <input type="date" name="date" value="{{ request('date') }}" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
+                    <input type="date" name="date" value="{{ request('date') }}" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium">
                 </div>
                 <div class="flex flex-col">
                     <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Metode Bayar</label>
-                    <select name="payment_method" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
+                    <select name="payment_method" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
                         <option value="">Semua Metode</option>
                         <option value="cash" {{ request('payment_method') == 'cash' ? 'selected' : '' }}>Tunai (Cash)</option>
                         <option value="transfer" {{ request('payment_method') == 'transfer' ? 'selected' : '' }}>Transfer Bank</option>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex flex-col">
                     <label class="text-[9px] font-bold text-natural-400 uppercase ml-1 mb-0.5">Status Pembayaran</label>
-                    <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-2xl text-sm py-2 px-4 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
+                    <select name="status" onchange="this.form.submit()" class="bg-natural-50 border-none rounded-xl text-xs py-1.5 px-3 focus:ring-2 focus:ring-brand-500/20 transition-all text-natural-600 font-medium min-w-[140px]">
                         <option value="">Semua Status</option>
                         <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Lunas / Sukses</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
@@ -50,9 +50,9 @@
                 </div>
             </div>
             <div class="relative flex-grow max-w-xs">
-                <i class='bx bx-search absolute left-4 top-1/2 -translate-y-1/2 text-natural-400 text-lg'></i>
+                <i class='bx bx-search absolute left-3 top-1/2 -translate-y-1/2 text-natural-400 text-lg'></i>
                 <input type="text" name="search" value="{{ request('search') }}" oninput="debounceSubmit()" placeholder="Cari No. Faktur atau Pelanggan..." 
-                       class="w-full pl-11 pr-4 py-2.5 bg-natural-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-500/20 transition-all">
+                       class="w-full pl-9 pr-3 py-1.5 bg-natural-50 border-none rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 transition-all">
             </div>
         </form>
 
@@ -62,12 +62,12 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Faktur & Tanggal</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
-                            <th class="px-6 py-3 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Metode</th>
-                            <th class="px-6 py-3 bg-gray-50 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
-                            <th class="px-6 py-3 bg-gray-50 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Faktur & Tanggal</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pelanggan</th>
+                            <th class="px-6 py-3 bg-gray-50 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Metode</th>
+                            <th class="px-6 py-3 bg-gray-50 text-center text-[10px] font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total Transaksi</th>
+                            <th class="px-6 py-3 bg-gray-50 text-right text-[10px] font-bold text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50 text-sm">
