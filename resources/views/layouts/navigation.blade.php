@@ -15,7 +15,7 @@
         <div class="flex items-center h-[60px] shrink-0 px-5 mt-1 transition-all duration-300" :class="sidebarOpen ? 'justify-start' : 'justify-center px-0'">
             <a href="{{ route('dashboard') }}" class="flex items-center gap-3 w-full transition-all duration-300 group" :class="sidebarOpen ? 'justify-start' : 'justify-center'">
                 <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech" class="h-8 w-auto object-contain transition-transform group-hover:scale-105 shrink-0">
-                <span x-show="sidebarOpen" x-transition.opacity class="font-black text-[12px] text-natural-800 leading-tight tracking-tight uppercase group-hover:text-brand-600 transition-colors line-clamp-2">LKtech<br>TN SEREAL</span>
+                <span x-show="sidebarOpen" x-transition.opacity class="font-black text-[12px] text-natural-800 leading-tight tracking-tight uppercase group-hover:text-brand-600 transition-colors line-clamp-2">LKTech<br>Indonesia</span>
             </a>
         </div>
 
