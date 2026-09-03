@@ -103,33 +103,33 @@
                             <td class="px-6 py-3 whitespace-nowrap text-center">
                                 <div class="flex flex-col items-center gap-1">
                                     @if($sale->payment_status === 'success')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-widest text-center">
                                             ✓ LUNAS
                                         </span>
                                     @elseif($sale->payment_status === 'pending')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-widest text-center">
                                             ⏳ PENDING
                                         </span>
                                     @elseif($sale->payment_status === 'failed' || $sale->payment_status === 'cancelled')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-widest text-center">
                                             🚫 BATAL
                                         </span>
                                     @else
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-slate-50 text-slate-600 border border-slate-200 uppercase tracking-widest text-center">
                                             EXPIRED
                                         </span>
                                     @endif
 
                                     @if($sale->order_status === 'selesai')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-widest text-center">
                                             SELESAI
                                         </span>
                                     @elseif($sale->order_status === 'diproses')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase tracking-widest text-center">
                                             DIPROSES
                                         </span>
                                     @elseif($sale->order_status === 'batal')
-                                        <span class="px-2.5 py-1 text-[10px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider w-full text-center">
+                                        <span class="px-2 py-0.5 text-[8px] font-bold rounded bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-widest text-center">
                                             BATAL
                                         </span>
                                     @endif
