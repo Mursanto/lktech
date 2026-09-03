@@ -75,28 +75,28 @@
                         <tr class="border-b border-gray-100 hover:bg-gray-50/40 transition-colors group">
                             <td class="px-6 py-3 whitespace-nowrap">
                                 <div class="flex items-center gap-1.5 mb-1">
-                                    <p class="text-sm font-semibold text-gray-900 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
+                                    <p class="text-[11px] font-semibold text-gray-900 leading-none">#{{ $sale->invoice_number ?? 'INV-'.str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</p>
                                     @if(strtolower($sale->payment_method) == 'cash' || $sale->payment_status === 'success')
-                                        <span class="text-[8px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200" title="Kasir POS Direct">🏪 Toko</span>
+                                        <span class="text-[7px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200" title="Kasir POS Direct">🏪 Toko</span>
                                     @else
-                                        <span class="text-[8px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200" title="Pesanan dari website">🌐 Web</span>
+                                        <span class="text-[7px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200" title="Pesanan dari website">🌐 Web</span>
                                     @endif
                                 </div>
-                                <p class="text-xs text-gray-500">{{ $sale->created_at->format('d M Y, H:i') }}</p>
+                                <p class="text-[9px] text-gray-500">{{ $sale->created_at->format('d M Y, H:i') }}</p>
                             </td>
                             <td class="px-6 py-3 whitespace-nowrap">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-sm font-bold">
+                                    <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-[10px] font-bold">
                                         {{ substr($sale->customer->name ?? 'C', 0, 1) }}
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-gray-900 whitespace-normal line-clamp-2 leading-tight">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
-                                        <p class="text-xs text-gray-500 mt-0.5">{{ $sale->customer->phone ?? '-' }}</p>
+                                        <p class="text-[11px] font-semibold text-gray-900 whitespace-normal line-clamp-2 leading-tight">{{ $sale->customer->name ?? 'Guest Customer' }}</p>
+                                        <p class="text-[9px] text-gray-500 mt-0.5">{{ $sale->customer->phone ?? '-' }}</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-3 whitespace-nowrap text-center">
-                                <span class="px-2.5 py-1 text-[10px] font-bold rounded border uppercase tracking-wider {{ strtolower($sale->payment_method) == 'cash' ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200' }}">
+                                <span class="px-2 py-0.5 text-[9px] font-bold rounded border uppercase tracking-wider {{ strtolower($sale->payment_method) == 'cash' ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200' }}">
                                     {{ $sale->payment_method ?? 'Cash' }}
                                 </span>
                             </td>
@@ -136,25 +136,25 @@
                                 </div>
                             </td>
                             <td class="px-6 py-3 whitespace-nowrap">
-                                <p class="text-sm font-semibold text-gray-900">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
-                                <p class="text-xs text-gray-500 mt-0.5">{{ $sale->saleDetails->sum('quantity') }} Item Terjual</p>
+                                <p class="text-[11px] font-semibold text-gray-900">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</p>
+                                <p class="text-[9px] text-gray-500 mt-0.5">{{ $sale->saleDetails->sum('quantity') }} Item Terjual</p>
                             </td>
 
                             <td class="px-6 py-3 whitespace-nowrap text-right">
                                 <div class="flex items-center justify-end gap-1">
-                                    <a href="{{ route('sales.show', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all" title="Detail">
-                                        <i class='bx bx-show text-lg'></i>
+                                    <a href="{{ route('sales.show', $sale->id) }}" class="p-1 text-xs text-gray-400 hover:text-brand-600 hover:bg-brand-50 rounded transition-all" title="Detail">
+                                        <i class='bx bx-show text-sm'></i>
                                     </a>
                                     
                                     @hasanyrole('Admin|Staff')
-                                    <a href="{{ route('sales.edit', $sale->id) }}" class="p-1.5 text-sm text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Edit">
-                                        <i class='bx bx-edit-alt text-lg'></i>
+                                    <a href="{{ route('sales.edit', $sale->id) }}" class="p-1 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-all" title="Edit">
+                                        <i class='bx bx-edit-alt text-sm'></i>
                                     </a>
                                     @endhasanyrole
                                     
                                     @if($sale->payment_status === 'success')
-                                        <a href="{{ route('sales.print', $sale->id) }}" target="_blank" class="p-1.5 text-sm text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="Cetak Struk">
-                                            <i class='bx bx-printer text-lg'></i>
+                                        <a href="{{ route('sales.print', $sale->id) }}" target="_blank" class="p-1 text-xs text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-all" title="Cetak Struk">
+                                            <i class='bx bx-printer text-sm'></i>
                                         </a>
                                     @endif
 

@@ -81,29 +81,29 @@
                                         <i class='bx bx-laptop text-base'></i>
                                     </div>
                                     <div class="max-w-[180px]">
-                                        <p class="text-xs font-semibold text-gray-900 truncate" title="{{ $product->brand }} {{ $product->model_series }}">{{ $product->brand }} {{ $product->model_series }}</p>
+                                        <p class="text-[11px] font-semibold text-gray-900 truncate" title="{{ $product->brand }} {{ $product->model_series }}">{{ $product->brand }} {{ $product->model_series }}</p>
                                         <div class="flex items-center gap-1.5 mt-0.5">
-                                            <p class="text-[10px] text-gray-500 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
+                                            <p class="text-[9px] text-gray-500 font-medium tracking-tight">ID: #{{ str_pad($product->id, 5, '0', STR_PAD_LEFT) }}</p>
                                             {{-- Badge Tipe Stok --}}
                                             @if(($product->tipe_stok ?? 'ready_stock') === 'ready_stock')
-                                                <span class="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-emerald-50 text-emerald-700 uppercase tracking-wider">Ready</span>
+                                                <span class="px-1.5 py-0.5 text-[8px] font-semibold rounded-full bg-emerald-50 text-emerald-700 uppercase tracking-wider">Ready</span>
                                             @else
-                                                <span class="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-orange-50 text-orange-700 uppercase tracking-wider">PO</span>
+                                                <span class="px-1.5 py-0.5 text-[8px] font-semibold rounded-full bg-orange-50 text-orange-700 uppercase tracking-wider">PO</span>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-1.5 whitespace-nowrap text-xs text-gray-500">
-                                <span class="px-2 py-1 rounded-full bg-gray-50 text-gray-600 text-[10px] font-semibold whitespace-nowrap border border-gray-100">
+                                <span class="px-2 py-1 rounded-full bg-gray-50 text-gray-600 text-[9px] font-semibold whitespace-nowrap border border-gray-100">
                                     {{ $product->category->name ?? 'Uncategorized' }}
                                 </span>
                             </td>
                             <td class="px-4 py-1.5 whitespace-nowrap text-right">
-                                <span class="text-xs font-semibold {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-900' }}">
+                                <span class="text-[11px] font-semibold {{ $product->stock <= 2 ? 'text-red-600' : 'text-gray-900' }}">
                                     {{ $product->stock }}
                                 </span>
-                                <span class="text-[9px] font-medium text-gray-500 uppercase ml-0.5">Unit</span>
+                                <span class="text-[8px] font-medium text-gray-500 uppercase ml-0.5">Unit</span>
                             </td>
                             @php
                                 $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
@@ -112,15 +112,15 @@
                             @endphp
                             @hasanyrole('Admin|Owner')
                             <td class="px-4 py-1.5 whitespace-nowrap text-right">
-                                <p class="text-xs font-semibold text-gray-900">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
+                                <p class="text-[11px] font-semibold text-gray-900">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</p>
                             </td>
                             @endhasanyrole
                             <td class="px-4 py-1.5 whitespace-nowrap text-right">
-                                <p class="text-xs font-semibold text-gray-900">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                                <p class="text-[11px] font-semibold text-gray-900">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
                             </td>
                             @hasanyrole('Admin|Owner')
                             <td class="px-4 py-1.5 whitespace-nowrap text-right">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700' }}">
+                                <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold {{ $margin >= 30 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700' }}">
                                     {{ round($margin, 1) }}%
                                 </span>
                             </td>
