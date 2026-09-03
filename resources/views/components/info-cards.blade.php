@@ -17,7 +17,7 @@
             <i class='bx bx-wrench text-lg sm:text-xl'></i>
         </div>
         <div class="min-w-0 flex-1">
-            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight group-hover:text-amber-500 transition-colors">Servis PC/HP</h4>
+            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight group-hover:text-amber-500 transition-colors">Service PC / Laptop</h4>
             <p class="text-[9px] sm:text-[10px] text-gray-400 leading-tight mt-0.5 truncate">Teknisi ahli & cepat</p>
         </div>
     </a>
