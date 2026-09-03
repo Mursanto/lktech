@@ -43,12 +43,14 @@
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Inventaris</span>
             </a>
 
+            {{-- 
             <a href="{{ route('catalog.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('catalog.*') ? 'bg-fuchsia-50 text-fuchsia-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Katalog Produk">
                 <i class='bx bx-store-alt text-lg {{ request()->routeIs('catalog.*') ? 'text-fuchsia-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Katalog Produk</span>
             </a>
+            --}}
 
             @hasanyrole('Admin|Staff|Kasir|Sales')
             <a href="{{ route('sales.index') }}" 
