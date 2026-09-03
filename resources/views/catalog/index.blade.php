@@ -40,7 +40,7 @@
 
         <!-- Catalog Grid Container -->
         <div class="flex-grow overflow-y-auto pr-1 custom-scrollbar">
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                 @forelse($products as $product)
                 <div class="bg-white rounded-3xl shadow-sm border border-natural-100/50 overflow-hidden group hover:shadow-md transition-all duration-300">
                     <!-- Image Thumbnail -->
@@ -52,38 +52,39 @@
                         @endif
 
                         <div class="absolute top-2 left-2">
-                            <span class="px-2 py-0.5 rounded-lg bg-white/90 backdrop-blur-md text-natural-800 text-[8px] font-black uppercase tracking-widest shadow-sm border border-gray-100">
-                                {{ $product->brand }}
-                            </span>
-                        </div>
-                        <div class="absolute bottom-2 left-2">
-                            <span class="text-white text-[8px] font-bold px-2 py-0.5 rounded-full bg-brand-500 shadow-sm">
-                                {{ $product->category->name ?? 'Device' }}
-                            </span>
+                            @if($product->stock > 0)
+                                <span class="px-2 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[8px] font-bold shadow-sm flex items-center gap-1 border border-emerald-100/50 backdrop-blur-sm">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></span> Ready Stok
+                                </span>
+                            @else
+                                <span class="px-2 py-1 rounded-full bg-amber-50 text-amber-600 text-[8px] font-bold shadow-sm flex items-center gap-1 border border-amber-100/50 backdrop-blur-sm">
+                                    <span class="w-1 h-1 rounded-full bg-amber-500"></span> Open Order
+                                </span>
+                            @endif
                         </div>
                     </div>
 
                     <!-- Details -->
-                    <div class="p-4 flex flex-col gap-2">
-                        <div class="min-h-[40px]">
-                            <h3 class="text-sm font-black text-natural-900 group-hover:text-brand-600 transition-colors line-clamp-2 leading-tight">
+                    <div class="p-2.5 flex flex-col gap-1">
+                        <div class="min-h-[28px]">
+                            <h3 class="text-[10px] font-semibold text-natural-900 group-hover:text-brand-600 transition-colors line-clamp-2 leading-tight">
                                 {{ $product->model_series }}
                             </h3>
                         </div>
                         
-                        <div class="flex items-end justify-between mt-1">
+                        <div class="flex items-end justify-between mt-0.5">
                             <div>
-                                <p class="text-[9px] text-natural-400 font-bold uppercase tracking-wider">Harga Promo</p>
+                                <p class="text-[7px] text-natural-400 font-bold uppercase tracking-wider mb-0.5">Harga Promo</p>
                                 @php
                                     $finalPrice = $product->selling_price > 0 ? $product->selling_price : ($product->purchase_price + $product->operational_cost);
                                 @endphp
-                                <div class="flex items-center gap-2 mt-1">
-                                    <p class="text-base font-black text-brand-600 leading-none">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
+                                <div class="flex items-center">
+                                    <p class="text-[11px] font-bold text-brand-600 leading-none">Rp {{ number_format((float) $finalPrice, 0, ',', '.') }}</p>
                                 </div>
                             </div>
-                            <div class="text-right pb-0.5">
-                                <p class="text-[9px] text-natural-400 font-bold uppercase tracking-wider">Tersedia</p>
-                                <p class="text-xs font-black text-natural-800 leading-none mt-1">{{ $product->stock }} <span class="text-[10px] font-bold text-natural-400">Unit</span></p>
+                            <div class="text-right">
+                                <p class="text-[7px] text-natural-400 font-bold uppercase tracking-wider mb-0.5">Tersedia</p>
+                                <p class="text-[10px] font-bold text-natural-800 leading-none">{{ $product->stock }} <span class="text-[8px] font-semibold text-natural-400">Unit</span></p>
                             </div>
                         </div>
 
