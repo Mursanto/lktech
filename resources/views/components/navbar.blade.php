@@ -105,16 +105,18 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('tentang-kami') ? 'text-brand-600' : '' }}">Tentang Kami</a>
             </div>
 
             <!-- Search Bar (Desktop) -->
-            <div class="flex-1 max-w-3xl px-4 hidden lg:block">
-                <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, merk, atau prosesor..." 
-                           class="w-full pl-4 pr-10 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm">
-                    <button type="submit" class="absolute right-0 top-0 h-full px-3 flex items-center justify-center text-gray-400 hover:text-brand-600 bg-gray-50 rounded-r-lg border-l border-gray-300">
-                        <i class='bx bx-search text-lg'></i>
+            <div class="flex-1 max-w-4xl px-8 hidden lg:block">
+                <form action="{{ route('home') }}" method="GET" class="relative flex items-center w-full group">
+                    <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+                        <i class='bx bx-search text-xl text-gray-400 group-focus-within:text-brand-500 transition-colors'></i>
+                    </div>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, pc rakitan, atau jasa website..." 
+                           class="w-full pl-14 pr-24 py-2.5 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:bg-white focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 text-[14px] transition-all duration-300 shadow-sm hover:shadow-md group-focus-within:shadow-md placeholder-gray-400 font-medium">
+                    <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-6 flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-bold text-[13px] tracking-wide rounded-full transition-all duration-300 shadow-sm shadow-brand-500/30">
+                        Cari
                     </button>
                 </form>
             </div>
@@ -244,9 +246,6 @@
                 </div>
             </div>
 
-            <a href="{{ route('tentang-kami') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('tentang-kami') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                Tentang Kami
-            </a>
         </div>
     </nav>
 </header>
