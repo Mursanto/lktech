@@ -381,8 +381,8 @@
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
                     if (window.innerWidth >= 768) return 4;
-                    if (window.innerWidth >= 640) return 3;
-                    return 2; 
+                    if (window.innerWidth >= 640) return 6;
+                    return 6; 
                 },
                 count: 6
             }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
@@ -409,8 +409,8 @@
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
                     if (window.innerWidth >= 768) return 4;
-                    if (window.innerWidth >= 640) return 3;
-                    return 2; 
+                    if (window.innerWidth >= 640) return 6;
+                    return 6; 
                 },
                 count: 6
             }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
@@ -437,8 +437,8 @@
                     if (window.innerWidth >= 1280) return 6;
                     if (window.innerWidth >= 1024) return 5;
                     if (window.innerWidth >= 768) return 4;
-                    if (window.innerWidth >= 640) return 3;
-                    return 2; 
+                    if (window.innerWidth >= 640) return 6;
+                    return 6; 
                 },
                 count: 6
             }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
