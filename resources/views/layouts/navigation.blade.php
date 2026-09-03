@@ -105,16 +105,7 @@
             @endif
 
             @if(auth()->check() && (auth()->user()->hasRole('Admin') || auth()->user()->hasPermissionTo('access_blog') || auth()->user()->hasPermissionTo('access_settings')))
-            <!-- Administrasi Section -->
-            <div x-show="sidebarOpen" class="px-5 mt-2 mb-1 flex items-center transition-opacity duration-300">
-                <div class="h-px bg-natural-100 flex-1"></div>
-                <p class="px-3 text-[8px] font-bold text-natural-400 uppercase tracking-widest whitespace-nowrap">Administrasi</p>
-                <div class="h-px bg-natural-100 flex-1"></div>
-            </div>
-            <!-- Separator for mini mode -->
-            <div x-show="!sidebarOpen" class="mt-2 mb-1 flex justify-center transition-opacity duration-300">
-                <div class="h-px w-6 bg-natural-200"></div>
-            </div>
+
             
             @if(auth()->user()->hasRole('Admin'))
             <a href="{{ route('reports.index') }}" 
