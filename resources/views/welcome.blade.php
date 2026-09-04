@@ -322,8 +322,8 @@
         <!-- Product Grid Section -->
         <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-6 lg:pt-2 lg:pb-8 flex-shrink-0">
             
+            @if(request()->has('search') && request()->search != '')
             <div class="mb-2 flex flex-wrap justify-between items-center gap-4">
-                @if(request()->has('search') && request()->search != '')
                 <div class="flex items-center gap-4 w-full">
                     <div>
                         <h2 class="text-sm font-bold text-gray-800">Hasil Pencarian: "{{ request()->search }}"</h2>
@@ -331,17 +331,8 @@
                     </div>
                     <a href="{{ route('home') }}" class="text-brand-600 text-xs font-semibold hover:underline bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-100 ml-auto">Lihat Semua</a>
                 </div>
-                @else
-                <div class="hidden md:flex items-center gap-4 w-full mb-2">
-                    <div>
-                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 flex items-center gap-2">
-                            <i class='bx bx-laptop text-brand-500'></i> Produk & Device
-                        </h2>
-                        <p class="text-gray-500 text-[11px] sm:text-xs mt-0.5">Berbagai pilihan laptop dan device terbaik.</p>
-                    </div>
-                </div>
-                @endif
             </div>
+            @endif
 
             <!-- Precision Grid (Compact Design) -->
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
