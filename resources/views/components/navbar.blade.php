@@ -55,23 +55,29 @@
                 <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('home') ? 'text-brand-600' : '' }}">Beranda</a>
                 <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
                 <div class="relative group flex items-center h-full" x-data="{ open: false, mitraOpen: false }" @mouseleave="open = false; mitraOpen = false">
-                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') ? 'text-brand-600' : '' }}">
+                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') || request()->routeIs('service-pc') || request()->routeIs('sewa-laptop') ? 'text-brand-600' : '' }}">
                         Layanan <i class='bx bx-chevron-down text-lg'></i>
                     </button>
-                    <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-56 z-50" style="display: none;">
+                    <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-60 z-50" style="display: none;">
                         <div class="bg-white border border-gray-100 rounded-xl shadow-lg py-2 overflow-hidden">
                             <!-- Layanan Utama -->
                             <div class="px-4 py-1.5">
                                 <span class="text-[10px] font-black text-brand-500 uppercase tracking-widest">Layanan Utama</span>
                             </div>
-                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
-                                Rakit PC Custom
+                            <a href="{{ route('katalog.index') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <span class="flex items-center gap-2"><i class='bx bx-laptop text-base text-brand-400'></i> Laptop Second / Bekas</span>
                             </a>
-                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20mendapatkan%20informasi%20Sewa%20Perangkat%20IT." target="_blank" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
-                                Sewa Perangkat IT
+                            <a href="{{ route('service-pc') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <span class="flex items-center gap-2"><i class='bx bx-wrench text-base text-amber-400'></i> Service PC &amp; Laptop</span>
+                            </a>
+                            <a href="{{ route('rakit-pc') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <span class="flex items-center gap-2"><i class='bx bx-desktop text-base text-purple-400'></i> Rakit PC Custom</span>
+                            </a>
+                            <a href="{{ route('sewa-laptop') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                <span class="flex items-center gap-2"><i class='bx bx-calendar-check text-base text-emerald-400'></i> Sewa PC &amp; Laptop</span>
                             </a>
                             <a href="{{ route('jasa-website') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors border-b border-gray-100">
-                                Jasa Pembuatan Website
+                                <span class="flex items-center gap-2"><i class='bx bx-globe text-base text-indigo-400'></i> Jasa Pembuatan Website</span>
                             </a>
                             <!-- Layanan Mitra — accordion toggle (klik untuk expand ke bawah) -->
                             <div>
@@ -206,12 +212,24 @@
                 Katalog
             </a>
 
+            <a href="{{ route('katalog.index') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('katalog.*') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                🖥️ Laptop Second / Bekas
+            </a>
+
+            <a href="{{ route('service-pc') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('service-pc') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                🔧 Service PC &amp; Laptop
+            </a>
+
             <a href="{{ route('rakit-pc') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('rakit-pc') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                Rakit PC Custom
+                🖥 Rakit PC Custom
+            </a>
+
+            <a href="{{ route('sewa-laptop') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('sewa-laptop') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                📅 Sewa PC &amp; Laptop
             </a>
 
             <a href="{{ route('jasa-website') }}" class="block w-full px-4 py-3.5 text-[15px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('jasa-website') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                Jasa Pembuatan Website
+                🌐 Jasa Pembuatan Website
             </a>
 
             <!-- Layanan Mitra — accordion -->
