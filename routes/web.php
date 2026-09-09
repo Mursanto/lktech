@@ -316,6 +316,17 @@ Route::get('/deploy-system', function () {
             $output[] = "<b>Migrasi Database:</b> Gagal - " . $e->getMessage() . "<br>";
         }
 
+        // 5. Seed Investor Role
+        try {
+            \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                '--class' => 'InvestorRoleSeeder',
+                '--force' => true
+            ]);
+            $output[] = "<b>Seed Role Investor:</b> Berhasil ditambahkan.<br>";
+        } catch (\Exception $e) {
+            $output[] = "<b>Seed Role Investor:</b> Gagal - " . $e->getMessage() . "<br>";
+        }
+
         return implode("<br>", $output);
     } catch (\Throwable $e) {
         return '<b>Terjadi Kesalahan Fatal:</b> ' . $e->getMessage() . ' di file ' . $e->getFile() . ' baris ' . $e->getLine();
