@@ -1,0 +1,86 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% ACTIVITY DIAGRAM
+%% Proses Login dengan Autentikasi 2FA
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% =================================================================
+
+flowchart TD
+    Start([🔵 Mulai]) --> A1
+
+    A1["Pengguna membuka\nHalaman Login"] --> A2
+    A2["Masukkan Email\ndan Password"] --> A3
+    A3{"Validasi\nFormat Input?"}
+
+    A3 -->|Tidak Valid| A2
+    A3 -->|Valid| A4
+
+    A4{"Cek Blokir IP?\n≥5 Percobaan Gagal"}
+    A4 -->|IP Diblokir\n10 menit| ERR1["❌ Tampilkan Pesan:\nAkun Diblokir Sementara"]
+    ERR1 --> End1([🔴 Selesai])
+
+    A4 -->|IP Tidak Diblokir| A5
+    A5{"Autentikasi\nCredential\n(Email & Password)?"}
+
+    A5 -->|Gagal| A6["Tambah Counter\nPercobaan Gagal"]
+    A6 --> A7{"Percobaan\nGagal ≥ 5?"}
+    A7 -->|Ya| A8["Kunci IP\nselama 10 Menit"]
+    A8 --> ERR2["❌ Log: login_failed\n(ActivityLog)"]
+    ERR2 --> End2([🔴 Selesai])
+    A7 -->|Tidak| ERR3["❌ Tampilkan Pesan:\nKredensial Salah"]
+    ERR3 --> A2
+
+    A5 -->|Berhasil| B1
+    B1{"Apakah User\nmemiliki\nGoogle 2FA aktif?"}
+
+    B1 -->|Ya| B2["Logout Sementara\nSimpan User ID\ndi Session"]
+    B2 --> B3["Redirect ke\nHalaman Verifikasi 2FA\n(Google Authenticator)"]
+    B3 --> B4["Masukkan Kode\nOTP 6 Digit"]
+    B4 --> B5{"Kode OTP\nValid?"}
+    B5 -->|Tidak| ERR4["❌ Tampilkan:\nKode Tidak Valid"]
+    ERR4 --> B4
+    B5 -->|Ya| OK1["✅ Log: 2fa_verified\n(ActivityLog)"]
+    OK1 --> SUCCESS
+
+    B1 -->|Tidak| C1
+    C1{"Apakah User\nmemiliki\nEmail OTP aktif?"}
+
+    C1 -->|Ya| C2["Generate OTP 6 Digit\nSimpan di Database\nExpiry 10 Menit"]
+    C2 --> C3["Kirim OTP\nke Email\n(via Mailtrap / SMTP)"]
+    C3 --> C4["Redirect ke\nHalaman Verifikasi OTP"]
+    C4 --> C5["Masukkan Kode\nOTP dari Email"]
+    C5 --> C6{"Kode Valid\ndan Belum\nExpired?"}
+    C6 -->|Tidak| ERR5["❌ Tampilkan:\nKode Salah / Expired"]
+    ERR5 --> C5
+    C6 -->|Ya| OK2["✅ Hapus OTP\ndari Database"]
+    OK2 --> SUCCESS
+
+    C1 -->|Tidak| SUCCESS
+
+    SUCCESS["✅ Login Berhasil\nBuat Session User\nLog: login (ActivityLog)"]
+    SUCCESS --> D1
+
+    D1{"Cek Role\nPengguna"}
+    D1 -->|Admin| D2["Redirect ke\nDashboard Admin\n(Akses Penuh)"]
+    D1 -->|Staff / Kasir| D3["Redirect ke\nDashboard Staff\n(Akses Terbatas)"]
+    D1 -->|Teknisi| D4["Redirect ke\nDashboard Teknisi\n(Modul Servis)"]
+
+    D2 --> EndA([🟢 Selesai - Admin])
+    D3 --> EndB([🟢 Selesai - Staff])
+    D4 --> EndC([🟢 Selesai - Teknisi])
+
+    %% Styling
+    style Start fill:#1E88E5,color:#fff,stroke:#1565C0
+    style SUCCESS fill:#43A047,color:#fff,stroke:#2E7D32
+    style End1 fill:#E53935,color:#fff,stroke:#B71C1C
+    style End2 fill:#E53935,color:#fff,stroke:#B71C1C
+    style EndA fill:#43A047,color:#fff,stroke:#2E7D32
+    style EndB fill:#43A047,color:#fff,stroke:#2E7D32
+    style EndC fill:#43A047,color:#fff,stroke:#2E7D32
+    style ERR1 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style ERR2 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style ERR3 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style ERR4 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style ERR5 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style OK1 fill:#C8E6C9,stroke:#43A047,color:#1B5E20
+    style OK2 fill:#C8E6C9,stroke:#43A047,color:#1B5E20

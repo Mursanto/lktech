@@ -1,0 +1,145 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% USE CASE DIAGRAM
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% Skripsi: Pengembangan Sistem Informasi Inventori Dan Penjualan
+%% Berbasis Web Menggunakan Laravel Dengan Penerapan Keamanan
+%% Autentikasi Pada LKTech
+%% =================================================================
+
+graph LR
+    %% ============ AKTOR ============
+    Customer(["👤 Customer\n──────────\nPelanggan"])
+    Admin(["👤 Admin\n──────────\nAdministrator"])
+    Staff(["👤 Staff\n──────────\nKasir / Staff"])
+    Teknisi(["👤 Teknisi\n──────────\nTechnician"])
+
+    %% ============ SISTEM BOUNDARY ============
+    subgraph SYS ["═══════ SISTEM INFORMASI LKTech ═══════"]
+
+        subgraph PUB ["🌐 Modul Publik"]
+            UC01["UC-01 Melihat Katalog Produk"]
+            UC02["UC-02 Melihat Detail Produk"]
+            UC03["UC-03 Menambah ke Keranjang"]
+            UC04["UC-04 Melakukan Checkout"]
+            UC05["UC-05 Melihat Riwayat Order"]
+        end
+
+        subgraph AUTH ["🔐 Modul Autentikasi"]
+            UC06["UC-06 Login ke Sistem"]
+            UC07["UC-07 Verifikasi 2FA\n(Google Auth / Email OTP)"]
+            UC08["UC-08 Setup 2FA Akun"]
+            UC09["UC-09 Logout dari Sistem"]
+            UC10["UC-10 Reset Password"]
+        end
+
+        subgraph INV ["📦 Modul Inventori"]
+            UC11["UC-11 Mengelola Produk (CRUD)"]
+            UC12["UC-12 Mengelola Kategori (CRUD)"]
+            UC13["UC-13 Melihat Stok Produk"]
+            UC14["UC-14 Ekspor Data Produk"]
+        end
+
+        subgraph SALES ["🛒 Modul Penjualan"]
+            UC15["UC-15 Membuat Transaksi Penjualan"]
+            UC16["UC-16 Melihat Data Penjualan"]
+            UC17["UC-17 Menandai Pembayaran Lunas"]
+            UC18["UC-18 Membatalkan Transaksi"]
+            UC19["UC-19 Mencetak Invoice / Nota"]
+            UC20["UC-20 Ekspor Data Penjualan"]
+        end
+
+        subgraph SVC ["🔧 Modul Servis"]
+            UC21["UC-21 Membuat Tiket Servis"]
+            UC22["UC-22 Update Status Servis"]
+            UC23["UC-23 Menambah Part Servis"]
+            UC24["UC-24 Mencetak Nota Servis"]
+        end
+
+        subgraph RENT ["💻 Modul Rental"]
+            UC25["UC-25 Membuat Transaksi Rental"]
+            UC26["UC-26 Update Status Rental"]
+            UC27["UC-27 Ekspor Data Rental"]
+        end
+
+        subgraph RPT ["📊 Modul Laporan"]
+            UC28["UC-28 Melihat Dashboard & Statistik"]
+            UC29["UC-29 Laporan Laba Rugi"]
+            UC30["UC-30 Audit Profit Penjualan"]
+        end
+
+        subgraph MGT ["⚙️ Modul Manajemen (Admin)"]
+            UC31["UC-31 Mengelola User (CRUD)"]
+            UC32["UC-32 Melihat Activity Log"]
+            UC33["UC-33 Pengaturan Website"]
+        end
+    end
+
+    %% ============ RELASI CUSTOMER ============
+    Customer --> UC01
+    Customer --> UC02
+    Customer --> UC03
+    Customer --> UC04
+    Customer --> UC05
+
+    %% ============ RELASI AUTH (SEMUA USER TERLOGIN) ============
+    Admin --- UC06
+    Staff --- UC06
+    Teknisi --- UC06
+    UC06 -. "<<include>>" .-> UC07
+    Admin --> UC08
+    Admin --> UC09
+    Staff --> UC09
+    Teknisi --> UC09
+    Admin --> UC10
+
+    %% ============ RELASI ADMIN - INVENTORI ============
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13
+    Admin --> UC14
+
+    %% ============ RELASI ADMIN & STAFF - PENJUALAN ============
+    Admin --> UC15
+    Staff --> UC15
+    Admin --> UC16
+    Staff --> UC16
+    Admin --> UC17
+    Staff --> UC17
+    Admin --> UC18
+    Staff --> UC18
+    Admin --> UC19
+    Staff --> UC19
+    Admin --> UC20
+
+    %% ============ RELASI SERVIS ============
+    Admin --> UC21
+    Staff --> UC21
+    Teknisi --> UC21
+    Admin --> UC22
+    Staff --> UC22
+    Teknisi --> UC22
+    Admin --> UC23
+    Teknisi --> UC23
+    Admin --> UC24
+    Staff --> UC24
+    Teknisi --> UC24
+
+    %% ============ RELASI RENTAL ============
+    Admin --> UC25
+    Staff --> UC25
+    Admin --> UC26
+    Staff --> UC26
+    Admin --> UC27
+
+    %% ============ RELASI LAPORAN ============
+    Admin --> UC28
+    Staff --> UC28
+    Teknisi --> UC28
+    Admin --> UC29
+    Admin --> UC30
+
+    %% ============ RELASI MANAJEMEN ============
+    Admin --> UC31
+    Admin --> UC32
+    Admin --> UC33

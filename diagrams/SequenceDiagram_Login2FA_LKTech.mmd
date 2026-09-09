@@ -1,0 +1,102 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% SEQUENCE DIAGRAM
+%% Proses Login dengan Autentikasi 2FA (Google Authenticator)
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% =================================================================
+
+sequenceDiagram
+    autonumber
+
+    actor User as 👤 Pengguna
+    participant Browser as 🌐 Browser
+    participant LoginCtrl as LoginController
+    participant Cache as Cache (Rate Limiter)
+    participant AuthFacade as Auth Facade
+    participant DB as 🗄️ Database
+    participant TwoFactorCtrl as TwoFactorController
+    participant ActivityLog as ActivityLog
+
+    Note over User, ActivityLog: ══ FASE 1: PROSES LOGIN ══
+
+    User ->> Browser: Buka Halaman Login & Masukkan Email + Password
+    Browser ->> LoginCtrl: POST /login (email, password)
+    LoginCtrl ->> Cache: Cek login_lockout_{IP}
+    
+    alt IP Diblokir (≥5 percobaan gagal)
+        Cache -->> LoginCtrl: IP terkunci
+        LoginCtrl -->> Browser: ❌ Redirect dengan pesan: "Akun Diblokir 10 Menit"
+        Browser -->> User: Tampilkan pesan error
+    else IP Tidak Diblokir
+        Cache -->> LoginCtrl: IP aman
+        LoginCtrl ->> AuthFacade: Auth::attempt(credentials)
+        AuthFacade ->> DB: SELECT * FROM users WHERE email = ?
+        DB -->> AuthFacade: Data User
+
+        alt Kredensial Salah
+            AuthFacade -->> LoginCtrl: false
+            LoginCtrl ->> Cache: Increment login_attempts_{IP}
+            LoginCtrl ->> ActivityLog: Log: login_failed (IP, User-Agent)
+            LoginCtrl -->> Browser: ❌ "Kredensial Tidak Cocok"
+            Browser -->> User: Tampilkan pesan error
+        else Kredensial Benar
+            AuthFacade -->> LoginCtrl: User Object
+
+            Note over LoginCtrl, TwoFactorCtrl: ══ FASE 2: CEK 2FA ══
+
+            LoginCtrl ->> DB: Cek google2fa_secret & otp_enabled
+            DB -->> LoginCtrl: Data User
+
+            alt Google 2FA Aktif
+                LoginCtrl ->> AuthFacade: Auth::logout() - Logout sementara
+                LoginCtrl ->> Browser: Simpan 2fa:user:id di Session
+                LoginCtrl -->> Browser: ✅ Redirect ke /2fa/verify?method=google
+                Browser -->> User: Tampilkan Form OTP Google Auth
+
+                User ->> Browser: Input Kode OTP 6 Digit
+                Browser ->> TwoFactorCtrl: POST /2fa/verify (code)
+                TwoFactorCtrl ->> DB: SELECT google2fa_secret WHERE id = ?
+                DB -->> TwoFactorCtrl: Encrypted Secret
+                TwoFactorCtrl ->> TwoFactorCtrl: decrypt(secret) → checkCode(secret, code)
+
+                alt Kode OTP Valid
+                    TwoFactorCtrl ->> AuthFacade: Auth::login(user)
+                    TwoFactorCtrl ->> ActivityLog: Log: 2fa_verified (method, IP)
+                    TwoFactorCtrl -->> Browser: ✅ Redirect ke /dashboard
+                    Browser -->> User: Dashboard Berhasil Dimuat
+                else Kode OTP Tidak Valid
+                    TwoFactorCtrl -->> Browser: ❌ "Kode Tidak Valid"
+                    Browser -->> User: Tampilkan pesan error
+                end
+
+            else Email OTP Aktif
+                LoginCtrl ->> DB: Generate & Simpan OTP (6 digit, exp: 10 menit)
+                LoginCtrl ->> LoginCtrl: Mail::send(MailOtp) ke email admin
+                LoginCtrl ->> AuthFacade: Auth::logout() - Logout sementara
+                LoginCtrl -->> Browser: ✅ Redirect ke /2fa/verify?method=email
+                Browser -->> User: Tampilkan Form OTP Email
+
+                User ->> Browser: Input Kode OTP dari Email
+                Browser ->> TwoFactorCtrl: POST /2fa/verify (code)
+                TwoFactorCtrl ->> DB: SELECT otp_code, otp_expires_at
+                DB -->> TwoFactorCtrl: OTP Data
+
+                alt OTP Valid & Belum Expired
+                    TwoFactorCtrl ->> DB: UPDATE: otp_code = NULL
+                    TwoFactorCtrl ->> AuthFacade: Auth::login(user)
+                    TwoFactorCtrl ->> ActivityLog: Log: 2fa_verified (method=email, IP)
+                    TwoFactorCtrl -->> Browser: ✅ Redirect ke /dashboard
+                    Browser -->> User: Dashboard Berhasil Dimuat
+                else OTP Salah / Expired
+                    TwoFactorCtrl -->> Browser: ❌ "Kode Salah atau Expired"
+                    Browser -->> User: Tampilkan pesan error
+                end
+
+            else Tidak Ada 2FA
+                LoginCtrl ->> Cache: Cache::forget(login_attempts)
+                LoginCtrl ->> ActivityLog: Log: login (IP, User-Agent)
+                LoginCtrl -->> Browser: ✅ Redirect ke /dashboard
+                Browser -->> User: Dashboard Berhasil Dimuat
+            end
+        end
+    end

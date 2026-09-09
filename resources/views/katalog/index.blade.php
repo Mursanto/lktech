@@ -91,14 +91,31 @@
                     </ul>
                 </div>
 
-                {{-- Filter: Brand --}}
-                @if($availableBrands->count() > 0)
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: true }">
+                {{-- Filter: Merek --}}
+                @if(count($availableBrands) > 0)
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200" 
+                     x-data="{ 
+                        expanded: true,
+                        selectedBrands: {{ json_encode($selectedBrands) }},
+                        toggleParent(parent, children) {
+                            if (this.selectedBrands.includes(parent)) {
+                                children.forEach(child => {
+                                    if (!this.selectedBrands.includes(child)) this.selectedBrands.push(child);
+                                });
+                            } else {
+                                this.selectedBrands = this.selectedBrands.filter(b => !children.includes(b));
+                            }
+                            $refs.brandForm.submit();
+                        },
+                        submitForm() {
+                            $refs.brandForm.submit();
+                        }
+                     }">
                     <button @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-3">
                         <span>Filter Merek</span>
                         <i class='bx text-gray-400 text-base' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                     </button>
-                    <form method="GET" action="{{ route('katalog.index') }}" x-show="expanded">
+                    <form x-ref="brandForm" method="GET" action="{{ route('katalog.index') }}" x-show="expanded">
                         @if(request()->has('category_id'))
                             <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                         @endif
@@ -111,20 +128,44 @@
                         @if(request()->has('price_max'))
                             <input type="hidden" name="price_max" value="{{ request('price_max') }}">
                         @endif
-                        <div class="space-y-2 max-h-48 overflow-y-auto">
-                            @foreach($availableBrands->take(20) as $brand)
-                            <label class="flex items-center gap-2 cursor-pointer group">
-                                <input type="checkbox" name="brands[]" value="{{ $brand }}" 
-                                    {{ in_array($brand, $selectedBrands ?? []) ? 'checked' : '' }}
-                                    onchange="this.form.submit()"
-                                    class="w-4 h-4 text-brand-600 rounded border-gray-300 focus:ring-brand-500 cursor-pointer">
-                                <span class="text-sm text-gray-600 group-hover:text-brand-600 transition-colors truncate">{{ $brand }}</span>
-                            </label>
+                        
+                        <div class="max-h-72 overflow-y-auto custom-scrollbar pr-2 py-1 space-y-1.5">
+                            @foreach($availableBrands as $parentBrand => $childBrands)
+                            <div class="flex flex-col gap-1" x-data="{ open: true }">
+                                <div class="flex items-center justify-between">
+                                    <label class="flex items-center gap-2 cursor-pointer group flex-1 py-0.5">
+                                        <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
+                                               x-model="selectedBrands"
+                                               @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
+                                               class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                        <span class="text-[13px] font-medium text-gray-700 group-hover:text-brand-600 transition-colors truncate">{{ $parentBrand }}</span>
+                                    </label>
+                                    @if(count($childBrands) > 0)
+                                    <button type="button" @click="open = !open" class="text-gray-400 hover:text-brand-600 p-0.5">
+                                        <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                    </button>
+                                    @endif
+                                </div>
+                                
+                                @if(count($childBrands) > 0)
+                                <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
+                                    @foreach($childBrands as $childBrand)
+                                    <label class="flex items-center gap-2 cursor-pointer group py-0.5">
+                                        <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
+                                               x-model="selectedBrands"
+                                               @change="submitForm()"
+                                               class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                        <span class="text-[11px] font-normal text-gray-600 group-hover:text-brand-600 transition-colors truncate">{{ $childBrand }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
                             @endforeach
                         </div>
                         @if(!empty($selectedBrands))
                         <a href="{{ request()->url() . '?' . http_build_query(array_merge(request()->except('brands'), [])) }}" 
-                           class="mt-2 inline-block text-xs text-red-500 hover:text-red-600 font-medium">
+                           class="mt-3 inline-block text-xs text-red-500 hover:text-red-600 font-medium">
                             × Hapus filter merek
                         </a>
                         @endif
@@ -268,15 +309,50 @@
                             </div>
                         </div>
                         {{-- Brand Filter --}}
-                        @if($availableBrands->count() > 0)
-                        <div class="py-4 border-b border-gray-100">
+                        @if(count($availableBrands) > 0)
+                        <div class="py-4 border-b border-gray-100" x-data="{
+                            selectedBrands: {{ json_encode($selectedBrands) }},
+                            toggleParent(parent, children) {
+                                if (this.selectedBrands.includes(parent)) {
+                                    children.forEach(child => {
+                                        if (!this.selectedBrands.includes(child)) this.selectedBrands.push(child);
+                                    });
+                                } else {
+                                    this.selectedBrands = this.selectedBrands.filter(b => !children.includes(b));
+                                }
+                            }
+                        }">
                             <h4 class="text-sm font-bold text-gray-700 mb-3">Filter Merek</h4>
-                            <div class="grid grid-cols-2 gap-2">
-                                @foreach($availableBrands->take(20) as $brand)
-                                <label class="flex items-center gap-2 border {{ in_array($brand, $selectedBrands ?? []) ? 'border-brand-500 bg-brand-50 text-brand-600' : 'border-gray-200 text-gray-600' }} rounded-lg px-3 py-2 cursor-pointer text-sm">
-                                    <input type="checkbox" name="brands[]" value="{{ $brand }}" {{ in_array($brand, $selectedBrands ?? []) ? 'checked' : '' }} class="w-4 h-4 text-brand-600 rounded border-gray-300">
-                                    <span class="truncate">{{ $brand }}</span>
-                                </label>
+                            <div class="space-y-1.5 py-1">
+                                @foreach($availableBrands as $parentBrand => $childBrands)
+                                <div class="flex flex-col gap-1" x-data="{ open: false }">
+                                    <div class="flex items-center justify-between">
+                                        <label class="flex items-center gap-2 cursor-pointer flex-1 py-0.5">
+                                            <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
+                                                   x-model="selectedBrands"
+                                                   @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
+                                                   class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300">
+                                            <span class="text-[13px] font-medium text-gray-700 truncate">{{ $parentBrand }}</span>
+                                        </label>
+                                        @if(count($childBrands) > 0)
+                                        <button type="button" @click="open = !open" class="text-gray-400 p-0.5">
+                                            <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                        </button>
+                                        @endif
+                                    </div>
+                                    @if(count($childBrands) > 0)
+                                    <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
+                                        @foreach($childBrands as $childBrand)
+                                        <label class="flex items-center gap-2 cursor-pointer py-0.5">
+                                            <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
+                                                   x-model="selectedBrands"
+                                                   class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300">
+                                            <span class="text-[11px] font-normal text-gray-600 truncate">{{ $childBrand }}</span>
+                                        </label>
+                                        @endforeach
+                                    </div>
+                                    @endif
+                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -458,17 +534,50 @@
                 </div>
 
                 {{-- Brand Filter --}}
-                @if($availableBrands->count() > 0)
-                <div class="py-4 border-b border-gray-100">
+                @if(count($availableBrands) > 0)
+                <div class="py-4 border-b border-gray-100" x-data="{
+                    selectedBrands: {{ json_encode($selectedBrands) }},
+                    toggleParent(parent, children) {
+                        if (this.selectedBrands.includes(parent)) {
+                            children.forEach(child => {
+                                if (!this.selectedBrands.includes(child)) this.selectedBrands.push(child);
+                            });
+                        } else {
+                            this.selectedBrands = this.selectedBrands.filter(b => !children.includes(b));
+                        }
+                    }
+                }">
                     <h4 class="text-sm font-bold text-gray-700 mb-3">Filter Merek</h4>
-                    <div class="grid grid-cols-2 gap-2">
-                        @foreach($availableBrands->take(20) as $brand)
-                        <label class="flex items-center gap-2 border {{ in_array($brand, $selectedBrands ?? []) ? 'border-brand-500 bg-brand-50 text-brand-600' : 'border-gray-200 text-gray-600' }} rounded-lg px-3 py-2 cursor-pointer text-sm">
-                            <input type="checkbox" name="brands[]" value="{{ $brand }}" 
-                                {{ in_array($brand, $selectedBrands ?? []) ? 'checked' : '' }}
-                                class="w-4 h-4 text-brand-600 rounded border-gray-300 focus:ring-brand-500">
-                            <span class="truncate">{{ $brand }}</span>
-                        </label>
+                    <div class="space-y-1.5 py-1">
+                        @foreach($availableBrands as $parentBrand => $childBrands)
+                        <div class="flex flex-col gap-1" x-data="{ open: false }">
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center gap-2 cursor-pointer flex-1 py-0.5">
+                                    <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
+                                           x-model="selectedBrands"
+                                           @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
+                                           class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300">
+                                    <span class="text-[13px] font-medium text-gray-700 truncate">{{ $parentBrand }}</span>
+                                </label>
+                                @if(count($childBrands) > 0)
+                                <button type="button" @click="open = !open" class="text-gray-400 p-0.5">
+                                    <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                </button>
+                                @endif
+                            </div>
+                            @if(count($childBrands) > 0)
+                            <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
+                                @foreach($childBrands as $childBrand)
+                                <label class="flex items-center gap-2 cursor-pointer py-0.5">
+                                    <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
+                                           x-model="selectedBrands"
+                                           class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300">
+                                    <span class="text-[11px] font-normal text-gray-600 truncate">{{ $childBrand }}</span>
+                                </label>
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
                         @endforeach
                     </div>
                 </div>

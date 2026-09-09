@@ -55,7 +55,7 @@
         {{-- =====================================================
              ROW 1: 3-GRID SUMMARY CARDS — PENJUALAN
         ====================================================== --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 shrink-0">
 
             {{-- Card: Total Pendapatan Penjualan --}}
             <div class="bg-white p-3 rounded-2xl border border-natural-100 shadow-sm flex items-center gap-3">
@@ -64,7 +64,10 @@
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Penjualan · Pendapatan</p>
-                    <p class="text-base font-black text-natural-800 truncate">Rp {{ number_format($sales->sum('total_amount'), 0, ',', '.') }}</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($sales->sum('total_amount'), 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-natural-400 mt-1">Rp</span>
+                        <span class="text-base font-black text-natural-800">{{ number_format($sales->sum('total_amount'), 0, ',', '.') }}</span>
+                    </div>
                     @if($growthPendapatan >= 0)
                         <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthPendapatan, 1) }}% dari bln lalu</p>
                     @else
@@ -80,7 +83,10 @@
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Penjualan · Modal Stok</p>
-                    <p class="text-base font-black text-natural-800 truncate">Rp {{ number_format($sales->sum('total_amount') - $sales->sum('profit_amount'), 0, ',', '.') }}</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($sales->sum('total_amount') - $sales->sum('profit_amount'), 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-natural-400 mt-1">Rp</span>
+                        <span class="text-base font-black text-natural-800">{{ number_format($sales->sum('total_amount') - $sales->sum('profit_amount'), 0, ',', '.') }}</span>
+                    </div>
                     @if($growthModal >= 0)
                         <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthModal, 1) }}% dari bln lalu</p>
                     @else
@@ -95,12 +101,48 @@
                     <i class='bx bx-trending-up'></i>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Penjualan · Laba Bersih</p>
-                    <p class="text-base font-black text-brand-600 truncate">Rp {{ number_format($sales->sum('profit_amount'), 0, ',', '.') }}</p>
+                    <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Penjualan · Laba Kotor</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($sales->sum('profit_amount'), 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-brand-400 mt-1">Rp</span>
+                        <span class="text-base font-black text-brand-600">{{ number_format($sales->sum('profit_amount'), 0, ',', '.') }}</span>
+                    </div>
                     @if($growthLaba >= 0)
                         <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthLaba, 1) }}% dari bln lalu</p>
                     @else
                         <p class="text-[9px] text-rose-600 mt-0.5 font-bold">↓ {{ number_format($growthLaba, 1) }}% dari bln lalu</p>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Card: Total Beban Bagi Hasil --}}
+            <div class="bg-white p-3 rounded-2xl border border-natural-100 shadow-sm flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg shrink-0">
+                    <i class='bx bx-pie-chart-alt'></i>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Beban Bagi Hasil</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($totalBebanInvestor, 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-amber-500 mt-1">Rp</span>
+                        <span class="text-base font-black text-amber-600">{{ number_format($totalBebanInvestor, 0, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Card: Laba Bersih LKTech --}}
+            <div class="bg-white p-3 rounded-2xl border border-natural-100 shadow-sm flex items-center gap-3 col-span-2 lg:col-span-1">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0">
+                    <i class='bx bx-buildings'></i>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-[8px] font-bold text-natural-400 uppercase tracking-wider">Laba Bersih LKTech</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($lktechNetProfit, 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-emerald-500 mt-1">Rp</span>
+                        <span class="text-base font-black text-emerald-600">{{ number_format($lktechNetProfit, 0, ',', '.') }}</span>
+                    </div>
+                    @if($growthLabaLktech >= 0)
+                        <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthLabaLktech, 1) }}% dari bln lalu</p>
+                    @else
+                        <p class="text-[9px] text-rose-600 mt-0.5 font-bold">↓ {{ number_format($growthLabaLktech, 1) }}% dari bln lalu</p>
                     @endif
                 </div>
             </div>
@@ -119,7 +161,10 @@
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-[8px] font-bold text-violet-400 uppercase tracking-wider">Service · Total Pendapatan</p>
-                    <p class="text-base font-black text-natural-800 truncate">Rp {{ number_format($totalPendapatanService, 0, ',', '.') }}</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($totalPendapatanService, 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-natural-400 mt-1">Rp</span>
+                        <span class="text-base font-black text-natural-800">{{ number_format($totalPendapatanService, 0, ',', '.') }}</span>
+                    </div>
                     @if($growthService >= 0)
                         <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthService, 1) }}% dari bln lalu</p>
                     @else
@@ -135,7 +180,10 @@
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-[8px] font-bold text-violet-400 uppercase tracking-wider">Service · Laba Bersih Jasa</p>
-                    <p class="text-base font-black text-violet-700 truncate">Rp {{ number_format($totalLabaService, 0, ',', '.') }}</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($totalLabaService, 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-violet-500 mt-1">Rp</span>
+                        <span class="text-base font-black text-violet-700">{{ number_format($totalLabaService, 0, ',', '.') }}</span>
+                    </div>
                     <p class="text-[9px] text-natural-400 mt-0.5 font-medium">jasa − sparepart</p>
                 </div>
             </div>
@@ -147,7 +195,10 @@
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="text-[8px] font-bold text-cyan-500 uppercase tracking-wider">Sewa Laptop · Pendapatan</p>
-                    <p class="text-base font-black text-cyan-700 truncate">Rp {{ number_format($totalPendapatanSewa, 0, ',', '.') }}</p>
+                    <div class="flex items-start gap-0.5 truncate" title="Rp {{ number_format($totalPendapatanSewa, 0, ',', '.') }}">
+                        <span class="text-[10px] font-bold text-cyan-500 mt-1">Rp</span>
+                        <span class="text-base font-black text-cyan-700">{{ number_format($totalPendapatanSewa, 0, ',', '.') }}</span>
+                    </div>
                     @if($growthRental >= 0)
                         <p class="text-[9px] text-emerald-600 mt-0.5 font-bold">↑ +{{ number_format($growthRental, 1) }}% dari bln lalu</p>
                     @else
@@ -211,7 +262,7 @@
                                 </td>
                             </tr>
                             <tr class="hover:bg-natural-50/30 transition-colors">
-                                <td class="px-4 py-1.5 font-semibold text-natural-800 pl-6">Laba Bersih Penjualan</td>
+                                <td class="px-4 py-1.5 font-semibold text-natural-800 pl-6">Laba Kotor Penjualan</td>
                                 <td class="px-4 py-1.5 text-right text-natural-500">Rp {{ number_format($pmLaba, 0, ',', '.') }}</td>
                                 <td class="px-4 py-1.5 text-right font-bold text-natural-800">Rp {{ number_format($cmLaba, 0, ',', '.') }}</td>
                                 <td class="px-4 py-1.5 text-right font-black">
@@ -219,6 +270,24 @@
                                         <span class="text-emerald-600">↑ +{{ number_format($growthLaba, 1) }}%</span>
                                     @else
                                         <span class="text-rose-600">↓ {{ number_format($growthLaba, 1) }}%</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-natural-50/30 transition-colors">
+                                <td class="px-4 py-1.5 font-semibold text-natural-800 pl-6">Beban Bagi Hasil Investor</td>
+                                <td class="px-4 py-1.5 text-right text-natural-500">- Rp {{ number_format($pmBebanInvestor, 0, ',', '.') }}</td>
+                                <td class="px-4 py-1.5 text-right font-bold text-amber-600">- Rp {{ number_format($cmBebanInvestor, 0, ',', '.') }}</td>
+                                <td class="px-4 py-1.5 text-right font-black text-natural-400">-</td>
+                            </tr>
+                            <tr class="hover:bg-natural-50/30 transition-colors bg-emerald-50/30">
+                                <td class="px-4 py-2 font-bold text-emerald-800 pl-6 border-t border-emerald-100">Laba Bersih LKTech</td>
+                                <td class="px-4 py-2 text-right font-bold text-emerald-600 border-t border-emerald-100">Rp {{ number_format($pmLabaLktech, 0, ',', '.') }}</td>
+                                <td class="px-4 py-2 text-right font-black text-emerald-700 border-t border-emerald-100">Rp {{ number_format($cmLabaLktech, 0, ',', '.') }}</td>
+                                <td class="px-4 py-2 text-right font-black border-t border-emerald-100">
+                                    @if($growthLabaLktech >= 0)
+                                        <span class="text-emerald-600">↑ +{{ number_format($growthLabaLktech, 1) }}%</span>
+                                    @else
+                                        <span class="text-rose-600">↓ {{ number_format($growthLabaLktech, 1) }}%</span>
                                     @endif
                                 </td>
                             </tr>
@@ -441,9 +510,18 @@
                                     @if($trx['type'] === 'sale')
                                         <div class="flex flex-col gap-0.5 max-w-[200px]">
                                             @foreach($trx['data']->saleDetails->take(2) as $detail)
-                                                <p class="text-[9px] font-bold text-natural-700 leading-tight truncate">
-                                                    • {{ $detail->product->brand ?? 'Item' }} {{ $detail->product->model_series ?? '' }}
-                                                </p>
+                                                <div class="mb-1">
+                                                    <p class="text-[9px] font-bold text-natural-700 leading-tight truncate">
+                                                        • {{ $detail->product->brand ?? 'Item' }} {{ $detail->product->model_series ?? '' }}
+                                                    </p>
+                                                    @if($detail->product && $detail->product->investor)
+                                                        @php
+                                                            $invShare = (int) round(($detail->profit ?? 0) * ($detail->product->investor->share_percentage / 100));
+                                                            $lkShare = ($detail->profit ?? 0) - $invShare;
+                                                        @endphp
+                                                        <p class="text-[8px] text-amber-600 pl-2 font-medium" title="Pembagian Profit">Hak Investor: Rp {{ number_format($invShare, 0, ',', '.') }} | Hak LKTech: Rp {{ number_format($lkShare, 0, ',', '.') }}</p>
+                                                    @endif
+                                                </div>
                                             @endforeach
                                             @if($trx['data']->saleDetails->count() > 2)
                                                 <p class="text-[9px] text-natural-400">+{{ $trx['data']->saleDetails->count() - 2 }} item lainnya</p>
@@ -525,9 +603,18 @@
                             <td class="px-4 py-2">
                                 <div class="flex flex-col gap-0.5 max-w-[200px]">
                                     @foreach($sale->saleDetails as $detail)
-                                        <p class="text-[9px] font-bold text-natural-700 leading-tight truncate">
-                                            • {{ $detail->product->brand ?? 'Item' }} {{ $detail->product->model_series ?? '' }}
-                                        </p>
+                                        <div class="mb-1">
+                                            <p class="text-[9px] font-bold text-natural-700 leading-tight truncate">
+                                                • {{ $detail->product->brand ?? 'Item' }} {{ $detail->product->model_series ?? '' }}
+                                            </p>
+                                            @if($detail->product && $detail->product->investor)
+                                                @php
+                                                    $invShare = (int) round(($detail->profit ?? 0) * ($detail->product->investor->share_percentage / 100));
+                                                    $lkShare = ($detail->profit ?? 0) - $invShare;
+                                                @endphp
+                                                <p class="text-[8px] text-amber-600 pl-2 font-medium" title="Pembagian Profit">Hak Investor: Rp {{ number_format($invShare, 0, ',', '.') }} | Hak LKTech: Rp {{ number_format($lkShare, 0, ',', '.') }}</p>
+                                            @endif
+                                        </div>
                                     @endforeach
                                 </div>
                             </td>

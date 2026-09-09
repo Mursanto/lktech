@@ -15,9 +15,10 @@ class ReportController extends Controller
         $endDate   = $request->input('end_date');
 
         // =====================================================
+        // =====================================================
         // SALES DATA — hanya yang sudah LUNAS (payment_status = success)
         // =====================================================
-        $salesQuery = \App\Models\Sale::with('saleDetails.product')
+        $salesQuery = \App\Models\Sale::with('saleDetails.product.investor')
             ->where('payment_status', 'success')
             ->orderBy('created_at', 'desc');
 
@@ -36,6 +37,17 @@ class ReportController extends Controller
         $totalBiayaOperasional = $sales->sum(fn($s) => $s->operational_cost ?? 0);
         $totalLabaKotor        = $totalLabaBersih + $totalBiayaOperasional;
         $totalModal            = $totalPenjualan - $totalLabaKotor;
+
+        $totalBebanInvestor = 0;
+        foreach ($sales as $sale) {
+            foreach ($sale->saleDetails as $detail) {
+                if ($detail->product && $detail->product->investor) {
+                    $profit = $detail->profit ?? 0;
+                    $totalBebanInvestor += (int) round($profit * ($detail->product->investor->share_percentage / 100));
+                }
+            }
+        }
+        $lktechNetProfit = $totalLabaBersih - $totalBebanInvestor;
 
         // =====================================================
         // SERVICE DATA — hanya yang sudah LUNAS (payment_status = success)
@@ -79,26 +91,48 @@ class ReportController extends Controller
         $totalPendapatanSewa = $rentals->sum('total_price');
 
         // =====================================================
+        // =====================================================
         // MONTH-OVER-MONTH (MoM) — SALES (hanya yang lunas)
         // =====================================================
-        $currentMonthSales  = \App\Models\Sale::where('payment_status', 'success')
+        $currentMonthSales  = \App\Models\Sale::with('saleDetails.product.investor')->where('payment_status', 'success')
                                               ->whereMonth('created_at', now()->month)
                                               ->whereYear('created_at', now()->year)->get();
-        $previousMonthSales = \App\Models\Sale::where('payment_status', 'success')
+        $previousMonthSales = \App\Models\Sale::with('saleDetails.product.investor')->where('payment_status', 'success')
                                               ->whereMonth('created_at', now()->subMonth()->month)
                                               ->whereYear('created_at', now()->subMonth()->year)->get();
 
         $cmPendapatan = $currentMonthSales->sum('total_amount');
         $cmLaba       = $currentMonthSales->sum('profit_amount');
         $cmModal      = $cmPendapatan - $cmLaba;
+        $cmBebanInvestor = 0;
+        foreach ($currentMonthSales as $sale) {
+            foreach ($sale->saleDetails as $detail) {
+                if ($detail->product && $detail->product->investor) {
+                    $profit = $detail->profit ?? 0;
+                    $cmBebanInvestor += (int) round($profit * ($detail->product->investor->share_percentage / 100));
+                }
+            }
+        }
+        $cmLabaLktech = $cmLaba - $cmBebanInvestor;
 
         $pmPendapatan = $previousMonthSales->sum('total_amount');
         $pmLaba       = $previousMonthSales->sum('profit_amount');
         $pmModal      = $pmPendapatan - $pmLaba;
+        $pmBebanInvestor = 0;
+        foreach ($previousMonthSales as $sale) {
+            foreach ($sale->saleDetails as $detail) {
+                if ($detail->product && $detail->product->investor) {
+                    $profit = $detail->profit ?? 0;
+                    $pmBebanInvestor += (int) round($profit * ($detail->product->investor->share_percentage / 100));
+                }
+            }
+        }
+        $pmLabaLktech = $pmLaba - $pmBebanInvestor;
 
         $growthPendapatan = $pmPendapatan > 0 ? (($cmPendapatan - $pmPendapatan) / $pmPendapatan) * 100 : ($cmPendapatan > 0 ? 100 : 0);
         $growthModal      = $pmModal > 0 ? (($cmModal - $pmModal) / $pmModal) * 100 : ($cmModal > 0 ? 100 : 0);
         $growthLaba       = $pmLaba > 0 ? (($cmLaba - $pmLaba) / $pmLaba) * 100 : ($cmLaba > 0 ? 100 : 0);
+        $growthLabaLktech = $pmLabaLktech > 0 ? (($cmLabaLktech - $pmLabaLktech) / $pmLabaLktech) * 100 : ($cmLabaLktech > 0 ? 100 : 0);
 
         // =====================================================
         // MONTH-OVER-MONTH (MoM) — SERVICE (hanya yang lunas)
@@ -130,15 +164,15 @@ class ReportController extends Controller
 
         return view('reports.index', compact(
             // Sales data
-            'sales', 'totalPenjualan', 'totalModal', 'totalLabaKotor', 'totalBiayaOperasional', 'totalLabaBersih',
+            'sales', 'totalPenjualan', 'totalModal', 'totalLabaKotor', 'totalBiayaOperasional', 'totalLabaBersih', 'totalBebanInvestor', 'lktechNetProfit',
             // Service data
             'services', 'totalPendapatanService', 'totalLabaService',
             // Rental data
             'rentals', 'totalPendapatanSewa',
             // MoM Sales
-            'cmPendapatan', 'cmModal', 'cmLaba',
-            'pmPendapatan', 'pmModal', 'pmLaba',
-            'growthPendapatan', 'growthModal', 'growthLaba',
+            'cmPendapatan', 'cmModal', 'cmLaba', 'cmBebanInvestor', 'cmLabaLktech',
+            'pmPendapatan', 'pmModal', 'pmLaba', 'pmBebanInvestor', 'pmLabaLktech',
+            'growthPendapatan', 'growthModal', 'growthLaba', 'growthLabaLktech',
             // MoM Service
             'cmService', 'pmService', 'growthService',
             // MoM Rental

@@ -50,8 +50,9 @@
             </h3>
 
             <!-- Price -->
-            <div class="text-emerald-600 font-extrabold text-sm sm:text-base mb-1.5">
-                Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+            <div class="flex items-start gap-0.5 mb-1.5" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
+                <span class="text-[10px] sm:text-xs font-bold text-emerald-500 mt-0.5">Rp</span>
+                <span class="text-emerald-600 font-extrabold text-sm sm:text-base leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
             </div>
 
             <!-- Specs List (Compact) / Conditional Rendering -->

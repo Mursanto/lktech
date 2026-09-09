@@ -233,14 +233,36 @@ class PublicCatalogController extends Controller
                                         ->count();
         }
 
-        // Collect all available brands for filter sidebar
-        $availableBrands = \App\Models\Product::where('stock', '>', 0)
+        // Hierarki merek statis yang valid untuk sanitasi dan pengelompokan UI
+        $brandHierarchy = [
+            'Acer' => [],
+            'Apple / MacBook' => ['MacBook Air', 'MacBook Pro'],
+            'ASUS' => [],
+            'DELL' => ['Dell Latitude', 'Dell Vostro', 'Dell XPS'],
+            'HP' => ['HP Elitebook', 'HP Elitebook x360', 'HP ProBook', 'HP ZBook'],
+            'Lenovo' => ['Lenovo ThinkPad', 'Lenovo ThinkPad Yoga', 'Lenovo ThinkPad X1 Carbon', 'Lenovo 500w'],
+            'Microsoft' => ['Microsoft Surface', 'Microsoft Surface Laptop'],
+            'Toshiba / Dynabook' => ['Dynabook'],
+        ];
+
+        // Flatten hierarchy untuk keperluan filtering
+        $validBrands = array_keys($brandHierarchy);
+        foreach ($brandHierarchy as $children) {
+            $validBrands = array_merge($validBrands, $children);
+        }
+
+        // Collect all available brands for filter sidebar (only valid ones, for query usage if needed)
+        $activeBrands = \App\Models\Product::where('stock', '>', 0)
             ->where('status', '!=', 'sold')
             ->whereNotNull('brand')
             ->where('brand', '!=', '')
+            ->whereIn('brand', $validBrands)
             ->distinct()
-            ->orderBy('brand')
-            ->pluck('brand');
+            ->pluck('brand')
+            ->toArray();
+
+        // Tampilkan SELURUH struktur hierarki merek sesuai permintaan (tidak peduli stok kosong)
+        $availableBrands = $brandHierarchy;
 
         $selectedBrands = $request->brands ?? [];
         $priceMin = $request->price_min ? (int) str_replace('.', '', $request->price_min) : null;
@@ -272,7 +294,13 @@ class PublicCatalogController extends Controller
 
             // Brand filter
             if (!empty($selectedBrands)) {
-                $query->whereIn('brand', $selectedBrands);
+                $expandedBrands = $selectedBrands;
+                foreach ($selectedBrands as $sb) {
+                    if (isset($brandHierarchy[$sb])) {
+                        $expandedBrands = array_merge($expandedBrands, $brandHierarchy[$sb]);
+                    }
+                }
+                $query->whereIn('brand', array_unique($expandedBrands));
             }
 
             // Price range filter

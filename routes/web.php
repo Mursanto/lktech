@@ -110,6 +110,18 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
     // Promo Video
     Route::resource('promo-video', App\Http\Controllers\Admin\PromoVideoController::class)->names('admin.promo-video');
+
+    // Investor Management
+    Route::resource('investors', App\Http\Controllers\InvestorController::class);
+    Route::get('/investor-report', [App\Http\Controllers\InvestorReportController::class, 'index'])->name('investor.report');
+    Route::get('/investor-report/export', [App\Http\Controllers\InvestorReportController::class, 'export'])->name('investor.report.export');
+    Route::post('/investor-report/bulk-payout', [App\Http\Controllers\InvestorReportController::class, 'processBulkPayout'])->name('investor.report.bulk-payout');
+});
+
+// Investor Dashboard (Read-Only) — role Investor
+Route::middleware(['auth', 'role:Investor'])->group(function () {
+    Route::get('/investor/dashboard', [App\Http\Controllers\InvestorReportController::class, 'dashboard'])->name('investor.dashboard');
+    Route::get('/investor/dashboard/export', [App\Http\Controllers\InvestorReportController::class, 'exportDashboard'])->name('investor.dashboard.export');
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify

@@ -21,13 +21,18 @@
 
         <!-- Navigation Links (Aligned to px-5 to match Logo) -->
         <div class="flex-1 overflow-y-auto py-2 px-3 space-y-0.5 custom-scrollbar transition-all duration-300">
+            @php
+                $isPureInvestor = auth()->user()->hasRole('Investor') && !auth()->user()->hasAnyRole(['Admin', 'Staff', 'Teknisi', 'Kasir', 'Sales']);
+            @endphp
             
+            @unless($isPureInvestor)
             <a href="{{ route('dashboard') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('dashboard') ? 'bg-brand-50 text-brand-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Dashboard">
                 <i class='bx bx-grid-alt text-lg {{ request()->routeIs('dashboard') ? 'text-brand-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Dashboard</span>
             </a>
+            @endunless
 
             <a href="/" target="_blank"
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium mr-2"
@@ -36,12 +41,14 @@
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Landing Page</span>
             </a>
 
+            @unless($isPureInvestor)
             <a href="{{ route('products.index') }}" 
                class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('products.*') ? 'bg-blue-50 text-blue-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Inventaris">
                 <i class='bx bx-box text-lg {{ request()->routeIs('products.*') ? 'text-blue-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Inventaris</span>
             </a>
+            @endunless
 
             {{-- 
             <a href="{{ route('catalog.index') }}" 
@@ -113,6 +120,13 @@
                :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Laporan">
                 <i class='bx bx-pie-chart-alt-2 text-lg {{ request()->routeIs('reports.*') ? 'text-rose-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
                 <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Laporan</span>
+            </a>
+
+            <a href="{{ route('investors.index') }}" 
+               class="flex items-center gap-3 py-1.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('investors.*') || request()->routeIs('investor.*') ? 'bg-violet-50 text-violet-700 font-bold mr-2' : 'text-natural-600 hover:bg-natural-50 hover:text-natural-900 font-medium' }}"
+               :class="sidebarOpen ? 'px-5 justify-start' : 'px-0 justify-center'" title="Investor">
+                <i class='bx bx-user-pin text-lg {{ request()->routeIs('investors.*') || request()->routeIs('investor.*') ? 'text-violet-600' : 'text-natural-400 group-hover:text-natural-600' }} transition-colors shrink-0'></i>
+                <span x-show="sidebarOpen" x-transition.opacity class="whitespace-nowrap text-[13px]">Investor</span>
             </a>
             @endif
 

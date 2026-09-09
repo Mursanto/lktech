@@ -128,6 +128,34 @@
                                         <input type="number" name="operational_cost" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500" value="0">
                                     </div>
                                 </div>
+
+                                {{-- KEPEMILIKAN ASET --}}
+                                <div x-data="{ ownerType: '{{ old('ownership_type', 'lktech') }}' }" class="mt-3 p-3 bg-violet-50 rounded-xl border border-violet-100">
+                                    <p class="text-[11px] font-black text-violet-700 uppercase tracking-wider mb-2">Kepemilikan Aset</p>
+                                    <div class="flex gap-2 mb-2">
+                                        <label class="flex items-center gap-1.5 px-3 py-1.5 border-2 rounded-lg cursor-pointer transition-all text-[11px] font-bold"
+                                               :class="ownerType === 'lktech' ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-gray-200 text-gray-600'">
+                                            <input type="radio" name="ownership_type" value="lktech" x-model="ownerType" checked class="sr-only">
+                                            🏢 Milik LKTech
+                                        </label>
+                                        <label class="flex items-center gap-1.5 px-3 py-1.5 border-2 rounded-lg cursor-pointer transition-all text-[11px] font-bold"
+                                               :class="ownerType === 'investor' ? 'border-violet-500 bg-violet-50 text-violet-700' : 'border-gray-200 text-gray-600'">
+                                            <input type="radio" name="ownership_type" value="investor" x-model="ownerType" class="sr-only">
+                                            👤 Milik Investor
+                                        </label>
+                                    </div>
+                                    <div x-show="ownerType === 'investor'" x-transition>
+                                        <label class="block text-[10px] font-bold text-violet-600 mb-1">Pilih Investor</label>
+                                        <select name="investor_id" class="w-full px-2 py-1.5 text-xs border border-violet-300 rounded focus:ring-1 focus:ring-violet-500">
+                                            <option value="">-- Pilih Investor --</option>
+                                            @foreach($investors as $inv)
+                                            <option value="{{ $inv->id }}" {{ old('investor_id') == $inv->id ? 'selected' : '' }}>
+                                                {{ $inv->name }} ({{ number_format($inv->share_percentage, 1) }}%)
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

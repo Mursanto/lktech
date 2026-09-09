@@ -1,0 +1,55 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% ACTIVITY DIAGRAM
+%% Proses Servis Perangkat
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% =================================================================
+
+flowchart TD
+    Start([🔵 Mulai]) --> S1
+
+    S1["Staff / Admin / Teknisi\nBuka Menu Servis"] --> S2
+    S2["Klik 'Buat Tiket Servis Baru'"] --> S3
+    S3["Input Data:\n- Pelanggan\n- Data Perangkat\n- Keluhan\n- Estimasi Biaya"] --> S4
+
+    S4["Simpan Tiket Servis\n(Status: PENDING)"] --> S5
+    S5["Log Activity:\ncreate_service"] --> S6
+
+    S6["Teknisi Menerima\nTiket Servis"] --> S7
+    S7["Update Status:\nPROCESS"] --> S8
+
+    S8{"Butuh Part\nTambahan?"}
+
+    S8 -->|Ya| S8A["Cek Stok Part\ndi Inventori"]
+    S8A --> S8B{"Stok Part\nTersedia?"}
+    S8B -->|Tidak| S8C["Pesan Part\nEksternal"]
+    S8C --> S8D
+    S8B -->|Ya| S8D
+    S8D["Tambahkan Part\nke Tiket Servis"]
+    S8D --> S8E["Kurangi Stok\nProduk (service_parts)"]
+    S8E --> S9
+
+    S8 -->|Tidak| S9
+
+    S9["Perbaikan Selesai"] --> S10
+    S10["Update Status:\nDONE"] --> S11
+    S11["Hitung Total Tagihan:\nBiaya Jasa + Biaya Part"] --> S12
+
+    S12{"Proses\nPembayaran"}
+    S12 -->|Tunai| S13["Update Payment Status:\nSUCCESS"]
+    S12 -->|Transfer / QRIS| S14["Status: PENDING\nTunggu Konfirmasi"]
+    S14 --> S15["Konfirmasi Pembayaran"]
+    S15 --> S13
+
+    S13 --> S16["Cetak Nota Servis\n(PDF)"]
+    S16 --> S17["Log Activity:\nupdate_service"]
+    S17 --> End([🟢 Servis Selesai])
+
+    %% Styling
+    style Start fill:#1E88E5,color:#fff,stroke:#1565C0
+    style End fill:#43A047,color:#fff,stroke:#2E7D32
+    style S4 fill:#E3F2FD,stroke:#1E88E5
+    style S7 fill:#FFF9C4,stroke:#F57F17
+    style S10 fill:#C8E6C9,stroke:#43A047
+    style S13 fill:#C8E6C9,stroke:#43A047
+    style S16 fill:#F3E5F5,stroke:#7B1FA2

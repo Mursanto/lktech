@@ -1,0 +1,194 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% ENTITY RELATIONSHIP DIAGRAM (ERD)
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% Standar: Chen/Crow's Foot Notation (Mermaid erDiagram)
+%% =================================================================
+
+erDiagram
+    %% =================================================================
+    %% RELASI / KARDINALITAS ANTAR ENTITAS
+    %% =================================================================
+
+    users ||--o{ sales            : "membuat (user_id)"
+    users ||--o{ services         : "menangani (technician_id)"
+    users ||--o{ activity_logs    : "mencatat (user_id)"
+
+    customers ||--o{ sales        : "melakukan (customer_id)"
+    customers ||--o{ services     : "meminta (customer_id)"
+    customers ||--o{ rentals      : "menyewa (customer_id)"
+
+    categories ||--o{ products    : "mengklasifikasi (category_id)"
+    categories |o--o{ categories  : "parent-child (parent_id)"
+
+    sales ||--o{ sale_details     : "berisi (sale_id)"
+    products ||--o{ sale_details  : "dimasukkan dalam (product_id)"
+
+    services ||--o{ service_parts : "menggunakan (service_id)"
+    products ||--o{ service_parts : "dipakai pada (product_id)"
+
+    %% =================================================================
+    %% ENTITAS DAN ATRIBUT
+    %% =================================================================
+
+    users {
+        bigint      id              PK  "Auto Increment"
+        varchar     name                "Nama Lengkap"
+        varchar     email           UK  "Unik, untuk Login"
+        varchar     password            "Bcrypt Hashed"
+        varchar     role                "Admin|Staff|Teknisi"
+        varchar     google2fa_secret    "Encrypted TOTP Secret"
+        datetime    google2fa_enabled_at
+        varchar     otp_code            "6 Digit Email OTP"
+        datetime    otp_expires_at      "Expiry 10 menit"
+        boolean     otp_enabled         "0=off, 1=on"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    customers {
+        bigint      id              PK  "Auto Increment"
+        varchar     name                "Nama Pelanggan"
+        varchar     phone               "No. Telepon"
+        varchar     email               "Email Pelanggan"
+        text        address             "Alamat Lengkap"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    categories {
+        bigint      id              PK  "Auto Increment"
+        bigint      parent_id       FK  "Self-reference (nullable)"
+        varchar     name                "Nama Kategori"
+        enum        type_category       "hardware|peripheral|software|service"
+        text        description
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    products {
+        bigint      id              PK  "Auto Increment"
+        bigint      category_id     FK  "Referensi categories.id"
+        varchar     brand               "Merek Produk"
+        varchar     model_series        "Seri Model"
+        varchar     serial_number       "Nomor Seri"
+        varchar     processor           "Spesifikasi Prosesor"
+        varchar     ram                 "Kapasitas RAM"
+        varchar     storage             "Kapasitas Storage"
+        decimal     screen_size         "Ukuran Layar (inch)"
+        integer     battery_health      "Kesehatan Baterai (%)"
+        decimal     battery_runtime     "Daya Tahan Baterai (jam)"
+        text        condition           "Kondisi Fisik"
+        decimal     purchase_price      "Harga Beli"
+        decimal     selling_price       "Harga Jual"
+        decimal     operational_cost    "Biaya Operasional"
+        enum        status              "available|sold|booked"
+        varchar     tipe_stok           "ready_stock|open_order"
+        integer     stock               "Jumlah Stok"
+        varchar     image_path          "Path Gambar Utama"
+        text        description         "Deskripsi Produk"
+        json        gallery_images      "Array Path Gambar Galeri"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    sales {
+        bigint      id              PK  "Auto Increment"
+        bigint      user_id         FK  "Referensi users.id"
+        bigint      customer_id     FK  "Referensi customers.id"
+        varchar     payment_method      "Tunai|Transfer|QRIS"
+        decimal     total_amount        "Total Harga Transaksi"
+        decimal     profit_amount       "Total Keuntungan"
+        decimal     operational_cost    "Total Biaya Operasional"
+        date        transaction_date    "Tanggal Transaksi"
+        varchar     payment_status      "pending|success|expired|failed"
+        varchar     payment_reference_id "Referensi ID Pembayaran"
+        text        notes               "Catatan Tambahan"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    sale_details {
+        bigint      id              PK  "Auto Increment"
+        bigint      sale_id         FK  "Referensi sales.id"
+        bigint      product_id      FK  "Referensi products.id"
+        varchar     manual_sn           "SN Manual (opsional)"
+        integer     quantity            "Jumlah Barang"
+        decimal     price_at_transaction "Harga Saat Transaksi"
+        decimal     purchase_price      "Harga Beli Saat Transaksi"
+        decimal     profit              "Keuntungan Per Item"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    services {
+        bigint      id              PK  "Auto Increment"
+        bigint      customer_id     FK  "Referensi customers.id"
+        bigint      technician_id   FK  "Referensi users.id"
+        varchar     device_name         "Nama Perangkat"
+        varchar     serial_number       "Nomor Seri Perangkat"
+        varchar     device_brand        "Merek Perangkat"
+        varchar     device_model        "Model Perangkat"
+        varchar     service_type        "Jenis Servis"
+        text        complaint           "Keluhan Pelanggan"
+        text        issue_description   "Deskripsi Masalah Teknis"
+        json        devices             "Detail Perangkat (JSON)"
+        enum        status              "pending|process|done|cancelled"
+        decimal     estimated_cost      "Estimasi Biaya Servis"
+        decimal     actual_cost         "Biaya Aktual Servis"
+        decimal     service_fee         "Biaya Jasa Teknisi"
+        decimal     estimated_parts_cost "Estimasi Biaya Part"
+        decimal     total_amount        "Total Tagihan"
+        date        completion_date     "Tanggal Selesai"
+        text        notes               "Catatan Teknisi"
+        varchar     payment_status      "pending|success|failed"
+        varchar     payment_method      "Metode Pembayaran"
+        varchar     payment_reference_id "Referensi ID Pembayaran"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    service_parts {
+        bigint      id              PK  "Auto Increment"
+        bigint      service_id      FK  "Referensi services.id (CASCADE)"
+        bigint      product_id      FK  "Referensi products.id"
+        integer     quantity            "Jumlah Part"
+        decimal     price               "Harga Part"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    rentals {
+        bigint      id              PK  "Auto Increment"
+        bigint      customer_id     FK  "Referensi customers.id"
+        varchar     customer_name       "Nama Penyewa"
+        varchar     customer_phone      "No. Telepon Penyewa"
+        varchar     laptop_name         "Nama Laptop"
+        varchar     serial_number       "Nomor Seri Laptop"
+        varchar     manual_sn           "SN Manual"
+        date        rental_date         "Tanggal Mulai Sewa"
+        date        return_date         "Tanggal Pengembalian"
+        decimal     daily_price         "Harga Sewa Per Hari"
+        decimal     total_price         "Total Harga Sewa"
+        varchar     status              "active|completed|overdue"
+        text        notes               "Catatan Tambahan"
+        varchar     payment_status      "pending|success|failed"
+        varchar     payment_method      "Metode Pembayaran"
+        varchar     payment_reference_id "Referensi ID Pembayaran"
+        timestamp   created_at
+        timestamp   updated_at
+    }
+
+    activity_logs {
+        bigint      id              PK  "Auto Increment"
+        bigint      user_id         FK  "Referensi users.id (CASCADE)"
+        varchar     action              "login|logout|create|update|delete|2fa_verified"
+        varchar     model_type          "Nama Model yang Diubah"
+        bigint      model_id            "ID Record yang Diubah"
+        json        old_values          "Nilai Sebelum Perubahan"
+        json        new_values          "Nilai Setelah Perubahan"
+        varchar     ip_address          "IP Address Pengguna"
+        varchar     user_agent          "Browser / Device Info"
+        timestamp   created_at
+        timestamp   updated_at
+    }

@@ -1,0 +1,194 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% LOGICAL RECORD STRUCTURE (LRS)
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% Menampilkan: PK, FK, Tipe Data Spesifik, dan Relasi Antar Tabel
+%% =================================================================
+
+erDiagram
+    %% =================================================================
+    %% RELASI FISIK (Sesuai Foreign Key di Database)
+    %% =================================================================
+
+    users ||--o{ sales            : "FK: sales.user_id → users.id"
+    users ||--o{ services         : "FK: services.technician_id → users.id"
+    users ||--o{ activity_logs    : "FK: activity_logs.user_id → users.id"
+
+    customers ||--o{ sales        : "FK: sales.customer_id → customers.id"
+    customers ||--o{ services     : "FK: services.customer_id → customers.id"
+    customers ||--o{ rentals      : "FK: rentals.customer_id → customers.id"
+
+    categories ||--o{ products    : "FK: products.category_id → categories.id"
+    categories |o--o{ categories  : "FK: categories.parent_id → categories.id"
+
+    sales ||--o{ sale_details     : "FK: sale_details.sale_id → sales.id"
+    products ||--o{ sale_details  : "FK: sale_details.product_id → products.id"
+
+    services ||--o{ service_parts : "FK: service_parts.service_id → services.id (CASCADE)"
+    products ||--o{ service_parts : "FK: service_parts.product_id → products.id"
+
+    %% =================================================================
+    %% RECORD STRUCTURE (Tipe Data Fisik Database)
+    %% =================================================================
+
+    users {
+        BIGINT_UNSIGNED     id                  PK
+        VARCHAR_255         name
+        VARCHAR_255         email               UK
+        VARCHAR_255         password
+        VARCHAR_50          role
+        VARCHAR_255         google2fa_secret        "nullable, encrypted"
+        DATETIME            google2fa_enabled_at    "nullable"
+        VARCHAR_6           otp_code                "nullable"
+        DATETIME            otp_expires_at          "nullable"
+        TINYINT_1           otp_enabled             "default: 0"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    customers {
+        BIGINT_UNSIGNED     id                  PK
+        VARCHAR_255         name
+        VARCHAR_20          phone
+        VARCHAR_255         email                   "nullable"
+        TEXT                address                 "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    categories {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     parent_id           FK  "nullable → categories.id"
+        VARCHAR_255         name
+        ENUM                type_category           "hardware|peripheral|software|service"
+        TEXT                description             "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    products {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     category_id         FK  "→ categories.id"
+        VARCHAR_255         brand
+        VARCHAR_255         model_series
+        VARCHAR_255         serial_number           "nullable"
+        VARCHAR_255         processor               "nullable"
+        VARCHAR_10          ram                     "nullable"
+        VARCHAR_50          storage                 "nullable"
+        DECIMAL_8_2         screen_size             "nullable"
+        INTEGER             battery_health          "nullable"
+        DECIMAL_8_2         battery_runtime         "nullable"
+        TEXT                condition               "nullable"
+        DECIMAL_15_2        purchase_price          "default: 0"
+        DECIMAL_15_2        selling_price           "default: 0"
+        DECIMAL_15_2        operational_cost        "default: 0"
+        ENUM                status                  "available|sold|booked"
+        VARCHAR_20          tipe_stok               "ready_stock|open_order"
+        INTEGER             stock                   "default: 0"
+        VARCHAR_255         image_path              "nullable"
+        TEXT                description             "nullable"
+        JSON                gallery_images          "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    sales {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     user_id             FK  "→ users.id"
+        BIGINT_UNSIGNED     customer_id         FK  "nullable → customers.id"
+        VARCHAR_50          payment_method
+        DECIMAL_15_2        total_amount            "default: 0"
+        DECIMAL_15_2        profit_amount           "default: 0"
+        DECIMAL_15_2        operational_cost        "default: 0"
+        DATE                transaction_date
+        VARCHAR_20          payment_status          "pending|success|expired|failed"
+        VARCHAR_255         payment_reference_id    "nullable"
+        TEXT                notes                   "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    sale_details {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     sale_id             FK  "→ sales.id"
+        BIGINT_UNSIGNED     product_id          FK  "→ products.id"
+        VARCHAR_255         manual_sn               "nullable"
+        INTEGER             quantity                "default: 1"
+        DECIMAL_15_2        price_at_transaction
+        DECIMAL_15_2        purchase_price          "default: 0"
+        DECIMAL_15_2        profit                  "default: 0"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    services {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     customer_id         FK  "→ customers.id"
+        BIGINT_UNSIGNED     technician_id       FK  "nullable → users.id"
+        VARCHAR_255         device_name             "nullable"
+        VARCHAR_255         serial_number           "nullable"
+        VARCHAR_255         device_brand            "nullable"
+        VARCHAR_255         device_model            "nullable"
+        VARCHAR_100         service_type            "nullable"
+        TEXT                complaint               "nullable"
+        TEXT                issue_description       "nullable"
+        JSON                devices                 "nullable"
+        ENUM                status                  "pending|process|done|cancelled"
+        DECIMAL_15_2        estimated_cost          "default: 0"
+        DECIMAL_15_2        actual_cost             "default: 0"
+        DECIMAL_15_2        service_fee             "default: 0"
+        DECIMAL_15_2        estimated_parts_cost    "default: 0"
+        DECIMAL_15_2        total_amount            "default: 0"
+        DATE                completion_date         "nullable"
+        TEXT                notes                   "nullable"
+        VARCHAR_20          payment_status          "nullable"
+        VARCHAR_50          payment_method          "nullable"
+        VARCHAR_255         payment_reference_id    "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    service_parts {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     service_id          FK  "→ services.id (ON DELETE CASCADE)"
+        BIGINT_UNSIGNED     product_id          FK  "→ products.id"
+        INTEGER             quantity                "default: 1"
+        DECIMAL_15_2        price                   "default: 0"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    rentals {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     customer_id         FK  "nullable → customers.id"
+        VARCHAR_255         customer_name
+        VARCHAR_20          customer_phone
+        VARCHAR_255         laptop_name
+        VARCHAR_255         serial_number           "nullable"
+        VARCHAR_255         manual_sn               "nullable"
+        DATE                rental_date
+        DATE                return_date
+        DECIMAL_15_2        daily_price             "default: 0"
+        DECIMAL_15_2        total_price             "default: 0"
+        VARCHAR_20          status                  "active|completed|overdue"
+        TEXT                notes                   "nullable"
+        VARCHAR_20          payment_status          "nullable"
+        VARCHAR_50          payment_method          "nullable"
+        VARCHAR_255         payment_reference_id    "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }
+
+    activity_logs {
+        BIGINT_UNSIGNED     id                  PK
+        BIGINT_UNSIGNED     user_id             FK  "nullable → users.id (CASCADE)"
+        VARCHAR_100         action
+        VARCHAR_255         model_type              "nullable"
+        BIGINT_UNSIGNED     model_id                "nullable"
+        JSON                old_values              "nullable"
+        JSON                new_values              "nullable"
+        VARCHAR_45          ip_address              "nullable"
+        VARCHAR_500         user_agent              "nullable"
+        TIMESTAMP           created_at              "nullable"
+        TIMESTAMP           updated_at              "nullable"
+    }

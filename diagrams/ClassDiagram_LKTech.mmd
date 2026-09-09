@@ -1,0 +1,363 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% CLASS DIAGRAM
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% Berbasis Laravel MVC Pattern
+%% =================================================================
+
+classDiagram
+    direction TB
+
+    %% ============================================================
+    %% === MODELS (Eloquent)
+    %% ============================================================
+
+    class User {
+        +BigInt id
+        +String name
+        +String email
+        +String password
+        +String role
+        +String google2fa_secret
+        +String google2fa_enabled_at
+        +String otp_code
+        +Datetime otp_expires_at
+        +Boolean otp_enabled
+        +Datetime created_at
+        +Datetime updated_at
+        +sales() HasMany
+        +services() HasMany
+        +activityLogs() HasMany
+        +hasAnyRole(roles) Boolean
+    }
+
+    class Customer {
+        +BigInt id
+        +String name
+        +String phone
+        +String email
+        +Text address
+        +Datetime created_at
+        +Datetime updated_at
+        +sales() HasMany
+        +services() HasMany
+        +rentals() HasMany
+    }
+
+    class Category {
+        +BigInt id
+        +BigInt parent_id
+        +String name
+        +Enum type_category
+        +Text description
+        +Datetime created_at
+        +Datetime updated_at
+        +products() HasMany
+        +parent() BelongsTo
+        +children() HasMany
+    }
+
+    class Product {
+        +BigInt id
+        +BigInt category_id
+        +String brand
+        +String model_series
+        +String serial_number
+        +String processor
+        +String ram
+        +String storage
+        +Decimal screen_size
+        +Integer battery_health
+        +Decimal battery_runtime
+        +Text condition
+        +Decimal purchase_price
+        +Decimal selling_price
+        +Decimal operational_cost
+        +Enum status
+        +String tipe_stok
+        +Integer stock
+        +String image_path
+        +Text description
+        +JSON gallery_images
+        +Datetime created_at
+        +Datetime updated_at
+        +category() BelongsTo
+        +saleDetails() HasMany
+        +serviceParts() HasMany
+    }
+
+    class Sale {
+        +BigInt id
+        +BigInt user_id
+        +BigInt customer_id
+        +String payment_method
+        +Decimal total_amount
+        +Decimal profit_amount
+        +Decimal operational_cost
+        +Date transaction_date
+        +String payment_status
+        +String payment_reference_id
+        +Text notes
+        +Datetime created_at
+        +Datetime updated_at
+        +user() BelongsTo
+        +customer() BelongsTo
+        +saleDetails() HasMany
+        +isPaid() Boolean
+    }
+
+    class SaleDetail {
+        +BigInt id
+        +BigInt sale_id
+        +BigInt product_id
+        +String manual_sn
+        +Integer quantity
+        +Decimal price_at_transaction
+        +Decimal purchase_price
+        +Decimal profit
+        +Datetime created_at
+        +Datetime updated_at
+        +sale() BelongsTo
+        +product() BelongsTo
+    }
+
+    class Service {
+        +BigInt id
+        +BigInt customer_id
+        +BigInt technician_id
+        +String device_name
+        +String serial_number
+        +String device_brand
+        +String device_model
+        +Text complaint
+        +Text issue_description
+        +Enum status
+        +Decimal estimated_cost
+        +Decimal actual_cost
+        +Decimal service_fee
+        +Decimal estimated_parts_cost
+        +Decimal total_amount
+        +Date completion_date
+        +Text notes
+        +String payment_status
+        +String payment_method
+        +Datetime created_at
+        +Datetime updated_at
+        +customer() BelongsTo
+        +technician() BelongsTo
+        +parts() HasMany
+        +isPaid() Boolean
+    }
+
+    class ServicePart {
+        +BigInt id
+        +BigInt service_id
+        +BigInt product_id
+        +Integer quantity
+        +Decimal price
+        +Datetime created_at
+        +Datetime updated_at
+        +service() BelongsTo
+        +product() BelongsTo
+    }
+
+    class Rental {
+        +BigInt id
+        +BigInt customer_id
+        +String customer_name
+        +String customer_phone
+        +String laptop_name
+        +String serial_number
+        +Date rental_date
+        +Date return_date
+        +Decimal daily_price
+        +Decimal total_price
+        +String status
+        +Text notes
+        +String payment_status
+        +String payment_method
+        +Datetime created_at
+        +Datetime updated_at
+        +customer() BelongsTo
+        +isPaid() Boolean
+    }
+
+    class ActivityLog {
+        +BigInt id
+        +BigInt user_id
+        +String action
+        +String model_type
+        +BigInt model_id
+        +JSON old_values
+        +JSON new_values
+        +String ip_address
+        +String user_agent
+        +Datetime created_at
+        +user() BelongsTo
+    }
+
+    %% ============================================================
+    %% === CONTROLLERS
+    %% ============================================================
+
+    class LoginController {
+        +showLoginForm() View
+        +login(Request) RedirectResponse
+        +logout(Request) RedirectResponse
+        -logLoginActivity(Request, action, success) void
+    }
+
+    class TwoFactorController {
+        -google2fa GoogleAuthenticator
+        +showSetup() View
+        +enable(Request) RedirectResponse
+        +disable(Request) RedirectResponse
+        +showVerification() View
+        +verify(Request) RedirectResponse
+        +enableEmailOtp(Request) RedirectResponse
+        +disableEmailOtp(Request) RedirectResponse
+    }
+
+    class DashboardController {
+        +index(Request) View
+    }
+
+    class ProductController {
+        +index(Request) View
+        +create() View
+        +store(Request) RedirectResponse
+        +show(Product) View
+        +edit(Product) View
+        +update(Request, Product) RedirectResponse
+        +destroy(Product) RedirectResponse
+        +export() Response
+    }
+
+    class SaleController {
+        +index(Request) View
+        +create() View
+        +store(Request) RedirectResponse
+        +show(Sale) View
+        +edit(Sale) View
+        +update(Request, Sale) RedirectResponse
+        +markAsPaid(Sale) RedirectResponse
+        +completeOrder(Sale) RedirectResponse
+        +cancel(Sale) RedirectResponse
+        +generateInvoice(Sale) Response
+        +export() Response
+    }
+
+    class ServiceController {
+        +index(Request) View
+        +create() View
+        +store(Request) RedirectResponse
+        +show(Service) View
+        +edit(Service) View
+        +update(Request, Service) RedirectResponse
+        +cancel(Service) RedirectResponse
+        +print(Service) View
+        +export() Response
+    }
+
+    class RentalController {
+        +index(Request) View
+        +create() View
+        +store(Request) RedirectResponse
+        +show(Rental) View
+        +edit(Rental) View
+        +update(Request, Rental) RedirectResponse
+        +cancel(Rental) RedirectResponse
+        +export() Response
+    }
+
+    class ReportController {
+        +index(Request) View
+        +profit(Request) View
+        +export(Request) Response
+        +profitLossExport(Request) Response
+    }
+
+    class ActivityLogController {
+        +index(Request) View
+        +show(ActivityLog) View
+        +export() Response
+        +clearLogs() RedirectResponse
+        +backupDatabase() Response
+    }
+
+    class UserController {
+        +index() View
+        +create() View
+        +store(Request) RedirectResponse
+        +edit(User) View
+        +update(Request, User) RedirectResponse
+        +destroy(User) RedirectResponse
+    }
+
+    class CartController {
+        +add(Request) RedirectResponse
+        +remove(id) RedirectResponse
+        +update(id, Request) RedirectResponse
+        +empty() RedirectResponse
+        +checkout() View
+        +process(Request) RedirectResponse
+        +success(order_id) View
+        +downloadInvoice(order_id) Response
+    }
+
+    class CategoryController {
+        +index() View
+        +create() View
+        +store(Request) RedirectResponse
+        +edit(Category) View
+        +update(Request, Category) RedirectResponse
+        +destroy(Category) RedirectResponse
+    }
+
+    %% ============================================================
+    %% === RELASI ANTAR MODEL (Eloquent Relationships)
+    %% ============================================================
+
+    User "1" --> "0..*" Sale : creates
+    User "1" --> "0..*" Service : handles (technician)
+    User "1" --> "0..*" ActivityLog : generates
+
+    Customer "1" --> "0..*" Sale : places
+    Customer "1" --> "0..*" Service : requests
+    Customer "1" --> "0..*" Rental : books
+
+    Category "1" --> "0..*" Product : classifies
+    Category "0..1" --> "0..*" Category : parent-child
+
+    Sale "1" --> "1..*" SaleDetail : contains
+    Product "1" --> "0..*" SaleDetail : included in
+
+    Service "1" --> "0..*" ServicePart : uses
+    Product "1" --> "0..*" ServicePart : used in
+
+    %% ============================================================
+    %% === RELASI CONTROLLER → MODEL
+    %% ============================================================
+
+    LoginController ..> User : uses
+    LoginController ..> ActivityLog : logs
+    TwoFactorController ..> User : uses
+    TwoFactorController ..> ActivityLog : logs
+    SaleController ..> Sale : manages
+    SaleController ..> SaleDetail : manages
+    SaleController ..> Product : updates stock
+    ServiceController ..> Service : manages
+    ServiceController ..> ServicePart : manages
+    RentalController ..> Rental : manages
+    ProductController ..> Product : manages
+    ProductController ..> Category : uses
+    CategoryController ..> Category : manages
+    UserController ..> User : manages
+    ActivityLogController ..> ActivityLog : manages
+    ReportController ..> Sale : reads
+    ReportController ..> Service : reads
+    DashboardController ..> Sale : reads
+    DashboardController ..> Service : reads
+    DashboardController ..> Product : reads
+    CartController ..> Sale : creates
+    CartController ..> SaleDetail : creates

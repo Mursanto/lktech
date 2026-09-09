@@ -1,0 +1,52 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% ACTIVITY DIAGRAM
+%% Proses Transaksi Penjualan
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% =================================================================
+
+flowchart TD
+    Start([🔵 Mulai]) --> S1
+
+    S1["Staff / Admin membuka\nMenu Penjualan"] --> S2
+    S2["Klik 'Buat Transaksi\nBaru'"] --> S3
+
+    S3{"Pilih / Input\nData Pelanggan"}
+    S3 -->|Pelanggan Baru| S3A["Input Data Pelanggan\n(Nama, No. HP, Email)"]
+    S3A --> S4
+    S3 -->|Pelanggan Lama| S4
+
+    S4["Pilih Produk\ndari Stok"] --> S5
+    S5{"Stok Produk\nTersedia?"}
+
+    S5 -->|Tidak| ERR1["❌ Tampilkan Pesan:\nStok Habis"]
+    ERR1 --> S4
+
+    S5 -->|Ya| S6["Tentukan Jumlah\n& Harga Jual"]
+    S6 --> S7["Hitung Total Transaksi\n& Estimasi Profit"]
+    S7 --> S8["Pilih Metode\nPembayaran\n(Tunai / Transfer / QRIS)"]
+    S8 --> S9["Konfirmasi &\nSimpan Transaksi"]
+    S9 --> S10["Sistem Menyimpan\nData Sale &\nSale Detail"]
+    S10 --> S11["Kurangi Stok\nProduk Otomatis"]
+    S11 --> S12["Log Activity:\ncreate_sale"]
+    S12 --> S13
+
+    S13{"Proses\nPembayaran"}
+    S13 -->|Tunai - Langsung Lunas| S14["Update Status:\npayment_status = success"]
+    S13 -->|Transfer / QRIS| S15["Status: pending\nTunggu Konfirmasi Admin"]
+
+    S14 --> S16["Cetak Invoice / Nota\n(PDF)"]
+    S15 --> S17["Staff Konfirmasi\nBukti Transfer"]
+    S17 --> S18["Klik 'Tandai Lunas'"]
+    S18 --> S16
+
+    S16 --> End([🟢 Transaksi Selesai])
+
+    %% Styling
+    style Start fill:#1E88E5,color:#fff,stroke:#1565C0
+    style End fill:#43A047,color:#fff,stroke:#2E7D32
+    style ERR1 fill:#FFCDD2,stroke:#E53935,color:#B71C1C
+    style S10 fill:#E3F2FD,stroke:#1E88E5
+    style S11 fill:#FFF9C4,stroke:#F57F17
+    style S12 fill:#F3E5F5,stroke:#7B1FA2
+    style S16 fill:#C8E6C9,stroke:#43A047

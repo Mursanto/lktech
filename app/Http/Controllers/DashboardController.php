@@ -13,6 +13,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // Jika user HANYA memiliki role Investor (tidak punya role Admin/Staff dll), redirect ke dashboard khusus investor
+        $user = Auth::user();
+        if ($user && $user->hasRole('Investor') && !$user->hasAnyRole(['Admin', 'Staff', 'Teknisi', 'Kasir', 'Sales'])) {
+            return redirect()->route('investor.dashboard');
+        }
+
         // 1. Rincian Stok Berdasarkan Kategori
         $stokDevice = \App\Models\Product::where('status', 'available')->whereHas('category', function($q) { 
             $q->where('name', 'Laptop & Device')->orWhereHas('parent', function($q2) { $q2->where('name', 'Laptop & Device'); });
@@ -114,19 +120,55 @@ class DashboardController extends Controller
         $rentalOmzetBulanLalu = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_price');
         $omzetBulanLalu = $saleOmzetBulanLalu + $serviceOmzetBulanLalu + $rentalOmzetBulanLalu;
         
-        $saleLabaBulanIni = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('profit_amount');
+        $salesBulanIni = \App\Models\Sale::with('saleDetails.product.investor')
+            ->where('payment_status', 'success')
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->get();
+        $saleLabaBulanIni = $salesBulanIni->sum('profit_amount');
+        
+        $investorShareBulanIni = 0;
+        $investorUnpaidCount = 0;
+        foreach ($salesBulanIni as $sale) {
+            foreach ($sale->saleDetails as $detail) {
+                if ($detail->product && $detail->product->investor) {
+                    $profit = $detail->profit ?? 0;
+                    $investorShareBulanIni += (int) round($profit * ($detail->product->investor->share_percentage / 100));
+                    if ($detail->payout_status !== 'paid') {
+                        $investorUnpaidCount++;
+                    }
+                }
+            }
+        }
+
         $serviceLabaBulanIni = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->get()->sum(function($s) {
             return $s->actual_cost - $s->estimated_parts_cost;
         });
         $rentalLabaBulanIni = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_price');
-        $labaBulanIni = $saleLabaBulanIni + $serviceLabaBulanIni + $rentalLabaBulanIni;
+        $labaBulanIni = $saleLabaBulanIni + $serviceLabaBulanIni + $rentalLabaBulanIni - $investorShareBulanIni;
 
-        $saleLabaBulanLalu = \App\Models\Sale::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('profit_amount');
+        $salesBulanLalu = \App\Models\Sale::with('saleDetails.product.investor')
+            ->where('payment_status', 'success')
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->whereYear('created_at', now()->subMonth()->year)
+            ->get();
+        $saleLabaBulanLalu = $salesBulanLalu->sum('profit_amount');
+
+        $investorShareBulanLalu = 0;
+        foreach ($salesBulanLalu as $sale) {
+            foreach ($sale->saleDetails as $detail) {
+                if ($detail->product && $detail->product->investor) {
+                    $profit = $detail->profit ?? 0;
+                    $investorShareBulanLalu += (int) round($profit * ($detail->product->investor->share_percentage / 100));
+                }
+            }
+        }
+
         $serviceLabaBulanLalu = \App\Models\Service::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->get()->sum(function($s) {
             return $s->actual_cost - $s->estimated_parts_cost;
         });
         $rentalLabaBulanLalu = \App\Models\Rental::where('payment_status', 'success')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_price');
-        $labaBulanLalu = $saleLabaBulanLalu + $serviceLabaBulanLalu + $rentalLabaBulanLalu;
+        $labaBulanLalu = $saleLabaBulanLalu + $serviceLabaBulanLalu + $rentalLabaBulanLalu - $investorShareBulanLalu;
 
         // Pertumbuhan Persentase MoM
         $omzetGrowth = $omzetBulanLalu > 0 ? (($omzetBulanIni - $omzetBulanLalu) / $omzetBulanLalu) * 100 : ($omzetBulanIni > 0 ? 100 : 0);
@@ -178,6 +220,8 @@ class DashboardController extends Controller
             'labaBulanLalu' => $labaBulanLalu,
             'omzetGrowth' => $omzetGrowth,
             'labaGrowth' => $labaGrowth,
+            'investorShareBulanIni' => $investorShareBulanIni,
+            'investorUnpaidCount' => $investorUnpaidCount,
         ]);
     }
 }

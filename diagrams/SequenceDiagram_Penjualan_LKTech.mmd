@@ -1,0 +1,79 @@
+%%{init: {'theme': 'default'}}%%
+%% =================================================================
+%% SEQUENCE DIAGRAM
+%% Proses Transaksi Penjualan
+%% Sistem Informasi Inventori dan Penjualan - LKTech
+%% =================================================================
+
+sequenceDiagram
+    autonumber
+
+    actor Staff as 👤 Staff / Admin
+    participant Browser as 🌐 Browser
+    participant SaleCtrl as SaleController
+    participant DB as 🗄️ Database
+    participant ProductCtrl as ProductController
+    participant ActivityLog as ActivityLog
+
+    Note over Staff, ActivityLog: ══ FASE 1: MEMBUAT TRANSAKSI ══
+
+    Staff ->> Browser: Buka Menu Penjualan → Klik "Buat Transaksi"
+    Browser ->> SaleCtrl: GET /sales/create
+    SaleCtrl ->> DB: SELECT customers, products (status=available)
+    DB -->> SaleCtrl: Data Pelanggan & Produk
+    SaleCtrl -->> Browser: Tampilkan Form Penjualan
+    Browser -->> Staff: Form Transaksi Siap
+
+    Staff ->> Browser: Pilih Pelanggan + Pilih Produk + Qty + Harga
+    Browser ->> SaleCtrl: POST /sales (form data)
+
+    Note over SaleCtrl, DB: ══ FASE 2: VALIDASI & SIMPAN DATA ══
+
+    SaleCtrl ->> SaleCtrl: Validasi Input (required fields)
+    SaleCtrl ->> DB: Cek stok produk yang dipilih
+    DB -->> SaleCtrl: Data Stok
+
+    alt Stok Tidak Cukup
+        SaleCtrl -->> Browser: ❌ Redirect back + Error: "Stok Tidak Cukup"
+        Browser -->> Staff: Tampilkan pesan error
+    else Stok Tersedia
+        SaleCtrl ->> DB: BEGIN TRANSACTION
+        SaleCtrl ->> DB: INSERT INTO sales (user_id, customer_id, total, payment_method, ...)
+        DB -->> SaleCtrl: Sale ID
+
+        loop Untuk Setiap Produk
+            SaleCtrl ->> DB: INSERT INTO sale_details (sale_id, product_id, qty, price, profit)
+            SaleCtrl ->> DB: UPDATE products SET stock = stock - qty
+            SaleCtrl ->> DB: UPDATE products SET status = 'sold' (jika stok = 0)
+        end
+
+        SaleCtrl ->> DB: COMMIT TRANSACTION
+        SaleCtrl ->> ActivityLog: Log: create_sale (user_id, sale_id, IP)
+
+        Note over SaleCtrl, DB: ══ FASE 3: PROSES PEMBAYARAN ══
+
+        alt Pembayaran Tunai
+            SaleCtrl ->> DB: UPDATE sales SET payment_status = 'success'
+            SaleCtrl -->> Browser: ✅ Redirect ke /sales/{id}
+            Browser -->> Staff: Detail Transaksi + Tombol Cetak Invoice
+        else Pembayaran Transfer / QRIS
+            SaleCtrl ->> DB: UPDATE sales SET payment_status = 'pending'
+            SaleCtrl -->> Browser: ✅ Redirect ke /sales/{id}
+            Browser -->> Staff: Detail Transaksi (Status: Menunggu Konfirmasi)
+
+            Staff ->> Browser: Cek Bukti Transfer → Klik "Tandai Lunas"
+            Browser ->> SaleCtrl: POST /sales/{sale}/mark-paid
+            SaleCtrl ->> DB: UPDATE sales SET payment_status = 'success'
+            SaleCtrl ->> ActivityLog: Log: mark_paid (user_id, sale_id)
+            SaleCtrl -->> Browser: ✅ Status Updated
+        end
+
+        Note over Staff, Browser: ══ FASE 4: CETAK INVOICE ══
+
+        Staff ->> Browser: Klik "Cetak Invoice"
+        Browser ->> SaleCtrl: GET /sales/{sale}/invoice
+        SaleCtrl ->> DB: SELECT sale, sale_details, customer, products
+        DB -->> SaleCtrl: Data Lengkap Transaksi
+        SaleCtrl -->> Browser: ✅ Generate PDF Invoice
+        Browser -->> Staff: Invoice Siap Diunduh / Dicetak
+    end
