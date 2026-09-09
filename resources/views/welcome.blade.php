@@ -351,8 +351,8 @@
 
         <!-- Produk Terlaris Section -->
         @if(!request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
-            <div class="mb-3 border-b border-gray-100 pb-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-0">
+            <div class="mb-1.5 border-b border-gray-100 pb-1.5">
                 <div class="flex items-baseline gap-2.5">
                     <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight flex items-center gap-1.5 whitespace-nowrap">
                         <i class='bx bxs-hot text-orange-500'></i> Produk Terlaris
@@ -372,7 +372,7 @@
                 },
                 count: 6
             }" x-init="count = visibleCount; window.addEventListener('resize', () => { count = visibleCount })">
-                <div class="flex justify-between items-end mb-3">
+                <div class="flex justify-between items-end mb-2">
                     <div class="min-w-0 flex-1 border-l-4 border-brand-500 pl-2">
                         <h3 class="text-sm sm:text-base font-bold text-gray-800 font-montserrat tracking-tight mb-0 flex items-center gap-2 truncate">
                             Lisensi & Software
@@ -452,11 +452,11 @@
         <div class="bg-white py-3 lg:py-4 border-y border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-3 min-w-0">
-                    <div class="text-left min-w-0 flex-1">
-                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">
+                    <div class="flex items-baseline gap-2.5 min-w-0 flex-1">
+                        <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight whitespace-nowrap">
                             Alur Pemesanan
                         </h2>
-                        <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Sistem kami terintegrasi dengan email</p>
+                        <p class="text-gray-400 text-xs truncate">Sistem kami terintegrasi dengan email</p>
                     </div>
                     <!-- Geser Indicator (Mobile Only) -->
                     <div class="flex sm:hidden items-center gap-1 text-gray-400 text-[10px] font-bold shrink-0 ml-2 bg-gray-50 px-2 py-1 rounded-full animate-pulse">
@@ -653,9 +653,9 @@
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
             <div class="flex items-center justify-between mb-3">
-                <div class="min-w-0 flex-1">
-                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight mb-0 sm:mb-0.5 truncate">Artikel &amp; Panduan</h2>
-                    <p class="text-gray-500 text-[11px] sm:text-xs truncate mt-0.5">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
+                <div class="flex items-baseline gap-2.5 min-w-0 flex-1">
+                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight whitespace-nowrap">Artikel & Panduan</h2>
+                    <p class="text-gray-400 text-xs truncate">Tips, trik, dan edukasi seputar dunia IT untuk Anda.</p>
                 </div>
                 <a href="{{ route('blog.index') }}" class="flex items-center gap-1 text-brand-600 font-medium hover:text-brand-700 transition-colors text-xs sm:text-sm sm:font-bold whitespace-nowrap ml-3">
                     Lihat Semua <i class='bx bx-right-arrow-alt text-base sm:text-xl'></i>
