@@ -65,6 +65,7 @@
                                         $hasBlog = $user->hasPermissionTo('access_blog') || $user->hasRole('Admin');
                                         $hasSettings = $user->hasPermissionTo('access_settings') || $user->hasRole('Admin');
                                         $hasRakitPc = $user->hasPermissionTo('access_rakit_pc') || $user->hasRole('Admin');
+                                        $hasInvestor = $user->hasRole('Investor') || $user->hasRole('Admin');
                                     @endphp
                                     <div class="flex flex-wrap gap-1 mt-1">
                                         <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasInventory ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-400' }}" title="Inventaris">
@@ -87,6 +88,9 @@
                                         </div>
                                         <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasSettings ? 'bg-fuchsia-100 text-fuchsia-600' : 'bg-gray-100 text-gray-400' }}" title="Pengaturan Web">
                                             <i class='bx bx-cog text-xs'></i>
+                                        </div>
+                                        <div class="w-6 h-6 rounded flex items-center justify-center {{ $hasInvestor ? 'bg-violet-100 text-violet-600' : 'bg-gray-100 text-gray-400' }}" title="Modul Investor">
+                                            <i class='bx bx-user-pin text-xs'></i>
                                         </div>
                                     </div>
                                 </div>
