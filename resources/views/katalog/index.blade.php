@@ -72,16 +72,16 @@
             <div class="sticky top-20 space-y-4">
                 
                 {{-- Category List --}}
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-gray-800 text-base border-b border-gray-100 pb-2 mb-3">Kategori Produk</h3>
-                    <ul class="space-y-1">
+                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-2">Kategori Produk</h3>
+                    <ul class="space-y-0.5">
                         @foreach($mainCategories as $category)
                             @if($category->total_count > 0)
                             <li>
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" 
-                                   class="flex justify-between items-center px-3 py-2 text-sm {{ (isset($selectedCategoryId) && $selectedCategoryId == $category->id) ? 'text-brand-600 bg-brand-50 font-bold' : 'text-gray-600 hover:text-brand-600 hover:bg-brand-50' }} rounded-lg transition-colors group">
+                                   class="flex justify-between items-center px-2 py-1.5 text-[13px] {{ (isset($selectedCategoryId) && $selectedCategoryId == $category->id) ? 'text-brand-600 bg-brand-50 font-bold' : 'text-gray-600 font-medium hover:text-brand-600 hover:bg-brand-50' }} rounded-lg transition-colors group">
                                     <span class="truncate">{{ $category->name }}</span>
-                                    <span class="bg-gray-100 text-gray-500 group-hover:bg-brand-100 group-hover:text-brand-600 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                                    <span class="bg-gray-100 text-gray-500 group-hover:bg-brand-100 group-hover:text-brand-600 flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold">
                                         {{ $category->total_count }}
                                     </span>
                                 </a>
@@ -174,7 +174,7 @@
                 @endif
 
                 {{-- Filter: Harga --}}
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: true }">
+                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: true }">
                     <button @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-3">
                         <span>Rentang Harga</span>
                         <i class='bx text-gray-400 text-base' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
@@ -189,27 +189,22 @@
                         @foreach($selectedBrands ?? [] as $b)
                             <input type="hidden" name="brands[]" value="{{ $b }}">
                         @endforeach
-                        <div class="space-y-2">
-                            <div>
-                                <label class="text-xs text-gray-500 font-medium mb-1 block">Harga Minimum</label>
-                                <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="0"
-                                    class="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <div>
-                                <label class="text-xs text-gray-500 font-medium mb-1 block">Harga Maksimum</label>
-                                <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="99999999"
-                                    class="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold py-2 rounded-lg transition-colors">
-                                Terapkan
-                            </button>
+                        <div class="flex items-center gap-2 mb-2">
+                            <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min"
+                                class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <span class="text-gray-400 font-medium">-</span>
+                            <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max"
+                                class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        </div>
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-medium h-8 rounded-lg transition-colors">
+                            Terapkan
+                        </button>
                             @if($priceMin || $priceMax)
                             <a href="{{ request()->url() . '?' . http_build_query(request()->except(['price_min', 'price_max'])) }}"
                                class="block text-center text-xs text-red-500 hover:text-red-600 font-medium mt-1">
                                 × Hapus filter harga
                             </a>
                             @endif
-                        </div>
                     </form>
                 </div>
 
@@ -358,17 +353,12 @@
                         </div>
                         @endif
                         {{-- Price Range --}}
-                        <div class="py-4">
-                            <h4 class="text-sm font-bold text-gray-700 mb-3">Rentang Harga</h4>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-xs text-gray-500 mb-1 block">Min (Rp)</label>
-                                    <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="0" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                </div>
-                                <div>
-                                    <label class="text-xs text-gray-500 mb-1 block">Max (Rp)</label>
-                                    <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Semua" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                </div>
+                        <div class="py-3">
+                            <h4 class="text-sm font-bold text-gray-700 mb-2">Rentang Harga</h4>
+                            <div class="flex items-center gap-2">
+                                <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                <span class="text-gray-400 font-medium">-</span>
+                                <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                         </div>
                         {{-- Action Buttons --}}
@@ -584,19 +574,14 @@
                 @endif
 
                 {{-- Price Range --}}
-                <div class="py-4">
-                    <h4 class="text-sm font-bold text-gray-700 mb-3">Rentang Harga</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="text-xs text-gray-500 mb-1 block">Min (Rp)</label>
-                            <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="0"
-                                class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        </div>
-                        <div>
-                            <label class="text-xs text-gray-500 mb-1 block">Max (Rp)</label>
-                            <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Semua"
-                                class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        </div>
+                <div class="py-3">
+                    <h4 class="text-sm font-bold text-gray-700 mb-2">Rentang Harga</h4>
+                    <div class="flex items-center gap-2">
+                        <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min"
+                            class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <span class="text-gray-400 font-medium">-</span>
+                        <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max"
+                            class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
 
