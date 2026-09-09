@@ -352,11 +352,13 @@
         <!-- Produk Terlaris Section -->
         @if(!request()->has('search'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
-            <div class="mb-5 border-b border-gray-100 pb-3">
-                <h2 class="text-lg sm:text-xl font-black text-gray-900 font-montserrat tracking-tight mb-0 flex items-center gap-2">
-                    <i class='bx bxs-hot text-orange-500'></i> Produk Terlaris
-                </h2>
-                <p class="text-gray-500 text-xs sm:text-sm mt-1">Lisensi software, aksesoris, dan sparepart terfavorit.</p>
+            <div class="mb-3 border-b border-gray-100 pb-2">
+                <div class="flex items-baseline gap-2.5">
+                    <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight flex items-center gap-1.5 whitespace-nowrap">
+                        <i class='bx bxs-hot text-orange-500'></i> Produk Terlaris
+                    </h2>
+                    <p class="text-gray-400 text-xs truncate">Lisensi software, aksesoris, dan sparepart terfavorit.</p>
+                </div>
             </div>
 
             @if(isset($softwareProducts) && $softwareProducts->count() > 0)
