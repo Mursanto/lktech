@@ -1,12 +1,12 @@
 @props(['product'])
 
-<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[160px] h-full">
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
-        <!-- Image Area -->
-        <div class="relative w-full h-32 sm:h-40 md:h-48 bg-gray-100 overflow-hidden border-b border-gray-100">
-            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover bg-white p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500">
+        <!-- Image Area — Full Bleed -->
+        <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
+            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             
             <!-- Badges Area (top-right) -->
             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
@@ -20,69 +20,46 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Terjual Habis
                     </span>
                 @endif
-
-                {{-- Removed Top-Right Pre-Order Badge to avoid duplication --}}
             </div>
-
-            {{-- Label Tipe Stok (Disembunyikan, bisa digunakan untuk Promo di kemudian hari) --}}
-            {{-- 
-            @if(($product->tipe_stok ?? 'ready_stock') === 'ready_stock')
-                <div class="absolute bottom-1.5 left-1.5">
-                    <span class="bg-emerald-500/90 backdrop-blur text-white px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm">
-                        ✓ Ready Stock
-                    </span>
-                </div>
-            @else
-                <div class="absolute bottom-1.5 left-1.5">
-                    <span class="bg-orange-400/90 backdrop-blur text-white px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm">
-                        ⏱ Open Order
-                    </span>
-                </div>
-            @endif 
-            --}}
         </div>
 
         <!-- Content Details -->
-        <div class="p-1.5 sm:p-2 flex flex-col flex-grow">
+        <div class="px-2 pt-2 pb-1 flex flex-col flex-grow">
             <!-- Brand & Model -->
-            <h3 class="text-xs sm:text-sm font-bold text-gray-800 line-clamp-2 leading-snug mb-1 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
+            <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
                 {{ $product->brand }} {{ $product->model_series }}
             </h3>
 
             <!-- Price -->
-            <div class="flex items-start gap-0.5 mb-1.5" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
-                <span class="text-[10px] sm:text-xs font-bold text-emerald-500 mt-0.5">Rp</span>
-                <span class="text-emerald-600 font-extrabold text-sm sm:text-base leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
+            <div class="flex items-start gap-0.5 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
+                <span class="text-[9px] sm:text-[10px] font-bold text-emerald-500 mt-0.5">Rp</span>
+                <span class="text-emerald-600 font-extrabold text-xs sm:text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
             </div>
 
             <!-- Specs List (Compact) / Conditional Rendering -->
             @php
-                // Cek apakah data spesifikasi benar-benar diisi (bukan sekadar tanda '-' atau 'N/A' atau kosong)
                 $hasValidProcessor = !empty($product->processor) && !in_array(strtolower(trim($product->processor)), ['-', 'n/a', 'none', 'na', '']);
                 $hasValidRam = !empty($product->ram) && !in_array(strtolower(trim($product->ram)), ['-', 'n/a', 'none', 'na', '']);
                 $hasValidStorage = !empty($product->storage) && !in_array(strtolower(trim($product->storage)), ['-', 'n/a', 'none', 'na', '']);
-                
-                // Tampilkan blok spesifikasi HANYA JIKA setidaknya salah satu spesifikasi utama (CPU/RAM/SSD) diisi dengan benar.
-                // Ini sangat akurat untuk menyembunyikan spek pada Baterai, Sparepart, dan Aksesoris tanpa mempedulikan nama kategorinya.
                 $showSpecs = $hasValidProcessor || $hasValidRam || $hasValidStorage;
             @endphp
 
             @if($showSpecs)
-            <div class="text-[9px] text-gray-500 flex flex-wrap gap-x-2 gap-y-0.5 leading-tight flex-grow">
-                <span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-chip'></i>{{ $product->processor ?: 'N/A' }}</span>
-                <span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-memory-card'></i>{{ $product->ram ?: 'N/A' }}</span>
-                <span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-hdd'></i>{{ $product->storage ?: 'N/A' }}</span>
+            <div class="text-[9px] text-gray-500 flex flex-wrap gap-x-1.5 gap-y-0.5 leading-tight flex-grow">
+                @if($hasValidProcessor)<span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-chip'></i>{{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-memory-card'></i>{{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="flex items-center gap-0.5 whitespace-nowrap"><i class='bx bx-hdd'></i>{{ $product->storage }}</span>@endif
             </div>
             @else
-            <div class="text-[10px] text-gray-500 leading-tight flex-grow line-clamp-2">
-                {{ $product->description ? Str::limit(strip_tags($product->description), 50) : 'Produk ' . ($product->category ? $product->category->name : 'berkualitas') . ' dengan penawaran harga terbaik.' }}
+            <div class="text-[9px] text-gray-400 leading-tight flex-grow line-clamp-2">
+                {{ $product->description ? Str::limit(strip_tags($product->description), 45) : 'Produk ' . ($product->category ? $product->category->name : 'berkualitas') . '.' }}
             </div>
             @endif
         </div>
     </a>
 
-    <!-- Separated Action Button Container at Bottom -->
-    <div class="p-1.5 sm:p-2 pt-0 mt-auto" x-data="{
+    <!-- Action Button Container at Bottom -->
+    <div class="px-2 pb-2 pt-1 mt-auto" x-data="{
         adding: false,
         addToCart(productId) {
             this.adding = true;
@@ -118,7 +95,7 @@
             });
         }
     }">
-        <div class="pt-2 border-t border-gray-100 flex gap-1 sm:gap-1.5">
+        <div class="border-t border-gray-100 pt-1.5 flex gap-1">
             @php
                 $shareUrl = route('katalog.show', $product->id);
                 $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
@@ -127,22 +104,22 @@
             
             @if(!$isSold)
                 @if($isPreOrder)
-                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 sm:py-1.5 rounded-md text-[9px] sm:text-[11px] transition-colors flex justify-center items-center gap-0.5 sm:gap-1 shadow-sm disabled:opacity-75">
-                        <i class='bx bx-cart-add text-xs sm:text-sm shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Pre-Order'"></span>
+                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 rounded text-[10px] transition-colors flex justify-center items-center gap-0.5 shadow-sm disabled:opacity-75">
+                        <i class='bx bx-cart-add text-xs shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Pre-Order'"></span>
                     </button>
                 @else
-                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-1 sm:py-1.5 rounded-md text-[9px] sm:text-[11px] transition-colors flex justify-center items-center gap-0.5 sm:gap-1 shadow-sm disabled:opacity-75">
-                        <i class='bx bx-cart-add text-xs sm:text-sm shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Keranjang'"></span>
+                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-1 rounded text-[10px] transition-colors flex justify-center items-center gap-0.5 shadow-sm disabled:opacity-75">
+                        <i class='bx bx-cart-add text-xs shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Keranjang'"></span>
                     </button>
                 @endif
             @else
-                <button disabled class="flex-1 min-w-0 px-1 bg-gray-300 text-gray-500 font-bold py-1 sm:py-1.5 rounded-md text-[9px] sm:text-[11px] flex justify-center items-center gap-0.5 sm:gap-1 cursor-not-allowed">
+                <button disabled class="flex-1 min-w-0 px-1 bg-gray-200 text-gray-400 font-bold py-1 rounded text-[10px] flex justify-center items-center gap-0.5 cursor-not-allowed">
                     <span class="truncate">Stok Habis</span>
                 </button>
             @endif
 
-            <button type="button" @click.prevent="shareProduct('{{ $shareUrl }}')" class="flex-none shrink-0 w-7 sm:w-8 flex justify-center items-center bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 rounded-md transition-colors shadow-sm" title="Bagikan Produk">
-                <i class='bx bx-share-alt text-xs sm:text-sm'></i>
+            <button type="button" @click.prevent="shareProduct('{{ $shareUrl }}')" class="flex-none shrink-0 w-7 flex justify-center items-center bg-gray-50 hover:bg-gray-100 text-gray-500 border border-gray-200 rounded transition-colors shadow-sm" title="Bagikan Produk">
+                <i class='bx bx-share-alt text-xs'></i>
             </button>
         </div>
     </div>
