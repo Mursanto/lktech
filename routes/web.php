@@ -309,6 +309,14 @@ Route::get('/deploy-system', function () {
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
         $output[] = "<b>Optimize Clear:</b> Berhasil membersihkan cache Laravel.<br>";
 
+        // 4. Migrate Database
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            $output[] = "<b>Migrasi Database:</b> Berhasil (Artisan).<br>";
+        } catch (\Exception $e) {
+            $output[] = "<b>Migrasi Database:</b> Gagal - " . $e->getMessage() . "<br>";
+        }
+
         return implode("<br>", $output);
     } catch (\Throwable $e) {
         return '<b>Terjadi Kesalahan Fatal:</b> ' . $e->getMessage() . ' di file ' . $e->getFile() . ' baris ' . $e->getLine();
