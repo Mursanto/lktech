@@ -289,21 +289,20 @@ Route::get('/deploy-system', function () {
     error_reporting(E_ALL);
     
     try {
-        if (!function_exists('exec')) {
-            return "<b>Error:</b> Fungsi exec() dinonaktifkan di server hosting Anda (biasanya karena alasan keamanan cPanel). Anda harus menjalankan composer install via terminal SSH atau lokal.";
-        }
-
         $output = [];
         $output[] = "<b>Memulai Deployment Sistem...</b><br>";
 
-        // 1. Eksekusi Git Pull
-        exec('git pull origin main 2>&1', $outGit, $retGit);
-        $output[] = "<b>Git Pull Status:</b><br>" . nl2br(implode("\n", $outGit)) . "<br>";
+        // 1. Eksekusi Git Pull & Composer (Jika exec aktif)
+        if (function_exists('exec')) {
+            exec('git pull origin main 2>&1', $outGit, $retGit);
+            $output[] = "<b>Git Pull Status:</b><br>" . nl2br(implode("\n", $outGit)) . "<br>";
 
-        // 2. Eksekusi Composer Install
-        putenv('COMPOSER_HOME=' . storage_path('framework/cache'));
-        exec('composer install --no-dev --optimize-autoloader 2>&1', $outComp, $retComp);
-        $output[] = "<b>Composer Install Status:</b><br>" . nl2br(implode("\n", $outComp)) . "<br>";
+            putenv('COMPOSER_HOME=' . storage_path('framework/cache'));
+            exec('composer install --no-dev --optimize-autoloader 2>&1', $outComp, $retComp);
+            $output[] = "<b>Composer Install Status:</b><br>" . nl2br(implode("\n", $outComp)) . "<br>";
+        } else {
+            $output[] = "<b>Warning:</b> Fungsi exec() dinonaktifkan. Melewati Git Pull & Composer Install.<br>";
+        }
 
         // 3. Clear Cache
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
