@@ -300,28 +300,28 @@
 
             </div>
 
-            <!-- 3. Right: Sticky Action Box (Tokopedia Style "Atur Jumlah & Catatan") -->
+            <!-- 3. Right: Sticky Action Box (Compact) -->
             <div class="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0">
-                <div class="sticky top-24 border border-gray-200 rounded-2xl p-5 shadow-lg shadow-gray-100/50 bg-white">
-                    <h3 class="font-bold text-gray-800 mb-4 text-lg">Transaksi</h3>
+                <div class="sticky top-24 border border-gray-200 rounded-2xl p-4 shadow-lg shadow-gray-100/50 bg-white">
+                    <h3 class="font-bold text-gray-800 mb-3 text-base">Transaksi</h3>
                     
-                    <div class="mb-5 pb-5 border-b border-gray-100">
-                        <span class="text-gray-500 text-xs font-semibold uppercase tracking-widest block mb-1">Harga Unit</span>
-                        <div class="text-2xl xl:text-3xl font-black text-gray-900 tracking-tight">
+                    <div class="mb-3 pb-3 border-b border-gray-100">
+                        <span class="text-gray-500 text-[10px] font-semibold uppercase tracking-widest block mb-0.5">Harga Unit</span>
+                        <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight">
                             Rp {{ number_format($product->selling_price, 0, ',', '.') }}
                         </div>
                     </div>
 
-                    <div class="space-y-3 mb-6 text-sm">
+                    <div class="space-y-2 mb-4 text-xs">
                         <div class="flex justify-between items-center">
                             <span class="text-gray-500 font-medium">Status Stok:</span>
                             @if($product->stock > 0 && $product->status !== 'Sold')
-                                <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200 flex items-center gap-1.5">
+                                <span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     Sisa {{ $product->stock }} unit
                                 </span>
                             @else
-                                <span class="text-red-700 font-bold bg-red-50 px-2 py-1 rounded-md border border-red-200 flex items-center gap-1.5">
+                                <span class="text-red-700 font-bold bg-red-50 px-1.5 py-0.5 rounded border border-red-200 flex items-center gap-1">
                                     <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
                                     Kosong / Terjual
                                 </span>
@@ -329,7 +329,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-3" x-data="{
+                    <div class="space-y-2.5" x-data="{
                         adding: false,
                         buyingNow: false,
                         addToCart(productId, buyNow = false) {
@@ -372,71 +372,67 @@
                     }">
                         @if($product->stock > 0 && $product->status !== 'Sold')
                             @if($product->status == 'Pre-Order')
-                                <div class="flex flex-col sm:flex-row gap-3">
-                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 px-3 rounded-lg text-sm transition-all shadow-sm flex justify-center items-center gap-1.5">
-                                        <span x-text="buyingNow ? 'Memproses...' : 'Beli Sekarang'"></span>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                        <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2.5 px-3 rounded-lg text-sm transition-all flex justify-center items-center gap-1.5 shadow-sm">
-                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Memproses...' : '+ Keranjang'"></span>
+                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
+                                        <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
-                                <p class="text-xs text-orange-600 font-medium leading-tight text-center">
-                                    *Estimasi pengiriman Pre-Order ±7 hari.
+                                <p class="text-[10px] text-orange-600 font-medium leading-tight text-center mt-1">
+                                    *Estimasi Pre-Order ±7 hari.
                                 </p>
                             @else
-                                <div class="flex flex-col sm:flex-row gap-3">
-                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-3 rounded-lg text-sm transition-all shadow-sm flex justify-center items-center gap-1.5">
-                                        <span x-text="buyingNow ? 'Memproses...' : 'Beli Sekarang'"></span>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                        <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2.5 px-3 rounded-lg text-sm transition-all flex justify-center items-center gap-1.5 shadow-sm">
-                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Memproses...' : '+ Keranjang'"></span>
+                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
+                                        <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
                             @endif
                         @else
-                            <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3 px-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2">
+                            <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-2 px-3 rounded-lg text-xs cursor-not-allowed flex justify-center items-center gap-1.5">
                                 Stok Habis
                             </button>
                         @endif
 
-                        <div class="flex items-center justify-center gap-6 py-1 text-sm text-gray-500 font-medium">
-                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                <i class='bx bx-heart text-lg'></i> Wishlist
+                        <div class="flex items-center justify-center gap-4 py-1 text-xs text-gray-500 font-medium">
+                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" class="flex items-center gap-1 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-heart text-base'></i> Wishlist
                             </button>
-                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                <i class='bx bx-share-alt text-lg'></i> Bagikan
+                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" class="flex items-center gap-1 hover:text-brand-600 transition-colors">
+                                <i class='bx bx-share-alt text-base'></i> Bagikan
                             </button>
                         </div>
 
                         <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk%20di%20Katalog%20Anda:%20{{ $product->brand }}%20{{ $product->model_series }}" target="_blank" 
-                           class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-2.5 px-3 rounded-lg text-sm transition-colors flex justify-center items-center gap-2 shadow-sm">
-                            <i class='bx bx-message-rounded-dots text-lg'></i> Tanya Admin
+                           class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-2 px-2 rounded-lg text-xs transition-colors flex justify-center items-center gap-1.5 shadow-sm">
+                            <i class='bx bx-message-rounded-dots text-base'></i> Tanya Admin
                         </a>
                     </div>
                     
-                    <div class="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400 font-medium bg-gray-50 py-2 rounded-lg">
-                        <i class='bx bx-check-shield text-base text-emerald-500'></i> Transaksi Aman & Bergaransi
-                    </div>
-
-                    <!-- Trust Badge Section -->
-                    <div class="mt-5 border-t border-gray-100 pt-4 space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-shield-quarter text-lg'></i>
+                    <!-- Trust Badge Section (Compact) -->
+                    <div class="mt-4 border-t border-gray-100 pt-3 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-shield-quarter text-sm'></i>
                             </div>
-                            <span class="text-sm text-gray-700 font-medium">Lulus Quality Control</span>
+                            <span class="text-xs text-gray-700 font-medium">Lulus Quality Control</span>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-medal text-lg'></i>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-medal text-sm'></i>
                             </div>
-                            <span class="text-sm text-gray-700 font-medium">Bergaransi Terpercaya</span>
+                            <span class="text-xs text-gray-700 font-medium">Bergaransi Terpercaya</span>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-wrench text-lg'></i>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                                <i class='bx bx-wrench text-sm'></i>
                             </div>
-                            <span class="text-sm text-gray-700 font-medium">Layanan After-Sales</span>
+                            <span class="text-xs text-gray-700 font-medium">Layanan After-Sales</span>
                         </div>
                     </div>
                 </div>
