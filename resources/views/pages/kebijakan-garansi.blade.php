@@ -58,7 +58,7 @@
                 @else
                     <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Masa Berlaku Garansi</h2>
                     <p class="text-gray-600 mb-8 leading-relaxed">
-                        Kami memberikan garansi mesin selama 2 (dua) minggu dan garansi perangkat lunak (software) selama 1 (satu) bulan, terhitung sejak tanggal pembelian yang tercantum pada nota.
+                        Kami memberikan garansi mesin selama 2 (dua) minggu sejak tanggal pembelian yang tercantum pada nota. Untuk garansi perangkat lunak (software, khususnya OS dan Microsoft Word), kami memberikan garansi <strong>Lifetime (Seumur Hidup)</strong> selama tidak di-uninstall atau instal ulang.
                     </p>
 
                     <h2 class="text-2xl font-bold text-gray-900 mb-4 font-montserrat">Syarat Klaim Garansi</h2>

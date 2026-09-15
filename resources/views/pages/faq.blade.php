@@ -128,7 +128,7 @@
                      {
                          id: 9, cat: 'garansi',
                          q: 'Berapa lama masa garansi produk dari LKTech?',
-                         a: 'Kami memberikan jaminan garansi yang transparan:\n\n• Garansi Mesin: 2 (dua) minggu sejak tanggal pembelian\n• Garansi Software: 1 (satu) bulan sejak tanggal pembelian\n\nMasa garansi dihitung dari tanggal yang tertera di nota/struk pembelian. Simpan nota Anda baik-baik ya! 📋'
+                         a: 'Kami memberikan jaminan garansi yang transparan:\n\n• Garansi Mesin: 2 (dua) minggu sejak tanggal pembelian\n• Garansi Software (khusus OS dan MS Office): Lifetime (Seumur Hidup) selama tidak di-uninstall atau instal ulang.\n\nMasa garansi mesin dihitung dari tanggal yang tertera di nota/struk pembelian. Simpan nota Anda baik-baik ya! 📋'
                      },
                      {
                          id: 10, cat: 'garansi',
@@ -308,8 +308,8 @@
                         <h3 class="font-bold text-amber-800 mb-1">📋 Kebijakan Garansi Resmi LKTech</h3>
                         <p class="text-amber-700 text-sm leading-relaxed">
                             Syarat dan ketentuan garansi dibuat untuk melindungi hak Anda sebagai pembeli dan menjaga transparansi setiap transaksi di LKTech.
-                            Garansi mesin berlaku <strong>2 minggu</strong>, garansi software <strong>1 bulan</strong> sejak tanggal pembelian.
-                            Klaim garansi wajib disertai nota pembelian & segel garansi yang masih utuh.
+                            Garansi mesin berlaku <strong>2 minggu</strong> sejak tanggal pembelian, garansi software (khusus OS dan MS Office) berlaku <strong>Lifetime</strong> selama tidak di-uninstall atau instal ulang.
+                            Klaim garansi mesin wajib disertai nota pembelian & segel garansi yang masih utuh.
                         </p>
                     </div>
                 </div>
