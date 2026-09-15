@@ -111,6 +111,38 @@
         }
 
         /* ==========================================
+           LIFETIME — Text Gradient + Neon Glow
+           ========================================== */
+        @keyframes lifetimeGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 6px rgba(16, 185, 129, 0.55),
+                    0 0 14px rgba(16, 185, 129, 0.35),
+                    0 0 28px rgba(16, 185, 129, 0.18);
+            }
+            50% {
+                text-shadow:
+                    0 0 10px rgba(52, 211, 153, 0.80),
+                    0 0 22px rgba(52, 211, 153, 0.55),
+                    0 0 40px rgba(52, 211, 153, 0.30);
+            }
+        }
+        .text-lifetime-glow {
+            /* Gradient: emerald-700 → emerald-500 → teal-400 */
+            background: linear-gradient(90deg, #047857 0%, #10b981 40%, #34d399 75%, #10b981 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+            font-size: 1.2em;
+            letter-spacing: -0.01em;
+            animation:
+                shimmer 4s linear infinite,
+                lifetimeGlow 2.5s ease-in-out infinite;
+        }
+
+        /* ==========================================
            PENYESUAIAN TAMPILAN WEB MOBILE (< 640px)
            ========================================== */
         @media (max-width: 639px) {
@@ -204,8 +236,8 @@
                             <span class="text-shimmer">Premium</span> untuk Produktivitas<br class="block sm:hidden"> 
                             Tanpa Batas
                         </h1>
-                        <p class="hero-description text-gray-600 text-xs sm:text-sm md:text-base font-medium mb-4 text-justify">
-                            Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
+                        <p class="hero-description text-gray-600 text-[11px] sm:text-xs md:text-sm font-medium mb-3 text-justify line-clamp-2">
+                            Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 
                         <!-- Tombol CTA -->
