@@ -216,23 +216,23 @@
             </a>
 
             <a href="{{ route('katalog.index') }}" class="block w-full px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('katalog.*') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                🖥️ Laptop Second / Bekas
+                Laptop Second / Bekas
             </a>
 
             <a href="{{ route('service-pc') }}" class="block w-full px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('service-pc') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                🔧 Service PC &amp; Laptop
+                Service PC &amp; Laptop
             </a>
 
             <a href="{{ route('rakit-pc') }}" class="block w-full px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('rakit-pc') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                🖥 Rakit PC Custom
+                Rakit PC Custom
             </a>
 
             <a href="{{ route('sewa-laptop') }}" class="block w-full px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('sewa-laptop') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                📅 Sewa PC &amp; Laptop
+                Sewa PC &amp; Laptop
             </a>
 
             <a href="{{ route('jasa-website') }}" class="block w-full px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-100 {{ request()->routeIs('jasa-website') ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
-                🌐 Jasa Pembuatan Website
+                Jasa Pembuatan Website
             </a>
 
             <!-- Layanan Mitra — accordion -->
