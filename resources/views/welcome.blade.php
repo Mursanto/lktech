@@ -231,12 +231,10 @@
                     <!-- Left: Text (60%) -->
                     <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
-                        <h1 class="hero-title text-2xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-3 text-justify sm:text-left">
-                            Laptop Bekas <span class="text-shimmer">Berkualitas</span><br class="block sm:hidden"> 
-                            <span class="text-shimmer">Premium</span> untuk Produktivitas<br class="block sm:hidden"> 
-                            Tanpa Batas
+                        <h1 class="hero-title text-xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-2 sm:mb-3 text-center sm:text-left">
+                            Laptop Bekas <span class="text-shimmer">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
                         </h1>
-                        <p class="hero-description text-gray-600 text-[11px] sm:text-xs md:text-sm font-medium mb-3 text-justify line-clamp-2">
+                        <p class="hero-description text-gray-600 text-[11px] sm:text-xs md:text-sm font-medium mb-3 text-justify">
                             Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 

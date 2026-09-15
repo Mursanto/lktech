@@ -187,10 +187,7 @@
                     @endif
                 </a>
 
-                <!-- FAQ Link (Mobile) -->
-                <a href="{{ route('faq') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors {{ request()->routeIs('faq') ? 'text-brand-600' : '' }}" title="FAQ">
-                    <i class='bx bx-help-circle text-2xl'></i>
-                </a>
+
 
                 <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
                     <i class='bx bx-cart text-2xl'></i>
