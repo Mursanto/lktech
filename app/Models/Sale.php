@@ -12,6 +12,8 @@ class Sale extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'subtotal' => 'integer',
+        'discount' => 'integer',
         'total_amount' => 'integer',
         'profit_amount' => 'integer',
         'transaction_date' => 'datetime',

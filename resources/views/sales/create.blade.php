@@ -226,58 +226,65 @@
                     </div>
 
                     <!-- ===== RIGHT: Ringkasan & Aksi ===== -->
-                    <div class="w-full md:w-[38%] lg:w-[35%] p-4 md:p-5 bg-gray-50 flex flex-col gap-3 overflow-y-auto scrollbar-hide">
-                        <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wider border-b border-emerald-100 pb-1">Ringkasan Penjualan</h3>
+                    <div class="w-full md:w-[38%] lg:w-[35%] p-3 md:p-4 bg-gray-50 flex flex-col gap-1.5 overflow-y-auto">
+                        <h3 class="text-xs font-bold text-emerald-700 uppercase tracking-wider border-b border-emerald-100 pb-1 shrink-0">Ringkasan Penjualan</h3>
 
                         <!-- Grand Total -->
-                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center p-2 rounded bg-slate-50 border border-slate-100">
-                                    <span class="text-xs font-bold text-slate-600">Total Item:</span>
-                                    <span id="total-qty" class="text-sm font-black text-slate-800">0</span>
+                        <div class="bg-white rounded-lg p-2 border border-gray-200 shadow-sm shrink-0">
+                            <div class="grid grid-cols-3 gap-1.5 mb-1.5">
+                                <div class="col-span-1 flex justify-between items-center p-1.5 rounded bg-slate-50 border border-slate-100">
+                                    <span class="text-[10px] font-bold text-slate-600">Qty:</span>
+                                    <span id="total-qty" class="text-xs font-black text-slate-800">0</span>
                                 </div>
-                                <div class="flex flex-col items-center p-3 bg-emerald-50 rounded border border-emerald-100">
-                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Grand Total</span>
-                                    <span id="grand-total" class="text-2xl font-extrabold text-emerald-600 w-full text-center">Rp 0</span>
+                                <div class="col-span-2 flex justify-between items-center p-1.5 rounded bg-slate-50 border border-slate-100">
+                                    <span class="text-[10px] font-bold text-slate-600">Subtotal:</span>
+                                    <span id="sub-total" class="text-xs font-black text-slate-800">Rp 0</span>
                                 </div>
+                            </div>
+                            <div class="flex justify-between items-center p-1.5 rounded bg-slate-50 border border-slate-100 mb-1.5">
+                                <label for="discount" class="text-[10px] font-bold text-slate-600">Diskon (Rp):</label>
+                                <input type="number" id="discount" name="discount" min="0" value="0" class="w-24 text-right border border-gray-300 rounded px-1.5 py-0.5 text-[11px] focus:ring-1 focus:ring-emerald-500 font-bold text-red-600">
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-emerald-50 rounded border border-emerald-100">
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Grand Total</span>
+                                <span id="grand-total" class="text-lg font-extrabold text-emerald-600">Rp 0</span>
                             </div>
                         </div>
 
                         <!-- Payment -->
-                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                            <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-2">Informasi Pembayaran</h4>
-                            <div class="space-y-2">
+                        <div class="bg-white rounded-lg p-2 border border-gray-200 shadow-sm shrink-0">
+                            <div class="grid grid-cols-2 gap-2">
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Metode Pembayaran</label>
-                                    <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500">
+                                    <label class="block text-[9px] font-bold text-gray-700 mb-0.5 uppercase">Metode Bayar</label>
+                                    <select name="payment_method" class="w-full border border-gray-300 rounded px-1.5 py-1 text-[10px] bg-gray-50 focus:ring-1 focus:ring-emerald-500">
                                         <option value="cash">💵 Tunai (Cash)</option>
                                         <option value="transfer">🏦 Transfer Bank</option>
                                         <option value="qris">📱 QRIS</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Catatan</label>
-                                    <textarea name="notes" rows="2" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-emerald-500" placeholder="Catatan tambahan..."></textarea>
+                                    <label class="block text-[9px] font-bold text-gray-700 mb-0.5 uppercase">Catatan</label>
+                                    <input type="text" name="notes" class="w-full border border-gray-300 rounded px-1.5 py-1 text-[10px] bg-gray-50 focus:ring-1 focus:ring-emerald-500" placeholder="Catatan opsional...">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Live Summary Items -->
-                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm flex-grow overflow-y-auto min-h-[150px]">
-                            <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-1.5">Daftar Item</h4>
-                            <div id="summary-items" class="text-xs text-gray-400 italic">Belum ada produk dipilih...</div>
+                        <div class="bg-white rounded-lg p-1.5 border border-gray-200 shadow-sm flex-grow overflow-y-auto min-h-[40px] max-h-[120px]">
+                            <h4 class="text-[9px] font-bold text-gray-500 uppercase mb-1">Daftar Item</h4>
+                            <div id="summary-items" class="text-[10px] text-gray-400 italic">Belum ada produk...</div>
                         </div>
 
                         <!-- Actions -->
-                        <div class="space-y-2 pt-2 border-t border-gray-200 shrink-0">
-                            <button type="submit" id="submit-btn"
-                                class="w-full px-4 py-3 bg-emerald-600 text-white rounded-lg font-black text-xs shadow-lg hover:bg-emerald-700 hover:shadow-xl hover:-translate-y-0.5 transform transition-all uppercase tracking-widest flex justify-center items-center gap-1.5">
-                                <i class='bx bx-check-circle text-lg'></i> Selesaikan Penjualan
-                            </button>
+                        <div class="flex gap-2 pt-1 border-t border-gray-200 shrink-0">
                             <a href="{{ route('sales.index') }}"
-                                class="w-full px-4 py-1.5 bg-white border border-gray-300 text-gray-600 rounded font-bold text-xs shadow-sm hover:bg-gray-50 transition uppercase flex justify-center items-center text-center">
-                                Batal & Kembali
+                                class="w-1/3 px-2 py-2 bg-white border border-gray-300 text-gray-600 rounded font-bold text-[10px] shadow-sm hover:bg-gray-50 transition uppercase flex justify-center items-center text-center">
+                                Batal
                             </a>
+                            <button type="submit" id="submit-btn"
+                                class="w-2/3 px-2 py-2 bg-emerald-600 text-white rounded font-black text-[11px] shadow-lg hover:bg-emerald-700 hover:-translate-y-0.5 transform transition-all uppercase flex justify-center items-center gap-1">
+                                <i class='bx bx-check-circle text-sm'></i> Simpan Transaksi
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -580,7 +587,7 @@
         // Recalculate Grand Total + Summary Panel
         // =============================================
         function updateTotals() {
-            let totalQty = 0, grandTotal = 0;
+            let totalQty = 0, subTotal = 0;
             const lines = [];
 
             document.querySelectorAll('.product-row').forEach(row => {
@@ -588,7 +595,7 @@
                 const subInput = row.querySelector('.subtotal-display');
                 const { qty, sub, name } = recalcRow(row, qtyInput, subInput);
                 totalQty   += qty;
-                grandTotal += sub;
+                subTotal   += sub;
                 if (sub > 0 && name) {
                     const shortName = name.split('\u2014')[0].trim();
                     lines.push(
@@ -603,7 +610,15 @@
                 }
             });
 
+            const discountInput = document.getElementById('discount');
+            let discount = parseInt(discountInput.value) || 0;
+            if (discount < 0) { discount = 0; discountInput.value = 0; }
+            if (discount > subTotal) { discount = subTotal; discountInput.value = subTotal; }
+
+            const grandTotal = subTotal - discount;
+
             document.getElementById('total-qty').textContent  = totalQty;
+            document.getElementById('sub-total').textContent = 'Rp ' + subTotal.toLocaleString('id-ID');
             document.getElementById('grand-total').textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
             document.getElementById('summary-items').innerHTML = lines.length
                 ? lines.join('')
@@ -699,8 +714,12 @@
             initCustomerToggle();
             initFormValidation();
             initDateField();
-            addRow();
             document.getElementById('add-product-btn').addEventListener('click', addRow);
+            
+            document.getElementById('discount').addEventListener('input', updateTotals);
+
+            // Injeksi baris pertama
+            addRow();
         });
 
     })();

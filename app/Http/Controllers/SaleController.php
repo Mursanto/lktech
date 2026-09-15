@@ -125,8 +125,12 @@ class SaleController extends Controller
                     ? \Carbon\Carbon::parse($request->transaction_date)
                     : now();
 
+                $discount = $request->input('discount', 0);
+                
                 $sale = \App\Models\Sale::create([
                     'customer_id' => $customerId,
+                    'subtotal' => 0,
+                    'discount' => $discount,
                     'total_amount' => 0,
                     'profit_amount' => 0,
                     'user_id' => auth()->id() ?? 1,
@@ -135,26 +139,51 @@ class SaleController extends Controller
                     'notes' => $request->input('notes')
                 ]);
 
-                $grandTotal = 0;
+                $subtotal = 0;
+                $totalPurchasePrice = 0;
                 $totalProfit = 0;
 
-                // 3. Loop Item: Potong Stok & Simpan ke Tabel Anak (SaleDetail)
+                // Hitung total subtotal dulu untuk proporsi diskon
                 foreach ($request->items as $item) {
                     $product = \App\Models\Product::lockForUpdate()->findOrFail($item['product_id']);
-                    
                     if ($product->stock < $item['quantity']) {
                         throw new \Exception("Stok {$product->brand} tidak mencukupi! Sisa: {$product->stock}");
                     }
+                    $subtotal += ($product->selling_price * $item['quantity']);
+                    $totalPurchasePrice += ($product->purchase_price * $item['quantity']);
+                }
 
-                    // Verifikasi SN telah dihapus agar lebih fleksibel
+                $grandTotal = $subtotal - $discount;
 
-                    $subtotal = $product->selling_price * $item['quantity'];
-                    $profit = ($product->selling_price - $product->purchase_price) * $item['quantity']; 
+                // Validasi Margin: Grand Total tidak boleh lebih kecil dari Harga Modal
+                if ($grandTotal < $totalPurchasePrice) {
+                    throw new \Exception("Diskon terlalu besar! Total Akhir (Rp " . number_format($grandTotal, 0, ',', '.') . ") lebih rendah dari Total Modal (Rp " . number_format($totalPurchasePrice, 0, ',', '.') . ").");
+                }
+
+                $discountRemaining = $discount;
+                $itemsCount = count($request->items);
+                $loopIndex = 0;
+
+                // 3. Loop Item: Potong Stok & Simpan ke Tabel Anak (SaleDetail)
+                foreach ($request->items as $item) {
+                    $loopIndex++;
+                    $product = \App\Models\Product::findOrFail($item['product_id']);
                     
-                    $grandTotal += $subtotal;
+                    $itemSubtotal = $product->selling_price * $item['quantity'];
+                    
+                    // Proporsi diskon untuk item ini
+                    if ($loopIndex === $itemsCount) {
+                        $itemDiscount = $discountRemaining; // Sisa diskon untuk item terakhir (menghindari selisih pembulatan)
+                    } else {
+                        $itemDiscount = $subtotal > 0 ? (int) round(($itemSubtotal / $subtotal) * $discount) : 0;
+                        $discountRemaining -= $itemDiscount;
+                    }
+
+                    // Profit = (Harga Jual - Harga Beli) * Qty - Diskon Item
+                    $profit = (($product->selling_price - $product->purchase_price) * $item['quantity']) - $itemDiscount; 
                     $totalProfit += $profit;
 
-                    // Simpan Rincian ke SaleDetail (NAMA KOLOM SUDAH DISESUAIKAN)
+                    // Simpan Rincian ke SaleDetail
                     \App\Models\SaleDetail::create([
                         'sale_id' => $sale->id,
                         'product_id' => $product->id,
@@ -176,6 +205,7 @@ class SaleController extends Controller
 
                 // 4. Update Faktur Induk dengan Total Harga & Laba yang sebenarnya
                 $sale->update([
+                    'subtotal' => $subtotal,
                     'total_amount' => $grandTotal,
                     'profit_amount' => $totalProfit
                 ]);

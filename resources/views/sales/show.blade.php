@@ -124,11 +124,11 @@
                                 <div class="font-bold text-sm text-slate-900">{{ $sale->customer->name ?? 'Pelanggan Umum' }}</div>
                                 
                                 @if($sale->customer && $sale->customer->phone)
-                                <div><strong class="text-slate-800">Telp:</strong> {{ $sale->customer->phone }}</div>
+                                <div class="no-print"><strong class="text-slate-800">Telp:</strong> {{ $sale->customer->phone }}</div>
                                 @endif
                                 
                                 @if($sale->customer && $sale->customer->email)
-                                <div><strong class="text-slate-800">Email:</strong> {{ $sale->customer->email }}</div>
+                                <div class="no-print"><strong class="text-slate-800">Email:</strong> {{ $sale->customer->email }}</div>
                                 @endif
                                 
                                 @if($sale->customer && $sale->customer->address)
@@ -143,40 +143,34 @@
                         <!-- Invoice Metadata -->
                         <div class="bg-slate-50 p-3 rounded border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1.5 uppercase text-[10px] tracking-widest border-b border-slate-200 pb-1">Detail Faktur</h3>
-                            <div class="text-xs text-slate-700 space-y-1.5">
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
-                                    <span class="font-medium">No. Faktur:</span>
-                                    <span class="font-bold text-slate-900">{{ $sale->invoice_no ?? str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
-                                    <span class="font-medium">Tanggal:</span>
-                                    <span class="flex items-center gap-1.5">
-                                        <span class="text-slate-900">{{ $sale->transaction_date->format('d M Y, H:i') }}</span>
-                                        @role('Admin')
-                                        <button type="button" onclick="document.getElementById('modal-edit-date').classList.remove('hidden')"
-                                            class="no-print inline-flex items-center px-1.5 py-0.5 bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded text-[9px] font-bold transition-colors"
-                                            title="Edit Tanggal Transaksi">
-                                            ✏️ Edit
-                                        </button>
-                                        @endrole
-                                    </span>
-                                </div>
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
-                                    <span class="font-medium">Sales:</span>
-                                    <span class="text-slate-900">{{ $sale->user->name }}</span>
-                                </div>
-                                <div class="flex justify-between items-center pt-0.5">
-                                    <span class="font-medium">Status:</span>
-                                    <div class="flex gap-1">
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->payment_status === 'success' ? 'bg-green-100 text-green-800 border-green-200' : ($sale->payment_status === 'failed' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200') }} border">
-                                            {{ strtoupper($sale->payment_status === 'success' ? 'LUNAS' : ($sale->payment_status === 'failed' ? 'BATAL' : 'PENDING')) }}
-                                        </span>
-                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->order_status === 'selesai' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : ($sale->order_status === 'batal' ? 'bg-red-100 text-red-800 border-red-200' : ($sale->order_status === 'diproses' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-orange-100 text-orange-800 border-orange-200')) }} border">
-                                            {{ strtoupper(str_replace('_', ' ', $sale->order_status)) }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="w-full text-xs text-slate-700">
+                                <tbody>
+                                    <tr>
+                                        <td class="py-1 border-b border-slate-200/60 w-32 font-medium">No. Faktur</td>
+                                        <td class="py-1 border-b border-slate-200/60 w-4 text-center">:</td>
+                                        <td class="py-1 border-b border-slate-200/60 text-right font-bold text-slate-900">{{ $sale->invoice_no ?? str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1 border-b border-slate-200/60 font-medium">Tanggal</td>
+                                        <td class="py-1 border-b border-slate-200/60 text-center">:</td>
+                                        <td class="py-1 border-b border-slate-200/60 text-right text-slate-900">{{ $sale->transaction_date->format('d M Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1 border-b border-slate-200/60 font-medium">Metode Pembayaran</td>
+                                        <td class="py-1 border-b border-slate-200/60 text-center">:</td>
+                                        <td class="py-1 border-b border-slate-200/60 text-right text-slate-900">{{ $sale->payment_method === 'qris' ? 'QRIS' : ucfirst($sale->payment_method ?? 'Cash') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-1 pt-2 font-medium">Status Pembayaran</td>
+                                        <td class="py-1 pt-2 text-center">:</td>
+                                        <td class="py-1 pt-2 text-right">
+                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->payment_status === 'success' ? 'bg-green-100 text-green-800 border-green-200' : ($sale->payment_status === 'failed' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200') }} border">
+                                                {{ strtoupper($sale->payment_status === 'success' ? 'LUNAS' : ($sale->payment_status === 'failed' ? 'BATAL' : 'PENDING')) }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -227,6 +221,20 @@
                                 </tr>
                                 @endforeach
                                 <tr style="background-color: #f3f4f6;">
+                                    <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 600; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">SUBTOTAL</td>
+                                    <td style="padding: 6px 8px; text-align: right; font-weight: 600; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">
+                                        Rp {{ number_format($sale->subtotal ?? $sale->total_amount, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                @if($sale->discount > 0)
+                                <tr style="background-color: #ffffff;">
+                                    <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 400; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">Diskon / Potongan</td>
+                                    <td style="padding: 6px 8px; text-align: right; font-weight: 400; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">
+                                        -Rp{{ number_format($sale->discount, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                @endif
+                                <tr style="background-color: #f3f4f6;">
                                     <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">TOTAL BAYAR</td>
                                     <td style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">
                                         Rp {{ number_format($sale->total_amount, 0, ',', '.') }}
@@ -237,16 +245,18 @@
                     </div>
 
                     <!-- Footer Section -->
-                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end">
-                        <div class="footer w-2/3">
+                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end gap-2">
+                        <div class="footer w-1/2">
                             <h4 class="font-semibold text-gray-900 text-[10px] mb-0.5">Ketentuan Garansi</h4>
                             <div class="text-gray-600 text-[9px]" style="line-height: 1.2;">
-                                <div>1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
-                                <div>2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
+                                <div>1. Garansi 2 mgg hardware sejak pembelian. Segel utuh wajib.</div>
+                                <div>2. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.</div>
+                                <div>3. Batal jika cacat fisik (jatuh/kena air/modifikasi).</div>
                             </div>
                         </div>
-                        <div class="w-1/3 text-right text-gray-700 font-medium text-[9px] italic">
-                            Terima kasih telah berbelanja di LKtech!
+                        <div class="w-1/2 text-right text-gray-700 font-medium text-[9px] flex flex-col justify-end">
+                            <span class="italic mb-0.5">Terima kasih telah berbelanja di LKtech!</span>
+                            <span class="font-bold text-gray-800" style="line-height: 1.2;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</span>
                         </div>
                     </div>
 

@@ -128,12 +128,6 @@
         <div class="info-box">
             <div class="info-box-title">Ditagihkan Kepada</div>
             <div class="customer-name">{{ $sale->customer->name ?? 'Pelanggan Umum' }}</div>
-            @if($sale->customer && $sale->customer->phone)
-            <div class="customer-detail"><strong>Telp:</strong> {{ $sale->customer->phone }}</div>
-            @endif
-            @if($sale->customer && $sale->customer->email)
-            <div class="customer-detail"><strong>Email:</strong> {{ $sale->customer->email }}</div>
-            @endif
             @if($sale->customer && $sale->customer->address)
             <div class="customer-detail" style="margin-top:4px;">
                 <strong>Alamat:</strong><br>{{ $sale->customer->address }}
@@ -144,31 +138,33 @@
         {{-- Detail Faktur --}}
         <div class="info-box">
             <div class="info-box-title">Detail Faktur</div>
-            <div class="info-row">
-                <span class="lbl">No. Faktur:</span>
-                <span class="val">{{ str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</span>
-            </div>
-            <div class="info-row">
-                <span class="lbl">Tanggal:</span>
-                <span class="val">{{ \Carbon\Carbon::parse($sale->transaction_date)->format('d M Y, H:i') }}</span>
-            </div>
-            <div class="info-row">
-                <span class="lbl">Sales:</span>
-                <span class="val">{{ $sale->user->name ?? '-' }}</span>
-            </div>
-            <div class="info-row">
-                <span class="lbl">Status:</span>
-                <span>
-                    @php $ps = $sale->payment_status; $os = $sale->order_status; @endphp
-                    <span class="badge {{ $ps==='success'?'badge-success':($ps==='failed'?'badge-failed':'badge-pending') }}">
-                        {{ strtoupper($ps==='success'?'LUNAS':($ps==='failed'?'BATAL':'PENDING')) }}
-                    </span>
-                    &nbsp;
-                    <span class="badge {{ $os==='selesai'?'badge-selesai':($os==='batal'?'badge-batal':($os==='diproses'?'badge-diproses':'badge-menunggu')) }}">
-                        {{ strtoupper(str_replace('_',' ',$os)) }}
-                    </span>
-                </span>
-            </div>
+            <table style="width:100%; border-collapse:collapse; font-size:9pt; line-height:1.4;">
+                <tr>
+                    <td style="width:110px; font-weight:600; padding:2px 0;">No. Faktur</td>
+                    <td style="width:15px; text-align:center;">:</td>
+                    <td style="text-align:right; font-weight:700;">{{ str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; padding:2px 0;">Tanggal</td>
+                    <td style="text-align:center;">:</td>
+                    <td style="text-align:right;">{{ \Carbon\Carbon::parse($sale->transaction_date)->format('d M Y') }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; padding:2px 0;">Metode Pembayaran</td>
+                    <td style="text-align:center;">:</td>
+                    <td style="text-align:right;">{{ $sale->payment_method === 'qris' ? 'QRIS' : ucfirst($sale->payment_method ?? 'Cash') }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; padding:2px 0;">Status Pembayaran</td>
+                    <td style="text-align:center;">:</td>
+                    <td style="text-align:right;">
+                        @php $ps = $sale->payment_status; @endphp
+                        <span class="badge {{ $ps==='success'?'badge-success':($ps==='failed'?'badge-failed':'badge-pending') }}">
+                            {{ strtoupper($ps==='success'?'LUNAS':($ps==='failed'?'BATAL':'PENDING')) }}
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -216,6 +212,16 @@
             </tr>
             @endforeach
             <tr class="total-tr">
+                <td colspan="2" style="text-align:right; border-bottom:1px solid #eee;">SUBTOTAL</td>
+                <td style="text-align:right; border-bottom:1px solid #eee;">Rp {{ number_format($sale->subtotal ?? $sale->total_amount, 0, ',', '.') }}</td>
+            </tr>
+            @if($sale->discount > 0)
+            <tr class="total-tr">
+                <td colspan="2" style="text-align:right; border-bottom:1px solid #eee; font-weight:normal; color:#4b5563;">Diskon / Potongan</td>
+                <td style="text-align:right; border-bottom:1px solid #eee; font-weight:normal; color:#4b5563;">-Rp{{ number_format($sale->discount, 0, ',', '.') }}</td>
+            </tr>
+            @endif
+            <tr class="total-tr">
                 <td colspan="2" style="text-align:right;">TOTAL BAYAR</td>
                 <td style="text-align:right;">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
             </tr>
@@ -230,8 +236,9 @@
             <div class="warranty-item">2. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.</div>
             <div class="warranty-item">3. Batal jika cacat fisik (jatuh/kena air/modifikasi).</div>
         </div>
-        <div class="thankyou" style="width:33%;">
-            Terima kasih telah berbelanja di LKtech!
+        <div class="thankyou" style="width:33%; display: flex; flex-direction: column; justify-content: flex-end; text-align: right;">
+            <div style="font-style: italic; margin-bottom: 4px;">Terima kasih telah berbelanja di LKtech!</div>
+            <div style="font-weight: bold; color: #1f2937; line-height: 1.2;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</div>
         </div>
     </div>
 
