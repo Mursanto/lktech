@@ -55,7 +55,7 @@
                 <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('home') ? 'text-brand-600' : '' }}">Beranda</a>
                 <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
                 <div class="relative group flex items-center h-full" x-data="{ open: false, mitraOpen: false }" @mouseleave="open = false; mitraOpen = false">
-                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') || request()->routeIs('service-pc') || request()->routeIs('sewa-laptop') ? 'text-brand-600' : '' }}">
+                    <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') || request()->routeIs('service-pc') || request()->routeIs('sewa-laptop') || request()->routeIs('limbah-elektronik') ? 'text-brand-600' : '' }}">
                         Layanan <i class='bx bx-chevron-down text-lg'></i>
                     </button>
                     <div x-show="open" x-transition.opacity class="absolute top-full left-0 pt-2 w-60 z-50" style="display: none;">
@@ -105,6 +105,9 @@
                                     </a>
                                     <a href="{{ route('martabak-jawara') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                         Martabak Jawara
+                                    </a>
+                                    <a href="{{ route('limbah-elektronik') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                        Limbah Elektronik (Bintang)
                                     </a>
                                 </div>
                             </div>
@@ -234,7 +237,7 @@
 
             <!-- Layanan Mitra — accordion -->
             @php
-                $isMitraActive = request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara');
+                $isMitraActive = request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') || request()->routeIs('limbah-elektronik');
             @endphp
             <div x-data="{ mitraMobileOpen: {{ $isMitraActive ? 'true' : 'false' }} }" class="border-b border-gray-100">
                 <button @click="mitraMobileOpen = !mitraMobileOpen"
@@ -258,8 +261,11 @@
                     <a href="{{ route('jasa-furniture') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('jasa-furniture') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                         Jasa Furniture
                     </a>
-                    <a href="{{ route('martabak-jawara') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md {{ request()->routeIs('martabak-jawara') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                    <a href="{{ route('martabak-jawara') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('martabak-jawara') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
                         Martabak Jawara
+                    </a>
+                    <a href="{{ route('limbah-elektronik') }}" class="block w-full px-4 py-3 text-[14px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('limbah-elektronik') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                        Limbah Elektronik (Bintang)
                     </a>
                 </div>
             </div>

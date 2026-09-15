@@ -66,6 +66,8 @@ Route::get('/jasa-website', [PageController::class, 'jasaWebsite'])->name('jasa-
 Route::get('/wifi-voucher', [PageController::class, 'wifiVoucher'])->name('wifi-voucher');
 Route::view('/jasa-furniture', 'pages.jasa-furniture')->name('jasa-furniture');
 Route::view('/martabak-jawara', 'pages.martabak-jawara')->name('martabak-jawara');
+Route::view('/layanan/limbah-elektronik', 'pages.limbah-elektronik')->name('limbah-elektronik');
+Route::redirect('/bintang-scrap', '/layanan/limbah-elektronik', 301);
 Route::view('/service-pc', 'pages.service-pc')->name('service-pc');
 Route::view('/sewa-laptop', 'pages.sewa-laptop')->name('sewa-laptop');
 
