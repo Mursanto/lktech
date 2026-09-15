@@ -12,6 +12,9 @@
     
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Fancybox v5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5/dist/fancybox/fancybox.css"/>
     
     <!-- Tailwind CSS & Alpine.js -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,19 +47,40 @@
         .prose p { margin-bottom: 1em; color: #4b5563; line-height: 1.6; }
         .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
         .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
-        
-        /* Interactive Image Zoom */
+
+        /* ─── Main Image Container ─── */
         .zoom-container {
             position: relative;
             overflow: hidden;
             border-radius: 0.75rem;
-            cursor: zoom-in;
+            cursor: zoom-in;          /* tetap zoom-in cursor agar user tahu bisa diklik */
         }
+        /* Hilangkan hover-scale lama; Fancybox akan handle zoom fullscreen */
         .zoom-image {
             transition: transform 0.3s ease;
         }
-        .zoom-container:hover .zoom-image {
-            transform: scale(1.5);
+
+        /* Gentle brightness lift on hover → hint that image is clickable */
+        .fancybox-main-link:hover .zoom-image {
+            transform: scale(1.03);
+            filter: brightness(1.04);
+        }
+
+        /* ─── Fancybox Overrides ─── */
+        /* Thumbnail strip di bawah Fancybox */
+        .fancybox__thumbs .carousel__slide .f-thumbs__slide__button {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .fancybox__thumbs .carousel__slide.is-selected .f-thumbs__slide__button {
+            border-color: #3b82f6;
+        }
+
+        /* Pastikan container gambar tidak overflow ke bawah thumbnail lokal */
+        .gallery-main-wrap {
+            position: relative;
         }
     </style>
 </head>
@@ -112,22 +136,44 @@
                 <div class="sticky top-24">
 
                     <!-- ─── Main Image + Prev/Next Arrows ─── -->
-                    <div class="relative group">
+                    <div class="relative group gallery-main-wrap">
 
-                        <!-- Main Image -->
-                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-3 rounded-xl"
-                             @mousemove="updateZoom"
-                             @mouseenter="zoomActive = true"
-                             @mouseleave="zoomActive = false">
-                            <img :src="activeImage"
-                                 alt="{{ $product->brand }} {{ $product->model_series }}"
-                                 class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white transition-opacity duration-300"
-                                 :style="zoomActive ? `transform-origin: ${zoomX}% ${zoomY}%` : 'transform-origin: center center'"
-                                 x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
+                        {{-- ── Fancybox Hidden Gallery Links (data source) ── --}}
+                        {{-- Semua link gambar tersembunyi ini dipakai Fancybox sebagai sumber galeri --}}
+                        <div id="fancybox-gallery-source" class="hidden">
+                            @foreach($product->all_images as $idx => $img)
+                                <a href="{{ $img }}"
+                                   data-fancybox="product-gallery"
+                                   data-caption="{{ $product->brand }} {{ $product->model_series }} &mdash; Foto {{ $idx + 1 }} / {{ count($product->all_images) }}"
+                                   id="fancybox-item-{{ $idx }}"
+                                   aria-label="Buka foto {{ $idx + 1 }} fullscreen"
+                                ></a>
+                            @endforeach
                         </div>
 
-                        <!-- PREV Arrow -->
-                        <button @click="prev()"
+                        <!-- Main Image — klik buka Fancybox mulai dari foto aktif -->
+                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-3 rounded-xl fancybox-main-link"
+                             @click="document.getElementById('fancybox-item-' + currentIndex).click()"
+                             @mouseenter="zoomActive = true"
+                             @mouseleave="zoomActive = false"
+                             title="Klik untuk memperbesar foto"
+                             role="button"
+                             tabindex="0"
+                             @keydown.enter="document.getElementById('fancybox-item-' + currentIndex).click()"
+                             aria-label="Klik untuk membuka galeri foto fullscreen">
+                            <img :src="activeImage"
+                                 alt="{{ $product->brand }} {{ $product->model_series }}"
+                                 class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white transition-all duration-300"
+                                 x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
+
+                            {{-- Ikon zoom hint di sudut kanan bawah gambar --}}
+                            <span class="absolute bottom-3 right-3 bg-black/40 text-white rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                                <i class="bx bx-expand-alt text-sm"></i>
+                            </span>
+                        </div>
+
+                        <!-- PREV Arrow (navigasi Alpine — tidak membuka lightbox) -->
+                        <button @click.stop="prev()"
                                 x-show="images.length > 1"
                                 class="absolute left-2 top-1/2 -translate-y-1/2 z-10
                                        w-9 h-9 flex items-center justify-center
@@ -142,8 +188,8 @@
                             <i class="bx bx-chevron-left text-xl"></i>
                         </button>
 
-                        <!-- NEXT Arrow -->
-                        <button @click="next()"
+                        <!-- NEXT Arrow (navigasi Alpine — tidak membuka lightbox) -->
+                        <button @click.stop="next()"
                                 x-show="images.length > 1"
                                 class="absolute right-2 top-1/2 -translate-y-1/2 z-10
                                        w-9 h-9 flex items-center justify-center
@@ -167,12 +213,13 @@
                     </div>
 
                     <!-- ─── Thumbnails Row ─── -->
+                    {{-- Klik thumbnail: navigasi Alpine DAN langsung buka Fancybox di foto itu --}}
                     <div class="flex gap-2 overflow-x-auto pb-1 pt-1 scrollbar-hide">
                         @foreach($product->all_images as $idx => $img)
-                            <button @click="goTo({{ $idx }})"
-                                    class="relative w-16 h-16 xl:w-[70px] xl:h-[70px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white"
+                            <button @click.stop="goTo({{ $idx }}); document.getElementById('fancybox-item-{{ $idx }}').click()"
+                                    class="relative w-16 h-16 xl:w-[70px] xl:h-[70px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white cursor-zoom-in"
                                     :class="currentIndex === {{ $idx }} ? 'border-brand-500 ring-2 ring-brand-200 scale-105' : 'border-gray-200 hover:border-brand-300'"
-                                    title="Foto {{ $idx + 1 }}">
+                                    title="Buka foto {{ $idx + 1 }} fullscreen">
                                 <img src="{{ $img }}"
                                      class="absolute inset-0 w-full h-full object-contain p-1"
                                      x-on:error="$event.target.src = 'https://placehold.co/80x80/f3f4f6/9ca3af?text=?'">
@@ -490,6 +537,60 @@
 
     <!-- Footer -->
     <x-footer />
-    
+
+    <!-- ─────────────────────────────────────────────
+         Fancybox v5 JS + Inisialisasi
+    ───────────────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Fancybox.bind('[data-fancybox="product-gallery"]', {
+                // ── Navigasi & Animasi ──
+                animated: true,
+                showClass: 'f-fadeIn',
+                hideClass: 'f-fadeOut',
+
+                // ── Thumbnail Strip di bawah ──
+                Thumbs: {
+                    type: 'classic',   // tampilkan thumbnail strip
+                },
+
+                // ── Toolbar (tombol zoom, fullscreen, download, tutup) ──
+                Toolbar: {
+                    display: {
+                        left  : ['infobar'],
+                        middle: ['zoomIn', 'zoomOut', 'toggle1to1', 'rotateCCW', 'rotateCW', 'flipX', 'flipY'],
+                        right : ['slideshow', 'thumbs', 'close'],
+                    },
+                },
+
+                // ── Zoom Plugin ──
+                Images: {
+                    zoom: true,
+                },
+
+                // ── Caption ──
+                caption: function (fancybox, slide) {
+                    return slide.el ? slide.el.dataset.caption : '';
+                },
+
+                // ── Sinkronisasi: saat Fancybox navigasi, update Alpine slider ──
+                on: {
+                    'Carousel.change': (fancybox, carousel) => {
+                        // Cari Alpine component di parent wrapper
+                        const mainEl = document.querySelector('[x-data]');
+                        if (mainEl && mainEl._x_dataStack) {
+                            // Alpine v3: ambil data via $data
+                            const alpineData = Alpine.$data ? Alpine.$data(mainEl) : null;
+                            if (alpineData && typeof alpineData.goTo === 'function') {
+                                alpineData.goTo(carousel.page);
+                            }
+                        }
+                    }
+                },
+            });
+        });
+    </script>
+
 </body>
 </html>
