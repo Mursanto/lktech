@@ -226,8 +226,9 @@
     <div class="inv-footer">
         <div style="width:66%">
             <div class="warranty-title">Ketentuan Garansi</div>
-            <div class="warranty-item">1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
-            <div class="warranty-item">2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
+            <div class="warranty-item">1. Garansi 2 mgg hardware sejak pembelian. Segel utuh wajib.</div>
+            <div class="warranty-item">2. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.</div>
+            <div class="warranty-item">3. Batal jika cacat fisik (jatuh/kena air/modifikasi).</div>
         </div>
         <div class="thankyou" style="width:33%;">
             Terima kasih telah berbelanja di LKtech!
