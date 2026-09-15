@@ -131,7 +131,7 @@
             </div>
 
             <!-- Auth Navigation (Desktop) -->
-            <div class="hidden md:flex flex-shrink-0 items-center gap-3">
+            <div class="hidden md:flex flex-shrink-0 items-center gap-2">
                 <!-- Riwayat Pesanan Link -->
                 <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
@@ -144,7 +144,12 @@
                     @endif
                 </a>
 
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-2 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+                <!-- FAQ Link -->
+                <a href="{{ route('faq') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors {{ request()->routeIs('faq') ? 'text-brand-600' : '' }}" title="FAQ">
+                    <i class='bx bx-help-circle text-2xl'></i>
+                </a>
+
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>
@@ -180,6 +185,11 @@
                     @elseif($hasOrderHistory)
                         <span class="absolute top-0 right-0 inline-flex items-center justify-center w-[10px] h-[10px] transform translate-x-0 -translate-y-1/4 bg-gray-400 border border-white rounded-circle rounded-full"></span>
                     @endif
+                </a>
+
+                <!-- FAQ Link (Mobile) -->
+                <a href="{{ route('faq') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors {{ request()->routeIs('faq') ? 'text-brand-600' : '' }}" title="FAQ">
+                    <i class='bx bx-help-circle text-2xl'></i>
                 </a>
 
                 <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
