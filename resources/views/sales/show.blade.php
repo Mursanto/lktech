@@ -223,17 +223,15 @@
                                 <tr style="background-color: #f3f4f6;">
                                     <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 600; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">SUBTOTAL</td>
                                     <td style="padding: 6px 8px; text-align: right; font-weight: 600; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">
-                                        Rp {{ number_format($sale->subtotal ?? $sale->total_amount, 0, ',', '.') }}
+                                        Rp {{ number_format($sale->subtotal > 0 ? $sale->subtotal : $sale->total_amount, 0, ',', '.') }}
                                     </td>
                                 </tr>
-                                @if($sale->discount > 0)
                                 <tr style="background-color: #ffffff;">
                                     <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 400; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">Diskon / Potongan</td>
                                     <td style="padding: 6px 8px; text-align: right; font-weight: 400; font-size: 8pt; color: #4b5563; border-bottom: 1px solid #e5e7eb;">
-                                        -Rp{{ number_format($sale->discount, 0, ',', '.') }}
+                                        -Rp{{ number_format($sale->discount ?? 0, 0, ',', '.') }}
                                     </td>
                                 </tr>
-                                @endif
                                 <tr style="background-color: #f3f4f6;">
                                     <td colspan="2" style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">TOTAL BAYAR</td>
                                     <td style="padding: 6px 8px; text-align: right; font-weight: 700; font-size: 9pt; color: #111827; border-bottom: 1px solid #e5e7eb;">

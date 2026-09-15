@@ -213,14 +213,12 @@
             @endforeach
             <tr class="total-tr">
                 <td colspan="2" style="text-align:right; border-bottom:1px solid #eee;">SUBTOTAL</td>
-                <td style="text-align:right; border-bottom:1px solid #eee;">Rp {{ number_format($sale->subtotal ?? $sale->total_amount, 0, ',', '.') }}</td>
+                <td style="text-align:right; border-bottom:1px solid #eee;">Rp {{ number_format($sale->subtotal > 0 ? $sale->subtotal : $sale->total_amount, 0, ',', '.') }}</td>
             </tr>
-            @if($sale->discount > 0)
             <tr class="total-tr">
                 <td colspan="2" style="text-align:right; border-bottom:1px solid #eee; font-weight:normal; color:#4b5563;">Diskon / Potongan</td>
-                <td style="text-align:right; border-bottom:1px solid #eee; font-weight:normal; color:#4b5563;">-Rp{{ number_format($sale->discount, 0, ',', '.') }}</td>
+                <td style="text-align:right; border-bottom:1px solid #eee; font-weight:normal; color:#4b5563;">-Rp{{ number_format($sale->discount ?? 0, 0, ',', '.') }}</td>
             </tr>
-            @endif
             <tr class="total-tr">
                 <td colspan="2" style="text-align:right;">TOTAL BAYAR</td>
                 <td style="text-align:right;">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
