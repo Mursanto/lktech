@@ -30,8 +30,8 @@
 
             <!-- Kolom 2: Informasi Kontak -->
             <div>
-                <h4 class="font-bold text-gray-800 mb-2 md:mb-4 font-montserrat h-6 flex items-center max-md:text-[1.1rem]">Hubungi Kami</h4>
-                <ul class="flex flex-col gap-1.5 md:gap-3 text-sm max-md:text-[0.825rem] text-gray-600 max-md:leading-[1.3]">
+                <h4 class="font-bold text-gray-800 mb-1 md:mb-4 font-montserrat h-6 flex items-center max-md:text-[1.1rem]">Hubungi Kami</h4>
+                <ul class="flex flex-col gap-0.5 md:gap-3 text-sm max-md:text-[0.825rem] text-gray-600 max-md:leading-[1.3]">
                     <li class="flex items-start gap-2">
                         <i class='bx bx-map text-lg max-md:text-[0.95rem] text-brand-500 mt-0.5 flex-shrink-0'></i>
                         <span class="leading-tight">{!! $settings->alamat ?? 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168' !!}</span>
