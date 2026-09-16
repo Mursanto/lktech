@@ -42,6 +42,7 @@
         }
     </script>
     <style>
+        [x-cloak] { display: none !important; }
         /* Prose styles for Quill output */
         .prose h1, .prose h2, .prose h3 { font-weight: 700; color: #1f2937; margin-top: 1.5em; margin-bottom: 0.5em; }
         .prose p { margin-bottom: 1em; color: #4b5563; line-height: 1.6; }
