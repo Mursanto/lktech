@@ -158,7 +158,7 @@
           }
 
           .hero-title {
-            font-size: 1.18rem !important;
+            font-size: 0.95rem !important;
             line-height: 1.25 !important;
             margin-bottom: 8px !important;
           }
