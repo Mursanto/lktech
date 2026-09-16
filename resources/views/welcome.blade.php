@@ -164,8 +164,8 @@
           }
 
           .hero-description {
-            font-size: 0.78rem !important;
-            line-height: 1.35 !important;
+            font-size: 0.60rem !important;
+            line-height: 1.25 !important;
             margin-bottom: 10px !important;
           }
 
