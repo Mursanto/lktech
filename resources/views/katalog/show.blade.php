@@ -82,6 +82,24 @@
         .gallery-main-wrap {
             position: relative;
         }
+
+        /* ─── Fancybox Mobile Tweaks ─── */
+        @media (max-width: 639px) {
+            .f-button {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .f-button svg {
+                width: 18px !important;
+                height: 18px !important;
+            }
+            .fancybox__toolbar {
+                padding: 4px !important;
+            }
+            .fancybox__toolbar__items {
+                gap: 2px !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
