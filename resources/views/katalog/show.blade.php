@@ -256,7 +256,7 @@
             <!-- 2. Middle: Info & Description Column -->
             <div class="flex-1 min-w-0 pb-12">
                 <!-- Title -->
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-2">
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2">
                     {{ $product->brand }} {{ $product->model_series }}
                 </h1>
                 
@@ -274,9 +274,9 @@
                 </div>
 
                 <!-- Price (Mobile Only, hidden on Desktop since Desktop has right box) -->
-                <div class="lg:hidden mb-6 pb-6 border-b border-gray-200">
-                    <div class="text-3xl font-extrabold text-gray-900">
-                        Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+                <div class="lg:hidden mb-5 pb-5 border-b border-gray-200">
+                    <div class="text-2xl font-extrabold text-gray-900">
+                        <span class="text-base font-bold text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
                     </div>
                 </div>
 
@@ -285,7 +285,7 @@
                     <h2 class="text-lg font-bold text-gray-900 mb-3 border-l-4 border-brand-500 pl-3">Spesifikasi & Detail Produk</h2>
                     
                     @if($product->description)
-                        <div class="prose max-w-none text-sm text-gray-700">
+                        <div class="prose max-w-none text-xs sm:text-sm text-gray-700">
                             {!! $product->description !!}
                         </div>
                     @else
@@ -326,7 +326,7 @@
                     <div class="mb-3 pb-3 border-b border-gray-100">
                         <span class="text-gray-500 text-[10px] font-semibold uppercase tracking-widest block mb-0.5">Harga Unit</span>
                         <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight">
-                            Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+                            <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
                         </div>
                     </div>
 
@@ -390,7 +390,7 @@
                     }">
                         @if($product->stock > 0 && $product->status !== 'Sold')
                             @if($product->status == 'Pre-Order')
-                                <div class="flex flex-col sm:flex-row gap-2">
+                                <div class="flex flex-row gap-2">
                                     <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
@@ -402,7 +402,7 @@
                                     *Estimasi Pre-Order ±7 hari.
                                 </p>
                             @else
-                                <div class="flex flex-col sm:flex-row gap-2">
+                                <div class="flex flex-row gap-2">
                                     <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
