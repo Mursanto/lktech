@@ -154,6 +154,11 @@
                 <!-- Main Sticky Wrapper to keep images in view while scrolling description -->
                 <div class="sticky top-24">
 
+                    <!-- Hint Text -->
+                    <div class="text-xs text-gray-500 mb-2 flex items-center gap-1.5 ml-1 font-medium">
+                        <i class='bx bx-zoom-in text-[15px] text-brand-500'></i> Klik foto untuk melihat detail
+                    </div>
+
                     <!-- ─── Main Image + Prev/Next Arrows ─── -->
                     <div class="relative group gallery-main-wrap">
 
@@ -498,6 +503,7 @@
 
     <!-- Footer -->
     <x-footer />
+    <x-mobile-bottom-nav />
 
     <!-- ─────────────────────────────────────────────
          Fancybox v5 JS + Inisialisasi
