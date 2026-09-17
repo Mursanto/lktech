@@ -96,7 +96,7 @@
                     </button>
                     
                     <!-- Dynamic Page Header -->
-                    <div class="hidden sm:flex items-center w-full truncate">
+                    <div class="flex items-center w-full truncate ml-2 sm:ml-0">
                         @if (isset($header))
                             <div class="w-full flex items-center">
                                 {{ $header }}

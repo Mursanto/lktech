@@ -1,19 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between w-full">
-            <div>
+            <div class="truncate pr-2">
                 @if($investor)
-                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Dashboard Investor — {{ $investor->name }}</h2>
-                <p class="text-natural-500 text-[9px] mt-1">Pantau aset & riwayat bagi hasil Anda secara real-time</p>
+                <h2 class="text-xs sm:text-base font-bold text-natural-900 tracking-tight leading-none truncate">Dashboard Investor — {{ $investor->name }}</h2>
+                <p class="text-natural-500 text-[8px] sm:text-[9px] mt-1 truncate">Pantau aset & riwayat bagi hasil Anda secara real-time</p>
                 @else
-                <h2 class="text-base font-bold text-natural-900 tracking-tight leading-none">Dashboard Investor</h2>
-                <p class="text-natural-500 text-[9px] mt-1">Akun Anda belum terhubung ke profil investor</p>
+                <h2 class="text-xs sm:text-base font-bold text-natural-900 tracking-tight leading-none truncate">Dashboard Investor</h2>
+                <p class="text-natural-500 text-[8px] sm:text-[9px] mt-1 truncate">Akun Anda belum terhubung ke profil investor</p>
                 @endif
             </div>
             @if($investor)
-            <div class="text-right">
-                <p class="text-[10px] text-natural-400 uppercase tracking-wider">Persentase Bagi Hasil</p>
-                <p class="text-xl font-black text-violet-600">{{ number_format($investor->share_percentage, 1) }}%</p>
+            <div class="text-right shrink-0">
+                <p class="text-[7px] sm:text-[10px] text-natural-400 uppercase tracking-wider hidden xs:block">Persentase Bagi Hasil</p>
+                <p class="text-[7px] sm:text-[10px] text-natural-400 uppercase tracking-wider block xs:hidden">Bagi Hasil</p>
+                <p class="text-sm sm:text-xl font-black text-violet-600 leading-tight">{{ number_format($investor->share_percentage, 1) }}%</p>
             </div>
             @endif
         </div>
