@@ -61,9 +61,9 @@
         </form>
 
         {{-- Summary Cards --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
+        <div class="grid grid-cols-2 lg:grid-cols-12 gap-3">
             {{-- Total Investasi --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm lg:col-span-3 flex flex-col justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm col-span-2 sm:col-span-1 lg:col-span-3 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
                     <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Total Investasi Modal</p>
                     <div class="w-6 h-6 bg-blue-50 text-blue-600 rounded flex items-center justify-center shrink-0">
@@ -78,7 +78,7 @@
             </div>
 
             {{-- Pendapatan Bersih --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm flex flex-col lg:col-span-4 justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm flex flex-col col-span-2 sm:col-span-1 lg:col-span-4 justify-between">
                 <div class="flex justify-between items-start mb-1">
                     <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Total Pendapatan</p>
                     <div class="w-6 h-6 bg-emerald-50 text-emerald-600 rounded flex items-center justify-center shrink-0">
@@ -106,7 +106,7 @@
             </div>
 
             {{-- Nilai Sisa Aset --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm lg:col-span-3 flex flex-col justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
                     <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Nilai Sisa Aset</p>
                     <div class="w-6 h-6 bg-amber-50 text-amber-600 rounded flex items-center justify-center shrink-0">
@@ -122,7 +122,7 @@
 
             {{-- ROI --}}
             @php $roi = $totalInvestment > 0 ? ($investorShare / $totalInvestment) * 100 : 0; @endphp
-            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-3 shadow-sm text-white lg:col-span-2 flex flex-col justify-between">
+            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-3 shadow-sm text-white col-span-1 lg:col-span-2 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
                     <p class="text-[9px] font-bold text-violet-200 uppercase tracking-wider">ROI</p>
                     <div class="w-6 h-6 bg-white/20 rounded flex items-center justify-center shrink-0">
@@ -149,17 +149,17 @@
         {{-- Data Area with Tabs --}}
         <div x-data="{ activeTab: 'stok' }">
             {{-- Tabs Navigation --}}
-            <div class="flex items-center gap-4 border-b border-natural-200 mb-4 px-2">
+            <div class="flex items-center gap-2 sm:gap-4 border-b border-natural-200 mb-4 px-1 sm:px-2 overflow-x-auto hide-scrollbar">
                 <button @click="activeTab = 'stok'" 
                         :class="activeTab === 'stok' ? 'border-brand-500 text-brand-700 font-bold' : 'border-transparent text-natural-500 hover:text-natural-700 font-medium'"
-                        class="px-4 py-3 border-b-2 text-sm transition-all focus:outline-none flex items-center gap-2">
-                    <i class='bx bx-box text-lg'></i>
+                        class="px-3 sm:px-4 py-3 border-b-2 text-xs sm:text-sm transition-all focus:outline-none flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                    <i class='bx bx-box text-base sm:text-lg'></i>
                     Stok Tersedia ({{ $currentStockQty }} Unit)
                 </button>
                 <button @click="activeTab = 'riwayat'" 
                         :class="activeTab === 'riwayat' ? 'border-brand-500 text-brand-700 font-bold' : 'border-transparent text-natural-500 hover:text-natural-700 font-medium'"
-                        class="px-4 py-3 border-b-2 text-sm transition-all focus:outline-none flex items-center gap-2">
-                    <i class='bx bx-receipt text-lg'></i>
+                        class="px-3 sm:px-4 py-3 border-b-2 text-xs sm:text-sm transition-all focus:outline-none flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+                    <i class='bx bx-receipt text-base sm:text-lg'></i>
                     Riwayat Terjual ({{ $soldQty }} Unit)
                 </button>
             </div>
