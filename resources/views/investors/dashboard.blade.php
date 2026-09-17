@@ -33,104 +33,106 @@
     <div class="flex flex-col flex-1 space-y-4">
     
         {{-- Control Bar --}}
-        <form method="GET" action="{{ route('investor.dashboard') }}" class="bg-white rounded-2xl border border-natural-100 shadow-sm p-3">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div class="flex flex-wrap items-center gap-3">
-                    <div class="flex items-center gap-2">
-                        <label class="text-[10px] font-bold text-natural-500 uppercase tracking-wider">Dari</label>
-                        <input type="date" name="start_date" value="{{ $startDate }}" class="px-2 py-1.5 border border-natural-200 rounded-lg text-xs focus:border-brand-500 focus:outline-none">
+        <form method="GET" action="{{ route('investor.dashboard') }}" class="bg-white rounded-xl border border-natural-100 shadow-sm p-2.5 sm:p-3">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-3">
+                <div class="grid grid-cols-2 md:flex items-center gap-2 w-full md:w-auto">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Dari</label>
+                        <input type="date" name="start_date" value="{{ $startDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
                     </div>
-                    <div class="flex items-center gap-2">
-                        <label class="text-[10px] font-bold text-natural-500 uppercase tracking-wider">Sampai</label>
-                        <input type="date" name="end_date" value="{{ $endDate }}" class="px-2 py-1.5 border border-natural-200 rounded-lg text-xs focus:border-brand-500 focus:outline-none">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                        <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Sampai</label>
+                        <input type="date" name="end_date" value="{{ $endDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
                     </div>
-                    <button type="submit" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm">
+                </div>
+                
+                <div class="flex items-center justify-end w-full md:w-auto gap-2">
+                    <button type="submit" class="px-3 sm:px-4 py-1.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-[10px] sm:text-xs transition-all shadow-sm flex items-center justify-center">
                         Filter
                     </button>
                     @if($startDate || $endDate)
-                    <a href="{{ route('investor.dashboard') }}" class="px-3 py-1.5 bg-natural-100 hover:bg-natural-200 text-natural-600 font-bold rounded-lg text-xs transition-all">
+                    <a href="{{ route('investor.dashboard') }}" class="px-3 sm:px-4 py-1.5 bg-natural-100 hover:bg-natural-200 text-natural-600 font-bold rounded-lg text-[10px] sm:text-xs transition-all flex items-center justify-center">
                         Reset
                     </a>
                     @endif
+                    <a href="{{ route('investor.dashboard.export', request()->query()) }}" class="px-3 sm:px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-[10px] sm:text-xs transition-all shadow-sm flex items-center justify-center gap-1.5">
+                        <i class='bx bx-spreadsheet'></i> <span class="hidden xs:inline">Download</span> Excel
+                    </a>
                 </div>
-                
-                <a href="{{ route('investor.dashboard.export', request()->query()) }}" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm flex items-center gap-2">
-                    <i class='bx bx-spreadsheet'></i> Download Excel
-                </a>
             </div>
         </form>
 
         {{-- Summary Cards --}}
         <div class="grid grid-cols-2 lg:grid-cols-12 gap-3">
             {{-- Total Investasi --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm col-span-2 sm:col-span-1 lg:col-span-3 flex flex-col justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-2.5 sm:p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Total Investasi Modal</p>
-                    <div class="w-6 h-6 bg-blue-50 text-blue-600 rounded flex items-center justify-center shrink-0">
-                        <i class='bx bx-briefcase text-sm'></i>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-natural-500 uppercase tracking-wider leading-tight pr-1">Total Modal</p>
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-blue-50 text-blue-600 rounded flex items-center justify-center shrink-0">
+                        <i class='bx bx-briefcase text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <div class="flex items-start gap-1">
-                    <span class="text-xs font-bold text-natural-500 mt-0.5">Rp</span>
-                    <span class="text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
+                <div class="flex items-start gap-0.5 sm:gap-1 whitespace-nowrap">
+                    <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
+                    <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-natural-500 font-medium text-[10px] mt-1">Total {{ $totalQty }} Unit Barang</p>
+                <p class="text-natural-500 font-medium text-[9px] sm:text-[10px] mt-1">{{ $totalQty }} Unit Barang</p>
             </div>
 
             {{-- Pendapatan Bersih --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm flex flex-col col-span-2 sm:col-span-1 lg:col-span-4 justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-2.5 sm:p-3 shadow-sm flex flex-col col-span-1 lg:col-span-4 justify-between">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Total Pendapatan</p>
-                    <div class="w-6 h-6 bg-emerald-50 text-emerald-600 rounded flex items-center justify-center shrink-0">
-                        <i class='bx bx-money text-sm'></i>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-natural-500 uppercase tracking-wider leading-tight pr-1">Total Profit</p>
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-emerald-50 text-emerald-600 rounded flex items-center justify-center shrink-0">
+                        <i class='bx bx-money text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <div class="flex items-end justify-between mb-1.5">
-                    <div class="flex items-start gap-1 whitespace-nowrap">
-                        <span class="text-xs font-bold text-natural-500 mt-0.5">Rp</span>
-                        <span class="text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($investorShare, 0, ',', '.') }}</span>
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-1.5">
+                    <div class="flex items-start gap-0.5 sm:gap-1 whitespace-nowrap">
+                        <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
+                        <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($investorShare, 0, ',', '.') }}</span>
                     </div>
-                    <p class="text-natural-500 font-medium text-[10px] text-right">{{ $soldQty }} Unit Terjual</p>
+                    <p class="text-natural-400 font-medium text-[9px] sm:text-[10px] mt-0.5 sm:mt-0 sm:text-right">{{ $soldQty }} Terjual</p>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-1.5 mt-auto">
-                    <div class="bg-amber-50 rounded p-1 border border-amber-100">
-                        <p class="text-[8px] font-bold text-amber-500 uppercase leading-tight mb-0.5">Belum Ditransfer</p>
-                        <p class="text-[10px] font-bold text-amber-700">Rp {{ number_format($totalPendingPayout, 0, ',', '.') }}</p>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-1.5 mt-auto">
+                    <div class="bg-amber-50 rounded p-1 border border-amber-100 flex justify-between xl:block items-center">
+                        <p class="text-[7px] sm:text-[8px] font-bold text-amber-500 uppercase leading-tight xl:mb-0.5">Pending</p>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-amber-700">Rp {{ number_format($totalPendingPayout, 0, ',', '.') }}</p>
                     </div>
-                    <div class="bg-emerald-50 rounded p-1 border border-emerald-100">
-                        <p class="text-[8px] font-bold text-emerald-500 uppercase leading-tight mb-0.5">Sudah Ditransfer</p>
-                        <p class="text-[10px] font-bold text-emerald-700">Rp {{ number_format($totalPaidPayout, 0, ',', '.') }}</p>
+                    <div class="bg-emerald-50 rounded p-1 border border-emerald-100 flex justify-between xl:block items-center">
+                        <p class="text-[7px] sm:text-[8px] font-bold text-emerald-500 uppercase leading-tight xl:mb-0.5">Lunas</p>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-emerald-700">Rp {{ number_format($totalPaidPayout, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
 
             {{-- Nilai Sisa Aset --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between">
+            <div class="bg-white rounded-xl border border-natural-100 p-2.5 sm:p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Nilai Sisa Aset</p>
-                    <div class="w-6 h-6 bg-amber-50 text-amber-600 rounded flex items-center justify-center shrink-0">
-                        <i class='bx bx-box text-sm'></i>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-natural-500 uppercase tracking-wider leading-tight pr-1">Nilai Sisa Aset</p>
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-amber-50 text-amber-600 rounded flex items-center justify-center shrink-0">
+                        <i class='bx bx-box text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <div class="flex items-start gap-1 whitespace-nowrap">
-                    <span class="text-xs font-bold text-natural-500 mt-0.5">Rp</span>
-                    <span class="text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($assetValue, 0, ',', '.') }}</span>
+                <div class="flex items-start gap-0.5 sm:gap-1 whitespace-nowrap">
+                    <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
+                    <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($assetValue, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-natural-500 font-medium text-[10px] mt-1">Sisa {{ $currentStockQty }} Unit Tersedia</p>
+                <p class="text-natural-500 font-medium text-[9px] sm:text-[10px] mt-1">{{ $currentStockQty }} Unit Tersedia</p>
             </div>
 
             {{-- ROI --}}
             @php $roi = $totalInvestment > 0 ? ($investorShare / $totalInvestment) * 100 : 0; @endphp
-            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-3 shadow-sm text-white col-span-1 lg:col-span-2 flex flex-col justify-between">
+            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-2.5 sm:p-3 shadow-sm text-white col-span-1 lg:col-span-2 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[9px] font-bold text-violet-200 uppercase tracking-wider">ROI</p>
-                    <div class="w-6 h-6 bg-white/20 rounded flex items-center justify-center shrink-0">
-                        <i class='bx bx-trending-up text-sm'></i>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-violet-200 uppercase tracking-wider leading-tight pr-1">ROI</p>
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white/20 rounded flex items-center justify-center shrink-0">
+                        <i class='bx bx-trending-up text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <p class="text-lg lg:text-xl font-black whitespace-nowrap">{{ number_format($roi, 2, ',', '.') }}%</p>
-                <p class="text-violet-200 text-[8px] mt-1 font-medium leading-tight opacity-90">(Pendapatan &divide; Modal)</p>
+                <p class="text-[13px] sm:text-lg lg:text-xl font-black whitespace-nowrap">{{ number_format($roi, 2, ',', '.') }}%</p>
+                <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90">(Profit &divide; Modal)</p>
             </div>
         </div>
 
