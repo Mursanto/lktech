@@ -63,74 +63,74 @@
         {{-- Summary Cards --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
             {{-- Total Investasi --}}
-            <div class="bg-white rounded-2xl border border-natural-100 p-5 shadow-sm lg:col-span-3">
-                <div class="flex justify-between items-start mb-2">
+            <div class="bg-white rounded-2xl border border-natural-100 p-4 shadow-sm lg:col-span-3 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-1">
                     <p class="text-[10px] font-bold text-natural-500 uppercase tracking-wider">Total Investasi Modal</p>
-                    <div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center shrink-0">
-                        <i class='bx bx-briefcase text-lg'></i>
+                    <div class="w-7 h-7 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                        <i class='bx bx-briefcase text-base'></i>
                     </div>
                 </div>
                 <div class="flex items-start gap-1">
-                    <span class="text-sm font-bold text-natural-500 mt-1">Rp</span>
-                    <span class="text-xl lg:text-3xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
+                    <span class="text-sm font-bold text-natural-500 mt-0.5">Rp</span>
+                    <span class="text-xl lg:text-2xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
                 </div>
                 <p class="text-natural-500 font-semibold text-[11px] mt-1">Total {{ $totalQty }} Unit Barang</p>
             </div>
 
             {{-- Pendapatan Bersih --}}
-            <div class="bg-white rounded-2xl border border-natural-100 p-5 shadow-sm flex flex-col lg:col-span-4">
-                <div class="flex justify-between items-start mb-2">
+            <div class="bg-white rounded-2xl border border-natural-100 p-4 shadow-sm flex flex-col lg:col-span-4 justify-between">
+                <div class="flex justify-between items-start mb-1">
                     <p class="text-[10px] font-bold text-natural-500 uppercase tracking-wider">Total Pendapatan</p>
-                    <div class="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center shrink-0">
-                        <i class='bx bx-money text-lg'></i>
+                    <div class="w-7 h-7 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center shrink-0">
+                        <i class='bx bx-money text-base'></i>
                     </div>
                 </div>
-                <div class="flex items-end justify-between mb-2">
+                <div class="flex items-end justify-between mb-1.5">
                     <div class="flex items-start gap-1 whitespace-nowrap">
-                        <span class="text-sm font-bold text-natural-500 mt-1">Rp</span>
-                        <span class="text-xl lg:text-3xl font-black text-natural-800 tracking-tight">{{ number_format($investorShare, 0, ',', '.') }}</span>
+                        <span class="text-sm font-bold text-natural-500 mt-0.5">Rp</span>
+                        <span class="text-xl lg:text-2xl font-black text-natural-800 tracking-tight">{{ number_format($investorShare, 0, ',', '.') }}</span>
                     </div>
-                    <p class="text-natural-500 font-semibold text-[11px] mb-1 text-right">{{ $soldQty }} Unit Terjual</p>
+                    <p class="text-natural-500 font-semibold text-[11px] text-right">{{ $soldQty }} Unit Terjual</p>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-2 mt-auto">
-                    <div class="bg-amber-50 rounded-lg p-2 border border-amber-100">
+                <div class="grid grid-cols-2 gap-1.5 mt-auto">
+                    <div class="bg-amber-50 rounded-lg p-1.5 border border-amber-100">
                         <p class="text-[9px] font-bold text-amber-500 uppercase leading-tight mb-0.5">Belum Ditransfer</p>
-                        <p class="text-[11px] font-bold text-amber-700">Rp {{ number_format($totalPendingPayout, 0, ',', '.') }}</p>
+                        <p class="text-[10px] sm:text-[11px] font-bold text-amber-700">Rp {{ number_format($totalPendingPayout, 0, ',', '.') }}</p>
                     </div>
-                    <div class="bg-emerald-50 rounded-lg p-2 border border-emerald-100">
+                    <div class="bg-emerald-50 rounded-lg p-1.5 border border-emerald-100">
                         <p class="text-[9px] font-bold text-emerald-500 uppercase leading-tight mb-0.5">Sudah Ditransfer</p>
-                        <p class="text-[11px] font-bold text-emerald-700">Rp {{ number_format($totalPaidPayout, 0, ',', '.') }}</p>
+                        <p class="text-[10px] sm:text-[11px] font-bold text-emerald-700">Rp {{ number_format($totalPaidPayout, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
 
             {{-- Nilai Sisa Aset --}}
-            <div class="bg-white rounded-2xl border border-natural-100 p-5 shadow-sm lg:col-span-3">
-                <div class="flex justify-between items-start mb-2">
+            <div class="bg-white rounded-2xl border border-natural-100 p-4 shadow-sm lg:col-span-3 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-1">
                     <p class="text-[10px] font-bold text-natural-500 uppercase tracking-wider">Nilai Sisa Aset (Stok)</p>
-                    <div class="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center shrink-0">
-                        <i class='bx bx-box text-lg'></i>
+                    <div class="w-7 h-7 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center shrink-0">
+                        <i class='bx bx-box text-base'></i>
                     </div>
                 </div>
                 <div class="flex items-start gap-1 whitespace-nowrap">
-                    <span class="text-sm font-bold text-natural-500 mt-1">Rp</span>
-                    <span class="text-xl lg:text-3xl font-black text-natural-800 tracking-tight">{{ number_format($assetValue, 0, ',', '.') }}</span>
+                    <span class="text-sm font-bold text-natural-500 mt-0.5">Rp</span>
+                    <span class="text-xl lg:text-2xl font-black text-natural-800 tracking-tight">{{ number_format($assetValue, 0, ',', '.') }}</span>
                 </div>
                 <p class="text-natural-500 font-semibold text-[11px] mt-1">Sisa {{ $currentStockQty }} Unit Tersedia</p>
             </div>
 
             {{-- ROI --}}
             @php $roi = $totalInvestment > 0 ? ($investorShare / $totalInvestment) * 100 : 0; @endphp
-            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-2xl p-5 shadow-sm text-white lg:col-span-2">
-                <div class="flex justify-between items-start mb-2">
+            <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-2xl p-4 shadow-sm text-white lg:col-span-2 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-1">
                     <p class="text-[10px] font-bold text-violet-200 uppercase tracking-wider">ROI</p>
-                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
-                        <i class='bx bx-trending-up text-lg'></i>
+                    <div class="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center shrink-0">
+                        <i class='bx bx-trending-up text-base'></i>
                     </div>
                 </div>
                 <p class="text-xl lg:text-2xl font-black whitespace-nowrap">{{ number_format($roi, 2, ',', '.') }}%</p>
-                <p class="text-violet-200 text-[9px] mt-1.5 font-medium leading-tight opacity-90">(Pendapatan &divide; Total Modal)</p>
+                <p class="text-violet-200 text-[9px] mt-1 font-medium leading-tight opacity-90">(Pendapatan &divide; Total Modal)</p>
             </div>
         </div>
 
