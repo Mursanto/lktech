@@ -134,7 +134,8 @@
             </div>
         </div>
 
-        {{-- Chart Trend Profit Bulanan --}}
+        {{-- Chart Trend Profit Bulanan (Dihilangkan sementara) --}}
+        {{--
         <div class="bg-white rounded-2xl border border-natural-100 shadow-sm py-4 px-5">
             <h3 class="text-sm font-bold text-natural-800 mb-3 flex items-center gap-2">
                 <i class='bx bx-line-chart text-violet-500 text-lg'></i> Trend Bagi Hasil 6 Bulan Terakhir
@@ -143,6 +144,7 @@
                 <canvas id="investorTrendChart"></canvas>
             </div>
         </div>
+        --}}
 
         {{-- Data Area with Tabs --}}
         <div x-data="{ activeTab: 'stok' }">
