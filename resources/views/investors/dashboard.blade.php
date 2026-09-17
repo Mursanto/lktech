@@ -151,26 +151,26 @@
         {{-- Data Area with Tabs --}}
         <div x-data="{ activeTab: 'stok' }">
             {{-- Tabs Navigation --}}
-            <div class="flex items-center gap-2 sm:gap-4 border-b border-natural-200 mb-4 px-1 sm:px-2 overflow-x-auto hide-scrollbar">
+            <div class="flex items-center gap-1 sm:gap-4 border-b border-natural-200 mb-3 px-1 sm:px-2 overflow-x-auto hide-scrollbar">
                 <button @click="activeTab = 'stok'" 
                         :class="activeTab === 'stok' ? 'border-brand-500 text-brand-700 font-bold' : 'border-transparent text-natural-500 hover:text-natural-700 font-medium'"
-                        class="px-3 sm:px-4 py-3 border-b-2 text-xs sm:text-sm transition-all focus:outline-none flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
-                    <i class='bx bx-box text-base sm:text-lg'></i>
+                        class="px-2 sm:px-4 py-2.5 sm:py-3 border-b-2 text-[10px] sm:text-sm transition-all focus:outline-none flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                    <i class='bx bx-box text-sm sm:text-lg'></i>
                     Stok Tersedia ({{ $currentStockQty }} Unit)
                 </button>
                 <button @click="activeTab = 'riwayat'" 
                         :class="activeTab === 'riwayat' ? 'border-brand-500 text-brand-700 font-bold' : 'border-transparent text-natural-500 hover:text-natural-700 font-medium'"
-                        class="px-3 sm:px-4 py-3 border-b-2 text-xs sm:text-sm transition-all focus:outline-none flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
-                    <i class='bx bx-receipt text-base sm:text-lg'></i>
+                        class="px-2 sm:px-4 py-2.5 sm:py-3 border-b-2 text-[10px] sm:text-sm transition-all focus:outline-none flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                    <i class='bx bx-receipt text-sm sm:text-lg'></i>
                     Riwayat Terjual ({{ $soldQty }} Unit)
                 </button>
             </div>
 
             {{-- Tab 1: Stok Produk Aktif --}}
             <div x-show="activeTab === 'stok'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="bg-white rounded-2xl border border-natural-100 shadow-sm overflow-hidden">
-                <div class="px-5 py-4 border-b border-natural-100">
-                    <h3 class="text-sm font-bold text-natural-800">Produk Saya di Inventori LKTech</h3>
-                <p class="text-[10px] text-natural-400 mt-0.5">{{ $activeProducts->count() }} produk tersedia</p>
+                <div class="px-4 sm:px-5 py-3 sm:py-4 border-b border-natural-100">
+                    <h3 class="text-xs sm:text-sm font-bold text-natural-800">Produk Saya di Inventori LKTech</h3>
+                <p class="text-[9px] sm:text-[10px] text-natural-400 mt-0.5">{{ $activeProducts->count() }} produk tersedia</p>
             </div>
             @if($activeProducts->isEmpty())
             <div class="py-8 text-center text-natural-400 text-sm">
@@ -178,37 +178,37 @@
                 <p>Tidak ada produk aktif saat ini</p>
             </div>
             @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs">
+            <div class="overflow-x-auto hide-scrollbar">
+                <table class="w-full text-[10px] sm:text-xs">
                     <thead>
                         <tr class="bg-natural-50 border-b border-natural-100">
-                            <th class="text-left px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Produk</th>
-                            <th class="text-left px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Kategori</th>
-                            <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Stok</th>
-                            <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Harga Modal/Unit</th>
-                            <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Total Modal Sisa</th>
-                            <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Harga Jual/Unit</th>
+                            <th class="text-left px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Produk</th>
+                            <th class="text-left px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Kategori</th>
+                            <th class="text-center px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Stok</th>
+                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Harga Modal/Unit</th>
+                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Total Modal Sisa</th>
+                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Harga Jual/Unit</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50">
                         @foreach($activeProducts as $product)
                         <tr class="hover:bg-natural-50/60 transition-colors">
-                            <td class="px-4 py-3">
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 min-w-[120px]">
                                 <p class="font-bold text-natural-800">{{ $product->brand }} {{ $product->model_series }}</p>
-                                <p class="text-natural-400 text-[10px]">SN: {{ $product->serial_number }}</p>
+                                <p class="text-natural-400 text-[8px] sm:text-[10px]">SN: {{ $product->serial_number }}</p>
                             </td>
-                            <td class="px-4 py-3 text-natural-500">{{ $product->category->name ?? '-' }}</td>
-                            <td class="px-4 py-3 text-center">
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-natural-500">{{ $product->category->name ?? '-' }}</td>
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-center">
                                 <span class="font-bold text-natural-700">{{ $product->stock }}</span>
                             </td>
-                            <td class="px-4 py-3 text-right font-semibold text-natural-600">
-                                Rp {{ number_format($product->purchase_price, 0, ',', '.') }}
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-semibold text-natural-600 whitespace-nowrap">
+                                <span class="text-[9px] mr-0.5 text-natural-400">Rp</span>{{ number_format($product->purchase_price, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-right font-semibold text-amber-600">
-                                Rp {{ number_format(($product->stock ?? 1) * $product->purchase_price, 0, ',', '.') }}
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-semibold text-amber-600 whitespace-nowrap">
+                                <span class="text-[9px] mr-0.5 text-amber-400">Rp</span>{{ number_format(($product->stock ?? 1) * $product->purchase_price, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-right font-bold text-emerald-600">
-                                Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-bold text-emerald-600 whitespace-nowrap">
+                                <span class="text-[9px] mr-0.5 text-emerald-400 font-semibold">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
                             </td>
                         </tr>
                         @endforeach
@@ -220,14 +220,14 @@
 
             {{-- Tab 2: Riwayat Bagi Hasil Transaksi --}}
             <div x-cloak x-show="activeTab === 'riwayat'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="bg-white rounded-2xl border border-natural-100 shadow-sm overflow-hidden">
-                <div class="px-5 py-4 border-b border-natural-100 flex justify-between items-center">
+                <div class="px-4 sm:px-5 py-3 sm:py-4 border-b border-natural-100 flex justify-between items-center">
                 <div>
-                    <h3 class="text-sm font-bold text-natural-800">Riwayat Transaksi & Bagi Hasil</h3>
-                    <p class="text-[10px] text-natural-400 mt-0.5">{{ $details->count() }} transaksi penjualan produk Anda (all time)</p>
+                    <h3 class="text-xs sm:text-sm font-bold text-natural-800">Riwayat Transaksi</h3>
+                    <p class="text-[9px] sm:text-[10px] text-natural-400 mt-0.5">{{ $details->count() }} transaksi penjualan (all time)</p>
                 </div>
                 @if($details->isNotEmpty())
-                <a href="{{ route('investor.dashboard.export') }}" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm hover:shadow-md flex items-center gap-1.5">
-                    <i class='bx bx-spreadsheet'></i> Download Excel
+                <a href="{{ route('investor.dashboard.export') }}" class="px-2 sm:px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-[10px] sm:text-xs transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+                    <i class='bx bx-spreadsheet'></i> <span class="hidden xs:inline">Download</span>
                 </a>
                 @endif
             </div>
@@ -237,39 +237,39 @@
                 <p>Belum ada transaksi penjualan produk Anda</p>
             </div>
             @else
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs">
+            <div class="overflow-x-auto hide-scrollbar">
+                <table class="w-full text-[10px] sm:text-xs">
                     <thead>
                         <tr class="bg-natural-50 border-b border-natural-100">
-                            <th class="text-left px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider">Invoice</th>
-                            <th class="text-left px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider">Produk</th>
-                            <th class="text-center px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider">Qty</th>
-                            <th class="text-right px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">HPP (Modal)</th>
-                            <th class="text-right px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">Harga Jual</th>
-                            <th class="text-right px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">Profit Bersih</th>
-                            <th class="text-right px-3 py-3 text-violet-600 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">Hak Anda ({{ number_format($investor->share_percentage, 1) }}%)</th>
-                            <th class="text-center px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">Status Pencairan</th>
-                            <th class="text-right px-3 py-3 text-natural-500 font-semibold text-[11px] uppercase tracking-wider whitespace-nowrap">Tanggal</th>
+                            <th class="text-left px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Invoice</th>
+                            <th class="text-left px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Produk</th>
+                            <th class="text-center px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Qty</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Modal</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Jual</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Profit</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-violet-600 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Hak ({{ number_format($investor->share_percentage, 1) }}%)</th>
+                            <th class="text-center px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Status</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Tanggal</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-natural-50 text-xs">
+                    <tbody class="divide-y divide-natural-50 text-[10px] sm:text-xs">
                         @foreach($details as $detail)
                         <tr class="hover:bg-natural-50/60 transition-colors">
-                            <td class="px-3 py-3 font-bold text-brand-600 whitespace-nowrap">{{ $detail['invoice'] }}</td>
-                            <td class="px-3 py-3 font-semibold text-natural-700 min-w-[120px]">{{ $detail['product'] }}</td>
-                            <td class="px-3 py-3 text-center text-natural-600">{{ $detail['qty'] }}</td>
-                            <td class="px-3 py-3 text-right whitespace-nowrap"><span class="text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['purchase_price'], 0, ',', '.') }}</td>
-                            <td class="px-3 py-3 text-right whitespace-nowrap"><span class="text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['price'], 0, ',', '.') }}</td>
-                            <td class="px-3 py-3 text-right font-bold text-amber-600 whitespace-nowrap"><span class="text-[10px] font-medium mr-0.5 text-amber-500">Rp</span>{{ number_format($detail['profit'], 0, ',', '.') }}</td>
-                            <td class="px-3 py-3 text-right font-black text-violet-600 whitespace-nowrap"><span class="text-[10px] font-medium mr-0.5 text-violet-500">Rp</span>{{ number_format($detail['investor_share'], 0, ',', '.') }}</td>
-                            <td class="px-3 py-3 text-center whitespace-nowrap">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 font-bold text-brand-600 whitespace-nowrap">{{ $detail['invoice'] }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 font-semibold text-natural-700 min-w-[120px]">{{ $detail['product'] }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-center text-natural-600">{{ $detail['qty'] }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['purchase_price'], 0, ',', '.') }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['price'], 0, ',', '.') }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-bold text-amber-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-amber-500">Rp</span>{{ number_format($detail['profit'], 0, ',', '.') }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-black text-violet-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-violet-500">Rp</span>{{ number_format($detail['investor_share'], 0, ',', '.') }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-center whitespace-nowrap">
                                 @if(isset($detail['payout_status']) && $detail['payout_status'] == 'paid')
-                                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-[10px] font-bold">Sudah Transfer</span>
+                                    <span class="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-emerald-100 text-emerald-700 rounded text-[9px] sm:text-[10px] font-bold">Lunas</span>
                                 @else
-                                    <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded text-[10px] font-bold">Pending</span>
+                                    <span class="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-amber-100 text-amber-700 rounded text-[9px] sm:text-[10px] font-bold">Pending</span>
                                 @endif
                             </td>
-                            <td class="px-3 py-3 text-right text-natural-400 whitespace-nowrap">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right text-natural-400 whitespace-nowrap">
                                 {{ $detail['date'] ? \Carbon\Carbon::parse($detail['date'])->format('d M Y') : '-' }}
                             </td>
                         </tr>
@@ -277,8 +277,8 @@
                     </tbody>
                     <tfoot>
                         <tr class="bg-violet-50 border-t-2 border-violet-200 font-bold">
-                            <td colspan="5" class="px-3 py-3 text-natural-700 font-bold text-xs">Total Hak Bagi Hasil</td>
-                            <td colspan="2" class="px-3 py-3 text-right text-violet-700 font-black text-sm whitespace-nowrap"><span class="text-xs font-semibold mr-0.5 text-violet-500">Rp</span>{{ number_format($investorShare, 0, ',', '.') }}</td>
+                            <td colspan="5" class="px-2 sm:px-3 py-2 sm:py-3 text-natural-700 font-bold text-[10px] sm:text-xs">Total Hak Bagi Hasil</td>
+                            <td colspan="2" class="px-2 sm:px-3 py-2 sm:py-3 text-right text-violet-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-violet-500">Rp</span>{{ number_format($investorShare, 0, ',', '.') }}</td>
                             <td colspan="2"></td>
                         </tr>
                     </tfoot>
