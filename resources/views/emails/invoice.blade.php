@@ -18,7 +18,7 @@
         .items th { background-color: #f3f4f6; padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb; }
         .items td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
         .total-row td { font-weight: bold; font-size: 16px; border-top: 2px solid #e5e7eb; }
-        .total-amount { color: #2563eb; text-align: right; }
+        .total-amount { color: #2563eb; text-align: right; white-space: nowrap; }
         .footer { text-align: center; color: #6b7280; font-size: 14px; margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 20px; }
         .note { background-color: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #92400e; }
     </style>
@@ -73,7 +73,7 @@
                 <tr>
                     <td>{{ $detail->product->brand ?? 'Produk' }} {{ $detail->product->model_series ?? '' }}</td>
                     <td style="text-align: center;">{{ $detail->quantity }}</td>
-                    <td style="text-align: right;">Rp {{ number_format($detail->price_at_transaction * $detail->quantity, 0, ',', '.') }}</td>
+                    <td style="text-align: right; white-space: nowrap;">Rp {{ number_format($detail->price_at_transaction * $detail->quantity, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
                 <tr class="total-row">
