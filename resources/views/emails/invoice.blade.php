@@ -48,7 +48,7 @@
         <table class="details">
             <tr>
                 <th>Order ID</th>
-                <td>{{ $sale->payment_reference_id ?? 'SALE-'.$sale->id }}</td>
+                <td>{{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}</td>
             </tr>
             <tr>
                 <th>Tanggal Pembayaran</th>
