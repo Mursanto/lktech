@@ -35,8 +35,7 @@
 
         .header-logo img {
             max-height: 50px;
-            float: left;
-            margin-right: 15px;
+            display: block;
         }
 
         .company-name {
@@ -225,19 +224,18 @@
         }
         
         .footer-terms {
-            width: 60%;
+            width: 65%;
             vertical-align: bottom;
         }
 
         .footer-greeting {
-            width: 40%;
+            width: 35%;
             text-align: right;
             vertical-align: bottom;
             font-size: 9pt;
             font-style: italic;
             color: #4b5563;
             font-weight: 500;
-            white-space: nowrap;
         }
 
         .terms-title {
@@ -248,7 +246,7 @@
         }
 
         .terms-content {
-            font-size: 7.5pt;
+            font-size: 7pt;
             color: #4b5563;
             line-height: 1.4;
             white-space: nowrap;
@@ -448,7 +446,7 @@
                 </td>
                 <td class="footer-greeting">
                     Terima kasih telah berbelanja di LKTech!<br>
-                    <strong style="color: #111827; display: block; margin-top: 4px; font-size: 7.5pt; font-style: normal;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</strong>
+                    <span style="color: #4b5563; display: block; margin-top: 4px; font-size: 7pt; font-style: normal; font-weight: 500;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</span>
                 </td>
             </tr>
         </table>
