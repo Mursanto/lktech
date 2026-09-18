@@ -54,7 +54,7 @@
                         </div>
 
                         <!-- Manual editable fields (pre-filled from DB, can be overridden) -->
-                        <div class="grid grid-cols-1 gap-2">
+                        <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Nama Pelanggan *</label>
                                 <input type="text" name="customer_name" id="customer_name" required
@@ -67,13 +67,13 @@
                                     value="{{ old('customer_phone', $rental->customer_phone) }}"
                                     class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
                             </div>
-                            <div>
+                            <div class="col-span-2">
                                 <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Alamat</label>
                                 <input type="text" name="customer_address" id="customer_address"
                                     value="{{ old('customer_address', $rental->customer?->address) }}"
                                     class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
                             </div>
-                            <div>
+                            <div class="col-span-2">
                                 <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Email</label>
                                 <input type="email" name="customer_email" id="customer_email"
                                     value="{{ old('customer_email', $rental->customer?->email) }}"
@@ -81,34 +81,37 @@
                             </div>
                         </div>
 
-                        <!-- Status -->
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Sewa *</label>
-                            <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold
-                                {{ $rental->status == 'active' ? 'text-blue-600' : ($rental->status == 'completed' ? 'text-emerald-600' : 'text-red-600') }}">
-                                <option value="active"    {{ old('status', $rental->status) == 'active'    ? 'selected' : '' }}>🟢 Aktif (Sedang Disewa)</option>
-                                <option value="completed" {{ old('status', $rental->status) == 'completed' ? 'selected' : '' }}>✅ Selesai (Dikembalikan)</option>
-                                <option value="overdue"   {{ old('status', $rental->status) == 'overdue'   ? 'selected' : '' }}>⚠️ Terlambat</option>
-                            </select>
-                        </div>
+                        <!-- Status & Payment grid -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <!-- Status -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Sewa *</label>
+                                <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold
+                                    {{ $rental->status == 'active' ? 'text-blue-600' : ($rental->status == 'completed' ? 'text-emerald-600' : 'text-red-600') }}">
+                                    <option value="active"    {{ old('status', $rental->status) == 'active'    ? 'selected' : '' }}>🟢 Aktif (Sedang Disewa)</option>
+                                    <option value="completed" {{ old('status', $rental->status) == 'completed' ? 'selected' : '' }}>✅ Selesai (Dikembalikan)</option>
+                                    <option value="overdue"   {{ old('status', $rental->status) == 'overdue'   ? 'selected' : '' }}>⚠️ Terlambat</option>
+                                </select>
+                            </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Pembayaran</label>
-                            <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold">
-                                <option value="pending" {{ old('payment_status', $rental->payment_status) == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
-                                <option value="success" {{ old('payment_status', $rental->payment_status) == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
-                                <option value="cancelled" {{ old('payment_status', $rental->payment_status) == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
-                                <option value="failed" {{ old('payment_status', $rental->payment_status) == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Pembayaran</label>
+                                <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold">
+                                    <option value="pending" {{ old('payment_status', $rental->payment_status) == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                                    <option value="success" {{ old('payment_status', $rental->payment_status) == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
+                                    <option value="cancelled" {{ old('payment_status', $rental->payment_status) == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                                    <option value="failed" {{ old('payment_status', $rental->payment_status) == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
+                                </select>
+                            </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Metode Pembayaran</label>
-                            <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
-                                <option value="CASH" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'CASH' ? 'selected' : '' }}>CASH</option>
-                                <option value="TRANSFER" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
-                                <option value="QRIS" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'QRIS' ? 'selected' : '' }}>QRIS</option>
-                            </select>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Metode Pembayaran</label>
+                                <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
+                                    <option value="CASH" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'CASH' ? 'selected' : '' }}>CASH</option>
+                                    <option value="TRANSFER" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
+                                    <option value="QRIS" {{ strtoupper(old('payment_method', $rental->payment_method ?? '')) == 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Notes -->
