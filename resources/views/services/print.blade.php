@@ -62,7 +62,6 @@
         .invoice-info {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 30px;
         }
         

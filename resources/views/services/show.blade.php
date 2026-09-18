@@ -119,7 +119,7 @@
                     </div>
 
                     <!-- Invoice Details & Bill To (2-Column Grid) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 items-start">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Customer Information (Bill To) -->
                         <div class="bg-slate-50 p-3 rounded border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1.5 uppercase text-[10px] tracking-widest border-b border-slate-200 pb-1">Ditagihkan Kepada</h3>
