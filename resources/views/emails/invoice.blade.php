@@ -270,7 +270,8 @@
         <table class="header-table">
             <tr>
                 <td class="header-logo">
-                      <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'">
+                    <!-- Email absolute paths for images -->
+                    <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'">
                     <div>
                         <div class="company-name">LK Tech TN SEREAL</div>
                         <div class="company-details">
@@ -321,36 +322,42 @@
                 <td class="details-box" style="margin-left: 7.5px;">
                     <div class="box-title">Detail Faktur</div>
                     <div class="box-content">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">No. Faktur:</td>
-                                <td style="width: 55%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
-                                    {{ $sale->invoice_no ?? str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Tanggal:</td>
-                                <td style="width: 55%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
-                                    {{ $sale->transaction_date ? $sale->transaction_date->format('d M Y, H:i') : date('d M Y, H:i') }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Sales:</td>
-                                <td style="width: 55%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
-                                    {{ $sale->user->name ?? 'Admin User' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 45%; padding: 4px 0; font-weight: 500; vertical-align: middle;">Status:</td>
-                                <td style="width: 55%; padding: 4px 0; text-align: right; font-weight: 700; color: #0f172a; vertical-align: middle;">
-                                    @if($sale->isPaid())
-                                        <span class="status-badge status-lunas">LUNAS</span>
-                                    @else
-                                        <span class="status-badge status-pending">PENDING</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        </table>
+                          <table style="width: 100%; border-collapse: collapse;">
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">No. Faktur</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->invoice_no ?? str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Tanggal</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->transaction_date ? $sale->transaction_date->format('d M Y') : date('d M Y') }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Metode Pembayaran</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->payment_method === 'qris' ? 'QRIS' : ucfirst($sale->payment_method ?? 'Transfer') }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="padding: 6px 0 0 0; font-weight: 500; vertical-align: middle;">Status Pembayaran</td>
+                                  <td style="padding: 6px 0 0 0; text-align: center; vertical-align: middle;">:</td>
+                                  <td style="padding: 6px 0 0 0; text-align: right; vertical-align: middle;">
+                                      @if($sale->payment_status === 'success')
+                                          <span class="status-badge status-lunas">LUNAS</span>
+                                      @elseif($sale->payment_status === 'failed')
+                                          <span class="status-badge status-batal" style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">BATAL</span>
+                                      @else
+                                          <span class="status-badge status-pending">PENDING</span>
+                                      @endif
+                                  </td>
+                              </tr>
+                          </table>
                     </div>
                 </td>
             </tr>
