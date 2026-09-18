@@ -282,9 +282,9 @@
                         </div>
 
                         <!-- Actions -->
-                        <div class="space-y-2 pt-2 border-t border-gray-200">
+                        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-200">
                             <button type="submit" class="w-full px-4 py-2 bg-teal-600 text-white rounded font-bold text-xs shadow hover:bg-teal-700 transition uppercase flex justify-center items-center gap-1">
-                                <i class='bx bx-save text-sm'></i> Simpan Data Sewa
+                                <i class='bx bx-save text-sm'></i> Simpan Sewa
                             </button>
                             <a href="{{ route('rentals.index') }}" class="w-full px-4 py-1.5 bg-white border border-gray-300 text-gray-600 rounded font-bold text-xs shadow-sm hover:bg-gray-50 transition uppercase flex justify-center items-center text-center">
                                 Batal

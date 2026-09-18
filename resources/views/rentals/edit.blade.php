@@ -210,14 +210,14 @@
                         </div>
 
                         <!-- Actions -->
-                        <div class="space-y-2 pt-2 border-t border-gray-200">
-                            <button type="submit" class="w-full px-4 py-2 bg-teal-600 text-white rounded font-bold text-xs shadow hover:bg-teal-700 transition uppercase flex justify-center items-center gap-1">
-                                <i class='bx bx-save text-sm'></i> Simpan Perubahan
+                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-gray-200">
+                            <button type="submit" class="w-full px-2 py-2 bg-teal-600 text-white rounded font-bold text-[10px] shadow hover:bg-teal-700 transition uppercase flex justify-center items-center gap-1">
+                                <i class='bx bx-save text-sm'></i> Simpan
                             </button>
-                            <a href="{{ route('rentals.show', $rental->id) }}" class="w-full px-4 py-1.5 bg-white border border-teal-300 text-teal-600 rounded font-bold text-xs shadow-sm hover:bg-teal-50 transition uppercase flex justify-center items-center text-center">
-                                <i class='bx bx-show mr-1'></i> Lihat Detail
+                            <a href="{{ route('rentals.show', $rental->id) }}" class="w-full px-2 py-2 bg-white border border-teal-300 text-teal-600 rounded font-bold text-[10px] shadow-sm hover:bg-teal-50 transition uppercase flex justify-center items-center text-center">
+                                <i class='bx bx-show mr-1'></i> Detail
                             </a>
-                            <a href="{{ route('rentals.index') }}" class="w-full px-4 py-1.5 bg-white border border-gray-300 text-gray-600 rounded font-bold text-xs shadow-sm hover:bg-gray-50 transition uppercase flex justify-center items-center text-center">
+                            <a href="{{ route('rentals.index') }}" class="w-full px-2 py-2 bg-white border border-gray-300 text-gray-600 rounded font-bold text-[10px] shadow-sm hover:bg-gray-50 transition uppercase flex justify-center items-center text-center">
                                 Batal
                             </a>
                         </div>
