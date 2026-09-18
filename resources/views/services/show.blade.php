@@ -327,6 +327,15 @@
                             @endrole
                         @endif
 
+                        @if($service->customer && $service->customer->email)
+                            <form action="{{ route('services.resend_invoice', $service->id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold rounded flex items-center shadow-sm" title="Kirim Ulang Invoice via Email">
+                                    <i class='bx bx-envelope text-sm mr-1'></i> Kirim Email
+                                </button>
+                            </form>
+                        @endif
+
                         <button onclick="window.print()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded flex items-center shadow-sm">
                             <i class='bx bx-printer text-sm mr-1'></i> Cetak
                         </button>

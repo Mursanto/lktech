@@ -487,6 +487,24 @@ class ServiceController extends Controller
     {
         return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ServicesExport, 'servis.xlsx');
     }
+
+    /**
+     * Resend invoice email to customer manually.
+     */
+    public function resendInvoice(Service $service)
+    {
+        if (!$service->customer || !$service->customer->email) {
+            return back()->with('error', 'Pelanggan ini tidak memiliki alamat email yang valid.');
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($service->customer->email)->send(new \App\Mail\ServiceInvoiceMail($service));
+            return back()->with('success', 'Invoice berhasil dikirim ulang ke email pelanggan (' . $service->customer->email . ').');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim ulang email invoice service: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim ulang invoice: ' . $e->getMessage());
+        }
+    }
 }
 
 

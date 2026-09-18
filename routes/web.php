@@ -135,12 +135,14 @@ Route::middleware(['auth', 'role:Admin|Staff'])->group(function () {
     Route::patch('/sales/{sale}/update-date', [SaleController::class, 'updateDate'])->name('sales.update-date');
     Route::resource('sales', SaleController::class)->except(['index', 'show']);
     Route::patch('/rentals/{rental}/cancel', [RentalController::class, 'cancel'])->name('rentals.cancel');
+    Route::post('/rentals/{rental}/resend-invoice', [RentalController::class, 'resendInvoice'])->name('rentals.resend_invoice');
     Route::resource('rentals', RentalController::class)->except(['index', 'show']);
 });
 
 // 3. AKSES SERVIS (Admin & Teknisi & Staff) - Bisa Modify
 Route::middleware(['auth', 'role:Admin|Teknisi|Staff'])->group(function () {
     Route::patch('/services/{service}/cancel', [ServiceController::class, 'cancel'])->name('services.cancel');
+    Route::post('/services/{service}/resend-invoice', [ServiceController::class, 'resendInvoice'])->name('services.resend_invoice');
     Route::resource('services', ServiceController::class)->except(['index', 'show']);
 });
 

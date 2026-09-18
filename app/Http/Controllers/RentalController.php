@@ -248,6 +248,24 @@ class RentalController extends Controller
 
     public function export()
     {
-        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\RentalsExport, 'sewa_laptop.xlsx');
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\RentalsExport, 'sewa-laptop.xlsx');
+    }
+
+    /**
+     * Resend invoice email to customer manually.
+     */
+    public function resendInvoice(Rental $rental)
+    {
+        if (!$rental->customer || !$rental->customer->email) {
+            return back()->with('error', 'Pelanggan ini tidak memiliki alamat email yang valid.');
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($rental->customer->email)->send(new \App\Mail\RentalInvoiceMail($rental));
+            return back()->with('success', 'Invoice berhasil dikirim ulang ke email pelanggan (' . $rental->customer->email . ').');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim ulang email invoice rental: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim ulang invoice: ' . $e->getMessage());
+        }
     }
 }
