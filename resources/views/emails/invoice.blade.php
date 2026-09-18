@@ -76,10 +76,32 @@
                     <td style="text-align: right; white-space: nowrap;">Rp {{ number_format($detail->price_at_transaction * $detail->quantity, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
+                @php
+                    $subtotal = 0;
+                    foreach($sale->saleDetails as $detail) {
+                        $subtotal += ($detail->price_at_transaction * $detail->quantity);
+                    }
+                @endphp
+
+                @if($sale->discount_amount > 0)
+                <tr class="subtotal-row" style="font-weight: bold;">
+                    <td colspan="2" style="text-align: right; border-top: 2px solid #e5e7eb; padding-top: 12px;">Subtotal</td>
+                    <td class="total-amount" style="border-top: 2px solid #e5e7eb; padding-top: 12px; color: #374151;">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
+                </tr>
+                <tr class="discount-row" style="font-weight: bold; color: #6b7280;">
+                    <td colspan="2" style="text-align: right;">Diskon / Potongan</td>
+                    <td class="total-amount" style="color: #ef4444;">-Rp {{ number_format($sale->discount_amount, 0, ',', '.') }}</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="2" style="text-align: right;">Total Bayar</td>
+                    <td class="total-amount">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
+                </tr>
+                @else
                 <tr class="total-row">
                     <td colspan="2" style="text-align: right;">Subtotal</td>
                     <td class="total-amount">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
                 </tr>
+                @endif
             </tbody>
         </table>
 

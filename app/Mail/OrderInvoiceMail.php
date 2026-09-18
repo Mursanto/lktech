@@ -54,6 +54,34 @@ class OrderInvoiceMail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        if ($this->sale->payment_status === 'success') {
+            $data = [
+                'sale' => $this->sale,
+                'company' => [
+                    'name' => 'LK TECH',
+                    'address' => 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03 Mekarwangi, Tanah Sereal, Bogor 16168',
+                    'phone' => '0856-7354-046',
+                    'email' => 'sales@lktech.online',
+                ],
+                'warranty_terms' => [
+                    'Garansi 2 mgg hardware sejak pembelian. Segel utuh wajib.',
+                    'Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.',
+                    'Batal jika cacat fisik (jatuh/kena air/modifikasi).',
+                ],
+            ];
+
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('sales.invoice', $data);
+            $pdf->setPaper('A4', 'portrait');
+            $pdfContent = $pdf->output();
+
+            $filename = 'Invoice-LKTECH-' . str_pad($this->sale->id, 6, '0', STR_PAD_LEFT) . '.pdf';
+
+            $attachments[] = \Illuminate\Mail\Mailables\Attachment::fromData(fn () => $pdfContent, $filename)
+                ->withMime('application/pdf');
+        }
+
+        return $attachments;
     }
 }
