@@ -210,8 +210,8 @@
                     </div>
 
                     <!-- Footer Section -->
-                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end">
-                        <div class="footer w-2/3">
+                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end gap-2">
+                        <div class="footer w-1/2">
                             <h4 class="font-semibold text-gray-900 text-[10px] mb-0.5">Syarat & Ketentuan Sewa</h4>
                             <div class="text-gray-600 text-[9px]" style="line-height: 1.2;">
                                 <div>1. Penyewa wajib menjaga unit dengan baik selama masa sewa.</div>
@@ -219,8 +219,9 @@
                                 <div>3. Keterlambatan pengembalian akan dikenakan denda sesuai ketentuan.</div>
                             </div>
                         </div>
-                        <div class="w-1/3 text-right text-gray-700 font-medium text-[9px] italic">
-                            Terima kasih telah menyewa di LKtech!
+                        <div class="w-1/2 text-right text-gray-700 font-medium text-[9px] flex flex-col justify-end">
+                            <span class="italic mb-0.5 whitespace-nowrap">Terima kasih telah menyewa di LKtech!</span>
+                            <span class="font-bold text-gray-800" style="line-height: 1.2;">Struk ini berfungsi sebagai Bukti Sewa Laptop / Komputer.</span>
                         </div>
                     </div>
 
