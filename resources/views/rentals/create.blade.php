@@ -128,7 +128,7 @@
                         <div id="new_customer_area" class="hidden flex flex-col gap-2">
                             <div class="bg-blue-50 rounded-lg p-3 border border-blue-100">
                                 <p class="text-[10px] font-bold text-blue-600 uppercase mb-2 flex items-center gap-1"><i class='bx bx-user-plus'></i> Input Data Pelanggan Baru</p>
-                                <div class="space-y-2">
+                                <div class="grid grid-cols-2 gap-2">
                                     <div>
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Nama Lengkap *</label>
                                         <input type="text" name="new_customer_name" id="new_customer_name"
@@ -143,14 +143,14 @@
                                             class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500"
                                             placeholder="0812-xxxx-xxxx">
                                     </div>
-                                    <div>
+                                    <div class="col-span-2">
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Alamat</label>
                                         <input type="text" name="new_customer_address"
                                             value="{{ old('new_customer_address') }}"
                                             class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500"
                                             placeholder="Alamat lengkap (opsional)">
                                     </div>
-                                    <div>
+                                    <div class="col-span-2">
                                         <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Email</label>
                                         <input type="email" name="new_customer_email"
                                             value="{{ old('new_customer_email') }}"
@@ -161,33 +161,36 @@
                             </div>
                         </div>
 
-                        <!-- Status -->
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Sewa *</label>
-                            <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold text-blue-600">
-                                <option value="active"    {{ old('status', 'active') == 'active'    ? 'selected' : '' }}>🟢 Aktif (Sedang Disewa)</option>
-                                <option value="completed" {{ old('status') == 'completed'            ? 'selected' : '' }}>✅ Selesai (Dikembalikan)</option>
-                                <option value="overdue"   {{ old('status') == 'overdue'              ? 'selected' : '' }}>⚠️ Terlambat</option>
-                            </select>
-                        </div>
+                        <!-- Status & Payment grid -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <!-- Status -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Sewa *</label>
+                                <select name="status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold text-blue-600">
+                                    <option value="active"    {{ old('status', 'active') == 'active'    ? 'selected' : '' }}>🟢 Aktif (Sedang Disewa)</option>
+                                    <option value="completed" {{ old('status') == 'completed'            ? 'selected' : '' }}>✅ Selesai (Dikembalikan)</option>
+                                    <option value="overdue"   {{ old('status') == 'overdue'              ? 'selected' : '' }}>⚠️ Terlambat</option>
+                                </select>
+                            </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Pembayaran</label>
-                            <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold">
-                                <option value="pending" {{ old('payment_status') == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
-                                <option value="success" {{ old('payment_status') == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
-                                <option value="cancelled" {{ old('payment_status') == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
-                                <option value="failed" {{ old('payment_status') == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Status Pembayaran</label>
+                                <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500 font-bold">
+                                    <option value="pending" {{ old('payment_status') == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
+                                    <option value="success" {{ old('payment_status') == 'success' ? 'selected' : '' }}>✅ Lunas / Sukses</option>
+                                    <option value="cancelled" {{ old('payment_status') == 'cancelled' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                                    <option value="failed" {{ old('payment_status') == 'failed' ? 'selected' : '' }}>🚫 Gagal</option>
+                                </select>
+                            </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Metode Pembayaran</label>
-                            <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
-                                <option value="CASH" {{ strtoupper(old('payment_method')) == 'CASH' ? 'selected' : '' }}>CASH</option>
-                                <option value="TRANSFER" {{ strtoupper(old('payment_method')) == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
-                                <option value="QRIS" {{ strtoupper(old('payment_method')) == 'QRIS' ? 'selected' : '' }}>QRIS</option>
-                            </select>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Metode Pembayaran</label>
+                                <select name="payment_method" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
+                                    <option value="CASH" {{ strtoupper(old('payment_method')) == 'CASH' ? 'selected' : '' }}>CASH</option>
+                                    <option value="TRANSFER" {{ strtoupper(old('payment_method')) == 'TRANSFER' ? 'selected' : '' }}>TRANSFER</option>
+                                    <option value="QRIS" {{ strtoupper(old('payment_method')) == 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Notes (flexible height) -->
