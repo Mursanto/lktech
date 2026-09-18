@@ -83,14 +83,14 @@
                     }
                 @endphp
 
-                @if($sale->discount_amount > 0)
+                @if($sale->discount > 0)
                 <tr class="subtotal-row" style="font-weight: bold;">
                     <td colspan="2" style="text-align: right; border-top: 2px solid #e5e7eb; padding-top: 12px;">Subtotal</td>
                     <td class="total-amount" style="border-top: 2px solid #e5e7eb; padding-top: 12px; color: #374151;">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
                 </tr>
                 <tr class="discount-row" style="font-weight: bold; color: #6b7280;">
                     <td colspan="2" style="text-align: right;">Diskon / Potongan</td>
-                    <td class="total-amount" style="color: #ef4444;">-Rp {{ number_format($sale->discount_amount, 0, ',', '.') }}</td>
+                    <td class="total-amount" style="color: #ef4444;">-Rp {{ number_format($sale->discount, 0, ',', '.') }}</td>
                 </tr>
                 <tr class="total-row">
                     <td colspan="2" style="text-align: right;">Total Bayar</td>
@@ -98,7 +98,7 @@
                 </tr>
                 @else
                 <tr class="total-row">
-                    <td colspan="2" style="text-align: right;">Subtotal</td>
+                    <td colspan="2" style="text-align: right;">Total Bayar</td>
                     <td class="total-amount">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
                 </tr>
                 @endif

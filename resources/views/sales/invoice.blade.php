@@ -391,7 +391,33 @@
                 </tr>
                 @endforeach
                 
-                <!-- Total Row -->
+                <!-- Total Rows -->
+                @php
+                    $subtotal = 0;
+                    foreach($sale->saleDetails as $detail) {
+                        $subtotal += ($detail->price_at_transaction * $detail->quantity);
+                    }
+                @endphp
+                
+                @if($sale->discount > 0)
+                <tr>
+                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #4b5563; font-size: 10pt;">
+                        SUBTOTAL
+                    </td>
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; font-size: 10pt;">
+                        Rp {{ number_format($subtotal, 0, ',', '.') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #6b7280; font-size: 10pt;">
+                        Diskon / Potongan
+                    </td>
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #ef4444; font-size: 10pt;">
+                        -Rp {{ number_format($sale->discount, 0, ',', '.') }}
+                    </td>
+                </tr>
+                @endif
+                
                 <tr class="total-row">
                     <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb;">TOTAL BAYAR</td>
                     <td style="text-align: right; border-right: 1px solid #e5e7eb;">
