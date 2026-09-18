@@ -428,7 +428,27 @@ class SaleController extends Controller
                     $saleUpdateData['payment_status'] = $request->payment_status;
                 }
 
+                $oldPaymentStatus = $sale->payment_status;
+                $oldOrderStatus = $sale->order_status;
+
                 $sale->update($saleUpdateData);
+
+                // Kirim email jika status diubah menjadi Lunas dan Selesai
+                if (
+                    isset($saleUpdateData['payment_status']) && $saleUpdateData['payment_status'] === 'success' &&
+                    isset($saleUpdateData['order_status']) && $saleUpdateData['order_status'] === 'selesai'
+                ) {
+                    // Pastikan email tidak dikirim berulang kali jika statusnya memang sudah Lunas & Selesai dari awal
+                    if ($oldPaymentStatus !== 'success' || $oldOrderStatus !== 'selesai') {
+                        if ($sale->customer && $sale->customer->email) {
+                            try {
+                                \Illuminate\Support\Facades\Mail::to($sale->customer->email)->send(new \App\Mail\OrderInvoiceMail($sale));
+                            } catch (\Exception $e) {
+                                \Illuminate\Support\Facades\Log::error('Gagal mengirim email invoice via edit: ' . $e->getMessage());
+                            }
+                        }
+                    }
+                }
             });
 
             return redirect()->route('sales.index')->with('success', 'Transaksi berhasil diperbarui.');
