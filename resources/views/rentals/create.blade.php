@@ -97,6 +97,7 @@
                                             data-phone="{{ $customer->phone }}"
                                             data-name="{{ $customer->name }}"
                                             data-address="{{ $customer->address }}"
+                                            data-email="{{ $customer->email }}"
                                             {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                                             {{ $customer->name }} — {{ $customer->phone }}
                                         </option>
@@ -115,6 +116,10 @@
                                 <div class="col-span-2">
                                     <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Alamat (Auto)</label>
                                     <input type="text" id="display_address" readonly class="w-full border border-gray-200 rounded px-2 py-1 text-xs bg-gray-100 text-gray-600">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Email (Auto)</label>
+                                    <input type="email" id="display_email" readonly class="w-full border border-gray-200 rounded px-2 py-1 text-xs bg-gray-100 text-gray-600">
                                 </div>
                             </div>
                         </div>
@@ -144,6 +149,13 @@
                                             value="{{ old('new_customer_address') }}"
                                             class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500"
                                             placeholder="Alamat lengkap (opsional)">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Email</label>
+                                        <input type="email" name="new_customer_email"
+                                            value="{{ old('new_customer_email') }}"
+                                            class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500"
+                                            placeholder="Email (opsional)">
                                     </div>
                                 </div>
                             </div>
@@ -482,12 +494,14 @@
             const displayName  = document.getElementById('display_name');
             const displayPhone = document.getElementById('display_phone');
             const displayAddress = document.getElementById('display_address');
+            const displayEmail = document.getElementById('display_email');
 
             customerSel.addEventListener('change', function() {
                 const sel = this.options[this.selectedIndex];
                 displayName.value  = sel.getAttribute('data-name')  || '';
                 displayPhone.value = sel.getAttribute('data-phone') || '';
                 if(displayAddress) displayAddress.value = sel.getAttribute('data-address') || '';
+                if(displayEmail) displayEmail.value = sel.getAttribute('data-email') || '';
             });
             if (customerSel.value) customerSel.dispatchEvent(new Event('change'));
 

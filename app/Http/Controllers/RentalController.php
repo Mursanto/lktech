@@ -82,6 +82,7 @@ class RentalController extends Controller
             $rules['new_customer_name']    = 'required|string|max:255';
             $rules['new_customer_phone']   = 'required|string|max:20';
             $rules['new_customer_address'] = 'nullable|string';
+            $rules['new_customer_email']   = 'nullable|email';
         } else {
             $rules['customer_id'] = 'required|exists:customers,id';
         }
@@ -99,6 +100,7 @@ class RentalController extends Controller
                 'name'    => $request->new_customer_name,
                 'phone'   => $request->new_customer_phone,
                 'address' => $request->new_customer_address,
+                'email'   => $request->new_customer_email,
             ]);
         } else {
             $customer = Customer::findOrFail($request->customer_id);
@@ -178,11 +180,17 @@ class RentalController extends Controller
             }
         }
 
-        // Update customer address if they are editing the current customer
+        // Update customer address and email if they are editing the current customer
         if ($rental->customer_id) {
             $customer = Customer::find($rental->customer_id);
-            if ($customer && $request->has('customer_address')) {
-                $customer->update(['address' => $request->customer_address]);
+            if ($customer) {
+                if ($request->has('customer_address')) {
+                    $customer->address = $request->customer_address;
+                }
+                if ($request->has('customer_email')) {
+                    $customer->email = $request->customer_email;
+                }
+                $customer->save();
             }
         }
 
