@@ -178,7 +178,7 @@
                         </div>
 
                         <!-- Kalkulasi Harga -->
-                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm flex-grow">
+                        <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
                             <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-2">Kalkulasi Biaya Sewa</h4>
                             <div class="space-y-2">
                                 <div>
@@ -210,7 +210,7 @@
                         </div>
 
                         <!-- Actions -->
-                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-gray-200">
+                        <div class="grid grid-cols-3 gap-2 pt-4 mt-4 border-t border-gray-200">
                             <button type="submit" class="w-full px-2 py-2 bg-teal-600 text-white rounded font-bold text-[10px] shadow hover:bg-teal-700 transition uppercase flex justify-center items-center gap-1">
                                 <i class='bx bx-save text-sm'></i> Simpan
                             </button>
