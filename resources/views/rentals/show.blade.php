@@ -112,6 +112,9 @@
                         <!-- Invoice Title -->
                         <div class="mt-2 md:mt-0 text-left md:text-right">
                             <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-1">Rental Invoice</h2>
+                            <div class="text-[10px] text-gray-500 font-medium tracking-wide">
+                                Order ID {{ $rental->payment_reference_id ?? 'RNT-' . $rental->id . '-' . ($rental->created_at ? $rental->created_at->timestamp : time()) }}
+                            </div>
                         </div>
                     </div>
 
@@ -121,20 +124,20 @@
                         <div class="bg-slate-50 p-3 rounded border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1.5 uppercase text-[10px] tracking-widest border-b border-slate-200 pb-1">Penyewa</h3>
                             <div class="text-xs text-slate-700 space-y-1">
-                                <div class="font-bold text-sm text-slate-900">{{ $rental->customer_name }}</div>
+                                <div class="font-bold text-sm text-slate-900 mb-1">{{ $rental->customer_name }}</div>
                                 
                                 @if($rental->customer_phone)
-                                <div><strong class="text-slate-800">Telp:</strong> {{ $rental->customer_phone }}</div>
+                                <div class="no-print mb-1"><strong class="text-slate-800">Telp:</strong> {{ $rental->customer_phone }}</div>
                                 @endif
                                 
                                 @if(isset($rental->customer_email) && $rental->customer_email)
-                                <div><strong class="text-slate-800">Email:</strong> {{ $rental->customer_email }}</div>
+                                <div class="no-print mb-1"><strong class="text-slate-800">Email:</strong> {{ $rental->customer_email }}</div>
                                 @endif
                                 
-                                @if(isset($rental->customer_address) && $rental->customer_address)
+                                @if($rental->customer && $rental->customer->address)
                                 <div class="pt-1 leading-tight">
                                     <strong class="text-slate-800 block">Alamat:</strong>
-                                    {{ $rental->customer_address }}
+                                    {{ $rental->customer->address }}
                                 </div>
                                 @endif
                             </div>

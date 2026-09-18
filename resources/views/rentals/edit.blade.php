@@ -67,6 +67,12 @@
                                     value="{{ old('customer_phone', $rental->customer_phone) }}"
                                     class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
                             </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Alamat</label>
+                                <input type="text" name="customer_address" id="customer_address"
+                                    value="{{ old('customer_address', $rental->customer?->address) }}"
+                                    class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-white focus:ring-1 focus:ring-teal-500">
+                            </div>
                         </div>
 
                         <!-- Status -->

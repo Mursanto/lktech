@@ -178,6 +178,14 @@ class RentalController extends Controller
             }
         }
 
+        // Update customer address if they are editing the current customer
+        if ($rental->customer_id) {
+            $customer = Customer::find($rental->customer_id);
+            if ($customer && $request->has('customer_address')) {
+                $customer->update(['address' => $request->customer_address]);
+            }
+        }
+
         $rental->update($request->only([
             'customer_id', 'customer_name', 'customer_phone',
             'laptop_name', 'serial_number',
