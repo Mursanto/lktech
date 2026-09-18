@@ -239,8 +239,8 @@
                 <div class="info-label">DITAGIHKAN KEPADA</div>
                 <div class="info-value" style="font-weight: bold;">{{ $service->customer->name ?? 'Pelanggan Umum' }}</div>
                 
-                <div class="info-label">Telepon</div>
-                <div class="info-value">{{ $service->customer->phone ?? '-' }}</div>
+                <div class="info-label no-print">Telepon</div>
+                <div class="info-value no-print">{{ $service->customer->phone ?? '-' }}</div>
                 
                 <div class="info-label">Alamat</div>
                 <div class="info-value">{{ $service->customer->address ?? '-' }}</div>
@@ -249,8 +249,8 @@
             <div class="info-section">
                 <div class="info-label">DETAIL LAYANAN</div>
                 <div class="info-value"><strong>No. Servis:</strong> {{ $service->service_number ?? 'SRV-' . str_pad($service->id, 6, '0', STR_PAD_LEFT) }}</div>
-                <div class="info-value"><strong>Tanggal Masuk:</strong> {{ isset($service->created_at) ? $service->created_at->format('d M Y, H:i') : date('d M Y') }}</div>
-                <div class="info-value"><strong>Teknisi:</strong> {{ $service->technician->name ?? 'Staff User' }}</div>
+                <div class="info-value"><strong>Tanggal Masuk:</strong> {{ isset($service->created_at) ? $service->created_at->format('d M Y') : date('d M Y') }}</div>
+                <div class="info-value no-print"><strong>Teknisi:</strong> {{ $service->technician->name ?? 'Staff User' }}</div>
                 <div class="info-value"><strong>Status:</strong> 
                     <span style="font-size: 10px; font-weight: bold; color: white; padding: 2px 6px; border-radius: 4px; background-color: {{ $service->status == 'done' ? '#10b981' : ($service->status == 'process' ? '#3b82f6' : '#ef4444') }}">
                         {{ strtoupper($service->status) }}
@@ -343,9 +343,13 @@
             <ol style="text-align: left; margin-top: 0; padding-left: 20px; font-size: 10px;">
                 <li>Garansi servis 1 bulan untuk kerusakan yang sama.</li>
                 <li>Segel utuh wajib. Batal jika jatuh/terkena air/human error.</li>
+                <li>Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.</li>
                 <li>Perangkat yang tidak diambil > 3 bulan di luar tanggung jawab kami.</li>
             </ol>
-            <p style="margin-top: 20px;"><strong>Terima kasih telah mempercayakan servis Anda di LKtech!</strong></p>
+            <div style="margin-top: 20px;">
+                <strong>Terima kasih telah mempercayakan servis Anda di LKtech!</strong><br>
+                <strong>Struk ini berfungsi sebagai Bukti Service / Perbaikan</strong>
+            </div>
         </div>
 
         <!-- Signature Section -->

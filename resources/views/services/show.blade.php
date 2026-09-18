@@ -124,11 +124,11 @@
                                 <div class="font-bold text-sm text-slate-900">{{ $service->customer->name ?? 'Pelanggan Umum' }}</div>
                                 
                                 @if($service->customer && $service->customer->phone)
-                                <div><strong class="text-slate-800">Telp:</strong> {{ $service->customer->phone }}</div>
+                                <div class="no-print"><strong class="text-slate-800">Telp:</strong> {{ $service->customer->phone }}</div>
                                 @endif
                                 
                                 @if($service->customer && $service->customer->email)
-                                <div><strong class="text-slate-800">Email:</strong> {{ $service->customer->email }}</div>
+                                <div class="no-print"><strong class="text-slate-800">Email:</strong> {{ $service->customer->email }}</div>
                                 @endif
                                 
                                 @if($service->customer && $service->customer->address)
@@ -150,9 +150,9 @@
                                 </div>
                                 <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
                                     <span class="font-medium">Tanggal Masuk:</span>
-                                    <span class="text-slate-900">{{ $service->created_at->format('d M Y, H:i') }}</span>
+                                    <span class="text-slate-900">{{ $service->created_at->format('d M Y') }}</span>
                                 </div>
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 no-print">
                                     <span class="font-medium">Teknisi:</span>
                                     <span class="text-slate-900">{{ $service->technician->name ?? 'Belum Ditugaskan' }}</span>
                                 </div>
@@ -256,17 +256,19 @@
                     </div>
 
                     <!-- Footer Section -->
-                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end">
-                        <div class="footer w-2/3">
+                    <div class="mt-3 pt-2 border-t border-gray-200 flex justify-between items-end gap-2">
+                        <div class="footer w-1/2">
                             <h4 class="font-semibold text-gray-900 text-[10px] mb-0.5">Ketentuan Layanan & Garansi</h4>
                             <div class="text-gray-600 text-[9px]" style="line-height: 1.2;">
                                 <div>1. Garansi service 1 bulan untuk kerusakan yang sama.</div>
                                 <div>2. Segel utuh wajib. Batal jika jatuh/terkena air/human error.</div>
-                                <div>3. Perangkat yang tidak diambil >3 bulan di luar tanggung jawab kami.</div>
+                                <div>3. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.</div>
+                                <div>4. Perangkat yang tidak diambil >3 bulan di luar tanggung jawab kami.</div>
                             </div>
                         </div>
-                        <div class="w-1/3 text-right text-gray-700 font-medium text-[9px] italic">
-                            Terima kasih telah mempercayakan service Anda di LKtech!
+                        <div class="w-1/2 text-right text-gray-700 font-medium text-[9px] flex flex-col justify-end">
+                            <span class="italic mb-0.5 whitespace-nowrap">Terima kasih telah mempercayakan service Anda di LKtech!</span>
+                            <span class="font-bold text-gray-800" style="line-height: 1.2;">Struk ini berfungsi sebagai Bukti Service / Perbaikan</span>
                         </div>
                     </div>
 
