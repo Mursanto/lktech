@@ -278,7 +278,8 @@
                     </table>
                 </td>
                 <td class="header-title" style="width: 50%; text-align: right; vertical-align: middle;">
-                    <h1 class="invoice-title" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">INVOICE</h1>
+                    <h1 class="invoice-title" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-bottom: 2px;">INVOICE</h1>
+                    <div style="font-size: 8pt; color: #6b7280; font-weight: normal; letter-spacing: 0.5px;">Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}</div>
                 </td>
             </tr>
         </table>

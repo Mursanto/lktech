@@ -609,7 +609,24 @@ class SaleController extends Controller
         $filename = 'Invoice-' . str_pad($sale->id, 6, '0', STR_PAD_LEFT) . '.pdf';
         
         // Generate PDF
-        $pdf = Pdf::loadView('sales.pdf', compact('sale'));
+        $data = [
+            'sale' => $sale,
+            'company' => [
+                'name' => 'LKTECH',
+                'address' => 'Jl. Teknologi No. 123, Jakarta, Indonesia',
+                'phone' => '+62 21 1234 5678',
+                'email' => 'info@lktech.com',
+            ],
+            'warranty_terms' => [
+                'Garansi 1 tahun untuk kerusakan hardware (bukan karena human error)',
+                'Garansi tidak berlaku untuk kerusakan akibat jatuh, air, atau modifikasi',
+                'Service garansi hanya berlaku di service center resmi LKTECH',
+                'Baterai dan charger garansi 6 bulan',
+                'Software dan driver tidak termasuk dalam garansi',
+            ],
+        ];
+        $pdf = Pdf::loadView('sales.invoice', $data);
+        $pdf->setPaper('A4', 'portrait');
         
         // Download the PDF
         return $pdf->download($filename);

@@ -1,239 +1,456 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Invoice - {{ $sale->invoice_number ?? 'INV-' . str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}</title>
+    <meta charset="utf-8">
+    <title>Invoice - {{ $company['name'] ?? 'LK TECH' }}</title>
     <style>
         @page {
-            margin: 20mm;
+            margin: 25mm 20mm;
             size: A4;
         }
         
         body {
-            font-family: 'Arial', sans-serif;
-            font-size: 12px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11pt;
             line-height: 1.4;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            color: #111827; /* Tailwind gray-900 */
         }
-        
-        .invoice-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-        }
-        
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 5px;
-        }
-        
-        .company-info {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .invoice-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin: 20px 0;
-        }
-        
-        .invoice-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        
-        .invoice-details {
-            flex: 1;
-        }
-        
-        .billing-details {
-            flex: 1;
-            text-align: right;
-        }
-        
-        .section-title {
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .info-row {
-            margin-bottom: 5px;
-            font-size: 11px;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            color: #666;
-        }
-        
-        .products-table {
+
+        .container {
             width: 100%;
-            border-collapse: collapse;
+        }
+
+        /* Header */
+        .header-table {
+            width: 100%;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
         
+        .header-logo {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        .header-logo img {
+            max-height: 50px;
+            display: block;
+        }
+
+        .company-name {
+            font-size: 11pt;
+            font-weight: 800;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        .company-details {
+            font-size: 9pt;
+            color: #4b5563; /* Tailwind gray-600 */
+            line-height: 1.3;
+        }
+
+        .company-details a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .header-title {
+            width: 50%;
+            text-align: right;
+            vertical-align: top;
+        }
+
+        .invoice-title {
+            font-size: 24pt;
+            font-weight: 800;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        /* 2-Column Details */
+        .details-table {
+            width: 100%;
+            margin-bottom: 25px;
+            border-spacing: 15px 0;
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .details-box {
+            width: 50%;
+            background-color: #f8fafc; /* Tailwind slate-50 */
+            border: 1px solid #e2e8f0; /* Tailwind slate-200 */
+            border-radius: 4px;
+            padding: 12px;
+            vertical-align: top;
+        }
+
+        .box-title {
+            font-size: 8pt;
+            font-weight: 700;
+            color: #1e293b; /* Tailwind slate-800 */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+        }
+
+        .box-content {
+            font-size: 10pt;
+            color: #334155; /* Tailwind slate-700 */
+        }
+        
+        .box-content strong {
+            color: #0f172a; /* Tailwind slate-900 */
+        }
+
+        .meta-row {
+            width: 100%;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 4px 0;
+        }
+        
+        .meta-label {
+            display: inline-block;
+            width: 45%;
+            font-weight: 500;
+        }
+
+        .meta-value {
+            display: inline-block;
+            width: 54%;
+            text-align: right;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 700;
+        }
+        .status-lunas {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .status-pending {
+            background-color: #fef9c3;
+            color: #854d0e;
+            border: 1px solid #fef08a;
+        }
+
+        /* Products Table */
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
         .products-table th {
-            background-color: #1e3a8a;
-            color: white;
+            background-color: #f9fafb;
+            padding: 8px 10px;
             text-align: left;
-            padding: 10px;
-            font-size: 11px;
+            font-size: 9pt;
+            font-weight: 700;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            border-bottom: 2px solid #d1d5db;
         }
-        
+
         .products-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            font-size: 11px;
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+            font-size: 10pt;
+        }
+
+        .product-name {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .product-category {
+            font-size: 8pt;
+            color: #6b7280;
+        }
+
+        .product-specs {
+            font-size: 8pt;
+            color: #4b5563;
+            background-color: #f9fafb;
+            padding: 3px 5px;
+            border-radius: 3px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 7pt;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        .badge-ready { background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .badge-po { background-color: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+
+        .total-row td {
+            background-color: #f3f4f6;
+            padding: 10px;
+            font-weight: 800;
+            font-size: 11pt;
+            color: #111827;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Footer */
+        .footer-table {
+            width: 100%;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
         }
         
-        .products-table .text-right {
+        .footer-terms {
+            width: 65%;
+            vertical-align: bottom;
+        }
+
+        .footer-greeting {
+            width: 35%;
             text-align: right;
+            vertical-align: bottom;
+            font-size: 9pt;
+            font-style: italic;
+            color: #4b5563;
+            font-weight: 500;
         }
-        
-        .products-table .text-center {
-            text-align: center;
+
+        .terms-title {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 3px;
         }
-        
-        .total-section {
-            text-align: right;
-            margin-top: 20px;
-        }
-        
-        .total-row {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 5px;
-        }
-        
-        .total-label {
-            min-width: 150px;
-            text-align: right;
-            padding-right: 20px;
-            font-weight: bold;
-            font-size: 11px;
-        }
-        
-        .total-value {
-            min-width: 120px;
-            text-align: right;
-            font-weight: bold;
-            font-size: 11px;
-        }
-        
-        .grand-total {
-            border-top: 2px solid #1e3a8a;
-            padding-top: 5px;
-            font-size: 14px;
-            color: #1e3a8a;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 10px;
-            color: #666;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-        }
-        
-        .signature-section {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .signature-box {
-            width: 200px;
-            text-align: center;
-        }
-        
-        .signature-line {
-            border-bottom: 1px solid #333;
-            margin-bottom: 5px;
-            height: 40px;
-        }
-        
-        .signature-title {
-            font-size: 11px;
-            color: #666;
+
+        .terms-content {
+            font-size: 7pt;
+            color: #4b5563;
+            line-height: 1.4;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
-    <div class="invoice-container">
+    <div class="container">
         <!-- Header -->
-
-    <div class="content">
-        <table class="info-table">
+        <table class="header-table" style="border-collapse: collapse;">
             <tr>
-                <th width="30%">Kasir</th>
-                <td width="70%">{{ $sale->user->name ?? 'System' }}</td>
+                <td class="header-logo" style="width: 50%; vertical-align: middle;">
+                    <table style="border-collapse: collapse;">
+                        <tr>
+                            <td style="padding-right: 15px; vertical-align: middle;">
+                                <!-- DOMPDF absolute paths for images -->
+                                <img src="{{ public_path('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'" style="max-height: 50px;">
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <div class="company-name">LK Tech TN SEREAL</div>
+                                <div class="company-details">
+                                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
+                                    Mekarwangi, Tanah Sereal, Bogor 16168<br>
+                                    Telp: 0856-7354-046<br>
+                                    Website: <a href="https://lktech.online/">https://lktech.online/</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="header-title" style="width: 50%; text-align: right; vertical-align: middle;">
+                    <h1 class="invoice-title" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-bottom: 2px;">INVOICE</h1>
+                    <div style="font-size: 8pt; color: #6b7280; font-weight: normal; letter-spacing: 0.5px;">Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}</div>
+                </td>
             </tr>
         </table>
 
-        <table class="items-table">
+        <!-- 2-Column Details -->
+        <table style="width: 100%; margin-bottom: 25px; border-collapse: collapse;">
+            <tr>
+                <!-- Customer Info -->
+                <td style="width: 48%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; vertical-align: top; height: 150px;">
+                    <div class="box-title">Ditagihkan Kepada</div>
+                    <div class="box-content">
+                        <div style="font-weight: 800; font-size: 11pt; color: #0f172a; margin-bottom: 8px;">
+                            {{ $sale->customer->name ?? 'Pelanggan Umum' }}
+                        </div>
+                        
+                        
+                        
+                        @if($sale->customer && $sale->customer->address)
+                        <div style="margin-top: 8px; line-height: 1.4;">
+                            <strong style="display: block; margin-bottom: 2px;">Alamat:</strong>
+                            <span style="color: #334155;">{{ $sale->customer->address }}</span>
+                        </div>
+                        @endif
+                    </div>
+                </td>
+                
+                <td style="width: 4%;"></td> <!-- Spacer -->
+
+                <!-- Invoice Meta -->
+                <td style="width: 48%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; vertical-align: top; height: 150px;">
+                    <div class="box-title">Detail Faktur</div>
+                    <div class="box-content">
+                          <table style="width: 100%; border-collapse: collapse;">
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">No. Faktur</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->invoice_no ?? str_pad($sale->id, 6, '0', STR_PAD_LEFT) }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Tanggal</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->transaction_date ? $sale->transaction_date->format('d M Y') : date('d M Y') }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 45%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500; vertical-align: top;">Metode Pembayaran</td>
+                                  <td style="width: 5%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: center; vertical-align: top;">:</td>
+                                  <td style="width: 50%; padding: 4px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: 700; color: #0f172a; vertical-align: top;">
+                                      {{ $sale->payment_method === 'qris' ? 'QRIS' : ucfirst($sale->payment_method ?? 'Transfer') }}
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="padding: 6px 0 0 0; font-weight: 500; vertical-align: middle;">Status Pembayaran</td>
+                                  <td style="padding: 6px 0 0 0; text-align: center; vertical-align: middle;">:</td>
+                                  <td style="padding: 6px 0 0 0; text-align: right; vertical-align: middle;">
+                                      @if($sale->payment_status === 'success')
+                                          <span class="status-badge status-lunas">LUNAS</span>
+                                      @elseif($sale->payment_status === 'failed')
+                                          <span class="status-badge status-batal" style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">BATAL</span>
+                                      @else
+                                          <span class="status-badge status-pending">PENDING</span>
+                                      @endif
+                                  </td>
+                              </tr>
+                          </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Products Table -->
+        <table class="products-table">
             <thead>
                 <tr>
-                    <th width="5%">No</th>
-                    <th width="35%">Produk</th>
-                    <th width="15%">Qty</th>
-                    <th width="20%">Harga</th>
-                    <th width="25%">Subtotal</th>
+                    <th style="width: 50%;">PRODUK</th>
+                    <th style="width: 25%;">NOMOR SERI</th>
+                    <th style="width: 25%; text-align: right;">HARGA</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($sale->saleDetails as $index => $detail)
+                @foreach($sale->saleDetails as $detail)
                 <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td>{{ $detail->product->brand }} {{ $detail->product->model_series }}</td>
-                    <td class="text-center">{{ $detail->quantity }}</td>
-                    <td class="text-right">Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}</td>
-                    <td class="text-right highlight">Rp {{ number_format($detail->quantity * $detail->price_at_transaction, 0, ',', '.') }}</td>
+                    <td>
+                        <div class="product-name">
+                            {{ $detail->product->brand ?? '' }} {{ $detail->product->model_series ?? '' }}
+                            @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
+                                <span class="badge badge-po">Pre-Order</span>
+                            @else
+                                <span class="badge badge-ready">Ready</span>
+                            @endif
+                        </div>
+                        <div class="product-category">{{ $detail->product->category->name ?? 'Umum' }}</div>
+                        
+                        @if((!empty($detail->product->processor) && $detail->product->processor != '-') || 
+                            (!empty($detail->product->ram) && $detail->product->ram != '-') || 
+                            (!empty($detail->product->storage) && $detail->product->storage != '-'))
+                            <div class="product-specs">
+                                @if(!empty($detail->product->processor) && $detail->product->processor != '-') Proc: {{ $detail->product->processor }} @endif
+                                @if(!empty($detail->product->ram) && $detail->product->ram != '-') | RAM: {{ $detail->product->ram }} @endif
+                                @if(!empty($detail->product->storage) && $detail->product->storage != '-') | Storage: {{ $detail->product->storage }} @endif
+                            </div>
+                        @endif
+                    </td>
+                    <td>
+                        <div>{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</div>
+                        @if($detail->manual_sn)
+                        <div style="font-size: 8pt; color: #4b5563; margin-top: 4px;">SN/Key: {{ $detail->manual_sn }}</div>
+                        @endif
+                    </td>
+                    <td style="text-align: right; font-weight: 700;">
+                        Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}
+                    </td>
                 </tr>
                 @endforeach
+                
+                <!-- Total Rows -->
+                @php
+                    $subtotal = 0;
+                    foreach($sale->saleDetails as $detail) {
+                        $subtotal += ($detail->price_at_transaction * $detail->quantity);
+                    }
+                @endphp
+                
+                @if($sale->discount > 0)
+                <tr>
+                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #4b5563; font-size: 10pt;">
+                        SUBTOTAL
+                    </td>
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; font-size: 10pt;">
+                        Rp {{ number_format($subtotal, 0, ',', '.') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #6b7280; font-size: 10pt;">
+                        Diskon / Potongan
+                    </td>
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #ef4444; font-size: 10pt;">
+                        -Rp {{ number_format($sale->discount, 0, ',', '.') }}
+                    </td>
+                </tr>
+                @endif
+                
+                <tr class="total-row">
+                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb;">TOTAL BAYAR</td>
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb;">
+                        Rp {{ number_format($sale->total_amount, 0, ',', '.') }}
+                    </td>
+                </tr>
             </tbody>
         </table>
 
-        <table class="info-table">
+        <!-- Footer -->
+        <table class="footer-table">
             <tr>
-                <th width="60%">Total Quantity</th>
-                <td class="text-right" colspan="3">{{ $sale->saleDetails->sum('quantity') }}</td>
-            </tr>
-            <tr>
-                <th width="60%">Total Harga</th>
-                <td class="text-right" colspan="3">Rp {{ number_format($sale->total_amount, 0, ',', '.') }}</td>
-            </tr>
-            <tr>
-                <th width="60%">Total Profit</th>
-                <td class="text-right" colspan="3">Rp {{ number_format($sale->profit_amount, 0, ',', '.') }}</td>
+                <td class="footer-terms">
+                    <div class="terms-title">Ketentuan Garansi</div>
+                    <div class="terms-content">
+                        1. Garansi 2 mgg hardware sejak pembelian. Segel utuh wajib.<br>
+                        2. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.<br>
+                        3. Batal jika cacat fisik (jatuh/kena air/modifikasi).
+                    </div>
+                </td>
+                <td class="footer-greeting">
+                    Terima kasih telah berbelanja di LKTech!<br>
+                    <span style="color: #4b5563; display: block; margin-top: 4px; font-size: 7pt; font-style: normal; font-weight: 500; white-space: nowrap;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</span>
+                </td>
             </tr>
         </table>
-        <div class="footer">
-            <strong>Terms & Conditions:</strong><br>
-            1. Payment must be made within 30 days from invoice date.<br>
-            2. All prices are in Indonesian Rupiah (IDR).<br>
-            3. Goods sold are not returnable.<br>
-            4. This invoice is considered valid after payment is received.<br><br>
-            <strong>Thank you for your business!</strong>
-        </div>
     </div>
 </body>
 </html>

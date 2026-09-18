@@ -111,7 +111,10 @@
                         
                         <!-- Invoice Title -->
                         <div class="mt-2 md:mt-0 text-left md:text-right">
-                            <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-1">Invoice</h2>
+                            <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-0.5">Invoice</h2>
+                            <div class="text-[10px] text-gray-500 font-medium tracking-wide">
+                                Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}
+                            </div>
                         </div>
                     </div>
 
