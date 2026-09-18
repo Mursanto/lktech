@@ -254,12 +254,12 @@
                 @if($service->completion_date)
                 <div class="info-value"><strong>Tanggal Selesai:</strong> {{ \Carbon\Carbon::parse($service->completion_date)->format('d M Y') }}</div>
                 @endif
-                <div class="info-value no-print"><strong>Teknisi:</strong> {{ $service->technician->name ?? 'Staff User' }}</div>
                 <div class="info-value"><strong>Status:</strong> 
                     <span style="font-size: 10px; font-weight: bold; color: white; padding: 2px 6px; border-radius: 4px; background-color: {{ $service->status == 'done' ? '#10b981' : ($service->status == 'process' ? '#3b82f6' : '#ef4444') }}">
                         {{ strtoupper($service->status) }}
                     </span>
                 </div>
+                <div class="info-value no-print"><strong>Teknisi:</strong> {{ $service->technician->name ?? 'Staff User' }}</div>
             </div>
         </div>
 

@@ -161,11 +161,7 @@
                                     <span class="text-slate-900">{{ \Carbon\Carbon::parse($service->completion_date)->format('d M Y') }}</span>
                                 </div>
                                 @endif
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5 no-print">
-                                    <span class="font-medium">Teknisi:</span>
-                                    <span class="text-slate-900">{{ $service->technician->name ?? 'Belum Ditugaskan' }}</span>
-                                </div>
-                                <div class="flex justify-between items-center pt-0.5">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5">
                                     <span class="font-medium">Status:</span>
                                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold 
                                         {{ $service->status === 'Menunggu' ? 'bg-amber-100 text-amber-800 border border-amber-200' : 
@@ -173,6 +169,10 @@
                                            ($service->status === 'Selesai' || $service->status === 'done' ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200')) }}">
                                         {{ strtoupper($service->status) }}
                                     </span>
+                                </div>
+                                <div class="flex justify-between items-center pt-0.5 no-print">
+                                    <span class="font-medium">Teknisi:</span>
+                                    <span class="text-slate-900">{{ $service->technician->name ?? 'Belum Ditugaskan' }}</span>
                                 </div>
                             </div>
                         </div>
