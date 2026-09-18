@@ -40,12 +40,13 @@
         }
 
         .company-name {
-            font-size: 13pt;
+            font-size: 11pt;
             font-weight: 800;
             color: #111827;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 2px;
+            white-space: nowrap;
         }
 
         .company-details {
@@ -247,9 +248,10 @@
         }
 
         .terms-content {
-            font-size: 8pt;
+            font-size: 7.5pt;
             color: #4b5563;
             line-height: 1.4;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -305,19 +307,7 @@
                             {{ $sale->customer->name ?? 'Pelanggan Umum' }}
                         </div>
                         
-                        @if($sale->customer && $sale->customer->phone)
-                        <div class="meta-row">
-                            <span class="meta-label" style="width: 50px;">Telp:</span>
-                            <span style="color: #334155;">{{ $sale->customer->phone }}</span>
-                        </div>
-                        @endif
                         
-                        @if($sale->customer && $sale->customer->email)
-                        <div class="meta-row">
-                            <span class="meta-label" style="width: 50px;">Email:</span>
-                            <span style="color: #334155;">{{ $sale->customer->email }}</span>
-                        </div>
-                        @endif
                         
                         @if($sale->customer && $sale->customer->address)
                         <div style="margin-top: 8px; line-height: 1.4;">
@@ -469,7 +459,7 @@
                 </td>
                 <td class="footer-greeting">
                     Terima kasih telah berbelanja di LKTech!<br>
-                    <strong style="color: #111827; display: block; margin-top: 4px;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</strong>
+                    <strong style="color: #111827; display: block; margin-top: 4px; font-size: 7.5pt; font-style: normal;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</strong>
                 </td>
             </tr>
         </table>
