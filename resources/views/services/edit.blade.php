@@ -255,6 +255,10 @@
                                     </select>
                                 </div>
                                 <div>
+                                    <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Tanggal Selesai</label>
+                                    <input type="date" name="completion_date" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 focus:ring-1 focus:ring-emerald-500" value="{{ $service->completion_date ? \Carbon\Carbon::parse($service->completion_date)->format('Y-m-d') : '' }}">
+                                </div>
+                                <div>
                                     <label class="block text-[10px] font-bold text-gray-700 mb-0.5">Status Bayar</label>
                                     <select name="payment_status" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 font-bold focus:ring-1 focus:ring-emerald-500">
                                         <option value="pending" {{ $service->payment_status == 'pending' || !$service->payment_status ? 'selected' : '' }}>⏳ Pending</option>

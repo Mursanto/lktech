@@ -155,6 +155,12 @@
                                     <span class="font-medium">Tanggal Masuk:</span>
                                     <span class="text-slate-900">{{ $service->created_at->format('d M Y') }}</span>
                                 </div>
+                                @if($service->completion_date)
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
+                                    <span class="font-medium">Tanggal Selesai:</span>
+                                    <span class="text-slate-900">{{ \Carbon\Carbon::parse($service->completion_date)->format('d M Y') }}</span>
+                                </div>
+                                @endif
                                 <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 no-print">
                                     <span class="font-medium">Teknisi:</span>
                                     <span class="text-slate-900">{{ $service->technician->name ?? 'Belum Ditugaskan' }}</span>
