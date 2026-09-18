@@ -274,7 +274,7 @@
                         <tr>
                             <td style="padding-right: 15px; vertical-align: middle;">
                                 <!-- Email absolute paths for images -->
-                                <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'" style="max-height: 50px;">
+                                <img src="{{ asset('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'" style="max-height: 50px; display: block;">
                             </td>
                             <td style="vertical-align: middle;">
                                 <div class="company-name">LK Tech TN SEREAL</div>
@@ -457,7 +457,7 @@
                 </td>
                 <td class="footer-greeting">
                     Terima kasih telah berbelanja di LKTech!<br>
-                    <span style="color: #4b5563; display: block; margin-top: 4px; font-size: 7pt; font-style: normal; font-weight: 500;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</span>
+                    <span style="color: #4b5563; display: block; margin-top: 4px; font-size: 7pt; font-style: normal; font-weight: 500; white-space: nowrap;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</span>
                 </td>
             </tr>
         </table>
