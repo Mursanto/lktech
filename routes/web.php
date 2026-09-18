@@ -130,6 +130,7 @@ Route::middleware(['auth', 'role:Investor'])->group(function () {
 Route::middleware(['auth', 'role:Admin|Staff'])->group(function () {
     Route::post('/sales/{sale}/mark-paid', [SaleController::class, 'markAsPaid'])->name('sales.mark-paid');
     Route::post('/sales/{sale}/complete', [SaleController::class, 'completeOrder'])->name('sales.complete');
+    Route::post('/sales/{sale}/resend-invoice', [SaleController::class, 'resendInvoice'])->name('sales.resend_invoice');
     Route::patch('/sales/{sale}/cancel', [SaleController::class, 'cancel'])->name('sales.cancel');
     Route::patch('/sales/{sale}/update-date', [SaleController::class, 'updateDate'])->name('sales.update-date');
     Route::resource('sales', SaleController::class)->except(['index', 'show']);

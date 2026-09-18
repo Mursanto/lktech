@@ -665,6 +665,24 @@ class SaleController extends Controller
     }
 
     /**
+     * Resend invoice email to customer manually.
+     */
+    public function resendInvoice(Sale $sale)
+    {
+        if (!$sale->customer || !$sale->customer->email) {
+            return back()->with('error', 'Pelanggan ini tidak memiliki alamat email yang valid.');
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($sale->customer->email)->send(new \App\Mail\OrderInvoiceMail($sale));
+            return back()->with('success', 'Invoice berhasil dikirim ulang ke email pelanggan (' . $sale->customer->email . ').');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim ulang email invoice: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim ulang invoice: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Cancel a pending sale and restore stock.
      */
     public function cancel(Sale $sale)

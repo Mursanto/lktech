@@ -278,6 +278,7 @@
                                 </button>
                             </form>
 
+
                             @role('Admin')
                             <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini secara permanen? Data stok akan dikembalikan.')" class="inline">
                                 @csrf @method('DELETE')
@@ -314,6 +315,15 @@
                                 @csrf
                                 <button type="submit" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded flex items-center shadow-sm">
                                     <i class='bx bx-package text-sm mr-1'></i> Selesaikan Pesanan
+                                </button>
+                            </form>
+                        @endif
+
+                        @if($sale->customer && $sale->customer->email)
+                            <form action="{{ route('sales.resend_invoice', $sale->id) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold rounded flex items-center shadow-sm" title="Kirim Ulang Invoice via Email">
+                                    <i class='bx bx-envelope text-sm mr-1'></i> Kirim Email
                                 </button>
                             </form>
                         @endif
