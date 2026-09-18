@@ -593,7 +593,10 @@
                             <div>
                                 <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Total Tagihan</p>
                                 <div class="flex items-center gap-2">
-                                    <p class="text-3xl font-black text-brand-600 leading-tight">{{ $totalFormatted }}</p>
+                                    <div class="text-3xl font-black text-brand-600 leading-tight flex items-baseline gap-1">
+                                        <span class="text-lg font-bold opacity-80">Rp</span>
+                                        <span>{{ number_format($sale->total_amount, 0, ',', '.') }}</span>
+                                    </div>
                                     <button onclick="navigator.clipboard.writeText('{{ $sale->total_amount }}').then(()=>{ alert('Nominal disalin!') })"
                                             class="text-brand-500 hover:text-brand-700 transition-colors" title="Salin Nominal">
                                         <i class='bx bx-copy text-lg'></i>
@@ -819,7 +822,10 @@
                                 <div>
                                     <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Total Tagihan</p>
                                     <div class="flex items-center gap-3">
-                                        <p class="text-4xl font-black text-brand-600 leading-none">{{ $totalFormatted }}</p>
+                                        <div class="text-4xl font-black text-brand-600 leading-none flex items-baseline gap-1.5">
+                                            <span class="text-xl font-bold opacity-80">Rp</span>
+                                            <span>{{ number_format($sale->total_amount, 0, ',', '.') }}</span>
+                                        </div>
                                         <button onclick="navigator.clipboard.writeText('{{ $sale->total_amount }}').then(()=>{ alert('Nominal disalin!') })"
                                                 class="text-brand-500 hover:text-brand-700 transition-colors" title="Salin Nominal">
                                             <i class='bx bx-copy text-2xl'></i>
@@ -953,7 +959,10 @@
                             <i class='bx bx-bank text-4xl'></i>
                         </div>
                         <p class="text-sm font-bold text-gray-700 mb-1">Transfer ke Virtual Account</p>
-                        <p class="text-3xl font-black text-brand-600">{{ $totalFormatted }}</p>
+                        <div class="text-3xl font-black text-brand-600 flex justify-center items-baseline gap-1">
+                            <span class="text-lg font-bold opacity-80">Rp</span>
+                            <span>{{ number_format($sale->total_amount, 0, ',', '.') }}</span>
+                        </div>
                     </div>
                     <div class="fade-in-up w-full bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-3">Nomor VA — {{ $paymentInfo['bank'] }}</p>

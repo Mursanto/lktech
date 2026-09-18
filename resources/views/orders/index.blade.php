@@ -164,7 +164,7 @@
                             <div class="sm:border-l border-t sm:border-t-0 border-gray-100 sm:pl-5 pt-4 sm:pt-0 w-full sm:w-auto flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center shrink-0">
                                 <div class="text-left sm:text-right mb-0 sm:mb-3">
                                     <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Total Tagihan</p>
-                                    <p class="text-lg font-black text-brand-600" x-text="'Rp ' + order.total_formatted"></p>
+                                    <p class="text-lg font-black text-brand-600 flex items-baseline gap-1 justify-start sm:justify-end" x-html="'<span class=\'text-xs font-bold opacity-80\'>Rp</span><span>' + order.total_formatted + '</span>'"></p>
                                 </div>
                                 <div class="flex gap-2">
                                     <a :href="'https://wa.me/628567354046?text=' + encodeURIComponent('Halo Admin, saya ingin menanyakan pesanan dengan nomor ' + order.reference_number)" target="_blank" class="px-3 py-2 rounded-xl text-brand-600 hover:bg-brand-50 border border-brand-200 transition-colors text-xs font-bold flex items-center gap-1">
@@ -228,7 +228,7 @@
                             <div class="sm:border-l border-t sm:border-t-0 border-gray-100 sm:pl-5 pt-4 sm:pt-0 w-full sm:w-auto flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center shrink-0">
                                 <div class="text-left sm:text-right mb-0 sm:mb-3">
                                     <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Total Belanja</p>
-                                    <p class="text-base font-black text-gray-900" x-text="'Rp ' + order.total_formatted"></p>
+                                    <p class="text-base font-black text-gray-900 flex items-baseline gap-1 justify-start sm:justify-end" x-html="'<span class=\'text-[10px] font-bold opacity-80\'>Rp</span><span>' + order.total_formatted + '</span>'"></p>
                                 </div>
                                 <div class="flex gap-2">
                                     <a :href="'https://wa.me/628567354046?text=' + encodeURIComponent('Halo Admin, saya ingin menanyakan pesanan Lunas saya dengan nomor ' + order.reference_number)" target="_blank" class="px-4 py-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-xl transition-colors text-xs font-bold flex items-center gap-1.5">
@@ -295,7 +295,7 @@
                             <div class="sm:border-l border-t sm:border-t-0 border-gray-100 sm:pl-5 pt-4 sm:pt-0 w-full sm:w-auto flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center shrink-0">
                                 <div class="text-left sm:text-right mb-0 sm:mb-3">
                                     <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Total Tagihan</p>
-                                    <p class="text-base font-black text-gray-900" x-text="'Rp ' + order.total_formatted"></p>
+                                    <p class="text-base font-black text-gray-900 flex items-baseline gap-1 justify-start sm:justify-end" x-html="'<span class=\'text-[10px] font-bold opacity-80\'>Rp</span><span>' + order.total_formatted + '</span>'"></p>
                                 </div>
                                 <div class="flex gap-2">
                                     <a :href="'/checkout/success/' + order.id" class="px-3 py-2 rounded-xl text-brand-600 hover:bg-brand-50 border border-brand-200 transition-colors text-xs font-bold flex items-center gap-1" title="Lihat Detail">
