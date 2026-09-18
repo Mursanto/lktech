@@ -123,15 +123,15 @@
                         <!-- Customer Information (Bill To) -->
                         <div class="bg-slate-50 p-3 rounded border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1.5 uppercase text-[10px] tracking-widest border-b border-slate-200 pb-1">Ditagihkan Kepada</h3>
-                            <div class="text-xs text-slate-700 space-y-1">
-                                <div class="font-bold text-sm text-slate-900">{{ $service->customer->name ?? 'Pelanggan Umum' }}</div>
+                            <div class="text-xs text-slate-700">
+                                <div class="font-bold text-sm text-slate-900 mb-1">{{ $service->customer->name ?? 'Pelanggan Umum' }}</div>
                                 
                                 @if($service->customer && $service->customer->phone)
-                                <div class="no-print"><strong class="text-slate-800">Telp:</strong> {{ $service->customer->phone }}</div>
+                                <div class="no-print mb-1"><strong class="text-slate-800">Telp:</strong> {{ $service->customer->phone }}</div>
                                 @endif
                                 
                                 @if($service->customer && $service->customer->email)
-                                <div class="no-print"><strong class="text-slate-800">Email:</strong> {{ $service->customer->email }}</div>
+                                <div class="no-print mb-1"><strong class="text-slate-800">Email:</strong> {{ $service->customer->email }}</div>
                                 @endif
                                 
                                 @if($service->customer && $service->customer->address)
@@ -146,22 +146,22 @@
                         <!-- Invoice Metadata -->
                         <div class="bg-slate-50 p-3 rounded border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1.5 uppercase text-[10px] tracking-widest border-b border-slate-200 pb-1">Detail Layanan</h3>
-                            <div class="text-xs text-slate-700 space-y-1.5">
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
+                            <div class="text-xs text-slate-700">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5">
                                     <span class="font-medium">No. Service:</span>
                                     <span class="font-bold text-slate-900">SVC-{{ str_pad($service->id, 6, '0', STR_PAD_LEFT) }}</span>
                                 </div>
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5">
                                     <span class="font-medium">Tanggal Masuk:</span>
                                     <span class="text-slate-900">{{ $service->created_at->format('d M Y') }}</span>
                                 </div>
                                 @if($service->completion_date)
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5">
                                     <span class="font-medium">Tanggal Selesai:</span>
                                     <span class="text-slate-900">{{ \Carbon\Carbon::parse($service->completion_date)->format('d M Y') }}</span>
                                 </div>
                                 @endif
-                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 no-print">
+                                <div class="flex justify-between items-center border-b border-slate-200/60 pb-1 mb-1.5 no-print">
                                     <span class="font-medium">Teknisi:</span>
                                     <span class="text-slate-900">{{ $service->technician->name ?? 'Belum Ditugaskan' }}</span>
                                 </div>
