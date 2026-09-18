@@ -344,23 +344,52 @@ class SaleController extends Controller
                     $customerId = $request->customer_id;
                 }
 
-                $grandTotal = 0;
+                $discount = $request->input('discount', 0);
+                
+                $subtotal = 0;
+                $totalPurchasePrice = 0;
                 $totalProfit = 0;
 
-                // 4. Simpan Item Baru & Potong Stok Baru
+                // Hitung total subtotal dulu untuk proporsi diskon
                 foreach ($request->items as $item) {
                     $product = Product::lockForUpdate()->findOrFail($item['product_id']);
                     
                     if ($product->stock < $item['quantity']) {
                         throw new \Exception("Stok {$product->brand} tidak mencukupi! Sisa: {$product->stock}");
                     }
-
-                    // Verifikasi SN telah dihapus agar lebih fleksibel
-
-                    $subtotal = $product->selling_price * $item['quantity'];
-                    $profit = ($product->selling_price - ($product->purchase_price ?? 0)) * $item['quantity']; 
                     
-                    $grandTotal += $subtotal;
+                    $subtotal += ($product->selling_price * $item['quantity']);
+                    $totalPurchasePrice += (($product->purchase_price ?? 0) * $item['quantity']);
+                }
+
+                $grandTotal = $subtotal - $discount;
+
+                // Validasi Margin: Grand Total tidak boleh lebih kecil dari Harga Modal
+                if ($grandTotal < $totalPurchasePrice) {
+                    throw new \Exception("Diskon terlalu besar! Total Akhir (Rp " . number_format($grandTotal, 0, ',', '.') . ") lebih rendah dari Total Modal (Rp " . number_format($totalPurchasePrice, 0, ',', '.') . ").");
+                }
+
+                $discountRemaining = $discount;
+                $itemsCount = count($request->items);
+                $loopIndex = 0;
+
+                // 4. Simpan Item Baru & Potong Stok Baru
+                foreach ($request->items as $item) {
+                    $loopIndex++;
+                    $product = Product::findOrFail($item['product_id']);
+                    
+                    $itemSubtotal = $product->selling_price * $item['quantity'];
+                    
+                    // Proporsi diskon untuk item ini
+                    if ($loopIndex === $itemsCount) {
+                        $itemDiscount = $discountRemaining; // Sisa diskon untuk item terakhir (menghindari selisih pembulatan)
+                    } else {
+                        $itemDiscount = $subtotal > 0 ? (int) round(($itemSubtotal / $subtotal) * $discount) : 0;
+                        $discountRemaining -= $itemDiscount;
+                    }
+
+                    // Profit = (Harga Jual - Harga Beli) * Qty - Diskon Item
+                    $profit = (($product->selling_price - ($product->purchase_price ?? 0)) * $item['quantity']) - $itemDiscount; 
                     $totalProfit += $profit;
 
                     SaleDetail::create([
@@ -383,6 +412,8 @@ class SaleController extends Controller
                 // 5. Update Faktur Induk
                 $saleUpdateData = [
                     'customer_id' => $customerId,
+                    'subtotal' => $subtotal,
+                    'discount' => $discount,
                     'total_amount' => $grandTotal,
                     'profit_amount' => $totalProfit,
                     'payment_method' => $request->payment_method,
