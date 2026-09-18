@@ -115,9 +115,9 @@
                         </div>
 
                         <!-- Notes -->
-                        <div class="flex-grow">
+                        <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Catatan Tambahan</label>
-                            <textarea name="notes" rows="5" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-teal-500"
+                            <textarea name="notes" rows="4" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-teal-500"
                                 placeholder="Kondisi unit, jaminan, kelengkapan...">{{ old('notes', $rental->notes) }}</textarea>
                         </div>
                     </div>

@@ -193,10 +193,10 @@
                             </div>
                         </div>
 
-                        <!-- Notes (flexible height) -->
-                        <div class="flex-grow flex flex-col">
+                        <!-- Notes -->
+                        <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Catatan Tambahan</label>
-                            <textarea name="notes" class="flex-grow w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-teal-500 min-h-[60px]"
+                            <textarea name="notes" rows="4" class="w-full border border-gray-300 rounded px-2 py-1 text-xs bg-gray-50 resize-none focus:ring-1 focus:ring-teal-500 min-h-[60px]"
                                 placeholder="Kondisi unit, jaminan, kelengkapan yang diserahkan...">{{ old('notes') }}</textarea>
                         </div>
                     </div>
