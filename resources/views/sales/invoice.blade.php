@@ -256,59 +256,71 @@
 <body>
     <div class="container">
         <!-- Header -->
-        <table class="header-table">
+        <table class="header-table" style="border-collapse: collapse;">
             <tr>
-                <td class="header-logo">
-                    <!-- DOMPDF absolute paths for images -->
-                    <img src="{{ public_path('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'">
-                    <div>
-                        <div class="company-name">LK Tech TN SEREAL</div>
-                        <div class="company-details">
-                            Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
-                            Mekarwangi, Tanah Sereal, Bogor 16168<br>
-                            Telp: 0856-7354-046<br>
-                            Website: <a href="https://lktech.online/">https://lktech.online/</a>
-                        </div>
-                    </div>
+                <td class="header-logo" style="width: 50%; vertical-align: middle;">
+                    <table style="border-collapse: collapse;">
+                        <tr>
+                            <td style="padding-right: 15px; vertical-align: middle;">
+                                <!-- DOMPDF absolute paths for images -->
+                                <img src="{{ public_path('images/LKtech.png') }}" alt="LK Tech Logo" onerror="this.style.display='none'" style="max-height: 50px;">
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <div class="company-name">LK Tech TN SEREAL</div>
+                                <div class="company-details">
+                                    Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
+                                    Mekarwangi, Tanah Sereal, Bogor 16168<br>
+                                    Telp: 0856-7354-046<br>
+                                    Website: <a href="https://lktech.online/">https://lktech.online/</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td class="header-title">
-                    <div class="invoice-title">INVOICE</div>
+                <td class="header-title" style="width: 50%; text-align: right; vertical-align: middle;">
+                    <h1 class="invoice-title" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">INVOICE</h1>
                 </td>
             </tr>
         </table>
 
         <!-- 2-Column Details -->
-        <table class="details-table">
+        <table style="width: 100%; margin-bottom: 25px; border-collapse: collapse;">
             <tr>
-                <!-- Bill To -->
-                <td class="details-box" style="margin-right: 7.5px;">
+                <!-- Customer Info -->
+                <td style="width: 48%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; vertical-align: top; height: 150px;">
                     <div class="box-title">Ditagihkan Kepada</div>
                     <div class="box-content">
-                        <div style="font-size: 11pt; font-weight: 700; color: #0f172a; margin-bottom: 5px;">
-                            {{ $sale->customer->name ?? $sale->customer_name ?? 'Pelanggan Umum' }}
+                        <div style="font-weight: 800; font-size: 11pt; color: #0f172a; margin-bottom: 8px;">
+                            {{ $sale->customer->name ?? 'Pelanggan Umum' }}
                         </div>
                         
-                        @if(($sale->customer && $sale->customer->phone) || !empty($sale->phone))
-                        <div style="margin-bottom: 2px;"><strong>Telp:</strong> {{ $sale->customer->phone ?? $sale->phone }}</div>
+                        @if($sale->customer && $sale->customer->phone)
+                        <div class="meta-row">
+                            <span class="meta-label" style="width: 50px;">Telp:</span>
+                            <span style="color: #334155;">{{ $sale->customer->phone }}</span>
+                        </div>
                         @endif
                         
-                        @if(($sale->customer && $sale->customer->email) || !empty($sale->email))
-                        <div style="margin-bottom: 2px;"><strong>Email:</strong> {{ $sale->customer->email ?? $sale->email }}</div>
+                        @if($sale->customer && $sale->customer->email)
+                        <div class="meta-row">
+                            <span class="meta-label" style="width: 50px;">Email:</span>
+                            <span style="color: #334155;">{{ $sale->customer->email }}</span>
+                        </div>
                         @endif
                         
-                        @if(($sale->customer && $sale->customer->address) || !empty($sale->address))
-                        <div style="margin-top: 5px;">
-                            <strong>Alamat:</strong><br>
-                            {{ $sale->customer->address ?? $sale->address }}
+                        @if($sale->customer && $sale->customer->address)
+                        <div style="margin-top: 8px; line-height: 1.4;">
+                            <strong style="display: block; margin-bottom: 2px;">Alamat:</strong>
+                            <span style="color: #334155;">{{ $sale->customer->address }}</span>
                         </div>
                         @endif
                     </div>
                 </td>
                 
-                <td style="width: 15px;"></td> <!-- Spacer -->
+                <td style="width: 4%;"></td> <!-- Spacer -->
 
                 <!-- Invoice Meta -->
-                <td class="details-box" style="margin-left: 7.5px;">
+                <td style="width: 48%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px; vertical-align: top; height: 150px;">
                     <div class="box-title">Detail Faktur</div>
                     <div class="box-content">
                           <table style="width: 100%; border-collapse: collapse;">
@@ -439,13 +451,14 @@
                 <td class="footer-terms">
                     <div class="terms-title">Ketentuan Garansi</div>
                     <div class="terms-content">
-                        <div>1. Garansi 2 mgg hardware. Segel utuh wajib.</div>
-                        <div>2. Retur 7 hari jika produk masih baik. Batal jika jatuh/air.</div>
-                        <div>3. Preorder estimasi pengirman 1-2 Minggu</div>
+                        1. Garansi 2 mgg hardware sejak pembelian. Segel utuh wajib.<br>
+                        2. Garansi Lifetime software (OS & MS Word) s.d tidak di-uninstall.<br>
+                        3. Batal jika cacat fisik (jatuh/kena air/modifikasi).
                     </div>
                 </td>
                 <td class="footer-greeting">
-                    Terima kasih telah berbelanja di LKTech!
+                    Terima kasih telah berbelanja di LKTech!<br>
+                    <strong style="color: #111827; display: block; margin-top: 4px;">Struk ini berfungsi sebagai Bukti Pemesanan dan/atau Pembelian</strong>
                 </td>
             </tr>
         </table>
