@@ -111,7 +111,10 @@
                         
                         <!-- Invoice Title -->
                         <div class="mt-2 md:mt-0 text-left md:text-right">
-                            <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-1">Service Invoice</h2>
+                            <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-0.5">Service Invoice</h2>
+                            <div class="text-[10px] text-gray-500 font-medium tracking-wide">
+                                Order ID {{ $service->payment_reference_id ?? 'SVC-' . $service->id . '-' . ($service->created_at ? $service->created_at->timestamp : time()) }}
+                            </div>
                         </div>
                     </div>
 

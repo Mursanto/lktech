@@ -231,7 +231,8 @@
         </div>
 
         <!-- Invoice Title -->
-        <div class="invoice-title">TANDA TERIMA SERVIS</div>
+        <div class="invoice-title" style="margin-bottom: 2px;">TANDA TERIMA SERVIS</div>
+        <div style="text-align: center; font-size: 8pt; color: #6b7280; margin-bottom: 20px; letter-spacing: 0.5px;">Order ID {{ $service->payment_reference_id ?? 'SVC-' . $service->id . '-' . ($service->created_at ? $service->created_at->timestamp : time()) }}</div>
 
         <!-- Invoice Information -->
         <div class="invoice-info">
