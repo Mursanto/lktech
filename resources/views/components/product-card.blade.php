@@ -14,7 +14,8 @@
             <div class="badge-promo-live">🔥 PROMO UTAMA</div>
             @endif
 
-            <!-- Badges Area (top-right) -->
+            <!-- Badges Area (top-right) - Sembunyikan jika produk promo -->
+            @if(!$isPromo)
             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
                 {{-- Badge Stok Tersedia / Habis --}}
                 @if($product->stock > 0 && $product->status !== 'Sold')
@@ -27,6 +28,7 @@
                     </span>
                 @endif
             </div>
+            @endif
         </div>
 
         <!-- Content Details -->
