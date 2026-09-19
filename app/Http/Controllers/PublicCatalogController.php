@@ -71,6 +71,41 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
+        // ─── Ekstrak Promo Product IDs dari Banner Promo ───────────────────────
+        $promoProductIds = collect();
+        if ($setting && !empty($setting->promo_banners)) {
+            foreach ($setting->promo_banners as $banner) {
+                $link = $banner['link'] ?? '';
+                // Coba match URL katalog: /katalog/{id}
+                if (preg_match('#/katalog/(\d+)#', $link, $m)) {
+                    $promoProductIds->push((int) $m[1]);
+                }
+            }
+            $promoProductIds = $promoProductIds->unique()->values();
+        }
+
+        // Tandai & utamakan produk promo di baris pertama
+        if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
+            // Flag is_active_promo
+            $collectionToTransform->transform(function ($product) use ($promoProductIds) {
+                $product->is_active_promo = $promoProductIds->contains($product->id);
+                return $product;
+            });
+
+            // Pindahkan produk promo ke paling depan
+            $promoItems    = $collectionToTransform->filter(fn($p) => $p->is_active_promo)->values();
+            $regularItems  = $collectionToTransform->filter(fn($p) => !$p->is_active_promo)->values();
+            $sorted        = $promoItems->concat($regularItems);
+
+            // Ganti koleksi di objek $products jika paginate, atau langsung
+            if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+                $products->setCollection($sorted);
+            } else {
+                $products = $sorted;
+            }
+        }
+        // ───────────────────────────────────────────────────────────────────────
+
         // 1. Lisensi & Software (ID: 15)
         $softwareProducts = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 15)->orWhere('parent_id', 15)->pluck('id'))

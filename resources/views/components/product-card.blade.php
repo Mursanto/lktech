@@ -1,6 +1,7 @@
 @props(['product'])
+@php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full">
+<div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full {{ $isPromo ? 'promo-card-radar border-orange-400' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
@@ -8,6 +9,11 @@
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
             <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             
+            {{-- Badge PROMO UTAMA (top-left) --}}
+            @if($isPromo)
+            <div class="badge-promo-live">🔥 PROMO UTAMA</div>
+            @endif
+
             <!-- Badges Area (top-right) -->
             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
                 {{-- Badge Stok Tersedia / Habis --}}

@@ -47,6 +47,44 @@
         [x-cloak] { display: none !important; }
 
         /* ==========================================
+           RADAR WAVE — PROMO PRODUCT CARDS
+           ========================================== */
+
+        /* Badge PROMO UTAMA (pojok kiri atas gambar) */
+        .badge-promo-live {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            padding: 3px 8px 3px 6px;
+            border-bottom-right-radius: 10px;
+            z-index: 20;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            box-shadow: 2px 2px 6px rgba(239,68,68,0.4);
+        }
+
+        /* Radar / pulsing ring effect on promo card wrapper */
+        @keyframes radarPulse {
+            0%   { box-shadow: 0 0 0 0   rgba(249,115,22,0.55), 0 0 0 0   rgba(239,68,68,0.35); }
+            50%  { box-shadow: 0 0 0 8px rgba(249,115,22,0.0),  0 0 0 16px rgba(239,68,68,0.0); }
+            100% { box-shadow: 0 0 0 0   rgba(249,115,22,0.0),  0 0 0 0   rgba(239,68,68,0.0); }
+        }
+
+        .promo-card-radar {
+            animation: radarPulse 2.2s ease-out infinite;
+            /* Extra glow border handled by Tailwind border-orange-400 */
+        }
+
+        .promo-card-radar:hover {
+            animation-play-state: paused;
+        }
+
+        /* ==========================================
            PIANO WAVE ANIMATION UNTUK SERVICE CARDS
            ========================================== */
         @keyframes pianoWave {
