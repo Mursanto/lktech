@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
@@ -102,32 +102,22 @@
             </div>
         </div>
 
-        <!-- =====================================================================
-             FITUR TRACKING STATUS SEWA
-             ===================================================================== -->
+        <!-- ===================================================================== -->
         <div class="bg-gradient-to-r from-emerald-600 to-teal-500 py-6 px-4 sm:px-6 lg:px-8"
              x-data="{
                  contractNo: '',
-                 status: null,
+                 result: null,
                  loading: false,
                  error: '',
-                 trackRental() {
-                     if (!this.contractNo.trim()) {
-                         this.error = 'Masukkan Nomor Kontrak / Invoice Sewa Anda terlebih dahulu.';
-                         return;
-                     }
-                     this.error = '';
-                     this.loading = true;
-                     this.status = null;
-                     setTimeout(() => {
-                         const msg = encodeURIComponent('Halo LKTech, saya ingin mengecek status sewa dengan Nomor Kontrak: ' + this.contractNo.trim());
-                         window.open('https://wa.me/628567354046?text=' + msg, '_blank');
-                         this.loading = false;
-                         this.status = {
-                             kontrak: this.contractNo.trim(),
-                             info: 'Permintaan pengecekan telah dikirim via WhatsApp. Tim LKTech akan membalas dan memberikan informasi status sewa Anda segera.'
-                         };
-                     }, 800);
+                 async trackRental() {
+                     if (!this.contractNo.trim()) { this.error = 'Masukkan Nomor Kontrak Sewa Anda terlebih dahulu.'; return; }
+                     this.error = ''; this.loading = true; this.result = null;
+                     try {
+                         const res = await fetch('/api/track-rental?q=' + encodeURIComponent(this.contractNo.trim()));
+                         const data = await res.json();
+                         if (data.found) { this.result = data; } else { this.error = data.message; }
+                     } catch(e) { this.error = 'Gagal menghubungi server. Coba lagi.'; }
+                     this.loading = false;
                  }
              }">
             <div class="max-w-2xl mx-auto">
@@ -137,18 +127,13 @@
                     </h2>
                     <p class="text-emerald-200 text-xs truncate">Masukkan nomor kontrak untuk cek status sewa.</p>
                 </div>
-
-                <!-- Input Form -->
                 <div class="bg-white rounded-xl shadow-lg p-4 text-left">
                     <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Kontrak / Invoice Sewa</label>
                     <div class="flex gap-2">
-                        <input type="text"
-                               x-model="contractNo"
-                               @keyup.enter="trackRental()"
+                        <input type="text" x-model="contractNo" @keyup.enter="trackRental()"
                                placeholder="Contoh: RNT-2026-0008 atau INV-SEWA-XXXX"
                                class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
-                        <button @click="trackRental()"
-                                :disabled="loading"
+                        <button @click="trackRental()" :disabled="loading"
                                 class="shrink-0 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-sm flex items-center gap-1.5 shadow-md">
                             <i class='bx bx-search text-base' x-show="!loading"></i>
                             <i class='bx bx-loader-alt animate-spin text-base' x-show="loading" x-cloak></i>
@@ -156,28 +141,76 @@
                             <span x-show="loading" x-cloak>Mengecek...</span>
                         </button>
                     </div>
-
-                    <!-- Error -->
                     <p x-show="error" x-text="error" x-cloak class="text-red-500 text-xs font-semibold mt-1.5"></p>
-
-                    <!-- Status Result -->
-                    <div x-show="status" x-cloak class="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg fade-in-up">
-                        <div class="flex items-start gap-2">
-                            <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center shrink-0">
-                                <i class='bx bx-message-check text-white text-sm'></i>
-                            </div>
+                    <div x-show="result" x-cloak class="mt-3 border rounded-xl overflow-hidden fade-in-up">
+                        <div class="px-4 py-3 flex items-center justify-between border-b"
+                             :class="{'bg-blue-50 border-blue-200':result&&result.status==='active','bg-green-50 border-green-200':result&&result.status==='completed','bg-red-50 border-red-200':result&&result.status==='overdue'}">
                             <div>
-                                <p class="font-bold text-gray-900 text-sm">Kontrak: <span class="text-emerald-600" x-text="status && status.kontrak"></span></p>
-                                <p class="text-gray-600 text-xs mt-0.5" x-text="status && status.info"></p>
+                                <p class="font-black text-gray-900 text-sm" x-text="result&&result.contract_no"></p>
+                                <p class="text-gray-500 text-xs" x-text="result&&('Terdaftar: '+result.created_at)"></p>
                             </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-black"
+                                  :class="{'bg-blue-100 text-blue-800':result&&result.status==='active','bg-green-100 text-green-800':result&&result.status==='completed','bg-red-100 text-red-800':result&&result.status==='overdue'}"
+                                  x-text="result&&(result.status_icon+' '+result.status_label)"></span>
+                        </div>
+                        <div class="bg-white px-4 py-3 grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Penyewa</p><p class="font-semibold text-gray-800" x-text="result&&result.customer_name"></p></div>
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Laptop / Unit</p><p class="font-semibold text-gray-800" x-text="result&&result.laptop_name"></p></div>
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Tgl Pinjam</p><p class="font-semibold text-gray-800" x-text="result&&result.rental_date"></p></div>
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Tgl Kembali</p><p class="font-semibold text-gray-800" x-text="result&&result.return_date"></p></div>
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Status Bayar</p><p class="font-semibold" :class="result&&result.payment_status==='Lunas'?'text-green-600':'text-orange-500'" x-text="result&&result.payment_status"></p></div>
+                            <div><p class="text-gray-400 font-bold uppercase text-[10px]">Total Biaya</p><p class="font-black text-emerald-600" x-text="result&&('Rp '+result.total)"></p></div>
                         </div>
                     </div>
-
-                    <!-- Help Text -->
-                    <p class="text-gray-400 text-[10px] mt-2 text-center">Nomor kontrak terdapat pada surat perjanjian sewa atau email konfirmasi dan LKTech.</p>
+                    <p class="text-gray-400 text-[10px] mt-2 text-center">Nomor kontrak terdapat pada surat perjanjian sewa atau email konfirmasi dari LKTech.</p>
                 </div>
             </div>
         </div>
+
+        <!-- Status Tabs -->
+        <div class="bg-white border-b border-gray-100 py-6 px-4 sm:px-6 lg:px-8"
+             x-data="{activeTab:'active',searchQ:'',items:[],loading:false,tabs:[{key:'active',label:'Aktif'},{key:'completed',label:'Selesai'},{key:'overdue',label:'Terlambat'}],
+                 async load(){this.loading=true;try{const r=await fetch('/api/list-rentals?status='+this.activeTab+'&q='+encodeURIComponent(this.searchQ));const d=await r.json();this.items=d.data||[];}catch(e){this.items=[];}this.loading=false;},
+                 async switchTab(t){this.activeTab=t;await this.load();}}" x-init="load()">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex gap-2 mb-4">
+                    <input type="text" x-model="searchQ" @keyup.enter="load()" placeholder="Cari Nomor Kontrak (Contoh: RNT-2026-08...)"
+                           class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 text-sm font-semibold placeholder-gray-400 transition-all">
+                    <button @click="load()" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-sm flex items-center gap-1.5 transition-all">
+                        <i class='bx bx-search'></i> Cari
+                    </button>
+                </div>
+                <div class="flex gap-1 border-b border-gray-200 mb-4">
+                    <template x-for="tab in tabs" :key="tab.key">
+                        <button @click="switchTab(tab.key)" x-text="tab.label"
+                                class="px-4 py-2 text-sm font-bold transition-all border-b-2 -mb-px"
+                                :class="activeTab===tab.key?'border-emerald-500 text-emerald-600':'border-transparent text-gray-500 hover:text-gray-700'"></button>
+                    </template>
+                </div>
+                <div x-show="loading" class="text-center py-8 text-gray-400"><i class='bx bx-loader-alt animate-spin text-2xl'></i><p class="mt-1 text-sm">Memuat data...</p></div>
+                <div x-show="!loading&&items.length===0" class="text-center py-10 text-gray-400">
+                    <i class='bx bx-laptop text-4xl'></i><p class="text-sm font-semibold mt-2">Belum ada data sewa untuk status ini.</p>
+                </div>
+                <div x-show="!loading&&items.length>0" class="space-y-2">
+                    <template x-for="item in items" :key="item.id">
+                        <div class="flex items-center justify-between bg-white border border-gray-100 rounded-xl px-4 py-3 hover:border-emerald-200 hover:shadow-sm transition-all">
+                            <div>
+                                <p class="font-bold text-gray-800 text-sm" x-text="item.contract_no"></p>
+                                <p class="text-gray-500 text-xs" x-text="item.customer+' - '+item.laptop"></p>
+                                <p class="text-gray-400 text-[10px]" x-text="item.rental_date+' s/d '+item.return_date"></p>
+                            </div>
+                            <div class="text-right">
+                                <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black mb-1"
+                                      :class="{'bg-blue-100 text-blue-700':item.status==='active','bg-green-100 text-green-700':item.status==='completed','bg-red-100 text-red-700':item.status==='overdue'}"
+                                      x-text="item.status_label"></span>
+                                <p class="font-black text-emerald-600 text-sm" x-text="'Rp '+item.total"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Status Alur Sewa (Visual) -->
         <div class="bg-white py-8 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
@@ -329,7 +362,7 @@
                             <i class='bx bx-sun'></i>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 mb-1 font-montserrat">Paket Harian</h3>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5">1 – 7 Hari</p>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5">1 â€“ 7 Hari</p>
                         <div class="mb-6">
                             <span class="text-3xl font-black text-gray-900">Mulai Rp 100.000</span>
                             <span class="text-gray-400 text-sm">/hari</span>
@@ -357,14 +390,14 @@
                             <i class='bx bx-calendar-week'></i>
                         </div>
                         <h3 class="text-xl font-bold text-emerald-600 mb-1 font-montserrat relative z-10">Paket Mingguan</h3>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5 relative z-10">1 – 4 Minggu</p>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5 relative z-10">1 â€“ 4 Minggu</p>
                         <div class="mb-6 relative z-10">
                             <span class="text-3xl font-black text-gray-900">Mulai Rp 550.000</span>
                             <span class="text-gray-400 text-sm">/minggu</span>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-700 font-semibold flex-1 mb-6 relative z-10">
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Laptop Core i5 / i7 / Ryzen</li>
-                            <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> RAM 8–16GB, SSD 256GB+</li>
+                            <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> RAM 8â€“16GB, SSD 256GB+</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> OS Windows Original + Office</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Antar ke lokasi (area tertentu)</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Support &amp; Maintenance</li>
@@ -390,7 +423,7 @@
                         </div>
                         <ul class="space-y-3 text-sm text-gray-600 font-medium flex-1 mb-6">
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Laptop / PC pilihan bebas spek</li>
-                            <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> RAM 16–32GB, SSD NVMe</li>
+                            <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> RAM 16â€“32GB, SSD NVMe</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Full Setup &amp; Instalasi Software</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Antar-jemput gratis (area tertentu)</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Maintenance &amp; Penggantian Unit</li>
@@ -451,7 +484,7 @@
                         <div class="w-14 h-14 mx-auto bg-emerald-500 border-4 border-emerald-200 text-white rounded-full flex items-center justify-center text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] mb-4">
                             <i class='bx bx-check'></i>
                         </div>
-                        <h4 class="font-bold text-emerald-700 mb-2 text-sm font-montserrat">Perangkat Dikirim ✅</h4>
+                        <h4 class="font-bold text-emerald-700 mb-2 text-sm font-montserrat">Perangkat Dikirim âœ…</h4>
                         <p class="text-xs text-gray-500 leading-relaxed">Perangkat diantar ke alamat operasional Anda, sudah setup dan siap digunakan langsung.</p>
                     </div>
                 </div>
@@ -463,7 +496,7 @@
                     <div class="relative z-10">
                         <span class="inline-block bg-white/20 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-white/30 mb-4">Mulai Sewa Sekarang</span>
                         <h3 class="text-xl md:text-2xl font-black text-white font-montserrat mb-3">Butuh PC / Laptop untuk Event, Kantor, atau Proyek?</h3>
-                        <p class="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto mb-6">Kami siap menyediakan perangkat sesuai kebutuhan Anda — dari 1 unit untuk personal hingga puluhan unit untuk perusahaan dan event besar.</p>
+                        <p class="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto mb-6">Kami siap menyediakan perangkat sesuai kebutuhan Anda â€” dari 1 unit untuk personal hingga puluhan unit untuk perusahaan dan event besar.</p>
                         <div class="flex flex-col sm:flex-row gap-3 justify-center">
                             <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin konsultasi Sewa PC/Laptop.') }}" target="_blank"
                                class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-emerald-600 font-bold rounded-xl hover:bg-emerald-50 transition shadow-md text-sm">

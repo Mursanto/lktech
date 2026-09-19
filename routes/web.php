@@ -68,8 +68,14 @@ Route::view('/jasa-furniture', 'pages.jasa-furniture')->name('jasa-furniture');
 Route::view('/martabak-jawara', 'pages.martabak-jawara')->name('martabak-jawara');
 Route::view('/layanan/limbah-elektronik', 'pages.limbah-elektronik')->name('limbah-elektronik');
 Route::redirect('/bintang-scrap', '/layanan/limbah-elektronik', 301);
-Route::view('/service-pc', 'pages.service-pc')->name('service-pc');
-Route::view('/sewa-laptop', 'pages.sewa-laptop')->name('sewa-laptop');
+Route::get('/service-pc', [PageController::class, 'servicePc'])->name('service-pc');
+Route::get('/sewa-laptop', [PageController::class, 'sewaLaptop'])->name('sewa-laptop');
+
+// Public Tracking APIs
+Route::get('/api/track-service', [PageController::class, 'trackService']);
+Route::get('/api/track-rental', [PageController::class, 'trackRental']);
+Route::get('/api/list-services', [PageController::class, 'listServices']);
+Route::get('/api/list-rentals', [PageController::class, 'listRentals']);
 
 // Blog Public Routes
 Route::get('/blog', [App\Http\Controllers\PublicBlogController::class, 'index'])->name('blog.index');
