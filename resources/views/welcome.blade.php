@@ -72,10 +72,22 @@
             100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
         }
 
+        /* Radar / pulsing ring effect on promo card wrapper */
+        @keyframes radarPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+            50%  { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0.0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.0); }
+        }
+
         /* Border Kartu Promo Merah Halus */
         .promo-card-radar {
             border: 2px solid #ef4444 !important;
             border-radius: 12px;
+            animation: radarPulse 2.2s ease-out infinite;
+        }
+
+        .promo-card-radar:hover {
+            animation-play-state: paused;
         }
 
         /* ==========================================
