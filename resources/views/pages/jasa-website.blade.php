@@ -371,41 +371,42 @@
                     @forelse($packages as $package)
                     @php
                         $isHighlighted = !empty($package->badge);
-                        $bgStyles = [
-                            'bg-gradient-to-br from-blue-50 to-white border-blue-100',
-                            'bg-gradient-to-br from-indigo-50 to-white border-indigo-200',
-                            'bg-gradient-to-br from-emerald-50 to-white border-emerald-100'
-                        ];
-                        $iconColors = [
-                            'text-blue-500',
-                            'text-indigo-500',
-                            'text-emerald-500'
-                        ];
-                        $bgClass = $bgStyles[$loop->index % 3];
-                        $iconClass = $iconColors[$loop->index % 3];
                         
-                        if($isHighlighted) {
-                            $bgClass = 'bg-gradient-to-br from-brand-50 to-white border-2 border-brand-400';
-                            $iconClass = 'text-brand-600';
+                        $bgClass = 'bg-slate-50 border-gray-200';
+                        $iconClass = 'text-blue-500';
+                        
+                        $btnText = 'Pilih Paket Starter';
+                        $btnClass = 'px-6 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-xl transition-colors border border-blue-200 shadow-sm';
+                        
+                        if ($loop->index == 1) {
+                            $btnText = 'Pilih Paket Populer';
+                        } elseif ($loop->index == 2) {
+                            $btnText = 'Konsultasi Paket E-Commerce';
                         }
                         
-                        $highlightClass = $isHighlighted ? 'shadow-2xl z-10 md:-translate-y-4 transform' : 'shadow-sm hover:shadow-xl';
+                        if($isHighlighted) {
+                            $bgClass = 'bg-white border-2 border-blue-500 relative';
+                            $iconClass = 'text-blue-600';
+                            $btnClass = 'px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5';
+                        }
+                        
+                        $highlightClass = $isHighlighted ? 'shadow-[0_10px_25px_-5px_rgba(37,99,235,0.25)] z-20 md:scale-105 transform' : 'shadow-sm hover:shadow-md';
                     @endphp
                     <!-- Card: {{ $package->nama_paket }} -->
                     <div class="rounded-3xl border {{ $bgClass }} {{ $highlightClass }} p-8 transition-all flex flex-col h-full relative group">
                         @if($isHighlighted)
-                        <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">
+                        <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">
                             {{ $package->badge }}
                         </div>
                         @endif
                         
                         <div class="flex-grow relative z-10 text-center">
-                            <h3 class="{{ $isHighlighted ? 'text-lg md:text-xl font-bold text-brand-600' : 'text-base md:text-lg font-bold text-gray-900' }} mb-2 font-montserrat leading-tight md:min-h-[3rem]">{{ $package->nama_paket }}</h3>
-                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed mb-6 line-clamp-4 md:line-clamp-3 md:min-h-[2.75rem] text-left">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
+                            <h3 class="{{ $isHighlighted ? 'text-xl font-extrabold text-blue-700' : 'text-lg font-bold text-gray-900' }} mb-3 font-montserrat leading-tight md:min-h-[3rem]">{{ $package->nama_paket }}</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed text-left md:min-h-[3.5rem]">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
-                            <div class="mb-6 md:mb-8 flex items-baseline justify-center gap-1">
-                                <span class="text-xs sm:text-sm font-bold text-gray-900">Rp</span>
-                                <span class="{{ $isHighlighted ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
+                            <div class="mt-5 mb-8 flex items-baseline justify-center gap-1.5">
+                                <span class="text-sm font-medium text-gray-500">Rp</span>
+                                <span class="text-4xl font-extrabold text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
                             <ul class="space-y-3 mb-8 text-[11px] sm:text-xs text-left {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
@@ -418,12 +419,12 @@
                                 @endif
                             </ul>
                         </div>
-                        <div class="mt-auto pt-6 border-t border-white/50 relative z-10">
+                        <div class="mt-auto pt-6 border-t border-gray-200 relative z-10">
                             @php
                                 $waText = urlencode("Halo LKtech, saya ingin konsultasi mengenai Jasa Pembuatan Website (".$package->nama_paket.").");
                             @endphp
-                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5' : 'px-6 py-3 bg-white hover:bg-gray-50 text-gray-800 font-bold rounded-xl transition-colors shadow-sm border border-gray-100' }}">
-                                {{ $isHighlighted ? 'Pilih Paket Spesial' : 'Pilih Paket' }}
+                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $btnClass }}">
+                                {{ $btnText }}
                             </a>
                         </div>
                     </div>
