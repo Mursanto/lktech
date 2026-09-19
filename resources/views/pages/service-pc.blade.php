@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
@@ -86,7 +86,7 @@
                 </div>
                 <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
                     <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600"><i class='bx bx-time text-base'></i></span>
-                    Pengerjaan 1â€“3 Hari
+                    Pengerjaan 1-3 Hari
                 </div>
                 <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
                     <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600"><i class='bx bx-chip text-base'></i></span>
