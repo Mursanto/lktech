@@ -381,11 +381,11 @@
                         <div class="absolute inset-0 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl pointer-events-none"></div>
                         @endif
                         
-                        <div class="flex-grow relative z-10">
-                            <h3 class="{{ $isHighlighted ? 'text-xl md:text-2xl font-bold text-brand-600' : 'text-lg md:text-xl font-bold text-gray-900' }} mb-2 font-montserrat leading-tight line-clamp-2 md:min-h-[3.5rem]" title="{{ $package->nama_paket }}">{{ $package->nama_paket }}</h3>
-                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed mb-6 line-clamp-4 md:line-clamp-3 md:min-h-[2.75rem]" title="{{ $package->deskripsi_singkat }}">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
+                        <div class="flex-grow relative z-10 text-center">
+                            <h3 class="{{ $isHighlighted ? 'text-lg md:text-xl font-bold text-brand-600' : 'text-base md:text-lg font-bold text-gray-900' }} mb-2 font-montserrat leading-tight md:min-h-[3rem]">{{ $package->nama_paket }}</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed mb-6 line-clamp-4 md:line-clamp-3 md:min-h-[2.75rem] text-left">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
-                            <div class="mb-6 md:mb-8 flex items-baseline gap-1">
+                            <div class="mb-6 md:mb-8 flex items-baseline justify-center gap-1">
                                 <span class="text-xs sm:text-sm font-bold text-gray-900">Rp</span>
                                 <span class="{{ $isHighlighted ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
