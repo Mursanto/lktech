@@ -52,17 +52,20 @@
 
         /* Badge Promo Utama - Warna Merah Crimson */
         .badge-promo-live {
+            position: absolute;
+            top: 0;
+            left: 0;
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #ffffff;
-            font-weight: 700;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            padding: 3px 8px 3px 6px;
+            border-bottom-right-radius: 10px;
+            border-top-left-radius: 11px;
+            z-index: 20;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            white-space: nowrap;
             animation: badgeGlow 1.5s infinite;
         }
 
