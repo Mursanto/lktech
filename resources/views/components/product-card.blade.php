@@ -1,7 +1,7 @@
 @props(['product'])
 @php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full {{ $isPromo ? 'promo-card-radar border-orange-400' : 'border-gray-200' }}">
+<div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full {{ $isPromo ? 'promo-card-radar' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">

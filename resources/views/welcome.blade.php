@@ -50,38 +50,32 @@
            RADAR WAVE — PROMO PRODUCT CARDS
            ========================================== */
 
-        /* Badge PROMO UTAMA (pojok kiri atas gambar) */
+        /* Badge Promo Utama - Warna Merah Crimson */
         .badge-promo-live {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
             position: absolute;
-            top: 0;
-            left: 0;
-            background: linear-gradient(135deg, #f97316, #ef4444);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 900;
-            letter-spacing: 0.04em;
-            padding: 3px 8px 3px 6px;
-            border-bottom-right-radius: 10px;
-            z-index: 20;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            white-space: nowrap;
-            box-shadow: 2px 2px 6px rgba(239,68,68,0.4);
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+            animation: badgeGlow 1.5s infinite;
         }
 
-        /* Radar / pulsing ring effect on promo card wrapper */
-        @keyframes radarPulse {
-            0%   { box-shadow: 0 0 0 0   rgba(249,115,22,0.55), 0 0 0 0   rgba(239,68,68,0.35); }
-            50%  { box-shadow: 0 0 0 8px rgba(249,115,22,0.0),  0 0 0 16px rgba(239,68,68,0.0); }
-            100% { box-shadow: 0 0 0 0   rgba(249,115,22,0.0),  0 0 0 0   rgba(239,68,68,0.0); }
+        @keyframes badgeGlow {
+            0%   { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50%  { box-shadow: 0 0 10px 2px rgba(220, 38, 38, 0.7); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
         }
 
+        /* Border Kartu Promo Merah Halus */
         .promo-card-radar {
-            animation: radarPulse 2.2s ease-out infinite;
-            /* Extra glow border handled by Tailwind border-orange-400 */
-        }
-
-        .promo-card-radar:hover {
-            animation-play-state: paused;
+            border: 2px solid #ef4444 !important;
+            border-radius: 12px;
         }
 
         /* ==========================================
