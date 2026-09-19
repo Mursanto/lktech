@@ -83,21 +83,34 @@ class PublicCatalogController extends Controller
         }
 
         if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
-            // Flag is_active_promo
-            $collectionToTransform->transform(function ($product) use ($promoProductIds) {
-                $product->is_active_promo = $promoProductIds->contains($product->id);
+            // Fetch all promo products explicitly from DB so they appear even if not on page 1
+            $promoItems = \App\Models\Product::with('category')->whereIn('id', $promoProductIds)->get();
+            
+            // Transform their images just like regular products
+            $promoItems->transform(function ($product) {
+                if ($product->image_path) {
+                    $product->display_image = Storage::url($product->image_path);
+                } else {
+                    $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
+                    $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                }
+                $product->is_active_promo = true;
                 return $product;
             });
 
-            // Pisahkan & sisipkan di tengah baris (col 3 = offset 2, grid 6 kolom)
-            $promoItems   = $collectionToTransform->filter(fn($p) => $p->is_active_promo)->values();
-            $regularItems = $collectionToTransform->filter(fn($p) => !$p->is_active_promo)->values();
+            // Filter out these promo products from the regular items to avoid duplicates
+            $regularItems = $collectionToTransform->filter(fn($p) => !$promoProductIds->contains($p->id))->values();
 
             $result = $regularItems->all(); // ->all() menjaga objek Eloquent
-            foreach ($promoItems as $slotIndex => $promoProduct) {
-                $insertAt = $slotIndex * 6 + 2; // Baris ke-(slotIndex+1), kolom 3
-                $insertAt = min($insertAt, count($result));
-                array_splice($result, $insertAt, 0, [$promoProduct]);
+            
+            // Masukkan produk promo sesuai urutan slot (index) dari $promoProductIds
+            foreach ($promoProductIds as $slotIndex => $id) {
+                $promoProduct = $promoItems->firstWhere('id', $id);
+                if ($promoProduct) {
+                    $insertAt = $slotIndex * 6 + 2; // Baris ke-(slotIndex+1), kolom 3
+                    $insertAt = min($insertAt, count($result));
+                    array_splice($result, $insertAt, 0, [$promoProduct]);
+                }
             }
             $sorted = collect($result);
 
