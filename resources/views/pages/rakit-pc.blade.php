@@ -46,10 +46,6 @@
             <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiM2MEE1RkEiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-60"></div>
             
             <div class="relative z-10">
-                <div class="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-blue-200 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full mb-3 shadow-sm select-none">
-                    <i class='bx bx-desktop text-xs'></i>
-                    Jasa Rakit PC Custom
-                </div>
                 <h1 class="text-3xl md:text-4xl font-black font-montserrat text-gray-900 mb-3 tracking-tight">
                     Rakit PC <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Impian Anda</span>
                 </h1>
