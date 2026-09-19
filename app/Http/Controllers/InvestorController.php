@@ -22,6 +22,7 @@ class InvestorController extends Controller
                 $investor->asset_value    = $investor->totalAssetValue();
                 $investor->gross_profit   = $investor->totalGrossProfit();
                 $investor->investor_share = $investor->investorShareAmount();
+                $investor->total_stock    = $investor->currentStockQty();
                 return $investor;
             });
 

@@ -73,7 +73,7 @@
                             <th class="text-left px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">#</th>
                             <th class="text-left px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Investor</th>
                             <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Bagi Hasil</th>
-                            <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Produk</th>
+                            <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Total Stok</th>
                             <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Nilai Aset Aktif</th>
                             <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Profit Diterima</th>
                             <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Status</th>
@@ -101,7 +101,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-right">
-                                <span class="font-bold text-natural-700">{{ $investor->products_count }}</span>
+                                <span class="font-bold text-natural-700">{{ $investor->total_stock }}</span>
                                 <span class="text-natural-400 ml-1">unit</span>
                             </td>
                             <td class="px-4 py-3 text-right">
