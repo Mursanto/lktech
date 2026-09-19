@@ -382,12 +382,12 @@
                         @endif
                         
                         <div class="flex-grow relative z-10">
-                            <h3 class="{{ $isHighlighted ? 'text-2xl font-bold text-brand-600' : 'text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
-                            <p class="text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-6">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
+                            <h3 class="{{ $isHighlighted ? 'text-xl md:text-2xl font-bold text-brand-600' : 'text-lg md:text-xl font-bold text-gray-900' }} mb-2 font-montserrat leading-tight line-clamp-2 md:min-h-[3.5rem]" title="{{ $package->nama_paket }}">{{ $package->nama_paket }}</h3>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed mb-6 line-clamp-4 md:line-clamp-3 md:min-h-[2.75rem]" title="{{ $package->deskripsi_singkat }}">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
                             <div class="mb-6 md:mb-8 flex items-baseline gap-1">
                                 <span class="text-xs sm:text-sm font-bold text-gray-900">Rp</span>
-                                <span class="{{ $isHighlighted ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
+                                <span class="{{ $isHighlighted ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
                             <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
