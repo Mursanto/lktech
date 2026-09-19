@@ -71,13 +71,11 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
-        // ─── Ekstrak Promo Product IDs dari Banner Promo ───────────────────────
+        // ─── Ekstrak Promo Product IDs dari Produk Promo (promo_product_links) ──
         $promoProductIds = collect();
-        if ($setting && !empty($setting->promo_banners)) {
-            foreach ($setting->promo_banners as $banner) {
-                $link = $banner['link'] ?? '';
-                // Coba match URL katalog: /katalog/{id}
-                if (preg_match('#/katalog/(\d+)#', $link, $m)) {
+        if ($setting && !empty($setting->promo_product_links)) {
+            foreach ($setting->promo_product_links as $link) {
+                if (!empty($link) && preg_match('#/katalog/(\d+)#', $link, $m)) {
                     $promoProductIds->push((int) $m[1]);
                 }
             }
@@ -92,7 +90,6 @@ class PublicCatalogController extends Controller
             foreach ($promoProducts as $p) {
                 $p->is_active_promo = true;
             }
-            // Katalog utama tetap bersih, tanpa promo disisipkan
         }
         // ───────────────────────────────────────────────────────────────────────
 

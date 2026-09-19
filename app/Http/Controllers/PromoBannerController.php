@@ -21,10 +21,12 @@ class PromoBannerController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'banners' => 'nullable|array|max:7',
-            'banners.*.image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'banners.*.link' => 'nullable|url|max:255',
-            'banners.*.delete' => 'nullable|boolean',
+            'banners'                 => 'nullable|array|max:7',
+            'banners.*.image'         => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'banners.*.link'          => 'nullable|url|max:255',
+            'banners.*.delete'        => 'nullable|boolean',
+            'promo_product_links'     => 'nullable|array|max:3',
+            'promo_product_links.*'   => 'nullable|url|max:255',
         ]);
 
         $setting = WebSetting::first();
@@ -37,7 +39,7 @@ class PromoBannerController extends Controller
         if (empty($promoBanners) && $setting->promo_image_path) {
             $promoBanners[0] = [
                 'image' => $setting->promo_image_path,
-                'link' => $setting->promo_link
+                'link'  => $setting->promo_link
             ];
             $setting->promo_image_path = null;
             $setting->promo_link = null;
@@ -69,16 +71,21 @@ class PromoBannerController extends Controller
                 if ($imagePath) {
                     $newBanners[] = [
                         'image' => $imagePath,
-                        'link' => $link,
+                        'link'  => $link,
                     ];
                 }
             }
         }
 
-        // Re-index to ensure it's a list
+        // Re-index banners
         $setting->promo_banners = array_values($newBanners);
+
+        // Simpan link produk promo (hanya yang tidak kosong)
+        $productLinks = array_values(array_filter($request->input('promo_product_links', []), fn($v) => !empty(trim($v))));
+        $setting->promo_product_links = $productLinks;
+
         $setting->save();
 
-        return redirect()->back()->with('success', 'Banner Promo berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Banner & Produk Promo berhasil diperbarui.');
     }
 }

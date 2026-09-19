@@ -9,6 +9,7 @@ class WebSetting extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'promo_banners' => 'array',
+        'promo_banners'        => 'array',
+        'promo_product_links'  => 'array',
     ];
 }
