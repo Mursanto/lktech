@@ -103,11 +103,12 @@ class PublicCatalogController extends Controller
 
             $result = $regularItems->all(); // ->all() menjaga objek Eloquent
             
-            // Masukkan produk promo sesuai urutan slot (index) dari $promoProductIds
-            foreach ($promoProductIds as $slotIndex => $id) {
-                $promoProduct = $promoItems->firstWhere('id', $id);
+            // Masukkan HANYA produk promo pertama (Slot 1) ke tengah baris pertama katalog utama
+            if ($promoProductIds->isNotEmpty()) {
+                $firstPromoId = $promoProductIds->first();
+                $promoProduct = $promoItems->firstWhere('id', $firstPromoId);
                 if ($promoProduct) {
-                    $insertAt = $slotIndex * 6 + 2; // Baris ke-(slotIndex+1), kolom 3
+                    $insertAt = 2; // Baris 1, kolom 3
                     $insertAt = min($insertAt, count($result));
                     array_splice($result, $insertAt, 0, [$promoProduct]);
                 }
@@ -126,8 +127,9 @@ class PublicCatalogController extends Controller
         $softwareProducts = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 15)->orWhere('parent_id', 15)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) {
+            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
                 $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?software";
+                $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
             });
 
@@ -135,8 +137,9 @@ class PublicCatalogController extends Controller
         $accessoriesProducts = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 11)->orWhere('parent_id', 11)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) {
+            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
                 $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?accessories";
+                $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
             });
 
@@ -144,8 +147,9 @@ class PublicCatalogController extends Controller
         $sparepartProducts = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 6)->orWhere('parent_id', 6)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) {
+            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
                 $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?sparepart";
+                $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
             });
 
