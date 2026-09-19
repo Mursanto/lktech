@@ -117,6 +117,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::post('google-reviews/{googleReview}/reply', [App\Http\Controllers\Admin\GoogleReviewController::class, 'reply'])->name('google-reviews.reply');
 
     // Promo Video
+    Route::patch('promo-video/{promo_video}/toggle', [App\Http\Controllers\Admin\PromoVideoController::class, 'toggleActive'])->name('admin.promo-video.toggle');
     Route::resource('promo-video', App\Http\Controllers\Admin\PromoVideoController::class)->names('admin.promo-video');
 
     // Investor Management

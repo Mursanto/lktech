@@ -22,9 +22,9 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">File Video (MP4)</label>
-                    <input type="file" name="video" accept="video/mp4,video/webm" required class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Rekomendasi rasio vertikal (9:16 atau 4:5), durasi singkat (10-15 detik).</p>
+                    <label class="block text-[11px] font-bold text-natural-700">File Promo (Video/Gambar)</label>
+                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" required class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4). Rasio vertikal (9:16) disarankan.</p>
                 </div>
                 <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl text-[11px] transition shadow-sm">
                     + Unggah & Simpan Video
@@ -51,9 +51,13 @@
                         @forelse($videos as $video)
                         <tr class="hover:bg-natural-50/50 transition-colors group">
                             <td class="px-4 py-2 w-32 align-middle">
-                                <video class="w-24 h-16 object-cover rounded-lg bg-black border border-natural-200" controls preload="metadata">
-                                    <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                                </video>
+                                @if(preg_match('/\.(mp4|webm)$/i', $video->video_path))
+                                    <video class="w-24 h-16 object-cover rounded-lg bg-black border border-natural-200" controls preload="metadata">
+                                        <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                                    </video>
+                                @else
+                                    <img src="{{ asset('storage/' . $video->video_path) }}" class="w-24 h-16 object-cover rounded-lg border border-natural-200">
+                                @endif
                             </td>
                             
                             <td class="px-4 py-2 align-middle">
@@ -77,6 +81,14 @@
 
                             <td class="px-4 py-2 align-middle text-right">
                                 <div class="flex items-center justify-end gap-1">
+                                    <form action="{{ route('admin.promo-video.toggle', $video->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="inline-flex items-center justify-center w-8 h-6 {{ $video->is_active ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-500' }} rounded transition" title="{{ $video->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                            <i class='bx {{ $video->is_active ? 'bx-toggle-right' : 'bx-toggle-left' }} text-lg'></i>
+                                        </button>
+                                    </form>
+
                                     <button onclick="openEditModal({{ $video }})" class="inline-flex items-center justify-center w-6 h-6 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded transition" title="Edit">
                                         <i class='bx bx-edit text-sm'></i>
                                     </button>
@@ -124,9 +136,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">Ganti File Video (Biarkan kosong jika tidak ingin mengganti)</label>
-                    <input type="file" name="video" accept="video/mp4,video/webm" class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Rekomendasi rasio vertikal (9:16 atau 4:5), durasi singkat (10-15 detik).</p>
+                    <label class="block text-[11px] font-bold text-natural-700">Ganti File Promo (Biarkan kosong jika tidak ingin mengganti)</label>
+                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4).</p>
                 </div>
 
                 <div class="flex items-center gap-2">

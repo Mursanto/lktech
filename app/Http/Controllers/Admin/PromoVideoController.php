@@ -19,7 +19,7 @@ class PromoVideoController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'video' => 'required|mimes:mp4,webm|max:20480', // Maks 20MB
+            'video' => 'required|mimes:mp4,webm,jpeg,png,jpg,gif,webp|max:20480', // Maks 20MB
         ]);
 
         $path = $request->file('video')->store('promo_videos', 'public');
@@ -42,7 +42,7 @@ class PromoVideoController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'target_url' => 'nullable|url',
-            'video' => 'nullable|mimes:mp4,webm|max:20480', // video opsional saat edit
+            'video' => 'nullable|mimes:mp4,webm,jpeg,png,jpg,gif,webp|max:20480', // video opsional saat edit
         ]);
 
         $data = [
@@ -78,5 +78,19 @@ class PromoVideoController extends Controller
         $promoVideo->delete();
 
         return redirect()->back()->with('success', 'Video promo berhasil dihapus!');
+    }
+
+    public function toggleActive(PromoVideo $promoVideo)
+    {
+        $newStatus = !$promoVideo->is_active;
+        
+        // Jika diaktifkan, nonaktifkan yang lain
+        if ($newStatus) {
+            PromoVideo::where('id', '!=', $promoVideo->id)->update(['is_active' => false]);
+        }
+        
+        $promoVideo->update(['is_active' => $newStatus]);
+        
+        return redirect()->back()->with('success', 'Status promo berhasil diubah!');
     }
 }

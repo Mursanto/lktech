@@ -897,13 +897,17 @@
 
 
 
-        <video id="promoVideo" 
-               class="w-full h-full object-cover bg-black pointer-events-auto" 
-               controls 
-               preload="metadata" 
-               playsinline>
-            <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
-        </video>
+        @if(preg_match('/\.(mp4|webm)$/i', $activeVideo->video_path))
+            <video id="promoVideo" 
+                   class="w-full h-full object-cover bg-black pointer-events-auto" 
+                   controls 
+                   preload="metadata" 
+                   playsinline>
+                <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
+            </video>
+        @else
+            <img id="promoVideo" src="{{ asset('storage/' . $activeVideo->video_path) }}" class="w-full h-full object-cover bg-black pointer-events-auto">
+        @endif
     </div>
 
     <script>
@@ -912,7 +916,7 @@
         const widget = document.getElementById('floatingVideoWidget');
         const promoVideo = document.getElementById('promoVideo');
         if (widget) {
-            if (promoVideo) promoVideo.pause();
+            if (promoVideo && promoVideo.tagName.toLowerCase() === 'video') promoVideo.pause();
             widget.style.display = 'none';
             sessionStorage.setItem('promo_closed', 'true');
         }
