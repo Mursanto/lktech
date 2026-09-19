@@ -371,14 +371,32 @@
                     @forelse($packages as $package)
                     @php
                         $isHighlighted = !empty($package->badge);
+                        $bgStyles = [
+                            'bg-gradient-to-br from-blue-50 to-white border-blue-100',
+                            'bg-gradient-to-br from-indigo-50 to-white border-indigo-200',
+                            'bg-gradient-to-br from-emerald-50 to-white border-emerald-100'
+                        ];
+                        $iconColors = [
+                            'text-blue-500',
+                            'text-indigo-500',
+                            'text-emerald-500'
+                        ];
+                        $bgClass = $bgStyles[$loop->index % 3];
+                        $iconClass = $iconColors[$loop->index % 3];
+                        
+                        if($isHighlighted) {
+                            $bgClass = 'bg-gradient-to-br from-brand-50 to-white border-2 border-brand-400';
+                            $iconClass = 'text-brand-600';
+                        }
+                        
+                        $highlightClass = $isHighlighted ? 'shadow-2xl z-10 md:-translate-y-4 transform' : 'shadow-sm hover:shadow-xl';
                     @endphp
                     <!-- Card: {{ $package->nama_paket }} -->
-                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-8 transition-all flex flex-col h-full relative group">
+                    <div class="rounded-3xl border {{ $bgClass }} {{ $highlightClass }} p-8 transition-all flex flex-col h-full relative group">
                         @if($isHighlighted)
-                        <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
+                        <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">
                             {{ $package->badge }}
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl pointer-events-none"></div>
                         @endif
                         
                         <div class="flex-grow relative z-10 text-center">
@@ -390,21 +408,21 @@
                                 <span class="{{ $isHighlighted ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
-                            <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
+                            <ul class="space-y-3 mb-8 text-[11px] sm:text-xs text-left {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
                                 @if($package->fitur_list)
                                     @foreach(explode("\n", $package->fitur_list) as $fitur)
                                         @if(trim($fitur))
-                                        <li class="flex items-start gap-3"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-xl'></i> <span>{{ trim($fitur) }}</span></li>
+                                        <li class="flex items-start gap-2"><i class='bx bxs-check-circle {{ $iconClass }} text-lg shrink-0 mt-0.5'></i> <span class="leading-relaxed">{{ trim($fitur) }}</span></li>
                                         @endif
                                     @endforeach
                                 @endif
                             </ul>
                         </div>
-                        <div class="mt-auto pt-6 border-t {{ $isHighlighted ? 'border-brand-100' : 'border-gray-100' }} relative z-10">
+                        <div class="mt-auto pt-6 border-t border-white/50 relative z-10">
                             @php
                                 $waText = urlencode("Halo LKtech, saya ingin konsultasi mengenai Jasa Pembuatan Website (".$package->nama_paket.").");
                             @endphp
-                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5' : 'px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200' }}">
+                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5' : 'px-6 py-3 bg-white hover:bg-gray-50 text-gray-800 font-bold rounded-xl transition-colors shadow-sm border border-gray-100' }}">
                                 {{ $isHighlighted ? 'Pilih Paket Spesial' : 'Pilih Paket' }}
                             </a>
                         </div>
