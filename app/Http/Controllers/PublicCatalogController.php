@@ -84,7 +84,9 @@ class PublicCatalogController extends Controller
             $promoProductIds = $promoProductIds->unique()->values();
         }
 
-        // Tandai & utamakan produk promo di baris pertama
+        // Tandai & tempatkan produk promo di tengah setiap baris (kolom ke-3)
+        // Slot 1 → baris 1 col 3 (index 2), Slot 2 → baris 2 col 3 (index 8), dst.
+        // Grid = 6 kolom, jadi "tengah baris ke-N" = index (N-1)*6 + 2
         if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
             // Flag is_active_promo
             $collectionToTransform->transform(function ($product) use ($promoProductIds) {
@@ -92,12 +94,21 @@ class PublicCatalogController extends Controller
                 return $product;
             });
 
-            // Pindahkan produk promo ke paling depan
-            $promoItems    = $collectionToTransform->filter(fn($p) => $p->is_active_promo)->values();
-            $regularItems  = $collectionToTransform->filter(fn($p) => !$p->is_active_promo)->values();
-            $sorted        = $promoItems->concat($regularItems);
+            // Pisahkan produk promo & reguler
+            $promoItems   = $collectionToTransform->filter(fn($p) => $p->is_active_promo)->values();
+            $regularItems = $collectionToTransform->filter(fn($p) => !$p->is_active_promo)->values();
 
-            // Ganti koleksi di objek $products jika paginate, atau langsung
+            // Sisipkan setiap produk promo di tengah baris yang sesuai
+            // (kolom ke-3 dari setiap baris dalam grid 6 kolom = offset 2)
+            $result = $regularItems->toArray();
+            foreach ($promoItems as $slotIndex => $promoProduct) {
+                $insertAt = $slotIndex * 6 + 2; // Row (slotIndex+1), kolom 3 = center
+                $insertAt = min($insertAt, count($result)); // Jangan melewati batas
+                array_splice($result, $insertAt, 0, [$promoProduct]);
+            }
+            $sorted = collect($result);
+
+            // Ganti koleksi di objek $products
             if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
                 $products->setCollection($sorted);
             } else {
