@@ -53,6 +53,49 @@
         /* Bottom sheet animation */
         .bottom-sheet-enter { transform: translateY(100%); }
         .bottom-sheet-enter-active { transition: transform 0.3s ease-out; }
+
+        /* Badge Promo Utama - Warna Merah Crimson */
+        .badge-promo-live {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            padding: 3px 8px 3px 6px;
+            border-bottom-right-radius: 10px;
+            border-top-left-radius: 11px;
+            z-index: 20;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            animation: badgeGlow 1.5s infinite;
+        }
+
+        @keyframes badgeGlow {
+            0%   { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50%  { box-shadow: 0 0 10px 2px rgba(220, 38, 38, 0.7); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+        }
+
+        /* Radar / pulsing ring effect on promo card wrapper */
+        @keyframes radarPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+            50%  { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0.0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.0); }
+        }
+
+        /* Border Kartu Promo Merah Halus */
+        .promo-card-radar {
+            border: 2px solid #ef4444 !important;
+            border-radius: 12px;
+            animation: radarPulse 2.2s ease-out infinite;
+        }
+
+        .promo-card-radar:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
