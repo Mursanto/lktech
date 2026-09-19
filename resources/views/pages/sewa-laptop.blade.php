@@ -131,7 +131,7 @@
                     <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Kontrak / Invoice Sewa</label>
                     <div class="flex gap-2">
                         <input type="text" x-model="contractNo" @keyup.enter="trackRental()"
-                               placeholder="Contoh: RNT-2026-0008 atau INV-SEWA-XXXX"
+                               placeholder="Contoh: RNT-2026-0008"
                                class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
                         <button @click="trackRental()" :disabled="loading"
                                 class="shrink-0 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-sm flex items-center gap-1.5 shadow-md">
@@ -162,54 +162,11 @@
                             <div><p class="text-gray-400 font-bold uppercase text-[10px]">Total Biaya</p><p class="font-black text-emerald-600" x-text="result&&('Rp '+result.total)"></p></div>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-[10px] mt-2 text-center">Nomor kontrak terdapat pada surat perjanjian sewa atau email konfirmasi dari LKTech.</p>
+                    <p class="text-gray-400 text-[10px] mt-2 text-center">Nomor kontrak ada di struk/surat perjanjian sewa atau email konfirmasi dari LKTech. Contoh: RNT-2026-0008</p>
                 </div>
             </div>
         </div>
 
-        <!-- Status Tabs -->
-        <div class="bg-white border-b border-gray-100 py-6 px-4 sm:px-6 lg:px-8"
-             x-data="{activeTab:'active',searchQ:'',items:[],loading:false,tabs:[{key:'active',label:'Aktif'},{key:'completed',label:'Selesai'},{key:'overdue',label:'Terlambat'}],
-                 async load(){this.loading=true;try{const r=await fetch('/api/list-rentals?status='+this.activeTab+'&q='+encodeURIComponent(this.searchQ));const d=await r.json();this.items=d.data||[];}catch(e){this.items=[];}this.loading=false;},
-                 async switchTab(t){this.activeTab=t;await this.load();}}" x-init="load()">
-            <div class="max-w-3xl mx-auto">
-                <div class="flex gap-2 mb-4">
-                    <input type="text" x-model="searchQ" @keyup.enter="load()" placeholder="Cari Nomor Kontrak (Contoh: RNT-2026-08...)"
-                           class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 text-sm font-semibold placeholder-gray-400 transition-all">
-                    <button @click="load()" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-sm flex items-center gap-1.5 transition-all">
-                        <i class='bx bx-search'></i> Cari
-                    </button>
-                </div>
-                <div class="flex gap-1 border-b border-gray-200 mb-4">
-                    <template x-for="tab in tabs" :key="tab.key">
-                        <button @click="switchTab(tab.key)" x-text="tab.label"
-                                class="px-4 py-2 text-sm font-bold transition-all border-b-2 -mb-px"
-                                :class="activeTab===tab.key?'border-emerald-500 text-emerald-600':'border-transparent text-gray-500 hover:text-gray-700'"></button>
-                    </template>
-                </div>
-                <div x-show="loading" class="text-center py-8 text-gray-400"><i class='bx bx-loader-alt animate-spin text-2xl'></i><p class="mt-1 text-sm">Memuat data...</p></div>
-                <div x-show="!loading&&items.length===0" class="text-center py-10 text-gray-400">
-                    <i class='bx bx-laptop text-4xl'></i><p class="text-sm font-semibold mt-2">Belum ada data sewa untuk status ini.</p>
-                </div>
-                <div x-show="!loading&&items.length>0" class="space-y-2">
-                    <template x-for="item in items" :key="item.id">
-                        <div class="flex items-center justify-between bg-white border border-gray-100 rounded-xl px-4 py-3 hover:border-emerald-200 hover:shadow-sm transition-all">
-                            <div>
-                                <p class="font-bold text-gray-800 text-sm" x-text="item.contract_no"></p>
-                                <p class="text-gray-500 text-xs" x-text="item.customer+' - '+item.laptop"></p>
-                                <p class="text-gray-400 text-[10px]" x-text="item.rental_date+' s/d '+item.return_date"></p>
-                            </div>
-                            <div class="text-right">
-                                <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black mb-1"
-                                      :class="{'bg-blue-100 text-blue-700':item.status==='active','bg-green-100 text-green-700':item.status==='completed','bg-red-100 text-red-700':item.status==='overdue'}"
-                                      x-text="item.status_label"></span>
-                                <p class="font-black text-emerald-600 text-sm" x-text="'Rp '+item.total"></p>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div>
 
 
         <!-- Status Alur Sewa (Visual) -->
@@ -522,3 +479,4 @@
 
 </body>
 </html>
+

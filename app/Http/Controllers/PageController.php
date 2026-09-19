@@ -43,12 +43,15 @@ class PageController extends Controller
             return response()->json(['found' => false, 'message' => 'Masukkan nomor tiket terlebih dahulu.']);
         }
 
-        // Cari berdasarkan ID (SVC-2026-0001 format) atau angka langsung
+        // Parse nomor tiket: SVC-YYYY-NNNN (ambil NNNN), atau angka langsung
         $id = null;
-        if (preg_match('/(\d+)/', $q, $m)) {
+        if (preg_match('/(?:SVC|INV)-\d{4}-(\d+)/i', $q, $m)) {
+            $id = (int)$m[1];
+        } elseif (preg_match('/^(\d+)$/', trim($q), $m)) {
+            $id = (int)$m[1];
+        } elseif (preg_match('/(\d+)$/', $q, $m)) {
             $id = (int)$m[1];
         }
-
         $service = null;
         if ($id) {
             $service = Service::with(['customer', 'items', 'technician'])->find($id);
@@ -113,8 +116,13 @@ class PageController extends Controller
             return response()->json(['found' => false, 'message' => 'Masukkan nomor kontrak terlebih dahulu.']);
         }
 
+        // Parse nomor kontrak: RNT-YYYY-NNNN (ambil NNNN), atau angka langsung
         $id = null;
-        if (preg_match('/(\d+)/', $q, $m)) {
+        if (preg_match('/(?:RNT|INV)-\d{4}-(\d+)/i', $q, $m)) {
+            $id = (int)$m[1];
+        } elseif (preg_match('/^(\d+)$/', trim($q), $m)) {
+            $id = (int)$m[1];
+        } elseif (preg_match('/(\d+)$/', $q, $m)) {
             $id = (int)$m[1];
         }
 
