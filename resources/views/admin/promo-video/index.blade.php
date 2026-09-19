@@ -1,4 +1,4 @@
-﻿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-bold text-base text-natural-900 leading-tight">
             {{ __('Kelola Video Promo') }}
@@ -23,12 +23,16 @@
                 </div>
                 <div>
                     <label class="block text-base font-bold text-natural-700">File Promo (Video/Gambar)</label>
-                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" required class="mt-1 block w-full text-base text-natural-500 file:mr-3 file:py-3.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                    <p class="mt-1 text-xs text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4). Rasio vertikal (9:16) disarankan.</p>
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-3 mt-1">
+                        <div class="flex-grow">
+                            <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" required class="block w-full text-base text-natural-500 file:mr-3 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 border border-natural-200 rounded-lg bg-natural-50">
+                            <p class="mt-1.5 text-xs text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4). Rasio vertikal (9:16) disarankan.</p>
+                        </div>
+                        <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm transition shadow-sm whitespace-nowrap shrink-0 mt-1 sm:mt-0 h-fit">
+                            + Unggah & Simpan
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-4 rounded-xl text-base transition shadow-sm">
-                    + Unggah & Simpan Video
-                </button>
             </form>
         </div>
 
@@ -63,14 +67,14 @@
                             <td class="px-6 py-4 align-middle">
                                 <p class="font-bold text-base text-natural-800">{{ $video->title }}</p>
                                 <a href="{{ $video->target_url ?? '#' }}" target="_blank" class="text-xs text-brand-600 hover:underline block mt-0.5 truncate max-w-[200px]">
-                                    {{ $video->target_url ?? 'Tidak ada link' }} â†—
+                                    {{ $video->target_url ?? 'Tidak ada link' }} &nearr;
                                 </a>
                             </td>
 
                             <td class="px-6 py-4 align-middle text-center">
                                 @if($video->is_active)
-                                    <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-base font-bold">
-                                        â— Tampil di Web
+                                    <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-sm font-bold">
+                                        &bull; Tampil di Web
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-500 border border-gray-200 px-2 py-0.5 rounded text-base font-bold">
