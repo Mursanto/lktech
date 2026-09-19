@@ -275,6 +275,18 @@ class PublicCatalogController extends Controller
             $displayCategories = $mainCategories->where('id', $selectedCategoryId);
         }
 
+        // Ambil data setting untuk badge promo
+        $setting = \App\Models\WebSetting::first();
+        $promoProductIds = collect();
+        if ($setting && !empty($setting->promo_product_links)) {
+            foreach ($setting->promo_product_links as $link) {
+                if (!empty($link) && preg_match('#/katalog/(\d+)#', $link, $m)) {
+                    $promoProductIds->push((int) $m[1]);
+                }
+            }
+            $promoProductIds = $promoProductIds->unique()->values();
+        }
+
         // Count totals per category (eager loaded)
         foreach($mainCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
@@ -395,13 +407,14 @@ class PublicCatalogController extends Controller
                 $collectionToTransform = $products->getCollection();
             }
 
-            $collectionToTransform->transform(function ($product) {
+            $collectionToTransform->transform(function ($product) use ($promoProductIds) {
                 if ($product->image_path) {
                     $product->display_image = Storage::url($product->image_path);
                 } else {
                     $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
                     $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
                 }
+                $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
             });
 
