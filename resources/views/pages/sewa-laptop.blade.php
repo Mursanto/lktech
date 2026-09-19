@@ -74,11 +74,9 @@
     <main class="flex-grow w-full pb-20 md:pb-0">
 
         <!-- Hero Section -->
-        <div class="relative bg-gradient-to-br from-emerald-50 via-teal-50/70 to-cyan-50 py-12 px-4 sm:px-6 lg:px-8 text-center border-b border-emerald-100/70 w-full overflow-hidden">
+        <div class="relative bg-gradient-to-br from-emerald-50 via-teal-50/70 to-cyan-50 py-10 px-4 sm:px-6 lg:px-8 text-center border-b border-emerald-100/70 w-full overflow-hidden">
             <div class="absolute -top-10 -left-10 w-48 h-48 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-teal-200/20 rounded-full blur-3xl pointer-events-none"></div>
-
-
 
             <h1 class="text-2xl md:text-4xl font-black font-montserrat text-gray-900 mb-2 tracking-tight">
                 Sewa <span class="text-shimmer-emerald">PC &amp; Laptop</span>
@@ -87,20 +85,8 @@
                 Solusi cerdas kebutuhan perangkat IT harian, mingguan, hingga bulanan. Spesifikasi tinggi, bebas riset harga, tanpa perlu beli baru.
             </p>
 
-            <!-- Quick CTA -->
-            <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-                <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin info Sewa PC/Laptop.') }}" target="_blank"
-                   class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg text-sm">
-                    <i class='bx bxl-whatsapp text-lg'></i> Konsultasi Sewa Sekarang
-                </a>
-                <a href="#cara-sewa"
-                   class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-emerald-600 text-emerald-600 font-bold rounded-xl transition-all hover:bg-emerald-50 text-sm">
-                    <i class='bx bx-info-circle text-lg'></i> Cara Sewa
-                </a>
-            </div>
-
-            <!-- Stats -->
-            <div class="flex flex-wrap justify-center gap-6 mt-8">
+            <!-- Stats Bar -->
+            <div class="flex flex-wrap justify-center gap-6 mt-6">
                 <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
                     <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><i class='bx bx-calendar text-base'></i></span>
                     Sewa Harian / Bulanan
@@ -119,7 +105,7 @@
         <!-- =====================================================================
              FITUR TRACKING STATUS SEWA
              ===================================================================== -->
-        <div class="bg-gradient-to-r from-emerald-600 to-teal-500 py-10 px-4 sm:px-6 lg:px-8"
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-500 py-6 px-4 sm:px-6 lg:px-8"
              x-data="{
                  contractNo: '',
                  status: null,
@@ -144,51 +130,51 @@
                      }, 800);
                  }
              }">
-            <div class="max-w-2xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 bg-white/20 border border-white/30 text-white text-[11px] font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-widest">
-                    <i class='bx bx-search-alt text-sm'></i> Cek Status Sewa
+            <div class="max-w-2xl mx-auto">
+                <div class="flex items-baseline gap-2.5 justify-center mb-3">
+                    <h2 class="text-base md:text-lg font-black font-montserrat text-white flex items-center gap-1.5">
+                        <i class='bx bx-search-alt text-sm'></i> Tracking Nomor Kontrak Sewa
+                    </h2>
+                    <p class="text-emerald-200 text-xs truncate">Masukkan nomor kontrak untuk cek status sewa.</p>
                 </div>
-                <h2 class="text-xl md:text-2xl font-black font-montserrat text-white mb-2">Tracking Nomor Kontrak Sewa</h2>
-                <p class="text-emerald-100 text-xs md:text-sm mb-6">Masukkan Nomor Kontrak / Nomor Invoice Sewa Anda untuk mengecek status dan masa aktif sewa.</p>
 
                 <!-- Input Form -->
-                <div class="bg-white rounded-2xl shadow-xl p-5 md:p-6 text-left">
-                    <label class="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Nomor Kontrak / Invoice Sewa</label>
-                    <div class="flex gap-2 sm:gap-3">
+                <div class="bg-white rounded-xl shadow-lg p-4 text-left">
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Kontrak / Invoice Sewa</label>
+                    <div class="flex gap-2">
                         <input type="text"
                                x-model="contractNo"
                                @keyup.enter="trackRental()"
                                placeholder="Contoh: RNT-2026-0008 atau INV-SEWA-XXXX"
-                               class="ticket-input flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
+                               class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
                         <button @click="trackRental()"
                                 :disabled="loading"
-                                class="shrink-0 px-5 py-3 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-xl transition-all text-sm flex items-center gap-2 shadow-md hover:shadow-lg">
-                            <i class='bx bx-search text-lg' x-show="!loading"></i>
-                            <i class='bx bx-loader-alt animate-spin text-lg' x-show="loading" x-cloak></i>
+                                class="shrink-0 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-sm flex items-center gap-1.5 shadow-md">
+                            <i class='bx bx-search text-base' x-show="!loading"></i>
+                            <i class='bx bx-loader-alt animate-spin text-base' x-show="loading" x-cloak></i>
                             <span x-show="!loading">Cek Status</span>
                             <span x-show="loading" x-cloak>Mengecek...</span>
                         </button>
                     </div>
 
                     <!-- Error -->
-                    <p x-show="error" x-cloak class="text-red-500 text-xs font-semibold mt-2 flex items-center gap-1">
-                        <i class='bx bx-error-circle'></i> <span x-text="error"></span>
-                    </p>
+                    <p x-show="error" x-text="error" x-cloak class="text-red-500 text-xs font-semibold mt-1.5"></p>
 
                     <!-- Status Result -->
-                    <div x-show="status" x-cloak class="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl fade-in-up">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center shrink-0">
-                                <i class='bx bx-message-check text-white text-lg'></i>
+                    <div x-show="status" x-cloak class="mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg fade-in-up">
+                        <div class="flex items-start gap-2">
+                            <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center shrink-0">
+                                <i class='bx bx-message-check text-white text-sm'></i>
                             </div>
                             <div>
                                 <p class="font-bold text-gray-900 text-sm">Kontrak: <span class="text-emerald-600" x-text="status && status.kontrak"></span></p>
-                                <p class="text-gray-600 text-xs mt-1" x-text="status && status.info"></p>
+                                <p class="text-gray-600 text-xs mt-0.5" x-text="status && status.info"></p>
                             </div>
                         </div>
                     </div>
 
-                    <p class="text-gray-400 text-[10px] mt-3 text-center">Nomor kontrak terdapat pada surat perjanjian sewa atau email konfirmasi dari LKTech.</p>
+                    <!-- Help Text -->
+                    <p class="text-gray-400 text-[10px] mt-2 text-center">Nomor kontrak terdapat pada surat perjanjian sewa atau email konfirmasi dan LKTech.</p>
                 </div>
             </div>
         </div>
