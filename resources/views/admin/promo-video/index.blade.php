@@ -1,4 +1,4 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2 class="font-bold text-base text-natural-900 leading-tight">
             {{ __('Kelola Video Promo') }}
@@ -7,97 +7,97 @@
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 h-[calc(100vh-65px)] overflow-hidden flex flex-col space-y-4">
         
-        <div class="bg-white p-4 rounded-3xl shadow-sm border border-natural-100/50">
-            <h3 class="text-sm font-bold text-natural-800 mb-3">Tambah Video Promo Baru</h3>
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-natural-100/50">
+            <h3 class="text-base font-bold text-natural-800 mb-3">Tambah Video Promo Baru</h3>
             <form action="{{ route('admin.promo-video.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-natural-700">Judul Promo</label>
-                        <input type="text" name="title" required placeholder="Contoh: Promo Diskon Laptop X1 Carbon" class="mt-1 w-full rounded-xl border-natural-200 text-[11px] shadow-sm focus:border-brand-500 focus:ring-brand-500 px-3 py-1.5 bg-natural-50">
+                        <label class="block text-base font-bold text-natural-700">Judul Promo</label>
+                        <input type="text" name="title" required placeholder="Contoh: Promo Diskon Laptop X1 Carbon" class="mt-1 w-full rounded-xl border-natural-200 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500 px-3 py-3.5 bg-natural-50">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-natural-700">Link Target / Katalog (Opsional)</label>
-                        <input type="url" name="target_url" placeholder="https://lktech.online/katalog" class="mt-1 w-full rounded-xl border-natural-200 text-[11px] shadow-sm focus:border-brand-500 focus:ring-brand-500 px-3 py-1.5 bg-natural-50">
+                        <label class="block text-base font-bold text-natural-700">Link Target / Katalog (Opsional)</label>
+                        <input type="url" name="target_url" placeholder="https://lktech.online/katalog" class="mt-1 w-full rounded-xl border-natural-200 text-base shadow-sm focus:border-brand-500 focus:ring-brand-500 px-3 py-3.5 bg-natural-50">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">File Promo (Video/Gambar)</label>
-                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" required class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4). Rasio vertikal (9:16) disarankan.</p>
+                    <label class="block text-base font-bold text-natural-700">File Promo (Video/Gambar)</label>
+                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" required class="mt-1 block w-full text-base text-natural-500 file:mr-3 file:py-3.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    <p class="mt-1 text-xs text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4). Rasio vertikal (9:16) disarankan.</p>
                 </div>
-                <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl text-[11px] transition shadow-sm">
+                <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-4 rounded-xl text-base transition shadow-sm">
                     + Unggah & Simpan Video
                 </button>
             </form>
         </div>
 
         <div class="bg-white rounded-3xl shadow-sm border border-natural-100/50 flex-grow flex flex-col overflow-hidden">
-            <div class="p-4 border-b border-natural-100 bg-natural-50/50">
-                <h3 class="text-xs font-bold text-natural-800">Daftar Video Promo</h3>
+            <div class="p-6 border-b border-natural-100 bg-natural-50/50">
+                <h3 class="text-base font-bold text-natural-800">Daftar Video Promo</h3>
             </div>
             
             <div class="flex-grow overflow-y-auto">
                 <table class="w-full text-left border-collapse">
-                    <thead class="sticky top-0 z-10 bg-natural-50/80 text-natural-400 text-[10px] uppercase font-bold tracking-wider">
+                    <thead class="sticky top-0 z-10 bg-natural-50/80 text-natural-400 text-xs uppercase font-bold tracking-wider">
                         <tr>
-                            <th class="px-4 py-2 border-b border-natural-100">Pratinjau (Pause)</th>
-                            <th class="px-4 py-2 border-b border-natural-100">Judul & Link</th>
-                            <th class="px-4 py-2 border-b border-natural-100 text-center">Status</th>
-                            <th class="px-4 py-2 border-b border-natural-100 text-right">Aksi</th>
+                            <th class="px-6 py-4 border-b border-natural-100">Pratinjau (Pause)</th>
+                            <th class="px-6 py-4 border-b border-natural-100">Judul & Link</th>
+                            <th class="px-6 py-4 border-b border-natural-100 text-center">Status</th>
+                            <th class="px-6 py-4 border-b border-natural-100 text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50">
                         @forelse($videos as $video)
                         <tr class="hover:bg-natural-50/50 transition-colors group">
-                            <td class="px-4 py-2 w-32 align-middle">
+                            <td class="px-6 py-4 w-48 align-middle">
                                 @if(preg_match('/\.(mp4|webm)$/i', $video->video_path))
-                                    <video class="w-24 h-16 object-cover rounded-lg bg-black border border-natural-200" controls preload="metadata">
+                                    <video class="w-32 h-20 object-cover rounded-lg bg-black border border-natural-200" controls preload="metadata">
                                         <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
                                     </video>
                                 @else
-                                    <img src="{{ asset('storage/' . $video->video_path) }}" class="w-24 h-16 object-cover rounded-lg border border-natural-200">
+                                    <img src="{{ asset('storage/' . $video->video_path) }}" class="w-32 h-20 object-cover rounded-lg border border-natural-200">
                                 @endif
                             </td>
                             
-                            <td class="px-4 py-2 align-middle">
-                                <p class="font-bold text-[11px] text-natural-800">{{ $video->title }}</p>
-                                <a href="{{ $video->target_url ?? '#' }}" target="_blank" class="text-[9px] text-brand-600 hover:underline block mt-0.5 truncate max-w-[200px]">
-                                    {{ $video->target_url ?? 'Tidak ada link' }} ↗
+                            <td class="px-6 py-4 align-middle">
+                                <p class="font-bold text-base text-natural-800">{{ $video->title }}</p>
+                                <a href="{{ $video->target_url ?? '#' }}" target="_blank" class="text-xs text-brand-600 hover:underline block mt-0.5 truncate max-w-[200px]">
+                                    {{ $video->target_url ?? 'Tidak ada link' }} â†—
                                 </a>
                             </td>
 
-                            <td class="px-4 py-2 align-middle text-center">
+                            <td class="px-6 py-4 align-middle text-center">
                                 @if($video->is_active)
-                                    <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-[9px] font-bold">
-                                        ● Tampil di Web
+                                    <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-base font-bold">
+                                        â— Tampil di Web
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-500 border border-gray-200 px-2 py-0.5 rounded text-[9px] font-bold">
+                                    <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-500 border border-gray-200 px-2 py-0.5 rounded text-base font-bold">
                                         Nonaktif
                                     </span>
                                 @endif
                             </td>
 
-                            <td class="px-4 py-2 align-middle text-right">
+                            <td class="px-6 py-4 align-middle text-right">
                                 <div class="flex items-center justify-end gap-1">
                                     <form action="{{ route('admin.promo-video.toggle', $video->id) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="inline-flex items-center justify-center w-8 h-6 {{ $video->is_active ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-500' }} rounded transition" title="{{ $video->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                        <button type="submit" class="inline-flex items-center justify-center w-10 h-8 {{ $video->is_active ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-500' }} rounded transition" title="{{ $video->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
                                             <i class='bx {{ $video->is_active ? 'bx-toggle-right' : 'bx-toggle-left' }} text-lg'></i>
                                         </button>
                                     </form>
 
-                                    <button onclick="openEditModal({{ $video }})" class="inline-flex items-center justify-center w-6 h-6 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded transition" title="Edit">
-                                        <i class='bx bx-edit text-sm'></i>
+                                    <button onclick="openEditModal({{ $video }})" class="inline-flex items-center justify-center w-8 h-8 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded transition" title="Edit">
+                                        <i class='bx bx-edit text-base'></i>
                                     </button>
                                     
                                     <form action="{{ route('admin.promo-video.destroy', $video->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus video ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center justify-center w-6 h-6 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded transition" title="Hapus">
-                                            <i class='bx bx-trash text-sm'></i>
+                                        <button type="submit" class="inline-flex items-center justify-center w-8 h-8 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded transition" title="Hapus">
+                                            <i class='bx bx-trash text-base'></i>
                                         </button>
                                     </form>
                                 </div>
@@ -105,7 +105,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="px-4 py-8 text-center text-natural-400 italic text-[11px]">Belum ada video promo yang diunggah.</td>
+                            <td colspan="4" class="px-4 py-8 text-center text-natural-400 italic text-base">Belum ada video promo yang diunggah.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -126,29 +126,29 @@
                 @method('PUT')
                 
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">Judul Promo</label>
-                    <input type="text" id="edit_title" name="title" required class="mt-1 w-full rounded-xl border-natural-200 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-[11px] py-1.5">
+                    <label class="block text-base font-bold text-natural-700">Judul Promo</label>
+                    <input type="text" id="edit_title" name="title" required class="mt-1 w-full rounded-xl border-natural-200 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-base py-3.5">
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">Link Target</label>
-                    <input type="url" id="edit_target_url" name="target_url" class="mt-1 w-full rounded-xl border-natural-200 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-[11px] py-1.5">
+                    <label class="block text-base font-bold text-natural-700">Link Target</label>
+                    <input type="url" id="edit_target_url" name="target_url" class="mt-1 w-full rounded-xl border-natural-200 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-base py-3.5">
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-bold text-natural-700">Ganti File Promo (Biarkan kosong jika tidak ingin mengganti)</label>
-                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" class="mt-1 block w-full text-[11px] text-natural-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                    <p class="mt-1 text-[9px] text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4).</p>
+                    <label class="block text-base font-bold text-natural-700">Ganti File Promo (Biarkan kosong jika tidak ingin mengganti)</label>
+                    <input type="file" name="video" accept="video/mp4,video/webm,image/jpeg,image/png,image/gif,image/webp" class="mt-1 block w-full text-base text-natural-500 file:mr-3 file:py-3.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    <p class="mt-1 text-xs text-natural-500 font-medium">Maksimal 20MB. Gambar (JPG/PNG/WEBP) atau Video (MP4).</p>
                 </div>
 
                 <div class="flex items-center gap-2">
                     <input type="checkbox" id="edit_is_active" name="is_active" value="1" class="rounded border-natural-300 text-brand-600 focus:ring-brand-500">
-                    <label for="edit_is_active" class="text-[11px] font-bold text-natural-700">Aktifkan Video Ini di Landing Page</label>
+                    <label for="edit_is_active" class="text-base font-bold text-natural-700">Aktifkan Video Ini di Landing Page</label>
                 </div>
 
                 <div class="flex justify-end gap-2 border-t border-natural-100 pt-4">
-                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-natural-600 rounded-xl text-[11px] font-bold hover:bg-natural-50 transition">Batal</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 text-white rounded-xl text-[11px] hover:bg-brand-700 font-bold shadow-sm transition">Simpan Perubahan</button>
+                    <button type="button" onclick="closeEditModal()" class="px-6 py-4 text-natural-600 rounded-xl text-base font-bold hover:bg-natural-50 transition">Batal</button>
+                    <button type="submit" class="px-6 py-4 bg-brand-600 text-white rounded-xl text-base hover:bg-brand-700 font-bold shadow-sm transition">Simpan Perubahan</button>
                 </div>
             </form>
         </div>
@@ -178,3 +178,4 @@
         }
     </script>
 </x-app-layout>
+
