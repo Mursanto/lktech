@@ -100,7 +100,8 @@ class PublicCatalogController extends Controller
 
             // Sisipkan setiap produk promo di tengah baris yang sesuai
             // (kolom ke-3 dari setiap baris dalam grid 6 kolom = offset 2)
-            $result = $regularItems->toArray();
+            // Gunakan ->all() bukan ->toArray() agar objek Eloquent tetap utuh
+            $result = $regularItems->all();
             foreach ($promoItems as $slotIndex => $promoProduct) {
                 $insertAt = $slotIndex * 6 + 2; // Row (slotIndex+1), kolom 3 = center
                 $insertAt = min($insertAt, count($result)); // Jangan melewati batas
