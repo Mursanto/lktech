@@ -380,32 +380,6 @@
         </div>
         @endif
 
-        {{-- ==================== SECTION: PRODUK PROMO ==================== --}}
-        @if(!empty($promoProducts) && $promoProducts->count() > 0 && !request()->has('search'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2">
-            {{-- Header --}}
-            <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-sm">
-                        🔥 PRODUK PROMO
-                    </div>
-                    <span class="text-gray-400 text-xs hidden sm:block">Penawaran terbatas, segera dapatkan!</span>
-                </div>
-                <a href="{{ route('katalog.index') }}" class="text-orange-500 hover:text-orange-600 text-xs font-semibold hover:underline flex items-center gap-1">
-                    Lihat Katalog <i class='bx bx-chevron-right'></i>
-                </a>
-            </div>
-
-            {{-- Promo Cards — special highlighted grid --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3">
-                @foreach($promoProducts as $product)
-                <x-product-card :product="$product" />
-                @endforeach
-            </div>
-        </div>
-        @endif
-        {{-- ============================================================== --}}
-
         <!-- Product Grid Section -->
         <div id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-6 lg:pt-2 lg:pb-8 flex-shrink-0">
             

@@ -71,7 +71,7 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
-        // ─── Ekstrak Promo Product IDs dari Produk Promo (promo_product_links) ──
+        // ─── Sisipkan Produk Promo di tengah katalog (kolom ke-3 tiap baris) ──────
         $promoProductIds = collect();
         if ($setting && !empty($setting->promo_product_links)) {
             foreach ($setting->promo_product_links as $link) {
@@ -82,13 +82,29 @@ class PublicCatalogController extends Controller
             $promoProductIds = $promoProductIds->unique()->values();
         }
 
-        // Tandai produk promo — pisahkan dari katalog utama, tampilkan di section tersendiri
-        $promoProducts = collect();
         if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
-            // Ambil produk promo dari collection (sudah ter-transform display_image)
-            $promoProducts = $collectionToTransform->filter(fn($p) => $promoProductIds->contains($p->id))->values();
-            foreach ($promoProducts as $p) {
-                $p->is_active_promo = true;
+            // Flag is_active_promo
+            $collectionToTransform->transform(function ($product) use ($promoProductIds) {
+                $product->is_active_promo = $promoProductIds->contains($product->id);
+                return $product;
+            });
+
+            // Pisahkan & sisipkan di tengah baris (col 3 = offset 2, grid 6 kolom)
+            $promoItems   = $collectionToTransform->filter(fn($p) => $p->is_active_promo)->values();
+            $regularItems = $collectionToTransform->filter(fn($p) => !$p->is_active_promo)->values();
+
+            $result = $regularItems->all(); // ->all() menjaga objek Eloquent
+            foreach ($promoItems as $slotIndex => $promoProduct) {
+                $insertAt = $slotIndex * 6 + 2; // Baris ke-(slotIndex+1), kolom 3
+                $insertAt = min($insertAt, count($result));
+                array_splice($result, $insertAt, 0, [$promoProduct]);
+            }
+            $sorted = collect($result);
+
+            if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+                $products->setCollection($sorted);
+            } else {
+                $products = $sorted;
             }
         }
         // ───────────────────────────────────────────────────────────────────────
@@ -143,7 +159,7 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        return view('welcome', compact('products', 'promoProducts', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews'));
+        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews'));
     }
 
     public function show(Product $product)
