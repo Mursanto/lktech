@@ -84,12 +84,12 @@
                             </td>
 
                             <td class="px-6 py-4 align-middle text-right">
-                                <div class="flex items-center justify-end gap-1">
+                                <div class="flex items-center justify-end gap-2">
                                     <form action="{{ route('admin.promo-video.toggle', $video->id) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="inline-flex items-center justify-center w-10 h-8 {{ $video->is_active ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-500' }} rounded transition" title="{{ $video->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                            <i class='bx {{ $video->is_active ? 'bx-toggle-right' : 'bx-toggle-left' }} text-lg'></i>
+                                        <button type="submit" class="inline-flex items-center justify-center w-12 h-8 {{ $video->is_active ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-500' }} rounded transition" title="{{ $video->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                            <i class='bx {{ $video->is_active ? 'bx-toggle-right' : 'bx-toggle-left' }} text-2xl'></i>
                                         </button>
                                     </form>
 
