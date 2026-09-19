@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
@@ -74,36 +74,35 @@
     <main class="flex-grow w-full pb-20 md:pb-0">
 
         <!-- Hero Section -->
-        <div class="relative bg-gradient-to-br from-emerald-50 via-teal-50/70 to-cyan-50 py-10 px-4 sm:px-6 lg:px-8 text-center border-b border-emerald-100/70 w-full overflow-hidden">
+        <div class="relative bg-gradient-to-br from-emerald-50 via-teal-50/70 to-cyan-50 pt-6 pb-4 px-4 sm:px-6 lg:px-8 text-center border-b border-emerald-100/70 w-full overflow-hidden">
             <div class="absolute -top-10 -left-10 w-48 h-48 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-teal-200/20 rounded-full blur-3xl pointer-events-none"></div>
 
-            <h1 class="text-2xl md:text-4xl font-black font-montserrat text-gray-900 mb-2 tracking-tight">
+            <h1 class="text-xl md:text-4xl font-black font-montserrat text-gray-900 mb-1 md:mb-2 tracking-tight">
                 Sewa <span class="text-shimmer-emerald">PC &amp; Laptop</span>
             </h1>
-            <p class="text-gray-600 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed mt-2">
+            <p class="text-gray-600 text-[11px] md:text-sm max-w-2xl mx-auto leading-relaxed mt-1 md:mt-2">
                 Solusi cerdas kebutuhan perangkat IT harian, mingguan, hingga bulanan. Spesifikasi tinggi, bebas riset harga, tanpa perlu beli baru.
             </p>
 
             <!-- Stats Bar -->
-            <div class="flex flex-wrap justify-center gap-6 mt-6">
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><i class='bx bx-calendar text-base'></i></span>
-                    Sewa Harian / Bulanan
+            <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 mt-3 md:mt-5 text-[10px] sm:text-sm text-gray-700 sm:text-gray-600 font-semibold max-w-lg mx-auto">
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-calendar text-emerald-600 text-sm sm:text-base'></i> Sewa Harian/Bulanan
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><i class='bx bx-car text-base'></i></span>
-                    Antar ke Lokasi Anda
+                <span class="text-emerald-200">|</span>
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-car text-emerald-600 text-sm sm:text-base'></i> Antar ke Lokasi
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><i class='bx bx-support text-base'></i></span>
-                    Support &amp; Maintenance Gratis
+                <span class="text-emerald-200">|</span>
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-support text-emerald-600 text-sm sm:text-base'></i> Support Gratis
                 </div>
             </div>
         </div>
 
         <!-- ===================================================================== -->
-        <div class="bg-gradient-to-r from-emerald-600 to-teal-500 py-6 px-4 sm:px-6 lg:px-8"
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-500 pt-4 pb-6 px-4 sm:px-6 lg:px-8"
              x-data="{
                  contractNo: '',
                  result: null,
@@ -121,24 +120,24 @@
                  }
              }">
             <div class="max-w-2xl mx-auto">
-                <div class="flex items-baseline gap-2.5 justify-center mb-3">
-                    <h2 class="text-base md:text-lg font-black font-montserrat text-white flex items-center gap-1.5">
-                        <i class='bx bx-search-alt text-sm'></i> Tracking Nomor Kontrak Sewa
+                <div class="flex items-baseline gap-2.5 justify-center mb-2 md:mb-3">
+                    <h2 class="text-sm md:text-lg font-black font-montserrat text-white flex items-center gap-1.5">
+                        <i class='bx bx-search-alt text-sm md:text-base'></i> Tracking Nomor Kontrak Sewa
                     </h2>
-                    <p class="text-emerald-200 text-xs truncate">Masukkan nomor kontrak untuk cek status sewa.</p>
+                    <p class="text-emerald-200 text-xs truncate hidden sm:block">Masukkan nomor kontrak untuk cek status sewa.</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-4 text-left">
-                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Kontrak / Invoice Sewa</label>
-                    <div class="flex gap-2">
+                <div class="bg-white rounded-xl shadow-lg p-3 md:p-4 text-left">
+                    <label class="block text-[9px] md:text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Kontrak / Invoice Sewa</label>
+                    <div class="flex flex-row gap-2">
                         <input type="text" x-model="contractNo" @keyup.enter="trackRental()"
-                               placeholder="Contoh: RNT-2026-0008"
-                               class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
+                               placeholder="RNT-2026-0008"
+                               class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 text-[11px] sm:text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
                         <button @click="trackRental()" :disabled="loading"
-                                class="shrink-0 px-4 h-10 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-sm flex items-center gap-1.5 shadow-md">
-                            <i class='bx bx-search text-base' x-show="!loading"></i>
-                            <i class='bx bx-loader-alt animate-spin text-base' x-show="loading" x-cloak></i>
-                            <span x-show="!loading">Cek Status</span>
-                            <span x-show="loading" x-cloak>Mengecek...</span>
+                                class="shrink-0 px-3 md:px-4 h-10 justify-center bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-[11px] sm:text-sm flex items-center gap-1 md:gap-1.5 shadow-md">
+                            <i class='bx bx-search text-sm md:text-base' x-show="!loading"></i>
+                            <i class='bx bx-loader-alt animate-spin text-sm md:text-base' x-show="loading" x-cloak></i>
+                            <span x-show="!loading">Cek</span>
+                            <span x-show="loading" x-cloak>Cek...</span>
                         </button>
                     </div>
                     <p x-show="error" x-text="error" x-cloak class="text-red-500 text-xs font-semibold mt-1.5"></p>
@@ -218,86 +217,106 @@
                     <p class="text-gray-500 text-sm max-w-2xl mx-auto">Manfaat yang tidak akan Anda dapatkan jika membeli perangkat baru sendiri.</p>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
                     <!-- Benefit 1 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                             <i class='bx bx-money'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Hemat Biaya Modal</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Tidak perlu keluar biaya besar di awal</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Hemat Biaya Modal</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Tidak perlu keluar biaya besar di awal</p>
+                        </div>
                     </div>
                     <!-- Benefit 2 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                             <i class='bx bx-up-arrow-circle'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Bebas Upgrade Spek</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Ganti spesifikasi kapan saja sesuai kebutuhan</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Bebas Upgrade Spek</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Ganti spesifikasi kapan saja sesuai kebutuhan</p>
+                        </div>
                     </div>
                     <!-- Benefit 3 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                             <i class='bx bx-wrench'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Maintenance Gratis</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Biaya perawatan ditanggung LKTech</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Maintenance Gratis</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Biaya perawatan ditanggung LKTech</p>
+                        </div>
                     </div>
                     <!-- Benefit 4 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-purple-500 group-hover:text-white transition-colors">
                             <i class='bx bx-buildings'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Bebas Depresiasi</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Tidak ada kerugian penyusutan aset</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Bebas Depresiasi</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Tidak ada kerugian penyusutan aset</p>
+                        </div>
                     </div>
                     <!-- Benefit 5 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-sky-500 group-hover:text-white transition-colors">
                             <i class='bx bx-headphone'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Support 24 Jam</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Tim siap membantu kapan pun Anda butuh</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Support 24 Jam</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Tim siap membantu kapan pun Anda butuh</p>
+                        </div>
                     </div>
                     <!-- Benefit 6 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-rose-500 group-hover:text-white transition-colors">
                             <i class='bx bx-calendar-event'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Fleksibel Durasi</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Harian, mingguan, hingga tahunan</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Fleksibel Durasi</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Harian, mingguan, hingga tahunan</p>
+                        </div>
                     </div>
                     <!-- Benefit 7 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-teal-500 group-hover:text-white transition-colors">
                             <i class='bx bx-slider-alt'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Custom Spesifikasi</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Pilih merk dan spek sesuai kebutuhan</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Custom Spesifikasi</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Pilih merk dan spek sesuai kebutuhan</p>
+                        </div>
                     </div>
                     <!-- Benefit 8 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-green-500 group-hover:text-white transition-colors">
                             <i class='bx bx-gift'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Setup &amp; Instalasi Gratis</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Sudah siap pakai saat tiba di lokasi</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Setup &amp; Instalasi Gratis</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Sudah siap pakai saat tiba di lokasi</p>
+                        </div>
                     </div>
                     <!-- Benefit 9 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
                             <i class='bx bx-group'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Tanpa Minimum Unit</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Sewa 1 unit pun bisa, tanpa minimum</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Tanpa Minimum Unit</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Sewa 1 unit pun bisa, tanpa minimum</p>
+                        </div>
                     </div>
                     <!-- Benefit 10 -->
-                    <div class="float-anim group bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all text-center cursor-default">
-                        <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                    <div class="float-anim group bg-white rounded-2xl p-3 sm:p-4 border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all flex items-center sm:flex-col sm:text-center text-left gap-3 sm:gap-0 cursor-default">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-xl sm:text-2xl sm:mx-auto sm:mb-3 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                             <i class='bx bx-car'></i>
                         </div>
-                        <h4 class="font-bold text-gray-800 text-xs leading-tight">Antar ke Lokasi</h4>
-                        <p class="text-[10px] text-gray-400 mt-1 leading-snug">Pengiriman langsung ke kantor atau lokasi acara</p>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-[11px] sm:text-xs leading-tight">Antar ke Lokasi</h4>
+                            <p class="text-[9px] sm:text-[10px] text-gray-400 mt-0.5 sm:mt-1 leading-snug">Pengiriman langsung ke kantor atau lokasi acara</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -314,15 +333,21 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                     <!-- Paket Harian -->
-                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-8 flex flex-col h-full group">
-                        <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-3xl mb-5 group-hover:bg-sky-500 group-hover:text-white transition-colors group-hover:scale-110 duration-300">
-                            <i class='bx bx-sun'></i>
+                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-6 sm:p-8 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shrink-0 group-hover:bg-sky-500 group-hover:text-white transition-colors group-hover:scale-110 duration-300">
+                                <i class='bx bx-sun'></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-0.5 font-montserrat">Paket Harian</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">1 - 7 Hari</p>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-1 font-montserrat">Paket Harian</h3>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5">1 â€“ 7 Hari</p>
-                        <div class="mb-6">
-                            <span class="text-3xl font-black text-gray-900">Mulai Rp 100.000</span>
-                            <span class="text-gray-400 text-sm">/hari</span>
+                        <div class="mb-6 flex items-baseline gap-1">
+                            <span class="text-xs sm:text-sm font-bold text-gray-500">Mulai</span>
+                            <span class="text-xs font-bold text-gray-900 ml-1">Rp</span>
+                            <span class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">100.000</span>
+                            <span class="text-gray-400 text-xs sm:text-sm">/hari</span>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-600 font-medium flex-1 mb-6">
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Laptop Office / Core i5+</li>
@@ -340,21 +365,27 @@
                     </div>
 
                     <!-- Paket Mingguan (Popular) -->
-                    <div class="bg-white rounded-3xl border-2 border-emerald-500 shadow-2xl transition-all duration-300 p-8 flex flex-col h-full relative z-10 md:-translate-y-4 transform">
-                        <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">Populer</div>
+                    <div class="bg-white rounded-3xl border-2 border-emerald-500 shadow-2xl transition-all duration-300 p-6 sm:p-8 flex flex-col h-full relative z-10 md:-translate-y-4 transform">
+                        <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm z-20">Populer</div>
                         <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/50 to-transparent rounded-3xl pointer-events-none"></div>
-                        <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-5 relative z-10">
-                            <i class='bx bx-calendar-week'></i>
+                        <div class="flex items-center gap-4 mb-5 relative z-10">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shrink-0">
+                                <i class='bx bx-calendar-week'></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-bold text-emerald-600 mb-0.5 font-montserrat">Paket Mingguan</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">1 - 4 Minggu</p>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-emerald-600 mb-1 font-montserrat relative z-10">Paket Mingguan</h3>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5 relative z-10">1 â€“ 4 Minggu</p>
-                        <div class="mb-6 relative z-10">
-                            <span class="text-3xl font-black text-gray-900">Mulai Rp 550.000</span>
-                            <span class="text-gray-400 text-sm">/minggu</span>
+                        <div class="mb-6 relative z-10 flex items-baseline gap-1">
+                            <span class="text-xs sm:text-sm font-bold text-gray-500">Mulai</span>
+                            <span class="text-xs font-bold text-gray-900 ml-1">Rp</span>
+                            <span class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">550.000</span>
+                            <span class="text-gray-400 text-xs sm:text-sm">/minggu</span>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-700 font-semibold flex-1 mb-6 relative z-10">
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Laptop Core i5 / i7 / Ryzen</li>
-                            <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> RAM 8â€“16GB, SSD 256GB+</li>
+                            <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> RAM 8-16GB, SSD 256GB+</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> OS Windows Original + Office</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Antar ke lokasi (area tertentu)</li>
                             <li class="flex items-center gap-2"><i class='bx bxs-check-circle text-emerald-500 text-lg'></i> Support &amp; Maintenance</li>
@@ -368,19 +399,25 @@
                     </div>
 
                     <!-- Paket Bulanan -->
-                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-8 flex flex-col h-full group">
-                        <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-5 group-hover:bg-purple-500 group-hover:text-white transition-colors group-hover:scale-110 duration-300">
-                            <i class='bx bx-calendar-star'></i>
+                    <div class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 p-6 sm:p-8 flex flex-col h-full group">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl sm:text-3xl shrink-0 group-hover:bg-purple-500 group-hover:text-white transition-colors group-hover:scale-110 duration-300">
+                                <i class='bx bx-calendar-star'></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-0.5 font-montserrat">Paket Bulanan</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider">1 Bulan ke atas</p>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-1 font-montserrat">Paket Bulanan</h3>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-5">1 Bulan ke atas</p>
-                        <div class="mb-6">
-                            <span class="text-3xl font-black text-gray-900">Mulai Rp 1.500.000</span>
-                            <span class="text-gray-400 text-sm">/bulan</span>
+                        <div class="mb-6 flex items-baseline gap-1">
+                            <span class="text-xs sm:text-sm font-bold text-gray-500">Mulai</span>
+                            <span class="text-xs font-bold text-gray-900 ml-1">Rp</span>
+                            <span class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">1.500.000</span>
+                            <span class="text-gray-400 text-xs sm:text-sm">/bulan</span>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-600 font-medium flex-1 mb-6">
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Laptop / PC pilihan bebas spek</li>
-                            <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> RAM 16â€“32GB, SSD NVMe</li>
+                            <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> RAM 16-32GB, SSD NVMe</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Full Setup &amp; Instalasi Software</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Antar-jemput gratis (area tertentu)</li>
                             <li class="flex items-center gap-2"><i class='bx bx-check-circle text-emerald-500 text-lg'></i> Maintenance &amp; Penggantian Unit</li>
@@ -404,7 +441,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-10">
                     <span class="text-emerald-600 font-bold tracking-wider uppercase text-[10px] mb-2 block bg-emerald-50 inline-block px-3 py-1 rounded-full border border-emerald-100">Step By Step</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Cara Sewa PC &amp; Laptop di LKTech</h2>
+                    <h2 class="text-base sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Cara Sewa PC/Laptop di LKTech</h2>
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Proses mudah dan cepat. Perangkat siap pakai langsung sampai di lokasi Anda.</p>
                 </div>
 
@@ -413,36 +450,44 @@
                     <div class="hidden lg:block absolute top-12 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-emerald-100 via-emerald-300 to-emerald-100 z-0"></div>
 
                     <!-- Step 1 -->
-                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-6 text-center group hover:-translate-y-1">
-                        <div class="w-14 h-14 mx-auto bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl font-black shadow-sm mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
+                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-4 sm:p-6 flex items-start sm:flex-col sm:items-center sm:text-center text-left gap-3 sm:gap-0 group hover:-translate-y-1">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 shrink-0 bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-lg sm:text-2xl font-black shadow-sm sm:mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
                             1
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2 text-sm font-montserrat">Pilih Perangkat &amp; Durasi</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Konsultasikan kebutuhan spesifikasi, jumlah unit, dan durasi sewa yang Anda inginkan via WhatsApp.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm font-montserrat">Pilih Perangkat &amp; Durasi</h4>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed">Konsultasikan kebutuhan spesifikasi, jumlah unit, dan durasi sewa yang Anda inginkan via WhatsApp.</p>
+                        </div>
                     </div>
                     <!-- Step 2 -->
-                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-6 text-center group hover:-translate-y-1">
-                        <div class="w-14 h-14 mx-auto bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl font-black shadow-sm mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
+                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-4 sm:p-6 flex items-start sm:flex-col sm:items-center sm:text-center text-left gap-3 sm:gap-0 group hover:-translate-y-1">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 shrink-0 bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-lg sm:text-2xl font-black shadow-sm sm:mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
                             2
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2 text-sm font-montserrat">Lengkapi Dokumen</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Siapkan KTP/identitas dan tanda tangan surat perjanjian sewa. Proses administrasi singkat dan mudah.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm font-montserrat">Lengkapi Dokumen</h4>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed">Siapkan KTP/identitas dan tanda tangan surat perjanjian sewa. Proses administrasi singkat dan mudah.</p>
+                        </div>
                     </div>
                     <!-- Step 3 -->
-                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-6 text-center group hover:-translate-y-1">
-                        <div class="w-14 h-14 mx-auto bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl font-black shadow-sm mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
+                    <div class="relative z-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 p-4 sm:p-6 flex items-start sm:flex-col sm:items-center sm:text-center text-left gap-3 sm:gap-0 group hover:-translate-y-1">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 shrink-0 bg-white border-4 border-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-lg sm:text-2xl font-black shadow-sm sm:mb-4 group-hover:bg-emerald-500 group-hover:border-emerald-200 group-hover:text-white transition-all">
                             3
                         </div>
-                        <h4 class="font-bold text-gray-900 mb-2 text-sm font-montserrat">Bayar Deposit &amp; Sewa</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Lakukan pembayaran deposit jaminan dan biaya sewa pertama. Transfer bank / tunai / e-wallet tersedia.</p>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1 sm:mb-2 text-sm font-montserrat">Bayar Deposit &amp; Sewa</h4>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed">Lakukan pembayaran deposit jaminan dan biaya sewa pertama. Transfer bank / tunai / e-wallet tersedia.</p>
+                        </div>
                     </div>
                     <!-- Step 4 -->
-                    <div class="relative z-10 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center group hover:-translate-y-1">
-                        <div class="w-14 h-14 mx-auto bg-emerald-500 border-4 border-emerald-200 text-white rounded-full flex items-center justify-center text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] mb-4">
+                    <div class="relative z-10 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-6 flex items-start sm:flex-col sm:items-center sm:text-center text-left gap-3 sm:gap-0 group hover:-translate-y-1">
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 shrink-0 bg-emerald-500 border-4 border-emerald-200 text-white rounded-full flex items-center justify-center text-2xl sm:text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] sm:mb-4">
                             <i class='bx bx-check'></i>
                         </div>
-                        <h4 class="font-bold text-emerald-700 mb-2 text-sm font-montserrat">Perangkat Dikirim âœ…</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Perangkat diantar ke alamat operasional Anda, sudah setup dan siap digunakan langsung.</p>
+                        <div>
+                            <h4 class="font-bold text-emerald-700 mb-1 sm:mb-2 text-sm font-montserrat">Perangkat Dikirim ✅</h4>
+                            <p class="text-[11px] sm:text-xs text-gray-500 leading-relaxed">Perangkat diantar ke alamat operasional Anda, sudah setup dan siap digunakan langsung.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -453,7 +498,7 @@
                     <div class="relative z-10">
                         <span class="inline-block bg-white/20 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-white/30 mb-4">Mulai Sewa Sekarang</span>
                         <h3 class="text-xl md:text-2xl font-black text-white font-montserrat mb-3">Butuh PC / Laptop untuk Event, Kantor, atau Proyek?</h3>
-                        <p class="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto mb-6">Kami siap menyediakan perangkat sesuai kebutuhan Anda â€” dari 1 unit untuk personal hingga puluhan unit untuk perusahaan dan event besar.</p>
+                        <p class="text-emerald-100 text-sm leading-relaxed max-w-xl mx-auto mb-6">Kami siap menyediakan perangkat sesuai kebutuhan Anda - dari 1 unit untuk personal hingga puluhan unit untuk perusahaan dan event besar.</p>
                         <div class="flex flex-col sm:flex-row gap-3 justify-center">
                             <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin konsultasi Sewa PC/Laptop.') }}" target="_blank"
                                class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-emerald-600 font-bold rounded-xl hover:bg-emerald-50 transition shadow-md text-sm">

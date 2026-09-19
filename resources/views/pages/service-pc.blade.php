@@ -65,38 +65,35 @@
     <main class="flex-grow w-full pb-20 md:pb-0">
 
         <!-- Hero Section -->
-        <div class="relative bg-gradient-to-br from-amber-50 via-orange-50/70 to-yellow-50 py-10 px-4 sm:px-6 lg:px-8 text-center border-b border-amber-100/70 w-full overflow-hidden">
+        <div class="relative bg-gradient-to-br from-amber-50 via-orange-50/70 to-yellow-50 pt-6 pb-4 px-4 sm:px-6 lg:px-8 text-center border-b border-amber-100/70 w-full overflow-hidden">
             <div class="absolute -top-10 -left-10 w-48 h-48 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-orange-200/20 rounded-full blur-3xl pointer-events-none"></div>
 
-
-
-            <h1 class="text-2xl md:text-4xl font-black font-montserrat text-gray-900 mb-2 tracking-tight">
+            <h1 class="text-xl md:text-4xl font-black font-montserrat text-gray-900 mb-1 md:mb-2 tracking-tight">
                 Service <span class="text-shimmer-amber">PC &amp; Laptop</span>
             </h1>
-            <p class="text-gray-600 text-xs md:text-sm max-w-2xl mx-auto leading-relaxed mt-2">
+            <p class="text-gray-600 text-[11px] md:text-sm max-w-2xl mx-auto leading-relaxed mt-1 md:mt-2">
                 Perbaikan profesional oleh teknisi berpengalaman. Diagnosa cepat, sparepart original, dan garansi pengerjaan resmi dari LKTech.
             </p>
 
             <!-- Stats Bar -->
-            <div class="flex flex-wrap justify-center gap-6 mt-6">
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600"><i class='bx bx-check-shield text-base'></i></span>
-                    Garansi Service 30 Hari
+            <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 mt-3 md:mt-5 text-[10px] sm:text-sm text-gray-700 sm:text-gray-600 font-semibold max-w-lg mx-auto">
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-check-shield text-amber-600 text-sm sm:text-base'></i> Garansi 30 Hari
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600"><i class='bx bx-time text-base'></i></span>
-                    Pengerjaan 1-3 Hari
+                <span class="text-amber-200">|</span>
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-time text-amber-600 text-sm sm:text-base'></i> Pengerjaan 1-3 Hari
                 </div>
-                <div class="flex items-center gap-2 text-sm text-gray-600 font-semibold">
-                    <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center text-amber-600"><i class='bx bx-chip text-base'></i></span>
-                    Sparepart Original
+                <span class="text-amber-200">|</span>
+                <div class="flex items-center gap-1">
+                    <i class='bx bx-chip text-amber-600 text-sm sm:text-base'></i> Sparepart Original
                 </div>
             </div>
         </div>
 
         <!-- ===================================================================== -->
-        <div class="bg-gradient-to-r from-amber-600 to-orange-500 py-6 px-4 sm:px-6 lg:px-8"
+        <div class="bg-gradient-to-r from-amber-600 to-orange-500 pt-4 pb-6 px-4 sm:px-6 lg:px-8"
              x-data="{
                  ticketNo: '',
                  result: null,
@@ -114,24 +111,24 @@
                  }
              }">
             <div class="max-w-2xl mx-auto">
-                <div class="flex items-baseline gap-2.5 justify-center mb-3">
-                    <h2 class="text-base md:text-lg font-black font-montserrat text-white flex items-center gap-1.5">
-                        <i class='bx bx-search-alt text-sm'></i> Tracking Nomor Tiket Service
+                <div class="flex items-baseline gap-2.5 justify-center mb-2 md:mb-3">
+                    <h2 class="text-sm md:text-lg font-black font-montserrat text-white flex items-center gap-1.5">
+                        <i class='bx bx-search-alt text-sm md:text-base'></i> Tracking Nomor Tiket Service
                     </h2>
-                    <p class="text-amber-200 text-xs truncate">Masukkan nomor tiket untuk cek status pengerjaan.</p>
+                    <p class="text-amber-200 text-xs truncate hidden sm:block">Masukkan nomor tiket untuk cek status pengerjaan.</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg p-4 text-left">
-                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Tiket / Invoice Service</label>
-                    <div class="flex gap-2">
+                <div class="bg-white rounded-xl shadow-lg p-3 md:p-4 text-left">
+                    <label class="block text-[9px] md:text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nomor Tiket / Invoice Service</label>
+                    <div class="flex flex-row gap-2">
                         <input type="text" x-model="ticketNo" @keyup.enter="trackService()"
-                               placeholder="Contoh: SVC-2026-0012"
-                               class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-amber-500 text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
+                               placeholder="SVC-2026-0012"
+                               class="ticket-input flex-1 px-3 h-10 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-amber-500 text-[11px] sm:text-sm font-semibold text-gray-800 placeholder-gray-400 transition-all">
                         <button @click="trackService()" :disabled="loading"
-                                class="shrink-0 px-4 h-10 bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-sm flex items-center gap-1.5 shadow-md">
-                            <i class='bx bx-search text-base' x-show="!loading"></i>
-                            <i class='bx bx-loader-alt animate-spin text-base' x-show="loading" x-cloak></i>
-                            <span x-show="!loading">Cek Status</span>
-                            <span x-show="loading" x-cloak>Mengecek...</span>
+                                class="shrink-0 px-3 md:px-4 h-10 justify-center bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-bold rounded-lg transition-all text-[11px] sm:text-sm flex items-center gap-1 md:gap-1.5 shadow-md">
+                            <i class='bx bx-search text-sm md:text-base' x-show="!loading"></i>
+                            <i class='bx bx-loader-alt animate-spin text-sm md:text-base' x-show="loading" x-cloak></i>
+                            <span x-show="!loading">Cek</span>
+                            <span x-show="loading" x-cloak>Cek...</span>
                         </button>
                     </div>
                     <p x-show="error" x-text="error" x-cloak class="text-red-500 text-xs font-semibold mt-1.5"></p>
@@ -165,97 +162,97 @@
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-8">
                     <span class="inline-block bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-amber-100 mb-3">Jenis Layanan</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Apa Masalah PC / Laptop Anda?</h2>
+                    <h2 class="text-base sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Apa Masalah PC/Laptop Anda?</h2>
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Kami menangani berbagai kerusakan perangkat keras maupun perangkat lunak.</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
                     <!-- Masalah 1 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Performa Lambat / Lemot') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                             <i class='bx bx-trending-down text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Performa Lambat</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Lemot, loading lama, lag saat multitasking</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Performa Lambat</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Lemot, loading lama, lag saat multitasking</p>
                         </div>
                     </a>
                     <!-- Masalah 2 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Suka Hang / Mati Sendiri') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-red-50 text-red-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-red-50 text-red-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-red-500 group-hover:text-white transition-colors">
                             <i class='bx bx-power-off text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Hang / Mati Sendiri</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Restart tiba-tiba, freeze, blue screen (BSOD)</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Hang / Mati Sendiri</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Restart tiba-tiba, freeze, blue screen (BSOD)</p>
                         </div>
                     </a>
                     <!-- Masalah 3 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Cepat Panas / Overheat') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-orange-50 text-orange-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                             <i class='bx bx-droplet-half text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Cepat Panas (Overheat)</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Fan kencang, suhu tinggi, thermal paste kering</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Cepat Panas (Overheat)</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Fan kencang, suhu tinggi, thermal paste kering</p>
                         </div>
                     </a>
                     <!-- Masalah 4 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Layar Rusak / LCD Bermasalah') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                             <i class='bx bx-window-close text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Layar / LCD Rusak</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Retak, blank, bergaris, flickering, backlight mati</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Layar / LCD Rusak</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Retak, blank, bergaris, flickering, backlight mati</p>
                         </div>
                     </a>
                     <!-- Masalah 5 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Keyboard / Touchpad Bermasalah') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-purple-500 group-hover:text-white transition-colors">
                             <i class='bx bx-keyboard text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Keyboard / Touchpad</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Tombol macet, tidak responsif, touchpad error</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Keyboard / Touchpad</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Tombol macet, tidak responsif, touchpad error</p>
                         </div>
                     </a>
                     <!-- Masalah 6 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Baterai / Charger Bermasalah') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-yellow-50 text-yellow-600 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-yellow-50 text-yellow-600 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
                             <i class='bx bx-battery text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Baterai / Charger</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Baterai drop, tidak charge, charger konslet</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Baterai / Charger</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Baterai drop, tidak charge, charger konslet</p>
                         </div>
                     </a>
                     <!-- Masalah 7 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Tidak Bisa Konek WiFi / LAN') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-sky-50 text-sky-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-sky-50 text-sky-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-sky-500 group-hover:text-white transition-colors">
                             <i class='bx bx-wifi-off text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Koneksi WiFi / LAN</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Tidak terdeteksi, sering putus, kecepatan rendah</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Koneksi WiFi / LAN</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Tidak terdeteksi, sering putus, kecepatan rendah</p>
                         </div>
                     </a>
                     <!-- Masalah 8 -->
                     <a href="https://wa.me/628567354046?text={{ urlencode('Halo LKTech, saya ingin service laptop dengan masalah: Casing / Engsel Rusak') }}" target="_blank"
-                       class="group bg-white rounded-xl border border-gray-100 p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex items-center gap-3 cursor-pointer">
-                        <div class="w-9 h-9 bg-gray-100 text-gray-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-gray-500 group-hover:text-white transition-colors">
+                       class="group bg-white rounded-xl border border-gray-100 p-2.5 sm:p-3.5 hover:border-amber-300 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 cursor-pointer">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 bg-gray-100 text-gray-500 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-gray-500 group-hover:text-white transition-colors">
                             <i class='bx bx-wrench text-lg'></i>
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-gray-800 text-sm group-hover:text-amber-600 transition-colors">Casing / Engsel Rusak</h4>
-                            <p class="text-[11px] text-gray-400 leading-snug truncate">Engsel patah, casing retak, port USB longgar</p>
+                            <h4 class="font-bold text-gray-800 text-[12px] sm:text-sm group-hover:text-amber-600 transition-colors leading-tight sm:leading-normal">Casing / Engsel Rusak</h4>
+                            <p class="text-[10px] sm:text-[11px] text-gray-400 leading-snug line-clamp-2 sm:truncate mt-0.5 sm:mt-0">Engsel patah, casing retak, port USB longgar</p>
                         </div>
                     </a>
                 </div>
@@ -277,34 +274,34 @@
                     <span class="inline-block bg-brand-50 text-brand-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-brand-100 mb-3">Mengapa Memilih LKTech?</span>
                     <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Keunggulan Service Kami</h2>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="group bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                        <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="group bg-gray-50 rounded-2xl p-3 sm:p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3 group-hover:bg-amber-500 group-hover:text-white transition-colors duration-300">
                             <i class='bx bx-user-check'></i>
                         </div>
-                        <h3 class="text-sm font-bold text-gray-900 mb-1 font-montserrat">Teknisi Berpengalaman</h3>
-                        <p class="text-[12px] text-gray-500 leading-relaxed">Ditangani teknisi bersertifikat dengan pengalaman lebih dari 5 tahun di bidang hardware dan software.</p>
+                        <h3 class="text-[13px] sm:text-sm font-bold text-gray-900 mb-1 font-montserrat">Teknisi Berpengalaman</h3>
+                        <p class="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">Ditangani teknisi bersertifikat dengan pengalaman lebih dari 5 tahun di bidang hardware dan software.</p>
                     </div>
-                    <div class="group bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    <div class="group bg-gray-50 rounded-2xl p-3 sm:p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
                             <i class='bx bx-chip'></i>
                         </div>
-                        <h3 class="text-sm font-bold text-gray-900 mb-1 font-montserrat">Sparepart Original</h3>
-                        <p class="text-[12px] text-gray-500 leading-relaxed">Hanya menggunakan sparepart original bergaransi resmi. Tidak ada komponen KW yang membahayakan perangkat.</p>
+                        <h3 class="text-[13px] sm:text-sm font-bold text-gray-900 mb-1 font-montserrat">Sparepart Original</h3>
+                        <p class="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">Hanya menggunakan sparepart original bergaransi resmi. Tidak ada komponen KW yang membahayakan perangkat.</p>
                     </div>
-                    <div class="group bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+                    <div class="group bg-gray-50 rounded-2xl p-3 sm:p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
                             <i class='bx bx-check-shield'></i>
                         </div>
-                        <h3 class="text-sm font-bold text-gray-900 mb-1 font-montserrat">Garansi Service 30 Hari</h3>
-                        <p class="text-[12px] text-gray-500 leading-relaxed">Setiap pengerjaan dijamin garansi 30 hari. Masalah yang sama muncul kembali, kami perbaiki gratis.</p>
+                        <h3 class="text-[13px] sm:text-sm font-bold text-gray-900 mb-1 font-montserrat">Garansi Service 30 Hari</h3>
+                        <p class="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">Setiap pengerjaan dijamin garansi 30 hari. Masalah yang sama muncul kembali, kami perbaiki gratis.</p>
                     </div>
-                    <div class="group bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                        <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300">
+                    <div class="group bg-gray-50 rounded-2xl p-3 sm:p-4 border border-gray-100 hover:border-amber-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-lg sm:text-xl mb-2 sm:mb-3 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300">
                             <i class='bx bx-time-five'></i>
                         </div>
-                        <h3 class="text-sm font-bold text-gray-900 mb-1 font-montserrat">Pengerjaan 1â€“3 Hari</h3>
-                        <p class="text-[12px] text-gray-500 leading-relaxed">Diagnosa di hari yang sama, mayoritas pengerjaan selesai dalam 1â€“3 hari kerja.</p>
+                        <h3 class="text-[13px] sm:text-sm font-bold text-gray-900 mb-1 font-montserrat">Pengerjaan 1-3 Hari</h3>
+                        <p class="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed">Diagnosa di hari yang sama, mayoritas pengerjaan selesai dalam 1-3 hari kerja.</p>
                     </div>
                 </div>
             </div>
@@ -358,7 +355,7 @@
                                 <i class='bx bx-check text-3xl'></i>
                             </div>
                             <span class="text-[10px] font-black text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 mb-1">Langkah 4</span>
-                            <h4 class="text-sm font-bold text-emerald-700 font-montserrat mb-1">Serah Terima âœ…</h4>
+                            <h4 class="text-sm font-bold text-emerald-700 font-montserrat mb-1">Serah Terima ✅</h4>
                             <p class="text-[11px] text-gray-400 leading-snug">Perangkat selesai + struk resmi & garansi 30 hari.</p>
                         </div>
                     </div>

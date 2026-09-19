@@ -121,44 +121,44 @@
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Feature 1 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
-                        <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-blue-100 group-hover:bg-blue-200/70 text-brand-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-4 sm:p-5 border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all duration-300 ease-in-out group flex flex-col gap-3 cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-blue-500 group-hover:bg-blue-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-devices'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Tampil Profesional di Semua Gawai</h3>
+                            <h3 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-blue-700 font-montserrat leading-snug transition-colors duration-300">Tampil Profesional di Semua Gawai</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Website Anda akan terlihat sempurna baik dilihat dari ponsel, tablet, maupun komputer, sehingga calon pelanggan tidak ragu bertransaksi.</p>
+                        <p class="text-[10px] sm:text-sm text-gray-500 leading-snug sm:leading-relaxed">Sempurna dilihat dari ponsel, tablet, maupun komputer, sehingga pelanggan tidak ragu bertransaksi.</p>
                     </div>
                     <!-- Feature 2 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
-                        <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-emerald-100 group-hover:bg-emerald-200/70 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <div class="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-4 sm:p-5 border border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 ease-in-out group flex flex-col gap-3 cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-emerald-500 group-hover:bg-emerald-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-search-alt'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Mudah Ditemukan Pelanggan Baru</h3>
+                            <h3 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-emerald-700 font-montserrat leading-snug transition-colors duration-300">Mudah Ditemukan Pelanggan Baru</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Struktur website dirancang dan dioptimasi agar cepat terindeks di Google, membuat usaha Anda lebih mudah ditemukan calon pembeli.</p>
+                        <p class="text-[10px] sm:text-sm text-gray-500 leading-snug sm:leading-relaxed">Struktur website dioptimasi agar cepat terindeks Google, usaha Anda lebih mudah ditemukan calon pembeli.</p>
                     </div>
                     <!-- Feature 3 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
-                        <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-amber-100 group-hover:bg-amber-200/70 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <div class="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-4 sm:p-5 border border-amber-100 hover:border-amber-300 hover:shadow-lg transition-all duration-300 ease-in-out group flex flex-col gap-3 cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-amber-500 group-hover:bg-amber-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-globe'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Langsung Online Tanpa Ribet</h3>
+                            <h3 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-amber-700 font-montserrat leading-snug transition-colors duration-300">Langsung Online Tanpa Ribet</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami mengurus semua aspek teknis mulai dari domain hingga hosting. Anda tinggal fokus menjalankan dan mengembangkan bisnis.</p>
+                        <p class="text-[10px] sm:text-sm text-gray-500 leading-snug sm:leading-relaxed">Kami urus semua urusan teknis seperti domain & hosting. Anda tinggal terima beres dan fokus pada bisnis.</p>
                     </div>
                     <!-- Feature 4 -->
-                    <div class="bg-gray-50 rounded-3xl p-5 border border-gray-100 hover:border-blue-200 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-in-out group h-full w-full flex flex-col justify-start cursor-default">
-                        <div class="flex items-center gap-3.5 mb-4">
-                            <div class="w-12 h-12 shrink-0 bg-purple-100 group-hover:bg-purple-200/70 text-purple-600 rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-4 sm:p-5 border border-purple-100 hover:border-purple-300 hover:shadow-lg transition-all duration-300 ease-in-out group flex flex-col gap-3 cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-purple-500 group-hover:bg-purple-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                 <i class='bx bx-support'></i>
                             </div>
-                            <h3 class="text-base md:text-lg font-bold text-gray-900 group-hover:text-blue-600 font-montserrat leading-snug transition-colors duration-300">Kami Siap Bantu Kapan Pun</h3>
+                            <h3 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-purple-700 font-montserrat leading-snug transition-colors duration-300">Kami Siap Bantu Kapan Pun</h3>
                         </div>
-                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed">Kami memberikan jaminan rasa tenang dengan dukungan teknis yang siap mendampingi Anda kapan saja jika ada kendala pasca rilis.</p>
+                        <p class="text-[10px] sm:text-sm text-gray-500 leading-snug sm:leading-relaxed">Dukungan teknis responsif yang siap mendampingi Anda kapan saja jika ada kendala pasca website rilis.</p>
                     </div>
                 </div>
             </div>
@@ -184,10 +184,10 @@
              }">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Section Header -->
-                <div class="text-center mb-8">
-                    <span class="inline-block bg-brand-50 text-brand-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-brand-100 mb-3">Inspirasi Desain</span>
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Pilihan Contoh Template Website</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Beberapa contoh tampilan website yang pernah kami kerjakan. Desain bisa disesuaikan dengan kebutuhan dan identitas bisnis Anda.</p>
+                <div class="text-center mb-6 md:mb-8">
+                    <span class="inline-block bg-brand-50 text-brand-600 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-brand-100 mb-2 md:mb-3">Inspirasi Desain</span>
+                    <h2 class="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-1.5 md:mb-2 tracking-tighter whitespace-nowrap sm:whitespace-normal">Pilihan Contoh Template Website</h2>
+                    <p class="text-[11px] sm:text-sm text-gray-500 max-w-xl mx-auto leading-relaxed px-2">Beberapa contoh tampilan website yang pernah kami kerjakan. Desain bisa disesuaikan dengan kebutuhan dan identitas bisnis Anda.</p>
                 </div>
 
                 <!-- Carousel Wrapper -->
@@ -361,9 +361,9 @@
         <!-- Packages Grid -->
         <div id="paket" class="bg-gray-50 pt-10 pb-12 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Pilihan Paket Harga</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Solusi tepat untuk segala skala bisnis. Harga transparan tanpa biaya tersembunyi.</p>
+                <div class="text-center mb-6 md:mb-8">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 md:mb-3 tracking-tight">Pilihan Paket Harga</h2>
+                    <p class="text-[11px] sm:text-sm text-gray-500 max-w-xl mx-auto px-2">Solusi tepat untuk segala skala bisnis. Harga transparan tanpa biaya tersembunyi.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
@@ -385,8 +385,9 @@
                             <h3 class="{{ $isHighlighted ? 'text-2xl font-bold text-brand-600' : 'text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
                             <p class="text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-6">{{ $package->deskripsi_singkat ?? 'Paket Website' }}</p>
                             
-                            <div class="mb-8">
-                                <span class="{{ $isHighlighted ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-xl sm:text-2xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
+                            <div class="mb-6 md:mb-8 flex items-baseline gap-1">
+                                <span class="text-xs sm:text-sm font-bold text-gray-900">Rp</span>
+                                <span class="{{ $isHighlighted ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl' }} font-black text-gray-900 tracking-tight">{{ number_format($package->harga_mulai, 0, ',', '.') }}</span>
                             </div>
                             
                             <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
@@ -424,68 +425,95 @@
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkU4RjAiLz48L3N2Zz4=')] opacity-50"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="text-center mb-8">
-                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 block bg-brand-50 inline-block px-3 py-1 rounded-full border border-brand-100">Step By Step</span>
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Alur Kerja Kami</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Proses yang terstruktur untuk memastikan hasil akhir yang memuaskan dan sesuai ekspektasi.</p>
+                <div class="text-center mb-8 md:mb-10">
+                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Step By Step</span>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 md:mb-3 tracking-tight">Alur Kerja Kami</h2>
+                    <p class="text-[11px] sm:text-sm text-gray-500 max-w-xl mx-auto px-2">Proses yang terstruktur untuk memastikan hasil akhir yang memuaskan dan sesuai ekspektasi.</p>
                 </div>
                 
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 text-center relative">
-                    <!-- Connecting Line for Desktop -->
-                    <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0"></div>
+                <style>
+                    .snake-h { background: repeating-linear-gradient(90deg, #93c5fd 0px, #93c5fd 8px, transparent 8px, transparent 16px); animation: snake-h-anim 1s linear infinite; }
+                    .snake-h-rev { background: repeating-linear-gradient(270deg, #93c5fd 0px, #93c5fd 8px, transparent 8px, transparent 16px); animation: snake-h-rev-anim 1s linear infinite; }
+                    .snake-v { background: repeating-linear-gradient(180deg, #93c5fd 0px, #93c5fd 8px, transparent 8px, transparent 16px); animation: snake-v-anim 1s linear infinite; }
+                    @keyframes snake-h-anim { from { background-position: 0 0; } to { background-position: 16px 0; } }
+                    @keyframes snake-h-rev-anim { from { background-position: 0 0; } to { background-position: -16px 0; } }
+                    @keyframes snake-v-anim { from { background-position: 0 0; } to { background-position: 0 16px; } }
+                </style>
+
+                <div class="grid grid-cols-3 md:grid-cols-5 gap-y-8 md:gap-y-4 gap-x-2 md:gap-x-4 text-center relative px-2 sm:px-0">
+                    
+                    <!-- Connecting Line Desktop (Single continuous line) -->
+                    <div class="hidden md:block absolute top-[38px] left-[10%] right-[10%] h-[4px] snake-h z-0"></div>
 
                     <!-- Step 1 -->
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center group col-start-1 row-start-1 md:col-auto md:row-auto">
+                        <!-- Connecting Line Mobile -->
+                        <div class="absolute top-[22px] left-1/2 w-1/2 h-[3px] snake-h z-0 md:hidden"></div>
+                        
+                        <div class="relative z-10 w-12 h-12 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-[3px] md:border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 transition-all duration-300 group-hover:scale-110">
                             1
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Konsultasi</h4>
-                            <p class="hidden md:block text-xs text-gray-500 px-2">Diskusi konsep, target audiens, dan fitur yang dibutuhkan.</p>
+                            <h4 class="font-bold text-gray-900 text-[11px] md:text-base leading-tight mb-1 md:mb-2">Konsultasi</h4>
+                            <p class="text-[9px] md:text-xs text-gray-500 px-0.5 md:px-2 leading-tight md:leading-relaxed">Diskusi konsep & fitur.</p>
                         </div>
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center group col-start-2 row-start-1 md:col-auto md:row-auto">
+                        <!-- Connecting Line Mobile -->
+                        <div class="absolute top-[22px] left-0 w-full h-[3px] snake-h z-0 md:hidden"></div>
+
+                        <div class="relative z-10 w-12 h-12 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-[3px] md:border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 transition-all duration-300 group-hover:scale-110">
                             2
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Desain UI/UX</h4>
-                            <p class="hidden md:block text-xs text-gray-500 px-2">Pembuatan mockup visual yang memukau dan mudah digunakan.</p>
+                            <h4 class="font-bold text-gray-900 text-[11px] md:text-base leading-tight mb-1 md:mb-2">Desain UI/UX</h4>
+                            <p class="text-[9px] md:text-xs text-gray-500 px-0.5 md:px-2 leading-tight md:leading-relaxed">Pembuatan mockup.</p>
                         </div>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <div class="relative z-10 flex flex-col items-center text-center group col-start-3 row-start-1 md:col-auto md:row-auto">
+                        <!-- Connecting Line Mobile -->
+                        <div class="absolute top-[22px] left-0 w-1/2 h-[3px] snake-h z-0 md:hidden"></div>
+                        <!-- Drop down line to Row 2 (Step 4) -->
+                        <div class="absolute top-[22px] left-[calc(50%-1.5px)] w-[3px] h-[calc(100%+32px)] snake-v z-0 md:hidden"></div>
+
+                        <div class="relative z-10 w-12 h-12 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-[3px] md:border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 transition-all duration-300 group-hover:scale-110">
                             3
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Development</h4>
-                            <p class="hidden md:block text-xs text-gray-500 px-2">Proses coding yang rapi, optimasi kecepatan, dan keamanan.</p>
+                            <h4 class="font-bold text-gray-900 text-[11px] md:text-base leading-tight mb-1 md:mb-2">Development</h4>
+                            <p class="text-[9px] md:text-xs text-gray-500 px-0.5 md:px-2 leading-tight md:leading-relaxed">Coding rapi & cepat.</p>
                         </div>
                     </div>
 
-                    <!-- Step 4 -->
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group hover:bg-brand-600 hover:text-white transition-colors duration-300">
+                    <!-- Step 4 (Moves to Left on Mobile) -->
+                    <div class="relative z-10 flex flex-col items-center text-center group col-start-3 row-start-2 md:col-auto md:row-auto">
+                        <!-- Connecting Line Mobile (Flows Right to Left) -->
+                        <div class="absolute top-[22px] left-0 w-1/2 h-[3px] snake-h-rev z-0 md:hidden"></div>
+
+                        <div class="relative z-10 w-12 h-12 md:w-20 md:h-20 shrink-0 mx-auto bg-white border-[3px] md:border-4 border-brand-100 text-brand-600 rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-sm mb-2 md:mb-4 group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 transition-all duration-300 group-hover:scale-110">
                             4
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 text-xs md:text-base leading-tight md:mb-2">Revisi</h4>
-                            <p class="hidden md:block text-xs text-gray-500 px-2">Kami berikan kesempatan revisi agar hasil benar-benar sempurna.</p>
+                            <h4 class="font-bold text-gray-900 text-[11px] md:text-base leading-tight mb-1 md:mb-2">Revisi</h4>
+                            <p class="text-[9px] md:text-xs text-gray-500 px-0.5 md:px-2 leading-tight md:leading-relaxed">Penyempurnaan akhir.</p>
                         </div>
                     </div>
 
-                    <!-- Step 5 -->
-                    <div class="relative z-10 flex flex-col items-center text-center p-3 md:p-0 bg-white md:bg-transparent rounded-xl md:rounded-none shadow-sm md:shadow-none border md:border-none border-gray-100 col-span-2 md:col-span-1">
-                        <div class="w-10 h-10 md:w-20 md:h-20 shrink-0 mx-auto bg-emerald-500 border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-[0_0_20px_rgba(16,185,129,0.3)] mb-2 md:mb-4">
+                    <!-- Step 5 (Ends at Center on Mobile) -->
+                    <div class="relative z-10 flex flex-col items-center text-center group col-start-2 row-start-2 md:col-auto md:row-auto">
+                        <!-- Connecting Line Mobile (Receives from Right) -->
+                        <div class="absolute top-[22px] right-0 w-1/2 h-[3px] snake-h-rev z-0 md:hidden"></div>
+
+                        <div class="relative z-10 w-12 h-12 md:w-20 md:h-20 shrink-0 mx-auto bg-emerald-500 border-[3px] md:border-4 border-emerald-100 text-white rounded-full flex items-center justify-center text-lg md:text-3xl font-black shadow-[0_0_15px_rgba(16,185,129,0.4)] mb-2 md:mb-4 group-hover:scale-110 transition-all duration-300">
                             <i class='bx bx-check'></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-emerald-600 text-xs md:text-base leading-tight md:mb-2">Rilis & Panduan</h4>
-                            <p class="hidden md:block text-xs text-gray-500 px-2">Website online! Anda akan dibekali panduan penggunaannya.</p>
+                            <h4 class="font-bold text-emerald-600 text-[11px] md:text-base leading-tight mb-1 md:mb-2">Rilis & Panduan</h4>
+                            <p class="text-[9px] md:text-xs text-gray-500 px-0.5 md:px-2 leading-tight md:leading-relaxed">Website siap pakai.</p>
                         </div>
                     </div>
 
@@ -494,17 +522,19 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="bg-brand-600 py-12 relative overflow-hidden">
+        <div class="bg-brand-600 py-10 md:py-12 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
             <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[150px] opacity-10"></div>
             
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 class="text-3xl md:text-5xl font-black text-white font-montserrat mb-6 tracking-tight leading-tight">Siap Membawa Bisnis Anda ke Level Selanjutnya?</h2>
-                <p class="text-brand-100 text-lg mb-10 max-w-2xl mx-auto">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center">
+                <h2 class="text-[22px] sm:text-3xl md:text-4xl font-black text-white font-montserrat mb-3 md:mb-6 tracking-tight leading-[1.2] max-w-md md:max-w-none mx-auto">
+                    Siap Membawa Bisnis Anda<br>ke Level Selanjutnya?
+                </h2>
+                <p class="text-brand-100 text-xs md:text-lg mb-6 md:mb-10 max-w-2xl mx-auto leading-relaxed px-2">
                     Jangan biarkan kompetitor mendahului Anda. Mari ciptakan website profesional yang meningkatkan kredibilitas dan penjualan hari ini juga!
                 </p>
-                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." target="_blank" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                    <i class='bx bxl-whatsapp text-2xl'></i> Hubungi Tim Kami Sekarang
+                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20konsultasi%20mengenai%20Jasa%20Pembuatan%20Website." target="_blank" class="inline-flex items-center justify-center gap-1.5 md:gap-2 px-6 py-3 md:px-10 md:py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-sm md:text-lg transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                    <i class='bx bxl-whatsapp text-lg md:text-2xl'></i> Hubungi Tim Kami
                 </a>
             </div>
         </div>

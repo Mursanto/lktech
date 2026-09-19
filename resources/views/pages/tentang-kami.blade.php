@@ -30,10 +30,6 @@
         <div class="relative bg-gradient-to-r from-blue-50 via-cyan-50/70 to-emerald-50 py-4 md:py-10 px-4 sm:px-6 lg:px-8 text-center border-b border-cyan-100/70 w-full overflow-hidden">
             <div class="absolute -top-10 -left-10 w-48 h-48 bg-blue-200/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-emerald-200/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-200/60 text-blue-600 text-[11px] font-semibold px-4 py-1.5 rounded-full mb-1 md:mb-3 select-none">
-                <i class='bx bx-buildings text-sm'></i>
-                Tentang LKTech
-            </div>
             <h1 class="text-xl md:text-3xl font-black font-montserrat text-blue-900 mt-1 md:mt-0 mb-0 md:mb-2 tracking-tight">Kisah LKTech</h1>
             <p class="text-gray-600 text-[11px] md:text-sm max-w-2xl mx-auto leading-tight md:leading-relaxed truncate">Perjalanan dan komitmen terbaik kami untuk Anda.</p>
         </div>
