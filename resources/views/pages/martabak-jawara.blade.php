@@ -250,18 +250,18 @@
                     </div>
 
                     {{-- Logo --}}
-                    <div class="hidden lg:flex items-center justify-center fade-up delay-4">
+                    <div class="flex items-center justify-center fade-up delay-4 mt-2 lg:mt-0">
                         <div class="relative logo-float">
-                            <div class="w-64 h-64 xl:w-80 xl:h-80 rounded-full overflow-hidden border-4 border-amber-400/30 shadow-2xl" style="box-shadow: 0 0 60px rgba(245,158,11,0.3), 0 30px 80px rgba(0,0,0,0.5);">
+                            <div class="w-36 h-36 sm:w-48 sm:h-48 lg:w-64 lg:h-64 xl:w-80 xl:h-80 rounded-full overflow-hidden border-2 lg:border-4 border-amber-400/30 shadow-2xl mx-auto" style="box-shadow: 0 0 40px rgba(245,158,11,0.3), 0 20px 50px rgba(0,0,0,0.5);">
                                 <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}"
                                      alt="Logo Martabak Jawara"
                                      class="w-full h-full object-cover">
                             </div>
                             {{-- Orbiting badge --}}
-                            <div class="absolute -top-3 -right-3 bg-amber-400 text-amber-900 text-xs font-black px-3 py-1.5 rounded-full shadow-lg rotate-12">
+                            <div class="absolute -top-1 -right-1 lg:-top-3 lg:-right-3 bg-amber-400 text-amber-900 text-[9px] lg:text-xs font-black px-2 lg:px-3 py-1 lg:py-1.5 rounded-full shadow-lg rotate-12">
                                 ⭐ Rasa Juara!
                             </div>
-                            <div class="absolute -bottom-3 -left-3 bg-green-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg -rotate-6">
+                            <div class="absolute -bottom-1 -left-1 lg:-bottom-3 lg:-left-3 bg-green-500 text-white text-[9px] lg:text-xs font-black px-2 lg:px-3 py-1 lg:py-1.5 rounded-full shadow-lg -rotate-6">
                                 🛵 Pesan Antar
                             </div>
                         </div>
