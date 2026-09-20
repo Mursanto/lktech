@@ -99,40 +99,40 @@
             </div>
 
             <!-- Kolom 3: Metode Pembayaran & Sosial Media -->
-            <div>
+            <div class="self-start">
                 <!-- Metode Pembayaran -->
-                <h4 class="font-bold text-gray-800 mb-2 md:mb-4 font-montserrat h-6 flex items-center max-md:text-[1.1rem]">Metode Pembayaran</h4>
-                <div class="flex flex-wrap gap-2 mb-4">
+                <h4 class="font-bold text-gray-800 mb-3 font-montserrat flex items-center max-md:text-[1.1rem]">Metode Pembayaran</h4>
+                <div class="grid grid-cols-2 gap-2 mb-4">
                     
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#005E6A]">Livin'</span> <span class="text-[#FFB71B] ml-0.5">Mandiri</span>
                     </div>
                     
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#006677]">wondr</span> <span class="text-[9px] text-gray-400 mx-1 font-medium italic">by</span> <span class="text-[#F15A23]">BNI</span>
                     </div>
                     
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter italic">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter italic">
                         <span class="text-[#4C2882]">OVO</span>
                     </div>
                     
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#00AED6]">GoPay</span>
                     </div>
 
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#108EE9]">DANA</span>
                     </div>
 
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#EE4D2D]">ShopeePay</span>
                     </div>
 
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter">
                         <span class="text-[#DF1921] italic">LinkAja</span>
                     </div>
 
-                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center tracking-tighter italic">
+                    <div class="px-2.5 py-1 bg-white border border-gray-200 shadow-sm rounded text-[11px] font-black flex items-center justify-center tracking-tighter italic">
                         <span class="text-[#ED1C24]">QR</span><span class="text-[#005B9F]">IS</span>
                     </div>
                 </div>
