@@ -306,32 +306,32 @@
         <section class="bg-stone-50 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
-                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-sm border border-stone-200 flex items-center gap-2.5 sm:gap-4 hover:shadow-md transition-shadow">
                         <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-home-heart'></i></div>
                         <div>
                             <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Kitchen Set</p>
-                            <p class="text-[9px] sm:text-xs text-gray-500">Custom & Modern</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500 mt-0.5">Custom & Modern</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-sm border border-stone-200 flex items-center gap-2.5 sm:gap-4 hover:shadow-md transition-shadow">
                         <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-bed'></i></div>
                         <div>
                             <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Kamar Set</p>
-                            <p class="text-[9px] sm:text-xs text-gray-500">Elegan & Nyaman</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500 mt-0.5">Elegan & Nyaman</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-sm border border-stone-200 flex items-center gap-2.5 sm:gap-4 hover:shadow-md transition-shadow">
                         <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-tv'></i></div>
                         <div>
                             <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Backdrop TV</p>
-                            <p class="text-[9px] sm:text-xs text-gray-500">Desain Premium</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500 mt-0.5">Desain Premium</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-sm border border-stone-200 flex items-center gap-2.5 sm:gap-4 hover:shadow-md transition-shadow">
                         <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-lg sm:text-2xl shrink-0"><i class='bx bxs-check-shield'></i></div>
                         <div>
                             <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Bergaransi</p>
-                            <p class="text-[9px] sm:text-xs text-gray-500">Kualitas Terjamin</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500 mt-0.5">Kualitas Terjamin</p>
                         </div>
                     </div>
                 </div>
