@@ -43,7 +43,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full pb-20 md:pb-0">
         <!-- Hero Section -->
-        <section class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-[70vh] flex items-center pt-24 pb-12 overflow-hidden"
+        <section class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-[70vh] flex items-center pt-6 md:pt-24 pb-12 overflow-hidden"
                  x-data="{ topologyModal: false }">
             {{-- Decorative blobs --}}
             <div class="absolute top-0 right-0 w-96 h-96 rounded-full blur-[130px] opacity-20" style="background:#2563eb;"></div>

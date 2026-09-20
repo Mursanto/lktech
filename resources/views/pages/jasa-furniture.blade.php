@@ -238,7 +238,7 @@
             <div class="absolute top-0 right-0 w-96 h-96 rounded-full blur-[120px] opacity-20" style="background:#c08040;"></div>
             <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-15" style="background:#d4a96a;"></div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20 pb-10 w-full">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-6 md:pt-20 pb-10 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     {{-- Text content --}}
                     <div class="lg:col-span-7">
