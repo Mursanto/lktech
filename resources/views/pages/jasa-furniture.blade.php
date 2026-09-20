@@ -147,13 +147,20 @@
         }
 
         .hero-image-frame {
-            width: 320px;
-            height: 320px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
             border: 6px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             animation: floatAnim 4s ease-in-out infinite;
+        }
+
+        @media (min-width: 640px) {
+            .hero-image-frame {
+                width: 320px;
+                height: 320px;
+            }
         }
 
         .hero-img {
@@ -235,10 +242,10 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     {{-- Text content --}}
                     <div class="lg:col-span-7">
-                        <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
-                            <span class="flex items-center gap-1"><i class='bx bx-map text-amber-400 text-sm'></i> Bandar Lampung</span>
-                            <span class="text-white/30">•</span>
-                            <span class="flex items-center gap-1"><i class='bx bx-time-five text-amber-400 text-sm'></i> Sen-Sab: 09.00 - 17.00 WIB</span>
+                        <div class="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-[10px] sm:text-xs font-medium text-amber-200 whitespace-nowrap overflow-hidden max-w-full">
+                            <span class="flex items-center gap-1 truncate"><i class='bx bx-map text-amber-400 text-[10px] sm:text-sm shrink-0'></i> Bandar Lampung</span>
+                            <span class="text-white/30 shrink-0">•</span>
+                            <span class="flex items-center gap-1 truncate"><i class='bx bx-time-five text-amber-400 text-[10px] sm:text-sm shrink-0'></i> Sen-Sab: 09.00-17.00 WIB</span>
                         </div>
 
                         <h1 class="font-montserrat text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-3 tracking-tight fade-up delay-1">
@@ -298,33 +305,33 @@
         {{-- ─── INFO STRIP ─── --}}
         <section class="bg-stone-50 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                        <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl shrink-0"><i class='bx bx-home-heart'></i></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                        <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-home-heart'></i></div>
                         <div>
-                            <p class="font-bold text-gray-900 text-sm leading-tight">Kitchen Set</p>
-                            <p class="text-xs text-gray-500">Custom & Modern</p>
+                            <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Kitchen Set</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500">Custom & Modern</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                        <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl shrink-0"><i class='bx bx-bed'></i></div>
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                        <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-bed'></i></div>
                         <div>
-                            <p class="font-bold text-gray-900 text-sm leading-tight">Kamar Set</p>
-                            <p class="text-xs text-gray-500">Elegan & Nyaman</p>
+                            <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Kamar Set</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500">Elegan & Nyaman</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                        <div class="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl shrink-0"><i class='bx bx-tv'></i></div>
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                        <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-lg sm:text-2xl shrink-0"><i class='bx bx-tv'></i></div>
                         <div>
-                            <p class="font-bold text-gray-900 text-sm leading-tight">Backdrop TV</p>
-                            <p class="text-xs text-gray-500">Desain Premium</p>
+                            <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Backdrop TV</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500">Desain Premium</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-stone-200 flex items-center gap-4 hover:shadow-md transition-shadow">
-                        <div class="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-2xl shrink-0"><i class='bx bxs-check-shield'></i></div>
+                    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 hover:shadow-md transition-shadow">
+                        <div class="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-lg sm:text-2xl shrink-0"><i class='bx bxs-check-shield'></i></div>
                         <div>
-                            <p class="font-bold text-gray-900 text-sm leading-tight">Bergaransi</p>
-                            <p class="text-xs text-gray-500">Kualitas Terjamin</p>
+                            <p class="font-bold text-gray-900 text-[11px] sm:text-sm leading-tight">Bergaransi</p>
+                            <p class="text-[9px] sm:text-xs text-gray-500">Kualitas Terjamin</p>
                         </div>
                     </div>
                 </div>
