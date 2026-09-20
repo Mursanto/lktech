@@ -64,9 +64,7 @@
                             <div class="px-4 py-1.5">
                                 <span class="text-[10px] font-black text-brand-500 uppercase tracking-widest">Layanan Utama</span>
                             </div>
-                            <a href="{{ route('katalog.index') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
-                                <span class="flex items-center gap-2"><i class='bx bx-laptop text-base text-brand-400'></i> Laptop Second / Bekas</span>
-                            </a>
+
                             <a href="{{ route('service-pc') }}" class="block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                 <span class="flex items-center gap-2"><i class='bx bx-wrench text-base text-amber-400'></i> Service PC &amp; Laptop</span>
                             </a>
