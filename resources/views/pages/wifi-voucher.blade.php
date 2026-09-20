@@ -393,12 +393,12 @@
                 </div>
 
                 <!-- Penjelasan Keuntungan Bersih -->
-                <div class="mt-8 bg-brand-50 rounded-3xl p-8 border border-brand-100 shadow-sm relative overflow-hidden">
+                <div class="mt-6 md:mt-8 bg-brand-50 rounded-3xl p-5 md:p-8 border border-brand-100 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
                         <i class='bx bx-line-chart text-9xl'></i>
                     </div>
-                    <h3 class="text-[14px] md:text-xl font-bold text-brand-900 mb-4 md:mb-6 font-montserrat flex items-center gap-1.5 md:gap-2 tracking-tight">
-                        <i class='bx bx-wallet text-brand-600 text-lg md:text-xl'></i> Simulasi Keuntungan Bersih (Net Profit)
+                    <h3 class="text-[12px] sm:text-[14px] md:text-xl font-bold text-brand-900 mb-4 md:mb-6 font-montserrat flex items-center gap-1 md:gap-2 tracking-tight whitespace-nowrap">
+                        <i class='bx bx-wallet text-brand-600 text-sm md:text-xl'></i> Simulasi Keuntungan Bersih (Net Profit)
                     </h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 relative z-10">
