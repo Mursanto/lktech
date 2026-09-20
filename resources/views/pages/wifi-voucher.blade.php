@@ -163,9 +163,9 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <span class="text-brand-400 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-900/50 px-3 py-1 rounded-full border border-brand-800">Cara Kerja</span>
-                        <h2 class="text-3xl font-black font-montserrat mb-6 tracking-tight">Konektivitas via Satelit Starlink</h2>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
+                        <span class="text-brand-400 font-bold tracking-wider uppercase text-[9px] md:text-[10px] mb-1.5 md:mb-2 inline-block bg-brand-900/50 px-2.5 md:px-3 py-0.5 md:py-1 rounded-full border border-brand-800">Cara Kerja</span>
+                        <h2 class="text-2xl md:text-3xl font-black font-montserrat mb-3 md:mb-6 tracking-tight leading-tight">Konektivitas via Satelit Starlink</h2>
+                        <p class="text-gray-300 text-[11.5px] md:text-sm mb-6 md:mb-8 leading-relaxed">
                             Kami menghadirkan internet cepat langsung dari satelit ke perangkat Anda. Sistem cloud hotspot kami memungkinkan pengelolaan voucher yang efisien dan akses nonstop 24/7.
                         </p>
                         
@@ -217,9 +217,9 @@
         <!-- Packages Grid -->
         <div id="paket" class="bg-gray-50 py-20 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-gray-900 font-montserrat mb-3 tracking-tight">Pilihan Skema Kerjasama</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Mulai usaha WiFi Voucher Anda. Jadikan lokasi wisata bebas blankspot dan hasilkan keuntungan.</p>
+                <div class="text-center mb-8 md:mb-16">
+                    <h2 class="text-xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 md:mb-3 tracking-tight">Pilihan Skema Kerjasama</h2>
+                    <p class="text-gray-500 text-[11px] md:text-sm max-w-xl mx-auto px-4 md:px-0">Mulai usaha WiFi Voucher Anda. Jadikan lokasi wisata bebas blankspot dan hasilkan keuntungan.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(max($packages->count(), 1), 3) }} gap-8 items-stretch justify-center max-w-5xl mx-auto">
@@ -228,38 +228,38 @@
                     @php
                         $isHighlighted = !empty($package->badge);
                     @endphp
-                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-8 transition-all flex flex-col h-full relative group w-full">
+                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-5 md:p-8 transition-all flex flex-col h-full relative group w-full">
                         @if($isHighlighted)
-                        <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
+                        <div class="absolute top-0 right-0 bg-brand-600 text-white text-[9px] md:text-[10px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
                             {{ $package->badge }}
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-b from-brand-50/50 to-transparent rounded-3xl pointer-events-none"></div>
                         @endif
                         
                         <div class="flex-grow relative z-10">
-                            <h3 class="{{ $isHighlighted ? 'text-2xl font-bold text-brand-600' : 'text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
-                            <p class="text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-6">{{ $package->deskripsi_singkat ?? 'Paket WiFi Voucher' }}</p>
+                            <h3 class="{{ $isHighlighted ? 'text-xl md:text-2xl font-bold text-brand-600' : 'text-lg md:text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
+                            <p class="text-[11px] md:text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-4 md:mb-6">{{ $package->deskripsi_singkat ?? 'Paket WiFi Voucher' }}</p>
                             
-                            <div class="mb-8">
-                                <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Investasi / Harga</p>
-                                <span class="{{ $isHighlighted ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-xl sm:text-2xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga, 0, ',', '.') }}</span>
+                            <div class="mb-5 md:mb-8">
+                                <p class="text-[9px] md:text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Investasi / Harga</p>
+                                <span class="{{ $isHighlighted ? 'text-2xl md:text-4xl' : 'text-xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga, 0, ',', '.') }}</span>
                             </div>
                             
-                            <ul class="space-y-4 mb-8 text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
+                            <ul class="space-y-2.5 md:space-y-4 mb-6 md:mb-8 text-[11px] md:text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
                                 @if($package->fitur_list)
                                     @foreach(explode("\n", $package->fitur_list) as $fitur)
                                         @if(trim($fitur))
-                                        <li class="flex items-start gap-3"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-xl'></i> <span>{{ trim($fitur) }}</span></li>
+                                        <li class="flex items-start gap-2.5 md:gap-3"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-lg md:text-xl mt-0.5 md:mt-0'></i> <span>{{ trim($fitur) }}</span></li>
                                         @endif
                                     @endforeach
                                 @endif
                             </ul>
                         </div>
-                        <div class="mt-auto pt-6 border-t {{ $isHighlighted ? 'border-brand-100' : 'border-gray-100' }} relative z-10">
+                        <div class="mt-auto pt-5 md:pt-6 border-t {{ $isHighlighted ? 'border-brand-100' : 'border-gray-100' }} relative z-10">
                             @php
                                 $waText = urlencode("Halo LKtech, saya ingin konsultasi mengenai layanan WiFi Voucher Starlink (".$package->nama_paket.").");
                             @endphp
-                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5' : 'px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200' }}">
+                            <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="w-full block text-center {{ $isHighlighted ? 'px-4 md:px-6 py-2.5 md:py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-xs md:text-sm' : 'px-4 md:px-6 py-2.5 md:py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 font-bold rounded-xl transition-colors border border-gray-200 text-xs md:text-sm' }}">
                                 {{ $isHighlighted ? 'Mulai Sekarang' : 'Konsultasi Paket' }}
                             </a>
                         </div>
@@ -278,10 +278,10 @@
         <!-- Estimasi Pendapatan -->
         <div id="omzet" class="bg-white py-16 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-10">
-                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[10px] mb-2 inline-block bg-brand-50 px-3 py-1 rounded-full border border-brand-100">Simulasi Omzet</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 tracking-tight">Estimasi Omzet Penjualan</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm">Simulasi potensi pendapatan harian dari penjualan voucher WiFi di lokasi Anda.</p>
+                <div class="text-center mb-6 md:mb-10">
+                    <span class="text-brand-600 font-bold tracking-wider uppercase text-[9px] md:text-[10px] mb-1.5 md:mb-2 inline-block bg-brand-50 px-2.5 md:px-3 py-0.5 md:py-1 rounded-full border border-brand-100">Simulasi Omzet</span>
+                    <h2 class="text-xl md:text-3xl font-black text-gray-900 font-montserrat mb-1.5 md:mb-2 tracking-tight">Estimasi Omzet Penjualan</h2>
+                    <p class="text-gray-500 text-[11px] md:text-sm px-4 md:px-0">Simulasi potensi pendapatan harian dari penjualan voucher WiFi di lokasi Anda.</p>
                 </div>
 
                 <!-- Mobile Card Stack View (< 640px) -->
