@@ -265,6 +265,41 @@
                 </div>
             </div>
 
+            <!-- Informasi — accordion -->
+            @php
+                $isInfoActive = request()->routeIs('tentang-kami') || request()->routeIs('faq') || request()->routeIs('blog.index');
+            @endphp
+            <div x-data="{ infoMobileOpen: {{ $isInfoActive ? 'true' : 'false' }} }" class="border-b border-gray-100">
+                <button @click="infoMobileOpen = !infoMobileOpen"
+                        class="w-full flex items-center justify-between px-4 py-2 text-[14px] transition-all duration-200 ease-in-out rounded-md {{ $isInfoActive ? 'text-brand-600 font-semibold border-l-4 border-brand-600 bg-brand-50/80' : 'text-gray-800 font-medium border-l-4 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                    <span>Informasi</span>
+                    <i class='bx text-lg transition-transform duration-200'
+                       :class="infoMobileOpen ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                </button>
+                <div x-show="infoMobileOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-1"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-1"
+                     class="pl-5 pb-1 pt-0.5"
+                     x-cloak>
+                    <a href="{{ route('tentang-kami') }}" class="block w-full px-4 py-1.5 text-[13px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('tentang-kami') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                        Tentang Kami
+                    </a>
+                    <a href="{{ route('faq') }}" class="block w-full px-4 py-1.5 text-[13px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('faq') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                        FAQ & Bantuan
+                    </a>
+                    <a href="{{ route('blog.index') }}" class="block w-full px-4 py-1.5 text-[13px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 {{ request()->routeIs('blog.index') ? 'text-brand-600 font-semibold border-l-2 border-brand-600' : 'text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60' }}">
+                        Blog & Panduan
+                    </a>
+                    <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank" class="block w-full px-4 py-1.5 text-[13px] transition-all duration-200 ease-in-out rounded-md border-b border-gray-50 text-gray-600 font-medium border-l-2 border-transparent hover:text-brand-600 hover:bg-brand-50 active:bg-brand-100/60">
+                        Toko Tokopedia
+                    </a>
+                </div>
+            </div>
+
         </div>
     </nav>
 </header>
