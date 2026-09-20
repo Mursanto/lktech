@@ -399,6 +399,7 @@
                         ['src'=>'images/martabak-jawara/Martabak Pizza - Basic.webp',                     'alt'=>'Martabak Pizza Basic',                       'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 35.000', 'desc'=>'Martabak manis dibentuk pizza dengan 4-8 pilihan topping standar favorit.'],
                         ['src'=>'images/martabak-jawara/Martabak Pizza Ulitimate.webp',                   'alt'=>'Martabak Pizza Ultimate',                    'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 45.000', 'desc'=>'Martabak pizza mewah dengan kombinasi topping premium terlengkap dan melimpah.'],
                         ['src'=>'images/martabak-jawara/Martabak-Pizza-Pro.webp',                         'alt'=>'Martabak Pizza Pro',                         'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 40.000', 'desc'=>'Pilihan rasa kekinian pro yang cocok dinikmati bersama teman atau keluarga.'],
+                        ['src'=>'images/martabak-jawara/Martabak Pizza - Basic.webp',                     'alt'=>'Martabak Pizza 8 Rasa',                      'tag'=>'pizza',       'label'=>'Pizza', 'price'=>'Rp 38.000', 'desc'=>'Martabak manis pizza dengan 8 kombinasi topping pilihan yang menggugah selera.'],
                     ];
                     @endphp
 
