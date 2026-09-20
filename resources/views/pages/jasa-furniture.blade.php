@@ -138,28 +138,27 @@
         /* ── Hero Visual Showcase ── */
         .hero-visual-wrapper {
             position: relative;
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            max-width: 480px;
             margin: 0 auto;
         }
 
         .hero-image-frame {
-            width: 250px;
-            height: 250px;
+            width: 144px;
+            height: 144px;
             border-radius: 50%;
-            border: 6px solid rgba(255, 255, 255, 0.15);
+            border: 4px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             animation: floatAnim 4s ease-in-out infinite;
         }
 
         @media (min-width: 640px) {
             .hero-image-frame {
-                width: 320px;
-                height: 320px;
+                width: 250px;
+                height: 250px;
+                border: 6px solid rgba(255, 255, 255, 0.15);
             }
         }
 
@@ -178,37 +177,60 @@
             position: absolute;
             background: #ffffff;
             color: #1e293b;
-            padding: 8px 16px;
+            padding: 4px 10px;
             border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             z-index: 10;
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.6rem;
+        }
+
+        @media (min-width: 640px) {
+            .floating-badge {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+                gap: 8px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            }
         }
 
         .badge-top {
-            top: 20px;
-            right: -10px;
+            top: 0px;
+            right: -20px;
             background: #fef08a;
             color: #854d0e;
             animation: floatAnim 3s ease-in-out infinite reverse;
         }
 
         .badge-bottom {
-            bottom: 25px;
-            left: -10px;
+            bottom: -5px;
+            left: -20px;
             background: #ffffff;
             animation: floatAnim 3.5s ease-in-out infinite 0.5s;
         }
 
         .badge-bottom small {
             display: block;
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             color: #64748b;
             font-weight: normal;
+        }
+
+        @media (min-width: 640px) {
+            .badge-top {
+                top: 20px;
+                right: -30px;
+            }
+            .badge-bottom {
+                bottom: 25px;
+                left: -30px;
+            }
+            .badge-bottom small {
+                font-size: 0.65rem;
+            }
         }
 
         @keyframes floatAnim {
@@ -218,11 +240,14 @@
 
         @media (max-width: 1023px) {
             .hero-visual-wrapper {
-                margin-top: 40px;
+                margin-top: 16px;
             }
+        }
+
+        @media (min-width: 1024px) {
             .hero-image-frame {
-                width: 260px;
-                height: 260px;
+                width: 320px;
+                height: 320px;
             }
         }
     </style>
