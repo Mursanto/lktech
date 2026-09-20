@@ -39,27 +39,25 @@
 
             {{-- ① KISAH KAMI — 2-Column Layout --}}
             <section>
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     {{-- Left: Photo --}}
-                    <div class="lg:col-span-5">
-                        <div class="relative">
-                            <img src="{{ asset('images/TentangKami.webp') }}"
-                                 alt="Tim LKTech TN SEREAL"
-                                 class="w-full h-56 lg:h-auto object-cover rounded-2xl shadow-lg hover:scale-[1.02] transition duration-300">
-                            <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-md px-4 py-3 flex items-center gap-3 border border-gray-100">
-                                <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg shrink-0">
-                                    <i class='bx bx-calendar-check'></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Berdiri Sejak</p>
-                                    <p class="text-sm font-black text-gray-900 font-montserrat">2020</p>
-                                </div>
+                    <div class="relative w-full h-full min-h-[300px]">
+                        <img src="{{ asset('images/TentangKami.webp') }}"
+                             alt="Tim LKTech TN SEREAL"
+                             class="w-full h-full object-cover rounded-2xl shadow-md hover:scale-[1.01] transition duration-300">
+                        <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 border border-white/50">
+                            <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg shrink-0 shadow-sm">
+                                <i class='bx bx-calendar-check'></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Berdiri Sejak</p>
+                                <p class="text-sm font-black text-gray-900 font-montserrat">2020</p>
                             </div>
                         </div>
                     </div>
                     {{-- Right: Story --}}
-                    <div class="lg:col-span-7 text-center kisah-kami-content">
-                        <div class="space-y-4 text-slate-600 text-sm md:text-base leading-[1.7] text-justify">
+                    <div class="text-left kisah-kami-content">
+                        <div class="space-y-4 text-slate-600 text-[14px] md:text-[15px] leading-relaxed text-justify">
                             <p>Berawal dari sebuah komitmen untuk menghadirkan perangkat teknologi yang terjangkau namun berkualitas premium, <strong class="text-gray-800">LKTech</strong> lahir sebagai solusi tepercaya bagi masyarakat dan instansi di wilayah Bogor dan sekitarnya. Kami memulai langkah dengan spesialisasi pada penyediaan perangkat laptop standar tinggi yang wajib melewati proses <em>Quality Control</em> (QC) ketat, guna memastikan setiap unit yang diterima pelanggan selalu dalam kondisi prima dan siap tempur.</p>
                             <p>Seiring dengan pesatnya tuntutan era digital dan besarnya dukungan kepercayaan dari para pelanggan setia, <strong class="text-gray-800">LKTech</strong> kini telah bertransformasi menjadi penyedia solusi teknologi informasi terpadu <em>(One-Stop IT Solution)</em>. Jangkauan layanan kami telah berekspansi secara profesional, mencakup layanan perakitan PC <em>custom</em> berspesifikasi tinggi, serta penyedia jasa pembuatan <em>website</em> modern yang didedikasikan untuk membantu UMKM dan perusahaan melakukan digitalisasi bisnis dengan mudah, responsif, dan elegan.</p>
                             <p class="mb-0">Meskipun skala layanan kami semakin membesar, nilai inti fundamental LKTech tidak pernah bergeser. Kami selalu menomorsatukan layanan purna jual <em>(after-sales)</em> yang prima, jaminan garansi yang transparan, serta dukungan servis oleh teknisi ahli yang berpengalaman. Di LKTech, kami tidak sekadar menjual produk; kami hadir untuk membangun kemitraan teknologi jangka panjang yang berlandaskan prinsip kepercayaan, kemudahan, dan kepuasan Anda sebagai prioritas utama.</p>
@@ -123,44 +121,44 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
                     {{-- Card 1 --}}
-                    <div class="bg-white rounded-2xl md:rounded-3xl p-4 lg:p-6 border border-gray-100 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-emerald-200 transition-all duration-300 group flex flex-row md:flex-col items-start md:items-center text-left md:text-center">
-                        <div class="shrink-0 w-11 h-11 lg:w-14 lg:h-14 bg-emerald-50 group-hover:bg-emerald-100 text-emerald-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl lg:text-2xl mr-3 md:mr-0 mb-0 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
-                            <i class='bx bx-check-shield'></i>
+                    <div class="h-full bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-emerald-200 transition-all duration-300 flex flex-col group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="shrink-0 w-11 h-11 bg-emerald-50 group-hover:bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                                <i class='bx bx-check-shield'></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-[14px] lg:text-[15px] group-hover:text-emerald-700 transition-colors duration-300 font-montserrat leading-tight">Quality Control Ketat</h4>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-900 mb-1 md:mb-2 text-sm lg:text-base group-hover:text-emerald-700 transition-colors duration-300 font-montserrat">Quality Control Ketat</h4>
-                            <p class="text-[13px] lg:text-xs text-gray-500 leading-snug lg:leading-relaxed">Setiap produk melewati 2 lapis pengujian teknis untuk memastikan performa dan fisik maksimal.</p>
-                        </div>
+                        <p class="text-[13px] text-gray-500 leading-relaxed">Setiap produk melewati 2 lapis pengujian teknis untuk memastikan performa dan fisik maksimal.</p>
                     </div>
                     {{-- Card 2 --}}
-                    <div class="bg-white rounded-2xl md:rounded-3xl p-4 lg:p-6 border border-gray-100 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 transition-all duration-300 group flex flex-row md:flex-col items-start md:items-center text-left md:text-center">
-                        <div class="shrink-0 w-11 h-11 lg:w-14 lg:h-14 bg-blue-50 group-hover:bg-blue-100 text-brand-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl lg:text-2xl mr-3 md:mr-0 mb-0 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
-                            <i class='bx bx-money'></i>
+                    <div class="h-full bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-blue-200 transition-all duration-300 flex flex-col group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="shrink-0 w-11 h-11 bg-blue-50 group-hover:bg-blue-100 text-brand-600 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                                <i class='bx bx-money'></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-[14px] lg:text-[15px] group-hover:text-brand-600 transition-colors duration-300 font-montserrat leading-tight">Harga Transparan</h4>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-900 mb-1 md:mb-2 text-sm lg:text-base group-hover:text-brand-600 transition-colors duration-300 font-montserrat">Harga Transparan</h4>
-                            <p class="text-[13px] lg:text-xs text-gray-500 leading-snug lg:leading-relaxed">Penawaran harga terbaik dan sangat bersaing di pasaran tanpa adanya biaya tersembunyi.</p>
-                        </div>
+                        <p class="text-[13px] text-gray-500 leading-relaxed">Penawaran harga terbaik dan sangat bersaing di pasaran tanpa adanya biaya tersembunyi.</p>
                     </div>
                     {{-- Card 3 --}}
-                    <div class="bg-white rounded-2xl md:rounded-3xl p-4 lg:p-6 border border-gray-100 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-purple-200 transition-all duration-300 group flex flex-row md:flex-col items-start md:items-center text-left md:text-center">
-                        <div class="shrink-0 w-11 h-11 lg:w-14 lg:h-14 bg-purple-50 group-hover:bg-purple-100 text-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl lg:text-2xl mr-3 md:mr-0 mb-0 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
-                            <i class='bx bx-support'></i>
+                    <div class="h-full bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-purple-200 transition-all duration-300 flex flex-col group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="shrink-0 w-11 h-11 bg-purple-50 group-hover:bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                                <i class='bx bx-support'></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-[14px] lg:text-[15px] group-hover:text-purple-600 transition-colors duration-300 font-montserrat leading-tight">Layanan Purna Jual</h4>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-900 mb-1 md:mb-2 text-sm lg:text-base group-hover:text-purple-600 transition-colors duration-300 font-montserrat">Layanan Purna Jual</h4>
-                            <p class="text-[13px] lg:text-xs text-gray-500 leading-snug lg:leading-relaxed">Dukungan teknisi after-sales yang ramah, cepat tanggap, dan senantiasa siap membantu.</p>
-                        </div>
+                        <p class="text-[13px] text-gray-500 leading-relaxed">Dukungan teknisi after-sales yang ramah, cepat tanggap, dan senantiasa siap membantu.</p>
                     </div>
                     {{-- Card 4 --}}
-                    <div class="bg-white rounded-2xl md:rounded-3xl p-4 lg:p-6 border border-gray-100 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-amber-200 transition-all duration-300 group flex flex-row md:flex-col items-start md:items-center text-left md:text-center">
-                        <div class="shrink-0 w-11 h-11 lg:w-14 lg:h-14 bg-amber-50 group-hover:bg-amber-100 text-amber-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl lg:text-2xl mr-3 md:mr-0 mb-0 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
-                            <i class='bx bx-map-pin'></i>
+                    <div class="h-full bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-amber-200 transition-all duration-300 flex flex-col group">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="shrink-0 w-11 h-11 bg-amber-50 group-hover:bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                                <i class='bx bx-map-pin'></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-[14px] lg:text-[15px] group-hover:text-amber-600 transition-colors duration-300 font-montserrat leading-tight">Jangkauan Luas</h4>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-900 mb-1 md:mb-2 text-sm lg:text-base group-hover:text-amber-600 transition-colors duration-300 font-montserrat">Jangkauan Luas</h4>
-                            <p class="text-[13px] lg:text-xs text-gray-500 leading-snug lg:leading-relaxed">Melayani pelanggan di Bogor dan sekitarnya, kini juga siap melayani seluruh wilayah Indonesia.</p>
-                        </div>
+                        <p class="text-[13px] text-gray-500 leading-relaxed">Melayani pelanggan di Bogor dan sekitarnya, kini juga siap melayani seluruh wilayah Indonesia.</p>
                     </div>
                 </div>
             </section>
