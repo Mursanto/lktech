@@ -5,10 +5,13 @@
             
             <!-- Kolom 1: Profil Singkat -->
             <div>
-                <a href="{{ route('home') }}" class="flex items-center gap-2 mb-3 md:mb-4 h-6">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 mb-1 h-6">
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-6 w-auto object-contain">
                     <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
                 </a>
+                <div class="text-[9.5px] font-bold uppercase tracking-widest text-gray-500 mb-3 md:mb-4 pl-8">
+                    By Laras & Kenzi Technology
+                </div>
                 
                 <!-- Google Maps Embed -->
                 <div class="rounded-xl overflow-hidden shadow-sm w-full mt-0">

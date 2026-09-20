@@ -33,9 +33,6 @@
                     <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 sm:h-8 w-auto">
                     <div class="hidden sm:flex flex-col">
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 leading-none">LKTech Indonesia</span>
-                        <span class="text-[6.5px] font-bold uppercase tracking-widest mt-1 tagline-radiate-bluegold w-full text-center">
-                            LKTech TN Sereal By Laras & Kenzi Technology
-                        </span>
                     </div>
                 </a>
             </div>
@@ -120,7 +117,7 @@
                     <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                         <i class='bx bx-search text-xl text-gray-400 group-focus-within:text-brand-500 transition-colors'></i>
                     </div>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, pc rakitan, atau jasa website..." 
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, PC, atau jasa..." 
                            class="w-full pl-14 pr-24 py-2.5 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:bg-white focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 text-[14px] transition-all duration-300 shadow-sm hover:shadow-md group-focus-within:shadow-md placeholder-gray-400 font-medium">
                     <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-6 flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-bold text-[13px] tracking-wide rounded-full transition-all duration-300 shadow-sm shadow-brand-500/30">
                         Cari
