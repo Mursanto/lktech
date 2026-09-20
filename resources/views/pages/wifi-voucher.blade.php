@@ -397,34 +397,34 @@
                     <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
                         <i class='bx bx-line-chart text-9xl'></i>
                     </div>
-                    <h3 class="text-xl font-bold text-brand-900 mb-6 font-montserrat flex items-center gap-2">
-                        <i class='bx bx-wallet text-brand-600'></i> Simulasi Keuntungan Bersih (Net Profit)
+                    <h3 class="text-[14px] md:text-xl font-bold text-brand-900 mb-4 md:mb-6 font-montserrat flex items-center gap-1.5 md:gap-2 tracking-tight">
+                        <i class='bx bx-wallet text-brand-600 text-lg md:text-xl'></i> Simulasi Keuntungan Bersih (Net Profit)
                     </h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-100">
-                            <h4 class="font-bold text-gray-900 mb-2 border-b border-gray-100 pb-2">Skema 1: Beli Putus</h4>
-                            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 relative z-10">
+                        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-brand-100">
+                            <h4 class="font-bold text-gray-900 mb-2 border-b border-gray-100 pb-2 text-sm md:text-base">Skema 1: Beli Putus</h4>
+                            <ul class="text-[11px] md:text-sm text-gray-600 space-y-2 mb-4">
                                 <li class="flex justify-between"><span>Total Omzet:</span> <span class="font-medium text-gray-900">Rp 18.957.750</span></li>
                                 <li class="flex justify-between text-red-500"><span>Biaya Bulanan:</span> <span>- Rp 2.362.500</span></li>
-                                <li class="flex justify-between border-t border-gray-100 pt-2 font-bold text-brand-600 text-base"><span>Profit Owner:</span> <span>± Rp 16.595.250 / bln</span></li>
+                                <li class="flex justify-between border-t border-gray-100 pt-2 font-bold text-brand-600 text-[12px] md:text-base"><span>Profit Owner:</span> <span>± Rp 16.595.250 / bln</span></li>
                             </ul>
-                            <div class="bg-green-50 text-green-700 text-xs px-3 py-2 rounded-lg flex items-start gap-2">
-                                <i class='bx bxs-check-circle mt-0.5 text-base'></i>
+                            <div class="bg-green-50 text-green-700 text-[10px] md:text-xs px-3 py-2 rounded-lg flex items-start gap-2">
+                                <i class='bx bxs-check-circle mt-0.5 text-sm md:text-base'></i>
                                 <span>Investasi awal Rp18,9 Juta diproyeksikan <strong>kembali modal (BEP) hanya dalam ~1,1 bulan!</strong></span>
                             </div>
                         </div>
 
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-100">
-                            <h4 class="font-bold text-gray-900 mb-2 border-b border-gray-100 pb-2">Skema 2: Sharing Revenue</h4>
-                            <p class="text-xs text-gray-500 mb-3">Dari bagi hasil margin voucher per user (tanpa modal awal & biaya bulanan):</p>
-                            <ul class="text-sm text-gray-600 space-y-2 mb-4">
-                                <li class="flex justify-between"><span>1.100 user (6 Jam) x Rp 2.100:</span> <span class="font-medium text-gray-900">Rp 2.310.000</span></li>
-                                <li class="flex justify-between"><span>470 user (12 Jam) x Rp 5.250:</span> <span class="font-medium text-gray-900">Rp 2.467.500</span></li>
-                                <li class="flex justify-between border-t border-gray-100 pt-2 font-bold text-brand-600 text-base"><span>Profit Owner:</span> <span>± Rp 4.777.500 / bln</span></li>
+                        <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-brand-100">
+                            <h4 class="font-bold text-gray-900 mb-2 border-b border-gray-100 pb-2 text-sm md:text-base">Skema 2: Sharing Revenue</h4>
+                            <p class="text-[10px] md:text-xs text-gray-500 mb-3">Dari bagi hasil margin voucher per user (tanpa modal awal & biaya bulanan):</p>
+                            <ul class="text-[10.5px] md:text-sm text-gray-600 space-y-2 mb-4">
+                                <li class="flex justify-between items-center"><span class="truncate pr-1">1.100 user (6 Jam) x Rp 2.100:</span> <span class="font-medium text-gray-900 shrink-0">Rp 2.310.000</span></li>
+                                <li class="flex justify-between items-center"><span class="truncate pr-1">470 user (12 Jam) x Rp 5.250:</span> <span class="font-medium text-gray-900 shrink-0">Rp 2.467.500</span></li>
+                                <li class="flex justify-between border-t border-gray-100 pt-2 font-bold text-brand-600 text-[12px] md:text-base"><span>Profit Owner:</span> <span>± Rp 4.777.500 / bln</span></li>
                             </ul>
-                            <div class="bg-blue-50 text-blue-700 text-xs px-3 py-2 rounded-lg flex items-start gap-2">
-                                <i class='bx bxs-info-circle mt-0.5 text-base'></i>
+                            <div class="bg-blue-50 text-blue-700 text-[10px] md:text-xs px-3 py-2 rounded-lg flex items-start gap-2">
+                                <i class='bx bxs-info-circle mt-0.5 text-sm md:text-base'></i>
                                 <span>Mendapatkan passive income murni <strong>tanpa risiko & investasi modal di awal.</strong></span>
                             </div>
                         </div>
