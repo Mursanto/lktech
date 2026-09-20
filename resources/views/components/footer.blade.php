@@ -32,31 +32,50 @@
             </div>
 
             <!-- Kolom 2: Informasi Kontak & Sosial Media -->
-            <div class="flex flex-col gap-4 self-start">
+            <div class="flex flex-col justify-start items-start space-y-4">
+                <!-- HUBUNGI KAMI -->
                 <div>
-                    <h4 class="font-bold text-gray-800 mb-3 font-montserrat flex items-center max-md:text-[1.1rem]">Hubungi Kami</h4>
-                    <ul class="flex flex-col space-y-2.5 text-sm max-md:text-[0.825rem] text-gray-600">
-                        <li class="flex items-start gap-3">
-                            <i class='bx bx-map text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <span class="leading-snug">Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168</span>
+                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Hubungi Kami</h3>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <!-- Alamat -->
+                        <li class="flex items-start gap-2.5">
+                            <svg class="w-5 h-5 text-brand-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="leading-snug">
+                                Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
+                                Tanah Sereal, Bogor 16168
+                            </span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class='bx bx-envelope text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <a href="mailto:sales@lktech.online" class="hover:text-brand-600 transition-colors leading-snug">sales@lktech.online</a>
+
+                        <!-- Email -->
+                        <li class="flex items-center gap-2.5">
+                            <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <a href="mailto:sales@lktech.online" class="hover:text-brand-600 transition-colors">sales@lktech.online</a>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class='bx bxl-whatsapp text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <a href="https://wa.me/628567354046" target="_blank" class="hover:text-brand-600 transition-colors leading-snug">+62 856-7354-046</a>
+
+                        <!-- WhatsApp -->
+                        <li class="flex items-center gap-2.5">
+                            <i class='bx bxl-whatsapp text-[1.25rem] text-brand-500 shrink-0'></i>
+                            <a href="https://wa.me/628567354046" target="_blank" class="hover:text-brand-600 transition-colors">+62 856-7354-046</a>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class='bx bx-time-five text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <span class="leading-snug">Senin - Sabtu: 09:00 - 17:00</span>
+
+                        <!-- Jam Operasional -->
+                        <li class="flex items-center gap-2.5">
+                            <svg class="w-5 h-5 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Senin - Sabtu: 09:00 - 17:00</span>
                         </li>
                     </ul>
                 </div>
 
+                <!-- IKUTI KAMI -->
                 <div>
-                    <h4 class="font-bold text-gray-800 mb-2 font-montserrat flex items-center max-md:text-[1.1rem]">Ikuti Kami</h4>
+                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Ikuti Kami</h3>
                     <div class="flex items-center gap-2">
                         <!-- Facebook -->
                         <a href="{{ $settings->facebook_url ?? 'https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="Facebook">
