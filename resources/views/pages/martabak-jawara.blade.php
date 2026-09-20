@@ -203,7 +203,7 @@
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[200px] opacity-5" style="background:#fbbf24;"></div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-6 md:pt-20 pb-8 md:pb-12 w-full">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center">
                     {{-- Text Content --}}
                     <div>
                         <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-4 fade-up text-xs font-medium text-amber-200">
@@ -242,7 +242,7 @@
                             </a>
                         </div>
 
-                        <div class="fade-up delay-4 mb-4 flex items-center gap-2">
+                        <div class="fade-up delay-4 mb-0 lg:mb-4 flex items-center gap-2">
                             <a href="#menu" class="text-amber-300 hover:text-amber-200 text-xs font-semibold flex items-center gap-1">
                                 <i class='bx bx-down-arrow-alt animate-bounce text-sm'></i> Lihat Menu Spesial Kami
                             </a>
