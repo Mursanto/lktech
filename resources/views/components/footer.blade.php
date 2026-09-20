@@ -172,8 +172,9 @@
         @endif
 
         <div class="border-t border-gray-100 pt-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-xs text-gray-500 font-medium">
-                &copy; 2025 LKTech Solusi IT Integrated. Hardware Andal. Software Profesional. Satu Integrasi.
+            <div class="text-xs text-gray-500 font-medium leading-relaxed">
+                &copy; 2025 LKTech Solusi IT Integrated. All rights reserved.<br>
+                Hardware Andal. Software Profesional. Satu Integrasi.
             </div>
         </div>
     </div>
