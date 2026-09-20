@@ -39,25 +39,27 @@
 
             {{-- ① KISAH KAMI — 2-Column Layout --}}
             <section>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
                     {{-- Left: Photo --}}
-                    <div class="relative w-full h-full min-h-[300px]">
-                        <img src="{{ asset('images/TentangKami.webp') }}"
-                             alt="Tim LKTech TN SEREAL"
-                             class="w-full h-full object-cover rounded-2xl shadow-md hover:scale-[1.01] transition duration-300">
-                        <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 border border-white/50">
-                            <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg shrink-0 shadow-sm">
-                                <i class='bx bx-calendar-check'></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Berdiri Sejak</p>
-                                <p class="text-sm font-black text-gray-900 font-montserrat">2020</p>
+                    <div class="lg:col-span-5">
+                        <div class="relative">
+                            <img src="{{ asset('images/TentangKami.webp') }}"
+                                 alt="Tim LKTech TN SEREAL"
+                                 class="w-full h-56 lg:h-auto object-cover rounded-2xl shadow-lg hover:scale-[1.02] transition duration-300">
+                            <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 border border-white/50">
+                                <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg shrink-0 shadow-sm">
+                                    <i class='bx bx-calendar-check'></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Berdiri Sejak</p>
+                                    <p class="text-sm font-black text-gray-900 font-montserrat">2020</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {{-- Right: Story --}}
-                    <div class="text-left kisah-kami-content">
-                        <div class="space-y-4 text-slate-600 text-[14px] md:text-[15px] leading-relaxed text-justify">
+                    <div class="lg:col-span-7 text-left kisah-kami-content">
+                        <div class="space-y-4 text-slate-600 text-[13px] md:text-[14px] leading-relaxed text-justify">
                             <p>Berawal dari sebuah komitmen untuk menghadirkan perangkat teknologi yang terjangkau namun berkualitas premium, <strong class="text-gray-800">LKTech</strong> lahir sebagai solusi tepercaya bagi masyarakat dan instansi di wilayah Bogor dan sekitarnya. Kami memulai langkah dengan spesialisasi pada penyediaan perangkat laptop standar tinggi yang wajib melewati proses <em>Quality Control</em> (QC) ketat, guna memastikan setiap unit yang diterima pelanggan selalu dalam kondisi prima dan siap tempur.</p>
                             <p>Seiring dengan pesatnya tuntutan era digital dan besarnya dukungan kepercayaan dari para pelanggan setia, <strong class="text-gray-800">LKTech</strong> kini telah bertransformasi menjadi penyedia solusi teknologi informasi terpadu <em>(One-Stop IT Solution)</em>. Jangkauan layanan kami telah berekspansi secara profesional, mencakup layanan perakitan PC <em>custom</em> berspesifikasi tinggi, serta penyedia jasa pembuatan <em>website</em> modern yang didedikasikan untuk membantu UMKM dan perusahaan melakukan digitalisasi bisnis dengan mudah, responsif, dan elegan.</p>
                             <p class="mb-0">Meskipun skala layanan kami semakin membesar, nilai inti fundamental LKTech tidak pernah bergeser. Kami selalu menomorsatukan layanan purna jual <em>(after-sales)</em> yang prima, jaminan garansi yang transparan, serta dukungan servis oleh teknisi ahli yang berpengalaman. Di LKTech, kami tidak sekadar menjual produk; kami hadir untuk membangun kemitraan teknologi jangka panjang yang berlandaskan prinsip kepercayaan, kemudahan, dan kepuasan Anda sebagai prioritas utama.</p>
