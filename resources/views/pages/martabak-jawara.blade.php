@@ -216,7 +216,7 @@
                             Martabak <span class="badge-shimmer">Jawara</span>
                         </h1>
 
-                        <p class="text-white/90 text-sm leading-relaxed mb-6 fade-up delay-2 max-w-xl">
+                        <p class="text-white/90 text-center lg:text-left text-[11.5px] sm:text-xs md:text-sm leading-relaxed mb-6 fade-up delay-2 max-w-xl mx-auto lg:mx-0">
                             Martabak Jawara hadir dengan 3 senjata pamungkas: Manis, Pizza, dan Tipker. Dibuat fresh setiap hari dari bahan pilihan, teksturnya dijamin lembut serta tipker yang crunchy bikin nagih.
                             <br class="hidden md:inline">
                             <span class="font-bold text-amber-300">Satu gigitan, langsung kecanduan. Siap buktikan?</span>
