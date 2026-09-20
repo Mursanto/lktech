@@ -436,16 +436,16 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="bg-brand-600 py-20 relative overflow-hidden">
+        <div class="bg-brand-600 py-10 md:py-20 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
             
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 class="text-3xl md:text-5xl font-black text-white font-montserrat mb-6 tracking-tight leading-tight">Ubah Blankspot Jadi Peluang Usaha</h2>
-                <p class="text-brand-100 text-lg mb-10 max-w-2xl mx-auto">
+                <h2 class="text-[17px] sm:text-2xl md:text-5xl font-black text-white font-montserrat mb-3 md:mb-6 tracking-tight leading-tight whitespace-nowrap sm:whitespace-normal">Ubah Blankspot Jadi Peluang Usaha</h2>
+                <p class="text-brand-100 text-sm md:text-lg mb-6 md:mb-10 max-w-2xl mx-auto leading-relaxed">
                     Hubungi kami sekarang untuk konsultasi pemasangan jaringan satelit Starlink di lokasi wisata atau desa Anda.
                 </p>
-                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20layanan%20WiFi%20Voucher%20Starlink." target="_blank" class="inline-flex items-center gap-2 px-10 py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-lg transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                    <i class='bx bxl-whatsapp text-2xl'></i> Konsultasi via WhatsApp
+                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20layanan%20WiFi%20Voucher%20Starlink." target="_blank" class="inline-flex items-center gap-1.5 md:gap-2 px-6 py-3 md:px-10 md:py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-sm md:text-lg transition-all shadow-lg md:shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                    <i class='bx bxl-whatsapp text-lg md:text-2xl'></i> Konsultasi via WhatsApp
                 </a>
             </div>
         </div>
