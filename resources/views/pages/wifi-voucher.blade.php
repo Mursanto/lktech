@@ -164,8 +164,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
                         <span class="text-brand-400 font-bold tracking-wider uppercase text-[9px] md:text-[10px] mb-1.5 md:mb-2 inline-block bg-brand-900/50 px-2.5 md:px-3 py-0.5 md:py-1 rounded-full border border-brand-800">Cara Kerja</span>
-                        <h2 class="text-2xl md:text-3xl font-black font-montserrat mb-3 md:mb-6 tracking-tight leading-tight">Konektivitas via Satelit Starlink</h2>
-                        <p class="text-gray-300 text-[11.5px] md:text-sm mb-6 md:mb-8 leading-relaxed">
+                        <h2 class="text-[15px] sm:text-xl md:text-3xl font-black font-montserrat mb-3 md:mb-6 tracking-tight leading-tight whitespace-nowrap sm:whitespace-normal">Konektivitas via Satelit Starlink</h2>
+                        <p class="text-gray-300 text-[10.5px] sm:text-[11.5px] md:text-sm mb-6 md:mb-8 leading-relaxed">
                             Kami menghadirkan internet cepat langsung dari satelit ke perangkat Anda. Sistem cloud hotspot kami memungkinkan pengelolaan voucher yang efisien dan akses nonstop 24/7.
                         </p>
                         
@@ -191,8 +191,8 @@
                     
                     <div class="space-y-8">
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2"><i class='bx bxs-check-circle text-brand-500'></i> Bagi Pengelola Wisata</h3>
-                            <ul class="space-y-3 text-sm text-gray-300">
+                            <h3 class="text-[15px] sm:text-lg md:text-xl font-bold text-white mb-3 md:mb-4 flex items-center gap-2"><i class='bx bxs-check-circle text-brand-500'></i> Bagi Pengelola Wisata</h3>
+                            <ul class="space-y-2 md:space-y-3 text-[11px] sm:text-sm text-gray-300">
                                 <li><strong>Revenue Langsung:</strong> Penjualan voucher di lokasi ramai bisa mencapai 50-200 voucher/hari.</li>
                                 <li><strong>Viral Marketing:</strong> Pengunjung dapat upload konten real-time, mendatangkan promosi organik.</li>
                                 <li><strong>Daya Saing:</strong> Menjadi pembeda dari kompetitor yang masih blankspot.</li>
@@ -201,8 +201,8 @@
                         </div>
                         
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2"><i class='bx bxs-check-circle text-brand-500'></i> Bagi Pengunjung</h3>
-                            <ul class="space-y-3 text-sm text-gray-300">
+                            <h3 class="text-[15px] sm:text-lg md:text-xl font-bold text-white mb-3 md:mb-4 flex items-center gap-2"><i class='bx bxs-check-circle text-brand-500'></i> Bagi Pengunjung</h3>
+                            <ul class="space-y-2 md:space-y-3 text-[11px] sm:text-sm text-gray-300">
                                 <li><strong>Keamanan & Darurat:</strong> Bisa menghubungi tim SAR atau keluarga saat kondisi darurat.</li>
                                 <li><strong>Berbagi Momen:</strong> Upload foto/video langsung ke sosmed.</li>
                                 <li><strong>Pembayaran Digital:</strong> Transaksi QRIS, e-wallet, dan transfer bisa dilakukan tanpa macet.</li>
