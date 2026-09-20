@@ -14,7 +14,7 @@
                 </div>
                 
                 <!-- Google Maps Embed -->
-                <div class="rounded-xl overflow-hidden shadow-sm w-full mt-0">
+                <div class="rounded-xl overflow-hidden shadow-sm w-full mt-4">
                     @if(isset($settings) && $settings->maps_iframe)
                         <div class="w-full h-40 md:h-48 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
                             {!! $settings->maps_iframe !!}
@@ -151,18 +151,18 @@
             <!-- Kolom 4: Tautan Berguna -->
             <div class="hidden md:block self-start">
                 <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Informasi</h3>
-                <ul class="space-y-2 text-sm text-slate-600">
-                    <li><a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Beranda</a></li>
-                    <li><a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Katalog Produk</a></li>
-                    <li><a href="{{ route('rakit-pc') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Rakit PC</a></li>
-                    <li><a href="{{ route('jasa-website') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Jasa Website</a></li>
-                    <li><a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Blog & Panduan</a></li>
-                    <li><a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tentang Kami</a></li>
-                    <li><a href="{{ route('faq') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> FAQ & Bantuan</a></li>
+                <ul class="space-y-2 text-sm text-slate-600 list-none">
+                    <li><a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Beranda</a></li>
+                    <li><a href="{{ route('katalog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Katalog Produk</a></li>
+                    <li><a href="{{ route('rakit-pc') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Rakit PC</a></li>
+                    <li><a href="{{ route('jasa-website') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Jasa Website</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Blog & Panduan</a></li>
+                    <li><a href="{{ route('tentang-kami') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Tentang Kami</a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">FAQ & Bantuan</a></li>
                     <li>
                         <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
-                           class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
-                            <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Toko Tokopedia
+                           class="hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                            Toko Tokopedia
                         </a>
                     </li>
                 </ul>
