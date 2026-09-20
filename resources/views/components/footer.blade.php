@@ -149,19 +149,19 @@
             </div>
 
             <!-- Kolom 4: Tautan Berguna -->
-            <div class="hidden md:block">
-                <h4 class="font-bold text-gray-800 mb-4 font-montserrat h-6 flex items-center max-md:text-[1.1rem]">Informasi</h4>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Beranda</a></li>
-                    <li><a href="{{ route('katalog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Katalog Produk</a></li>
-                    <li><a href="{{ route('rakit-pc') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Rakit PC</a></li>
-                    <li><a href="{{ route('jasa-website') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Jasa Website</a></li>
-                    <li><a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Blog & Panduan</a></li>
-                    <li><a href="{{ route('tentang-kami') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tentang Kami</a></li>
-                    <li><a href="{{ route('faq') }}" class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> FAQ & Bantuan</a></li>
+            <div class="hidden md:block self-start">
+                <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Informasi</h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li><a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Beranda</a></li>
+                    <li><a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Katalog Produk</a></li>
+                    <li><a href="{{ route('rakit-pc') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Rakit PC</a></li>
+                    <li><a href="{{ route('jasa-website') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Jasa Website</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Blog & Panduan</a></li>
+                    <li><a href="{{ route('tentang-kami') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Tentang Kami</a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-brand-600 transition-colors flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> FAQ & Bantuan</a></li>
                     <li>
                         <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
-                           class="text-gray-600 hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                           class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div> Toko Tokopedia
                         </a>
                     </li>
