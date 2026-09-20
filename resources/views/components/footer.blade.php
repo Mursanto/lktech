@@ -32,25 +32,25 @@
             </div>
 
             <!-- Kolom 2: Informasi Kontak & Sosial Media -->
-            <div class="flex flex-col gap-4 md:gap-5 self-start">
+            <div class="flex flex-col gap-4 self-start">
                 <div>
-                    <h4 class="font-bold text-gray-800 mb-2 md:mb-3 font-montserrat flex items-center max-md:text-[1.1rem]">Hubungi Kami</h4>
-                    <ul class="flex flex-col gap-2 md:gap-2.5 text-sm max-md:text-[0.825rem] text-gray-600">
+                    <h4 class="font-bold text-gray-800 mb-3 font-montserrat flex items-center max-md:text-[1.1rem]">Hubungi Kami</h4>
+                    <ul class="flex flex-col space-y-2.5 text-sm max-md:text-[0.825rem] text-gray-600">
                         <li class="flex items-start gap-3">
-                            <i class='bx bx-map text-lg max-md:text-[0.95rem] text-brand-500 mt-[3px] flex-shrink-0'></i>
-                            <span class="leading-tight">{!! $settings->alamat ?? 'Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168' !!}</span>
+                            <i class='bx bx-map text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
+                            <span class="leading-snug">Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>Tanah Sereal, Bogor 16168</span>
                         </li>
                         <li class="flex items-start gap-3">
                             <i class='bx bx-envelope text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <a href="mailto:{{ strip_tags($settings->email ?? 'sales@lktech.online') }}" class="hover:text-brand-600 transition-colors leading-tight">{{ strip_tags($settings->email ?? 'sales@lktech.online') }}</a>
+                            <a href="mailto:sales@lktech.online" class="hover:text-brand-600 transition-colors leading-snug">sales@lktech.online</a>
                         </li>
                         <li class="flex items-start gap-3">
                             <i class='bx bxl-whatsapp text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->telepon ?? '628567354046') }}" target="_blank" class="hover:text-brand-600 transition-colors leading-tight">{{ $settings->telepon ?? '+62 856-7354-046' }}</a>
+                            <a href="https://wa.me/628567354046" target="_blank" class="hover:text-brand-600 transition-colors leading-snug">+62 856-7354-046</a>
                         </li>
                         <li class="flex items-start gap-3">
                             <i class='bx bx-time-five text-lg max-md:text-[0.95rem] text-brand-500 mt-[2px] flex-shrink-0'></i>
-                            <span class="leading-tight">{{ $settings->jam_operasional ?? 'Senin - Sabtu: 09:00 - 17:00' }}</span>
+                            <span class="leading-snug">Senin - Sabtu: 09:00 - 17:00</span>
                         </li>
                     </ul>
                 </div>
