@@ -95,16 +95,16 @@
                                      x-transition:leave-end="opacity-0 -translate-y-1"
                                      class="bg-gray-50 border-t border-gray-100"
                                      style="display:none;">
-                                    <a href="{{ route('wifi-voucher') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                    <a href="{{ route('wifi-voucher') }}" class="block pl-10 pr-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                         WiFi Voucher Starlink
                                     </a>
-                                    <a href="{{ route('jasa-furniture') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                    <a href="{{ route('jasa-furniture') }}" class="block pl-10 pr-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                         Jasa Furniture
                                     </a>
-                                    <a href="{{ route('martabak-jawara') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                    <a href="{{ route('martabak-jawara') }}" class="block pl-10 pr-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                         Martabak Jawara
                                     </a>
-                                    <a href="{{ route('limbah-elektronik') }}" class="block px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
+                                    <a href="{{ route('limbah-elektronik') }}" class="block pl-10 pr-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
                                         Limbah Elektronik (Bintang)
                                     </a>
                                 </div>
