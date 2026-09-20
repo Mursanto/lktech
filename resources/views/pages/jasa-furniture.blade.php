@@ -429,6 +429,7 @@
                             ['src'=>'images/furniture/kitchen-set/kitchen-1.webp','alt'=>'Kitchen Set Custom Minimalis', 'desc'=>'Dapur modern dengan cabinet multifungsi dan meja bar kompak.', 'material'=>'Multiplex 18mm & HPL Taco Premium'],
                             ['src'=>'images/furniture/kitchen-set/kitchen-2.webp','alt'=>'Kitchen Set Clean White', 'desc'=>'Dapur bernuansa putih bersih dengan finishing anti gores dan laci soft-close.', 'material'=>'Blockboard Melamin & HPL Glossy'],
                             ['src'=>'images/furniture/kitchen-set/kitchen-3.webp','alt'=>'Kitchen Set Classic Modern', 'desc'=>'Sentuhan profil mewah dengan perpaduan warna abu-abu elegan dan top table marmer.', 'material'=>'Multiplex 18mm & Cat Duco Polyurethane'],
+                            ['src'=>'images/furniture/kitchen-set/kitchen-1.webp','alt'=>'Kitchen Set Island', 'desc'=>'Desain dapur luas dengan meja island terpusat untuk area persiapan memasak.', 'material'=>'Multiplex 18mm & HPL Premium'],
                         ];
                         $kamarImages = [
                             ['src'=>'images/furniture/kamar-set/kamar-1.webp', 'alt'=>'Kamar Set Minimalis Cozy', 'desc'=>'Tempat tidur dengan storage laci bawah dipadu lemari pakaian sliding pintu kaca.', 'material'=>'Multiplex & Finishing HPL Serat Kayu'],
@@ -442,7 +443,7 @@
                             ['src'=>'images/furniture/kamar-set/kamar-9.webp', 'alt'=>'Kamar Set Klasik Mewah', 'desc'=>'Detail ukiran profil klasik dengan finishing cat duco broken white.', 'material'=>'Kayu Mahoni & Cat Duco Semi Gloss'],
                             ['src'=>'images/furniture/kamar-set/kamar-10.webp','alt'=>'Daybed Storage Multifungsi', 'desc'=>'Ranjang santai di sudut jendela dengan laci penyimpanan selimut di bawahnya.', 'material'=>'Multiplex & Finishing HPL'],
                             ['src'=>'images/furniture/kamar-set/kamar-11.webp','alt'=>'Lemari Pakaian Sliding Glass', 'desc'=>'Lemari pakaian dengan pintu geser kaca tempered hitam yang maskulin.', 'material'=>'Multiplex, Alumunium Frame & Kaca Tinted'],
-                            ['src'=>'images/furniture/kamar-set/kamar-11.webp','alt'=>'Headboard Panel Kisi-kisi', 'desc'=>'Panel dinding dekoratif bermotif kisi-kisi kayu di belakang tempat tidur.', 'material'=>'Multiplex & HPL Serat Kayu'],
+                            ['src'=>'images/furniture/kamar-set/kamar-12.webp','alt'=>'Headboard Panel Kisi-kisi', 'desc'=>'Panel dinding dekoratif bermotif kisi-kisi kayu di belakang tempat tidur.', 'material'=>'Multiplex & HPL Serat Kayu'],
                         ];
                         $backdropImages = [
                             ['src'=>'images/furniture/backdrop-tv/backdrop-1.webp','alt'=>'Backdrop TV Minimalis LED', 'desc'=>'Panel TV gantung dengan ambalan pajangan dan lampu LED strip hangat.', 'material'=>'Multiplex & Finishing HPL'],
@@ -527,7 +528,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-14">
                     <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Mengapa Kami?</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Keunggulan Interior S2</h2>
+                    <h2 class="font-montserrat text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">Keunggulan Interior S2</h2>
                     <p class="text-gray-500 text-sm max-w-xl mx-auto">Kepuasan pelanggan adalah prioritas utama kami dalam setiap proyek furniture.</p>
                 </div>
 
@@ -631,12 +632,6 @@
         {{-- ─── INFO TOKO ─── --}}
         <section class="bg-stone-50 py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-14">
-                    <span class="inline-block text-amber-700 font-bold tracking-widest uppercase text-[10px] mb-3 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">Lokasi & Kontak</span>
-                    <h2 class="font-montserrat text-3xl md:text-4xl font-black text-gray-900 mb-4 tracking-tight">Temukan Kami</h2>
-                    <p class="text-gray-500 text-sm max-w-xl mx-auto">Kunjungi showroom kami atau hubungi langsung untuk konsultasi furniture custom Anda.</p>
-                </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
                     <!-- Info Card -->
                     <div class="bg-white rounded-3xl shadow-sm border border-stone-200 p-8 flex flex-col gap-6">
@@ -721,15 +716,15 @@
                     Konsultasikan kebutuhan furniture Anda sekarang. Tim kami siap membantu menciptakan ruang yang indah, fungsional, dan sesuai anggaran.
                 </p>
 
-                <div class="flex flex-wrap justify-center gap-2 md:gap-6 text-white/60 text-[10px] md:text-sm mt-2 md:mt-12">
-                    <div class="flex items-center gap-1.5 md:gap-2">
-                        <i class='bx bx-map text-amber-400'></i>
-                        <span>Jl. Terusan Pulau Singkep, Saba Balau, Sukabumi, Bandar Lampung</span>
+                <div class="flex flex-col md:flex-row md:justify-center items-start md:items-center gap-1.5 md:gap-6 text-white/60 text-[9px] sm:text-[10px] md:text-sm mt-4 md:mt-12 max-w-[260px] md:max-w-none mx-auto text-left">
+                    <div class="flex items-start gap-1.5 md:gap-2">
+                        <i class='bx bx-map text-amber-400 mt-0.5 shrink-0'></i>
+                        <span class="leading-tight">Jl. Terusan Pulau Singkep, Saba Balau, Sukabumi, Bandar Lampung</span>
                     </div>
                     <span class="hidden md:inline">•</span>
-                    <div class="flex items-center gap-1.5 md:gap-2">
-                        <i class='bx bx-time-five text-amber-400'></i>
-                        <span>Buka 09.00 – 17.00 WIB</span>
+                    <div class="flex items-start gap-1.5 md:gap-2">
+                        <i class='bx bx-time-five text-amber-400 mt-0.5 shrink-0'></i>
+                        <span class="leading-tight">Buka 09.00 – 17.00 WIB</span>
                     </div>
                 </div>
             </div>
