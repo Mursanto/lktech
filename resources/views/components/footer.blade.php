@@ -44,8 +44,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                             <span class="leading-snug">
-                                Villa Mutiara 1 Sektor 2 BLOK i-18 No.03<br>
-                                Tanah Sereal, Bogor 16168
+                                Villa Mutiara 1 Sektor 2 BLOK i-18<br>
+                                No. 03 Tanah Sereal, Bogor 16168
                             </span>
                         </li>
 
