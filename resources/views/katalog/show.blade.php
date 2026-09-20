@@ -339,10 +339,13 @@
                     <div class="space-y-2 mb-4 text-xs">
                         <div class="flex justify-between items-center">
                             <span class="text-gray-500 font-medium">Status Stok:</span>
+                            @php
+                                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                            @endphp
                             @if($product->stock > 0 && $product->status !== 'Sold')
                                 <span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    Sisa {{ $product->stock }} unit
+                                    {{ $isPreOrder ? 'PO (Pre-Order)' : 'Ready Stok' }} - Sisa {{ $product->stock }} unit
                                 </span>
                             @else
                                 <span class="text-red-700 font-bold bg-red-50 px-1.5 py-0.5 rounded border border-red-200 flex items-center gap-1">

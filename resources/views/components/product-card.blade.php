@@ -18,11 +18,7 @@
             @if(!$isPromo)
             <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
                 {{-- Badge Stok Tersedia / Habis --}}
-                @if($product->stock > 0 && $product->status !== 'Sold')
-                    <span class="bg-white/95 backdrop-blur text-brand-600 px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm border border-brand-100 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Ready ({{ $product->stock }})
-                    </span>
-                @else
+                @if($product->stock <= 0 || $product->status === 'Sold')
                     <span class="bg-white/95 backdrop-blur text-red-600 px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm border border-red-100 flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Terjual Habis
                     </span>
