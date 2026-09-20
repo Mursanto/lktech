@@ -212,7 +212,7 @@
                 <div class="divider-emerald max-w-xs mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
                 @php
                 $wasteTypes = [
                     ['emoji'=>'🖥️','label'=>'Motherboard Bekas','desc'=>'Semua merk & generasi'],
@@ -224,11 +224,11 @@
                 ];
                 @endphp
                 @foreach($wasteTypes as $waste)
-                <div class="flex items-center gap-3 rounded-lg p-3 cursor-default transition-colors duration-300 border border-slate-700/50 hover:border-emerald-500" style="background:rgba(31,41,55,0.4);">
-                    <div class="text-3xl flex-shrink-0">{{ $waste['emoji'] }}</div>
-                    <div>
-                        <div class="font-bold text-sm text-white leading-tight mb-0.5">{{ $waste['label'] }}</div>
-                        <div class="text-xs text-slate-400 leading-tight">{{ $waste['desc'] }}</div>
+                <div class="flex items-center gap-2 sm:gap-3 rounded-lg p-2 sm:p-3 cursor-default transition-colors duration-300 border border-slate-700/50 hover:border-emerald-500" style="background:rgba(31,41,55,0.4);">
+                    <div class="text-2xl sm:text-3xl flex-shrink-0">{{ $waste['emoji'] }}</div>
+                    <div class="min-w-0">
+                        <div class="font-bold text-[11px] sm:text-sm text-white leading-tight mb-0.5 truncate">{{ $waste['label'] }}</div>
+                        <div class="text-[9px] sm:text-xs text-slate-400 leading-tight truncate sm:whitespace-normal">{{ $waste['desc'] }}</div>
                     </div>
                 </div>
                 @endforeach
