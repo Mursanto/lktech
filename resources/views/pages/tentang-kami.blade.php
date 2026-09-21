@@ -118,8 +118,8 @@
             {{-- ③ MENGAPA MEMILIH KAMI — 4-Column Grid --}}
             <section class="pb-2 lg:pb-6">
                 <div class="text-center mb-5 lg:mb-8">
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 font-montserrat tracking-tight">Mengapa Memilih LKTech?</h2>
-                    <p class="text-gray-500 text-sm mt-2">Keunggulan nyata yang membedakan kami dari yang lain.</p>
+                    <h2 class="text-[19px] sm:text-2xl md:text-3xl font-black text-gray-900 font-montserrat tracking-tight whitespace-nowrap">Mengapa Memilih LKTech?</h2>
+                    <p class="text-gray-500 text-[10px] sm:text-sm mt-1 sm:mt-2 whitespace-nowrap">Keunggulan nyata yang membedakan kami dari yang lain.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
                     {{-- Card 1 --}}

@@ -5,11 +5,11 @@
             
             <!-- Kolom 1: Profil Singkat -->
             <div>
-                <a href="{{ route('home') }}" class="flex items-center gap-2 mb-1 h-6">
-                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-6 w-auto object-contain">
-                    <span class="font-montserrat font-black text-[19px] tracking-tight text-blue-900 leading-none">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
+                <a href="{{ route('home') }}" class="flex items-center gap-2 mb-1">
+                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 sm:h-8 w-auto object-contain">
+                    <span class="font-montserrat font-black text-[17px] sm:text-lg lg:text-xl tracking-tight text-blue-900 leading-none whitespace-nowrap">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
                 </a>
-                <div class="text-[9.5px] font-bold uppercase tracking-widest text-gray-500 mb-3 md:mb-4 pl-8">
+                <div class="text-[7.5px] sm:text-[8px] font-bold uppercase tracking-widest text-gray-400 mb-2 pl-9 sm:pl-10">
                     By Laras & Kenzi Technology
                 </div>
                 
@@ -139,33 +139,63 @@
 
                 <!-- Tokopedia Cicilan / PayLater -->
                 <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
-                   class="flex items-center gap-2 w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[11px] font-bold px-3 py-2 rounded-lg mb-5 hover:from-green-600 hover:to-emerald-600 transition-all shadow-sm">
-                    <i class='bx bx-store text-sm'></i>
-                    <span>Tokopedia – Cicilan & PayLater Tersedia</span>
-                    <i class='bx bx-link-external text-xs ml-auto'></i>
+                   class="flex items-center gap-3 w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-3 rounded-xl mt-4 md:mt-2 hover:from-green-600 hover:to-emerald-600 transition-all shadow-md group">
+                    <i class='bx bx-store text-2xl shrink-0'></i>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-xs sm:text-[13px] font-bold">Tokopedia - Cicilan & Paylater</span>
+                        <span class="text-[10px] sm:text-[11px] font-medium text-emerald-100 flex items-center gap-1 mt-0.5">Tersedia disini <i class='bx bx-pointer text-xs'></i></span>
+                    </div>
                 </a>
 
 
             </div>
 
-            <!-- Kolom 4: Tautan Berguna -->
-            <div class="hidden md:block self-start">
-                <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Informasi</h3>
-                <ul class="space-y-2 text-sm text-slate-600 list-none">
-                    <li><a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Beranda</a></li>
-                    <li><a href="{{ route('katalog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Katalog Produk</a></li>
-                    <li><a href="{{ route('rakit-pc') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Rakit PC</a></li>
-                    <li><a href="{{ route('jasa-website') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Jasa Website</a></li>
-                    <li><a href="{{ route('blog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Blog & Panduan</a></li>
-                    <li><a href="{{ route('tentang-kami') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Tentang Kami</a></li>
-                    <li><a href="{{ route('faq') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">FAQ & Bantuan</a></li>
-                    <li>
-                        <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
-                           class="hover:text-blue-600 transition-colors flex items-center gap-1.5">
-                            Toko Tokopedia
-                        </a>
-                    </li>
-                </ul>
+            <!-- Kolom 4 & 5: Informasi & Mitra -->
+            <div class="hidden md:flex w-full justify-between gap-2 self-start">
+                
+                <!-- Tautan Berguna -->
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Informasi</h3>
+                    <ul class="space-y-2 text-sm text-slate-600 list-none">
+                        <li><a href="{{ route('home') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Beranda</a></li>
+                        <li><a href="{{ route('katalog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Katalog Produk</a></li>
+                        <li><a href="{{ route('rakit-pc') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Rakit PC</a></li>
+                        <li><a href="{{ route('jasa-website') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Jasa Website</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Blog & Panduan</a></li>
+                        <li><a href="{{ route('tentang-kami') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">Tentang Kami</a></li>
+                        <li><a href="{{ route('faq') }}" class="hover:text-blue-600 transition-colors flex items-center gap-1.5">FAQ & Bantuan</a></li>
+                        <li>
+                            <a href="https://www.tokopedia.com/lktech-tn-sereal" target="_blank"
+                               class="hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                                Toko Tokopedia
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Support by Mitra -->
+                <div class="shrink-0 w-20 lg:w-24">
+                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Mitra</h3>
+                    <div class="flex flex-col gap-2">
+                        <!-- Kopkarsat -->
+                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
+                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="KOPKARSAT" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        </div>
+                        <!-- Martabak Jawara -->
+                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
+                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Martabak Jawara" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        </div>
+                        <!-- Furniture -->
+                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
+                            <img src="{{ asset('images/logo-furniture.png') }}" alt="Furniture" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        </div>
+                        <!-- Limbah Elektronik Bintang -->
+                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
+                            <img src="{{ asset('images/logo-bintang-v2.png') }}" alt="Limbah Elektronik Bintang" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
