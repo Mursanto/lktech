@@ -175,23 +175,23 @@
 
                 <!-- Support by Mitra -->
                 <div class="shrink-0 w-20 lg:w-24">
-                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Mitra</h3>
+                    <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center justify-center">Mitra</h3>
                     <div class="flex flex-col gap-2">
                         <!-- Kopkarsat -->
-                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
-                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="KOPKARSAT" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
+                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="KOPKARSAT" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
                         </div>
                         <!-- Martabak Jawara -->
-                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
-                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Martabak Jawara" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
+                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Martabak Jawara" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
                         </div>
                         <!-- Furniture -->
-                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
-                            <img src="{{ asset('images/logo-furniture.png') }}" alt="Furniture" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
+                            <img src="{{ asset('images/logo-furniture.png') }}" alt="Furniture" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
                         </div>
                         <!-- Limbah Elektronik Bintang -->
-                        <div class="bg-white p-1 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center h-10 hover:border-blue-300 transition-colors">
-                            <img src="{{ asset('images/logo-bintang-v2.png') }}" alt="Limbah Elektronik Bintang" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                        <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
+                            <img src="{{ asset('images/logo-bintang-v2.png') }}" alt="Limbah Elektronik Bintang" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
                         </div>
                     </div>
                 </div>
