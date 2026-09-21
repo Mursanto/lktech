@@ -31,6 +31,11 @@
                         outfit:  ['Outfit', 'sans-serif'],
                         montserrat: ['Montserrat', 'sans-serif'],
                     },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                        }
+                    }
                 }
             }
         }
@@ -391,6 +396,9 @@
     </section>
 
     @include('components.footer')
+
+    <!-- Mobile Bottom Navigation -->
+    <x-mobile-bottom-nav />
 
 </body>
 </html>

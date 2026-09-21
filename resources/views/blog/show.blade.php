@@ -23,20 +23,20 @@
     <style>
         [x-cloak] { display: none !important; }
         .prose h2, .prose h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; color: #111827; margin-top: 1.2em; margin-bottom: 0.5em; }
-        .prose h2 { font-size: 1.125rem; line-height: 1.3; }
-        .prose h3 { font-size: 1.05rem; line-height: 1.4; }
-        .prose p { margin-bottom: 1em; line-height: 1.6; color: #374151; font-size: 0.875rem; }
-        .prose ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 1em; }
-        .prose ol { list-style-type: decimal; padding-left: 1.2em; margin-bottom: 1em; }
-        .prose li { margin-bottom: 0.4em; line-height: 1.5; color: #374151; font-size: 0.875rem; }
+        .prose h2 { font-size: 0.95rem; line-height: 1.3; }
+        .prose h3 { font-size: 0.9rem; line-height: 1.4; }
+        .prose p { margin-bottom: 1em; line-height: 1.6; color: #374151; font-size: 0.8rem; }
+        .prose ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 1em; font-size: 0.8rem; }
+        .prose ol { list-style-type: decimal; padding-left: 1.2em; margin-bottom: 1em; font-size: 0.8rem; }
+        .prose li { margin-bottom: 0.4em; line-height: 1.5; color: #374151; }
         .prose img { border-radius: 0.5rem; margin: 1.2em 0; max-width: 100%; height: auto; }
-        .prose blockquote { border-left: 4px solid #3b82f6; padding-left: 1em; font-style: italic; color: #4b5563; background: #eff6ff; padding: 1em; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1em; font-size: 0.875rem; }
+        .prose blockquote { border-left: 4px solid #3b82f6; padding-left: 1em; font-style: italic; color: #4b5563; background: #eff6ff; padding: 1em; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1em; font-size: 0.8rem; }
         .prose strong { color: #111827; font-weight: 700; }
         
         @media (min-width: 768px) {
-            .prose h2 { font-size: 1.5rem; margin-top: 2em; margin-bottom: 0.75em; }
-            .prose h3 { font-size: 1.25rem; margin-top: 2em; margin-bottom: 0.75em; }
-            .prose p, .prose li, .prose blockquote { font-size: 1.05rem; margin-bottom: 1.5em; line-height: 1.8; }
+            .prose h2 { font-size: 1.1rem; margin-top: 2em; margin-bottom: 0.75em; }
+            .prose h3 { font-size: 1rem; margin-top: 2em; margin-bottom: 0.75em; }
+            .prose p, .prose li, .prose blockquote { font-size: 0.95rem; margin-bottom: 1.5em; line-height: 1.8; }
             .prose img { border-radius: 0.75rem; margin: 2em 0; }
         }
     </style>
@@ -48,10 +48,10 @@
     <x-navbar />
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-16">
         
         <!-- Breadcrumbs -->
-        <nav class="flex text-sm text-gray-500 mb-8 font-medium">
+        <nav class="flex text-xs text-gray-500 mb-4 sm:mb-8 font-medium">
             <a href="{{ route('home') }}" class="hover:text-brand-600">Home</a>
             <span class="mx-2">/</span>
             <a href="{{ route('blog.index') }}" class="hover:text-brand-600">Blog</a>
@@ -59,34 +59,35 @@
             <span class="text-gray-400 cursor-default line-clamp-1">{{ $post->title }}</span>
         </nav>
 
-        <article class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden mb-16">
+        <article class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-12">
             
-            <!-- Hero Thumbnail -->
-            <div class="w-full aspect-[21/9] bg-gray-100 overflow-hidden relative">
-                @if($post->thumbnail)
-                    <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
-                @else
-                    <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
-                        <i class='bx bx-image-alt text-6xl'></i>
-                    </div>
-                @endif
-            </div>
-
             <!-- Content Container -->
-            <div class="p-6 md:p-12">
-                <!-- Meta Info -->
-                <div class="flex items-center gap-4 text-sm text-gray-500 mb-6 font-semibold">
-                    <div class="flex items-center gap-1 bg-brand-50 text-brand-600 px-3 py-1.5 rounded-lg">
-                        <i class='bx bx-calendar'></i>
-                        {{ $post->published_at ? $post->published_at->format('d F Y') : $post->created_at->format('d F Y') }}
-                    </div>
-                    <div class="flex items-center gap-1 text-gray-400">
-                        <i class='bx bx-user-circle'></i> Admin LKTech
+            <div class="p-4 md:p-8">
+                
+                <!-- Floated Container for Image and Meta Info -->
+                <div class="float-left w-[45%] sm:w-1/3 md:w-1/4 mr-4 mb-2 md:mr-6 md:mb-4 flex flex-col gap-2">
+                    @if($post->thumbnail)
+                        <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full rounded-xl object-contain bg-gray-50 border border-gray-100 p-1">
+                    @else
+                        <div class="w-full aspect-square flex items-center justify-center text-gray-400 bg-gray-100 rounded-xl border border-gray-100">
+                            <i class='bx bx-image-alt text-4xl md:text-6xl'></i>
+                        </div>
+                    @endif
+
+                    <!-- Meta Info (underneath image) -->
+                    <div class="flex flex-row flex-wrap justify-between gap-1.5 text-[8.5px] sm:text-[10px] text-gray-500 font-semibold w-full">
+                        <div class="flex items-center gap-1 bg-brand-50 text-brand-600 px-1.5 py-0.5 rounded shrink-0">
+                            <i class='bx bx-calendar'></i>
+                            {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
+                        </div>
+                        <div class="flex items-center gap-1 text-gray-400 shrink-0">
+                            <i class='bx bx-user-circle'></i> Admin
+                        </div>
                     </div>
                 </div>
 
                 <!-- Title -->
-                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 font-montserrat leading-snug mb-3 sm:mb-6">
+                <h1 class="text-base sm:text-lg md:text-xl lg:text-2xl font-black text-gray-900 font-montserrat leading-snug mb-3 sm:mb-4">
                     {{ $post->title }}
                 </h1>
 
@@ -94,6 +95,8 @@
                 <div class="prose max-w-none text-gray-700">
                     {!! $post->content !!}
                 </div>
+                
+                <div class="clear-both"></div>
             </div>
             
         </article>
@@ -101,20 +104,20 @@
         <!-- Recommended Posts -->
         @if($recentPosts->count() > 0)
         <div class="mb-8">
-            <h3 class="text-2xl font-black text-gray-900 font-montserrat mb-6">Artikel Terkait Lainnya</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h3 class="text-lg font-black text-gray-900 font-montserrat mb-4">Artikel Terkait Lainnya</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($recentPosts as $recent)
-                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
-                    <a href="{{ route('blog.show', $recent->slug) }}" class="block w-full h-36 bg-gray-100 overflow-hidden">
+                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-row items-center p-3 gap-3">
+                    <a href="{{ route('blog.show', $recent->slug) }}" class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
                         @if($recent->thumbnail)
-                            <img src="{{ Storage::url($recent->thumbnail) }}" alt="{{ $recent->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ Storage::url($recent->thumbnail) }}" alt="{{ $recent->title }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                         @endif
                     </a>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <h4 class="font-bold text-gray-900 mb-2 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
+                    <div class="flex flex-col justify-center flex-grow min-w-0">
+                        <h4 class="font-bold text-[13px] sm:text-sm text-gray-900 mb-1.5 leading-tight group-hover:text-brand-600 transition-colors line-clamp-2">
                             <a href="{{ route('blog.show', $recent->slug) }}">{{ $recent->title }}</a>
                         </h4>
-                        <div class="text-xs text-gray-500 font-medium mt-auto flex items-center gap-1">
+                        <div class="text-[10px] text-gray-500 font-medium flex items-center gap-1">
                             <i class='bx bx-calendar'></i> {{ $recent->published_at ? $recent->published_at->format('d M Y') : $recent->created_at->format('d M Y') }}
                         </div>
                     </div>
