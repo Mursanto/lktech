@@ -211,14 +211,16 @@
                         @endif
                     </div>
 
-                    <div class="mt-auto pt-3 border-t border-gray-100">
-                        <p class="text-[9px] uppercase tracking-wider text-gray-400 font-bold mb-0.5">Mulai dari</p>
-                        <div class="flex items-baseline gap-1 mb-2">
-                            <span class="text-xs font-bold {{ $priceColor }}">Rp</span>
-                            <span class="text-2xl sm:text-3xl font-black {{ $priceColor }} tracking-tight">{{ number_format($package->harga_estimasi, 0, ',', '.') }}</span>
+                    <div class="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+                        <div>
+                            <p class="text-[9px] uppercase tracking-wider text-gray-400 font-bold mb-0.5 leading-none">Mulai dari</p>
+                            <div class="flex items-baseline gap-0.5">
+                                <span class="text-[10px] font-bold {{ $priceColor }}">Rp</span>
+                                <span class="text-lg sm:text-xl font-black {{ $priceColor }} tracking-tight">{{ number_format($package->harga_estimasi, 0, ',', '.') }}</span>
+                            </div>
                         </div>
-                        <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="{{ $btnClass }}">
-                            <i class='bx bxl-whatsapp text-base'></i> Pesan Paket Ini
+                        <a href="https://wa.me/628567354046?text={{ $waText }}" target="_blank" class="shrink-0 inline-flex justify-center items-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] rounded-xl transition shadow-sm">
+                            <i class='bx bxl-whatsapp text-sm'></i> Pesan
                         </a>
                     </div>
                 </div>
