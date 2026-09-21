@@ -73,7 +73,7 @@
         </div>
 
         <!-- Main FAQ Content -->
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14"
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 sm:py-10 lg:py-14"
              x-data="{
                  activeCategory: 'semua',
                  openItem: null,
@@ -225,23 +225,33 @@
                  }
              }">
 
-            <!-- Category Pills -->
-            <div class="flex flex-wrap gap-2 mb-8 justify-center">
+            <!-- Category Pills & Policy Links -->
+            <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-5 sm:mb-8 xl:flex-nowrap">
                 <template x-for="cat in categories" :key="cat.id">
                     <button
                         @click="activeCategory = cat.id; openItem = null"
                         :class="activeCategory === cat.id
                             ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105'
                             : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'"
-                        class="category-pill px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer"
+                        class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap"
                         x-text="cat.label">
                     </button>
                 </template>
+                
+                <!-- Policy Anchor Links -->
+                <a href="#kebijakan-privasi" 
+                   class="bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:text-blue-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">
+                    🔒 Privasi
+                </a>
+                <a href="#syarat-ketentuan" 
+                   class="bg-white text-gray-600 border border-gray-200 hover:border-emerald-300 hover:text-emerald-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">
+                    📝 Ketentuan
+                </a>
             </div>
 
             <!-- FAQ Count Info -->
             <div class="flex items-center justify-between mb-6">
-                <p class="text-sm text-gray-500">
+                <p class="text-xs sm:text-sm text-gray-500">
                     Menampilkan <span class="font-bold text-gray-700" x-text="filteredFaqs.length"></span> pertanyaan
                 </p>
                 <button @click="openItem = null" x-show="openItem !== null" class="text-xs text-brand-600 hover:underline font-semibold" x-cloak>
