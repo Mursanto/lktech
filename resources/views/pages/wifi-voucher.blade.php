@@ -120,37 +120,45 @@
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {{-- Card 1 --}}
                     <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
-                        <div class="w-10 h-10 bg-red-100 text-red-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                            <i class='bx bx-wifi-off'></i>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-red-100 text-red-650 rounded-xl flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                                <i class='bx bx-wifi-off'></i>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-black text-gray-900 font-montserrat leading-snug">Sinyal GSM Lemah</h3>
                         </div>
-                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Sinyal GSM Lemah</h3>
                         <p class="text-[11px] text-gray-500 leading-normal">Banyak daerah pedesaan dan wisata terisolasi dari sinyal GSM.</p>
                     </div>
                     
                     {{-- Card 2 --}}
                     <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
-                        <div class="w-10 h-10 bg-blue-100 text-blue-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                            <i class='bx bx-message-rounded-dots'></i>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-650 rounded-xl flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                                <i class='bx bx-message-rounded-dots'></i>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-black text-gray-900 font-montserrat leading-snug">Kebutuhan Komunikasi</h3>
                         </div>
-                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Kebutuhan Komunikasi</h3>
                         <p class="text-[11px] text-gray-500 leading-normal">Kebutuhan penting untuk transaksi digital dan komunikasi sehari-hari.</p>
                     </div>
                     
                     {{-- Card 3 --}}
                     <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
-                        <div class="w-10 h-10 bg-orange-100 text-orange-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                            <i class='bx bx-git-branch'></i>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-orange-100 text-orange-650 rounded-xl flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                                <i class='bx bx-git-branch'></i>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-black text-gray-900 font-montserrat leading-snug">Infrastruktur Terbatas</h3>
                         </div>
-                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Infrastruktur Terbatas</h3>
                         <p class="text-[11px] text-gray-500 leading-normal">Penarikan kabel fiber optik ke daerah pelosok sangat mahal & lambat.</p>
                     </div>
 
                     {{-- Card 4 --}}
                     <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all group">
-                        <div class="w-10 h-10 bg-green-100 text-green-650 rounded-xl flex items-center justify-center text-xl mb-3 shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                            <i class='bx bx-line-chart'></i>
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-green-100 text-green-650 rounded-xl flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                                <i class='bx bx-line-chart'></i>
+                            </div>
+                            <h3 class="text-xs sm:text-sm font-black text-gray-900 font-montserrat leading-snug">Peluang Revenue</h3>
                         </div>
-                        <h3 class="text-xs sm:text-sm font-black text-gray-900 mb-1 font-montserrat leading-snug">Peluang Revenue</h3>
                         <p class="text-[11px] text-gray-500 leading-normal">Hasilkan profit tambahan dari penjualan voucher WiFi di lokasi Anda.</p>
                     </div>
                 </div>
@@ -215,9 +223,9 @@
         </div>
 
         <!-- Packages Grid -->
-        <div id="paket" class="bg-gray-50 py-20 border-t border-gray-100">
+        <div id="paket" class="bg-gray-50 py-10 md:py-14 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-8 md:mb-16">
+                <div class="text-center mb-6 md:mb-10">
                     <h2 class="text-xl md:text-3xl font-black text-gray-900 font-montserrat mb-2 md:mb-3 tracking-tight">Pilihan Skema Kerjasama</h2>
                     <p class="text-gray-500 text-[11px] md:text-sm max-w-xl mx-auto px-4 md:px-0">Mulai usaha WiFi Voucher Anda. Jadikan lokasi wisata bebas blankspot dan hasilkan keuntungan.</p>
                 </div>
@@ -228,7 +236,7 @@
                     @php
                         $isHighlighted = !empty($package->badge);
                     @endphp
-                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-5 md:p-8 transition-all flex flex-col h-full relative group w-full">
+                    <div class="bg-white rounded-3xl {{ $isHighlighted ? 'shadow-2xl border-2 border-brand-500 z-10 md:-translate-y-4 transform' : 'shadow-sm border border-gray-100 hover:shadow-xl' }} p-5 md:p-6 transition-all flex flex-col h-full relative group w-full">
                         @if($isHighlighted)
                         <div class="absolute top-0 right-0 bg-brand-600 text-white text-[9px] md:text-[10px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-bl-2xl uppercase tracking-widest shadow-sm">
                             {{ $package->badge }}
@@ -238,18 +246,18 @@
                         
                         <div class="flex-grow relative z-10">
                             <h3 class="{{ $isHighlighted ? 'text-xl md:text-2xl font-bold text-brand-600' : 'text-lg md:text-xl font-bold text-gray-900' }} mb-1 font-montserrat">{{ $package->nama_paket }}</h3>
-                            <p class="text-[11px] md:text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-4 md:mb-6">{{ $package->deskripsi_singkat ?? 'Paket WiFi Voucher' }}</p>
+                            <p class="text-[11px] md:text-xs {{ $isHighlighted ? 'text-gray-500' : 'text-brand-600' }} font-bold uppercase tracking-wider mb-3 md:mb-4">{{ $package->deskripsi_singkat ?? 'Paket WiFi Voucher' }}</p>
                             
-                            <div class="mb-5 md:mb-8">
+                            <div class="mb-4 md:mb-5">
                                 <p class="text-[9px] md:text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Investasi / Harga</p>
                                 <span class="{{ $isHighlighted ? 'text-2xl md:text-4xl' : 'text-xl md:text-3xl' }} font-black text-gray-900 whitespace-nowrap">Rp {{ number_format($package->harga, 0, ',', '.') }}</span>
                             </div>
                             
-                            <ul class="space-y-2.5 md:space-y-4 mb-6 md:mb-8 text-[11px] md:text-sm {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
+                            <ul class="space-y-1.5 md:space-y-2.5 mb-5 md:mb-6 text-[11px] md:text-[13px] {{ $isHighlighted ? 'text-gray-700 font-semibold' : 'text-gray-600 font-medium' }}">
                                 @if($package->fitur_list)
                                     @foreach(explode("\n", $package->fitur_list) as $fitur)
                                         @if(trim($fitur))
-                                        <li class="flex items-start gap-2.5 md:gap-3"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-lg md:text-xl mt-0.5 md:mt-0'></i> <span>{{ trim($fitur) }}</span></li>
+                                        <li class="flex items-start gap-2"><i class='bx {{ $isHighlighted ? 'bxs-check-circle text-brand-600' : 'bx-check-circle text-brand-500' }} text-lg md:text-xl mt-0.5 md:mt-0'></i> <span>{{ trim($fitur) }}</span></li>
                                         @endif
                                     @endforeach
                                 @endif
@@ -276,9 +284,9 @@
         </div>
 
         <!-- Estimasi Pendapatan -->
-        <div id="omzet" class="bg-white py-16 border-t border-gray-100">
+        <div id="omzet" class="bg-white py-10 md:py-14 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-6 md:mb-10">
+                <div class="text-center mb-5 md:mb-8">
                     <span class="text-brand-600 font-bold tracking-wider uppercase text-[9px] md:text-[10px] mb-1.5 md:mb-2 inline-block bg-brand-50 px-2.5 md:px-3 py-0.5 md:py-1 rounded-full border border-brand-100">Simulasi Omzet</span>
                     <h2 class="text-xl md:text-3xl font-black text-gray-900 font-montserrat mb-1.5 md:mb-2 tracking-tight">Estimasi Omzet Penjualan</h2>
                     <p class="text-gray-500 text-[11px] md:text-sm px-4 md:px-0">Simulasi potensi pendapatan harian dari penjualan voucher WiFi di lokasi Anda.</p>
@@ -436,16 +444,16 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="bg-brand-600 py-10 md:py-20 relative overflow-hidden">
+        <div class="bg-brand-600 py-8 md:py-14 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
             
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 class="text-[17px] sm:text-2xl md:text-5xl font-black text-white font-montserrat mb-3 md:mb-6 tracking-tight leading-tight whitespace-nowrap sm:whitespace-normal">Ubah Blankspot Jadi Peluang Usaha</h2>
-                <p class="text-brand-100 text-sm md:text-lg mb-6 md:mb-10 max-w-2xl mx-auto leading-relaxed">
-                    Hubungi kami sekarang untuk konsultasi pemasangan jaringan satelit Starlink di lokasi wisata atau desa Anda.
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center">
+                <h2 class="text-[13px] sm:text-[18px] md:text-3xl lg:text-4xl font-black text-white font-montserrat mb-2 md:mb-4 tracking-tight leading-tight whitespace-nowrap">Ubah Blankspot Jadi Peluang Usaha</h2>
+                <p class="text-brand-100 text-[11px] sm:text-sm md:text-base mb-5 md:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
+                    Hubungi kami untuk konsultasi pemasangan satelit Starlink di lokasi Anda.
                 </p>
-                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20layanan%20WiFi%20Voucher%20Starlink." target="_blank" class="inline-flex items-center gap-1.5 md:gap-2 px-6 py-3 md:px-10 md:py-4 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-sm md:text-lg transition-all shadow-lg md:shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                    <i class='bx bxl-whatsapp text-lg md:text-2xl'></i> Konsultasi via WhatsApp
+                <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20layanan%20WiFi%20Voucher%20Starlink." target="_blank" class="inline-flex items-center gap-1.5 px-5 py-2.5 md:px-8 md:py-3.5 bg-white text-brand-600 hover:bg-gray-50 hover:text-brand-700 rounded-full font-black text-[12px] md:text-base transition-all shadow-lg hover:-translate-y-0.5">
+                    <i class='bx bxl-whatsapp text-lg md:text-2xl'></i> Hubungi via WhatsApp
                 </a>
             </div>
         </div>

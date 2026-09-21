@@ -586,7 +586,7 @@
                     </div>
 
                     {{-- Google Maps Embed --}}
-                    <div class="rounded-3xl overflow-hidden shadow-sm border border-amber-100 h-full min-h-[400px]">
+                    <div class="rounded-3xl overflow-hidden shadow-sm border border-amber-100 h-full min-h-[250px] lg:min-h-[400px]">
                         <iframe
                             src="https://maps.google.com/maps?q=Teras+Alfamart+Talang+Jawa+Atas+Jl+Jenderal+Sudirman+Muara+Enim&t=&z=16&ie=UTF8&iwloc=&output=embed"
                             class="w-full h-full border-0"
