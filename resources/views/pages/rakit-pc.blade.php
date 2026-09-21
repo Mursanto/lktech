@@ -242,7 +242,7 @@
                 
                 <div class="text-center md:text-left relative z-10 flex-grow">
                     <span class="inline-block bg-white/20 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-white/30 mb-2">Spek Custom</span>
-                    <h3 class="text-lg md:text-xl font-black text-white font-montserrat mb-1.5">Tidak Ada Paket yang Cocok?</h3>
+                    <h3 class="text-[14px] sm:text-lg md:text-xl font-black text-white font-montserrat mb-1.5 whitespace-nowrap">Tidak Ada Paket yang Cocok?</h3>
                     <p class="text-blue-100 text-xs leading-relaxed max-w-md">Ceritakan kebutuhan game, software, dan budget Anda. Teknisi LKTech akan meracikkan PC yang 100% sesuai untuk Anda.</p>
                 </div>
                 

@@ -226,27 +226,21 @@
              }">
 
             <!-- Category Pills & Policy Links -->
-            <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-5 sm:mb-8 xl:flex-nowrap">
-                <template x-for="cat in categories" :key="cat.id">
-                    <button
-                        @click="activeCategory = cat.id; openItem = null"
-                        :class="activeCategory === cat.id
-                            ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105'
-                            : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'"
-                        class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap"
-                        x-text="cat.label">
-                    </button>
-                </template>
+            <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-5 sm:mb-8">
+                <!-- Baris 1 -->
+                <div class="flex justify-center gap-1.5 sm:gap-2 w-full md:w-auto">
+                    <button @click="activeCategory = 'semua'; openItem = null" :class="activeCategory === 'semua' ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'" class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap">🏠 Semua</button>
+                    <button @click="activeCategory = 'pembelian'; openItem = null" :class="activeCategory === 'pembelian' ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'" class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap">🛒 Pembelian</button>
+                    <button @click="activeCategory = 'garansi'; openItem = null" :class="activeCategory === 'garansi' ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'" class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap">🛡️ Garansi</button>
+                    <button @click="activeCategory = 'servis'; openItem = null" :class="activeCategory === 'servis' ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'" class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap">🔧 Servis</button>
+                </div>
                 
-                <!-- Policy Anchor Links -->
-                <a href="#kebijakan-privasi" 
-                   class="bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:text-blue-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">
-                    🔒 Privasi
-                </a>
-                <a href="#syarat-ketentuan" 
-                   class="bg-white text-gray-600 border border-gray-200 hover:border-emerald-300 hover:text-emerald-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">
-                    📝 Ketentuan
-                </a>
+                <!-- Baris 2 -->
+                <div class="flex justify-center gap-1.5 sm:gap-2 w-full md:w-auto mt-0.5 sm:mt-0">
+                    <a href="#kebijakan-privasi" class="bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:text-blue-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">🔒 Privasi</a>
+                    <a href="#syarat-ketentuan" class="bg-white text-gray-600 border border-gray-200 hover:border-emerald-300 hover:text-emerald-600 category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">📝 Ketentuan</a>
+                    <button @click="activeCategory = 'lainnya'; openItem = null" :class="activeCategory === 'lainnya' ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'" class="category-pill px-2.5 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-sm font-bold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center">💡 Lainnya</button>
+                </div>
             </div>
 
             <!-- FAQ Count Info -->
