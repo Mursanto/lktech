@@ -171,10 +171,15 @@
         </div>
         @endif
 
-        <div class="border-t border-gray-100 pt-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div class="text-xs text-gray-500 font-medium leading-relaxed">
                 &copy; 2025 LKTech Solusi IT Integrated. All rights reserved.<br>
                 Hardware Andal. Software Profesional. Satu Integrasi.
+            </div>
+            <div class="text-xs text-gray-500 font-medium flex gap-3">
+                <a href="{{ route('faq') }}#kebijakan-privasi" class="hover:text-blue-600 transition-colors">Kebijakan Privasi</a>
+                <span class="text-gray-300">|</span>
+                <a href="{{ route('faq') }}#syarat-ketentuan" class="hover:text-blue-600 transition-colors">Syarat & Ketentuan</a>
             </div>
         </div>
     </div>

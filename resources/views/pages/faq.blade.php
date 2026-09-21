@@ -58,15 +58,15 @@
                 <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
                 <div class="absolute bottom-0 right-0 w-72 h-72 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
             </div>
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-1.5 text-sm font-semibold mb-6">
-                    <i class='bx bx-help-circle text-lg'></i>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 text-center relative z-10">
+                <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
+                    <i class='bx bx-help-circle text-base sm:text-lg'></i>
                     <span>Pusat Bantuan & FAQ</span>
                 </div>
-                <h1 class="text-3xl lg:text-5xl font-black font-montserrat leading-tight mb-4 drop-shadow-sm">
-                    Ada Pertanyaan? <br class="hidden sm:block">Kami Siap Bantu! 🙋
+                <h1 class="text-2xl sm:text-3xl lg:text-5xl font-black font-montserrat leading-tight mb-2 sm:mb-4 drop-shadow-sm">
+                    Ada Pertanyaan? <br>Kami Siap Bantu! 🙋
                 </h1>
-                <p class="text-blue-100 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
+                <p class="text-blue-100 text-xs sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
                     Temukan jawaban atas pertanyaan yang paling sering ditanyakan seputar pembelian, pembayaran, garansi, dan layanan LKTech. Santai aja, kami jelaskan dengan bahasa yang mudah dipahami.
                 </p>
             </div>
@@ -233,7 +233,7 @@
                         :class="activeCategory === cat.id
                             ? 'bg-brand-600 text-white shadow-lg shadow-brand-200 scale-105'
                             : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-300 hover:text-brand-600'"
-                        class="category-pill px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 cursor-pointer"
+                        class="category-pill px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer"
                         x-text="cat.label">
                     </button>
                 </template>
@@ -257,19 +257,19 @@
 
                         <!-- Question Header -->
                         <button @click="toggle(faq.id)"
-                                class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-1 group">
+                                class="w-full flex items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-5 sm:py-4 text-left rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-1 group">
                             <div class="flex items-center gap-3 flex-1 min-w-0">
-                                <div class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200"
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200"
                                      :class="openItem === faq.id ? 'bg-brand-600 text-white' : 'bg-brand-50 text-brand-600 group-hover:bg-brand-100'">
-                                    <i class='bx bx-question-mark text-base'></i>
+                                    <i class='bx bx-question-mark text-sm sm:text-base'></i>
                                 </div>
-                                <span class="font-bold text-gray-800 text-sm sm:text-base leading-tight"
+                                <span class="font-bold text-gray-800 text-xs sm:text-base leading-tight"
                                       :class="openItem === faq.id ? 'text-brand-700' : ''"
                                       x-text="faq.q"></span>
                             </div>
-                            <div class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
+                            <div class="shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all duration-300"
                                  :class="openItem === faq.id ? 'bg-brand-600 text-white rotate-180' : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200'">
-                                <i class='bx bx-chevron-down text-lg'></i>
+                                <i class='bx bx-chevron-down text-base sm:text-lg'></i>
                             </div>
                         </button>
 
@@ -282,9 +282,9 @@
                              x-transition:leave-start="opacity-100 translate-y-0"
                              x-transition:leave-end="opacity-0 -translate-y-2"
                              x-cloak>
-                            <div class="px-5 pb-5 pt-0">
-                                <div class="ml-10 pl-0 border-t border-gray-100 pt-3">
-                                    <p class="text-gray-600 text-sm leading-relaxed whitespace-pre-line" x-text="faq.a"></p>
+                            <div class="px-4 pb-4 sm:px-5 sm:pb-5 pt-0">
+                                <div class="ml-9 sm:ml-10 pl-0 border-t border-gray-100 pt-3">
+                                    <p class="text-gray-600 text-xs sm:text-sm leading-relaxed whitespace-pre-line" x-text="faq.a"></p>
                                 </div>
                             </div>
                         </div>
@@ -298,19 +298,54 @@
                 </div>
             </div>
 
-            <!-- Warranty Policy Info Card -->
-            <div class="mt-10 bg-amber-50 border border-amber-200 rounded-2xl p-6">
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
-                        <i class='bx bx-shield-check text-xl text-amber-600'></i>
+            <!-- Informasi Kebijakan & Ketentuan -->
+            <div class="mt-12 space-y-6">
+                <!-- Kebijakan Garansi -->
+                <div id="kebijakan-garansi" class="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-6 transition-all hover:shadow-md scroll-mt-24">
+                    <div class="flex items-start gap-3 sm:gap-4">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class='bx bx-shield-check text-lg sm:text-xl text-amber-600'></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-amber-800 mb-1 sm:mb-2 text-base sm:text-lg">Kebijakan Garansi Resmi</h3>
+                            <p class="text-amber-700 text-xs sm:text-sm leading-relaxed text-justify">
+                                Syarat dan ketentuan garansi dibuat untuk melindungi hak Anda sebagai pembeli dan menjaga transparansi setiap transaksi di LKTech.
+                                Garansi mesin berlaku <strong>2 minggu</strong> sejak tanggal pembelian, garansi software (khusus OS dan MS Office) berlaku <strong>Lifetime</strong> selama tidak di-uninstall atau instal ulang.
+                                Klaim garansi mesin wajib disertai nota pembelian & segel garansi yang masih utuh.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-amber-800 mb-1">📋 Kebijakan Garansi Resmi LKTech</h3>
-                        <p class="text-amber-700 text-sm leading-relaxed">
-                            Syarat dan ketentuan garansi dibuat untuk melindungi hak Anda sebagai pembeli dan menjaga transparansi setiap transaksi di LKTech.
-                            Garansi mesin berlaku <strong>2 minggu</strong> sejak tanggal pembelian, garansi software (khusus OS dan MS Office) berlaku <strong>Lifetime</strong> selama tidak di-uninstall atau instal ulang.
-                            Klaim garansi mesin wajib disertai nota pembelian & segel garansi yang masih utuh.
-                        </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <!-- Kebijakan Privasi -->
+                    <div id="kebijakan-privasi" class="bg-blue-50 border border-blue-200 rounded-2xl p-4 sm:p-6 transition-all hover:shadow-md scroll-mt-24">
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                                <i class='bx bx-lock-alt text-lg sm:text-xl text-blue-600'></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-blue-800 mb-1 sm:mb-2 text-base sm:text-lg">Kebijakan Privasi</h3>
+                                <p class="text-blue-700 text-xs sm:text-sm leading-relaxed text-justify">
+                                    Kami sangat menghargai privasi Anda. Data pribadi yang Anda berikan (seperti nama, alamat, nomor telepon, dan email) hanya digunakan untuk keperluan pemrosesan pesanan, pengiriman, dan layanan pelanggan terkait. Kami tidak akan membagikan atau menjual informasi pribadi Anda kepada pihak ketiga tanpa persetujuan Anda, kecuali diwajibkan oleh hukum.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Syarat & Ketentuan -->
+                    <div id="syarat-ketentuan" class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 sm:p-6 transition-all hover:shadow-md scroll-mt-24">
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+                                <i class='bx bx-file text-lg sm:text-xl text-emerald-600'></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-emerald-800 mb-1 sm:mb-2 text-base sm:text-lg">Syarat & Ketentuan</h3>
+                                <p class="text-emerald-700 text-xs sm:text-sm leading-relaxed text-justify">
+                                    Dengan melakukan transaksi di LKTech, Anda setuju dengan ketentuan yang berlaku. Harga dan ketersediaan stok dapat berubah sewaktu-waktu. Segala bentuk pembatalan pesanan setelah barang dikirim mengikuti kebijakan retur. LKTech berhak membatalkan pesanan jika terdapat ketidaksesuaian data atau indikasi kecurangan demi keamanan bersama.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -322,25 +357,25 @@
                     <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white rounded-full"></div>
                 </div>
                 <div class="relative z-10">
-                    <h3 class="text-xl sm:text-2xl font-black font-montserrat mb-2">Masih Ada Pertanyaan? 🤔</h3>
-                    <p class="text-blue-100 text-sm sm:text-base mb-6 max-w-lg mx-auto leading-relaxed">
+                    <h3 class="text-lg sm:text-2xl font-black font-montserrat mb-1 sm:mb-2">Masih Ada Pertanyaan? 🤔</h3>
+                    <p class="text-blue-100 text-xs sm:text-base mb-5 sm:mb-6 max-w-lg mx-auto leading-relaxed px-2">
                         Jangan ragu untuk langsung menghubungi kami! Tim kami siap membantu Anda dengan ramah dan profesional, dari Senin sampai Sabtu.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <div class="flex flex-row gap-2 sm:gap-3 justify-center">
                         <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20punya%20pertanyaan%20seputar%20layanan%20LKtech."
                            target="_blank"
-                           class="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/30">
-                            <i class='bx bxl-whatsapp text-xl'></i>
-                            Chat via WhatsApp
+                           class="inline-flex flex-1 sm:flex-none items-center justify-center gap-1.5 sm:gap-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-3 py-2.5 sm:px-6 sm:py-3 rounded-xl text-[11px] sm:text-base transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-900/30">
+                            <i class='bx bxl-whatsapp text-base sm:text-xl'></i>
+                            WhatsApp
                         </a>
                         <a href="https://www.tokopedia.com/lktech-tn-sereal"
                            target="_blank"
-                           class="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold px-6 py-3 rounded-xl border border-white/30 transition-all duration-200 hover:-translate-y-0.5">
-                            <i class='bx bx-store text-xl'></i>
-                            Beli di Tokopedia
+                           class="inline-flex flex-1 sm:flex-none items-center justify-center gap-1.5 sm:gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold px-3 py-2.5 sm:px-6 sm:py-3 rounded-xl border border-white/30 text-[11px] sm:text-base transition-all duration-200 hover:-translate-y-0.5">
+                            <i class='bx bx-store text-base sm:text-xl'></i>
+                            Tokopedia
                         </a>
                     </div>
-                    <p class="text-blue-200 text-xs mt-4">
+                    <p class="text-blue-200 text-[10px] sm:text-xs mt-4 sm:mt-4">
                         ⭐ Cicilan & PayLater tersedia di Tokopedia | 📍 Tanah Sereal, Bogor
                     </p>
                 </div>
