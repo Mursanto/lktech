@@ -58,15 +58,15 @@
                 <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
                 <div class="absolute bottom-0 right-0 w-72 h-72 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
             </div>
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 text-center relative z-10">
-                <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm font-semibold mb-4 sm:mb-6">
-                    <i class='bx bx-help-circle text-base sm:text-lg'></i>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10 text-center relative z-10">
+                <div class="inline-flex items-center gap-1 sm:gap-1.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-semibold mb-2.5 sm:mb-4">
+                    <i class='bx bx-help-circle text-sm sm:text-base'></i>
                     <span>Pusat Bantuan & FAQ</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl lg:text-5xl font-black font-montserrat leading-tight mb-2 sm:mb-4 drop-shadow-sm">
+                <h1 class="text-[1.35rem] sm:text-2xl lg:text-4xl font-black font-montserrat leading-tight mb-1.5 sm:mb-3 drop-shadow-sm">
                     Ada Pertanyaan? <br>Kami Siap Bantu! 🙋
                 </h1>
-                <p class="text-blue-100 text-xs sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
+                <p class="text-blue-100 text-[10.5px] sm:text-sm lg:text-base max-w-2xl mx-auto leading-normal sm:leading-relaxed px-1 sm:px-0">
                     Temukan jawaban atas pertanyaan yang paling sering ditanyakan seputar pembelian, pembayaran, garansi, dan layanan LKTech. Santai aja, kami jelaskan dengan bahasa yang mudah dipahami.
                 </p>
             </div>
