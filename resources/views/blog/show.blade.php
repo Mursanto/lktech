@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -20,16 +21,24 @@
         }
     </script>
     <style>
-        .prose h2, .prose h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; color: #111827; margin-top: 2em; margin-bottom: 0.75em; }
-        .prose h2 { font-size: 1.5rem; }
-        .prose h3 { font-size: 1.25rem; }
-        .prose p { margin-bottom: 1.5em; line-height: 1.8; color: #374151; font-size: 1.05rem; }
-        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.5em; }
-        .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1.5em; }
-        .prose li { margin-bottom: 0.5em; line-height: 1.6; color: #374151; }
-        .prose img { border-radius: 0.75rem; margin: 2em 0; max-width: 100%; height: auto; }
-        .prose blockquote { border-left: 4px solid #3b82f6; padding-left: 1em; font-style: italic; color: #4b5563; background: #eff6ff; padding: 1em; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1.5em; }
+        [x-cloak] { display: none !important; }
+        .prose h2, .prose h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; color: #111827; margin-top: 1.2em; margin-bottom: 0.5em; }
+        .prose h2 { font-size: 1.125rem; line-height: 1.3; }
+        .prose h3 { font-size: 1.05rem; line-height: 1.4; }
+        .prose p { margin-bottom: 1em; line-height: 1.6; color: #374151; font-size: 0.875rem; }
+        .prose ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 1em; }
+        .prose ol { list-style-type: decimal; padding-left: 1.2em; margin-bottom: 1em; }
+        .prose li { margin-bottom: 0.4em; line-height: 1.5; color: #374151; font-size: 0.875rem; }
+        .prose img { border-radius: 0.5rem; margin: 1.2em 0; max-width: 100%; height: auto; }
+        .prose blockquote { border-left: 4px solid #3b82f6; padding-left: 1em; font-style: italic; color: #4b5563; background: #eff6ff; padding: 1em; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1em; font-size: 0.875rem; }
         .prose strong { color: #111827; font-weight: 700; }
+        
+        @media (min-width: 768px) {
+            .prose h2 { font-size: 1.5rem; margin-top: 2em; margin-bottom: 0.75em; }
+            .prose h3 { font-size: 1.25rem; margin-top: 2em; margin-bottom: 0.75em; }
+            .prose p, .prose li, .prose blockquote { font-size: 1.05rem; margin-bottom: 1.5em; line-height: 1.8; }
+            .prose img { border-radius: 0.75rem; margin: 2em 0; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased flex flex-col min-h-screen">
@@ -77,7 +86,7 @@
                 </div>
 
                 <!-- Title -->
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 font-montserrat leading-tight mb-8">
+                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 font-montserrat leading-snug mb-3 sm:mb-6">
                     {{ $post->title }}
                 </h1>
 
