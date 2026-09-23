@@ -56,16 +56,16 @@
         </div>
 
         <!-- Content Details -->
-        <div class="px-1.5 pt-1.5 pb-1 sm:p-2 flex flex-col flex-grow">
+        <div class="px-1.5 pt-1.5 pb-2 sm:px-2 sm:pt-2 sm:pb-2.5 flex flex-col flex-grow">
             <!-- Brand & Model -->
-            <h3 class="text-xs font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
+            <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 line-clamp-2 leading-snug mb-0.5 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
                 {{ $product->brand }} {{ $product->model_series }}
             </h3>
 
             <!-- Price -->
-            <div class="flex items-start gap-0.5 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
-                <span class="text-[10px] font-bold text-emerald-500 mt-0.5">Rp</span>
-                <span class="text-emerald-600 font-extrabold text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
+            <div class="flex items-baseline gap-0.5 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
+                <span class="text-[9px] font-bold text-emerald-500">Rp</span>
+                <span class="text-emerald-600 font-extrabold text-xs sm:text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
             </div>
 
             <!-- Specs List (Compact) / Conditional Rendering -->
@@ -73,18 +73,20 @@
                 $hasValidProcessor = !empty($product->processor) && !in_array(strtolower(trim($product->processor)), ['-', 'n/a', 'none', 'na', '']);
                 $hasValidRam = !empty($product->ram) && !in_array(strtolower(trim($product->ram)), ['-', 'n/a', 'none', 'na', '']);
                 $hasValidStorage = !empty($product->storage) && !in_array(strtolower(trim($product->storage)), ['-', 'n/a', 'none', 'na', '']);
+                $hasValidScreen = !empty($product->screen_size) && $product->screen_size > 0;
                 $showSpecs = $hasValidProcessor || $hasValidRam || $hasValidStorage;
             @endphp
 
             @if($showSpecs)
-            <div class="text-[10px] text-gray-500 flex items-center gap-1.5 leading-tight flex-grow truncate">
-                @if($hasValidProcessor)<span class="flex items-center gap-0.5"><i class='bx bx-chip'></i>{{ $product->processor }}</span>@endif
-                @if($hasValidRam)<span class="flex items-center gap-0.5"><i class='bx bx-memory-card'></i>{{ $product->ram }}</span>@endif
-                @if($hasValidStorage)<span class="flex items-center gap-0.5"><i class='bx bx-hdd'></i>{{ $product->storage }}</span>@endif
+            <div class="text-[10px] text-gray-500 leading-snug line-clamp-1 flex-grow">
+                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-desktop'></i>{{ $product->screen_size }}"</span>@endif
+                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-chip'></i>{{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-memory-card'></i>{{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5"><i class='bx bx-hdd'></i>{{ $product->storage }}</span>@endif
             </div>
             @else
-            <div class="text-[10px] text-gray-500 leading-tight flex-grow truncate">
-                {{ $product->description ? Str::limit(strip_tags($product->description), 45) : 'Produk berkualitas.' }}
+            <div class="text-[10px] text-gray-400 leading-snug flex-grow line-clamp-2">
+                {{ $product->description ? Str::limit(strip_tags($product->description), 55) : ($product->category ? $product->category->name : 'Produk berkualitas') . '.' }}
             </div>
             @endif
         </div>
