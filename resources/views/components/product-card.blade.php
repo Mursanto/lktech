@@ -19,16 +19,16 @@
                     $totalViews = $baseViews + $actualViews;
                     $formattedViews = $totalViews >= 1000 ? round($totalViews/1000, 1) . 'k' : $totalViews;
                 @endphp
-                <div class="flex items-center gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-md text-[9px] font-semibold shadow-sm border border-white/20 h-5 shrink pointer-events-auto overflow-hidden">
-                    <i class='bx bx-show text-[10px] shrink-0'></i> <span class="truncate">{{ $formattedViews }}</span>
+                <div class="flex items-center gap-0.5 sm:gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-white/20 h-4 sm:h-5 shrink-0 pointer-events-auto overflow-hidden">
+                    <i class='bx bx-show text-[9px] sm:text-[10px] shrink-0'></i> <span class="whitespace-nowrap">{{ $formattedViews }}</span>
                 </div>
 
                 <!-- Badges Area Status (Kanan Atas) -->
                 <div class="flex flex-col gap-1 items-end shrink-0 pointer-events-auto">
                     {{-- Badge PROMO UTAMA --}}
                     @if($isPromo)
-                    <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm flex items-center gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite]">
-                        <span class="animate-[bounce_2s_infinite]">🔥</span> Hot Promo
+                    <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0">
+                        <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
                     </div>
                     @endif
 
