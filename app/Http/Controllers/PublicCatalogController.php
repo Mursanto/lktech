@@ -242,14 +242,18 @@ class PublicCatalogController extends Controller
         if ($isPromoActive) {
             $dynamicPromoBanners = \App\Models\Product::bannerHero()->get()->map(function($p) {
                 $title = $p->brand . ' ' . $p->model_series;
-                $desc = strip_tags(html_entity_decode($p->description));
+                $desc = html_entity_decode($p->description);
+                
+                // Ganti tag penanda baris dengan separator sebelum strip_tags
+                $desc = str_ireplace(['<br>', '<br/>', '<br />', '</p>', '</li>'], '|', $desc);
+                $desc = strip_tags($desc);
                 
                 // 1. Hapus pengulangan nama produk
                 $desc = str_ireplace($title, '', $desc);
                 $desc = str_ireplace($p->model_series, '', $desc);
                 
-                // 2. Ganti asteris dengan separator
-                $desc = str_replace('*', '|', $desc);
+                // 2. Ganti asteris dan baris baru dengan separator
+                $desc = str_replace(['*', "\r\n", "\r", "\n"], '|', $desc);
                 
                 // 3. Hanya pertahankan huruf, angka, spasi, dan tanda baca umum (Hapus Emoji dll)
                 $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\°]/u', '', $desc);
@@ -261,7 +265,7 @@ class PublicCatalogController extends Controller
                 $desc = preg_replace('/\s+\|\s+/', ' | ', $desc);
                 
                 // 5. Trim karakter tidak perlu di awal dan akhir
-                $desc = trim($desc, " |,-.\t\n\r\0\x0B");
+                $desc = trim($desc, " |,-.\t\0\x0B");
 
                 return [
                     'image' => $p->image_path,

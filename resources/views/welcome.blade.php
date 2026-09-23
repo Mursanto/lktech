@@ -370,9 +370,9 @@
                                                         <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
                                                         <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/90 via-black/40 to-transparent rounded-b-3xl flex flex-col justify-end p-4 pb-3">
-                                                            <h3 class="text-white font-bold text-lg leading-tight mb-0.5 font-montserrat">{{ $banner['title'] }}</h3>
+                                                            <h3 class="text-white font-bold text-base sm:text-lg leading-tight mb-0.5 font-montserrat">{{ $banner['title'] }}</h3>
                                                             @if(!empty($banner['marketing_description']))
-                                                                <p class="text-gray-200 text-[11px] line-clamp-1 mb-1.5 font-medium leading-snug">{{ $banner['marketing_description'] }}</p>
+                                                                <p class="text-gray-200 text-[10px] sm:text-[11px] line-clamp-2 mb-1.5 font-medium leading-snug">{{ $banner['marketing_description'] }}</p>
                                                             @endif
                                                             @if(isset($banner['price']))
                                                                 <div class="flex items-center gap-2">
