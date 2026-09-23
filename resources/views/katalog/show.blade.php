@@ -44,10 +44,15 @@
     <style>
         [x-cloak] { display: none !important; }
         /* Prose styles for Quill output */
-        .prose h1, .prose h2, .prose h3 { font-weight: 700; color: #1f2937; margin-top: 1.5em; margin-bottom: 0.5em; }
-        .prose p { margin-bottom: 1em; color: #4b5563; line-height: 1.6; }
-        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
-        .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; color: #4b5563; }
+        .prose h1, .prose h2, .prose h3 { font-weight: 700; color: #1f2937; margin-top: 1em; margin-bottom: 0.3em; }
+        .prose p { margin-bottom: 0.5em; color: #4b5563; line-height: 1.5; }
+        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 0.5em; color: #4b5563; }
+        .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 0.5em; color: #4b5563; }
+        @media (max-width: 639px) {
+            .prose p { font-size: 0.8rem; line-height: 1.4; margin-bottom: 0.3em; }
+            .prose ul, .prose ol { font-size: 0.8rem; margin-bottom: 0.3em; }
+            .prose h1, .prose h2, .prose h3 { margin-top: 0.5em; margin-bottom: 0.2em; font-size: 0.9rem; }
+        }
 
         /* ─── Main Image Container ─── */
         .zoom-container {
@@ -110,7 +115,7 @@
     <x-navbar />
 
     <!-- Main Product Layout (Tokopedia Style 3 Columns) -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4" x-data="{
+    <main class="flex-grow max-w-7xl mx-auto w-full px-1.5 sm:px-6 lg:px-8 py-2 sm:py-4" x-data="{
         images: {{ json_encode($product->all_images) }},
         currentIndex: 0,
         get activeImage() { return this.images[this.currentIndex]; },
@@ -128,8 +133,8 @@
     }" @keydown.arrow-left.window="prev()" @keydown.arrow-right.window="next()">
         
         <!-- Breadcrumb Navigasi (Posisi Kiri) -->
-        <nav aria-label="breadcrumb" class="mb-4 sm:mb-6">
-            <ol class="flex items-center text-[13px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <nav aria-label="breadcrumb" class="mb-2 sm:mb-6">
+            <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <li class="flex items-center shrink-0">
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
                         <i class="bx bx-home-alt"></i> Home
@@ -146,17 +151,17 @@
             </ol>
         </nav>
 
-        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <div class="flex flex-col lg:flex-row gap-3 sm:gap-6 lg:gap-8">
             
             <!-- 1. Left: Gallery Column -->
-            <div class="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 flex flex-col gap-4">
+            <div class="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 flex flex-col gap-2 sm:gap-4">
                 
                 <!-- Main Sticky Wrapper to keep images in view while scrolling description -->
                 <div class="sticky top-24">
 
                     <!-- Hint Text -->
-                    <div class="text-xs text-gray-500 mb-2 flex items-center gap-1.5 ml-1 font-medium">
-                        <i class='bx bx-zoom-in text-[15px] text-brand-500'></i> Klik foto untuk melihat detail
+                    <div class="text-[10px] sm:text-xs text-gray-500 mb-1 sm:mb-2 flex items-center gap-1.5 ml-1 font-medium">
+                        <i class='bx bx-zoom-in text-[13px] sm:text-[15px] text-brand-500'></i> Klik foto untuk melihat detail
                     </div>
 
                     <!-- ─── Main Image + Prev/Next Arrows ─── -->
@@ -176,7 +181,7 @@
                         </div>
 
                         <!-- Main Image — klik buka Fancybox mulai dari foto aktif -->
-                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-3 rounded-xl fancybox-main-link"
+                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-1.5 sm:mb-3 rounded-lg sm:rounded-xl fancybox-main-link"
                              @click="document.getElementById('fancybox-item-' + currentIndex).click()"
                              @mouseenter="zoomActive = true"
                              @mouseleave="zoomActive = false"
@@ -187,7 +192,7 @@
                              aria-label="Klik untuk membuka galeri foto fullscreen">
                             <img :src="activeImage"
                                  alt="{{ $product->brand }} {{ $product->model_series }}"
-                                 class="absolute inset-0 w-full h-full object-contain p-4 zoom-image bg-white transition-all duration-300"
+                                 class="absolute inset-0 w-full h-full object-contain p-1 sm:p-4 zoom-image bg-white transition-all duration-300"
                                  x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
 
                             {{-- Ikon zoom hint di sudut kanan bawah gambar --}}
@@ -251,8 +256,8 @@
                         @endforeach
                     </div>
 
-                    <!-- Keyboard hint -->
-                    <p class="text-center text-[10px] text-gray-400 mt-2" x-show="images.length > 1">
+                    <!-- Keyboard hint (desktop only) -->
+                    <p class="text-center text-[10px] text-gray-400 mt-1 sm:mt-2 hidden sm:block" x-show="images.length > 1">
                         <i class="bx bx-keyboard"></i> Gunakan tombol ← → untuk navigasi foto
                     </p>
 
@@ -260,14 +265,14 @@
             </div>
 
             <!-- 2. Middle: Info & Description Column -->
-            <div class="flex-1 min-w-0 pb-12">
+            <div class="flex-1 min-w-0 pb-4 sm:pb-12">
                 <!-- Title -->
-                <h1 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2">
+                <h1 class="text-base sm:text-2xl font-bold text-gray-900 leading-tight mb-1 sm:mb-2">
                     {{ $product->brand }} {{ $product->model_series }}
                 </h1>
                 
                 <!-- Stats Row -->
-                <div class="flex items-center gap-4 text-sm text-gray-600 mb-4 pb-4 border-b border-gray-200">
+                <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-gray-200">
                     <div class="flex items-center gap-1">
                         <span class="font-bold text-gray-800">Kondisi:</span>
                         <span class="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">{{ $product->condition ?: 'Bekas' }}</span>
@@ -280,18 +285,18 @@
                 </div>
 
                 <!-- Price (Mobile Only, hidden on Desktop since Desktop has right box) -->
-                <div class="lg:hidden mb-5 pb-5 border-b border-gray-200">
-                    <div class="text-2xl font-extrabold text-gray-900">
-                        <span class="text-base font-bold text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
+                <div class="lg:hidden mb-2 sm:mb-5 pb-2 sm:pb-5 border-b border-gray-200">
+                    <div class="text-lg sm:text-2xl font-extrabold text-gray-900">
+                        <span class="text-xs sm:text-base font-bold text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
                     </div>
                 </div>
 
                 <!-- Description / Specifications -->
-                <div class="mt-4">
-                    <h2 class="text-lg font-bold text-gray-900 mb-3 border-l-4 border-brand-500 pl-3">Spesifikasi & Detail Produk</h2>
+                <div class="mt-1 sm:mt-4">
+                    <h2 class="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-l-4 border-brand-500 pl-2 sm:pl-3">Spesifikasi & Detail Produk</h2>
                     
                     @if($product->description)
-                        <div class="prose max-w-none text-xs sm:text-sm text-gray-700">
+                        <div class="prose max-w-none text-[11px] sm:text-sm text-gray-700">
                             {!! $product->description !!}
                         </div>
                     @else
@@ -470,7 +475,7 @@
 
     <!-- Related Products / Cross-Selling Section -->
     @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-    <section x-data class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 mb-2 mt-2 border-t border-gray-100">
+    <section x-data class="max-w-7xl mx-auto w-full px-1.5 sm:px-6 lg:px-8 py-2 sm:py-4 mb-1 sm:mb-2 mt-1 sm:mt-2 border-t border-gray-100">
         <div class="flex items-center justify-between mb-4 md:mb-6 gap-4 overflow-hidden">
             <h3 class="text-sm sm:text-lg font-medium text-gray-900 leading-snug truncate">
                 Rekomendasi produk terkait
