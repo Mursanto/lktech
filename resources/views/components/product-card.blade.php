@@ -78,11 +78,11 @@
             @endphp
 
             @if($showSpecs)
-            <div class="text-[10px] text-gray-500 flex flex-wrap gap-x-1.5 gap-y-0.5 leading-snug">
-                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-chip text-[9px]'></i>{{ $product->processor }}</span>@endif
-                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-memory-card text-[9px]'></i>{{ $product->ram }}</span>@endif
-                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-hdd text-[9px]'></i>{{ $product->storage }}</span>@endif
-                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-desktop text-[9px]'></i>{{ $product->screen_size }}"</span>@endif
+            <div class="text-[10px] text-gray-500 leading-snug line-clamp-2 overflow-hidden">
+                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-chip text-[9px]'></i>{{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-memory-card text-[9px]'></i>{{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-hdd text-[9px]'></i>{{ $product->storage }}</span>@endif
+                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5"><i class='bx bx-desktop text-[9px]'></i>{{ $product->screen_size }}"</span>@endif
             </div>
             @else
             <div class="text-[10px] text-gray-400 leading-snug line-clamp-2">
