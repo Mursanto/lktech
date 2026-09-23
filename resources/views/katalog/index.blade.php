@@ -106,7 +106,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full">
         
-        <div class="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-0 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
         
         {{-- ============================================================ --}}
         {{-- SIDEBAR DESKTOP (Categories + Filter Brand + Harga)          --}}
