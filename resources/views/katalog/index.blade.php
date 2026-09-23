@@ -259,188 +259,84 @@
         {{-- ============================================================ --}}
         <div class="flex-1 min-w-0">
 
-            {{-- Mobile Top Bar: Filter + Sort always visible side by side --}}
-            <div class="flex items-center gap-2 mb-4 md:hidden" x-data="{ filterOpen: false }" @open-filter-modal.window="filterOpen = true">
-
-                {{-- Filter Button --}}
-                <button type="button" @click="filterOpen = true"
-                        class="flex items-center gap-1.5 px-2.5 py-1.5 border border-gray-200 bg-white rounded-lg text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer shrink-0">
-                    <i class='bx bx-filter-alt text-brand-500'></i>
-                    Filter
-                    @if(!empty($selectedBrands) || $priceMin || $priceMax)
-                        <span class="bg-brand-600 text-white rounded-full text-[9px] font-bold w-4 h-4 flex items-center justify-center">
-                            {{ count($selectedBrands ?? []) + ($priceMin || $priceMax ? 1 : 0) }}
-                        </span>
-                    @endif
-                </button>
-
-                {{-- Sort Dropdown: always visible on mobile --}}
-                <form method="GET" action="{{ route('katalog.index') }}" class="relative ml-auto">
-                    @if(request()->has('category_id'))
-                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-                    @endif
-                    @if(request()->has('search'))
-                        <input type="hidden" name="search" value="{{ request('search') }}">
-                    @endif
-                    @foreach($selectedBrands ?? [] as $b)
-                        <input type="hidden" name="brands[]" value="{{ $b }}">
-                    @endforeach
-                    @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
-                    @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
-                    <select name="sort" onchange="this.form.submit()"
-                            class="w-full appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-2.5 pr-8 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm cursor-pointer">
-                        <option value="terbaru"  {{ request('sort', 'terbaru') == 'terbaru'  ? 'selected' : '' }}>Paling Sesuai</option>
-                        <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
-                        <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
-                        <option value="terbaru_saja" {{ request('sort') == 'terbaru_saja' ? 'selected' : '' }}>Produk Terbaru</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                        <i class='bx bx-chevron-down text-sm'></i>
-                    </div>
-                </form>
-
-                {{-- Bottom Sheet (inline Alpine scope) --}}
-                <div x-show="filterOpen"
-                     x-transition:enter="transition ease-out duration-200"
-                     x-transition:enter-start="opacity-0"
-                     x-transition:enter-end="opacity-100"
-                     x-transition:leave="transition ease-in duration-150"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0"
-                     @click="filterOpen = false"
-                     class="fixed inset-0 bg-black/50 z-[200]" x-cloak>
-                </div>
-                <div x-show="filterOpen"
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="translate-y-full"
-                     x-transition:enter-end="translate-y-0"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="translate-y-0"
-                     x-transition:leave-end="translate-y-full"
-                     class="fixed bottom-0 inset-x-0 z-[210] bg-white rounded-t-2xl shadow-2xl max-h-[85vh] overflow-y-auto" x-cloak>
-                    <div class="flex justify-center pt-3 pb-1">
-                        <div class="w-10 h-1 bg-gray-200 rounded-full"></div>
-                    </div>
-                    <div class="flex items-center justify-between px-5 py-3 border-b border-gray-100">
-                        <h3 class="font-bold text-gray-800 text-base">Filter & Urutkan</h3>
-                        <button @click="filterOpen = false" class="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-                            <i class='bx bx-x text-xl text-gray-500'></i>
-                        </button>
-                    </div>
-                    <form method="GET" action="{{ route('katalog.index') }}" class="px-5 pb-28">
-                        @if(request()->has('category_id'))
-                            <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-                        @endif
-                        @if(request()->has('search'))
-                            <input type="hidden" name="search" value="{{ request('search') }}">
-                        @endif
-                        {{-- Sort --}}
-                        <div class="py-4 border-b border-gray-100">
-                            <h4 class="text-sm font-bold text-gray-700 mb-3">Urutkan</h4>
-                            <div class="grid grid-cols-2 gap-2">
-                                @foreach(['terbaru' => 'Paling Sesuai', 'terendah' => 'Harga Terendah', 'tertinggi' => 'Harga Tertinggi', 'terbaru_saja' => 'Produk Terbaru'] as $val => $label)
-                                <label class="flex items-center gap-2 border {{ request('sort', 'terbaru') == $val ? 'border-brand-500 bg-brand-50 text-brand-600' : 'border-gray-200 text-gray-600' }} rounded-lg px-3 py-2 cursor-pointer text-sm font-medium">
-                                    <input type="radio" name="sort" value="{{ $val }}" {{ request('sort', 'terbaru') == $val ? 'checked' : '' }} class="w-3.5 h-3.5 text-brand-600">
-                                    {{ $label }}
-                                </label>
-                                @endforeach
-                            </div>
-                        </div>
-                        {{-- Brand Filter --}}
-                        @if(count($availableBrands) > 0)
-                        <div class="py-4 border-b border-gray-100" x-data="{
-                            selectedBrands: {{ json_encode($selectedBrands) }},
-                            toggleParent(parent, children) {
-                                if (this.selectedBrands.includes(parent)) {
-                                    children.forEach(child => {
-                                        if (!this.selectedBrands.includes(child)) this.selectedBrands.push(child);
-                                    });
-                                } else {
-                                    this.selectedBrands = this.selectedBrands.filter(b => !children.includes(b));
-                                }
-                            }
-                        }">
-                            <h4 class="text-sm font-bold text-gray-700 mb-3">Filter Merek</h4>
-                            <div class="space-y-1.5 py-1">
-                                @foreach($availableBrands as $parentBrand => $childBrands)
-                                <div class="flex flex-col gap-1" x-data="{ open: false }">
-                                    <div class="flex items-center justify-between">
-                                        <label class="flex items-center gap-2 cursor-pointer flex-1 py-0.5">
-                                            <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
-                                                   x-model="selectedBrands"
-                                                   @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
-                                                   class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300">
-                                            <span class="text-[13px] font-medium text-gray-700 truncate">{{ $parentBrand }}</span>
-                                        </label>
-                                        @if(count($childBrands) > 0)
-                                        <button type="button" @click="open = !open" class="text-gray-400 p-0.5">
-                                            <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
-                                        </button>
-                                        @endif
-                                    </div>
-                                    @if(count($childBrands) > 0)
-                                    <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
-                                        @foreach($childBrands as $childBrand)
-                                        <label class="flex items-center gap-2 cursor-pointer py-0.5">
-                                            <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
-                                                   x-model="selectedBrands"
-                                                   class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300">
-                                            <span class="text-[11px] font-normal text-gray-600 truncate">{{ $childBrand }}</span>
-                                        </label>
-                                        @endforeach
-                                    </div>
-                                    @endif
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-                        {{-- Price Range --}}
-                        <div class="py-3">
-                            <h4 class="text-sm font-bold text-gray-700 mb-2">Rentang Harga</h4>
-                            <div class="flex items-center gap-2">
-                                <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                <span class="text-gray-400 font-medium">-</span>
-                                <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                        </div>
-                        {{-- Action Buttons --}}
-                        <div class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-100 px-5 py-3 flex gap-3">
-                            <a href="{{ route('katalog.index', request()->only('category_id', 'search')) }}" class="flex-1 text-center border border-gray-200 rounded-xl py-3 text-sm font-bold text-gray-700">Reset</a>
-                            <button type="submit" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-bold transition-colors">Terapkan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            {{-- Mobile Filter & Sort has been moved to the first category header --}}
 
             <div class="space-y-8">
                 @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         {{-- Category Header --}}
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
-                            <h2 class="text-sm sm:text-base font-semibold text-gray-800 min-w-0 truncate">
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                    <i class='bx bx-category text-brand-500 text-lg shrink-0'></i>
-                                    <span class="truncate">{{ $category->name }}</span>
-                                </a>
-                            </h2>
+                        <div class="flex items-start sm:items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
+                            <div class="flex flex-col flex-1 min-w-0 pr-2">
+                                <h2 class="text-[13px] sm:text-base font-semibold text-gray-800 min-w-0 truncate">
+                                    <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
+                                        <i class='bx bx-category text-brand-500 text-base sm:text-lg shrink-0'></i>
+                                        <span class="truncate">{{ $category->name }}</span>
+                                    </a>
+                                </h2>
+                                
+                                @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
+                                    {{-- Preview mode: Lihat Semua on the right --}}
+                                    <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
+                                       class="shrink-0 text-[10px] sm:text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap mt-0.5">
+                                        Lihat Semua ({{ $category->total_count }}) &rarr;
+                                    </a>
+                                @endif
+                            </div>
 
-                            @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
-                                {{-- Preview mode: Lihat Semua on the right --}}
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
-                                   class="shrink-0 ml-3 text-xs sm:text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
-                                    Lihat Semua ({{ $category->total_count }}) &rarr;
-                                </a>
-                            @else
-                                {{-- Detail/Filter mode --}}
-                                {{-- Mobile: show "← Semua" link on right of category header (Row 2) --}}
-                                @if(isset($selectedCategoryId))
+                            @if($loop->first)
+                            {{-- Mobile Filter & Sort (Sejajar dengan Judul Kategori) --}}
+                            <div class="flex items-center gap-1 md:hidden shrink-0 mt-0.5">
+                                {{-- Filter Button --}}
+                                <button type="button" @click="$dispatch('open-filter-modal')"
+                                        class="flex items-center gap-0.5 px-1.5 py-1 border border-gray-200 bg-white rounded text-[10px] font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer shrink-0">
+                                    <i class='bx bx-filter-alt text-brand-500 text-[11px]'></i>
+                                    Filter
+                                    @if(!empty($selectedBrands) || $priceMin || $priceMax)
+                                        <span class="bg-brand-600 text-white rounded-full text-[8px] font-bold w-3 h-3 flex items-center justify-center">
+                                            {{ count($selectedBrands ?? []) + ($priceMin || $priceMax ? 1 : 0) }}
+                                        </span>
+                                    @endif
+                                </button>
+
+                                {{-- Sort Dropdown --}}
+                                <form method="GET" action="{{ route('katalog.index') }}" class="relative shrink-0">
+                                    @if(request()->has('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                                    @endif
+                                    @if(request()->has('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+                                    @foreach($selectedBrands ?? [] as $b)
+                                        <input type="hidden" name="brands[]" value="{{ $b }}">
+                                    @endforeach
+                                    @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
+                                    @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
+                                    
+                                    <select name="sort" onchange="this.form.submit()"
+                                            class="appearance-none bg-white border border-gray-200 text-gray-700 py-1 pl-1.5 pr-4 rounded text-[10px] font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500 shadow-sm cursor-pointer">
+                                        <option value="terbaru"  {{ request('sort', 'terbaru') == 'terbaru'  ? 'selected' : '' }}>Paling Sesuai</option>
+                                        <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
+                                        <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
+                                        <option value="terbaru_saja" {{ request('sort') == 'terbaru_saja' ? 'selected' : '' }}>Terbaru</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-1 flex items-center text-gray-400">
+                                        <i class='bx bx-chevron-down text-[10px]'></i>
+                                    </div>
+                                </form>
+                            </div>
+                            @endif
+
+                            @if(isset($selectedCategoryId))
+                            {{-- Detail/Filter mode --}}
+                            {{-- Mobile: show "← Semua" link --}}
+                            <div class="flex items-center gap-1 shrink-0 ml-1 md:hidden mt-0.5">
                                 <a href="{{ route('katalog.index') }}"
-                                   class="shrink-0 ml-3 text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1.5 rounded-lg whitespace-nowrap md:hidden">
+                                   class="text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded whitespace-nowrap">
                                     &larr; Semua
                                 </a>
-                                @endif
+                            </div>
+                            @endif
                                 {{-- Desktop: Action buttons on right --}}
                                 <div class="hidden md:flex items-center gap-2 shrink-0 ml-3">
                                     @if(isset($selectedCategoryId))
