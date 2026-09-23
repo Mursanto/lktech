@@ -192,7 +192,7 @@
                              aria-label="Klik untuk membuka galeri foto fullscreen">
                             <img :src="activeImage"
                                  alt="{{ $product->brand }} {{ $product->model_series }}"
-                                 class="absolute inset-0 w-full h-full object-contain p-1 sm:p-4 zoom-image bg-white transition-all duration-300"
+                                 class="absolute inset-0 w-full h-full object-cover zoom-image bg-white transition-all duration-300"
                                  x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
 
                             {{-- Ikon zoom hint di sudut kanan bawah gambar --}}
