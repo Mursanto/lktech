@@ -233,12 +233,24 @@
                             <i class="bx bx-chevron-right text-xl"></i>
                         </button>
 
-                        <!-- Image Counter Badge -->
+                        <!-- Image Counter Badge (Bottom Center) -->
                         <div x-show="images.length > 1"
-                             class="absolute bottom-4 right-4 bg-black/50 text-white text-xs font-semibold
-                                    px-2 py-0.5 rounded-full pointer-events-none">
+                             class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 bg-black/50 text-white text-xs font-semibold
+                                    px-3 py-1 rounded-full pointer-events-none">
                             <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
                         </div>
+                        
+                        <!-- PRE-ORDER Badge (Top Right) -->
+                        @php
+                            $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                        @endphp
+                        @if($isPreOrder)
+                        <div class="absolute top-3 right-3 z-20 pointer-events-none">
+                            <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 h-7 whitespace-nowrap">
+                                <i class='bx bx-time-five text-sm'></i> <span>Pre-Order</span>
+                            </div>
+                        </div>
+                        @endif
                     </div>
 
                     <!-- ─── Thumbnails Row ─── -->
