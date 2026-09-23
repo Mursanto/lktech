@@ -1,10 +1,10 @@
 @props(['product'])
 @php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
-    <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col cursor-pointer">
+    <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
         <!-- Image & Video Area — Full Bleed -->
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
             @if(!empty($product->video_url))
@@ -78,14 +78,15 @@
             @endphp
 
             @if($showSpecs)
-            <div class="text-[10px] text-gray-500 leading-snug line-clamp-2 overflow-hidden">
-                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-chip text-[9px]'></i>{{ $product->processor }}</span>@endif
-                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-memory-card text-[9px]'></i>{{ $product->ram }}</span>@endif
-                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5 mr-1.5"><i class='bx bx-hdd text-[9px]'></i>{{ $product->storage }}</span>@endif
-                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5"><i class='bx bx-desktop text-[9px]'></i>{{ $product->screen_size }}"</span>@endif
+            {{-- max-h forces exactly 2 lines: 10px font × 1.375 leading × 2 = 27.5px → 28px --}}
+            <div class="text-[10px] text-gray-500 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.75em">
+                @if($hasValidProcessor)<span class="mr-1.5"><i class='bx bx-chip align-middle text-[9px]'></i> {{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="mr-1.5"><i class='bx bx-memory-card align-middle text-[9px]'></i> {{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="mr-1.5"><i class='bx bx-hdd align-middle text-[9px]'></i> {{ $product->storage }}</span>@endif
+                @if($hasValidScreen)<span><i class='bx bx-desktop align-middle text-[9px]'></i> {{ $product->screen_size }}"</span>@endif
             </div>
             @else
-            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2">
+            <div class="text-[10px] text-gray-400 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.75em">
                 {{ $product->description ? Str::limit(strip_tags($product->description), 55) : ($product->category ? $product->category->name : 'Produk berkualitas') . '.' }}
             </div>
             @endif
@@ -93,7 +94,7 @@
     </a>
 
     <!-- Action Button Container at Bottom -->
-    <div class="px-1.5 pb-1.5 pt-1 sm:px-2 sm:pb-2" x-data="{
+    <div class="px-1.5 pb-1.5 pt-1 sm:px-2 sm:pb-2 mt-auto" x-data="{
         adding: false,
         addToCart(productId) {
             this.adding = true;
