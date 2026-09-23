@@ -56,7 +56,7 @@
         </div>
 
         <!-- Content Details -->
-        <div class="px-1.5 pt-1.5 pb-2 sm:px-2 sm:pt-2 sm:pb-2.5 flex flex-col flex-grow">
+        <div class="px-1.5 pt-1.5 pb-1.5 sm:px-2 sm:pt-2 sm:pb-2 flex flex-col">
             <!-- Brand & Model -->
             <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 line-clamp-2 leading-snug mb-0.5 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
                 {{ $product->brand }} {{ $product->model_series }}
@@ -78,14 +78,14 @@
             @endphp
 
             @if($showSpecs)
-            <div class="text-[10px] text-gray-500 leading-snug line-clamp-1 flex-grow">
-                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-desktop'></i>{{ $product->screen_size }}"</span>@endif
-                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-chip'></i>{{ $product->processor }}</span>@endif
-                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 mr-1"><i class='bx bx-memory-card'></i>{{ $product->ram }}</span>@endif
-                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5"><i class='bx bx-hdd'></i>{{ $product->storage }}</span>@endif
+            <div class="text-[10px] text-gray-500 flex flex-wrap gap-x-1.5 gap-y-0.5 leading-snug">
+                @if($hasValidProcessor)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-chip text-[9px]'></i>{{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-memory-card text-[9px]'></i>{{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-hdd text-[9px]'></i>{{ $product->storage }}</span>@endif
+                @if($hasValidScreen)<span class="inline-flex items-center gap-0.5 shrink-0"><i class='bx bx-desktop text-[9px]'></i>{{ $product->screen_size }}"</span>@endif
             </div>
             @else
-            <div class="text-[10px] text-gray-400 leading-snug flex-grow line-clamp-2">
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2">
                 {{ $product->description ? Str::limit(strip_tags($product->description), 55) : ($product->category ? $product->category->name : 'Produk berkualitas') . '.' }}
             </div>
             @endif
