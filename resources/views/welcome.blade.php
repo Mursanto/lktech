@@ -317,6 +317,12 @@
                                         'link' => $setting->promo_link
                                     ];
                                 }
+                                
+                                // Filter out inactive banners
+                                $promoBanners = array_filter($promoBanners, function($banner) {
+                                    return !isset($banner['is_active']) || $banner['is_active'];
+                                });
+                                $promoBanners = array_values($promoBanners);
                             }
                             if (isset($dynamicPromoBanners) && count($dynamicPromoBanners) > 0) {
                                 $promoBanners = array_merge($promoBanners, $dynamicPromoBanners);

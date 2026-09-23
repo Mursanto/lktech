@@ -102,10 +102,15 @@
                                         @enderror
                                     </div>
                                     @if($banner && isset($banner['image']))
-                                    <div class="pt-1">
+                                    <div class="pt-3 flex flex-col sm:flex-row sm:items-center gap-3">
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" name="banners[{{ $i }}][is_active]" value="1" {{ !isset($banner['is_active']) || $banner['is_active'] ? 'checked' : '' }} class="sr-only peer">
+                                            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                                            <span class="ml-2 text-[10px] font-bold text-gray-700 peer-checked:text-blue-600">Tampilkan</span>
+                                        </label>
                                         <label class="inline-flex items-center cursor-pointer">
                                             <input type="checkbox" name="banners[{{ $i }}][delete]" value="1" class="rounded border-natural-300 text-rose-600 shadow-sm focus:ring-rose-500">
-                                            <span class="ml-2 text-[11px] font-bold text-rose-600 hover:text-rose-700">Hapus Banner Ini</span>
+                                            <span class="ml-2 text-[10px] font-bold text-rose-600 hover:text-rose-700">Hapus Banner</span>
                                         </label>
                                     </div>
                                     @endif
@@ -156,18 +161,30 @@
                     </div>
 
                     @for($j = 0; $j < 3; $j++)
+                    @php
+                        $productPromo = $promoProductLinks[$j] ?? null;
+                        $productUrl = is_array($productPromo) ? ($productPromo['url'] ?? '') : $productPromo;
+                        $productActive = is_array($productPromo) ? ($productPromo['is_active'] ?? true) : true;
+                    @endphp
                     <div class="p-4 border border-natural-200 rounded-2xl bg-natural-50/50">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center">{{ $j + 1 }}</span>
-                            <h4 class="text-xs font-black text-orange-600 uppercase tracking-wider">Produk Promo {{ $j + 1 }}</h4>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center">{{ $j + 1 }}</span>
+                                <h4 class="text-xs font-black text-orange-600 uppercase tracking-wider">Produk Promo {{ $j + 1 }}</h4>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="promo_product_links[{{ $j }}][is_active]" value="1" {{ $productActive ? 'checked' : '' }} class="sr-only peer">
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-orange-500"></div>
+                                <span class="ml-2 text-[10px] font-bold text-gray-700 peer-checked:text-orange-600">Tampilkan</span>
+                            </label>
                         </div>
                         <label class="block text-[11px] font-bold text-natural-900 mb-1">Link Produk (URL Katalog)</label>
                         <input type="url" 
-                               name="promo_product_links[{{ $j }}]" 
-                               value="{{ old("promo_product_links.{$j}", $promoProductLinks[$j] ?? '') }}" 
+                               name="promo_product_links[{{ $j }}][url]" 
+                               value="{{ old("promo_product_links.{$j}.url", $productUrl) }}" 
                                class="w-full bg-white border border-natural-200 text-natural-900 text-[11px] rounded-xl focus:ring-orange-500 focus:border-orange-500 block p-2.5 transition-colors" 
                                placeholder="https://lktech.online/katalog/ID_PRODUK">
-                        @error("promo_product_links.{$j}")
+                        @error("promo_product_links.{$j}.url")
                             <p class="text-rose-500 text-[9px] mt-1">{{ $message }}</p>
                         @enderror
                     </div>

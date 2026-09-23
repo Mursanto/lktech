@@ -77,8 +77,10 @@ class PublicCatalogController extends Controller
 
         if ($isPromoActive) {
             if ($setting && !empty($setting->promo_product_links)) {
-                foreach ($setting->promo_product_links as $link) {
-                    if (!empty($link) && preg_match('#/katalog/(\d+)#', $link, $m)) {
+                foreach ($setting->promo_product_links as $linkData) {
+                    $url = is_array($linkData) ? ($linkData['url'] ?? '') : $linkData;
+                    $isActive = is_array($linkData) ? ($linkData['is_active'] ?? true) : true;
+                    if ($isActive && !empty($url) && preg_match('#/katalog/(\d+)#', $url, $m)) {
                         $promoProductIds->push((int) $m[1]);
                     }
                 }

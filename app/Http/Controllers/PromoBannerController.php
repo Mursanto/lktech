@@ -25,8 +25,9 @@ class PromoBannerController extends Controller
             'banners.*.image'         => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'banners.*.link'          => 'nullable|url|max:255',
             'banners.*.delete'        => 'nullable|boolean',
-            'promo_product_links'     => 'nullable|array|max:3',
-            'promo_product_links.*'   => 'nullable|url|max:255',
+            'promo_product_links'           => 'nullable|array|max:3',
+            'promo_product_links.*.url'     => 'nullable|url|max:255',
+            'promo_product_links.*.is_active' => 'nullable|boolean',
             'is_promo_active'         => 'nullable|boolean',
         ]);
 
@@ -73,6 +74,7 @@ class PromoBannerController extends Controller
                     $newBanners[] = [
                         'image' => $imagePath,
                         'link'  => $link,
+                        'is_active' => isset($bannerData['is_active']) && $bannerData['is_active'] == 1,
                     ];
                 }
             }
@@ -81,8 +83,17 @@ class PromoBannerController extends Controller
         // Re-index banners
         $setting->promo_banners = array_values($newBanners);
 
-        // Simpan link produk promo (hanya yang tidak kosong)
-        $productLinks = array_values(array_filter($request->input('promo_product_links', []), fn($v) => !empty(trim($v))));
+        // Simpan link produk promo (hanya yang tidak kosong url-nya)
+        $productLinks = [];
+        foreach ($request->input('promo_product_links', []) as $pLink) {
+            $url = is_array($pLink) ? ($pLink['url'] ?? '') : $pLink;
+            if (!empty(trim($url))) {
+                $productLinks[] = [
+                    'url' => $url,
+                    'is_active' => isset($pLink['is_active']) && $pLink['is_active'] == 1,
+                ];
+            }
+        }
         $setting->promo_product_links = $productLinks;
 
         $setting->is_promo_active = $request->has('is_promo_active');
