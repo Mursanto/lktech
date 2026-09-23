@@ -440,7 +440,7 @@
             @endif
 
             <!-- Precision Grid (Compact Design) -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-3">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                 @forelse($products as $product)
                 <x-product-card :product="$product" />
                 @empty
@@ -491,7 +491,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($softwareProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
@@ -519,7 +519,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($accessoriesProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
@@ -547,7 +547,7 @@
                         </h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($sparepartProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
                             <x-product-card :product="$product" />
@@ -1105,6 +1105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
 });
 </script>
+
 
 
 

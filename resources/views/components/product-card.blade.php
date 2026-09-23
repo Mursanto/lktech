@@ -56,7 +56,7 @@
         </div>
 
         <!-- Content Details -->
-        <div class="px-1.5 pt-1.5 pb-1.5 sm:px-2 sm:pt-2 sm:pb-2 flex flex-col">
+        <div class="p-1.5 sm:p-2 flex flex-col">
             <!-- Brand & Model -->
             <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 truncate leading-snug mb-0.5 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
                 {{ $product->brand }} {{ $product->model_series }}
@@ -92,71 +92,4 @@
             @endif
         </div>
     </a>
-
-    <!-- Action Button Container at Bottom -->
-    <div class="px-1.5 pb-1.5 pt-1 sm:px-2 sm:pb-2 mt-auto" x-data="{
-        adding: false,
-        addToCart(productId) {
-            this.adding = true;
-            fetch('{{ route('cart.add') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ product_id: productId })
-            })
-            .then(res => res.json())
-            .then(data => {
-                this.adding = false;
-                if(data.success) {
-                    window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
-                    
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-sm';
-                    toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-xl'></i> <span>Berhasil ditambahkan ke keranjang</span>`;
-                    document.body.appendChild(toast);
-                    
-                    setTimeout(() => {
-                        toast.classList.add('translate-y-10', 'opacity-0');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 3000);
-                }
-            })
-            .catch(err => {
-                this.adding = false;
-                alert('Kesalahan koneksi sistem.');
-            });
-        }
-    }">
-        <div class="border-t border-gray-100 pt-1.5 flex gap-1">
-            @php
-                $shareUrl = route('katalog.show', $product->id);
-                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
-                $isSold = $product->stock <= 0 || $product->status === 'Sold';
-            @endphp
-            
-            @if(!$isSold)
-                @if($isPreOrder)
-                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-1 rounded text-[10px] transition-colors flex justify-center items-center gap-0.5 shadow-sm disabled:opacity-75">
-                        <i class='bx bx-cart-add text-xs shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Pre-Order'"></span>
-                    </button>
-                @else
-                    <button @click.prevent="addToCart({{ $product->id }})" :disabled="adding" class="flex-1 min-w-0 px-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-1 rounded text-[10px] transition-colors flex justify-center items-center gap-0.5 shadow-sm disabled:opacity-75">
-                        <i class='bx bx-cart-add text-xs shrink-0'></i> <span class="truncate" x-text="adding ? 'Proses' : 'Keranjang'"></span>
-                    </button>
-                @endif
-            @else
-                <button disabled class="flex-1 min-w-0 px-1 bg-gray-200 text-gray-400 font-bold py-1 rounded text-[10px] flex justify-center items-center gap-0.5 cursor-not-allowed">
-                    <span class="truncate">Stok Habis</span>
-                </button>
-            @endif
-
-            <button type="button" @click.prevent="shareProduct('{{ $shareUrl }}')" class="flex-none shrink-0 w-7 flex justify-center items-center bg-gray-50 hover:bg-gray-100 text-gray-500 border border-gray-200 rounded transition-colors shadow-sm" title="Bagikan Produk">
-                <i class='bx bx-share-alt text-xs'></i>
-            </button>
-        </div>
-    </div>
-    
 </div>

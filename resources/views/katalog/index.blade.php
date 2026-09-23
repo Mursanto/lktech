@@ -478,7 +478,7 @@
                         </div>
 
                         {{-- Product Grid --}}
-                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-1.5 sm:gap-3">
+                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-1.5 sm:gap-2">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
                                     <x-product-card :product="$product" />
@@ -719,6 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
 });
 </script>
+
 
 
 
