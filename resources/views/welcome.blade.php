@@ -343,7 +343,7 @@
                                     }
                                  }">
                                  
-                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-transparent border border-white/20 group-hover:scale-105">
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-white border border-white/20 group-hover:scale-105">
                                     @foreach($promoBanners as $index => $banner)
                                         <div x-show="activeSlide === {{ $index }}" 
                                              x-transition:enter="transition ease-out duration-700"
@@ -364,16 +364,33 @@
                                             @endphp
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
-                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Left -->
                                                         <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
                                                         <div class="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/95 via-black/50 to-transparent rounded-b-3xl flex flex-col justify-end px-4 pb-4 sm:pb-5">
-                                                            <h3 class="text-white font-bold text-sm sm:text-base leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
-                                                            @if(!empty($banner['marketing_description']))
+                                                            <h3 class="text-white font-bold text-xs sm:text-sm leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
+                                                            
+                                                            @php
+                                                                $hasValidProcessor = !empty($banner['processor']) && !in_array(strtolower(trim($banner['processor'])), ['-', 'n/a', 'none', 'na', '']);
+                                                                $hasValidRam = !empty($banner['ram']) && !in_array(strtolower(trim($banner['ram'])), ['-', 'n/a', 'none', 'na', '']);
+                                                                $hasValidStorage = !empty($banner['storage']) && !in_array(strtolower(trim($banner['storage'])), ['-', 'n/a', 'none', 'na', '']);
+                                                                $hasValidScreen = !empty($banner['screen_size']) && $banner['screen_size'] > 0;
+                                                                $showSpecs = $hasValidProcessor || $hasValidRam || $hasValidStorage;
+                                                            @endphp
+                                                            
+                                                            @if($showSpecs)
+                                                                <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1.5 font-medium leading-relaxed">
+                                                                    @if($hasValidProcessor)<span class="mr-1.5">Processor {{ $banner['processor'] }}</span>@endif
+                                                                    @if($hasValidRam)<span class="mr-1.5">RAM {{ $banner['ram'] }}</span>@endif
+                                                                    @if($hasValidStorage)<span class="mr-1.5">Storage {{ $banner['storage'] }}</span>@endif
+                                                                    @if($hasValidScreen)<span>Layar {{ $banner['screen_size'] }}"</span>@endif
+                                                                </p>
+                                                            @elseif(!empty($banner['marketing_description']))
                                                                 <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1.5 font-medium leading-relaxed">{{ $banner['marketing_description'] }}</p>
                                                             @endif
+                                                            
                                                             @if(isset($banner['price']))
                                                                 <div class="flex items-center gap-2">
                                                                     <span class="text-emerald-400 font-bold text-sm sm:text-base">Rp {{ number_format($banner['price'], 0, ',', '.') }}</span>
@@ -384,7 +401,7 @@
                                                     @endif
                                                 </a>
                                             @else
-                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach

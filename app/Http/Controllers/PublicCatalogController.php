@@ -272,7 +272,11 @@ class PublicCatalogController extends Controller
                     'link' => route('katalog.show', $p->id),
                     'title' => $title,
                     'marketing_description' => \Illuminate\Support\Str::limit($desc, 120),
-                    'price' => $p->selling_price
+                    'price' => $p->selling_price,
+                    'processor' => $p->processor,
+                    'ram' => $p->ram,
+                    'storage' => $p->storage,
+                    'screen_size' => $p->screen_size,
                 ];
             })->toArray();
         }
