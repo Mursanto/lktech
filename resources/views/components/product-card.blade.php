@@ -25,8 +25,8 @@
             <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             
             <!-- Badges Container -->
-            <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 flex justify-between items-start z-30 gap-1.5 pointer-events-none">
-                {{-- Badge Views (Kiri Atas - Digeser jika ada video) --}}
+            <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 flex flex-wrap items-start z-30 gap-1 pointer-events-none">
+                {{-- Badge Views --}}
                 @php
                     // Menghasilkan start awal bervariasi antara 20 - 60 secara konsisten per produk
                     $baseViews = ($product->id * 17) % 41 + 20; 
@@ -38,29 +38,26 @@
                     <i class='bx bx-show text-[9px] sm:text-[10px] shrink-0'></i> <span class="whitespace-nowrap">{{ $formattedViews }}</span>
                 </div>
 
-                <!-- Badges Area Status (Kanan Atas) -->
-                <div class="flex flex-col gap-1 items-end shrink-0 pointer-events-auto">
-                    {{-- Badge PROMO UTAMA --}}
-                    @if($isPromo)
-                    <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0">
-                        <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
-                    </div>
-                    @endif
-
-                    {{-- Badge PRE-ORDER --}}
-                    @if($isPreOrder)
-                        <div class="bg-orange-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
-                            <i class='bx bx-time-five'></i> Pre-Order
-                        </div>
-                    @endif
-
-                    {{-- Badge Stok Tersedia / Habis --}}
-                    @if($product->stock <= 0 || $product->status === 'Sold')
-                        <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
-                            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
-                        </div>
-                    @endif
+                {{-- Badge PROMO UTAMA --}}
+                @if($isPromo)
+                <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0 pointer-events-auto">
+                    <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
                 </div>
+                @endif
+
+                {{-- Badge PRE-ORDER --}}
+                @if($isPreOrder)
+                <div class="bg-orange-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap pointer-events-auto">
+                    <i class='bx bx-time-five'></i> Pre-Order
+                </div>
+                @endif
+
+                {{-- Badge Stok Tersedia / Habis --}}
+                @if($product->stock <= 0 || $product->status === 'Sold')
+                <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap pointer-events-auto">
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
+                </div>
+                @endif
             </div>
         </div>
 
@@ -87,16 +84,16 @@
             @endphp
 
             @if($showSpecs)
-            {{-- max-h forces exactly 2 lines: 10px font × 1.375 leading × 2 = 27.5px → 28px --}}
-            <div class="text-[10px] text-gray-500 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.75em">
-                @if($hasValidProcessor)<span class="mr-1.5"><i class='bx bx-chip align-middle text-[9px]'></i> {{ $product->processor }}</span>@endif
-                @if($hasValidRam)<span class="mr-1.5"><i class='bx bx-memory-card align-middle text-[9px]'></i> {{ $product->ram }}</span>@endif
-                @if($hasValidStorage)<span class="mr-1.5"><i class='bx bx-hdd align-middle text-[9px]'></i> {{ $product->storage }}</span>@endif
-                @if($hasValidScreen)<span><i class='bx bx-desktop align-middle text-[9px]'></i> {{ $product->screen_size }}"</span>@endif
+            {{-- max-h forces exactly 3 lines: 10px font × 1.375 leading × 3 = 41.25px → 4.125em --}}
+            <div class="text-[10px] text-gray-500 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;max-height:4.125em">
+                @if($hasValidProcessor)<span class="mr-1.5">Processor {{ $product->processor }}</span>@endif
+                @if($hasValidRam)<span class="mr-1.5">RAM {{ $product->ram }}</span>@endif
+                @if($hasValidStorage)<span class="mr-1.5">Storage {{ $product->storage }}</span>@endif
+                @if($hasValidScreen)<span>Layar {{ $product->screen_size }}"</span>@endif
             </div>
             @else
-            <div class="text-[10px] text-gray-400 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.75em">
-                {{ $product->description ? Str::limit(strip_tags($product->description), 55) : ($product->category ? $product->category->name : 'Produk berkualitas') . '.' }}
+            <div class="text-[10px] text-gray-400 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;max-height:4.125em">
+                {{ $product->description ? Str::limit(strip_tags($product->description), 80) : ($product->category ? $product->category->name : 'Produk berkualitas') . '.' }}
             </div>
             @endif
         </div>
