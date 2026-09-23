@@ -79,8 +79,15 @@ class PublicCatalogController extends Controller
                     $promoProductIds->push((int) $m[1]);
                 }
             }
-            $promoProductIds = $promoProductIds->unique()->values();
         }
+        
+        // Merge with products flagged as is_promo_utama
+        $utamaPromoProducts = \App\Models\Product::promoUtama()->pluck('id');
+        if ($utamaPromoProducts->isNotEmpty()) {
+            $promoProductIds = $promoProductIds->merge($utamaPromoProducts);
+        }
+        
+        $promoProductIds = $promoProductIds->unique()->values();
 
         if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
             // Fetch all promo products explicitly from DB so they appear even if not on page 1
@@ -176,7 +183,7 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        $dynamicPromoBanners = \App\Models\Product::promoBanners()->get()->map(function($p) {
+        $dynamicPromoBanners = \App\Models\Product::bannerHero()->get()->map(function($p) {
             $title = $p->brand . ' ' . $p->model_series;
             $desc = strip_tags(html_entity_decode($p->description));
             

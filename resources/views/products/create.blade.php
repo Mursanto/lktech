@@ -163,6 +163,29 @@
                         <div class="w-full md:w-1/2 p-4 md:p-5 overflow-y-auto bg-gray-50 scrollbar-hide">
                             <h3 class="text-sm font-bold text-fuchsia-700 uppercase tracking-wider mb-3 border-b border-fuchsia-200 pb-1">Visual Katalog</h3>
                             
+                            <!-- Banner Promo Toggle -->
+                            <div class="mb-4 bg-white p-3 rounded-lg border border-fuchsia-100 shadow-sm flex flex-col gap-3">
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <div class="pt-0.5">
+                                        <input type="checkbox" name="is_banner_hero" value="1" class="w-4 h-4 text-fuchsia-600 border-gray-300 rounded focus:ring-fuchsia-500">
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs font-bold text-gray-800">Tampilkan sebagai Banner Promo (Hero Slider)</span>
+                                        <span class="block text-[10px] text-gray-500 leading-tight mt-0.5">Produk ini akan tampil pada kartu sliding hero di bagian atas landing page.</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <div class="pt-0.5">
+                                        <input type="checkbox" name="is_promo_utama" value="1" class="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs font-bold text-gray-800">Set sebagai Produk Promo Utama (🔥 Hot Promo)</span>
+                                        <span class="block text-[10px] text-gray-500 leading-tight mt-0.5">Produk ini akan diberi badge 'Hot Promo' dan diprioritaskan tampil pada section Produk Promo di bawah banner.</span>
+                                    </div>
+                                </label>
+                            </div>
+                            
                             <div class="flex gap-4 mb-4">
                                 <!-- Main Image Preview -->
                                 <div class="w-1/3">

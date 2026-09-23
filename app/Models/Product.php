@@ -33,6 +33,8 @@ class Product extends Model
         'ownership_type',
         'investor_id',
         'views_count',
+        'is_banner_hero',
+        'is_promo_utama',
     ];
 
     protected $casts = [
@@ -43,6 +45,8 @@ class Product extends Model
         'selling_price'  => 'integer',
         'gallery_images' => 'array',
         'investor_id'    => 'integer',
+        'is_banner_hero' => 'boolean',
+        'is_promo_utama' => 'boolean',
     ];
 
     public function category()
@@ -86,5 +90,25 @@ class Product extends Model
     public function scopeByInvestor($query, int $investorId)
     {
         return $query->where('investor_id', $investorId);
+    }
+
+    /**
+     * Produk yang tampil di banner promo hero slider.
+     */
+    public function scopeBannerHero($query)
+    {
+        return $query->where('is_banner_hero', true)
+                     ->where('stock', '>', 0)
+                     ->where('status', '!=', 'sold');
+    }
+
+    /**
+     * Produk promo utama (Hot Promo).
+     */
+    public function scopePromoUtama($query)
+    {
+        return $query->where('is_promo_utama', true)
+                     ->where('stock', '>', 0)
+                     ->where('status', '!=', 'sold');
     }
 }

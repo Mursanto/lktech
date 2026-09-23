@@ -113,6 +113,8 @@ class ProductController extends Controller
         $data['screen_size'] = $request->screen_size ?? 0;
         $data['battery_health'] = 0; // Forced default since we removed input
         $data['battery_runtime'] = $request->battery_runtime ?? 0;
+        $data['is_banner_hero'] = $request->has('is_banner_hero');
+        $data['is_promo_utama'] = $request->has('is_promo_utama');
 
         // 4. Handle Catalog Uploads
         if ($request->hasFile('image')) {
@@ -197,6 +199,8 @@ class ProductController extends Controller
             'status'         => $status,
             'ownership_type' => $request->ownership_type ?? 'lktech',
             'investor_id'    => ($request->ownership_type === 'investor') ? $request->investor_id : null,
+            'is_banner_hero' => $request->has('is_banner_hero'),
+            'is_promo_utama' => $request->has('is_promo_utama'),
         ]);
 
         if ($request->hasFile('image')) {
