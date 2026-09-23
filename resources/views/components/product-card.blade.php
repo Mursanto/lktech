@@ -9,22 +9,34 @@
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
             <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             
-            {{-- Badge PROMO UTAMA (top-left) --}}
-            @if($isPromo)
-            <div class="badge-promo-live">🔥 PROMO UTAMA</div>
-            @endif
+            <!-- Badges Container -->
+            <div class="absolute top-2 left-2 right-2 flex justify-between items-start z-10 gap-2 pointer-events-none">
+                {{-- Badge Views (Kiri Atas) --}}
+                @php
+                    $viewsCount = $product->views_count ?? 0;
+                    $formattedViews = $viewsCount >= 1000 ? round($viewsCount/1000, 1) . 'k' : $viewsCount;
+                @endphp
+                <div class="flex items-center gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-md text-[9px] font-semibold shadow-sm border border-white/20 h-5 shrink pointer-events-auto overflow-hidden">
+                    <i class='bx bx-show text-[10px] shrink-0'></i> <span class="truncate">{{ $formattedViews }}</span>
+                </div>
 
-            <!-- Badges Area (top-right) - Sembunyikan jika produk promo -->
-            @if(!$isPromo)
-            <div class="absolute top-1.5 right-1.5 flex flex-col gap-1 items-end">
-                {{-- Badge Stok Tersedia / Habis --}}
-                @if($product->stock <= 0 || $product->status === 'Sold')
-                    <span class="bg-white/95 backdrop-blur text-red-600 px-1.5 py-0.5 rounded text-[9px] font-bold shadow-sm border border-red-100 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Terjual Habis
-                    </span>
-                @endif
+                <!-- Badges Area Status (Kanan Atas) -->
+                <div class="flex flex-col gap-1 items-end shrink-0 pointer-events-auto">
+                    {{-- Badge PROMO UTAMA --}}
+                    @if($isPromo)
+                    <div class="bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm shadow-red-500/30 flex items-center gap-1">
+                        🔥 Hot Promo
+                    </div>
+                    @endif
+
+                    {{-- Badge Stok Tersedia / Habis --}}
+                    @if($product->stock <= 0 || $product->status === 'Sold')
+                        <div class="bg-white/95 backdrop-blur-sm text-red-600 px-2 py-0.5 rounded-md text-[9px] font-semibold shadow-sm border border-red-100 flex items-center gap-1 h-5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
+                        </div>
+                    @endif
+                </div>
             </div>
-            @endif
         </div>
 
         <!-- Content Details -->

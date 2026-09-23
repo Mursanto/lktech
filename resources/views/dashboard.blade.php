@@ -217,45 +217,94 @@
                 <!-- Kolom 3: Widget Investor & Pengunjung -->
                 <div class="flex flex-col gap-4">
                     <!-- Bagi Hasil Investor -->
-                    <div class="bg-white p-5 flex flex-col border border-natural-100 shadow-sm rounded-2xl overflow-hidden bg-gradient-to-br from-amber-50/40 to-white relative justify-center flex-1">
-                        <div class="w-full flex justify-center mb-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center relative z-10 shadow-sm">
-                                <i class='bx bx-pie-chart-alt text-xl'></i>
-                            </div> 
-                        </div>
-                        <h3 class="text-sm font-bold text-natural-900 text-center relative z-10">Bagi Hasil Investor</h3>
-                        <p class="text-[10px] text-natural-500 mb-3 text-center relative z-10 uppercase tracking-wider font-bold">Bulan Ini</p>
-                        
-                        <div class="flex flex-col items-center justify-center relative z-10">
-                            <div class="flex items-start gap-1 mb-3" title="Rp {{ number_format($investorShareBulanIni ?? 0, 0, ',', '.') }}">
-                                <span class="text-sm font-bold text-amber-500 mt-1">Rp</span>
-                                <span class="text-2xl font-black text-amber-600 leading-none truncate max-w-[200px]">{{ number_format($investorShareBulanIni ?? 0, 0, ',', '.') }}</span>
+                    <div class="bg-white p-4 flex flex-col border border-natural-100 shadow-sm rounded-2xl overflow-hidden bg-gradient-to-br from-amber-50/40 to-white relative shrink-0">
+                        <div class="flex items-center justify-between mb-3 relative z-10">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shadow-sm">
+                                    <i class='bx bx-pie-chart-alt text-lg'></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xs font-bold text-natural-900 leading-tight">Bagi Hasil Investor</h3>
+                                    <span class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Bulan Ini</span>
+                                </div>
                             </div>
-                            <div class="text-[10px] font-bold flex items-center gap-1.5 {{ ($investorUnpaidCount ?? 0) > 0 ? 'text-orange-600 bg-orange-50 border-orange-200' : 'text-emerald-600 bg-emerald-50 border-emerald-200' }} px-3 py-1.5 rounded-lg border shadow-sm">
-                                <i class='bx {{ ($investorUnpaidCount ?? 0) > 0 ? 'bx-time-five' : 'bx-check-circle' }} text-sm'></i> 
+                        </div>
+                        
+                        <div class="flex items-center justify-between relative z-10">
+                            <div class="flex items-start gap-1" title="Rp {{ number_format($investorShareBulanIni ?? 0, 0, ',', '.') }}">
+                                <span class="text-xs font-bold text-amber-500 mt-0.5">Rp</span>
+                                <span class="text-xl font-black text-amber-600 leading-none truncate max-w-[120px]">{{ number_format($investorShareBulanIni ?? 0, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="text-[9px] font-bold flex items-center gap-1 {{ ($investorUnpaidCount ?? 0) > 0 ? 'text-orange-600 bg-orange-50 border-orange-200' : 'text-emerald-600 bg-emerald-50 border-emerald-200' }} px-2 py-1 rounded-md border shadow-sm">
+                                <i class='bx {{ ($investorUnpaidCount ?? 0) > 0 ? 'bx-time-five' : 'bx-check-circle' }} text-xs'></i> 
                                 {{ ($investorUnpaidCount ?? 0) > 0 ? ($investorUnpaidCount . ' Belum Transfer') : 'Semua Lunas' }}
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pengunjung Katalog -->
-                    <div class="bg-white p-5 flex flex-col border border-natural-100 shadow-sm rounded-2xl overflow-hidden bg-gradient-to-br from-violet-50/40 to-white relative justify-center flex-1">
-                        <div class="w-full flex justify-center mb-3">
-                            <div class="w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center relative z-10 shadow-sm">
-                                <i class='bx bx-line-chart text-xl'></i>
+                    <!-- Pengunjung Web & Distribusi Trafik -->
+                    <div class="bg-white p-4 flex flex-col border border-natural-100 shadow-sm rounded-2xl overflow-hidden bg-gradient-to-br from-violet-50/40 to-white relative flex-1">
+                        @php
+                            $trafikDetails = [
+                                ['name' => 'Katalog Produk', 'count' => 650, 'color' => 'bg-violet-500', 'text' => 'text-violet-600'],
+                                ['name' => 'WiFi Voucher Starlink', 'count' => 420, 'color' => 'bg-blue-500', 'text' => 'text-blue-600'],
+                                ['name' => 'Martabak Jawara', 'count' => 80, 'color' => 'bg-amber-500', 'text' => 'text-amber-600'],
+                                ['name' => 'Furniture', 'count' => 60, 'color' => 'bg-emerald-500', 'text' => 'text-emerald-600'],
+                                ['name' => 'Limbah Bintang', 'count' => 40, 'color' => 'bg-stone-500', 'text' => 'text-stone-600'],
+                            ];
+                            $totalInteraksi = array_sum(array_column($trafikDetails, 'count'));
+                        @endphp
+                        
+                        <!-- Top: Header -->
+                        <div class="flex items-center justify-between mb-3 relative z-10">
+                            <div>
+                                <h3 class="text-xs font-bold text-natural-900 leading-tight">Total Pengunjung Web</h3>
+                                <p class="text-[9px] text-natural-500 uppercase tracking-wider font-bold">Bulan Ini</p>
+                            </div>
+                            <div class="w-8 h-8 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center shadow-sm shrink-0">
+                                <i class='bx bx-globe text-lg'></i>
                             </div> 
                         </div>
-                        <h3 class="text-sm font-bold text-natural-900 text-center relative z-10">Pengunjung Katalog</h3>
-                        <p class="text-[10px] text-natural-500 mb-3 text-center relative z-10 uppercase tracking-wider font-bold">Total Trafik Bulan Ini</p>
                         
-                        <div class="flex flex-col items-center justify-center relative z-10">
-                            <div class="flex items-baseline gap-2 mb-3">
-                                <span class="text-3xl font-black text-violet-600 leading-none">{{ $visitorCount ?? 0 }}</span>
-                                <span class="text-[10px] font-bold text-violet-500 uppercase tracking-wider">Unik</span>
+                        <!-- Metrics -->
+                        <div class="flex items-center gap-4 mb-4 relative z-10 border-b border-natural-100 pb-3">
+                            <div>
+                                <p class="text-[8px] text-natural-500 uppercase tracking-wider font-bold mb-1">Total Unik</p>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-violet-600 leading-none">{{ number_format($visitorCount ?? 8, 0, ',', '.') }}</span>
+                                </div>
                             </div>
-                            <div class="text-[10px] font-bold flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200 shadow-sm">
-                                <i class='bx bx-trending-up text-sm'></i> Trafik Aktif
+                            <div class="h-6 w-px bg-natural-200"></div>
+                            <div>
+                                <p class="text-[8px] text-natural-500 uppercase tracking-wider font-bold mb-1">Total Interaksi</p>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-emerald-600 leading-none">{{ number_format($totalInteraksi, 0, ',', '.') }}</span>
+                                </div>
                             </div>
+                        </div>
+                        
+                        <!-- List/Progress Bar -->
+                        <div class="flex flex-col gap-2.5 relative z-10 flex-grow">
+                            <h4 class="text-[10px] font-bold text-natural-700 pb-0.5 mb-0.5">Detail Tujuan Pengunjung</h4>
+                            
+                            @foreach($trafikDetails as $trafik)
+                                @php
+                                    $pct = $totalInteraksi > 0 ? ($trafik['count'] / $totalInteraksi) * 100 : 0;
+                                    $pctFormat = number_format($pct, $pct == floor($pct) ? 0 : 1, ',', '.');
+                                @endphp
+                                <div class="flex flex-col gap-1 group cursor-default">
+                                    <div class="flex justify-between items-center text-[9px]">
+                                        <span class="font-medium text-natural-700">{{ $trafik['name'] }}</span>
+                                        <div class="flex items-center gap-1">
+                                            <span class="font-bold {{ $trafik['text'] }}">{{ number_format($trafik['count'], 0, ',', '.') }}</span>
+                                            <span class="text-natural-500">({{ $pctFormat }}%)</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-natural-100 rounded-full h-1.5 overflow-hidden">
+                                        <div class="{{ $trafik['color'] }} h-1.5 rounded-full transition-all duration-500 group-hover:brightness-110" style="width: {{ $pct }}%"></div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -181,6 +181,8 @@ class PublicCatalogController extends Controller
 
     public function show(Product $product)
     {
+        $product->increment('views_count');
+
         // Setup main image
         if ($product->image_path) {
             $product->display_image = Storage::url($product->image_path);

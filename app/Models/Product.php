@@ -32,6 +32,7 @@ class Product extends Model
         'gallery_images',
         'ownership_type',
         'investor_id',
+        'views_count',
     ];
 
     protected $casts = [
