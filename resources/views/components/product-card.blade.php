@@ -34,8 +34,8 @@
 
                     {{-- Badge Stok Tersedia / Habis --}}
                     @if($product->stock <= 0 || $product->status === 'Sold')
-                        <div class="bg-white/95 backdrop-blur-sm text-red-600 px-2 py-0.5 rounded-md text-[9px] font-semibold shadow-sm border border-red-100 flex items-center gap-1 h-5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
+                        <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
+                            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
                         </div>
                     @endif
                 </div>
