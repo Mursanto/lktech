@@ -1,10 +1,10 @@
 @props(['product'])
 @php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
-    <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
+    <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col cursor-pointer">
         <!-- Image & Video Area — Full Bleed -->
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
             @if(!empty($product->video_url))
@@ -93,7 +93,7 @@
     </a>
 
     <!-- Action Button Container at Bottom -->
-    <div class="px-1.5 pb-1.5 pt-1 sm:px-2 sm:pb-2 mt-auto" x-data="{
+    <div class="px-1.5 pb-1.5 pt-1 sm:px-2 sm:pb-2" x-data="{
         adding: false,
         addToCart(productId) {
             this.adding = true;
