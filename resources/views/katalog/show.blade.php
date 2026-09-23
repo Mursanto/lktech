@@ -199,6 +199,25 @@
                             <span class="absolute bottom-3 right-3 bg-black/40 text-white rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                                 <i class="bx bx-expand-alt text-sm"></i>
                             </span>
+
+                            <!-- Image Counter Badge (Bottom Center) -->
+                            <div x-show="images.length > 1"
+                                 class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 bg-black/50 text-white text-[11px] sm:text-xs font-semibold
+                                        px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full pointer-events-none shadow-sm backdrop-blur-sm">
+                                <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
+                            </div>
+                            
+                            <!-- PRE-ORDER Badge (Top Right) -->
+                            @php
+                                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                            @endphp
+                            @if($isPreOrder)
+                            <div class="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-20 pointer-events-none">
+                                <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-semibold shadow-sm flex items-center gap-1 sm:gap-1.5 h-6 sm:h-7 whitespace-nowrap">
+                                    <i class='bx bx-time-five text-[11px] sm:text-sm'></i> <span>Pre-Order</span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
 
                         <!-- PREV Arrow (navigasi Alpine — tidak membuka lightbox) -->
@@ -232,25 +251,6 @@
                                 title="Foto selanjutnya">
                             <i class="bx bx-chevron-right text-xl"></i>
                         </button>
-
-                        <!-- Image Counter Badge (Bottom Center) -->
-                        <div x-show="images.length > 1"
-                             class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 bg-black/50 text-white text-xs font-semibold
-                                    px-3 py-1 rounded-full pointer-events-none">
-                            <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
-                        </div>
-                        
-                        <!-- PRE-ORDER Badge (Top Right) -->
-                        @php
-                            $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
-                        @endphp
-                        @if($isPreOrder)
-                        <div class="absolute top-3 right-3 z-20 pointer-events-none">
-                            <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm flex items-center gap-1.5 h-7 whitespace-nowrap">
-                                <i class='bx bx-time-five text-sm'></i> <span>Pre-Order</span>
-                            </div>
-                        </div>
-                        @endif
                     </div>
 
                     <!-- ─── Thumbnails Row ─── -->
