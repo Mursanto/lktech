@@ -360,16 +360,18 @@
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
                                                     <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
-                                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent rounded-3xl flex flex-col justify-end p-5">
-                                                            <div class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md w-max mb-2 uppercase tracking-wide">🔥 Promo Khusus</div>
-                                                            <h3 class="text-white font-black text-lg sm:text-xl leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
+                                                        <!-- Promo Badge moved to Top-Left -->
+                                                        <div class="absolute top-4 left-4 bg-brand-600 text-white text-xs px-2.5 py-1 rounded-md shadow-sm font-bold uppercase tracking-wide z-10">🔥 Promo Khusus</div>
+                                                        
+                                                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent rounded-3xl flex flex-col justify-end p-5">
+                                                            <h3 class="text-white font-bold text-xl leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
                                                             @if(!empty($banner['marketing_description']))
-                                                                <p class="text-gray-200 text-[11px] sm:text-xs line-clamp-2 mb-2.5 font-medium leading-snug">{{ $banner['marketing_description'] }}</p>
+                                                                <p class="text-gray-200 text-xs line-clamp-2 mb-2.5 font-medium leading-snug">{{ str_replace('*', '', $banner['marketing_description']) }}</p>
                                                             @endif
                                                             @if(isset($banner['price']))
                                                                 <div class="flex items-center gap-2">
                                                                     <span class="text-emerald-400 font-bold text-sm sm:text-base">Rp {{ number_format($banner['price'], 0, ',', '.') }}</span>
-                                                                    <span class="text-[10px] text-gray-400 line-through hidden sm:inline">Rp {{ number_format($banner['price'] * 1.15, 0, ',', '.') }}</span>
+                                                                    <span class="text-gray-400 text-[10px] opacity-60 line-through hidden sm:inline">Rp {{ number_format($banner['price'] * 1.15, 0, ',', '.') }}</span>
                                                                 </div>
                                                             @endif
                                                         </div>
