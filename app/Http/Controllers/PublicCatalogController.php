@@ -181,7 +181,11 @@ class PublicCatalogController extends Controller
 
     public function show(Product $product)
     {
-        $product->increment('views_count');
+        try {
+            $product->increment('views_count');
+        } catch (\Exception $e) {
+            // Ignore error if column not migrated yet
+        }
 
         // Setup main image
         if ($product->image_path) {
