@@ -40,6 +40,29 @@
             @endphp
 
             {{-- ================================================================
+                 MASTER SWITCH: AKTIF / NONAKTIF PROMO GLOBAL
+                 ================================================================ --}}
+            <div class="bg-white rounded-3xl shadow-sm border border-natural-200 overflow-hidden mb-6 relative">
+                <div class="px-5 py-4 border-b border-natural-100 bg-gradient-to-r from-red-50 to-white flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+                            <i class='bx bx-power-off text-white text-lg'></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-black text-natural-900 tracking-tight">Status Fitur Promo (Master Switch)</h3>
+                            <p class="text-[10px] text-natural-500 mt-0.5">Matikan sakelar ini jika Anda ingin menyembunyikan semua Banner Hero & Produk Promo dari halaman depan sekaligus.</p>
+                        </div>
+                    </div>
+                    
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_promo_active" value="1" {{ old('is_promo_active', $setting->is_promo_active ?? true) ? 'checked' : '' }} class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+                        <span class="ml-3 text-xs font-bold text-gray-700 peer-checked:text-red-600">AKTIF</span>
+                    </label>
+                </div>
+            </div>
+
+            {{-- ================================================================
                  BAGIAN 1: PENGATURAN BANNER PROMO (Slot 1–4)
                  ================================================================ --}}
             <div class="bg-white rounded-3xl shadow-sm border border-natural-200 overflow-hidden">

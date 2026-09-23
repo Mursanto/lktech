@@ -73,18 +73,22 @@ class PublicCatalogController extends Controller
 
         // ─── Sisipkan Produk Promo di tengah katalog (kolom ke-3 tiap baris) ──────
         $promoProductIds = collect();
-        if ($setting && !empty($setting->promo_product_links)) {
-            foreach ($setting->promo_product_links as $link) {
-                if (!empty($link) && preg_match('#/katalog/(\d+)#', $link, $m)) {
-                    $promoProductIds->push((int) $m[1]);
+        $isPromoActive = !$setting || !isset($setting->is_promo_active) || $setting->is_promo_active;
+
+        if ($isPromoActive) {
+            if ($setting && !empty($setting->promo_product_links)) {
+                foreach ($setting->promo_product_links as $link) {
+                    if (!empty($link) && preg_match('#/katalog/(\d+)#', $link, $m)) {
+                        $promoProductIds->push((int) $m[1]);
+                    }
                 }
             }
-        }
-        
-        // Merge with products flagged as is_promo_utama
-        $utamaPromoProducts = \App\Models\Product::promoUtama()->pluck('id');
-        if ($utamaPromoProducts->isNotEmpty()) {
-            $promoProductIds = $promoProductIds->merge($utamaPromoProducts);
+            
+            // Merge with products flagged as is_promo_utama
+            $utamaPromoProducts = \App\Models\Product::promoUtama()->pluck('id');
+            if ($utamaPromoProducts->isNotEmpty()) {
+                $promoProductIds = $promoProductIds->merge($utamaPromoProducts);
+            }
         }
         
         $promoProductIds = $promoProductIds->unique()->values();
@@ -232,37 +236,40 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        $dynamicPromoBanners = \App\Models\Product::bannerHero()->get()->map(function($p) {
-            $title = $p->brand . ' ' . $p->model_series;
-            $desc = strip_tags(html_entity_decode($p->description));
-            
-            // 1. Hapus pengulangan nama produk
-            $desc = str_ireplace($title, '', $desc);
-            $desc = str_ireplace($p->model_series, '', $desc);
-            
-            // 2. Ganti asteris dengan separator
-            $desc = str_replace('*', '|', $desc);
-            
-            // 3. Hanya pertahankan huruf, angka, spasi, dan tanda baca umum (Hapus Emoji dll)
-            $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\°]/u', '', $desc);
-            
-            // 4. Rapihkan spasi dan separator
-            $desc = preg_replace('/\|+/', '|', $desc);
-            $desc = preg_replace('/\s+/', ' ', $desc);
-            $desc = str_replace('|', ' | ', $desc);
-            $desc = preg_replace('/\s+\|\s+/', ' | ', $desc);
-            
-            // 5. Trim karakter tidak perlu di awal dan akhir
-            $desc = trim($desc, " |,-.\t\n\r\0\x0B");
+        $dynamicPromoBanners = collect();
+        if ($isPromoActive) {
+            $dynamicPromoBanners = \App\Models\Product::bannerHero()->get()->map(function($p) {
+                $title = $p->brand . ' ' . $p->model_series;
+                $desc = strip_tags(html_entity_decode($p->description));
+                
+                // 1. Hapus pengulangan nama produk
+                $desc = str_ireplace($title, '', $desc);
+                $desc = str_ireplace($p->model_series, '', $desc);
+                
+                // 2. Ganti asteris dengan separator
+                $desc = str_replace('*', '|', $desc);
+                
+                // 3. Hanya pertahankan huruf, angka, spasi, dan tanda baca umum (Hapus Emoji dll)
+                $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\°]/u', '', $desc);
+                
+                // 4. Rapihkan spasi dan separator
+                $desc = preg_replace('/\|+/', '|', $desc);
+                $desc = preg_replace('/\s+/', ' ', $desc);
+                $desc = str_replace('|', ' | ', $desc);
+                $desc = preg_replace('/\s+\|\s+/', ' | ', $desc);
+                
+                // 5. Trim karakter tidak perlu di awal dan akhir
+                $desc = trim($desc, " |,-.\t\n\r\0\x0B");
 
-            return [
-                'image' => $p->image_path,
-                'link' => route('katalog.show', $p->id),
-                'title' => $title,
-                'marketing_description' => \Illuminate\Support\Str::limit($desc, 120),
-                'price' => $p->selling_price
-            ];
-        })->toArray();
+                return [
+                    'image' => $p->image_path,
+                    'link' => route('katalog.show', $p->id),
+                    'title' => $title,
+                    'marketing_description' => \Illuminate\Support\Str::limit($desc, 120),
+                    'price' => $p->selling_price
+                ];
+            })->toArray();
+        }
 
         return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews', 'dynamicPromoBanners'));
     }

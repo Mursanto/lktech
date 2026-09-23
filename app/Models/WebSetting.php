@@ -11,5 +11,6 @@ class WebSetting extends Model
     protected $casts = [
         'promo_banners'        => 'array',
         'promo_product_links'  => 'array',
+        'is_promo_active'      => 'boolean',
     ];
 }

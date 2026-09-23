@@ -27,6 +27,7 @@ class PromoBannerController extends Controller
             'banners.*.delete'        => 'nullable|boolean',
             'promo_product_links'     => 'nullable|array|max:3',
             'promo_product_links.*'   => 'nullable|url|max:255',
+            'is_promo_active'         => 'nullable|boolean',
         ]);
 
         $setting = WebSetting::first();
@@ -83,6 +84,8 @@ class PromoBannerController extends Controller
         // Simpan link produk promo (hanya yang tidak kosong)
         $productLinks = array_values(array_filter($request->input('promo_product_links', []), fn($v) => !empty(trim($v))));
         $setting->promo_product_links = $productLinks;
+
+        $setting->is_promo_active = $request->has('is_promo_active');
 
         $setting->save();
 
