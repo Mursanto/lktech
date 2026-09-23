@@ -364,13 +364,13 @@
                                             @endphp
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
-                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain rounded-3xl">
+                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Left -->
                                                         <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
-                                                        <div class="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/95 via-black/50 to-transparent rounded-b-3xl flex flex-col justify-end px-4 pb-4 sm:pb-5">
-                                                            <h3 class="text-white font-bold text-xs sm:text-sm leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
+                                                        <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/95 via-black/60 to-transparent rounded-b-3xl flex flex-col justify-end px-3 pb-3 sm:px-4 sm:pb-4">
+                                                            <h3 class="text-white font-bold text-xs sm:text-sm leading-tight mb-0.5 font-montserrat">{{ $banner['title'] }}</h3>
                                                             
                                                             @php
                                                                 $hasValidProcessor = !empty($banner['processor']) && !in_array(strtolower(trim($banner['processor'])), ['-', 'n/a', 'none', 'na', '']);
@@ -381,14 +381,14 @@
                                                             @endphp
                                                             
                                                             @if($showSpecs)
-                                                                <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1.5 font-medium leading-relaxed">
+                                                                <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1 font-medium leading-relaxed">
                                                                     @if($hasValidProcessor)<span class="mr-1.5">Processor {{ $banner['processor'] }}</span>@endif
                                                                     @if($hasValidRam)<span class="mr-1.5">RAM {{ $banner['ram'] }}</span>@endif
                                                                     @if($hasValidStorage)<span class="mr-1.5">Storage {{ $banner['storage'] }}</span>@endif
                                                                     @if($hasValidScreen)<span>Layar {{ $banner['screen_size'] }}"</span>@endif
                                                                 </p>
                                                             @elseif(!empty($banner['marketing_description']))
-                                                                <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1.5 font-medium leading-relaxed">{{ $banner['marketing_description'] }}</p>
+                                                                <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1 font-medium leading-relaxed">{{ $banner['marketing_description'] }}</p>
                                                             @endif
                                                             
                                                             @if(isset($banner['price']))
@@ -401,7 +401,7 @@
                                                     @endif
                                                 </a>
                                             @else
-                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain rounded-3xl">
+                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
