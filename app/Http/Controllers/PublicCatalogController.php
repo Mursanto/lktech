@@ -89,7 +89,12 @@ class PublicCatalogController extends Controller
         
         $promoProductIds = $promoProductIds->unique()->values();
 
-        if ($promoProductIds->isNotEmpty() && $collectionToTransform instanceof \Illuminate\Support\Collection) {
+        $promoSoftware = collect();
+        $promoAccessories = collect();
+        $promoSpareparts = collect();
+        $promoLaptops = collect();
+
+        if ($promoProductIds->isNotEmpty()) {
             // Fetch all promo products explicitly from DB so they appear even if not on page 1
             $promoItems = \App\Models\Product::with('category')->whereIn('id', $promoProductIds)->get();
             
@@ -105,60 +110,104 @@ class PublicCatalogController extends Controller
                 return $product;
             });
 
-            // Filter out these promo products from the regular items to avoid duplicates
-            $regularItems = $collectionToTransform->filter(fn($p) => !$promoProductIds->contains($p->id))->values();
+            // Group by category
+            $promoItems->each(function ($product) use (&$promoSoftware, &$promoAccessories, &$promoSpareparts, &$promoLaptops) {
+                $catId = $product->category_id;
+                $parentCatId = $product->category ? $product->category->parent_id : null;
 
-            $result = $regularItems->all(); // ->all() menjaga objek Eloquent
-            
-            // Masukkan HANYA produk promo pertama (Slot 1) ke tengah baris pertama katalog utama
-            if ($promoProductIds->isNotEmpty()) {
-                $firstPromoId = $promoProductIds->first();
-                $promoProduct = $promoItems->firstWhere('id', $firstPromoId);
-                if ($promoProduct) {
-                    $insertAt = 2; // Baris 1, kolom 3
-                    $insertAt = min($insertAt, count($result));
-                    array_splice($result, $insertAt, 0, [$promoProduct]);
+                if ($catId == 15 || $parentCatId == 15) {
+                    $promoSoftware->push($product);
+                } elseif ($catId == 11 || $parentCatId == 11) {
+                    $promoAccessories->push($product);
+                } elseif ($catId == 6 || $parentCatId == 6) {
+                    $promoSpareparts->push($product);
+                } else {
+                    $promoLaptops->push($product);
                 }
-            }
-            $sorted = collect($result);
+            });
 
-            if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-                $products->setCollection($sorted);
-            } else {
-                $products = $sorted;
+            if ($collectionToTransform instanceof \Illuminate\Support\Collection) {
+                // Filter out ALL promo products from the regular items to avoid duplicates
+                $regularItems = $collectionToTransform->filter(fn($p) => !$promoProductIds->contains($p->id))->values();
+                $result = $regularItems->all(); 
+                
+                // Masukkan produk promo Laptop ke tengah-tengah katalog utama
+                $offset = 2; // Mulai dari indeks 2 (kolom 3 baris 1)
+                $step = 3;   // Lompat setiap 3 item
+                foreach ($promoLaptops as $promoProduct) {
+                    if ($offset > count($result)) {
+                        $result[] = $promoProduct;
+                    } else {
+                        array_splice($result, $offset, 0, [$promoProduct]);
+                    }
+                    $offset += $step;
+                }
+                
+                $sorted = collect($result);
+                if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+                    $products->setCollection($sorted);
+                } else {
+                    $products = $sorted;
+                }
             }
         }
         // ───────────────────────────────────────────────────────────────────────
 
+        // Helper function for category promo injection
+        $injectCategoryPromos = function($regularProducts, $promoCategoryList, $startOffset = 1, $step = 3) {
+            $result = $regularProducts->all();
+            if ($promoCategoryList->isNotEmpty()) {
+                $offset = $startOffset;
+                foreach ($promoCategoryList as $promoProduct) {
+                    if ($offset > count($result)) {
+                        $result[] = $promoProduct;
+                    } else {
+                        array_splice($result, $offset, 0, [$promoProduct]);
+                    }
+                    $offset += $step;
+                }
+            }
+            return collect(array_slice($result, 0, 6)); // Ensure max 6 items returned
+        };
+
         // 1. Lisensi & Software (ID: 15)
-        $softwareProducts = \App\Models\Product::with('category')
+        $softwareQuery = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 15)->orWhere('parent_id', 15)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
-                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?software";
-                $product->is_active_promo = $promoProductIds->contains($product->id);
-                return $product;
-            });
+            ->whereNotIn('id', $promoProductIds);
+        
+        $softwareProducts = $softwareQuery->take(6)->get()->transform(function ($product) {
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?software";
+            $product->is_active_promo = false;
+            return $product;
+        });
+        $softwareProducts = $injectCategoryPromos($softwareProducts, $promoSoftware, 1, 3); // index 1, 4...
 
         // 2. Aksesoris (ID: 11)
-        $accessoriesProducts = \App\Models\Product::with('category')
+        $accessoriesQuery = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 11)->orWhere('parent_id', 11)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
-                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?accessories";
-                $product->is_active_promo = $promoProductIds->contains($product->id);
-                return $product;
-            });
+            ->whereNotIn('id', $promoProductIds);
+            
+        $accessoriesProducts = $accessoriesQuery->take(6)->get()->transform(function ($product) {
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?accessories";
+            $product->is_active_promo = false;
+            return $product;
+        });
+        $accessoriesProducts = $injectCategoryPromos($accessoriesProducts, $promoAccessories, 1, 3);
 
         // 3. Komponen & Sparepart (ID: 6)
-        $sparepartProducts = \App\Models\Product::with('category')
+        $sparepartQuery = \App\Models\Product::with('category')
             ->whereIn('category_id', \App\Models\Category::where('id', 6)->orWhere('parent_id', 6)->pluck('id'))
             ->where('stock', '>', 0)->where('status', '!=', 'sold')
-            ->take(6)->get()->transform(function ($product) use ($promoProductIds) {
-                $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?sparepart";
-                $product->is_active_promo = $promoProductIds->contains($product->id);
-                return $product;
-            });
+            ->whereNotIn('id', $promoProductIds);
+            
+        $sparepartProducts = $sparepartQuery->take(6)->get()->transform(function ($product) {
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?sparepart";
+            $product->is_active_promo = false;
+            return $product;
+        });
+        $sparepartProducts = $injectCategoryPromos($sparepartProducts, $promoSpareparts, 1, 3);
 
         // Fetch Google Reviews
         $allReviews = \App\Models\GoogleReview::where('is_featured', true)
