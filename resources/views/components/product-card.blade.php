@@ -24,42 +24,44 @@
             
             <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             
-            <!-- Badges Container -->
-            <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 flex justify-between items-start z-30 gap-1.5 pointer-events-none">
-                {{-- Left Container: Badge Views --}}
-                @php
-                    // Menghasilkan start awal bervariasi antara 20 - 60 secara konsisten per produk
-                    $baseViews = ($product->id * 17) % 41 + 20; 
-                    $actualViews = $product->views_count ?? 0;
-                    $totalViews = $baseViews + $actualViews;
-                    $formattedViews = $totalViews >= 1000 ? round($totalViews/1000, 1) . 'k' : $totalViews;
-                @endphp
-                <div class="flex items-center gap-0.5 sm:gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-white/20 h-4 sm:h-5 shrink-0 pointer-events-auto overflow-hidden">
-                    <i class='bx bx-show text-[9px] sm:text-[10px] shrink-0'></i> <span class="whitespace-nowrap">{{ $formattedViews }}</span>
-                </div>
-
-                <!-- Right Container: Badges Area Status -->
-                <div class="flex flex-row flex-wrap gap-1 items-start justify-end shrink-0 pointer-events-auto max-w-[70%]">
-                    {{-- Badge PRE-ORDER --}}
-                    @if($isPreOrder)
-                    <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 shrink-0 h-4 sm:h-5 whitespace-nowrap">
-                        <i class='bx bx-time-five text-[9px] sm:text-[10px]'></i> <span class="whitespace-nowrap">Pre-Order</span>
+            <!-- Badges Container: View top-left, Pre-Order top-right, Hot Promo below Pre-Order -->
+            <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 z-30 pointer-events-none">
+                {{-- Single row: View (left) + Pre-Order (right) --}}
+                <div class="flex justify-between items-start gap-1">
+                    {{-- Left: Badge Views --}}
+                    @php
+                        $baseViews = ($product->id * 17) % 41 + 20; 
+                        $actualViews = $product->views_count ?? 0;
+                        $totalViews = $baseViews + $actualViews;
+                        $formattedViews = $totalViews >= 1000 ? round($totalViews/1000, 1) . 'k' : $totalViews;
+                    @endphp
+                    <div class="flex items-center gap-0.5 sm:gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-white/20 h-4 sm:h-5 shrink-0 pointer-events-auto overflow-hidden">
+                        <i class='bx bx-show text-[9px] sm:text-[10px] shrink-0'></i> <span class="whitespace-nowrap">{{ $formattedViews }}</span>
                     </div>
-                    @endif
 
-                    {{-- Badge PROMO UTAMA --}}
-                    @if($isPromo)
-                    <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0">
-                        <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
-                    </div>
-                    @endif
+                    {{-- Right: Pre-Order + Hot Promo stacked --}}
+                    <div class="flex flex-col items-end gap-0.5 pointer-events-auto">
+                        {{-- Badge PRE-ORDER --}}
+                        @if($isPreOrder)
+                        <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 shrink-0 h-4 sm:h-5 whitespace-nowrap">
+                            <i class='bx bx-time-five text-[9px] sm:text-[10px]'></i> <span class="whitespace-nowrap">Pre-Order</span>
+                        </div>
+                        @endif
 
-                    {{-- Badge Stok Tersedia / Habis --}}
-                    @if($product->stock <= 0 || $product->status === 'Sold')
-                    <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
-                        <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
+                        {{-- Badge PROMO UTAMA (below Pre-Order on the right) --}}
+                        @if($isPromo)
+                        <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0">
+                            <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
+                        </div>
+                        @endif
+
+                        {{-- Badge Stok Habis --}}
+                        @if($product->stock <= 0 || $product->status === 'Sold')
+                        <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
+                            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 shrink-0"></span> Terjual Habis
+                        </div>
+                        @endif
                     </div>
-                    @endif
                 </div>
             </div>
         </div>
