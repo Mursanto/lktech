@@ -361,12 +361,12 @@
                                                     <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Left -->
-                                                        <div class="absolute top-4 left-4 bg-brand-600 text-white text-xs px-2.5 py-1 rounded-md shadow-sm font-bold uppercase tracking-wide z-10">🔥 Promo Khusus</div>
+                                                        <div class="absolute top-3 left-3 bg-brand-600 text-white text-xs px-2.5 py-1 rounded-md shadow-sm font-bold uppercase tracking-wide z-10">🔥 Promo Khusus</div>
                                                         
                                                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent rounded-3xl flex flex-col justify-end p-5">
                                                             <h3 class="text-white font-bold text-xl leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
                                                             @if(!empty($banner['marketing_description']))
-                                                                <p class="text-gray-200 text-xs line-clamp-2 mb-2.5 font-medium leading-snug">{{ str_replace('*', '', $banner['marketing_description']) }}</p>
+                                                                <p class="text-gray-200 text-xs line-clamp-2 mb-2 font-medium leading-snug">{{ $banner['marketing_description'] }}</p>
                                                             @endif
                                                             @if(isset($banner['price']))
                                                                 <div class="flex items-center gap-2">

@@ -176,7 +176,39 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews'));
+        $dynamicPromoBanners = \App\Models\Product::promoBanners()->get()->map(function($p) {
+            $title = $p->brand . ' ' . $p->model_series;
+            $desc = strip_tags(html_entity_decode($p->description));
+            
+            // 1. Hapus pengulangan nama produk
+            $desc = str_ireplace($title, '', $desc);
+            $desc = str_ireplace($p->model_series, '', $desc);
+            
+            // 2. Ganti asteris dengan separator
+            $desc = str_replace('*', '|', $desc);
+            
+            // 3. Hanya pertahankan huruf, angka, spasi, dan tanda baca umum (Hapus Emoji dll)
+            $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\°]/u', '', $desc);
+            
+            // 4. Rapihkan spasi dan separator
+            $desc = preg_replace('/\|+/', '|', $desc);
+            $desc = preg_replace('/\s+/', ' ', $desc);
+            $desc = str_replace('|', ' | ', $desc);
+            $desc = preg_replace('/\s+\|\s+/', ' | ', $desc);
+            
+            // 5. Trim karakter tidak perlu di awal dan akhir
+            $desc = trim($desc, " |,-.\t\n\r\0\x0B");
+
+            return [
+                'image' => $p->image_path,
+                'link' => route('katalog.show', $p->id),
+                'title' => $title,
+                'marketing_description' => \Illuminate\Support\Str::limit($desc, 120),
+                'price' => $p->selling_price
+            ];
+        })->toArray();
+
+        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews', 'dynamicPromoBanners'));
     }
 
     public function show(Product $product)
