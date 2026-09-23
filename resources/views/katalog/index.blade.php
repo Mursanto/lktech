@@ -106,7 +106,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full">
         
-        <div class="max-w-[1400px] mx-auto px-0 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-1.5 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
         
         {{-- ============================================================ --}}
         {{-- SIDEBAR DESKTOP (Categories + Filter Brand + Harga)          --}}
@@ -275,7 +275,7 @@
                 </button>
 
                 {{-- Sort Dropdown: always visible on mobile --}}
-                <form method="GET" action="{{ route('katalog.index') }}" class="flex-1 relative">
+                <form method="GET" action="{{ route('katalog.index') }}" class="relative ml-auto">
                     @if(request()->has('category_id'))
                         <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                     @endif
