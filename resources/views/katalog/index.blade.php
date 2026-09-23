@@ -106,7 +106,7 @@
     <!-- Main Content -->
     <main class="flex-grow w-full">
         
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
+        <div class="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
         
         {{-- ============================================================ --}}
         {{-- SIDEBAR DESKTOP (Categories + Filter Brand + Harga)          --}}
@@ -478,7 +478,7 @@
                         </div>
 
                         {{-- Product Grid --}}
-                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 sm:gap-3">
+                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-1.5 sm:gap-3">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
                                     <x-product-card :product="$product" />
@@ -699,3 +699,23 @@
     </script>
 </body>
 </html>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                if (!video.src && video.dataset.src) {
+                    video.src = video.dataset.src;
+                    video.load();
+                }
+                video.play().catch(e => console.log('Autoplay blocked:', e));
+            } else {
+                video.pause();
+            }
+        });
+    }, { rootMargin: '0px', threshold: 0.5 });
+
+    document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
+});
+</script>

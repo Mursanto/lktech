@@ -185,6 +185,16 @@
                                     </div>
                                 </label>
                             </div>
+
+                            <div class="mb-4">
+                                <label class="block text-[11px] font-bold text-gray-600 mb-1">Video Preview (Opsional)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class='bx bxl-youtube text-red-500'></i>
+                                    </div>
+                                    <input type="url" name="video_url" class="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all text-sm outline-none shadow-sm" placeholder="Link Video (Contoh: https://youtube.com/...)">
+                                </div>
+                            </div>
                             
                             <div class="flex gap-4 mb-4">
                                 <!-- Main Image Preview -->

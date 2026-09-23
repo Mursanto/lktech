@@ -82,6 +82,7 @@ class ProductController extends Controller
             'tipe_stok' => 'required|in:ready_stock,open_order',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'video_url' => 'nullable|string|max:500',
             'description' => 'nullable|string',
         ];
         
@@ -115,6 +116,7 @@ class ProductController extends Controller
         $data['battery_runtime'] = $request->battery_runtime ?? 0;
         $data['is_banner_hero'] = $request->has('is_banner_hero');
         $data['is_promo_utama'] = $request->has('is_promo_utama');
+        $data['video_url'] = $request->video_url;
 
         // 4. Handle Catalog Uploads
         if ($request->hasFile('image')) {
@@ -174,6 +176,7 @@ class ProductController extends Controller
             'tipe_stok' => 'required|in:ready_stock,open_order',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'video_url' => 'nullable|string|max:500',
             'description' => 'nullable|string',
         ]);
 
@@ -201,6 +204,7 @@ class ProductController extends Controller
             'investor_id'    => ($request->ownership_type === 'investor') ? $request->investor_id : null,
             'is_banner_hero' => $request->has('is_banner_hero'),
             'is_promo_utama' => $request->has('is_promo_utama'),
+            'video_url'      => $request->video_url,
         ]);
 
         if ($request->hasFile('image')) {

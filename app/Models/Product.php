@@ -35,6 +35,7 @@ class Product extends Model
         'views_count',
         'is_banner_hero',
         'is_promo_utama',
+        'video_url',
     ];
 
     protected $casts = [

@@ -1,17 +1,30 @@
 @props(['product'])
 @php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
-        <!-- Image Area — Full Bleed -->
+        <!-- Image & Video Area — Full Bleed -->
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
-            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            @if(!empty($product->video_url))
+                <!-- Play Icon Badge -->
+                <div class="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2 z-20 bg-black/60 backdrop-blur-sm text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center shadow-lg pointer-events-none">
+                    <i class='bx bx-play text-xs sm:text-sm ml-0.5'></i>
+                </div>
+                
+                <!-- Video Element (Lazy loaded via IntersectionObserver) -->
+                <video 
+                    class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-700 opacity-0 group-hover:opacity-100 product-video-preview"
+                    muted loop playsinline preload="none" data-src="{{ $product->video_url }}">
+                </video>
+            @endif
+            
+            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             
             <!-- Badges Container -->
-            <div class="absolute top-2 left-2 right-2 flex justify-between items-start z-10 gap-2 pointer-events-none">
-                {{-- Badge Views (Kiri Atas) --}}
+            <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 flex justify-between items-start z-30 gap-1.5 pointer-events-none">
+                {{-- Badge Views (Kiri Atas - Digeser jika ada video) --}}
                 @php
                     // Menghasilkan start awal bervariasi antara 20 - 60 secara konsisten per produk
                     $baseViews = ($product->id * 17) % 41 + 20; 
