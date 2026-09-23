@@ -296,12 +296,7 @@
                     </div>
                 </div>
 
-                <!-- Price (Mobile Only, hidden on Desktop since Desktop has right box) -->
-                <div class="lg:hidden mb-2 sm:mb-5 pb-2 sm:pb-5 border-b border-gray-200">
-                    <div class="text-lg sm:text-2xl font-extrabold text-gray-900">
-                        <span class="text-xs sm:text-base font-bold text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
-                    </div>
-                </div>
+
 
                 <!-- Description / Specifications -->
                 <div class="mt-1 sm:mt-4">
@@ -346,9 +341,9 @@
                 <div class="sticky top-24 border border-gray-200 rounded-2xl p-4 shadow-lg shadow-gray-100/50 bg-white">
                     <h3 class="font-bold text-gray-800 mb-3 text-base">Transaksi</h3>
                     
-                    <div class="mb-3 pb-3 border-b border-gray-100">
-                        <span class="text-gray-500 text-[10px] font-semibold uppercase tracking-widest block mb-0.5">Harga Unit</span>
-                        <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight">
+                    <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-gray-100">
+                        <span class="text-gray-500 text-xs font-semibold uppercase tracking-widest">Harga Unit</span>
+                        <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight text-right">
                             <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
                         </div>
                     </div>
