@@ -1,6 +1,8 @@
 @props(['product'])
-@php $isPromo = !empty($product->is_active_promo); @endphp
-
+@php 
+    $isPromo = !empty($product->is_active_promo); 
+    $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+@endphp
 <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
@@ -43,6 +45,13 @@
                     <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite] shrink-0">
                         <span class="animate-[bounce_2s_infinite]">🔥</span> <span class="whitespace-nowrap">Hot Promo</span>
                     </div>
+                    @endif
+
+                    {{-- Badge PRE-ORDER --}}
+                    @if($isPreOrder)
+                        <div class="bg-orange-500 text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-semibold shadow-sm flex items-center gap-0.5 sm:gap-1 shrink-0 whitespace-nowrap">
+                            <i class='bx bx-time-five'></i> Pre-Order
+                        </div>
                     @endif
 
                     {{-- Badge Stok Tersedia / Habis --}}
