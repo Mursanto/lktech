@@ -194,7 +194,7 @@
            ========================================== */
         @media (max-width: 639px) {
           .hero-section {
-            padding: 12px 16px 8px 16px !important;
+            padding: 10px 6px 6px 6px !important;
             background-color: #f0f9ff;
           }
 
@@ -272,7 +272,7 @@
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-cyan-200 opacity-40 blur-3xl"></div>
             <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-200 opacity-40 blur-3xl"></div>
             
-            <div class="hero-container px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 py-3 lg:py-5 relative z-10 w-full">
+            <div class="hero-container px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 py-3 lg:py-5 relative z-10 w-full">
                 <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 lg:gap-6">
                     
                     <!-- Left: Text (60%) -->
@@ -425,7 +425,7 @@
         @endif
 
         <!-- Product Grid Section -->
-        <div id="katalog" class="px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 pt-0 pb-6 lg:pt-2 lg:pb-8 flex-shrink-0">
+        <div id="katalog" class="px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 pt-0 pb-6 lg:pt-2 lg:pb-8 flex-shrink-0">
             
             @if(request()->has('search') && request()->search != '')
             <div class="mb-2 flex flex-wrap justify-between items-center gap-4">
@@ -463,7 +463,7 @@
 
         <!-- Produk Terlaris Section -->
         @if(!request()->has('search'))
-        <div class="px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 pt-2 pb-0">
+        <div class="px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 pt-2 pb-0">
             <div class="mb-1.5 border-b border-gray-100 pb-1.5">
                 <div class="flex items-baseline gap-2.5">
                     <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight flex items-center gap-1.5 whitespace-nowrap">
@@ -562,7 +562,7 @@
         <!-- Cara Order Section -->
         @if(!request()->has('search'))
         <div class="bg-white py-3 lg:py-4 border-y border-gray-100">
-            <div class="px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8">
+            <div class="px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between mb-3 min-w-0">
                     <div class="flex items-baseline gap-2.5 min-w-0 flex-1">
                         <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight whitespace-nowrap">
@@ -637,7 +637,7 @@
         <!-- Google Reviews Section -->
         @if(isset($googleReviews) && $googleReviews->count() > 0 && !request()->has('search'))
         <div id="google-reviews" class="bg-[#F8FAFC] py-3 lg:py-4 border-y border-gray-100">
-            <div class="px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8">
+            <div class="px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8">
                 
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 md:mb-3 gap-3 px-2 sm:px-3">
                     <div class="min-w-0 flex-1">
@@ -763,7 +763,7 @@
 
         <!-- Blog & Panduan Section -->
         @if(isset($latestPosts) && $latestPosts->count() > 0 && !request()->has('search'))
-        <div class="px-3 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 py-3 lg:py-4">
+        <div class="px-1.5 sm:max-w-7xl sm:mx-auto sm:px-6 lg:px-8 py-3 lg:py-4">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-baseline gap-2.5 min-w-0 flex-1">
                     <h2 class="text-base sm:text-lg font-black text-gray-900 font-montserrat tracking-tight whitespace-nowrap">Artikel & Panduan</h2>
@@ -1105,5 +1105,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
 });
 </script>
+
 
 
