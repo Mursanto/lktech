@@ -318,6 +318,9 @@
                                     ];
                                 }
                             }
+                            if (isset($dynamicPromoBanners) && count($dynamicPromoBanners) > 0) {
+                                $promoBanners = array_merge($promoBanners, $dynamicPromoBanners);
+                            }
                         @endphp
                         
                         @if(count($promoBanners) > 0)
@@ -334,7 +337,7 @@
                                     }
                                  }">
                                  
-                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-transparent border border-white/20">
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-transparent border border-white/20 group-hover:scale-105">
                                     @foreach($promoBanners as $index => $banner)
                                         <div x-show="activeSlide === {{ $index }}" 
                                              x-transition:enter="transition ease-out duration-700"
@@ -344,12 +347,36 @@
                                              x-transition:leave-start="opacity-100 scale-100"
                                              x-transition:leave-end="opacity-0 scale-105"
                                              class="absolute inset-0 w-full h-full flex items-center justify-center">
+                                            @php 
+                                                if (Str::startsWith($banner['image'], 'http') || Str::startsWith($banner['image'], '/storage')) {
+                                                    $imgSrc = $banner['image'];
+                                                } else {
+                                                    // Fix for paths like 'public/catalog/...'
+                                                    $cleanPath = str_replace('public/', '', $banner['image']);
+                                                    $imgSrc = asset('storage/' . $cleanPath);
+                                                }
+                                            @endphp
                                             @if(!empty($banner['link']))
-                                                <a href="{{ $banner['link'] }}" class="block w-full h-full">
-                                                    <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
+                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                    @if(isset($banner['title']))
+                                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent rounded-3xl flex flex-col justify-end p-5">
+                                                            <div class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md w-max mb-2 uppercase tracking-wide">🔥 Promo Khusus</div>
+                                                            <h3 class="text-white font-black text-lg sm:text-xl leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
+                                                            @if(!empty($banner['marketing_description']))
+                                                                <p class="text-gray-200 text-[11px] sm:text-xs line-clamp-2 mb-2.5 font-medium leading-snug">{{ $banner['marketing_description'] }}</p>
+                                                            @endif
+                                                            @if(isset($banner['price']))
+                                                                <div class="flex items-center gap-2">
+                                                                    <span class="text-emerald-400 font-bold text-sm sm:text-base">Rp {{ number_format($banner['price'], 0, ',', '.') }}</span>
+                                                                    <span class="text-[10px] text-gray-400 line-through hidden sm:inline">Rp {{ number_format($banner['price'] * 1.15, 0, ',', '.') }}</span>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 </a>
                                             @else
-                                                <img src="{{ asset('storage/' . $banner['image']) }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
