@@ -264,7 +264,7 @@
 
                 {{-- Filter Button --}}
                 <button type="button" @click="filterOpen = true"
-                        class="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white rounded-lg text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer shrink-0">
+                        class="flex items-center gap-1.5 px-2.5 py-1.5 border border-gray-200 bg-white rounded-lg text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer shrink-0">
                     <i class='bx bx-filter-alt text-brand-500'></i>
                     Filter
                     @if(!empty($selectedBrands) || $priceMin || $priceMax)
@@ -288,7 +288,7 @@
                     @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
                     @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
                     <select name="sort" onchange="this.form.submit()"
-                            class="w-full appearance-none bg-white border border-gray-200 text-gray-700 py-2 pl-3 pr-8 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm cursor-pointer">
+                            class="w-full appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-2.5 pr-8 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm cursor-pointer">
                         <option value="terbaru"  {{ request('sort', 'terbaru') == 'terbaru'  ? 'selected' : '' }}>Paling Sesuai</option>
                         <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
                         <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
@@ -419,7 +419,7 @@
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         {{-- Category Header --}}
                         <div class="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
-                            <h2 class="text-base font-semibold text-gray-800 min-w-0 truncate">
+                            <h2 class="text-sm sm:text-base font-semibold text-gray-800 min-w-0 truncate">
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
                                     <i class='bx bx-category text-brand-500 text-lg shrink-0'></i>
                                     <span class="truncate">{{ $category->name }}</span>
@@ -429,7 +429,7 @@
                             @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
                                 {{-- Preview mode: Lihat Semua on the right --}}
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
-                                   class="shrink-0 ml-3 text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
+                                   class="shrink-0 ml-3 text-xs sm:text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
                                     Lihat Semua ({{ $category->total_count }}) &rarr;
                                 </a>
                             @else
