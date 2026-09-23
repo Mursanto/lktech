@@ -24,7 +24,7 @@
             
             <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             
-            <!-- Badges Container: 1 row — View (left) | Pre-Order + Hot Promo (right) -->
+            <!-- Badges Container: View top-left, Hot Promo top-right -->
             <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 z-30 pointer-events-none flex justify-between items-start gap-1">
 
                 {{-- Left: Badge Views --}}
@@ -39,16 +39,8 @@
                     <span class="whitespace-nowrap">{{ $formattedViews }}</span>
                 </div>
 
-                {{-- Right: Pre-Order & Hot Promo in 1 row --}}
+                {{-- Right: Hot Promo or Sold Out --}}
                 <div class="flex flex-row items-start gap-0.5 sm:gap-1 pointer-events-auto shrink-0">
-                    {{-- Badge PRE-ORDER --}}
-                    @if($isPreOrder)
-                    <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap">
-                        <i class='bx bx-time-five text-[9px] sm:text-[10px]'></i>
-                        <span>Pre-Order</span>
-                    </div>
-                    @endif
-
                     {{-- Badge HOT PROMO --}}
                     @if($isPromo)
                     <div class="bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
