@@ -320,7 +320,7 @@
                                 
                                 // Filter out inactive banners
                                 $promoBanners = array_filter($promoBanners, function($banner) {
-                                    return !isset($banner['is_active']) || $banner['is_active'];
+                                    return !is_array($banner) || !isset($banner['is_active']) || $banner['is_active'];
                                 });
                                 $promoBanners = array_values($promoBanners);
                             }

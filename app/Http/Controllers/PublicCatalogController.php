@@ -238,7 +238,7 @@ class PublicCatalogController extends Controller
             return $index !== false ? $index : count($priorityNames) + 1;
         })->values();
 
-        $dynamicPromoBanners = collect();
+        $dynamicPromoBanners = [];
         if ($isPromoActive) {
             $dynamicPromoBanners = \App\Models\Product::bannerHero()->get()->map(function($p) {
                 $title = $p->brand . ' ' . $p->model_series;
