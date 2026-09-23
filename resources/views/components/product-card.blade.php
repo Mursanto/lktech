@@ -13,8 +13,11 @@
             <div class="absolute top-2 left-2 right-2 flex justify-between items-start z-10 gap-2 pointer-events-none">
                 {{-- Badge Views (Kiri Atas) --}}
                 @php
-                    $viewsCount = $product->views_count ?? 0;
-                    $formattedViews = $viewsCount >= 1000 ? round($viewsCount/1000, 1) . 'k' : $viewsCount;
+                    // Menghasilkan start awal bervariasi antara 20 - 60 secara konsisten per produk
+                    $baseViews = ($product->id * 17) % 41 + 20; 
+                    $actualViews = $product->views_count ?? 0;
+                    $totalViews = $baseViews + $actualViews;
+                    $formattedViews = $totalViews >= 1000 ? round($totalViews/1000, 1) . 'k' : $totalViews;
                 @endphp
                 <div class="flex items-center gap-1 bg-gray-900/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-md text-[9px] font-semibold shadow-sm border border-white/20 h-5 shrink pointer-events-auto overflow-hidden">
                     <i class='bx bx-show text-[10px] shrink-0'></i> <span class="truncate">{{ $formattedViews }}</span>
