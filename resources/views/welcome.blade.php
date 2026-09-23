@@ -364,10 +364,7 @@
                                             @endphp
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
-                                                    <div class="absolute inset-0 bg-gray-900 rounded-3xl overflow-hidden pointer-events-none">
-                                                        <img src="{{ $imgSrc }}" alt="" class="w-full h-full object-cover opacity-40 blur-xl scale-110">
-                                                    </div>
-                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain relative z-0 drop-shadow-xl p-2 sm:p-4">
+                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Left -->
                                                         <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
@@ -387,12 +384,7 @@
                                                     @endif
                                                 </a>
                                             @else
-                                                <div class="relative w-full h-full rounded-3xl overflow-hidden">
-                                                    <div class="absolute inset-0 bg-gray-900 pointer-events-none">
-                                                        <img src="{{ $imgSrc }}" alt="" class="w-full h-full object-cover opacity-40 blur-xl scale-110">
-                                                    </div>
-                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-contain relative z-0 drop-shadow-xl p-2 sm:p-4">
-                                                </div>
+                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
