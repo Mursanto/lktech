@@ -1,7 +1,7 @@
 @props(['product'])
 @php $isPromo = !empty($product->is_active_promo); @endphp
 
-<div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full {{ $isPromo ? 'promo-card-radar' : 'border-gray-200' }}">
+<div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
@@ -27,8 +27,8 @@
                 <div class="flex flex-col gap-1 items-end shrink-0 pointer-events-auto">
                     {{-- Badge PROMO UTAMA --}}
                     @if($isPromo)
-                    <div class="bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm shadow-red-500/30 flex items-center gap-1">
-                        🔥 Hot Promo
+                    <div class="relative bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm flex items-center gap-1 group/badge overflow-hidden animate-[pulse_2s_ease-in-out_infinite]">
+                        <span class="animate-[bounce_2s_infinite]">🔥</span> Hot Promo
                     </div>
                     @endif
 
