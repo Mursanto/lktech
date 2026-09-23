@@ -275,7 +275,7 @@
                 </button>
 
                 {{-- Sort Dropdown: always visible on mobile --}}
-                <form method="GET" action="{{ route('katalog.index') }}" class="relative ml-auto">
+                <form method="GET" action="{{ route('katalog.index') }}" class="flex-1 relative">
                     @if(request()->has('category_id'))
                         <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                     @endif
