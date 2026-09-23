@@ -361,7 +361,7 @@
                                                     <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Left -->
-                                                        <div class="absolute top-3 left-3 bg-brand-600 text-white text-xs px-2.5 py-1 rounded-md shadow-sm font-bold uppercase tracking-wide z-10">🔥 Promo Khusus</div>
+                                                        <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-xs px-3 py-1 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
                                                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent rounded-3xl flex flex-col justify-end p-5">
                                                             <h3 class="text-white font-bold text-xl leading-tight mb-1 font-montserrat">{{ $banner['title'] }}</h3>
