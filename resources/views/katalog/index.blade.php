@@ -719,3 +719,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
 });
 </script>
+

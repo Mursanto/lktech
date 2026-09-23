@@ -58,7 +58,7 @@
         <!-- Content Details -->
         <div class="px-1.5 pt-1.5 pb-1.5 sm:px-2 sm:pt-2 sm:pb-2 flex flex-col">
             <!-- Brand & Model -->
-            <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 line-clamp-2 leading-snug mb-0.5 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
+            <h3 class="text-[11px] sm:text-xs font-semibold text-gray-800 truncate leading-snug mb-0.5 group-hover:text-brand-600 transition-colors" title="{{ $product->brand }} {{ $product->model_series }}">
                 {{ $product->brand }} {{ $product->model_series }}
             </h3>
 

@@ -24,7 +24,7 @@
                 ->count();
         }
     @endphp
-    <div class="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="max-w-[1400px] mx-auto px-1.5 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-14 gap-2 sm:gap-4">
             
             <!-- Logo -->
