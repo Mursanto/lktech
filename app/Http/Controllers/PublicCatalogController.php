@@ -26,10 +26,12 @@ class PublicCatalogController extends Controller
             } elseif ($request->sort == 'terendah') {
                 $query->orderBy('selling_price', 'asc');
             } else {
-                $query->latest();
+                // Default: promo utama tampil dulu, lalu terbaru
+                $query->orderByRaw('is_promo_utama DESC, is_banner_hero DESC, created_at DESC');
             }
         } else {
-            $query->latest();
+            // Default: promo utama tampil dulu, lalu terbaru
+            $query->orderByRaw('is_promo_utama DESC, is_banner_hero DESC, created_at DESC');
         }
 
         if ($request->has('search') && $request->search != '') {
@@ -133,23 +135,13 @@ class PublicCatalogController extends Controller
             });
 
             if ($collectionToTransform instanceof \Illuminate\Support\Collection) {
-                // Filter out ALL promo products from the regular items to avoid duplicates
+                // Pisahkan produk promo dan non-promo
+                $promoItems_laptop = $collectionToTransform->filter(fn($p) => $promoProductIds->contains($p->id))->values();
                 $regularItems = $collectionToTransform->filter(fn($p) => !$promoProductIds->contains($p->id))->values();
-                $result = $regularItems->all(); 
-                
-                // Masukkan produk promo Laptop ke tengah-tengah katalog utama
-                $offset = 2; // Mulai dari indeks 2 (kolom 3 baris 1)
-                $step = 3;   // Lompat setiap 3 item
-                foreach ($promoLaptops as $promoProduct) {
-                    if ($offset > count($result)) {
-                        $result[] = $promoProduct;
-                    } else {
-                        array_splice($result, $offset, 0, [$promoProduct]);
-                    }
-                    $offset += $step;
-                }
-                
-                $sorted = collect($result);
+
+                // Produk promo di DEPAN (baris 1, posisi 1), lalu regular items
+                $sorted = $promoItems_laptop->merge($regularItems);
+
                 if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator) {
                     $products->setCollection($sorted);
                 } else {

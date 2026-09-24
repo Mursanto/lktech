@@ -188,14 +188,37 @@
 
                             <div class="mb-4">
                                 <label class="block text-[11px] font-bold text-gray-600 mb-1">Video Preview (Opsional)</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class='bx bxl-youtube text-red-500'></i>
+                                <div class="flex gap-1 mb-1.5" id="video-tab-buttons">
+                                    <button type="button" id="btn-tab-url" onclick="switchVideoTab('url')"
+                                        class="flex-1 text-[10px] font-semibold py-1 rounded border border-brand-500 bg-brand-500 text-white transition">
+                                        <i class='bx bxl-youtube mr-1'></i>Link YouTube
+                                    </button>
+                                    <button type="button" id="btn-tab-file" onclick="switchVideoTab('file')"
+                                        class="flex-1 text-[10px] font-semibold py-1 rounded border border-gray-300 bg-white text-gray-600 transition">
+                                        <i class='bx bx-upload mr-1'></i>Upload File
+                                    </button>
+                                </div>
+                                {{-- Tab URL YouTube --}}
+                                <div id="video-tab-url">
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class='bx bxl-youtube text-red-500'></i>
+                                        </div>
+                                        <input type="url" name="video_url" id="video_url_input"
+                                            class="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all text-sm outline-none shadow-sm"
+                                            placeholder="Link Video (Contoh: https://youtube.com/...)">
                                     </div>
-                                    <input type="url" name="video_url" class="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all text-sm outline-none shadow-sm" placeholder="Link Video (Contoh: https://youtube.com/...)">
+                                </div>
+                                {{-- Tab Upload File Lokal --}}
+                                <div id="video-tab-file" class="hidden">
+                                    <label class="flex flex-col items-center justify-center w-full py-3 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition" id="video-upload-label">
+                                        <i class='bx bx-video-plus text-2xl text-gray-400 mb-1'></i>
+                                        <span class="text-[10px] text-gray-500" id="video-file-name">Klik untuk pilih video (MP4, WebM, MOV — maks 100MB)</span>
+                                        <input type="file" name="video_file" id="video_file_input" class="hidden" accept="video/mp4,video/webm,video/quicktime,video/avi" onchange="previewVideoFile(event)">
+                                    </label>
                                 </div>
                             </div>
-                            
+
                             <div class="flex gap-4 mb-4">
                                 <!-- Main Image Preview -->
                                 <div class="w-1/3">
@@ -466,6 +489,64 @@ function removeNewGalleryImage(index) {
     galleryData = newData;
     document.getElementById('gallery-upload').files = galleryData.files;
     renderGalleryPreviews();
+}
+
+// ─── Video Tab Switcher ────────────────────────────────────────────────
+function switchVideoTab(tab) {
+    const tabUrl  = document.getElementById('video-tab-url');
+    const tabFile = document.getElementById('video-tab-file');
+    const btnUrl  = document.getElementById('btn-tab-url');
+    const btnFile = document.getElementById('btn-tab-file');
+
+    if (tab === 'url') {
+        tabUrl.classList.remove('hidden');
+        tabFile.classList.add('hidden');
+        btnUrl.className  = 'flex-1 text-[10px] font-semibold py-1 rounded border border-brand-500 bg-brand-500 text-white transition';
+        btnFile.className = 'flex-1 text-[10px] font-semibold py-1 rounded border border-gray-300 bg-white text-gray-600 transition';
+        // Reset file input supaya tidak ikut tersubmit
+        const fi = document.getElementById('video_file_input');
+        if (fi) fi.value = '';
+    } else {
+        tabUrl.classList.add('hidden');
+        tabFile.classList.remove('hidden');
+        btnFile.className = 'flex-1 text-[10px] font-semibold py-1 rounded border border-brand-500 bg-brand-500 text-white transition';
+        btnUrl.className  = 'flex-1 text-[10px] font-semibold py-1 rounded border border-gray-300 bg-white text-gray-600 transition';
+        // Reset URL input supaya tidak ikut tersubmit
+        const ui = document.getElementById('video_url_input');
+        if (ui) ui.value = '';
+    }
+}
+
+// ─── Preview Video di area Foto Utama ─────────────────────────────────
+function previewVideoFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Update label filename
+    const nameEl = document.getElementById('video-file-name');
+    if (nameEl) nameEl.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
+
+    // Tampilkan preview video di kontainer Foto Utama
+    const container = document.getElementById('image-preview-container');
+    const placeholder = document.getElementById('placeholder-text');
+    const imgPreview = document.getElementById('image-preview');
+
+    if (container) {
+        // Hapus video preview lama jika ada
+        const oldVideo = document.getElementById('video-preview-local');
+        if (oldVideo) oldVideo.remove();
+
+        const videoEl = document.createElement('video');
+        videoEl.id = 'video-preview-local';
+        videoEl.src = URL.createObjectURL(file);
+        videoEl.controls = true;
+        videoEl.className = 'absolute inset-0 w-full h-full object-contain bg-black';
+        videoEl.style.zIndex = '15';
+        container.appendChild(videoEl);
+
+        if (placeholder) placeholder.style.display = 'none';
+        if (imgPreview) imgPreview.classList.add('hidden');
+    }
 }
 </script>
 </x-app-layout>

@@ -88,7 +88,7 @@
                 @if($hasValidProcessor)<span class="mr-1.5">Processor {{ $product->processor }}</span>@endif
                 @if($hasValidRam)<span class="mr-1.5">RAM {{ $product->ram }}</span>@endif
                 @if($hasValidStorage)<span class="mr-1.5">Storage {{ $product->storage }}</span>@endif
-                @if($hasValidScreen)<span>Layar {{ $product->screen_size }}"</span>@endif
+                @if($hasValidScreen)<span>Layar {{ $product->screen_size }} Inci</span>@endif
             </div>
             @else
             <div class="text-[10px] text-gray-400 leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;max-height:4.125em">

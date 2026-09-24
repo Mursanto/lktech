@@ -385,7 +385,7 @@
                                                                     @if($hasValidProcessor)<span class="mr-1.5">Processor {{ $banner['processor'] }}</span>@endif
                                                                     @if($hasValidRam)<span class="mr-1.5">RAM {{ $banner['ram'] }}</span>@endif
                                                                     @if($hasValidStorage)<span class="mr-1.5">Storage {{ $banner['storage'] }}</span>@endif
-                                                                    @if($hasValidScreen)<span>Layar {{ $banner['screen_size'] }}"</span>@endif
+                                                                    @if($hasValidScreen)<span>Layar {{ $banner['screen_size'] }} Inci</span>@endif
                                                                 </p>
                                                             @elseif(!empty($banner['marketing_description']))
                                                                 <p class="text-gray-200 text-[9px] sm:text-[10px] line-clamp-2 mb-1 font-medium leading-relaxed">{{ $banner['marketing_description'] }}</p>

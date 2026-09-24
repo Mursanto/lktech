@@ -209,7 +209,7 @@
                     <li><strong>Prosesor:</strong> {{ $product->processor ?: '-' }}</li>
                     <li><strong>RAM:</strong> {{ $product->ram ?: '-' }}</li>
                     <li><strong>Penyimpanan:</strong> {{ $product->storage ?: '-' }}</li>
-                    <li><strong>Layar:</strong> {{ $product->screen_size ? $product->screen_size . '"' : '-' }}</li>
+                    <li><strong>Layar:</strong> {{ $product->screen_size ? $product->screen_size . ' Inci' : '-' }}</li>
                 </ul>
                 <p><br></p>
                 <h3>Kondisi Unit:</h3>

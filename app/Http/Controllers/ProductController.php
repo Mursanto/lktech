@@ -83,6 +83,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'video_url' => 'nullable|string|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:102400',
             'description' => 'nullable|string',
         ];
         
@@ -132,6 +133,16 @@ class ProductController extends Controller
             $data['gallery_images'] = $galleryPaths;
         }
 
+        // 5. Handle Video Upload dari file lokal
+        if ($request->hasFile('video_file')) {
+            $videoFile = $request->file('video_file');
+            $videoFilename = uniqid('vid_') . '_' . time() . '.' . $videoFile->getClientOriginalExtension();
+            $videoPath = 'public/catalog/videos/' . $videoFilename;
+            \Illuminate\Support\Facades\Storage::put($videoPath, file_get_contents($videoFile->getRealPath()));
+            $data['video_path'] = $videoPath;
+            $data['video_url'] = null; // Prioritaskan file lokal, kosongkan URL jika ada
+        }
+
         if ($request->has('description')) {
             $data['description'] = $request->description;
         }
@@ -177,6 +188,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'video_url' => 'nullable|string|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:102400',
             'description' => 'nullable|string',
         ]);
 
@@ -204,7 +216,7 @@ class ProductController extends Controller
             'investor_id'    => ($request->ownership_type === 'investor') ? $request->investor_id : null,
             'is_banner_hero' => $request->has('is_banner_hero'),
             'is_promo_utama' => $request->has('is_promo_utama'),
-            'video_url'      => $request->video_url,
+            'video_url'      => $request->hasFile('video_file') ? null : $request->video_url,
         ]);
 
         if ($request->hasFile('image')) {
@@ -212,6 +224,19 @@ class ProductController extends Controller
                 Storage::delete($product->image_path);
             }
             $product->update(['image_path' => $this->compressAndStore($request->file('image'), 'public/catalog')]);
+        }
+
+        // Handle Video Upload dari file lokal
+        if ($request->hasFile('video_file')) {
+            // Hapus video lama jika ada
+            if ($product->video_path && Storage::exists($product->video_path)) {
+                Storage::delete($product->video_path);
+            }
+            $videoFile = $request->file('video_file');
+            $videoFilename = uniqid('vid_') . '_' . time() . '.' . $videoFile->getClientOriginalExtension();
+            $videoPath = 'public/catalog/videos/' . $videoFilename;
+            Storage::put($videoPath, file_get_contents($videoFile->getRealPath()));
+            $product->update(['video_path' => $videoPath, 'video_url' => null]);
         }
 
         $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
