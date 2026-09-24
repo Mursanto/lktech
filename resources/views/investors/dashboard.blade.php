@@ -34,16 +34,26 @@
     <div class="flex flex-col flex-1 space-y-4">
     
         {{-- Control Bar --}}
-        <form method="GET" action="{{ route('investor.dashboard') }}" class="bg-white rounded-xl border border-natural-100 shadow-sm p-2.5 sm:p-3">
+        <form x-ref="filterForm" method="GET" action="{{ route('investor.dashboard') }}" class="bg-white rounded-xl border border-natural-100 shadow-sm p-2.5 sm:p-3">
+            <input type="hidden" name="tab" :value="activeTab">
             <div class="flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-3">
-                <div class="grid grid-cols-2 md:flex items-center gap-2 w-full md:w-auto">
-                    <div class="flex items-center gap-1.5 sm:gap-2">
-                        <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Dari</label>
-                        <input type="date" name="start_date" value="{{ $startDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
+                <div class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto gap-2">
+                    <div class="grid grid-cols-2 md:flex items-center gap-2 w-full md:w-auto" :class="activeTab === 'stok' ? 'opacity-50 pointer-events-none' : ''" :title="activeTab === 'stok' ? 'Filter tanggal hanya aktif di tab Riwayat Terjual' : ''">
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Dari</label>
+                            <input type="date" name="start_date" id="start_date" value="{{ $startDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
+                        </div>
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Sampai</label>
+                            <input type="date" name="end_date" id="end_date" value="{{ $endDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
+                        </div>
                     </div>
-                    <div class="flex items-center gap-1.5 sm:gap-2">
-                        <label class="text-[9px] font-bold text-natural-500 uppercase tracking-wider">Sampai</label>
-                        <input type="date" name="end_date" value="{{ $endDate }}" class="w-full px-2 py-1.5 border border-natural-200 rounded-lg text-[10px] sm:text-xs focus:border-brand-500 focus:outline-none">
+                    
+                    {{-- Quick Presets --}}
+                    <div class="flex items-center gap-1 mt-1 md:mt-0" x-show="activeTab === 'riwayat'">
+                        <button type="button" @click="setDates('{{ now()->startOfMonth()->toDateString() }}', '{{ now()->endOfMonth()->toDateString() }}')" class="px-2 py-1 bg-natural-100 hover:bg-natural-200 text-natural-600 rounded text-[9px] sm:text-[10px] font-semibold transition-colors">Bulan Ini</button>
+                        <button type="button" @click="setDates('{{ now()->subMonths(3)->startOfMonth()->toDateString() }}', '{{ now()->endOfMonth()->toDateString() }}')" class="px-2 py-1 bg-natural-100 hover:bg-natural-200 text-natural-600 rounded text-[9px] sm:text-[10px] font-semibold transition-colors">3 Bulan Terakhir</button>
+                        <button type="button" @click="setDates('{{ now()->startOfYear()->toDateString() }}', '{{ now()->endOfYear()->toDateString() }}')" class="px-2 py-1 bg-natural-100 hover:bg-natural-200 text-natural-600 rounded text-[9px] sm:text-[10px] font-semibold transition-colors">Tahun Ini</button>
                     </div>
                 </div>
                 
@@ -52,7 +62,7 @@
                         Filter
                     </button>
                     @if($startDate || $endDate)
-                    <a href="{{ route('investor.dashboard') }}" class="px-3 sm:px-4 py-1.5 bg-natural-100 hover:bg-natural-200 text-natural-600 font-bold rounded-lg text-[10px] sm:text-xs transition-all flex items-center justify-center">
+                    <a href="{{ route('investor.dashboard', ['tab' => request('tab', 'stok')]) }}" class="px-3 sm:px-4 py-1.5 bg-natural-100 hover:bg-natural-200 text-natural-600 font-bold rounded-lg text-[10px] sm:text-xs transition-all flex items-center justify-center">
                         Reset
                     </a>
                     @endif
@@ -132,8 +142,8 @@
                         <i class='bx bx-trending-up text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <p class="text-[13px] sm:text-lg lg:text-xl font-black whitespace-nowrap">{{ number_format($roi, 2, ',', '.') }}%</p>
-                <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90">(Profit &divide; Modal)</p>
+                <p class="text-[13px] sm:text-lg lg:text-xl font-black whitespace-nowrap" title="Kalkulasi otomatis berbasis skema LKTech {{ 100 - $investor->share_percentage }}% : Investor {{ number_format($investor->share_percentage, 0) }}%">{{ number_format($roi, 2, ',', '.') }}%</p>
+                <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90 cursor-help" title="Kalkulasi otomatis berbasis skema LKTech {{ 100 - $investor->share_percentage }}% : Investor {{ number_format($investor->share_percentage, 0) }}%">(Profit &divide; Modal)</p>
             </div>
         </div>
 
@@ -150,7 +160,14 @@
         --}}
 
         {{-- Data Area with Tabs --}}
-        <div x-data="{ activeTab: 'stok' }">
+        <div x-data="{ 
+            activeTab: '{{ request('tab', 'stok') }}',
+            setDates(start, end) {
+                document.getElementById('start_date').value = start;
+                document.getElementById('end_date').value = end;
+                this.$refs.filterForm.submit();
+            }
+        }">
             {{-- Tabs Navigation --}}
             <div class="flex items-center gap-1 sm:gap-4 border-b border-natural-200 mb-3 px-1 sm:px-2 overflow-x-auto hide-scrollbar">
                 <button @click="activeTab = 'stok'" 
@@ -183,33 +200,46 @@
                 <table class="w-full text-[10px] sm:text-xs">
                     <thead>
                         <tr class="bg-natural-50 border-b border-natural-100">
-                            <th class="text-left px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Produk</th>
-                            <th class="text-left px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Kategori</th>
-                            <th class="text-center px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Stok</th>
-                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Harga Modal/Unit</th>
-                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Total Modal Sisa</th>
-                            <th class="text-right px-2 sm:px-4 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Harga Jual/Unit</th>
+                            <th class="text-left px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Produk</th>
+                            <th class="text-left px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Kategori</th>
+                            <th class="text-center px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider">Stok</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Modal/Unit</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Total Modal Sisa</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Harga Jual/Unit</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Est. Bagi Hasil ({{ number_format($investor->share_percentage, 0) }}%)</th>
+                            <th class="text-right px-2 sm:px-3 py-2 sm:py-3 text-[9px] sm:text-[11px] text-natural-500 font-bold uppercase tracking-wider whitespace-nowrap">Est. Total Return</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-natural-50">
                         @foreach($activeProducts as $product)
+                        @php
+                            $nettProfit = max(0, $product->selling_price - $product->purchase_price);
+                            $estBagiHasil = $nettProfit * ($investor->share_percentage / 100);
+                            $estTotalReturn = $product->purchase_price + $estBagiHasil;
+                        @endphp
                         <tr class="hover:bg-natural-50/60 transition-colors">
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 min-w-[120px]">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 min-w-[120px]">
                                 <p class="font-bold text-natural-800">{{ $product->brand }} {{ $product->model_series }}</p>
-                                <p class="text-natural-400 text-[8px] sm:text-[10px]">SN: {{ $product->serial_number }}</p>
+                                <p class="font-normal text-natural-500 text-[8px] sm:text-[10px]">SN: {{ $product->serial_number }}</p>
                             </td>
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-natural-500">{{ $product->category->name ?? '-' }}</td>
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-natural-500">{{ $product->category->name ?? '-' }}</td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-center">
                                 <span class="font-bold text-natural-700">{{ $product->stock }}</span>
                             </td>
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-semibold text-natural-600 whitespace-nowrap">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-semibold text-natural-600 whitespace-nowrap">
                                 <span class="text-[9px] mr-0.5 text-natural-400">Rp</span>{{ number_format($product->purchase_price, 0, ',', '.') }}
                             </td>
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-semibold text-amber-600 whitespace-nowrap">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-semibold text-amber-600 whitespace-nowrap">
                                 <span class="text-[9px] mr-0.5 text-amber-400">Rp</span>{{ number_format(($product->stock ?? 1) * $product->purchase_price, 0, ',', '.') }}
                             </td>
-                            <td class="px-2 sm:px-4 py-2 sm:py-3 text-right font-bold text-emerald-600 whitespace-nowrap">
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-bold text-emerald-600 whitespace-nowrap">
                                 <span class="text-[9px] mr-0.5 text-emerald-400 font-semibold">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
+                            </td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-bold text-violet-600 whitespace-nowrap">
+                                <span class="text-[9px] mr-0.5 text-violet-400 font-semibold">Rp</span>{{ number_format($estBagiHasil, 0, ',', '.') }}
+                            </td>
+                            <td class="px-2 sm:px-3 py-2 sm:py-3 text-right font-bold text-blue-600 whitespace-nowrap">
+                                <span class="text-[9px] mr-0.5 text-blue-400 font-semibold">Rp</span>{{ number_format($estTotalReturn, 0, ',', '.') }}
                             </td>
                         </tr>
                         @endforeach

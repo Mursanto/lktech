@@ -131,6 +131,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 Route::middleware(['auth', 'role:Investor'])->group(function () {
     Route::get('/investor/dashboard', [App\Http\Controllers\InvestorReportController::class, 'dashboard'])->name('investor.dashboard');
     Route::get('/investor/dashboard/export', [App\Http\Controllers\InvestorReportController::class, 'exportDashboard'])->name('investor.dashboard.export');
+    
+    // Legal & PKS
+    Route::get('/investor/legal', [App\Http\Controllers\InvestorLegalController::class, 'index'])->name('investor.legal.index');
+    Route::post('/investor/legal/agree', [App\Http\Controllers\InvestorLegalController::class, 'agree'])->name('investor.legal.agree');
+    Route::get('/investor/legal/export', [App\Http\Controllers\InvestorLegalController::class, 'exportPdf'])->name('investor.legal.export');
 });
 
 // 2. AKSES KASIR (Admin & Staff) - Bisa Modify

@@ -16,11 +16,14 @@ class Investor extends Model
         'share_percentage',
         'notes',
         'is_active',
+        'pks_agreed_at',
+        'pks_agreed_ip',
     ];
 
     protected $casts = [
         'share_percentage' => 'float',
         'is_active'        => 'boolean',
+        'pks_agreed_at'    => 'datetime',
     ];
 
     /**
