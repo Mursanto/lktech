@@ -52,7 +52,7 @@ class CatalogController extends Controller
             } else {
                 // Auto-fetch Fallback: Unsplash using product brand and model
                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                $product->display_image = asset('images/LKtech.png');
             }
             return $product;
         });

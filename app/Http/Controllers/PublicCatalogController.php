@@ -56,7 +56,7 @@ class PublicCatalogController extends Controller
                 $product->display_image = Storage::url($product->image_path);
             } else {
                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                $product->display_image = asset('images/LKtech.png');
             }
             return $product;
         });
@@ -112,7 +112,7 @@ class PublicCatalogController extends Controller
                     $product->display_image = Storage::url($product->image_path);
                 } else {
                     $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                    $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                    $product->display_image = asset('images/LKtech.png');
                 }
                 $product->is_active_promo = true;
                 return $product;
@@ -175,7 +175,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
         
         $softwareProducts = $softwareQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?software";
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
             $product->is_active_promo = false;
             return $product;
         });
@@ -188,7 +188,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
             
         $accessoriesProducts = $accessoriesQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?accessories";
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
             $product->is_active_promo = false;
             return $product;
         });
@@ -201,7 +201,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
             
         $sparepartProducts = $sparepartQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : "https://source.unsplash.com/400x400/?sparepart";
+            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
             $product->is_active_promo = false;
             return $product;
         });
@@ -289,7 +289,7 @@ class PublicCatalogController extends Controller
             $product->display_image = Storage::url($product->image_path);
         } else {
             $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-            $product->display_image = "https://source.unsplash.com/600x600/?{$searchQuery}";
+            $product->display_image = asset('images/LKtech.png');
         }
 
         // Setup gallery images
@@ -351,7 +351,7 @@ class PublicCatalogController extends Controller
                 $rp->display_image = Storage::url($rp->image_path);
             } else {
                 $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
-                $rp->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                $rp->display_image = asset('images/LKtech.png');
             }
             return $rp;
         });
@@ -517,7 +517,7 @@ class PublicCatalogController extends Controller
                     $product->display_image = Storage::url($product->image_path);
                 } else {
                     $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                    $product->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                    $product->display_image = asset('images/LKtech.png');
                 }
                 $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;

@@ -37,7 +37,7 @@
                                             <!-- Fallback preview -->
                                             @php
                                                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                                                $fallbackUrl = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                                                $fallbackUrl = asset('images/LKtech.png');
                                             @endphp
                                             <img src="{{ $fallbackUrl }}" id="image-preview" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2 opacity-50 grayscale">
                                             <div class="text-center z-10" id="placeholder-text">

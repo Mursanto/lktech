@@ -27,7 +27,7 @@ class CartController extends Controller
             $display_image = \Illuminate\Support\Facades\Storage::url($product->image_path);
         } else {
             $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-            $display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+            $display_image = asset('images/LKtech.png');
         }
 
         if (isset($cart[$product->id])) {
@@ -351,7 +351,7 @@ class CartController extends Controller
                 $rp->display_image = \Illuminate\Support\Facades\Storage::url($rp->image_path);
             } else {
                 $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
-                $rp->display_image = "https://source.unsplash.com/400x400/?{$searchQuery}";
+                $rp->display_image = asset('images/LKtech.png');
             }
             return $rp;
         });
