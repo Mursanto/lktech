@@ -3,7 +3,7 @@
     $isPromo = !empty($product->is_active_promo); 
     $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
 @endphp
-<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border-2 {{ $isPromo ? 'border-orange-500' : 'border-gray-200' }}">
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border border-gray-200">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
@@ -52,14 +52,6 @@
                     </div>
                     @endif
 
-                    {{-- Badge Pre-Order --}}
-                    @if($isPreOrder && $product->stock > 0 && $product->status !== 'Sold')
-                    <div class="bg-gray-900/70 backdrop-blur-sm text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-white/20 flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap">
-                        <i class='bx bx-time-five'></i>
-                        <span>Pre-Order</span>
-                    </div>
-                    @endif
-
                     {{-- Badge Terjual Habis --}}
                     @if($product->stock <= 0 || $product->status === 'Sold')
                     <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap">
@@ -82,6 +74,9 @@
             <div class="flex items-baseline gap-0.5 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
                 <span class="text-[9px] font-bold text-emerald-500">Rp</span>
                 <span class="text-emerald-600 font-extrabold text-xs sm:text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
+                @if($isPromo)
+                    <span class="text-gray-400 text-[8px] sm:text-[9px] opacity-60 line-through ml-1">Rp {{ number_format($product->selling_price * 1.15, 0, ',', '.') }}</span>
+                @endif
             </div>
 
             <!-- Specs List (Compact) / Conditional Rendering -->

@@ -343,8 +343,15 @@
                     
                     <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-gray-100">
                         <span class="text-gray-500 text-xs font-semibold uppercase tracking-widest">Harga Unit</span>
-                        <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight text-right">
-                            <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
+                        <div class="text-right">
+                            <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight">
+                                <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
+                            </div>
+                            @if(!empty($product->is_active_promo))
+                                <div class="text-gray-400 text-xs opacity-60 line-through">
+                                    Rp {{ number_format($product->selling_price * 1.15, 0, ',', '.') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
 

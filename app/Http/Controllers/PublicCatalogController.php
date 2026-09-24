@@ -295,6 +295,26 @@ class PublicCatalogController extends Controller
             $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
             $product->display_image = asset('images/LKtech.png');
         }
+        
+        $setting = \App\Models\WebSetting::first();
+        $isPromoActive = !$setting || !isset($setting->is_promo_active) || $setting->is_promo_active;
+        $isPromo = false;
+        
+        if ($isPromoActive) {
+            if ($product->is_promo_utama || $product->is_banner_hero) {
+                $isPromo = true;
+            } else if ($setting && !empty($setting->promo_product_links)) {
+                foreach ($setting->promo_product_links as $linkData) {
+                    $url = is_array($linkData) ? ($linkData['url'] ?? '') : $linkData;
+                    $isActive = is_array($linkData) ? ($linkData['is_active'] ?? true) : true;
+                    if ($isActive && !empty($url) && preg_match('#/katalog/' . $product->id . '($|/)#', $url)) {
+                        $isPromo = true;
+                        break;
+                    }
+                }
+            }
+        }
+        $product->is_active_promo = $isPromo;
 
         // Setup gallery images
         $gallery = [];
