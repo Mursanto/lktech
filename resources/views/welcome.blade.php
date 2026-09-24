@@ -366,8 +366,8 @@
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
                                                     <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
-                                                        <!-- Promo Badge moved to Top-Left -->
-                                                        <div class="absolute top-3 left-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
+                                                        <!-- Promo Badge moved to Top-Right -->
+                                                        <div class="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
                                                         <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/95 via-black/60 to-transparent rounded-b-3xl flex flex-col justify-end px-3 pb-3 sm:px-4 sm:pb-4">
                                                             <h3 class="text-white font-bold text-xs sm:text-sm leading-tight mb-0.5 font-montserrat">{{ $banner['title'] }}</h3>
