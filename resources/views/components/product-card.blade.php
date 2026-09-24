@@ -78,7 +78,7 @@
                     @php
                         $crossedPrice = $product->original_price ?? ($product->selling_price * 1.15);
                     @endphp
-                    <span class="text-gray-400 text-[8px] sm:text-[9px] opacity-60 line-through ml-1">Rp {{ number_format($crossedPrice, 0, ',', '.') }}</span>
+                    <span class="text-gray-600 text-[8px] sm:text-[9px] line-through ml-1">Rp {{ number_format($crossedPrice, 0, ',', '.') }}</span>
                 @endif
             </div>
 

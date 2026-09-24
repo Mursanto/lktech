@@ -397,7 +397,7 @@
                                                                     @php
                                                                         $crossedPriceBanner = $banner['original_price'] ?? ($banner['price'] * 1.15);
                                                                     @endphp
-                                                                    <span class="text-gray-400 text-[10px] opacity-60 line-through hidden sm:inline">Rp {{ number_format($crossedPriceBanner, 0, ',', '.') }}</span>
+                                                                    <span class="text-gray-200 text-[10px] line-through hidden sm:inline">Rp {{ number_format($crossedPriceBanner, 0, ',', '.') }}</span>
                                                                 </div>
                                                             @endif
                                                         </div>
