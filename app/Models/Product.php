@@ -23,6 +23,7 @@ class Product extends Model
         'condition',
         'purchase_price',
         'selling_price',
+        'original_price',
         'operational_cost',
         'status',
         'stock',

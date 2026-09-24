@@ -75,7 +75,10 @@
                 <span class="text-[9px] font-bold text-emerald-500">Rp</span>
                 <span class="text-emerald-600 font-extrabold text-xs sm:text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
                 @if($isPromo)
-                    <span class="text-gray-400 text-[8px] sm:text-[9px] opacity-60 line-through ml-1">Rp {{ number_format($product->selling_price * 1.15, 0, ',', '.') }}</span>
+                    @php
+                        $crossedPrice = $product->original_price ?? ($product->selling_price * 1.15);
+                    @endphp
+                    <span class="text-gray-400 text-[8px] sm:text-[9px] opacity-60 line-through ml-1">Rp {{ number_format($crossedPrice, 0, ',', '.') }}</span>
                 @endif
             </div>
 

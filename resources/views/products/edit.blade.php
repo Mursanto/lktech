@@ -115,20 +115,24 @@
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-4 gap-3">
+                                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
                                     <div id="stock-qty-container">
-                                    <label class="block text-[11px] font-bold text-gray-600 mb-1">Stok QTY *</label>
-                                    <input type="number" name="stock" value="{{ old('stock', $product->stock) }}" required min="0" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 font-bold text-brand-700">
-                                    <input type="hidden" name="status" value="{{ $product->status }}">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-gray-600 mb-1">Harga Beli *</label>
-                                    <input type="number" name="purchase_price" value="{{ $product->purchase_price }}" required class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 text-red-600 font-bold">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-gray-600 mb-1">Harga Jual *</label>
-                                    <input type="number" name="selling_price" value="{{ $product->selling_price }}" required class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 text-emerald-600 font-bold">
-                                </div>
+                                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Stok QTY *</label>
+                                        <input type="number" name="stock" value="{{ old('stock', $product->stock) }}" required min="0" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 font-bold text-brand-700">
+                                        <input type="hidden" name="status" value="{{ $product->status }}">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Harga Beli *</label>
+                                        <input type="number" name="purchase_price" value="{{ $product->purchase_price }}" required class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 text-red-600 font-bold">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Harga Jual *</label>
+                                        <input type="number" name="selling_price" value="{{ $product->selling_price }}" required class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 text-emerald-600 font-bold">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Harga Coret (Opsional)</label>
+                                        <input type="number" name="original_price" value="{{ $product->original_price }}" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500 text-gray-500 font-bold" placeholder="Cth: 5000000">
+                                    </div>
                                     <div>
                                         <label class="block text-[11px] font-bold text-gray-600 mb-1">Biaya Ops.</label>
                                         <input type="number" name="operational_cost" value="{{ $product->operational_cost ?? 0 }}" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-brand-500">

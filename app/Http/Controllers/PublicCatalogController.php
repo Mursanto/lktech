@@ -269,6 +269,7 @@ class PublicCatalogController extends Controller
                     'title' => $title,
                     'marketing_description' => \Illuminate\Support\Str::limit($desc, 120),
                     'price' => $p->selling_price,
+                    'original_price' => $p->original_price,
                     'processor' => $p->processor,
                     'ram' => $p->ram,
                     'storage' => $p->storage,

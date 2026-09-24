@@ -348,8 +348,11 @@
                                 <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
                             </div>
                             @if(!empty($product->is_active_promo))
+                                @php
+                                    $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
+                                @endphp
                                 <div class="text-gray-400 text-xs opacity-60 line-through">
-                                    Rp {{ number_format($product->selling_price * 1.15, 0, ',', '.') }}
+                                    Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
                                 </div>
                             @endif
                         </div>
