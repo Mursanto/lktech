@@ -4,13 +4,13 @@
     $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
     // Selang-seling: genap = Blue Flame (#00B0FF), ganjil = Orange Flame (#FF5722)
     $isEven = ($loopIndex % 2 === 0);
-    $fireIcon = $isEven ? '🔥' : '🔵';
+    $fireIcon = '🔥'; // Selalu pakai emoji api, warna dikontrol via CSS filter
     $badgeGlow = $isEven
         ? 'shadow-[0_0_8px_2px_rgba(255,87,34,0.5)]'   // orange glow
         : 'shadow-[0_0_8px_2px_rgba(0,176,255,0.5)]';  // blue glow
     $fireStyle = $isEven
-        ? 'filter: drop-shadow(0 0 3px #FF5722);'
-        : 'filter: drop-shadow(0 0 3px #00B0FF); filter: hue-rotate(200deg);';
+        ? 'filter: drop-shadow(0 0 3px #FF5722);'                                          // Orange fire
+        : 'filter: hue-rotate(200deg) saturate(3) brightness(1.2) drop-shadow(0 0 4px #00B0FF);'; // Blue fire
 @endphp
 <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border border-gray-200">
     
