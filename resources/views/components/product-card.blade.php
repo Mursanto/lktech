@@ -9,7 +9,10 @@
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
         <!-- Image & Video Area — Full Bleed -->
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
-            @if(!empty($product->video_url))
+            @php
+                $videoSrc = $product->video_path ? asset('storage/' . $product->video_path) : $product->video_url;
+            @endphp
+            @if(!empty($videoSrc))
                 <!-- Play Icon Badge -->
                 <div class="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2 z-20 bg-black/60 backdrop-blur-sm text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center shadow-lg pointer-events-none">
                     <i class='bx bx-play text-xs sm:text-sm ml-0.5'></i>
@@ -18,7 +21,7 @@
                 <!-- Video Element (Lazy loaded via IntersectionObserver) -->
                 <video 
                     class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-700 opacity-0 group-hover:opacity-100 product-video-preview"
-                    muted loop playsinline preload="none" data-src="{{ $product->video_url }}">
+                    muted loop playsinline preload="none" data-src="{{ $videoSrc }}">
                 </video>
             @endif
             
