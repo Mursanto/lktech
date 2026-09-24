@@ -52,6 +52,14 @@
                     </div>
                     @endif
 
+                    {{-- Badge Pre-Order --}}
+                    @if($isPreOrder && $product->stock > 0 && $product->status !== 'Sold')
+                    <div class="bg-gray-900/70 backdrop-blur-sm text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-white/20 flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap">
+                        <i class='bx bx-time-five'></i>
+                        <span>Pre-Order</span>
+                    </div>
+                    @endif
+
                     {{-- Badge Terjual Habis --}}
                     @if($product->stock <= 0 || $product->status === 'Sold')
                     <div class="bg-white/95 backdrop-blur-sm text-red-600 px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm border border-red-100 flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap">

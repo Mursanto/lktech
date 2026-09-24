@@ -51,16 +51,6 @@ class PublicCatalogController extends Controller
             $collectionToTransform = $products;
         }
 
-        $collectionToTransform->transform(function ($product) {
-            if ($product->image_path) {
-                $product->display_image = Storage::url($product->image_path);
-            } else {
-                $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                $product->display_image = asset('images/LKtech.png');
-            }
-            return $product;
-        });
-
         $latestPosts = collect();
         try {
             $latestPosts = \App\Models\Post::where('is_published', true)
@@ -88,14 +78,28 @@ class PublicCatalogController extends Controller
                 }
             }
             
-            // Merge with products flagged as is_promo_utama
-            $utamaPromoProducts = \App\Models\Product::promoUtama()->pluck('id');
+            // Merge with products flagged as is_promo_utama or is_banner_hero
+            $utamaPromoProducts = \App\Models\Product::where(function($q) {
+                $q->where('is_promo_utama', true)
+                  ->orWhere('is_banner_hero', true);
+            })->pluck('id');
             if ($utamaPromoProducts->isNotEmpty()) {
                 $promoProductIds = $promoProductIds->merge($utamaPromoProducts);
             }
         }
         
         $promoProductIds = $promoProductIds->unique()->values();
+
+        $collectionToTransform->transform(function ($product) use ($promoProductIds) {
+            if ($product->image_path) {
+                $product->display_image = Storage::url($product->image_path);
+            } else {
+                $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
+                $product->display_image = asset('images/LKtech.png');
+            }
+            $product->is_active_promo = $promoProductIds->contains($product->id);
+            return $product;
+        });
 
         $promoSoftware = collect();
         $promoAccessories = collect();
@@ -389,8 +393,17 @@ class PublicCatalogController extends Controller
                     $promoProductIds->push((int) $m[1]);
                 }
             }
-            $promoProductIds = $promoProductIds->unique()->values();
         }
+        
+        $utamaPromoProducts = \App\Models\Product::where(function($q) {
+            $q->where('is_promo_utama', true)
+              ->orWhere('is_banner_hero', true);
+        })->pluck('id');
+        
+        if ($utamaPromoProducts->isNotEmpty()) {
+            $promoProductIds = $promoProductIds->merge($utamaPromoProducts);
+        }
+        $promoProductIds = $promoProductIds->unique()->values();
 
         // Count totals per category (eager loaded)
         foreach($mainCategories as $category) {
