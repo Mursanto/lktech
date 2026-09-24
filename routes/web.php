@@ -121,6 +121,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('promo-video', App\Http\Controllers\Admin\PromoVideoController::class)->names('admin.promo-video');
 
     // Investor Management
+    Route::get('investors/{investor}/pks', [App\Http\Controllers\InvestorController::class, 'downloadPks'])->name('investors.pks');
     Route::resource('investors', App\Http\Controllers\InvestorController::class);
     Route::get('/investor-report', [App\Http\Controllers\InvestorReportController::class, 'index'])->name('investor.report');
     Route::get('/investor-report/export', [App\Http\Controllers\InvestorReportController::class, 'export'])->name('investor.report.export');

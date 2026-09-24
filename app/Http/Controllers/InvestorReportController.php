@@ -232,6 +232,8 @@ class InvestorReportController extends Controller
                     'profit'         => $profit,
                     'investor_share' => $invShare,
                     'payout_status'  => $detail->investor_payout_status ?? 'pending',
+                    'payout_attachment' => $detail->payout_attachment,
+                    'payout_date'    => $detail->payout_date,
                     'date'           => optional($detail->sale)->created_at,
                 ];
             });

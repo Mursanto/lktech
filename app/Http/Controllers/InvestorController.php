@@ -134,4 +134,16 @@ class InvestorController extends Controller
         return redirect()->route('investors.index')
             ->with('success', "Investor {$name} berhasil dihapus.");
     }
+
+    /**
+     * Download dokumen PKS Investor (Admin).
+     */
+    public function downloadPks(Investor $investor)
+    {
+        if (!$investor->pks_agreed_at) {
+            return redirect()->route('investors.index')->with('error', "Investor {$investor->name} belum menyetujui PKS.");
+        }
+
+        return view('investors.legal.print', compact('investor'));
+    }
 }

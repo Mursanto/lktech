@@ -76,6 +76,7 @@
                             <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Total Stok</th>
                             <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Nilai Aset Aktif</th>
                             <th class="text-right px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Profit Diterima</th>
+                            <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Dokumen PKS</th>
                             <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Status</th>
                             <th class="text-center px-4 py-3 text-natural-500 font-bold uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -111,6 +112,17 @@
                                 <span class="font-bold text-emerald-600 whitespace-nowrap"><span class="text-[10px] font-medium mr-0.5 text-emerald-400">Rp</span>{{ number_format($investor->investor_share, 0, ',', '.') }}</span>
                             </td>
                             <td class="px-4 py-3 text-center">
+                                @if($investor->pks_agreed_at)
+                                <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-md text-[9px] font-bold" title="Disetujui: {{ \Carbon\Carbon::parse($investor->pks_agreed_at)->format('d/m/Y') }}">
+                                    <i class='bx bx-check-shield text-xs'></i> Disetujui
+                                </span>
+                                @else
+                                <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-md text-[9px] font-bold">
+                                    <i class='bx bx-time text-xs'></i> Belum TTD
+                                </span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 text-center">
                                 @if($investor->is_active)
                                 <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-bold">
                                     <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Aktif
@@ -123,6 +135,12 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center justify-center gap-1.5">
+                                    @if($investor->pks_agreed_at)
+                                    <a href="{{ route('investors.pks', $investor) }}" target="_blank"
+                                       class="p-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg transition-colors" title="Detail/Cetak PKS">
+                                        <i class='bx bx-file-blank text-sm'></i>
+                                    </a>
+                                    @endif
                                     <a href="{{ route('investors.edit', $investor) }}"
                                        class="p-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition-colors" title="Edit">
                                         <i class='bx bx-edit text-sm'></i>

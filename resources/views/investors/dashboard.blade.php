@@ -295,7 +295,14 @@
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right font-black text-violet-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-violet-500">Rp</span>{{ number_format($detail['investor_share'], 0, ',', '.') }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-center whitespace-nowrap">
                                 @if(isset($detail['payout_status']) && $detail['payout_status'] == 'paid')
-                                    <span class="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-emerald-100 text-emerald-700 rounded text-[9px] sm:text-[10px] font-bold">Lunas</span>
+                                    <div class="flex flex-col items-center justify-center gap-1">
+                                        <span class="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-emerald-100 text-emerald-700 rounded text-[9px] sm:text-[10px] font-bold">Lunas</span>
+                                        @if(!empty($detail['payout_attachment']))
+                                        <a href="{{ asset('storage/' . $detail['payout_attachment']) }}" target="_blank" class="text-[8px] sm:text-[9px] text-brand-600 hover:underline flex items-center gap-0.5" title="Unduh Bukti Transfer">
+                                            <i class='bx bx-download'></i> Bukti TF
+                                        </a>
+                                        @endif
+                                    </div>
                                 @else
                                     <span class="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-amber-100 text-amber-700 rounded text-[9px] sm:text-[10px] font-bold">Pending</span>
                                 @endif
