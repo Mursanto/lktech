@@ -40,6 +40,7 @@ class PublicCatalogController extends Controller
                 $q->where('brand', 'like', "%{$search}%")
                   ->orWhere('model_series', 'like', "%{$search}%")
                   ->orWhere('processor', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
                   ->orWhereHas('category', function($cat) use ($search) {
                       $cat->where('name', 'like', "%{$search}%");
                   });
@@ -492,6 +493,7 @@ class PublicCatalogController extends Controller
                     $q->where('brand', 'like', "%{$search}%")
                       ->orWhere('model_series', 'like', "%{$search}%")
                       ->orWhere('processor', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%")
                       ->orWhereHas('category', function($cat) use ($search) {
                           $cat->where('name', 'like', "%{$search}%");
                       });

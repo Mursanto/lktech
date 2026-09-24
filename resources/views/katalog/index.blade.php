@@ -419,9 +419,9 @@
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         {{-- Category Header --}}
                         <div class="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
-                            <h2 class="text-sm sm:text-base font-semibold text-gray-800 min-w-0 truncate">
+                            <h2 class="text-sm font-bold text-gray-800 min-w-0 truncate">
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                    <i class='bx bx-category text-brand-500 text-lg shrink-0'></i>
+                                    <i class='bx bx-category text-brand-500 text-base shrink-0'></i>
                                     <span class="truncate">{{ $category->name }}</span>
                                 </a>
                             </h2>
