@@ -260,7 +260,7 @@
         <div class="flex-1 min-w-0">
 
             {{-- Mobile Top Bar: Filter + Sort always visible side by side --}}
-            <div class="flex items-center gap-2 mb-4 md:hidden" x-data="{ filterOpen: false }" @open-filter-modal.window="filterOpen = true">
+            <div class="flex items-center gap-2 mb-2 md:hidden" x-data="{ filterOpen: false }" @open-filter-modal.window="filterOpen = true">
 
                 {{-- Filter Button --}}
                 <button type="button" @click="filterOpen = true"
@@ -413,15 +413,15 @@
                 </div>
             </div>
 
-            <div class="space-y-8">
+            <div class="space-y-5 md:space-y-8">
                 @foreach($displayCategories as $category)
                     @if($category->all_products->count() > 0)
                     <section id="kategori-{{ $category->id }}" class="scroll-mt-20">
                         {{-- Category Header --}}
-                        <div class="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-100">
-                            <h2 class="text-sm font-bold text-gray-800 min-w-0 truncate">
+                        <div class="flex items-center justify-between mb-2 md:mb-3 pb-1.5 md:pb-2 border-b-2 border-gray-100">
+                            <h2 class="text-xs md:text-sm font-bold text-gray-800 min-w-0 truncate">
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" class="flex items-center gap-1.5 hover:text-brand-600 transition-colors">
-                                    <i class='bx bx-category text-brand-500 text-base shrink-0'></i>
+                                    <i class='bx bx-category text-brand-500 text-sm md:text-base shrink-0'></i>
                                     <span class="truncate">{{ $category->name }}</span>
                                 </a>
                             </h2>
@@ -429,7 +429,7 @@
                             @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
                                 {{-- Preview mode: Lihat Semua on the right --}}
                                 <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
-                                   class="shrink-0 ml-3 text-xs sm:text-[13px] font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
+                                   class="shrink-0 ml-3 text-[10px] md:text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
                                     Lihat Semua ({{ $category->total_count }}) &rarr;
                                 </a>
                             @else
