@@ -481,7 +481,7 @@
                         <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-1.5 sm:gap-2">
                             @foreach($category->all_products as $product)
                                 <div class="w-full">
-                                    <x-product-card :product="$product" />
+                                    <x-product-card :product="$product" :loop-index="$loop->index" />
                                 </div>
                             @endforeach
                         </div>

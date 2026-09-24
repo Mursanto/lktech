@@ -1,7 +1,16 @@
-@props(['product'])
+@props(['product', 'loopIndex' => 0])
 @php 
     $isPromo = !empty($product->is_active_promo); 
     $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+    // Selang-seling: genap = Blue Flame (#00B0FF), ganjil = Orange Flame (#FF5722)
+    $isEven = ($loopIndex % 2 === 0);
+    $fireIcon = $isEven ? '🔥' : '🔵';
+    $badgeGlow = $isEven
+        ? 'shadow-[0_0_8px_2px_rgba(255,87,34,0.5)]'   // orange glow
+        : 'shadow-[0_0_8px_2px_rgba(0,176,255,0.5)]';  // blue glow
+    $fireStyle = $isEven
+        ? 'filter: drop-shadow(0 0 3px #FF5722);'
+        : 'filter: drop-shadow(0 0 3px #00B0FF); filter: hue-rotate(200deg);';
 @endphp
 <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border border-gray-200">
     
@@ -46,8 +55,8 @@
                 <div class="flex flex-row items-start gap-0.5 sm:gap-1 pointer-events-auto shrink-0">
                     {{-- Badge HOT PROMO --}}
                     @if($isPromo)
-                    <div class="bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold shadow-sm flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
-                        <span>🔥</span>
+                    <div class="bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white px-1.5 sm:px-2 py-0.5 rounded-md text-[8px] sm:text-[9px] font-semibold flex items-center gap-0.5 h-4 sm:h-5 whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite] {{ $badgeGlow }}">
+                        <span style="{{ $fireStyle }}">{{ $fireIcon }}</span>
                         <span>Hot Promo</span>
                     </div>
                     @endif

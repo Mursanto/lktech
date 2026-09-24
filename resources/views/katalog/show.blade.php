@@ -513,7 +513,7 @@
         <div id="productSlider" class="flex overflow-x-auto gap-3 sm:gap-4 lg:gap-5 pb-4 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
             @foreach($relatedProducts as $rp)
                 <div class="snap-start flex-shrink-0 w-[160px] sm:w-[180px] lg:w-[220px]">
-                    <x-product-card :product="$rp" />
+                    <x-product-card :product="$rp" :loop-index="$loop->index" />
                 </div>
             @endforeach
         </div>

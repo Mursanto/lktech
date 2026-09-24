@@ -9,7 +9,7 @@
     <div class="flex overflow-x-auto lg:grid lg:grid-cols-5 lg:gap-4 lg:overflow-visible snap-x snap-mandatory gap-3 pb-4 scrollbar-none" style="scrollbar-width: none; -ms-overflow-style: none;">
         @foreach($products as $prod)
             <div class="w-[160px] lg:w-full shrink-0 snap-start h-full">
-                <x-product-card :product="$prod" />
+                <x-product-card :product="$prod" :loop-index="$loop->index" />
             </div>
         @endforeach
     </div>
