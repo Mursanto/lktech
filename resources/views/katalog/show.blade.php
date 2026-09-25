@@ -341,20 +341,20 @@
                 <div class="sticky top-24 border border-gray-200 rounded-2xl p-4 shadow-lg shadow-gray-100/50 bg-white">
                     <h3 class="font-bold text-gray-800 mb-3 text-base">Transaksi</h3>
                     
-                    <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-gray-100">
-                        <span class="text-gray-500 text-xs font-semibold uppercase tracking-widest">Harga Unit</span>
-                        <div class="text-right">
-                            <div class="text-xl xl:text-2xl font-black text-gray-900 tracking-tight">
-                                <span class="text-sm text-gray-600">Rp</span> {{ number_format($product->selling_price, 0, ',', '.') }}
-                            </div>
+                    <div class="flex items-baseline justify-between gap-1 mb-3 pb-3 border-b border-gray-100">
+                        <span class="text-gray-500 text-[10px] sm:text-xs font-semibold uppercase tracking-widest shrink-0">Harga Unit</span>
+                        <div class="text-right flex items-baseline justify-end gap-1.5 sm:gap-2 whitespace-nowrap">
                             @if(!empty($product->is_active_promo))
                                 @php
                                     $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
                                 @endphp
-                                <div class="text-gray-400 text-xs opacity-60 line-through">
-                                    Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
+                                <div class="text-gray-400 text-[10px] sm:text-xs opacity-70 line-through">
+                                    Rp{{ number_format($crossedPriceDetail, 0, ',', '.') }}
                                 </div>
                             @endif
+                            <div class="text-base sm:text-lg font-black text-gray-900 tracking-tight">
+                                <span class="text-xs sm:text-sm text-gray-600">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
+                            </div>
                         </div>
                     </div>
 
