@@ -201,15 +201,15 @@
         </div>
         @endif
 
-        <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <div class="text-xs text-gray-500 font-medium leading-relaxed">
-                &copy; 2025 LKTech Solusi IT Integrated. All rights reserved.<br>
-                Hardware Andal. Software Profesional. Satu Integrasi.
+        <div class="border-t border-gray-100 pt-5 mt-2 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex flex-col text-center md:text-left">
+                <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
+                <p class="text-[13px] text-gray-500">Hardware Andal. Software Profesional. Satu Integrasi.</p>
             </div>
-            <div class="text-xs text-gray-500 font-medium flex gap-3">
-                <a href="{{ route('faq') }}#kebijakan-privasi" class="hover:text-blue-600 transition-colors">Kebijakan Privasi</a>
+            <div class="flex items-center gap-3 text-[13px] text-gray-500 font-medium">
+                <a href="{{ route('faq') }}#kebijakan-privasi" class="hover:text-brand-600 transition-colors">Kebijakan Privasi</a>
                 <span class="text-gray-300">|</span>
-                <a href="{{ route('faq') }}#syarat-ketentuan" class="hover:text-blue-600 transition-colors">Syarat & Ketentuan</a>
+                <a href="{{ route('faq') }}#syarat-ketentuan" class="hover:text-brand-600 transition-colors">Syarat &amp; Ketentuan</a>
             </div>
         </div>
     </div>
