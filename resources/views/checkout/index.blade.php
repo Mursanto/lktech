@@ -318,6 +318,16 @@
                         <i class='bx bx-shield-alt-2 text-emerald-500'></i>
                         Pembayaran Aman by Midtrans
                     </div>
+
+                    {{-- WhatsApp Support Button --}}
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-center">
+                        <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20butuh%20bantuan%20terkait%20transaksi/checkout%20pesanan%20saya." 
+                           target="_blank"
+                           class="flex items-center gap-2 text-[11px] sm:text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg border border-emerald-100 shadow-sm">
+                            <i class='bx bxl-whatsapp text-lg'></i>
+                            Butuh bantuan transaksi? Chat WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -344,21 +354,18 @@
         </div>
     </main>
 
-    {{-- Full Footer (Desktop) --}}
-    <div class="hidden md:block">
-        <x-footer />
-    </div>
-
-    {{-- Minimalist Footer (Mobile) --}}
-    <div class="md:hidden bg-gray-50 pb-32 text-center flex flex-col items-center justify-center">
-        <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2">Metode Pembayaran Aman</p>
-        <div class="flex flex-wrap justify-center gap-2 mb-4">
-            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">Transfer Bank</span>
-            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">E-Wallet</span>
-            <span class="text-[10px] font-bold bg-white border border-gray-200 px-2.5 py-1 rounded-md text-gray-600 shadow-sm">QRIS</span>
+    {{-- Minimalist Distraction-Free Footer --}}
+    <footer class="bg-gray-50 border-t border-gray-200 mt-auto pb-24 lg:pb-8 pt-8">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-2">
+            <p class="text-[11px] font-bold text-gray-700">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
+            <p class="text-[10px] text-gray-500 italic font-medium">Hardware Andal. Software Profesional. Satu Integrasi.</p>
+            <div class="flex items-center gap-4 mt-2 text-[10px] text-brand-600 font-semibold">
+                <a href="#" class="hover:underline hover:text-brand-700">Kebijakan Privasi</a>
+                <span class="text-gray-300">|</span>
+                <a href="#" class="hover:underline hover:text-brand-700">Syarat &amp; Ketentuan</a>
+            </div>
         </div>
-        <p class="text-xs text-gray-400 font-medium">&copy; 2026 LKTech TN SEREAL.</p>
-    </div>
+    </footer>
 
     <script>
         const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
