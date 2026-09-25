@@ -12,7 +12,70 @@
         ? 'filter: drop-shadow(0 0 3px #FF5722);'                                          // Orange fire
         : 'filter: hue-rotate(200deg) saturate(3) brightness(1.2) drop-shadow(0 0 4px #00B0FF);'; // Blue fire
 @endphp
-<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border border-gray-200">
+@once
+<script>
+    document.addEventListener('alpine:init', () => {
+        if (!window.Alpine) return;
+        
+        // Mencegah duplikasi registrasi component jika file ini dimuat ulang via ajax
+        if(Alpine.data('cartButtonComponent')) return;
+
+        Alpine.data('cartButtonComponent', (productId) => ({
+            isLoading: false,
+            added: false,
+            showAnimation: false,
+
+            addToCart() {
+                if (this.isLoading) return;
+                this.isLoading = true;
+                
+                // Real request to backend
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        qty: 1
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.triggerSuccess(data.cart_count);
+                    } else {
+                        this.isLoading = false;
+                        alert('Gagal menambahkan ke keranjang.');
+                    }
+                })
+                .catch(error => {
+                    this.isLoading = false;
+                    console.error('Error:', error);
+                });
+            },
+
+            triggerSuccess(cartCount) {
+                this.isLoading = false;
+                this.added = true;
+                this.showAnimation = true;
+
+                // Dispatch global event untuk update icon keranjang di navbar
+                window.dispatchEvent(new CustomEvent('cart-updated', { detail: cartCount }));
+
+                setTimeout(() => {
+                    this.added = false;
+                    this.showAnimation = false;
+                }, 1500);
+            }
+        }));
+    });
+</script>
+@endonce
+
+<div x-data="cartButtonComponent({{ $product->id }})" class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col group relative min-w-0 sm:min-w-[150px] h-full border border-gray-200">
     
     <!-- Clickable Area to Detail Page -->
     <a href="{{ route('katalog.show', $product->id) }}" class="flex flex-col flex-grow cursor-pointer">
@@ -23,7 +86,7 @@
             @endphp
             @if(!empty($videoSrc))
                 <!-- Play Icon Badge -->
-                <div class="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2 z-20 bg-black/60 backdrop-blur-sm text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center shadow-lg pointer-events-none">
+                <div class="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 z-20 bg-black/60 backdrop-blur-sm text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center shadow-lg pointer-events-none">
                     <i class='bx bx-play text-xs sm:text-sm ml-0.5'></i>
                 </div>
                 
@@ -70,6 +133,37 @@
                     @endif
                 </div>
             </div>
+        <!-- Floating Action Button: Add to Cart (Bottom Left) -->
+        <button 
+            @click.prevent="addToCart"
+            :disabled="isLoading"
+            class="absolute bottom-[10px] left-[10px] z-30 flex items-center justify-center w-8 h-8 md:w-9 md:h-9 bg-[#2563EB] text-white rounded-full shadow-sm hover:scale-105 hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 pointer-events-auto opacity-100 md:opacity-0 md:translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+            aria-label="Add to cart"
+        >
+            <!-- Animasi +1 -->
+            <span 
+                x-show="showAnimation" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-0 scale-75"
+                x-transition:enter-end="opacity-100 -translate-y-8 scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 -translate-y-8"
+                x-transition:leave-end="opacity-0 -translate-y-12"
+                class="absolute pointer-events-none text-[10px] sm:text-xs font-bold text-[#2563EB] bg-white px-1.5 py-0.5 rounded-full shadow-md border border-gray-100"
+                style="display: none;"
+            >
+                +1
+            </span>
+
+            <!-- Ikon Default Keranjang -->
+            <i x-show="!added && !isLoading" class='bx bx-cart-add text-[16px] sm:text-[18px]'></i>
+            
+            <!-- Ikon Loading -->
+            <i x-show="isLoading" class='bx bx-loader-alt bx-spin text-[16px] sm:text-[18px] text-white/80' style="display: none;"></i>
+
+            <!-- Ikon Centang Berhasil -->
+            <i x-show="added" class='bx bx-check text-[16px] sm:text-[18px] text-white font-bold' style="display: none;"></i>
+        </button>
         </div>
 
         <!-- Content Details -->

@@ -17,10 +17,17 @@
 <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false }">
     @php
         $pendingOrdersCount = 0;
+        $processingOrdersCount = 0;
+        $hasOrderHistory = false;
         $userOrderIds = session()->get('user_orders', []);
         if (!empty($userOrderIds)) {
+            $hasOrderHistory = true;
             $pendingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
                 ->where('payment_status', 'pending')
+                ->count();
+            $processingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
+                ->where('payment_status', 'success')
+                ->whereIn('order_status', ['processing', 'shipping'])
                 ->count();
         }
     @endphp
@@ -155,7 +162,7 @@
                     <i class='bx bx-help-circle text-2xl'></i>
                 </a>
 
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>
@@ -195,7 +202,7 @@
 
 
 
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail">
+                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>

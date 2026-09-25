@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -16,9 +16,18 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
                     colors: {
-                        brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
+                        brand: { 
+                            50: '#eff6ff', 
+                            100: '#dbeafe', 
+                            500: '#3b82f6', 
+                            600: '#2563eb', 
+                            700: '#1d4ed8' 
+                        }
                     }
                 }
             }
@@ -44,37 +53,39 @@
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+<body class="font-sans text-gray-800 antialiased flex flex-col min-h-screen">
     <x-navbar />
 
-    <main class="flex-grow max-w-[1000px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" x-data="guestOrdersApp()">
+    <main class="flex-grow max-w-[1000px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8" x-data="guestOrdersApp()">
         <!-- Breadcrumb Navigasi -->
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="flex items-center space-x-2 text-sm text-gray-500">
-                <li>
-                    <a href="/" class="hover:text-brand-600 flex items-center gap-1 transition-colors">
-                        <i class="bx bx-home"></i> Home
+        <nav aria-label="breadcrumb" class="mb-2 sm:mb-6">
+            <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <li class="flex items-center shrink-0">
+                    <a href="/" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
+                        <i class="bx bx-home-alt"></i> Home
                     </a>
                 </li>
-                <li><span class="text-gray-400">/</span></li>
-                <li>
-                    <a href="/katalog" class="hover:text-brand-600 transition-colors">Katalog</a>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <a href="/katalog" class="hover:text-brand-600 hover:underline transition-colors">Katalog</a>
                 </li>
-                <li><span class="text-gray-400">/</span></li>
-                <li class="font-semibold text-gray-900" aria-current="page">Riwayat Transaksi</li>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <span class="text-gray-800 font-semibold" aria-current="page">Riwayat Transaksi</span>
+                </li>
             </ol>
         </nav>
 
-        <div class="mb-4">
-            <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">Riwayat Pesanan</h1>
-            <p class="text-sm text-gray-500 mt-1">Lacak status pesanan dan selesaikan pembayaran Anda di sini.</p>
+        <div class="mb-4 sm:mb-6">
+            <h1 class="text-lg sm:text-3xl font-black text-gray-900 tracking-tight">Riwayat Pesanan</h1>
+            <p class="text-[11px] sm:text-sm text-gray-500 mt-1">Lacak status pesanan dan selesaikan pembayaran Anda di sini.</p>
         </div>
 
         <!-- FORM PENCARIAN CADANGAN -->
-        <div class="bg-white p-3 rounded-xl border border-gray-200 mb-6 shadow-sm">
-            <form @submit.prevent="searchOrders" class="flex gap-2">
-                <input type="text" x-model="searchQuery" class="flex-1 rounded-lg border-gray-300 border px-3 py-2 text-sm focus:ring-brand-500 focus:border-brand-500" placeholder="Cari Kode Pesanan (Contoh: SALE-74-17...)" required>
-                <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
+        <div class="bg-white p-2 sm:p-3 rounded-xl border border-gray-200 mb-6 shadow-sm overflow-hidden">
+            <form @submit.prevent="searchOrders" class="flex gap-2 w-full">
+                <input type="text" x-model="searchQuery" class="flex-1 min-w-0 w-full rounded-lg border-gray-300 border px-3 py-2 text-xs sm:text-sm focus:ring-brand-500 focus:border-brand-500" placeholder="Cari Kode (Contoh: SALE-74...)" required>
+                <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-sm flex items-center gap-1 shrink-0">
                     <i class='bx bx-search'></i> 
                     <span class="hidden sm:inline">Cari Pesanan</span>
                 </button>
@@ -122,21 +133,21 @@
             <div x-show="activeTab === 'pending'" x-transition.opacity.duration.300ms class="space-y-4">
                 <template x-for="order in pendingOrders" :key="order.id">
                     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-                        <div class="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                <i class='bx bx-shopping-bag text-gray-400 text-xl'></i>
+                        <div class="px-4 md:px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <i class='bx bx-shopping-bag text-gray-400 text-lg sm:text-xl'></i>
                                 <div>
-                                    <p class="text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
-                                    <p class="text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
+                                    <p class="text-[10px] sm:text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
+                                    <p class="text-xs sm:text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">
+                            <span class="inline-flex items-center gap-1.5 bg-orange-100 text-orange-700 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full shrink-0">
                                 <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
-                                Menunggu Pembayaran
+                                Menunggu
                             </span>
                         </div>
                         
-                        <div class="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                        <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5">
                             <div class="flex-1 w-full min-w-0">
                                 <template x-for="(detail, index) in order.details" :key="index">
                                     <template x-if="index < 2">
@@ -179,9 +190,9 @@
                     </div>
                 </template>
                 <template x-if="pendingOrders.length === 0">
-                    <div class="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <i class='bx bx-receipt text-5xl text-gray-300 mb-3'></i>
-                        <p class="text-gray-500 font-medium">Belum ada pesanan yang menunggu pembayaran.</p>
+                    <div class="text-center py-8 sm:py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <i class='bx bx-receipt text-4xl sm:text-5xl text-gray-300 mb-3'></i>
+                        <p class="text-gray-500 font-medium text-xs sm:text-sm">Belum ada pesanan yang menunggu pembayaran.</p>
                     </div>
                 </template>
             </div>
@@ -190,20 +201,20 @@
             <div x-show="activeTab === 'processing'" x-transition.opacity.duration.300ms class="space-y-4" style="display: none;">
                 <template x-for="order in processingOrders" :key="order.id">
                     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden opacity-90">
-                        <div class="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                <i class='bx bx-check-circle text-blue-500 text-xl'></i>
+                        <div class="px-4 md:px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <i class='bx bx-check-circle text-blue-500 text-lg sm:text-xl'></i>
                                 <div>
-                                    <p class="text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
-                                    <p class="text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
+                                    <p class="text-[10px] sm:text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
+                                    <p class="text-xs sm:text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
-                                Lunas / Diproses
+                            <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full shrink-0">
+                                Diproses
                             </span>
                         </div>
                         
-                        <div class="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                        <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5">
                             <div class="flex-1 w-full min-w-0">
                                 <template x-for="(detail, index) in order.details" :key="index">
                                     <template x-if="index < 2">
@@ -243,9 +254,9 @@
                     </div>
                 </template>
                 <template x-if="processingOrders.length === 0">
-                    <div class="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <i class='bx bx-box text-5xl text-gray-300 mb-3'></i>
-                        <p class="text-gray-500 font-medium">Tidak ada pesanan yang sedang diproses.</p>
+                    <div class="text-center py-8 sm:py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <i class='bx bx-box text-4xl sm:text-5xl text-gray-300 mb-3'></i>
+                        <p class="text-gray-500 font-medium text-xs sm:text-sm">Tidak ada pesanan yang sedang diproses.</p>
                     </div>
                 </template>
             </div>
@@ -254,20 +265,20 @@
             <div x-show="activeTab === 'completed'" x-transition.opacity.duration.300ms class="space-y-4" style="display: none;">
                 <template x-for="order in completedOrders" :key="order.id">
                     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-                        <div class="px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                <i class='bx bx-check-double text-emerald-500 text-xl'></i>
+                        <div class="px-4 md:px-5 py-3 border-b border-gray-100 bg-gray-50/50 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <i class='bx bx-check-double text-emerald-500 text-lg sm:text-xl'></i>
                                 <div>
-                                    <p class="text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
-                                    <p class="text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
+                                    <p class="text-[10px] sm:text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
+                                    <p class="text-xs sm:text-sm font-mono font-bold text-gray-800" x-text="order.reference_number"></p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">
+                            <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full shrink-0">
                                 Selesai
                             </span>
                         </div>
                         
-                        <div class="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                        <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5">
                             <div class="flex-1 w-full min-w-0">
                                 <template x-for="(detail, index) in order.details" :key="index">
                                     <template x-if="index < 2">
@@ -307,9 +318,9 @@
                     </div>
                 </template>
                 <template x-if="completedOrders.length === 0">
-                    <div class="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <i class='bx bx-check-shield text-5xl text-gray-300 mb-3'></i>
-                        <p class="text-gray-500 font-medium">Belum ada pesanan yang selesai.</p>
+                    <div class="text-center py-8 sm:py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <i class='bx bx-check-shield text-4xl sm:text-5xl text-gray-300 mb-3'></i>
+                        <p class="text-gray-500 font-medium text-xs sm:text-sm">Belum ada pesanan yang selesai.</p>
                     </div>
                 </template>
             </div>
@@ -318,34 +329,37 @@
             <div x-show="activeTab === 'cancelled'" x-transition.opacity.duration.300ms class="space-y-4" style="display: none;">
                 <template x-for="order in cancelledOrders" :key="order.id">
                     <div class="bg-gray-50 border border-gray-200 rounded-2xl shadow-sm overflow-hidden opacity-75">
-                        <div class="px-5 py-3 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3">
-                                <i class='bx bx-x-circle text-gray-400 text-xl'></i>
+                        <div class="px-4 md:px-5 py-3 border-b border-gray-200 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                            <div class="flex items-center gap-2 sm:gap-3">
+                                <i class='bx bx-x-circle text-gray-400 text-lg sm:text-xl'></i>
                                 <div>
-                                    <p class="text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
-                                    <p class="text-sm font-mono font-bold text-gray-600 line-through" x-text="order.reference_number"></p>
+                                    <p class="text-[10px] sm:text-xs text-gray-500 font-medium" x-text="order.created_at_formatted + ' WIB'"></p>
+                                    <p class="text-xs sm:text-sm font-mono font-bold text-gray-600 line-through" x-text="order.reference_number"></p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center gap-1 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">
+                            <span class="inline-flex items-center gap-1 bg-gray-200 text-gray-600 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-full shrink-0">
                                 Dibatalkan
                             </span>
                         </div>
                     </div>
                 </template>
                 <template x-if="cancelledOrders.length === 0">
-                    <div class="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <i class='bx bx-x-circle text-5xl text-gray-300 mb-3'></i>
-                        <p class="text-gray-500 font-medium">Tidak ada pesanan yang dibatalkan.</p>
+                    <div class="text-center py-8 sm:py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300">
+                        <i class='bx bx-x-circle text-4xl sm:text-5xl text-gray-300 mb-3'></i>
+                        <p class="text-gray-500 font-medium text-xs sm:text-sm">Tidak ada pesanan yang dibatalkan.</p>
                     </div>
                 </template>
             </div>
         </div>
     </main>
 
-    {{-- Footer --}}
-    <div class="mt-auto">
+    {{-- Footer (Desktop Only) --}}
+    <div class="mt-auto hidden md:block">
         <x-footer />
     </div>
+
+    {{-- Mobile Bottom Nav (Mobile Only) --}}
+    <x-mobile-bottom-nav />
 
     <script>
         function guestOrdersApp() {
@@ -369,12 +383,9 @@
                 },
 
                 init() {
-                    const storedOrders = JSON.parse(localStorage.getItem("lktech_guest_orders")) || [];
-                    if (storedOrders.length > 0) {
-                        this.fetchOrders({ references: storedOrders });
-                    } else {
-                        this.isLoading = false;
-                    }
+                    // Do not auto-load all past orders from local storage.
+                    // This acts as a fresh tracking page where users must enter their order ID.
+                    this.isLoading = false;
                 },
 
                 searchOrders() {
@@ -395,47 +406,25 @@
                     })
                     .then(res => res.json())
                     .then(data => {
-                        if (data.status === 'success') {
-                            let hasNew = false;
-                            if (payload.search_query && data.data.length > 0) {
-                                let storedOrders = JSON.parse(localStorage.getItem("lktech_guest_orders")) || [];
-                                data.data.forEach(order => {
-                                    if (!storedOrders.includes(order.reference_number)) {
-                                        storedOrders.unshift(order.reference_number);
-                                        hasNew = true;
-                                    }
-                                });
-                                
-                                if (hasNew) {
-                                    localStorage.setItem("lktech_guest_orders", JSON.stringify(storedOrders));
-                                    // Fetch all updated orders from local storage to show full history
-                                    this.fetchOrders({ references: storedOrders });
-                                    this.searchQuery = '';
-                                    return;
-                                }
-                            }
+                        if (data.status === 'success' && data.data.length > 0) {
+                            this.orders = data.data;
                             
-                            if (payload.search_query && data.data.length === 0) {
-                                alert('Pesanan tidak ditemukan.');
-                            } else if (!payload.search_query || !hasNew) {
-                                this.orders = data.data;
-                            }
+                            // Auto-switch active tab based on the found order
+                            const status = data.data[0].order_status;
+                            if (status === 'menunggu_pembayaran') this.activeTab = 'pending';
+                            else if (status === 'diproses') this.activeTab = 'processing';
+                            else if (status === 'selesai') this.activeTab = 'completed';
+                            else if (status === 'batal') this.activeTab = 'cancelled';
                         } else {
-                            if (payload.search_query) {
-                                alert('Pesanan tidak ditemukan.');
-                            }
-                            if (!payload.search_query) {
-                                this.orders = [];
-                            }
+                            alert('Pesanan tidak ditemukan. Periksa kembali ID pesanan Anda.');
+                            this.orders = [];
                         }
                         this.isLoading = false;
                     })
                     .catch(err => {
                         console.error(err);
                         this.isLoading = false;
-                        if (payload.search_query) {
-                            alert('Terjadi kesalahan saat mencari pesanan.');
-                        }
+                        alert('Terjadi kesalahan saat mencari pesanan.');
                     });
                 }
             }

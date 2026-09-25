@@ -8,7 +8,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -18,7 +18,10 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
                     colors: {
                         brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
                     }
@@ -27,7 +30,7 @@
         }
     </script>
 </head>
-<body class="text-gray-800 antialiased">
+<body class="font-sans text-gray-800 antialiased flex flex-col min-h-screen">
     <x-navbar />
 
     {{-- Kirimkan data keranjang sebagai variabel PHP ke dalam JS, sertakan URL gambar yang sudah lengkap dari sisi server --}}
@@ -49,7 +52,7 @@
         }, $cart));
     @endphp
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 pb-28 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-8 pb-6 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
 
         {{-- Toast Notification --}}
         <div x-show="toast.show"
@@ -85,30 +88,49 @@
             </div>
         </div>
 
-        <div class="mb-4 sm:mb-8 flex flex-row items-center justify-between gap-2">
+        <!-- Breadcrumb Navigasi -->
+        <nav aria-label="breadcrumb" class="mb-2 sm:mb-6">
+            <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <li class="flex items-center shrink-0">
+                    <a href="/" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
+                        <i class="bx bx-home-alt"></i> Home
+                    </a>
+                </li>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <a href="/katalog" class="hover:text-brand-600 hover:underline transition-colors">Katalog</a>
+                </li>
+                <li class="flex items-center shrink-0">
+                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
+                    <span class="text-gray-800 font-semibold" aria-current="page">Keranjang</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="mb-3 sm:mb-8 flex flex-row items-center justify-between gap-2">
             <div>
-                <h1 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight mb-0.5">Keranjang</h1>
-                <p class="text-gray-500 text-xs sm:text-sm"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
+                <h1 class="text-lg sm:text-3xl font-black text-gray-900 tracking-tight mb-0.5">Keranjang</h1>
+                <p class="text-[11px] sm:text-sm text-gray-500"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
             </div>
             <a href="{{ route('katalog.index') }}" class="text-brand-600 font-bold text-sm sm:px-5 sm:py-2.5 sm:border-2 sm:border-brand-100 sm:rounded-xl hover:text-brand-700 transition-colors flex items-center gap-1">
-                <span class="sm:hidden text-xs">+ Tambah Barang</span>
+                <span class="sm:hidden text-[11px]">+ Tambah Barang</span>
                 <span class="hidden sm:inline-flex items-center gap-2"><i class='bx bx-left-arrow-alt text-xl'></i> Tambah Belanjaan</span>
             </a>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-4 sm:gap-8">
             {{-- LEFT: Daftar Produk --}}
-            <div class="w-full lg:flex-1 space-y-4 sm:space-y-6">
+            <div class="w-full lg:flex-1 space-y-3 sm:space-y-6">
 
                 {{-- DAFTAR PRODUK (tampil jika keranjang tidak kosong) --}}
                 <template x-if="cartItems.length > 0">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         {{-- Header --}}
-                        <div class="flex justify-between items-center px-4 sm:px-5 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
-                            <label class="flex items-center gap-2 sm:gap-3 cursor-pointer">
-                                <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-5 h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer">
+                        <div class="flex justify-between items-center px-4 sm:px-5 py-2.5 sm:py-4 border-b border-gray-100 bg-gray-50/50">
+                            <label class="flex items-center gap-2.5 sm:gap-3 cursor-pointer">
+                                <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer">
                                 <span class="font-bold text-gray-800 text-sm sm:text-base">Pilih Semua</span>
-                                <span class="text-xs text-gray-400 font-normal hidden sm:inline">(<span x-text="selectedItems.length"></span> dipilih)</span>
+                                <span class="text-[11px] sm:text-xs text-gray-400 font-normal hidden sm:inline">(<span x-text="selectedItems.length"></span> dipilih)</span>
                             </label>
                             <button type="button" @click="confirmEmpty()"
                                     class="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 sm:px-3 py-1.5 rounded-lg transition-colors">
@@ -119,13 +141,13 @@
                         {{-- Item List --}}
                         <div class="divide-y divide-gray-100">
                             <template x-for="item in cartItems" :key="item.id">
-                                <div class="flex items-center gap-3 px-5 py-4 hover:bg-gray-50/50 transition-colors">
+                                <div class="flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors">
                                     {{-- Checkbox --}}
                                     <input type="checkbox" :value="item.id" x-model="selectedItems" @change="syncSelectAll()"
-                                           class="w-5 h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer flex-shrink-0">
+                                           class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer flex-shrink-0">
 
                                     {{-- Gambar Produk --}}
-                                    <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
+                                    <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
                                         <template x-if="item.imageUrl">
                                             <img :src="item.imageUrl" class="w-full h-full object-cover" loading="lazy"
                                                  onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -167,9 +189,9 @@
 
                 {{-- Formulir Informasi Pembeli (tampil jika ada produk) --}}
                 <template x-if="cartItems.length > 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
-                        <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-4 pb-3 sm:pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
-                        <div class="space-y-4 sm:space-y-5">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3.5 sm:p-6">
+                        <h2 class="text-[13px] sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4 pb-2.5 sm:pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
+                        <div class="space-y-3.5 sm:space-y-5">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                                 <div>
                                     <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
@@ -226,8 +248,8 @@
 
             {{-- RIGHT: Ringkasan Belanja --}}
             <div class="w-full lg:w-[380px] flex-shrink-0">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
-                    <h2 class="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100">Ringkasan Belanja</h2>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 sticky top-24">
+                    <h2 class="text-[15px] sm:text-lg font-bold text-gray-900 mb-3 sm:mb-5 pb-3 sm:pb-4 border-b border-gray-100">Ringkasan Belanja</h2>
 
                     {{-- Error Banner --}}
                     <div x-show="showErrorBanner"
@@ -247,15 +269,15 @@
                     </div>
 
                     {{-- Info Dipilih --}}
-                    <div class="bg-blue-50 rounded-xl p-3 mb-4 flex items-center gap-2" x-show="cartItems.length > 0">
+                    <div class="bg-blue-50 rounded-xl p-2 sm:p-3 mb-3 sm:mb-4 flex items-center gap-2" x-show="cartItems.length > 0">
                         <i class='bx bx-info-circle text-blue-500'></i>
-                        <p class="text-xs text-blue-700 font-medium">
+                        <p class="text-[11px] sm:text-xs text-blue-700 font-medium">
                             <span x-text="selectedItems.length"></span> dari <span x-text="cartItems.length"></span> produk dipilih untuk dibayar
                         </p>
                     </div>
 
                     {{-- Ringkasan Harga --}}
-                    <div class="space-y-3 mb-5">
+                    <div class="space-y-2 sm:space-y-3 mb-4 sm:mb-5">
                         <div class="flex justify-between items-center text-sm text-gray-600">
                             <span>Subtotal (<span x-text="selectedItems.length"></span> produk)</span>
                             <span class="font-semibold text-gray-900" x-text="'Rp ' + formatRp(subtotal)"></span>
@@ -271,9 +293,9 @@
                     </div>
 
                     {{-- Disclaimer --}}
-                    <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 mb-5 flex gap-2 items-start">
+                    <div class="bg-orange-50 border border-orange-200 rounded-xl p-2.5 sm:p-3 mb-4 sm:mb-5 flex gap-2 items-start">
                         <i class='bx bx-info-circle text-orange-400 text-lg flex-shrink-0'></i>
-                        <p class="text-xs text-orange-700 leading-relaxed">
+                        <p class="text-[10px] sm:text-xs text-orange-700 leading-relaxed">
                             <strong class="block">Harga belum termasuk ongkos kirim!</strong>
                             Biaya kirim dikoordinasikan via WhatsApp setelah pembayaran.
                         </p>
@@ -301,8 +323,8 @@
         </div>
 
         {{-- Sticky Bottom Action Bar (Mobile Only) --}}
-        <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 pb-4 flex flex-col z-50 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
-            <div class="flex justify-between items-center w-full mb-3">
+        <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-3 flex flex-col z-50 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
+            <div class="flex justify-between items-center w-full mb-2">
                 <div class="flex flex-col">
                     <span class="text-[11px] text-gray-500 font-semibold mb-0.5">Total Pembayaran</span>
                     <span class="text-base font-black text-brand-600" x-text="'Rp ' + formatRp(subtotal)"></span>
