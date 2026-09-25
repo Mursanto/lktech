@@ -355,14 +355,16 @@
     </main>
 
     {{-- Minimalist Distraction-Free Footer --}}
-    <footer class="bg-gray-50 border-t border-gray-200 mt-auto pb-24 lg:pb-8 pt-8">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-2">
-            <p class="text-[11px] font-bold text-gray-700">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
-            <p class="text-[10px] text-gray-500 italic font-medium">Hardware Andal. Software Profesional. Satu Integrasi.</p>
-            <div class="flex items-center gap-4 mt-2 text-[10px] text-brand-600 font-semibold">
-                <a href="#" class="hover:underline hover:text-brand-700">Kebijakan Privasi</a>
+    <footer class="bg-gray-50 border-t border-gray-200 mt-auto pb-24 lg:pb-5 pt-5">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex flex-col text-center md:text-left">
+                <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
+                <p class="text-[13px] text-gray-500">Hardware Andal. Software Profesional. Satu Integrasi.</p>
+            </div>
+            <div class="flex items-center gap-3 text-[13px] text-gray-500 font-medium">
+                <a href="#" class="hover:text-brand-600 transition-colors">Kebijakan Privasi</a>
                 <span class="text-gray-300">|</span>
-                <a href="#" class="hover:underline hover:text-brand-700">Syarat &amp; Ketentuan</a>
+                <a href="#" class="hover:text-brand-600 transition-colors">Syarat &amp; Ketentuan</a>
             </div>
         </div>
     </footer>
