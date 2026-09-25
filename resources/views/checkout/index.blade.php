@@ -52,7 +52,7 @@
         }, $cart));
     @endphp
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-8 pb-6 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-5 pb-6 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
 
         {{-- Toast Notification --}}
         <div x-show="toast.show"
@@ -89,7 +89,7 @@
         </div>
 
         <!-- Breadcrumb Navigasi -->
-        <nav aria-label="breadcrumb" class="mb-2 sm:mb-6">
+        <nav aria-label="breadcrumb" class="mb-2 sm:mb-3">
             <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <li class="flex items-center shrink-0">
                     <a href="/" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
@@ -107,14 +107,14 @@
             </ol>
         </nav>
 
-        <div class="mb-3 sm:mb-8 flex flex-row items-center justify-between gap-2">
-            <div>
-                <h1 class="text-lg sm:text-3xl font-black text-gray-900 tracking-tight mb-0.5">Keranjang</h1>
-                <p class="text-[11px] sm:text-sm text-gray-500"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
+        <div class="mb-4 flex flex-row items-center justify-between gap-2">
+            <div class="flex items-baseline gap-2">
+                <h1 class="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">Keranjang</h1>
+                <p class="text-xs sm:text-sm text-gray-500"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
             </div>
-            <a href="{{ route('katalog.index') }}" class="text-brand-600 font-bold text-sm sm:px-5 sm:py-2.5 sm:border-2 sm:border-brand-100 sm:rounded-xl hover:text-brand-700 transition-colors flex items-center gap-1">
+            <a href="{{ route('katalog.index') }}" class="text-sm py-1.5 px-3 rounded-lg border border-brand-200 text-brand-600 hover:text-brand-700 hover:bg-brand-50 transition-colors flex items-center gap-1 font-semibold">
                 <span class="sm:hidden text-[11px]">+ Tambah Barang</span>
-                <span class="hidden sm:inline-flex items-center gap-2"><i class='bx bx-left-arrow-alt text-xl'></i> Tambah Belanjaan</span>
+                <span class="hidden sm:inline-flex items-center gap-1.5"><i class='bx bx-left-arrow-alt text-lg'></i> Tambah Belanjaan</span>
             </a>
         </div>
 
@@ -126,7 +126,7 @@
                 <template x-if="cartItems.length > 0">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         {{-- Header --}}
-                        <div class="flex justify-between items-center px-4 sm:px-5 py-2.5 sm:py-4 border-b border-gray-100 bg-gray-50/50">
+                        <div class="flex justify-between items-center px-4 sm:px-5 py-2.5 sm:py-3 border-b border-gray-100 bg-gray-50/50">
                             <label class="flex items-center gap-2.5 sm:gap-3 cursor-pointer">
                                 <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer">
                                 <span class="font-bold text-gray-800 text-sm sm:text-base">Pilih Semua</span>
@@ -141,7 +141,7 @@
                         {{-- Item List --}}
                         <div class="divide-y divide-gray-100">
                             <template x-for="item in cartItems" :key="item.id">
-                                <div class="flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors">
+                                <div class="flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 hover:bg-gray-50/50 transition-colors">
                                     {{-- Checkbox --}}
                                     <input type="checkbox" :value="item.id" x-model="selectedItems" @change="syncSelectAll()"
                                            class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer flex-shrink-0">
@@ -189,8 +189,8 @@
 
                 {{-- Formulir Informasi Pembeli (tampil jika ada produk) --}}
                 <template x-if="cartItems.length > 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3.5 sm:p-6">
-                        <h2 class="text-[13px] sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4 pb-2.5 sm:pb-4 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3.5 sm:p-5">
+                        <h2 class="text-[13px] sm:text-base font-bold text-gray-900 mb-3 pb-2.5 sm:pb-3 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
                         <div class="space-y-3.5 sm:space-y-5">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                                 <div>
@@ -233,7 +233,7 @@
 
                 {{-- Keranjang Kosong --}}
                 <template x-if="cartItems.length === 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 flex flex-col items-center justify-center text-center">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 sm:p-10 flex flex-col items-center justify-center text-center">
                         <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
                             <i class='bx bx-cart text-4xl text-gray-300'></i>
                         </div>
@@ -248,8 +248,8 @@
 
             {{-- RIGHT: Ringkasan Belanja --}}
             <div class="w-full lg:w-[380px] flex-shrink-0">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 sticky top-24">
-                    <h2 class="text-[15px] sm:text-lg font-bold text-gray-900 mb-3 sm:mb-5 pb-3 sm:pb-4 border-b border-gray-100">Ringkasan Belanja</h2>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5 sticky top-24">
+                    <h2 class="text-[15px] sm:text-base font-bold text-gray-900 mb-3 sm:mb-4 pb-3 border-b border-gray-100">Ringkasan Belanja</h2>
 
                     {{-- Error Banner --}}
                     <div x-show="showErrorBanner"

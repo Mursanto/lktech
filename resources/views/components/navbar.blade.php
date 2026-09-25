@@ -1,4 +1,6 @@
 <style>
+[x-cloak] { display: none !important; }
+
 @keyframes pulseBadge {
   0% { transform: scale(1) translate(25%, -25%); }
   50% { transform: scale(1.15) translate(25%, -25%); }
@@ -16,20 +18,7 @@
 </style>
 <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm" x-data="{ mobileMenuOpen: false, mobileSearchOpen: false }">
     @php
-        $pendingOrdersCount = 0;
-        $processingOrdersCount = 0;
-        $hasOrderHistory = false;
-        $userOrderIds = session()->get('user_orders', []);
-        if (!empty($userOrderIds)) {
-            $hasOrderHistory = true;
-            $pendingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
-                ->where('payment_status', 'pending')
-                ->count();
-            $processingOrdersCount = \App\Models\Sale::whereIn('id', $userOrderIds)
-                ->where('payment_status', 'success')
-                ->whereIn('order_status', ['processing', 'shipping'])
-                ->count();
-        }
+        // Badge untuk riwayat pesanan telah dihapus karena menggunakan sistem tracker manual
     @endphp
     <div class="max-w-[1400px] mx-auto px-1.5 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-14 gap-2 sm:gap-4">
@@ -148,13 +137,6 @@
                 <!-- Riwayat Pesanan Link -->
                 <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
-                    @if($pendingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
-                    @elseif($processingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-blue-500 rounded-full shadow-sm border-2 border-white">{{ $processingOrdersCount }}</span>
-                    @elseif($hasOrderHistory)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center w-[10px] h-[10px] transform translate-x-0 -translate-y-1/4 bg-gray-400 border border-white rounded-circle rounded-full"></span>
-                    @endif
                 </a>
 
                 <!-- FAQ Link -->
@@ -191,13 +173,6 @@
                 <!-- Riwayat Pesanan Link (Mobile) -->
                 <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
-                    @if($pendingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-500 rounded-full shadow-sm border-2 border-white" style="animation: pulseBadge 2s infinite;">{{ $pendingOrdersCount }}</span>
-                    @elseif($processingOrdersCount > 0)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-blue-500 rounded-full shadow-sm border-2 border-white">{{ $processingOrdersCount }}</span>
-                    @elseif($hasOrderHistory)
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center w-[10px] h-[10px] transform translate-x-0 -translate-y-1/4 bg-gray-400 border border-white rounded-circle rounded-full"></span>
-                    @endif
                 </a>
 
 

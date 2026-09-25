@@ -108,7 +108,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
+<body class="font-sans bg-white text-gray-800 antialiased flex flex-col min-h-screen">
 
     <!-- Header (Simple Tokopedia Style) -->
 
@@ -422,10 +422,10 @@
                         @if($product->stock > 0 && $product->status !== 'Sold')
                             @if($product->status == 'Pre-Order')
                                 <div class="flex flex-row gap-2">
-                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
+                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
                                         <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
@@ -434,10 +434,10 @@
                                 </p>
                             @else
                                 <div class="flex flex-row gap-2">
-                                    <button @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
+                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
                                         <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
@@ -527,7 +527,12 @@
 
 
     <!-- Footer -->
-    <x-footer />
+    <div class="hidden md:block">
+        <x-footer />
+    </div>
+    
+    <!-- Mobile Padding Fix to prevent overlap with bottom nav -->
+    <div class="md:hidden h-20 w-full"></div>
     <x-mobile-bottom-nav />
 
     <!-- ─────────────────────────────────────────────
