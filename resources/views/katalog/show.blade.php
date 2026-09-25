@@ -344,17 +344,17 @@
                     <div class="flex items-baseline justify-between gap-1 mb-3 pb-3 border-b border-gray-100">
                         <span class="text-gray-500 text-[10px] sm:text-xs font-semibold uppercase tracking-widest shrink-0">Harga Unit</span>
                         <div class="text-right flex items-baseline justify-end gap-1.5 sm:gap-2 whitespace-nowrap">
+                            <div class="text-base sm:text-lg font-black text-gray-900 tracking-tight">
+                                <span class="text-xs sm:text-sm text-gray-600">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
+                            </div>
                             @if(!empty($product->is_active_promo))
                                 @php
                                     $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
                                 @endphp
-                                <div class="text-gray-400 text-[10px] sm:text-xs opacity-70 line-through">
+                                <div class="text-gray-400 text-[9px] sm:text-[10px] opacity-70 line-through">
                                     Rp{{ number_format($crossedPriceDetail, 0, ',', '.') }}
                                 </div>
                             @endif
-                            <div class="text-base sm:text-lg font-black text-gray-900 tracking-tight">
-                                <span class="text-xs sm:text-sm text-gray-600">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
-                            </div>
                         </div>
                     </div>
 
