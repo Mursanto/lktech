@@ -355,7 +355,7 @@
     </main>
 
     {{-- Minimalist Distraction-Free Footer --}}
-    <footer class="bg-gray-50 border-t border-gray-200 mt-auto pb-24 lg:pb-5 pt-5">
+    <footer class="hidden md:block bg-gray-50 border-t border-gray-200 mt-auto pb-24 lg:pb-5 pt-5">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex flex-col text-center md:text-left">
                 <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
