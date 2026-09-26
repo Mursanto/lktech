@@ -31,7 +31,20 @@
     </script>
 </head>
 <body class="font-sans text-gray-800 antialiased flex flex-col min-h-screen">
-    <x-navbar />
+    <div class="hidden sm:block"><x-navbar /></div>
+
+    {{-- Mobile Floating Header (Anti-Gravity) --}}
+    <div class="sm:hidden sticky top-0 bg-white/80 backdrop-blur-md h-[56px] flex items-center justify-between px-4 z-50 border-b border-gray-100 shadow-sm box-border">
+        <a href="/katalog" class="w-11 h-11 flex items-center justify-start text-gray-700 hover:text-brand-600 transition-colors -ml-2">
+            <i class='bx bx-left-arrow-alt text-3xl'></i>
+        </a>
+        <div class="flex-1 text-center flex flex-col items-center justify-center">
+            <span class="text-[16px] font-bold text-gray-900 leading-none">Checkout</span>
+        </div>
+        <div class="w-11 h-11 flex items-center justify-end -mr-2">
+            <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-[30px] object-contain">
+        </div>
+    </div>
 
     {{-- Kirimkan data keranjang sebagai variabel PHP ke dalam JS, sertakan URL gambar yang sudah lengkap dari sisi server --}}
     @php
@@ -52,7 +65,7 @@
         }, $cart));
     @endphp
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-5 pb-6 sm:pb-8" x-data="checkoutPage({{ Js::from($cartForJs) }})">
+    <main class="w-full sm:max-w-7xl sm:mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-5 pb-[90px] lg:pb-8 box-border" x-data="checkoutPage({{ Js::from($cartForJs) }})">
 
         {{-- Toast Notification --}}
         <div x-show="toast.show"
@@ -88,8 +101,8 @@
             </div>
         </div>
 
-        <!-- Breadcrumb Navigasi -->
-        <nav aria-label="breadcrumb" class="mb-2 sm:mb-3">
+        {{-- Breadcrumb: hidden on mobile, visible on sm+ --}}
+        <nav aria-label="breadcrumb" class="hidden sm:block mb-2 sm:mb-3">
             <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <li class="flex items-center shrink-0">
                     <a href="/" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
@@ -107,7 +120,7 @@
             </ol>
         </nav>
 
-        <div class="mb-4 flex flex-row items-center justify-between gap-2">
+        <div class="hidden sm:flex mb-4 flex-row items-center justify-between gap-2">
             <div class="flex items-baseline gap-2">
                 <h1 class="text-lg sm:text-2xl font-black text-gray-900 tracking-tight">Keranjang</h1>
                 <p class="text-xs sm:text-sm text-gray-500"><span class="font-bold text-brand-600" x-text="totalQty"></span> item</p>
@@ -124,9 +137,9 @@
 
                 {{-- DAFTAR PRODUK (tampil jika keranjang tidak kosong) --}}
                 <template x-if="cartItems.length > 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         {{-- Header --}}
-                        <div class="flex justify-between items-center px-4 sm:px-5 py-2.5 sm:py-3 border-b border-gray-100 bg-gray-50/50">
+                        <div x-show="cartItems.length > 1" class="flex justify-between items-center px-4 sm:px-5 py-2.5 sm:py-3 border-b border-gray-100 bg-gray-50/50" style="display: none;">
                             <label class="flex items-center gap-2.5 sm:gap-3 cursor-pointer">
                                 <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer">
                                 <span class="font-bold text-gray-800 text-sm sm:text-base">Pilih Semua</span>
@@ -143,11 +156,11 @@
                             <template x-for="item in cartItems" :key="item.id">
                                 <div class="flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-3 hover:bg-gray-50/50 transition-colors">
                                     {{-- Checkbox --}}
-                                    <input type="checkbox" :value="item.id" x-model="selectedItems" @change="syncSelectAll()"
+                                    <input x-show="cartItems.length > 1" type="checkbox" :value="item.id" x-model="selectedItems" @change="syncSelectAll()"
                                            class="w-4 h-4 sm:w-5 sm:h-5 rounded text-brand-600 border-gray-300 focus:ring-brand-500 cursor-pointer flex-shrink-0">
 
                                     {{-- Gambar Produk --}}
-                                    <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
+                                    <div class="w-[60px] h-[60px] sm:w-16 sm:h-16 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 bg-gray-100">
                                         <template x-if="item.imageUrl">
                                             <img :src="item.imageUrl" class="w-full h-full object-cover" loading="lazy"
                                                  onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -160,24 +173,26 @@
                                     {{-- Info Produk --}}
                                     <div class="flex-1 min-w-0">
                                         <p class="font-semibold text-gray-900 text-xs sm:text-sm line-clamp-2 leading-snug mb-1" x-text="item.name"></p>
-                                        <div class="font-bold text-brand-600 text-sm mb-2 whitespace-nowrap" x-text="'Rp ' + formatRp(item.price * item.quantity)"></div>
-                                        <div class="flex items-center justify-end gap-3">
-                                            {{-- Tombol Hapus --}}
-                                            <button type="button" @click="confirmRemove(item.id, item.name)"
-                                                    class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                                                <i class='bx bx-trash text-lg'></i>
-                                            </button>
-                                            {{-- Kontrol Qty --}}
-                                            <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                                                <button type="button" @click="changeQty(item, -1)"
-                                                        class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
-                                                    <i class='bx bx-minus'></i>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <div class="font-bold text-brand-600 text-[13px] sm:text-sm whitespace-nowrap" x-text="'Rp ' + formatRp(item.price * item.quantity)"></div>
+                                            <div class="flex items-center gap-3">
+                                                {{-- Tombol Hapus --}}
+                                                <button type="button" @click="confirmRemove(item.id, item.name)"
+                                                        class="hidden sm:flex flex-shrink-0 w-8 h-8 items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                                    <i class='bx bx-trash text-lg'></i>
                                                 </button>
-                                                <span class="w-7 sm:w-9 text-center text-xs sm:text-sm font-bold text-gray-800 border-x border-gray-200 h-6 sm:h-7 flex items-center justify-center" x-text="item.quantity"></span>
-                                                <button type="button" @click="changeQty(item, 1)"
-                                                        class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
-                                                    <i class='bx bx-plus'></i>
-                                                </button>
+                                                {{-- Kontrol Qty --}}
+                                                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                                    <button type="button" @click="changeQty(item, -1)"
+                                                            class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
+                                                        <i class='bx bx-minus'></i>
+                                                    </button>
+                                                    <span class="w-7 sm:w-9 text-center text-[13px] sm:text-sm font-bold text-gray-800 border-x border-gray-200 h-6 sm:h-7 flex items-center justify-center" x-text="item.quantity"></span>
+                                                    <button type="button" @click="changeQty(item, 1)"
+                                                            class="w-7 h-6 sm:w-8 sm:h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">
+                                                        <i class='bx bx-plus'></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -189,43 +204,64 @@
 
                 {{-- Formulir Informasi Pembeli (tampil jika ada produk) --}}
                 <template x-if="cartItems.length > 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3.5 sm:p-5">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-3 sm:p-5">
                         <h2 class="text-[13px] sm:text-base font-bold text-gray-900 mb-3 pb-2.5 sm:pb-3 border-b border-gray-100">Informasi Pembeli & Pengiriman</h2>
-                        <div class="space-y-3.5 sm:space-y-5">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-                                <div>
-                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')"
-                                           :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
-                                           placeholder="Contoh: Budi Santoso">
-                                    <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-xs mt-1.5"></p>
-                                </div>
-                                <div>
-                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Alamat Email <span class="text-red-500">*</span></label>
-                                    <input type="email" x-model="formData.email" @blur="validateField('email')"
-                                           :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
-                                           placeholder="budi@email.com">
-                                    <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-xs mt-1.5"></p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-                                <div>
-                                    <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Nomor WhatsApp <span class="text-red-500">*</span></label>
-                                    <input type="text" x-model="formData.phone" @blur="validateField('phone')"
-                                           :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
-                                           class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
-                                           placeholder="08123456789">
-                                    <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-xs mt-1.5"></p>
-                                    <p class="text-[10px] sm:text-xs text-gray-400 mt-1.5 font-medium flex items-start gap-1"><i class='bx bx-info-circle mt-0.5'></i> Konfirmasi ongkir & resi akan dikirim via WhatsApp.</p>
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                            <!-- Baris 1: Nama Lengkap & Email -->
+                            <div>
+                                <label class="block text-[13px] sm:text-sm font-semibold text-gray-700 mb-[3px]">Nama Lengkap <span class="text-red-500">*</span></label>
+                                <input type="text" x-model="formData.customer_name" @blur="validateField('customer_name')"
+                                       :class="errors.customer_name ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                       class="w-full px-[12px] py-[10px] min-h-[44px] border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] sm:text-sm transition-all shadow-sm placeholder-gray-500 text-gray-900"
+                                       placeholder="Nama Lengkap Anda">
+                                <p x-show="errors.customer_name" x-text="errors.customer_name" class="text-red-500 text-[11px] mt-1"></p>
                             </div>
                             <div>
-                                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Alamat Pengiriman <span class="text-gray-400 font-normal text-[10px] sm:text-xs">(Opsional)</span></label>
-                                <textarea x-model="formData.address" rows="2"
-                                          class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all shadow-sm"
-                                          placeholder="Contoh: Jl. Sudirman No. 123, Jakarta..."></textarea>
+                                <label class="block text-[13px] sm:text-sm font-semibold text-gray-700 mb-[3px]">Alamat Email <span class="text-red-500">*</span></label>
+                                <input type="email" x-model="formData.email" @blur="validateField('email')"
+                                       :class="errors.email ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                       class="w-full px-[12px] py-[10px] min-h-[44px] border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] sm:text-sm transition-all shadow-sm placeholder-gray-500 text-gray-900"
+                                       placeholder="budi@email.com">
+                                <p x-show="errors.email" x-text="errors.email" class="text-red-500 text-[11px] mt-1"></p>
+                            </div>
+
+                            <!-- Baris 2: WhatsApp -->
+                            <div>
+                                <label class="flex items-center text-[13px] sm:text-sm font-semibold text-gray-700 mb-[3px]">
+                                    Nomor WhatsApp <span class="text-red-500 ml-1">*</span>
+                                    <div class="relative ml-1.5 group cursor-pointer" @click.prevent="alert('Konfirmasi ongkir & resi akan dikirim via WhatsApp.')">
+                                        <i class='bx bx-info-circle text-brand-500 text-sm'></i>
+                                    </div>
+                                </label>
+                                <input type="text" x-model="formData.phone" @blur="validateField('phone')"
+                                       :class="errors.phone ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                       class="w-full px-[12px] py-[10px] min-h-[44px] border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] sm:text-sm transition-all shadow-sm placeholder-gray-500 text-gray-900"
+                                       placeholder="08123456789">
+                                <p x-show="errors.phone" x-text="errors.phone" class="text-red-500 text-[11px] mt-1"></p>
+                            </div>
+                            <div class="hidden md:block"></div>
+
+                            <!-- Alamat Pengiriman (Selalu Tampil - Required) -->
+                            <div class="md:col-span-2">
+                                <label class="block text-[13px] sm:text-sm font-semibold text-gray-700 mb-[3px]">Alamat Pengiriman <span class="text-red-500">*</span></label>
+                                <textarea x-model="formData.address" rows="2" style="min-height: 60px;" @blur="validateField('address')"
+                                          :class="errors.address ? 'border-red-400 ring-1 ring-red-400' : 'border-gray-300'"
+                                          class="w-full px-[12px] py-[10px] border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] sm:text-sm transition-all shadow-sm placeholder-gray-500 text-gray-900"
+                                          placeholder="Alamat Lengkap (Jalan, No, Kota)"></textarea>
+                                <p x-show="errors.address" x-text="errors.address" class="text-red-500 text-[11px] mt-1"></p>
+                            </div>
+
+                            <!-- Catatan Pesanan (Accordion Opsional) -->
+                            <div class="md:col-span-2">
+                                <button type="button" @click="showCatatan = !showCatatan" class="flex items-center gap-1.5 text-[13px] font-semibold text-gray-500 hover:text-brand-600 transition-colors min-h-[36px]">
+                                    <i class='bx' :class="showCatatan ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                    <span x-text="showCatatan ? 'Sembunyikan Catatan' : '+ Tambah Catatan Pesanan (Opsional)'"></span>
+                                </button>
+                                <div x-show="showCatatan" x-transition.opacity.duration.300ms style="display: none;" class="mt-2">
+                                    <input type="text" x-model="formData.notes"
+                                           class="w-full px-[12px] py-[10px] min-h-[44px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] sm:text-sm transition-all shadow-sm placeholder-gray-500 text-gray-900"
+                                           placeholder="Catatan pengiriman/produk">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -233,7 +269,7 @@
 
                 {{-- Keranjang Kosong --}}
                 <template x-if="cartItems.length === 0">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 sm:p-10 flex flex-col items-center justify-center text-center">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 sm:p-10 flex flex-col items-center justify-center text-center">
                         <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
                             <i class='bx bx-cart text-4xl text-gray-300'></i>
                         </div>
@@ -248,7 +284,7 @@
 
             {{-- RIGHT: Ringkasan Belanja --}}
             <div class="w-full lg:w-[380px] flex-shrink-0">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5 sticky top-24">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-5 sticky top-24">
                     <h2 class="text-[15px] sm:text-base font-bold text-gray-900 mb-3 sm:mb-4 pb-3 border-b border-gray-100">Ringkasan Belanja</h2>
 
                     {{-- Error Banner --}}
@@ -269,7 +305,7 @@
                     </div>
 
                     {{-- Info Dipilih --}}
-                    <div class="bg-blue-50 rounded-xl p-2 sm:p-3 mb-3 sm:mb-4 flex items-center gap-2" x-show="cartItems.length > 0">
+                    <div class="bg-blue-50 rounded-xl p-2 sm:p-3 mb-3 sm:mb-4 flex items-center gap-2" x-show="cartItems.length > 1" style="display: none;">
                         <i class='bx bx-info-circle text-blue-500'></i>
                         <p class="text-[11px] sm:text-xs text-blue-700 font-medium">
                             <span x-text="selectedItems.length"></span> dari <span x-text="cartItems.length"></span> produk dipilih untuk dibayar
@@ -279,32 +315,24 @@
                     {{-- Ringkasan Harga --}}
                     <div class="space-y-2 sm:space-y-3 mb-4 sm:mb-5">
                         <div class="flex justify-between items-center text-sm text-gray-600">
-                            <span>Subtotal (<span x-text="selectedItems.length"></span> produk)</span>
+                            <span>Subtotal (<span x-text="selectedTotalQty"></span> produk)</span>
                             <span class="font-semibold text-gray-900" x-text="'Rp ' + formatRp(subtotal)"></span>
                         </div>
-                        <div class="flex justify-between items-center text-sm text-gray-600">
-                            <span>Biaya Pengiriman</span>
-                            <span class="text-orange-500 font-semibold text-xs">Dihitung Terpisah</span>
+                        <div class="flex flex-col">
+                            <div class="flex justify-between items-center text-sm text-gray-600">
+                                <span>Biaya Pengiriman</span>
+                                <span class="text-orange-500 font-semibold text-xs">Dihitung Terpisah</span>
+                            </div>
+                            <div class="mt-1 text-[10px] sm:text-xs text-orange-600 font-medium">
+                                Ongkir & resi dikoordinasikan via WhatsApp.
+                            </div>
                         </div>
-                        <div class="pt-3 border-t border-gray-100 flex justify-between items-center">
-                            <span class="font-bold text-gray-900">Total Pembayaran</span>
-                            <span class="text-xl font-black text-brand-600" x-text="'Rp ' + formatRp(subtotal)"></span>
-                        </div>
-                    </div>
-
-                    {{-- Disclaimer --}}
-                    <div class="bg-orange-50 border border-orange-200 rounded-xl p-2.5 sm:p-3 mb-4 sm:mb-5 flex gap-2 items-start">
-                        <i class='bx bx-info-circle text-orange-400 text-lg flex-shrink-0'></i>
-                        <p class="text-[10px] sm:text-xs text-orange-700 leading-relaxed">
-                            <strong class="block">Harga belum termasuk ongkos kirim!</strong>
-                            Biaya kirim dikoordinasikan via WhatsApp setelah pembayaran.
-                        </p>
                     </div>
 
                     {{-- Tombol Bayar --}}
                     <button type="button" @click="processPayment($event)"
                             :disabled="isLoading || cartItems.length === 0 || selectedItems.length === 0"
-                            class="hidden lg:flex w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md justify-center items-center gap-2 text-sm">
+                            class="hidden lg:flex w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-lg min-h-[44px] transition-all shadow-md justify-center items-center gap-2 text-sm">
                         <template x-if="isLoading">
                             <i class='bx bx-loader-alt bx-spin text-lg'></i>
                         </template>
@@ -314,18 +342,16 @@
                         <span x-text="isLoading ? 'Memproses...' : (selectedItems.length === 0 ? 'Pilih produk dulu' : 'Bayar Sekarang')"></span>
                     </button>
 
-                    <div class="mt-3 flex items-center justify-center gap-2 text-xs text-gray-400">
-                        <i class='bx bx-shield-alt-2 text-emerald-500'></i>
-                        Pembayaran Aman by Midtrans
-                    </div>
-
-                    {{-- WhatsApp Support Button --}}
-                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-center">
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center gap-1.5 text-[11px] font-medium text-emerald-600">
+                            <i class='bx bx-shield-alt-2 text-sm'></i>
+                            Aman by Midtrans
+                        </div>
                         <a href="https://wa.me/628567354046?text=Halo%20LKTech,%20saya%20butuh%20bantuan%20terkait%20transaksi/checkout%20pesanan%20saya." 
                            target="_blank"
-                           class="flex items-center gap-2 text-[11px] sm:text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg border border-emerald-100 shadow-sm">
-                            <i class='bx bxl-whatsapp text-lg'></i>
-                            Butuh bantuan transaksi? Chat WhatsApp
+                           class="flex items-center gap-1 text-[11px] font-bold text-gray-500 hover:text-emerald-600 transition-colors">
+                            <i class='bx bxl-whatsapp text-sm'></i>
+                            Chat WhatsApp
                         </a>
                     </div>
                 </div>
@@ -333,23 +359,23 @@
         </div>
 
         {{-- Sticky Bottom Action Bar (Mobile Only) --}}
-        <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-3 flex flex-col z-50 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
-            <div class="flex justify-between items-center w-full mb-2">
+        <div class="lg:hidden fixed bottom-0 left-0 w-full box-border bg-white border-t border-gray-100 py-2.5 px-4 flex flex-col z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between items-center w-full mb-1.5">
                 <div class="flex flex-col">
                     <span class="text-[11px] text-gray-500 font-semibold mb-0.5">Total Pembayaran</span>
                     <span class="text-base font-black text-brand-600" x-text="'Rp ' + formatRp(subtotal)"></span>
                 </div>
                 <button type="button" @click="processPayment($event)"
                         :disabled="isLoading || cartItems.length === 0 || selectedItems.length === 0"
-                        class="bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md flex items-center gap-2 text-sm">
+                        class="bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none text-white font-bold py-2 px-6 rounded-lg min-h-[44px] transition-all shadow-[0_2px_8px_rgba(37,99,235,0.2)] flex items-center gap-1.5 text-[13px] min-w-[120px] justify-center">
                     <template x-if="isLoading">
-                        <i class='bx bx-loader-alt bx-spin text-lg'></i>
+                        <i class='bx bx-loader-alt bx-spin text-base'></i>
                     </template>
                     <span x-text="isLoading ? 'Proses...' : 'Bayar Sekarang'"></span>
                 </button>
             </div>
-            <div class="flex items-center justify-center gap-1.5 text-[10px] text-emerald-600 font-semibold bg-emerald-50 py-1.5 rounded-md">
-                <i class='bx bx-check-shield text-sm'></i> Transaksi Aman & Terverifikasi
+            <div class="text-center">
+                <span class="text-[9px] text-gray-400 font-medium">Dengan menekan tombol, Anda menyetujui S&K</span>
             </div>
         </div>
     </main>
@@ -383,8 +409,9 @@
                 toast: { show: false, message: '' },
                 dialog: { show: false, title: '', message: '', confirm: () => {} },
 
-                formData: { customer_name: '', email: '', phone: '', address: '' },
-                errors: { customer_name: '', email: '', phone: '' },
+                formData: { customer_name: '', email: '', phone: '', address: '', notes: '' },
+                errors: { customer_name: '', email: '', phone: '', address: '' },
+                showCatatan: false,
                 isLoading: false,
                 showErrorBanner: false,
                 errorBannerDetail: '',
@@ -397,6 +424,9 @@
                 // ---- Computed ----
                 get totalQty() {
                     return this.cartItems.reduce((s, i) => s + i.quantity, 0);
+                },
+                get selectedTotalQty() {
+                    return this.cartItems.filter(i => this.selectedItems.includes(i.id)).reduce((s, i) => s + i.quantity, 0);
                 },
 
                 // ---- Helpers ----
@@ -530,11 +560,15 @@
                         if (!v) this.errors[field] = 'Nomor WhatsApp wajib diisi.';
                         else if (!/^(\+62|62|0)[0-9]{8,13}$/.test(v)) this.errors[field] = 'Format nomor tidak valid (contoh: 08123456789).';
                     }
+                    if (field === 'address') {
+                        if (!v) this.errors[field] = 'Alamat pengiriman wajib diisi.';
+                        else if (v.length < 10) this.errors[field] = 'Alamat terlalu singkat (min 10 karakter).';
+                    }
                     return !this.errors[field];
                 },
 
                 validateAll() {
-                    return ['customer_name', 'email', 'phone'].map(f => this.validateField(f)).every(Boolean);
+                    return ['customer_name', 'email', 'phone', 'address'].map(f => this.validateField(f)).every(Boolean);
                 },
 
                 // ---- Process Payment ----
@@ -547,6 +581,10 @@
                         if (this.errors.customer_name) errFields.push('Nama');
                         if (this.errors.email) errFields.push('Email');
                         if (this.errors.phone) errFields.push('WhatsApp');
+                        if (this.errors.address) {
+                            errFields.push('Alamat');
+                            this.showAlamat = true;
+                        }
                         this.errorBannerDetail = 'Mohon periksa kembali: ' + errFields.join(', ') + '.';
                         return;
                     }
@@ -573,6 +611,10 @@
                                 if (errData.errors.customer_name) this.errors.customer_name = errData.errors.customer_name[0];
                                 if (errData.errors.email) this.errors.email = errData.errors.email[0];
                                 if (errData.errors.phone) this.errors.phone = errData.errors.phone[0];
+                                if (errData.errors.address) {
+                                    this.errors.address = errData.errors.address[0];
+                                    this.showAlamat = true;
+                                }
                             }
                             this.showErrorBanner = true;
                             this.errorBannerDetail = 'Mohon periksa kembali data yang dimasukkan.';
