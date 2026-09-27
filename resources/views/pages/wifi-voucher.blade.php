@@ -301,8 +301,8 @@
                             <span class="bg-gray-100 text-gray-700 text-[10px] font-black px-2 py-0.5 rounded-full">20 User</span>
                         </div>
                         <div class="space-y-1.5 text-xs text-gray-600 border-t border-gray-100 pt-3">
-                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 147.000 <span class="text-[10px] text-gray-400 font-normal">(14 user)</span></span></div>
-                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 94.500 <span class="text-[10px] text-gray-400 font-normal">(6 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp 10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 147.000 <span class="text-[10px] text-gray-400 font-normal">(14 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp 15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 94.500 <span class="text-[10px] text-gray-400 font-normal">(6 user)</span></span></div>
                             <div class="flex justify-between font-bold text-gray-900 border-t border-dashed border-gray-200 pt-2 text-sm">
                                 <span>Potensi Omzet:</span>
                                 <span class="text-brand-600">Rp 241.500 / hari</span>
@@ -317,8 +317,8 @@
                             <span class="bg-gray-100 text-gray-700 text-[10px] font-black px-2 py-0.5 rounded-full">50 User</span>
                         </div>
                         <div class="space-y-1.5 text-xs text-gray-600 border-t border-gray-100 pt-3">
-                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 367.500 <span class="text-[10px] text-gray-400 font-normal">(35 user)</span></span></div>
-                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 236.250 <span class="text-[10px] text-gray-400 font-normal">(15 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp 10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 367.500 <span class="text-[10px] text-gray-400 font-normal">(35 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp 15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 236.250 <span class="text-[10px] text-gray-400 font-normal">(15 user)</span></span></div>
                             <div class="flex justify-between font-bold text-gray-900 border-t border-dashed border-gray-200 pt-2 text-sm">
                                 <span>Potensi Omzet:</span>
                                 <span class="text-brand-600">Rp 603.750 / hari</span>
@@ -333,9 +333,9 @@
                             <span class="bg-brand-100 text-brand-700 text-[10px] font-black px-2 py-0.5 rounded-full">100 User</span>
                         </div>
                         <div class="space-y-1.5 text-xs text-gray-600 border-t border-brand-100 pt-3">
-                            <div class="flex justify-between"><span>Voucher Rp10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 735.000 <span class="text-[10px] text-gray-400 font-normal">(70 user)</span></span></div>
-                            <div class="flex justify-between"><span>Voucher Rp15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 472.500 <span class="text-[10px] text-gray-400 font-normal">(30 user)</span></span></div>
-                            <div class="flex justify-between font-bold text-gray-905 border-t border-dashed border-brand-200 pt-2 text-sm">
+                            <div class="flex justify-between"><span>Voucher Rp 10.500 (6 Jam):</span> <span class="font-semibold text-gray-900">Rp 735.000 <span class="text-[10px] text-gray-400 font-normal">(70 user)</span></span></div>
+                            <div class="flex justify-between"><span>Voucher Rp 15.750 (12 Jam):</span> <span class="font-semibold text-gray-900">Rp 472.500 <span class="text-[10px] text-gray-400 font-normal">(30 user)</span></span></div>
+                            <div class="flex justify-between font-bold text-gray-900 border-t border-dashed border-brand-200 pt-2 text-sm">
                                 <span>Potensi Omzet:</span>
                                 <span class="text-brand-700">Rp 1.207.500 / hari</span>
                             </div>
@@ -359,8 +359,8 @@
                             <tr>
                                 <th class="px-6 py-5 whitespace-nowrap rounded-tl-3xl">Skenario Harian</th>
                                 <th class="px-6 py-5 text-center whitespace-nowrap">User (Asumsi)</th>
-                                <th class="px-6 py-5 text-right whitespace-nowrap">Voucher Rp10.500 <span class="font-normal text-brand-200 lowercase">(6 Jam)</span></th>
-                                <th class="px-6 py-5 text-right whitespace-nowrap">Voucher Rp15.750 <span class="font-normal text-brand-200 lowercase">(12 Jam)</span></th>
+                                <th class="px-6 py-5 text-right whitespace-nowrap">Voucher Rp 10.500 <span class="font-normal text-brand-200 lowercase">(6 Jam)</span></th>
+                                <th class="px-6 py-5 text-right whitespace-nowrap">Voucher Rp 15.750 <span class="font-normal text-brand-200 lowercase">(12 Jam)</span></th>
                                 <th class="px-6 py-5 text-right text-brand-200 font-black whitespace-nowrap rounded-tr-3xl">Total / Hari</th>
                             </tr>
                         </thead>
@@ -419,7 +419,7 @@
                             </ul>
                             <div class="bg-green-50 text-green-700 text-[10px] md:text-xs px-3 py-2 rounded-lg flex items-start gap-2">
                                 <i class='bx bxs-check-circle mt-0.5 text-sm md:text-base'></i>
-                                <span>Investasi awal Rp18,9 Juta diproyeksikan <strong>kembali modal (BEP) hanya dalam ~1,1 bulan!</strong></span>
+                                <span>Investasi awal Rp 18,9 Juta diproyeksikan <strong>kembali modal (BEP) hanya dalam ~1,1 bulan!</strong></span>
                             </div>
                         </div>
 

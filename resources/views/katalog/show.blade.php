@@ -114,405 +114,497 @@
 
     <x-navbar />
 
-    <!-- Main Product Layout (Tokopedia Style 3 Columns) -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-1.5 sm:px-6 lg:px-8 py-2 sm:py-4" x-data="{
+    <!-- Main Product Layout (Tokopedia Style 3 Columns / Mobile Optimized) -->
+    <div x-data="{
         images: {{ json_encode($product->all_images) }},
         currentIndex: 0,
         get activeImage() { return this.images[this.currentIndex]; },
         zoomActive: false,
-        zoomX: 50,
-        zoomY: 50,
         prev() { this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length; },
         next() { this.currentIndex = (this.currentIndex + 1) % this.images.length; },
         goTo(idx) { this.currentIndex = idx; },
-        updateZoom(e) {
-            const rect = e.target.getBoundingClientRect();
-            this.zoomX = ((e.clientX - rect.left) / rect.width) * 100;
-            this.zoomY = ((e.clientY - rect.top) / rect.height) * 100;
+        adding: false,
+        buyingNow: false,
+        addToCart(productId, buyNow = false) {
+            if(buyNow) this.buyingNow = true; else this.adding = true;
+            fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(buyNow) this.buyingNow = false; else this.adding = false;
+                if(data.success) {
+                    if(buyNow) {
+                        window.location.href = '/checkout';
+                    } else {
+                        window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
+                        
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed bottom-32 sm:bottom-24 right-4 bg-gray-900 text-white px-5 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 z-50 transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-xs sm:text-sm';
+                        toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-lg'></i> <span>Berhasil ditambahkan ke keranjang</span>`;
+                        document.body.appendChild(toast);
+                        
+                        setTimeout(() => {
+                            toast.classList.add('translate-y-6', 'opacity-0');
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }
+            })
+            .catch(err => {
+                if(buyNow) this.buyingNow = false; else this.adding = false;
+                alert('Kesalahan koneksi sistem.');
+            });
         }
     }" @keydown.arrow-left.window="prev()" @keydown.arrow-right.window="next()">
         
-        <!-- Breadcrumb Navigasi (Posisi Kiri) -->
-        <nav aria-label="breadcrumb" class="mb-2 sm:mb-6">
-            <ol class="flex items-center text-[11px] sm:text-sm text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide pb-1" style="scrollbar-width: none; -ms-overflow-style: none;">
-                <li class="flex items-center shrink-0">
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1 hover:text-brand-600 hover:underline transition-colors">
-                        <i class="bx bx-home-alt"></i> Home
-                    </a>
-                </li>
-                <li class="flex items-center shrink-0">
-                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
-                    <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 hover:underline transition-colors">Katalog</a>
-                </li>
-                <li class="flex items-center shrink-0">
-                    <span class="mx-2 text-gray-400 text-lg leading-none">›</span>
-                    <span class="text-gray-800 font-semibold truncate max-w-[150px] sm:max-w-[250px]" aria-current="page">{{ $product->brand }} {{ $product->model_series }}</span>
-                </li>
-            </ol>
-        </nav>
-
-        <div class="flex flex-col lg:flex-row gap-3 sm:gap-6 lg:gap-8">
+        <main class="flex-grow max-w-7xl mx-auto w-full px-2 sm:px-6 lg:px-8 py-1.5 sm:py-4">
             
-            <!-- 1. Left: Gallery Column -->
-            <div class="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 flex flex-col gap-2 sm:gap-4">
+            <!-- Breadcrumb Navigasi Compact -->
+            <nav aria-label="breadcrumb" class="mb-1.5 sm:mb-3">
+                <ol class="flex items-center text-[10px] sm:text-xs text-gray-500 font-medium overflow-x-auto whitespace-nowrap scrollbar-hide py-0.5" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <li class="flex items-center shrink-0">
+                        <a href="{{ route('home') }}" class="inline-flex items-center gap-1 hover:text-brand-600 transition-colors">
+                            <i class="bx bx-home-alt"></i> Home
+                        </a>
+                    </li>
+                    <li class="flex items-center shrink-0">
+                        <span class="mx-1.5 text-gray-300 text-xs">›</span>
+                        <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors">Katalog</a>
+                    </li>
+                    <li class="flex items-center shrink-0">
+                        <span class="mx-1.5 text-gray-300 text-xs">›</span>
+                        <span class="text-gray-800 font-semibold truncate max-w-[140px] sm:max-w-[220px]" aria-current="page">{{ $product->brand }} {{ $product->model_series }}</span>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="flex flex-col lg:flex-row gap-2.5 sm:gap-6 lg:gap-8">
                 
-                <!-- Main Sticky Wrapper to keep images in view while scrolling description -->
-                <div class="sticky top-24">
+                <!-- 1. Left: Gallery Column (Compressed Image & Thumbnails) -->
+                <div class="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 flex flex-col gap-1.5 sm:gap-3">
+                    
+                    <div class="sticky top-20">
 
-                    <!-- Hint Text -->
-                    <div class="text-[10px] sm:text-xs text-gray-500 mb-1 sm:mb-2 flex items-center gap-1.5 ml-1 font-medium">
-                        <i class='bx bx-zoom-in text-[13px] sm:text-[15px] text-brand-500'></i> Klik foto untuk melihat detail
-                    </div>
+                        <!-- ─── Main Image + Prev/Next Arrows ─── -->
+                        <div class="relative group gallery-main-wrap">
 
-                    <!-- ─── Main Image + Prev/Next Arrows ─── -->
-                    <div class="relative group gallery-main-wrap">
+                            {{-- Fancybox Hidden Gallery Links --}}
+                            <div id="fancybox-gallery-source" class="hidden">
+                                @foreach($product->all_images as $idx => $img)
+                                    <a href="{{ $img }}"
+                                       data-fancybox="product-gallery"
+                                       data-caption="{{ $product->brand }} {{ $product->model_series }} &mdash; Foto {{ $idx + 1 }} / {{ count($product->all_images) }}"
+                                       id="fancybox-item-{{ $idx }}"
+                                       aria-label="Buka foto {{ $idx + 1 }} fullscreen"
+                                    ></a>
+                                @endforeach
+                            </div>
 
-                        {{-- ── Fancybox Hidden Gallery Links (data source) ── --}}
-                        {{-- Semua link gambar tersembunyi ini dipakai Fancybox sebagai sumber galeri --}}
-                        <div id="fancybox-gallery-source" class="hidden">
+                            <!-- Main Image: max-h 280px & 4:3 ratio on mobile -->
+                            <div class="zoom-container w-full h-[230px] sm:h-[280px] lg:h-[340px] max-h-[280px] lg:max-h-none aspect-[4/3] lg:aspect-square bg-white border border-gray-200 mb-1.5 rounded-lg sm:rounded-xl fancybox-main-link relative overflow-hidden"
+                                 @click="document.getElementById('fancybox-item-' + currentIndex).click()"
+                                 @mouseenter="zoomActive = true"
+                                 @mouseleave="zoomActive = false"
+                                 title="Klik untuk memperbesar foto"
+                                 role="button"
+                                 tabindex="0"
+                                 @keydown.enter="document.getElementById('fancybox-item-' + currentIndex).click()"
+                                 aria-label="Klik untuk membuka galeri foto fullscreen">
+                                
+                                <img :src="activeImage"
+                                     alt="{{ $product->brand }} {{ $product->model_series }}"
+                                     class="absolute inset-0 w-full h-full object-contain p-1.5 zoom-image bg-white transition-all duration-300"
+                                     x-on:error="$event.target.src = 'https://placehold.co/400x300/f3f4f6/9ca3af?text=No+Image'">
+
+                                <!-- Zoom Hint Icon di Kiri Atas (Menggantikan Teks Redundan) -->
+                                <div class="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-sm text-white rounded-full w-6 h-6 flex items-center justify-center pointer-events-none shadow-sm" title="Klik untuk memperbesar">
+                                    <i class="bx bx-search-alt text-xs"></i>
+                                </div>
+
+                                <!-- Image Counter Badge (Bottom Center) -->
+                                <div x-show="images.length > 1"
+                                     class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 bg-black/50 text-white text-[10px] sm:text-xs font-semibold
+                                            px-2 sm:px-2.5 py-0.5 rounded-full pointer-events-none shadow-sm backdrop-blur-sm">
+                                    <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
+                                </div>
+                                
+                                <!-- PRE-ORDER Badge (Top Right) -->
+                                @php
+                                    $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                                @endphp
+                                @if($isPreOrder)
+                                <div class="absolute top-2 right-2 z-20 pointer-events-none">
+                                    <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2 py-0.5 rounded-md text-[10px] font-semibold shadow-sm flex items-center gap-1 h-5 whitespace-nowrap">
+                                        <i class='bx bx-time-five text-[11px]'></i> <span>Pre-Order</span>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+
+                            <!-- PREV Arrow -->
+                            <button @click.stop="prev()"
+                                    x-show="images.length > 1"
+                                    class="absolute left-1.5 top-1/2 -translate-y-1/2 z-10
+                                           w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center
+                                           bg-white/90 hover:bg-white
+                                           shadow-md rounded-full border border-gray-200
+                                           text-gray-600 hover:text-brand-600
+                                           opacity-0 group-hover:opacity-100
+                                           transition-all duration-200 cursor-pointer
+                                           focus:outline-none"
+                                    title="Foto sebelumnya">
+                                <i class="bx bx-chevron-left text-lg"></i>
+                            </button>
+
+                            <!-- NEXT Arrow -->
+                            <button @click.stop="next()"
+                                    x-show="images.length > 1"
+                                    class="absolute right-1.5 top-1/2 -translate-y-1/2 z-10
+                                           w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center
+                                           bg-white/90 hover:bg-white
+                                           shadow-md rounded-full border border-gray-200
+                                           text-gray-600 hover:text-brand-600
+                                           opacity-0 group-hover:opacity-100
+                                           transition-all duration-200 cursor-pointer
+                                           focus:outline-none"
+                                    title="Foto selanjutnya">
+                                <i class="bx bx-chevron-right text-lg"></i>
+                            </button>
+                        </div>
+
+                        <!-- ─── Thumbnails Row (40x40px, border-radius 4px) ─── -->
+                        <div class="flex gap-1.5 overflow-x-auto pb-0.5 pt-0.5 scrollbar-hide">
                             @foreach($product->all_images as $idx => $img)
-                                <a href="{{ $img }}"
-                                   data-fancybox="product-gallery"
-                                   data-caption="{{ $product->brand }} {{ $product->model_series }} &mdash; Foto {{ $idx + 1 }} / {{ count($product->all_images) }}"
-                                   id="fancybox-item-{{ $idx }}"
-                                   aria-label="Buka foto {{ $idx + 1 }} fullscreen"
-                                ></a>
+                                <button @click.stop="goTo({{ $idx }}); document.getElementById('fancybox-item-{{ $idx }}').click()"
+                                        class="relative w-10 h-10 flex-shrink-0 rounded-[4px] overflow-hidden border-2 transition-all duration-200 bg-white cursor-zoom-in p-0.5"
+                                        :class="currentIndex === {{ $idx }} ? 'border-brand-600 ring-1 ring-brand-300 scale-105' : 'border-gray-200 hover:border-brand-300'"
+                                        title="Buka foto {{ $idx + 1 }} fullscreen">
+                                    <img src="{{ $img }}"
+                                         class="absolute inset-0 w-full h-full object-contain p-0.5"
+                                         x-on:error="$event.target.src = 'https://placehold.co/40x40/f3f4f6/9ca3af?text=?'">
+                                </button>
                             @endforeach
                         </div>
 
-                        <!-- Main Image — klik buka Fancybox mulai dari foto aktif -->
-                        <div class="zoom-container w-full aspect-square bg-white border border-gray-200 mb-1.5 sm:mb-3 rounded-lg sm:rounded-xl fancybox-main-link"
-                             @click="document.getElementById('fancybox-item-' + currentIndex).click()"
-                             @mouseenter="zoomActive = true"
-                             @mouseleave="zoomActive = false"
-                             title="Klik untuk memperbesar foto"
-                             role="button"
-                             tabindex="0"
-                             @keydown.enter="document.getElementById('fancybox-item-' + currentIndex).click()"
-                             aria-label="Klik untuk membuka galeri foto fullscreen">
-                            <img :src="activeImage"
-                                 alt="{{ $product->brand }} {{ $product->model_series }}"
-                                 class="absolute inset-0 w-full h-full object-cover zoom-image bg-white transition-all duration-300"
-                                 x-on:error="$event.target.src = 'https://placehold.co/400x400/f3f4f6/9ca3af?text=No+Image'">
+                        <!-- Keyboard hint (desktop only) -->
+                        <p class="text-center text-[10px] text-gray-400 mt-1 hidden sm:block" x-show="images.length > 1">
+                            <i class="bx bx-keyboard"></i> Navigasi foto ← →
+                        </p>
 
-                            {{-- Ikon zoom hint di sudut kanan bawah gambar --}}
-                            <span class="absolute bottom-3 right-3 bg-black/40 text-white rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                                <i class="bx bx-expand-alt text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- 2. Middle: Info, Price, & Specs Accordion -->
+                <div class="flex-1 min-w-0 pb-2 sm:pb-8">
+                    
+                    <!-- Title & Condition Badge -->
+                    <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
+                        <h1 class="text-base sm:text-xl lg:text-2xl font-bold text-gray-900 leading-snug">
+                            {{ $product->brand }} {{ $product->model_series }}
+                        </h1>
+                        <span class="inline-flex items-center text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200">
+                            {{ $product->condition ?: 'Bekas' }}
+                        </span>
+                        @if($product->category)
+                        <span class="inline-flex items-center text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded bg-blue-50 text-brand-600 border border-blue-100">
+                            {{ $product->category->name }}
+                        </span>
+                        @endif
+                    </div>
+
+                    <!-- Prominent Price & Stock Row (Right Under Title) -->
+                    <div class="mt-1.5 mb-2.5 flex items-center justify-between gap-2 p-2.5 sm:p-3 bg-gradient-to-r from-blue-50/70 via-gray-50/50 to-transparent rounded-xl border border-blue-100/70">
+                        <div class="flex items-baseline gap-1 sm:gap-1.5 flex-wrap">
+                            <span class="text-xs sm:text-sm font-bold text-brand-600 mr-1">Rp</span>
+                            <span class="text-xl sm:text-2xl font-black text-gray-950 tracking-tight">
+                                {{ number_format($product->selling_price, 0, ',', '.') }}
                             </span>
-
-                            <!-- Image Counter Badge (Bottom Center) -->
-                            <div x-show="images.length > 1"
-                                 class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 bg-black/50 text-white text-[11px] sm:text-xs font-semibold
-                                        px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full pointer-events-none shadow-sm backdrop-blur-sm">
-                                <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
-                            </div>
-                            
-                            <!-- PRE-ORDER Badge (Top Right) -->
-                            @php
-                                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
-                            @endphp
-                            @if($isPreOrder)
-                            <div class="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 z-20 pointer-events-none">
-                                <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-semibold shadow-sm flex items-center gap-1 sm:gap-1.5 h-6 sm:h-7 whitespace-nowrap">
-                                    <i class='bx bx-time-five text-[11px] sm:text-sm'></i> <span>Pre-Order</span>
-                                </div>
-                            </div>
-                            @endif
-                        </div>
-
-                        <!-- PREV Arrow (navigasi Alpine — tidak membuka lightbox) -->
-                        <button @click.stop="prev()"
-                                x-show="images.length > 1"
-                                class="absolute left-2 top-1/2 -translate-y-1/2 z-10
-                                       w-9 h-9 flex items-center justify-center
-                                       bg-white/90 hover:bg-white
-                                       shadow-md rounded-full border border-gray-200
-                                       text-gray-600 hover:text-brand-600
-                                       opacity-0 group-hover:opacity-100
-                                       transition-all duration-200 cursor-pointer
-                                       focus:outline-none focus:ring-2 focus:ring-brand-400"
-                                style="margin-top: -1.5rem;"
-                                title="Foto sebelumnya">
-                            <i class="bx bx-chevron-left text-xl"></i>
-                        </button>
-
-                        <!-- NEXT Arrow (navigasi Alpine — tidak membuka lightbox) -->
-                        <button @click.stop="next()"
-                                x-show="images.length > 1"
-                                class="absolute right-2 top-1/2 -translate-y-1/2 z-10
-                                       w-9 h-9 flex items-center justify-center
-                                       bg-white/90 hover:bg-white
-                                       shadow-md rounded-full border border-gray-200
-                                       text-gray-600 hover:text-brand-600
-                                       opacity-0 group-hover:opacity-100
-                                       transition-all duration-200 cursor-pointer
-                                       focus:outline-none focus:ring-2 focus:ring-brand-400"
-                                style="margin-top: -1.5rem;"
-                                title="Foto selanjutnya">
-                            <i class="bx bx-chevron-right text-xl"></i>
-                        </button>
-                    </div>
-
-                    <!-- ─── Thumbnails Row ─── -->
-                    {{-- Klik thumbnail: navigasi Alpine DAN langsung buka Fancybox di foto itu --}}
-                    <div class="flex gap-2 overflow-x-auto pb-1 pt-1 scrollbar-hide">
-                        @foreach($product->all_images as $idx => $img)
-                            <button @click.stop="goTo({{ $idx }}); document.getElementById('fancybox-item-{{ $idx }}').click()"
-                                    class="relative w-16 h-16 xl:w-[70px] xl:h-[70px] flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white cursor-zoom-in"
-                                    :class="currentIndex === {{ $idx }} ? 'border-brand-500 ring-2 ring-brand-200 scale-105' : 'border-gray-200 hover:border-brand-300'"
-                                    title="Buka foto {{ $idx + 1 }} fullscreen">
-                                <img src="{{ $img }}"
-                                     class="absolute inset-0 w-full h-full object-contain p-1"
-                                     x-on:error="$event.target.src = 'https://placehold.co/80x80/f3f4f6/9ca3af?text=?'">
-                            </button>
-                        @endforeach
-                    </div>
-
-                    <!-- Keyboard hint (desktop only) -->
-                    <p class="text-center text-[10px] text-gray-400 mt-1 sm:mt-2 hidden sm:block" x-show="images.length > 1">
-                        <i class="bx bx-keyboard"></i> Gunakan tombol ← → untuk navigasi foto
-                    </p>
-
-                </div>
-            </div>
-
-            <!-- 2. Middle: Info & Description Column -->
-            <div class="flex-1 min-w-0 pb-4 sm:pb-12">
-                <!-- Title -->
-                <h1 class="text-base sm:text-2xl font-bold text-gray-900 leading-tight mb-1 sm:mb-2">
-                    {{ $product->brand }} {{ $product->model_series }}
-                </h1>
-                
-                <!-- Stats Row -->
-                <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4 pb-2 sm:pb-4 border-b border-gray-200">
-                    <div class="flex items-center gap-1">
-                        <span class="font-bold text-gray-800">Kondisi:</span>
-                        <span class="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">{{ $product->condition ?: 'Bekas' }}</span>
-                    </div>
-                    <div class="w-1 h-1 bg-gray-300 rounded-full"></div>
-                    <div class="flex items-center gap-1">
-                        <span class="font-bold text-gray-800">Kategori:</span>
-                        <span>{{ $product->category ? $product->category->name : 'Laptop' }}</span>
-                    </div>
-                </div>
-
-
-
-                <!-- Description / Specifications -->
-                <div class="mt-1 sm:mt-4">
-                    <h2 class="text-sm sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 border-l-4 border-brand-500 pl-2 sm:pl-3">Spesifikasi & Detail Produk</h2>
-                    
-                    @if($product->description)
-                        <div class="prose max-w-none text-[11px] sm:text-sm text-gray-700">
-                            {!! $product->description !!}
-                        </div>
-                    @else
-                        <!-- Fallback Spec Output -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-sm text-gray-700 mb-8">
-                            <div class="flex flex-col border-b border-gray-100 pb-2">
-                                <span class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider">Processor</span>
-                                <span class="font-medium">{{ $product->processor ?: 'N/A' }}</span>
-                            </div>
-                            <div class="flex flex-col border-b border-gray-100 pb-2">
-                                <span class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider">RAM</span>
-                                <span class="font-medium">{{ $product->ram ?: 'N/A' }}</span>
-                            </div>
-                            <div class="flex flex-col border-b border-gray-100 pb-2">
-                                <span class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider">Penyimpanan</span>
-                                <span class="font-medium">{{ $product->storage ?: 'N/A' }}</span>
-                            </div>
-                            <div class="flex flex-col border-b border-gray-100 pb-2">
-                                <span class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider">Layar</span>
-                                <span class="font-medium">{{ $product->screen_size ? $product->screen_size . ' Inch' : 'N/A' }}</span>
-                            </div>
-                            <div class="flex flex-col border-b border-gray-100 pb-2">
-                                <span class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider">Daya Tahan Baterai</span>
-                                <span class="font-medium">±{{ $product->battery_runtime ?: 'N/A' }} Jam</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-500 italic text-sm bg-gray-50 p-3 rounded-lg mb-4">Admin belum menuliskan deskripsi panjang untuk unit ini. Namun, spesifikasi di atas sudah tervalidasi.</p>
-                    @endif
-                </div>
-
-            </div>
-
-            <!-- 3. Right: Sticky Action Box (Compact) -->
-            <div class="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0">
-                <div class="sticky top-24 border border-gray-200 rounded-2xl p-4 shadow-lg shadow-gray-100/50 bg-white">
-                    <h3 class="font-bold text-gray-800 mb-3 text-base">Transaksi</h3>
-                    
-                    <div class="flex items-baseline justify-between gap-1 mb-3 pb-3 border-b border-gray-100">
-                        <span class="text-gray-500 text-[10px] sm:text-xs font-semibold uppercase tracking-widest shrink-0">Harga Unit</span>
-                        <div class="text-right flex items-baseline justify-end gap-1.5 sm:gap-2 whitespace-nowrap">
-                            <div class="text-base sm:text-lg font-black text-gray-900 tracking-tight">
-                                <span class="text-xs sm:text-sm text-gray-600">Rp</span>{{ number_format($product->selling_price, 0, ',', '.') }}
-                            </div>
                             @if(!empty($product->is_active_promo))
                                 @php
                                     $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
                                 @endphp
-                                <div class="text-gray-400 text-[9px] sm:text-[10px] opacity-70 line-through">
-                                    Rp{{ number_format($crossedPriceDetail, 0, ',', '.') }}
-                                </div>
+                                <span class="text-gray-400 text-[11px] sm:text-xs line-through ml-1">
+                                    Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
+                                </span>
+                                <span class="bg-rose-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-wider uppercase">Promo</span>
                             @endif
                         </div>
-                    </div>
 
-                    <div class="space-y-2 mb-4 text-xs">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-500 font-medium">Status Stok:</span>
-                            @php
-                                $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
-                            @endphp
+                        <!-- Stock Status Badge -->
+                        <div>
                             @if($product->stock > 0 && $product->status !== 'Sold')
-                                <span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    {{ $isPreOrder ? 'PO (Pre-Order)' : 'Ready Stok' }} - Sisa {{ $product->stock }} unit
+                                <span class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    {{ $isPreOrder ? 'Pre-Order' : 'Ready' }} ({{ $product->stock }})
                                 </span>
                             @else
-                                <span class="text-red-700 font-bold bg-red-50 px-1.5 py-0.5 rounded border border-red-200 flex items-center gap-1">
+                                <span class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200 shrink-0">
                                     <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                    Kosong / Terjual
+                                    Habis
                                 </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="space-y-2.5" x-data="{
-                        adding: false,
-                        buyingNow: false,
-                        addToCart(productId, buyNow = false) {
-                            if(buyNow) this.buyingNow = true; else this.adding = true;
-                            fetch('{{ route('cart.add') }}', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({ product_id: productId })
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if(buyNow) this.buyingNow = false; else this.adding = false;
-                                if(data.success) {
-                                    if(buyNow) {
-                                        window.location.href = '/checkout';
-                                    } else {
-                                        window.dispatchEvent(new CustomEvent('cart-updated', { detail: data.cart_count }));
-                                        
-                                        const toast = document.createElement('div');
-                                        toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform transition-all duration-300 translate-y-0 opacity-100 font-medium text-sm';
-                                        toast.innerHTML = `<i class='bx bx-check-circle text-emerald-400 text-xl'></i> <span>Berhasil ditambahkan ke keranjang</span>`;
-                                        document.body.appendChild(toast);
-                                        
-                                        setTimeout(() => {
-                                            toast.classList.add('translate-y-10', 'opacity-0');
-                                            setTimeout(() => toast.remove(), 300);
-                                        }, 3000);
-                                    }
-                                }
-                            })
-                            .catch(err => {
-                                if(buyNow) this.buyingNow = false; else this.adding = false;
-                                alert('Kesalahan koneksi sistem.');
-                            });
-                        }
-                    }">
+                    <!-- Accordion Spesifikasi & Detail Produk -->
+                    <div class="space-y-2 mt-2" x-data="{ openSpecs: true, openDesc: true }">
+                        
+                        <!-- Accordion 1: Spesifikasi Teknis -->
+                        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <button type="button" @click="openSpecs = !openSpecs" class="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 hover:bg-gray-100/70 transition-colors text-left font-bold text-xs sm:text-sm text-gray-800">
+                                <span class="flex items-center gap-1.5">
+                                    <i class='bx bx-chip text-brand-600 text-base'></i> Spesifikasi Teknis
+                                </span>
+                                <i class='bx bx-chevron-down text-lg text-gray-500 transition-transform duration-200' :class="openSpecs ? 'rotate-180' : ''"></i>
+                            </button>
+                            
+                            <div x-show="openSpecs" x-transition.opacity.duration.150ms class="p-2.5 sm:p-3 border-t border-gray-100">
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Processor</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->processor ?: '-' }}</span>
+                                    </div>
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">RAM</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->ram ?: '-' }}</span>
+                                    </div>
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Penyimpanan</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->storage ?: '-' }}</span>
+                                    </div>
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Layar</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->screen_size ? $product->screen_size . ' Inch' : '-' }}</span>
+                                    </div>
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Baterai</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->battery_runtime ? '±' . $product->battery_runtime . ' Jam' : '-' }}</span>
+                                    </div>
+                                    <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
+                                        <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Kondisi Fisik</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->condition ?: 'Bekas Terawat' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion 2: Deskripsi & Kelengkapan (Jika Tersedia) -->
+                        @if($product->description)
+                        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <button type="button" @click="openDesc = !openDesc" class="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 hover:bg-gray-100/70 transition-colors text-left font-bold text-xs sm:text-sm text-gray-800">
+                                <span class="flex items-center gap-1.5">
+                                    <i class='bx bx-detail text-brand-600 text-base'></i> Deskripsi & Kelengkapan
+                                </span>
+                                <i class='bx bx-chevron-down text-lg text-gray-500 transition-transform duration-200' :class="openDesc ? 'rotate-180' : ''"></i>
+                            </button>
+                            
+                            <div x-show="openDesc" x-transition.opacity.duration.150ms class="p-3 border-t border-gray-100">
+                                <div class="prose max-w-none text-xs sm:text-sm text-gray-700">
+                                    {!! $product->description !!}
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                    </div>
+
+                    <!-- Tombol Sekunder & Trust Badges (Tampil di Mobile) -->
+                    <div class="block lg:hidden mt-3 pt-2">
+                        <!-- Tombol Sekunder 1 Baris Horizontal -->
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk:%20{{ urlencode($product->brand . ' ' . $product->model_series) }}" target="_blank" 
+                               class="flex items-center justify-center gap-1 py-2 px-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-semibold transition-colors">
+                                <i class='bx bxl-whatsapp text-sm'></i> <span>Tanya Admin</span>
+                            </a>
+                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" 
+                                    class="flex items-center justify-center gap-1 py-2 px-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition-colors">
+                                <i class='bx bx-heart text-sm text-rose-500'></i> <span>Wishlist</span>
+                            </button>
+                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" 
+                                    class="flex items-center justify-center gap-1 py-2 px-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition-colors">
+                                <i class='bx bx-share-alt text-sm text-brand-600'></i> <span>Bagikan</span>
+                            </button>
+                        </div>
+
+                        <!-- Trust Badges 1 Baris Horizontal -->
+                        <div class="grid grid-cols-3 gap-2 mt-3 p-2.5 rounded-xl bg-gray-50/80 border border-gray-100 text-center">
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-blue-100/70 text-brand-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-shield-quarter'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">Lulus QC</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-amber-100/70 text-amber-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-medal'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">Bergaransi</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-emerald-100/70 text-emerald-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-wrench'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">After-Sales</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 3. Right: Desktop Action Panel (Without Heavy Card Box) -->
+                <div class="w-full lg:w-[280px] xl:w-[320px] flex-shrink-0 hidden lg:block">
+                    <div class="sticky top-20 space-y-3">
+                        
+                        <!-- CTA Buttons (Desktop) -->
                         @if($product->stock > 0 && $product->status !== 'Sold')
                             @if($product->status == 'Pre-Order')
-                                <div class="flex flex-row gap-2">
-                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                <div class="flex flex-col gap-2">
+                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-all shadow-sm flex justify-center items-center gap-1.5 cursor-pointer">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-orange-500 border border-orange-500 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
-                                        <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
+                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="w-full bg-white hover:bg-orange-50 text-orange-600 border border-orange-500 font-bold py-2.5 px-4 rounded-xl text-sm transition-all flex justify-center items-center gap-1.5 cursor-pointer">
+                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
-                                <p class="text-[10px] text-orange-600 font-medium leading-tight text-center mt-1">
-                                    *Estimasi Pre-Order ±7 hari.
+                                <p class="text-[11px] text-orange-600 font-medium text-center">
+                                    *Estimasi Pre-Order ±7 hari kerja.
                                 </p>
                             @else
-                                <div class="flex flex-row gap-2">
-                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-2 rounded-lg text-xs transition-all shadow-sm flex justify-center items-center gap-1">
+                                <div class="flex flex-col gap-2">
+                                    <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-all shadow-sm flex justify-center items-center gap-1.5 cursor-pointer">
                                         <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
                                     </button>
-                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="flex-1 bg-white hover:bg-gray-50 text-brand-600 border border-brand-600 font-bold py-2 px-2 rounded-lg text-xs transition-all flex justify-center items-center gap-1 shadow-sm">
-                                        <i class='bx bx-cart-add text-base'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
+                                    <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="w-full bg-white hover:bg-brand-50 text-brand-600 border border-brand-600 font-bold py-2.5 px-4 rounded-xl text-sm transition-all flex justify-center items-center gap-1.5 cursor-pointer">
+                                        <i class='bx bx-cart-add text-lg'></i> <span x-text="adding ? 'Proses...' : '+ Keranjang'"></span>
                                     </button>
                                 </div>
                             @endif
                         @else
-                            <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-2 px-3 rounded-lg text-xs cursor-not-allowed flex justify-center items-center gap-1.5">
+                            <button disabled class="w-full bg-gray-200 text-gray-500 font-bold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed flex justify-center items-center">
                                 Stok Habis
                             </button>
                         @endif
 
-                        <div class="flex items-center justify-center gap-4 py-1 text-xs text-gray-500 font-medium">
-                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" class="flex items-center gap-1 hover:text-brand-600 transition-colors">
-                                <i class='bx bx-heart text-base'></i> Wishlist
+                        <!-- Tombol Sekunder (Desktop 1 Baris Horizontal) -->
+                        <div class="grid grid-cols-3 gap-1.5 pt-1">
+                            <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk:%20{{ urlencode($product->brand . ' ' . $product->model_series) }}" target="_blank" 
+                               class="flex items-center justify-center gap-1 py-2 px-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-semibold transition-colors" title="Tanya Admin via WhatsApp">
+                                <i class='bx bxl-whatsapp text-sm'></i> <span>Tanya</span>
+                            </a>
+                            <button type="button" onclick="alert('Fitur Wishlist akan segera hadir!')" 
+                                    class="flex items-center justify-center gap-1 py-2 px-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition-colors" title="Simpan ke Wishlist">
+                                <i class='bx bx-heart text-sm text-rose-500'></i> <span>Wishlist</span>
                             </button>
-                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" class="flex items-center gap-1 hover:text-brand-600 transition-colors">
-                                <i class='bx bx-share-alt text-base'></i> Bagikan
+                            <button type="button" @click.prevent="navigator.clipboard.writeText(window.location.href); alert('Tautan produk berhasil disalin!')" 
+                                    class="flex items-center justify-center gap-1 py-2 px-1 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-lg text-xs font-semibold transition-colors" title="Salin Tautan">
+                                <i class='bx bx-share-alt text-sm text-brand-600'></i> <span>Bagikan</span>
                             </button>
                         </div>
 
-                        <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20tertarik%20dengan%20produk%20di%20Katalog%20Anda:%20{{ $product->brand }}%20{{ $product->model_series }}" target="_blank" 
-                           class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold py-2 px-2 rounded-lg text-xs transition-colors flex justify-center items-center gap-1.5 shadow-sm">
-                            <i class='bx bx-message-rounded-dots text-base'></i> Tanya Admin
-                        </a>
-                    </div>
-                    
-                    <!-- Trust Badge Section (Compact) -->
-                    <div class="mt-4 border-t border-gray-100 pt-3 space-y-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-shield-quarter text-sm'></i>
+                        <!-- Trust Badges (Desktop 1 Baris Horizontal) -->
+                        <div class="grid grid-cols-3 gap-1.5 pt-3 border-t border-gray-100 text-center">
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-shield-quarter'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">Lulus QC</span>
                             </div>
-                            <span class="text-xs text-gray-700 font-medium">Lulus Quality Control</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-medal text-sm'></i>
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-medal'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">Bergaransi</span>
                             </div>
-                            <span class="text-xs text-gray-700 font-medium">Bergaransi Terpercaya</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                                <i class='bx bx-wrench text-sm'></i>
+                            <div class="flex flex-col items-center">
+                                <div class="w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm mb-1">
+                                    <i class='bx bx-wrench'></i>
+                                </div>
+                                <span class="text-[10px] font-medium text-gray-700 leading-tight">After-Sales</span>
                             </div>
-                            <span class="text-xs text-gray-700 font-medium">Layanan After-Sales</span>
                         </div>
+
                     </div>
                 </div>
+
             </div>
+        </main>
 
+        <!-- ─────────────────────────────────────────────
+             Mobile Sticky CTA Bar (Menempel di Paling Bawah Layar)
+        ───────────────────────────────────────────────── -->
+        <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 px-3 py-2 md:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
+            <div class="flex items-center justify-between gap-2 max-w-lg mx-auto">
+                <!-- Mini Harga -->
+                <div class="flex flex-col shrink-0 min-w-0 pr-1">
+                    <span class="text-[9px] text-gray-400 font-semibold uppercase leading-none">Harga</span>
+                    <div class="text-xs sm:text-sm font-extrabold text-brand-600 truncate">
+                        Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+                    </div>
+                </div>
+
+                <!-- Tombol CTA Mobile -->
+                @if($product->stock > 0 && $product->status !== 'Sold')
+                    @if($product->status == 'Pre-Order')
+                        <div class="flex items-center gap-1.5 flex-1 justify-end">
+                            <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="py-2 px-2.5 rounded-lg border border-orange-500 text-orange-600 font-bold text-xs flex items-center justify-center gap-1 bg-orange-50 active:bg-orange-100 transition-colors">
+                                <i class='bx bx-cart-add text-sm'></i>
+                                <span x-text="adding ? '...' : '+ Keranjang'"></span>
+                            </button>
+                            <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 max-w-[130px] py-2 px-2.5 rounded-lg bg-orange-500 active:bg-orange-600 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-sm transition-colors">
+                                <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
+                            </button>
+                        </div>
+                    @else
+                        <div class="flex items-center gap-1.5 flex-1 justify-end">
+                            <button type="button" @click="addToCart({{ $product->id }}, false)" :disabled="adding || buyingNow" class="py-2 px-2.5 rounded-lg border border-brand-600 text-brand-600 font-bold text-xs flex items-center justify-center gap-1 bg-brand-50 active:bg-brand-100 transition-colors">
+                                <i class='bx bx-cart-add text-sm'></i>
+                                <span x-text="adding ? '...' : '+ Keranjang'"></span>
+                            </button>
+                            <button type="button" @click="addToCart({{ $product->id }}, true)" :disabled="adding || buyingNow" class="flex-1 max-w-[130px] py-2 px-2.5 rounded-lg bg-brand-600 active:bg-brand-700 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-sm transition-colors">
+                                <span x-text="buyingNow ? 'Proses...' : 'Beli Sekarang'"></span>
+                            </button>
+                        </div>
+                    @endif
+                @else
+                    <button disabled class="flex-1 py-2 px-3 bg-gray-200 text-gray-500 font-bold text-xs rounded-lg cursor-not-allowed text-center">
+                        Stok Habis
+                    </button>
+                @endif
+            </div>
         </div>
-    </main>
 
-    <!-- Related Products / Cross-Selling Section -->
+    </div>
+
+    <!-- Related Products / Cross-Selling Section (Efisiensi Ruang) -->
     @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-    <section x-data class="max-w-7xl mx-auto w-full px-1.5 sm:px-6 lg:px-8 py-2 sm:py-4 mb-1 sm:mb-2 mt-1 sm:mt-2 border-t border-gray-100">
-        <div class="flex items-center justify-between mb-4 md:mb-6 gap-4 overflow-hidden">
-            <h3 class="text-sm sm:text-lg font-medium text-gray-900 leading-snug truncate">
-                Rekomendasi produk terkait
+    <section x-data class="max-w-7xl mx-auto w-full px-2 sm:px-6 lg:px-8 py-2 sm:py-3 mb-1 mt-1 border-t border-gray-100">
+        <div class="flex items-center justify-between mb-2 md:mb-4 gap-2 overflow-hidden">
+            <h3 class="text-xs sm:text-base font-bold text-gray-900 leading-snug truncate">
+                Rekomendasi Produk Terkait
             </h3>
             
             <!-- Tombol Panah Navigasi Slider -->
-            <div class="flex gap-2 shrink-0">
-                <button type="button" id="btnSlideLeft" onclick="document.getElementById('productSlider').scrollBy({ left: -260, behavior: 'smooth' })" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-full shadow-sm transition-colors relative z-10" aria-label="Slide Kiri">
-                    <i class="bx bx-chevron-left text-xl"></i>
+            <div class="flex gap-1.5 shrink-0">
+                <button type="button" id="btnSlideLeft" onclick="document.getElementById('productSlider').scrollBy({ left: -220, behavior: 'smooth' })" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-full shadow-xs transition-colors" aria-label="Slide Kiri">
+                    <i class="bx bx-chevron-left text-base sm:text-lg"></i>
                 </button>
-                <button type="button" id="btnSlideRight" onclick="document.getElementById('productSlider').scrollBy({ left: 260, behavior: 'smooth' })" class="w-9 h-9 flex items-center justify-center bg-white border border-gray-200 text-brand-600 hover:bg-brand-50 rounded-full shadow-sm transition-colors relative z-10" aria-label="Slide Kanan">
-                    <i class="bx bx-chevron-right text-xl"></i>
+                <button type="button" id="btnSlideRight" onclick="document.getElementById('productSlider').scrollBy({ left: 220, behavior: 'smooth' })" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white border border-gray-200 text-brand-600 hover:bg-brand-50 rounded-full shadow-xs transition-colors" aria-label="Slide Kanan">
+                    <i class="bx bx-chevron-right text-base sm:text-lg"></i>
                 </button>
             </div>
         </div>
 
         <!-- Horizontal Scrollable Container (Compact Cards) -->
-        <div id="productSlider" class="flex overflow-x-auto gap-3 sm:gap-4 lg:gap-5 pb-4 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+        <div id="productSlider" class="flex overflow-x-auto gap-2 sm:gap-3.5 pb-2 snap-x scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
             @foreach($relatedProducts as $rp)
-                <div class="snap-start flex-shrink-0 w-[160px] sm:w-[180px] lg:w-[220px]">
+                <div class="snap-start flex-shrink-0 w-[130px] sm:w-[155px] lg:w-[185px]">
                     <x-product-card :product="$rp" :loop-index="$loop->index" />
                 </div>
             @endforeach
@@ -525,15 +617,13 @@
     </section>
     @endif
 
-
     <!-- Footer -->
     <div class="hidden md:block">
         <x-footer />
     </div>
     
-    <!-- Mobile Padding Fix to prevent overlap with bottom nav -->
+    <!-- Mobile Padding Fix to prevent overlap with sticky CTA bar -->
     <div class="md:hidden h-20 w-full"></div>
-    <x-mobile-bottom-nav />
 
     <!-- ─────────────────────────────────────────────
          Fancybox v5 JS + Inisialisasi

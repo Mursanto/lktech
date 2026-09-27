@@ -174,8 +174,8 @@
             </h3>
 
             <!-- Price -->
-            <div class="flex items-baseline gap-0.5 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
-                <span class="text-[9px] font-bold text-emerald-500">Rp</span>
+            <div class="flex items-baseline gap-1 mb-1" title="Rp {{ number_format($product->selling_price, 0, ',', '.') }}">
+                <span class="text-[9px] font-bold text-emerald-500 mr-0.5">Rp</span>
                 <span class="text-emerald-600 font-extrabold text-xs sm:text-sm leading-none">{{ number_format($product->selling_price, 0, ',', '.') }}</span>
                 @if($isPromo)
                     @php
