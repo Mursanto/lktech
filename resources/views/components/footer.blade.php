@@ -16,8 +16,12 @@
                 <!-- Google Maps Embed -->
                 <div class="rounded-xl overflow-hidden shadow-sm w-full mt-4">
                     @if(isset($settings) && $settings->maps_iframe)
+                        @php
+                            // Inject loading="lazy" ke iframe dari database untuk performa mobile
+                            $mapsIframe = preg_replace('/<iframe/i', '<iframe loading="lazy"', $settings->maps_iframe, 1);
+                        @endphp
                         <div class="w-full h-40 md:h-48 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
-                            {!! $settings->maps_iframe !!}
+                            {!! $mapsIframe !!}
                         </div>
                     @else
                         <iframe 
@@ -203,8 +207,7 @@
 
         <div class="border-t border-gray-100 pt-5 mt-2 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div class="flex flex-col text-center md:text-left">
-                <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated. All rights reserved.</p>
-                <p class="text-[13px] text-gray-500">Hardware Andal. Software Profesional. Satu Integrasi.</p>
+                <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated.</p>
             </div>
             <div class="flex items-center gap-3 text-[13px] text-gray-500 font-medium">
                 <a href="{{ route('faq') }}#kebijakan-privasi" class="hover:text-brand-600 transition-colors">Kebijakan Privasi</a>
