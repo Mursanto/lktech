@@ -354,9 +354,16 @@
                     </div>
 
                     <!-- Accordion Spesifikasi & Detail Produk -->
+                    @php
+                        // Tampilkan Spesifikasi Teknis hanya untuk Kategori Laptop & Device
+                        // (category_id: 1=Laptop & Device, 2=Laptop Gaming, 3=Laptop Office, 4=Ultrabook, 5=PC Desktop)
+                        $laptopCategoryIds = [1, 2, 3, 4, 5];
+                        $hasSpecs = in_array($product->category_id, $laptopCategoryIds);
+                    @endphp
                     <div class="space-y-2 mt-2" x-data="{ openSpecs: true, openDesc: true }">
                         
-                        <!-- Accordion 1: Spesifikasi Teknis -->
+                        <!-- Accordion 1: Spesifikasi Teknis (Hanya untuk Kategori Laptop & Device) -->
+                        @if($hasSpecs)
                         <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-xs">
                             <button type="button" @click="openSpecs = !openSpecs" class="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 hover:bg-gray-100/70 transition-colors text-left font-bold text-xs sm:text-sm text-gray-800">
                                 <span class="flex items-center gap-1.5">
@@ -367,26 +374,36 @@
                             
                             <div x-show="openSpecs" x-transition.opacity.duration.150ms class="p-2.5 sm:p-3 border-t border-gray-100">
                                 <div class="grid grid-cols-2 gap-2 text-xs">
+                                    @if(!is_null($product->processor) && trim($product->processor) !== '' && trim($product->processor) !== '-')
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Processor</span>
-                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->processor ?: '-' }}</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->processor }}</span>
                                     </div>
+                                    @endif
+                                    @if(!is_null($product->ram) && trim($product->ram) !== '' && trim($product->ram) !== '-')
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">RAM</span>
-                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->ram ?: '-' }}</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->ram }}</span>
                                     </div>
+                                    @endif
+                                    @if(!is_null($product->storage) && trim($product->storage) !== '' && trim($product->storage) !== '-')
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Penyimpanan</span>
-                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->storage ?: '-' }}</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->storage }}</span>
                                     </div>
+                                    @endif
+                                    @if($product->screen_size)
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Layar</span>
-                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->screen_size ? $product->screen_size . ' Inch' : '-' }}</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->screen_size }} Inch</span>
                                     </div>
+                                    @endif
+                                    @if($product->battery_runtime)
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Baterai</span>
-                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->battery_runtime ? '±' . $product->battery_runtime . ' Jam' : '-' }}</span>
+                                        <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">±{{ $product->battery_runtime }} Jam</span>
                                     </div>
+                                    @endif
                                     <div class="bg-gray-50/70 p-2 rounded-lg border border-gray-100">
                                         <span class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Kondisi Fisik</span>
                                         <span class="font-semibold text-gray-800 text-[11px] sm:text-xs">{{ $product->condition ?: 'Bekas Terawat' }}</span>
@@ -394,9 +411,9 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
-                        <!-- Accordion 2: Deskripsi & Kelengkapan (Jika Tersedia) -->
-                        @if($product->description)
+                        <!-- Accordion 2: Deskripsi & Kelengkapan (Selalu Tampil) -->
                         <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-xs">
                             <button type="button" @click="openDesc = !openDesc" class="w-full flex items-center justify-between px-3.5 py-2.5 bg-gray-50/80 hover:bg-gray-100/70 transition-colors text-left font-bold text-xs sm:text-sm text-gray-800">
                                 <span class="flex items-center gap-1.5">
@@ -406,12 +423,15 @@
                             </button>
                             
                             <div x-show="openDesc" x-transition.opacity.duration.150ms class="p-3 border-t border-gray-100">
+                                @if($product->description)
                                 <div class="prose max-w-none text-xs sm:text-sm text-gray-700">
                                     {!! $product->description !!}
                                 </div>
+                                @else
+                                <p class="text-xs text-gray-400 italic">Belum ada deskripsi untuk produk ini.</p>
+                                @endif
                             </div>
                         </div>
-                        @endif
 
                     </div>
 
