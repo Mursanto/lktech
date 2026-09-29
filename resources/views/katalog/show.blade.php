@@ -247,11 +247,11 @@
                                     </div>
                                     @elseif($isPreOrder)
                                     <div class="bg-[#374151] text-white px-[10px] py-[4px] rounded-[6px] text-[10px] font-semibold shadow-sm flex items-center gap-1 whitespace-nowrap">
-                                        <i class='bx bx-time-five text-[11px]'></i> <span>Pre-Order</span>
+                                        <i class='bx bx-time-five text-[11px]'></i> <span>Pre-Order ({{ $product->stock }})</span>
                                     </div>
                                     @else
                                     <div class="bg-[#16A34A] text-white px-[10px] py-[4px] rounded-[6px] text-[10px] font-semibold shadow-sm flex items-center gap-1 whitespace-nowrap">
-                                        <i class='bx bx-check-circle text-[11px]'></i> <span>Ready Stock</span>
+                                        <i class='bx bx-check-circle text-[11px]'></i> <span>Ready Stock ({{ $product->stock }})</span>
                                     </div>
                                     @endif
                                 </div>
@@ -329,9 +329,9 @@
                     </div>
 
                     <!-- Prominent Price & Stock Row (Right Under Title) -->
-                    <div class="mt-1.5 mb-2.5 flex items-center justify-between gap-2 p-2.5 sm:p-3 bg-gradient-to-r from-blue-50/70 via-gray-50/50 to-transparent rounded-xl border border-blue-100/70">
-                        <div class="flex items-center flex-wrap gap-x-2 gap-y-1">
-                            <div class="flex items-baseline">
+                    <div class="mt-1.5 mb-2.5 flex items-center justify-start gap-2 p-2.5 sm:p-3 bg-gradient-to-r from-blue-50/70 via-gray-50/50 to-transparent rounded-xl border border-blue-100/70">
+                        <div class="flex items-center flex-wrap gap-2 w-full">
+                            <div class="flex items-baseline shrink-0">
                                 <span class="text-xs sm:text-sm font-bold text-gray-900 mr-1">Rp</span>
                                 <span class="text-[18px] sm:text-[20px] font-black text-gray-900 tracking-tight leading-none">
                                     {{ number_format($product->selling_price, 0, ',', '.') }}
@@ -341,22 +341,10 @@
                                 @php
                                     $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
                                 @endphp
-                                <div class="flex items-center gap-1.5">
-                                    <span class="bg-[#DC2626] text-white text-[10px] sm:text-[12px] font-bold px-[6px] py-[2px] rounded-[4px] leading-none uppercase">Promo</span>
-                                    <span class="text-[#9CA3AF] text-[12px] sm:text-[14px] line-through leading-none">
-                                        Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
-                                    </span>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Stock Status Badge -->
-                        <div>
-                            @if($product->stock > 0 && $product->status !== 'Sold')
-                                <span class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    {{ $isPreOrder ? 'Kuota: ' . $product->stock : 'Stok: ' . $product->stock }}
+                                <span class="text-[#9CA3AF] text-[12px] sm:text-[14px] line-through leading-none shrink-0">
+                                    Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
                                 </span>
+                                <span class="bg-[#DC2626] text-white text-[10px] sm:text-[12px] font-bold px-[6px] py-[2px] rounded-[4px] leading-none uppercase shrink-0">Promo</span>
                             @endif
                         </div>
                     </div>
