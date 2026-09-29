@@ -235,17 +235,26 @@
                                     <span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span>
                                 </div>
                                 
-                                <!-- PRE-ORDER Badge (Top Right) -->
+                                <!-- Status Badge (Top Right) -->
                                 @php
                                     $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
+                                    $isHabis = $product->stock <= 0 || $product->status === 'Sold';
                                 @endphp
-                                @if($isPreOrder)
                                 <div class="absolute top-2 right-2 z-20 pointer-events-none">
-                                    <div class="bg-gray-900/70 backdrop-blur-sm border border-white/20 text-white px-2 py-0.5 rounded-md text-[10px] font-semibold shadow-sm flex items-center gap-1 h-5 whitespace-nowrap">
+                                    @if($isHabis)
+                                    <div class="bg-red-600 text-white px-[10px] py-[4px] rounded-[6px] text-[10px] font-semibold shadow-sm flex items-center gap-1 whitespace-nowrap">
+                                        <i class='bx bx-x-circle text-[11px]'></i> <span>Habis</span>
+                                    </div>
+                                    @elseif($isPreOrder)
+                                    <div class="bg-[#374151] text-white px-[10px] py-[4px] rounded-[6px] text-[10px] font-semibold shadow-sm flex items-center gap-1 whitespace-nowrap">
                                         <i class='bx bx-time-five text-[11px]'></i> <span>Pre-Order</span>
                                     </div>
+                                    @else
+                                    <div class="bg-[#16A34A] text-white px-[10px] py-[4px] rounded-[6px] text-[10px] font-semibold shadow-sm flex items-center gap-1 whitespace-nowrap">
+                                        <i class='bx bx-check-circle text-[11px]'></i> <span>Ready Stock</span>
+                                    </div>
+                                    @endif
                                 </div>
-                                @endif
                             </div>
 
                             <!-- PREV Arrow -->
@@ -321,19 +330,23 @@
 
                     <!-- Prominent Price & Stock Row (Right Under Title) -->
                     <div class="mt-1.5 mb-2.5 flex items-center justify-between gap-2 p-2.5 sm:p-3 bg-gradient-to-r from-blue-50/70 via-gray-50/50 to-transparent rounded-xl border border-blue-100/70">
-                        <div class="flex items-baseline gap-1 sm:gap-1.5 flex-wrap">
-                            <span class="text-xs sm:text-sm font-bold text-brand-600 mr-1">Rp</span>
-                            <span class="text-xl sm:text-2xl font-black text-gray-950 tracking-tight">
-                                {{ number_format($product->selling_price, 0, ',', '.') }}
-                            </span>
+                        <div class="flex items-center flex-wrap gap-x-2 gap-y-1">
+                            <div class="flex items-baseline">
+                                <span class="text-xs sm:text-sm font-bold text-gray-900 mr-1">Rp</span>
+                                <span class="text-[18px] sm:text-[20px] font-black text-gray-900 tracking-tight leading-none">
+                                    {{ number_format($product->selling_price, 0, ',', '.') }}
+                                </span>
+                            </div>
                             @if(!empty($product->is_active_promo))
                                 @php
                                     $crossedPriceDetail = $product->original_price ?? ($product->selling_price * 1.15);
                                 @endphp
-                                <span class="text-gray-400 text-[11px] sm:text-xs line-through ml-1">
-                                    Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
-                                </span>
-                                <span class="bg-rose-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded tracking-wider uppercase">Promo</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="bg-[#DC2626] text-white text-[10px] sm:text-[12px] font-bold px-[6px] py-[2px] rounded-[4px] leading-none uppercase">Promo</span>
+                                    <span class="text-[#9CA3AF] text-[12px] sm:text-[14px] line-through leading-none">
+                                        Rp {{ number_format($crossedPriceDetail, 0, ',', '.') }}
+                                    </span>
+                                </div>
                             @endif
                         </div>
 
@@ -342,12 +355,7 @@
                             @if($product->stock > 0 && $product->status !== 'Sold')
                                 <span class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    {{ $isPreOrder ? 'Pre-Order' : 'Ready' }} ({{ $product->stock }})
-                                </span>
-                            @else
-                                <span class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200 shrink-0">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                    Habis
+                                    {{ $isPreOrder ? 'Kuota: ' . $product->stock : 'Stok: ' . $product->stock }}
                                 </span>
                             @endif
                         </div>
