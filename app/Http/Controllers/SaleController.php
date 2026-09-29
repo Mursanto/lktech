@@ -654,17 +654,6 @@ class SaleController extends Controller
                     'order_status' => 'diproses'
                 ]);
 
-                // Deduct stock
-                foreach ($sale->saleDetails as $detail) {
-                    $product = Product::lockForUpdate()->find($detail->product_id);
-                    if ($product) {
-                        $product->decrement('stock', $detail->quantity);
-                        if ($product->stock <= 0) {
-                            $product->update(['status' => 'Sold']);
-                        }
-                    }
-                }
-
                 // Send Email Invoice Lunas
                 if ($sale->customer && $sale->customer->email) {
                     try {

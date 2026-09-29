@@ -210,6 +210,14 @@ class CartController extends Controller
                 'purchase_price' => $item['purchase_price'] ?? 0,
                 'profit' => ($item['price'] - ($item['purchase_price'] ?? 0)) * $item['quantity'],
             ]);
+
+            $product = \App\Models\Product::find($item['id']);
+            if ($product) {
+                $product->decrement('stock', $item['quantity']);
+                if ($product->stock <= 0) {
+                    $product->update(['status' => 'Sold']);
+                }
+            }
         }
 
         $orderId = 'SALE-' . $sale->id . '-' . time();
@@ -287,16 +295,6 @@ class CartController extends Controller
                         $sale->payment_status = 'success';
                         $sale->payment_method = $midtransStatus['payment_type'] ?? $sale->payment_method;
                         $sale->save();
-                        
-                        foreach ($sale->saleDetails as $detail) {
-                            $product = $detail->product;
-                            if ($product) {
-                                $product->decrement('stock', $detail->quantity);
-                                if ($product->stock <= 0) {
-                                    $product->update(['status' => 'Sold']);
-                                }
-                            }
-                        }
                         
                         if ($sale->customer && $sale->customer->email) {
                             try {
