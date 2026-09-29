@@ -307,6 +307,74 @@
                             <i class="bx bx-keyboard"></i> Navigasi foto ← →
                         </p>
 
+                        <!-- ─── Video Preview Section ─── -->
+                        @php
+                            $videoSrc = null;
+                            $isYoutube = false;
+                            if (!empty($product->video_path)) {
+                                // Path stored without 'public/' prefix → use Storage::url() or asset('storage/...')
+                                $vp = $product->video_path;
+                                // Support legacy paths that still have 'public/' prefix
+                                if (str_starts_with($vp, 'public/')) {
+                                    $vp = substr($vp, 7); // strip 'public/'
+                                }
+                                $videoSrc = asset('storage/' . $vp);
+                            } elseif (!empty($product->video_url)) {
+                                // Convert YouTube watch URL → embed URL
+                                $yt = $product->video_url;
+                                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $yt, $m)) {
+                                    $videoSrc = 'https://www.youtube.com/embed/' . $m[1] . '?autoplay=1&rel=0';
+                                    $isYoutube = true;
+                                } else {
+                                    $videoSrc = $yt;
+                                }
+                            }
+                        @endphp
+                        @if($videoSrc)
+                        <div x-data="{ videoPlaying: false }" class="mt-2">
+                            <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-1 flex items-center gap-1">
+                                <i class='bx bx-video text-brand-600'></i> Video Preview
+                            </p>
+                            <div class="relative w-full rounded-xl overflow-hidden bg-black border border-gray-200 shadow-sm" style="aspect-ratio: 16/9">
+                                <!-- Poster / Play Button (before video loads) -->
+                                <div x-show="!videoPlaying"
+                                     @click="videoPlaying = true"
+                                     class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer bg-gray-900/80 group">
+                                    <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}"
+                                         class="absolute inset-0 w-full h-full object-cover opacity-40"
+                                         alt="video thumbnail">
+                                    <div class="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                                        <i class='bx bx-play text-2xl sm:text-3xl text-brand-600 ml-1'></i>
+                                    </div>
+                                    <span class="relative z-10 mt-2 text-white text-[10px] sm:text-xs font-semibold opacity-80">Klik untuk putar video</span>
+                                </div>
+
+                                <!-- Actual Video / Embed (lazy: only renders after click) -->
+                                <template x-if="videoPlaying">
+                                    @if($isYoutube)
+                                    <iframe
+                                        src="{{ $videoSrc }}"
+                                        class="absolute inset-0 w-full h-full"
+                                        frameborder="0"
+                                        allow="autoplay; encrypted-media; picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
+                                    @else
+                                    <video
+                                        class="absolute inset-0 w-full h-full object-contain bg-black"
+                                        src="{{ $videoSrc }}"
+                                        controls
+                                        autoplay
+                                        playsinline
+                                        preload="metadata">
+                                        Browser Anda tidak mendukung pemutaran video.
+                                    </video>
+                                    @endif
+                                </template>
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
 

@@ -142,10 +142,10 @@ class ProductController extends Controller
         // 5. Handle Video Upload dari file lokal
         if ($request->hasFile('video_file')) {
             $videoFile = $request->file('video_file');
-            $videoFilename = uniqid('vid_') . '_' . time() . '.' . $videoFile->getClientOriginalExtension();
-            $videoPath = 'public/catalog/videos/' . $videoFilename;
-            \Illuminate\Support\Facades\Storage::put($videoPath, file_get_contents($videoFile->getRealPath()));
-            $data['video_path'] = $videoPath;
+            // Store to disk 'public' -> file lives at storage/app/public/catalog/videos/
+            // Path stored WITHOUT 'public/' prefix so asset('storage/' . $path) works correctly
+            $storedPath = $videoFile->store('catalog/videos', 'public');
+            $data['video_path'] = $storedPath;
             $data['video_url'] = null; // Prioritaskan file lokal, kosongkan URL jika ada
         }
 
@@ -236,15 +236,14 @@ class ProductController extends Controller
 
         // Handle Video Upload dari file lokal
         if ($request->hasFile('video_file')) {
-            // Hapus video lama jika ada
-            if ($product->video_path && Storage::exists($product->video_path)) {
-                Storage::delete($product->video_path);
+            // Hapus video lama jika ada (path di disk 'public')
+            if ($product->video_path && Storage::disk('public')->exists($product->video_path)) {
+                Storage::disk('public')->delete($product->video_path);
             }
             $videoFile = $request->file('video_file');
-            $videoFilename = uniqid('vid_') . '_' . time() . '.' . $videoFile->getClientOriginalExtension();
-            $videoPath = 'public/catalog/videos/' . $videoFilename;
-            Storage::put($videoPath, file_get_contents($videoFile->getRealPath()));
-            $product->update(['video_path' => $videoPath, 'video_url' => null]);
+            // Store to disk 'public' -> path stored WITHOUT 'public/' prefix
+            $storedPath = $videoFile->store('catalog/videos', 'public');
+            $product->update(['video_path' => $storedPath, 'video_url' => null]);
         }
 
         $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
