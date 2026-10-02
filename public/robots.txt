@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+Disallow: /storage/
+Disallow: /clear_cache_temp.php
+Disallow: /deploy_secret.php
+Allow: /
+
+Sitemap: https://lktech.online/sitemap.xml

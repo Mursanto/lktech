@@ -17,8 +17,14 @@
                 <div class="rounded-xl overflow-hidden shadow-sm w-full mt-4">
                     @if(isset($settings) && $settings->maps_iframe)
                         @php
-                            // Inject loading="lazy" ke iframe dari database untuk performa mobile
-                            $mapsIframe = preg_replace('/<iframe/i', '<iframe loading="lazy"', $settings->maps_iframe, 1);
+                            // Inject loading="lazy" dan title ke iframe dari database untuk performa & aksesibilitas
+                            $mapsIframe = $settings->maps_iframe;
+                            if (stripos($mapsIframe, 'title=') === false) {
+                                $mapsIframe = preg_replace('/<iframe/i', '<iframe title="Lokasi Toko LKTech TN SEREAL di Google Maps"', $mapsIframe, 1);
+                            }
+                            if (stripos($mapsIframe, 'loading=') === false) {
+                                $mapsIframe = preg_replace('/<iframe/i', '<iframe loading="lazy"', $mapsIframe, 1);
+                            }
                         @endphp
                         <div class="w-full h-40 md:h-48 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0">
                             {!! $mapsIframe !!}
@@ -27,6 +33,7 @@
                         <iframe 
                             src="https://maps.google.com/maps?q=LKtech+TN+SEREAL,+Tanah+Sereal,+Bogor&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                             class="w-full h-40 md:h-48 border-0" 
+                            title="Lokasi Toko LKTech TN SEREAL di Google Maps"
                             allowfullscreen="" 
                             loading="lazy" 
                             referrerpolicy="no-referrer-when-downgrade">
@@ -82,21 +89,21 @@
                     <h3 class="font-bold text-slate-900 text-base mb-3 font-montserrat flex items-center">Ikuti Kami</h3>
                     <div class="flex items-center gap-2">
                         <!-- Facebook -->
-                        <a href="{{ $settings->facebook_url ?? 'https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="Facebook">
-                            <i class='bx bxl-facebook text-lg text-[#1877F2]'></i>
+                        <a href="{{ $settings->facebook_url ?? 'https://www.facebook.com/marketplace/profile/1147601792/?ref=permalink&tab=listings&mibextid=dXMIcH' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="Facebook" aria-label="Kunjungi halaman Facebook LKTech">
+                            <i class='bx bxl-facebook text-lg text-[#1877F2]' aria-hidden="true"></i>
                         </a>
                         <!-- Instagram -->
-                        <a href="{{ $settings->instagram_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300 relative overflow-hidden group" title="Instagram">
+                        <a href="{{ $settings->instagram_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300 relative overflow-hidden group" title="Instagram" aria-label="Kunjungi Instagram LKTech">
                             <div class="absolute inset-0 bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <i class='bx bxl-instagram text-lg text-gray-700 group-hover:text-white relative z-10 transition-colors'></i>
+                            <i class='bx bxl-instagram text-lg text-gray-700 group-hover:text-white relative z-10 transition-colors' aria-hidden="true"></i>
                         </a>
                         <!-- LinkedIn -->
-                        <a href="#" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="LinkedIn">
-                            <i class='bx bxl-linkedin text-lg text-[#0A66C2]'></i>
+                        <a href="#" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="LinkedIn" aria-label="Kunjungi LinkedIn LKTech">
+                            <i class='bx bxl-linkedin text-lg text-[#0A66C2]' aria-hidden="true"></i>
                         </a>
                         <!-- TikTok -->
-                        <a href="{{ $settings->tiktok_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="TikTok">
-                            <i class='bx bxl-tiktok text-lg text-[#010101]'></i>
+                        <a href="{{ $settings->tiktok_url ?? '#' }}" target="_blank" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center hover:-translate-y-1 hover:shadow-md transition-all duration-300" title="TikTok" aria-label="Kunjungi TikTok LKTech">
+                            <i class='bx bxl-tiktok text-lg text-[#010101]' aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
@@ -183,19 +190,19 @@
                     <div class="flex flex-col gap-2">
                         <!-- Kopkarsat -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="KOPKARSAT" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
+                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="Logo Mitra KOPKARSAT" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
                         </div>
                         <!-- Martabak Jawara -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Martabak Jawara" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
+                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Logo Mitra Martabak Jawara" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
                         </div>
                         <!-- Furniture -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/logo-furniture.png') }}" alt="Furniture" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
+                            <img src="{{ asset('images/logo-furniture.webp') }}" alt="Logo Mitra Jasa Furniture" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
                         </div>
                         <!-- Limbah Elektronik Bintang -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/logo-bintang-v2.png') }}" alt="Limbah Elektronik Bintang" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply">
+                            <img src="{{ asset('images/logo-bintang-v2.webp') }}" alt="Logo Mitra Limbah Elektronik Bintang" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -207,7 +214,7 @@
 
         <div class="border-t border-gray-100 pt-5 mt-2 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div class="flex flex-col text-center md:text-left">
-                <p class="text-[13px] font-medium text-gray-500">&copy; 2025 LKTech Solusi IT Integrated.</p>
+                <p class="text-[13px] font-medium text-gray-600">&copy; {{ date('Y') }} LKTech Solusi IT Integrated.</p>
             </div>
             <div class="flex items-center gap-3 text-[13px] text-gray-500 font-medium">
                 <a href="{{ route('faq') }}#kebijakan-privasi" class="hover:text-brand-600 transition-colors">Kebijakan Privasi</a>

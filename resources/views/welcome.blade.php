@@ -3,41 +3,45 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Katalog LKTech TN SEREAL</title>
-    
-    <!-- Fonts -->
+    <title>{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Berkualitas Premium Bogor</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="LKTech TN SEREAL — Jual laptop bekas berkualitas premium dengan garansi software lifetime. Tersedia servis laptop, rakit PC, jasa website, dan WiFi voucher di Bogor.">
+    <meta name="keywords" content="laptop bekas bogor, laptop second berkualitas, servis laptop bogor, rakit PC bogor, LKTech, jual laptop murah">
+    <meta name="author" content="LKTech TN SEREAL">
+    <link rel="canonical" href="{{ url('/') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium Bogor">
+    <meta property="og:description" content="Laptop bekas berkualitas dengan garansi software lifetime. Servis, rakit PC, jasa website di Bogor.">
+    <meta property="og:image" content="{{ asset('images/LKtech.png') }}">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium">
+    <meta name="twitter:description" content="Laptop bekas berkualitas dengan garansi software lifetime di Bogor.">
+    <meta name="twitter:image" content="{{ asset('images/LKtech.png') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/LKtech.png') }}">
+
+    <!-- Fonts (Non-Render-Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Boxicons (Non-Render-Blocking) -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' media="print" onload="this.media='all'">
+    <noscript><link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></noscript>
+
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        montserrat: ['Montserrat', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6', 
-                            600: '#2563eb', 
-                            700: '#1d4ed8',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+        <style>
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;

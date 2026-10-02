@@ -17,47 +17,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+    
     <!-- Custom Tailwind Config -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
-                    },
-                    colors: {
-                        natural: {
-                            50: '#f6f8f7', // Calm light background
-                            100: '#edf1f0',
-                            200: '#dae3e0',
-                            300: '#c0cfca',
-                            400: '#9fb3ad',
-                            500: '#819891',
-                            600: '#667b75',
-                            700: '#53635f', // Main text
-                            800: '#45514f', // Headings
-                            900: '#3a4442',
-                        },
-                        brand: {
-                            50: '#f0fdfa', // Teal light
-                            100: '#ccfbf1',
-                            500: '#14b8a6', // Main brand (Teal)
-                            600: '#0d9488',
-                            700: '#0f766e',
-                        }
-                    },
-                    boxShadow: {
-                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.04)',
-                        'soft-hover': '0 10px 25px -4px rgba(0, 0, 0, 0.08)',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
         [x-cloak] { display: none !important; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }

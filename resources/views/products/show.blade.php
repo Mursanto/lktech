@@ -22,7 +22,7 @@
     </x-slot>
 
     <!-- Tailwind Typography for Prose -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <div class="py-6 h-[calc(100vh-65px)] overflow-hidden">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 h-full flex flex-col">

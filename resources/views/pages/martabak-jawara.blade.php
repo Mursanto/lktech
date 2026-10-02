@@ -20,34 +20,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans:    ['Inter', 'sans-serif'],
-                        outfit:  ['Outfit', 'sans-serif'],
-                        montserrat: ['Montserrat', 'sans-serif'],
-                        playfair: ['"Playfair Display"', 'serif'],
-                        dancing: ['"Dancing Script"', 'cursive'],
-                    },
-                    colors: {
-                        gold: {
-                            50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a',
-                            300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b',
-                            600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f',
-                        },
-                        brand: {
-                            50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
     <style>
         body { font-family: 'Inter', sans-serif; }
 
