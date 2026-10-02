@@ -368,7 +368,7 @@
                                             @endphp
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
-                                                    <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                    <img width="800" height="800" loading="lazy" src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Right -->
                                                         <div class="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
@@ -408,7 +408,7 @@
                                                     @endif
                                                 </a>
                                             @else
-                                                <img src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                <img width="800" height="800" loading="lazy" src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
@@ -438,7 +438,7 @@
                         @else
                             <!-- Placeholder jika belum ada promo -->
                             <div class="aspect-[16/9] w-full max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-transparent transform rotate-1 hover:rotate-0 transition duration-700 hover:scale-105">
-                                <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop Premium" class="w-full h-full object-cover">
+                                <img width="800" height="800" loading="lazy" src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop Premium" class="w-full h-full object-cover">
                             </div>
                         @endif
                     </div>
@@ -724,7 +724,7 @@
                                             <div class="flex items-center gap-2.5">
                                                 <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold overflow-hidden shrink-0 text-[11px]">
                                                     @if($review->reviewer_photo_url)
-                                                        <img src="{{ $review->reviewer_photo_url }}" alt="{{ $review->reviewer_name }}" class="w-full h-full object-cover">
+                                                        <img width="800" height="800" loading="lazy" src="{{ $review->reviewer_photo_url }}" alt="{{ $review->reviewer_name }}" class="w-full h-full object-cover">
                                                     @else
                                                         {{ substr($review->reviewer_name, 0, 1) }}
                                                     @endif
@@ -804,7 +804,7 @@
                     <!-- Thumbnail (Kiri) -->
                     <a href="{{ route('blog.show', $post->slug) }}" class="block w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden shrink-0 relative">
                         @if($post->thumbnail)
-                            <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img width="800" height="800" loading="lazy" src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="absolute inset-0 w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                                 <i class='bx bx-image text-2xl'></i>
@@ -1012,7 +1012,7 @@
                 <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
             </video>
         @else
-            <img id="promoVideo" src="{{ asset('storage/' . $activeVideo->video_path) }}" class="w-full h-full object-cover bg-black pointer-events-auto">
+            <img width="800" height="800" loading="lazy" id="promoVideo" src="{{ asset('storage/' . $activeVideo->video_path) }}" class="w-full h-full object-cover bg-black pointer-events-auto">
         @endif
     </div>
 
