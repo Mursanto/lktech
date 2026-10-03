@@ -318,7 +318,7 @@
                                 <div x-show="!videoPlaying"
                                      @click="videoPlaying = true"
                                      class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer bg-gray-900/80 group">
-                                    <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}"
+                                    <img src="{{ $product->display_image ?: asset('images/LKtech-fallback.webp') }}"
                                          class="absolute inset-0 w-full h-full object-cover opacity-40"
                                          alt="video thumbnail">
                                     <div class="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">

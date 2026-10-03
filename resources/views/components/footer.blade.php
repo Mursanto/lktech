@@ -6,7 +6,7 @@
             <!-- Kolom 1: Profil Singkat -->
             <div>
                 <a href="{{ route('home') }}" class="flex items-center gap-2 mb-1">
-                    <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech Logo" width="120" height="143" class="h-7 sm:h-8 w-auto object-contain">
+                    <img src="{{ asset('images/LKtech-sm.webp') }}" alt="LKTech Logo" width="80" height="95" class="h-7 sm:h-8 w-auto object-contain">
                     <span class="font-montserrat font-black text-[17px] sm:text-lg lg:text-xl tracking-tight text-blue-900 leading-none whitespace-nowrap">{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }}</span>
                 </a>
                 <div class="text-[7.5px] sm:text-[8px] font-bold uppercase tracking-widest text-gray-400 mb-2 pl-9 sm:pl-10">

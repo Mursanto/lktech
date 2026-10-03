@@ -26,10 +26,10 @@
     <meta name="twitter:image" content="{{ asset('images/LKtech.png') }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('images/LKtech.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/LKtech-sm.webp') }}">
 
-    <!-- Preload LCP Hero Image -->
-    <link rel="preload" as="image" href="{{ asset('images/LKtech.webp') }}">
+    <!-- Preload LCP: Navbar Logo (kecil, 5KB) -->
+    <link rel="preload" as="image" href="{{ asset('images/LKtech-sm.webp') }}">
 
     <!-- Fonts (Non-Render-Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,9 +37,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Boxicons (Non-Render-Blocking) -->
+    <!-- Boxicons (Non-Render-Blocking) + font-display:swap override -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' media="print" onload="this.media='all'">
     <noscript><link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></noscript>
+    <style>
+        /* Override font-display untuk Boxicons agar tidak block render */
+        @font-face {
+            font-family: 'boxicons';
+            font-display: swap;
+            src: url('https://unpkg.com/boxicons@2.1.4/fonts/boxicons.woff2') format('woff2'),
+                 url('https://unpkg.com/boxicons@2.1.4/fonts/boxicons.woff') format('woff');
+        }
+    </style>
 
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

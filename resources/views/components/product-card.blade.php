@@ -97,7 +97,7 @@
                 </video>
             @endif
             
-            <img src="{{ $product->display_image ?: asset('images/LKtech.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech.png') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
+            <img src="{{ $product->display_image ?: asset('images/LKtech-fallback.webp') }}" onerror="this.onerror=null; this.src='{{ asset('images/LKtech-fallback.webp') }}';" alt="{{ $product->brand }} {{ $product->model_series }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             
             <!-- Badges Container: View top-left, Hot Promo top-right -->
             <div class="absolute top-1.5 left-1.5 right-1.5 sm:top-2 sm:left-2 sm:right-2 z-30 pointer-events-none flex justify-between items-start gap-1">
