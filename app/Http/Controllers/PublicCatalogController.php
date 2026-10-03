@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -64,7 +64,7 @@ class PublicCatalogController extends Controller
 
         $setting = \App\Models\WebSetting::first();
 
-        // ─── Sisipkan Produk Promo di tengah katalog (kolom ke-3 tiap baris) ──────
+        // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Sisipkan Produk Promo di tengah katalog (kolom ke-3 tiap baris) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
         $promoProductIds = collect();
         $isPromoActive = !$setting || !isset($setting->is_promo_active) || $setting->is_promo_active;
 
@@ -93,10 +93,10 @@ class PublicCatalogController extends Controller
 
         $collectionToTransform->transform(function ($product) use ($promoProductIds) {
             if ($product->image_path) {
-                $product->display_image = Storage::url($product->image_path);
+                $product->display_image = $this->resolveImageUrl($product->image_path);
             } else {
                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                $product->display_image = asset('images/LKtech.png');
+                $product->display_image = asset('images/LKtech-fallback.webp');
             }
             $product->is_active_promo = $promoProductIds->contains($product->id);
             return $product;
@@ -114,10 +114,10 @@ class PublicCatalogController extends Controller
             // Transform their images just like regular products
             $promoItems->transform(function ($product) {
                 if ($product->image_path) {
-                    $product->display_image = Storage::url($product->image_path);
+                    $product->display_image = $this->resolveImageUrl($product->image_path);
                 } else {
                     $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                    $product->display_image = asset('images/LKtech.png');
+                    $product->display_image = asset('images/LKtech-fallback.webp');
                 }
                 $product->is_active_promo = true;
                 return $product;
@@ -154,7 +154,7 @@ class PublicCatalogController extends Controller
                 }
             }
         }
-        // ───────────────────────────────────────────────────────────────────────
+        // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 
         // Helper function for category promo injection
         $injectCategoryPromos = function($regularProducts, $promoCategoryList, $startOffset = 1, $step = 3) {
@@ -180,7 +180,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
         
         $softwareProducts = $softwareQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
+            $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -193,7 +193,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
             
         $accessoriesProducts = $accessoriesQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
+            $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -206,7 +206,7 @@ class PublicCatalogController extends Controller
             ->whereNotIn('id', $promoProductIds);
             
         $sparepartProducts = $sparepartQuery->take(6)->get()->transform(function ($product) {
-            $product->display_image = $product->image_path ? Storage::url($product->image_path) : asset('images/LKtech.png');
+            $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -253,7 +253,7 @@ class PublicCatalogController extends Controller
                 $desc = str_replace(['*', "\r\n", "\r", "\n"], '|', $desc);
                 
                 // 3. Hanya pertahankan huruf, angka, spasi, dan tanda baca umum (Hapus Emoji dll)
-                $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\°]/u', '', $desc);
+                $desc = preg_replace('/[^\p{L}\p{N}\s\.\,\-\|\/\Ã‚Â°]/u', '', $desc);
                 
                 // 4. Rapihkan spasi dan separator
                 $desc = preg_replace('/\|+/', '|', $desc);
@@ -292,10 +292,10 @@ class PublicCatalogController extends Controller
 
         // Setup main image
         if ($product->image_path) {
-            $product->display_image = Storage::url($product->image_path);
+            $product->display_image = $this->resolveImageUrl($product->image_path);
         } else {
             $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-            $product->display_image = asset('images/LKtech.png');
+            $product->display_image = asset('images/LKtech-fallback.webp');
         }
         
         $setting = \App\Models\WebSetting::first();
@@ -374,10 +374,10 @@ class PublicCatalogController extends Controller
         // Transform images for related products
         $relatedProducts->transform(function ($rp) {
             if ($rp->image_path) {
-                $rp->display_image = Storage::url($rp->image_path);
+                $rp->display_image = $this->resolveImageUrl($rp->image_path);
             } else {
                 $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
-                $rp->display_image = asset('images/LKtech.png');
+                $rp->display_image = asset('images/LKtech-fallback.webp');
             }
             return $rp;
         });
@@ -550,10 +550,10 @@ class PublicCatalogController extends Controller
 
             $collectionToTransform->transform(function ($product) use ($promoProductIds) {
                 if ($product->image_path) {
-                    $product->display_image = Storage::url($product->image_path);
+                    $product->display_image = $this->resolveImageUrl($product->image_path);
                 } else {
                     $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                    $product->display_image = asset('images/LKtech.png');
+                    $product->display_image = asset('images/LKtech-fallback.webp');
                 }
                 $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
@@ -601,4 +601,25 @@ class PublicCatalogController extends Controller
 
         return back()->with('success', 'Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.');
     }
+
+    /**
+     * Resolve image URL â€” prefer WebP version if it exists on disk.
+     * Converts e.g. "catalog/img_xxx.jpeg" -> "catalog/img_xxx.webp" if the .webp exists.
+     */
+    private function resolveImageUrl(?string $imagePath): string
+    {
+        if (!$imagePath) {
+            return asset('images/LKtech-fallback.webp');
+        }
+
+        // Try WebP variant first
+        $webpPath = preg_replace('/\.(jpe?g|png)$/i', '.webp', $imagePath);
+        if ($webpPath !== $imagePath && Storage::disk('public')->exists($webpPath)) {
+            return Storage::url($webpPath);
+        }
+
+        return Storage::url($imagePath);
+    }
 }
+
+

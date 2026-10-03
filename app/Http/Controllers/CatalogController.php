@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -52,7 +52,7 @@ class CatalogController extends Controller
             } else {
                 // Auto-fetch Fallback: Unsplash using product brand and model
                 $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-                $product->display_image = asset('images/LKtech.png');
+                $product->display_image = asset('images/LKtech-fallback.webp');
             }
             return $product;
         });
@@ -140,3 +140,4 @@ class CatalogController extends Controller
         return redirect()->route('catalog.index')->with('success', 'Katalog produk beserta gambar berhasil diperbarui.');
     }
 }
+

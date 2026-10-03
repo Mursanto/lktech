@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Http\Controllers;
 
@@ -27,7 +27,7 @@ class CartController extends Controller
             $display_image = \Illuminate\Support\Facades\Storage::url($product->image_path);
         } else {
             $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
-            $display_image = asset('images/LKtech.png');
+            $display_image = asset('images/LKtech-fallback.webp');
         }
 
         if (isset($cart[$product->id])) {
@@ -349,7 +349,7 @@ class CartController extends Controller
                 $rp->display_image = \Illuminate\Support\Facades\Storage::url($rp->image_path);
             } else {
                 $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
-                $rp->display_image = asset('images/LKtech.png');
+                $rp->display_image = asset('images/LKtech-fallback.webp');
             }
             return $rp;
         });
@@ -385,3 +385,4 @@ class CartController extends Controller
         return $pdf->download($filename);
     }
 }
+
