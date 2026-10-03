@@ -28,6 +28,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/LKtech.png') }}">
 
+    <!-- Preload LCP Hero Image -->
+    <link rel="preload" as="image" href="{{ asset('images/LKtech.webp') }}">
+
     <!-- Fonts (Non-Render-Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,20 +103,16 @@
         /* ==========================================
            PIANO WAVE ANIMATION UNTUK SERVICE CARDS
            ========================================== */
+        /* pianoWave — GPU-only (transform only, no box-shadow animation) */
         @keyframes pianoWave {
-          0%, 100% {
-            transform: translateY(0);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-          }
-          50% {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25);
-            border-color: #93c5fd;
-          }
+          0%, 100% { transform: translateY(0) translateZ(0); }
+          50%       { transform: translateY(-4px) translateZ(0); }
         }
 
         .service-card {
           animation: pianoWave 4s infinite ease-in-out;
+          will-change: transform;
+          transition: box-shadow 0.3s ease;
         }
 
         .service-card:nth-child(1) { animation-delay: 0.0s; }
@@ -125,6 +124,8 @@
 
         .service-card:hover {
           animation-play-state: paused;
+          box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.25);
+          border-color: #93c5fd;
         }
 
         /* ==========================================
@@ -147,39 +148,36 @@
           margin-bottom: 10px;
         }
 
-        /* Shimmer Animation for Premium Text */
+        /* Shimmer Animation — GPU-accelerated via transform */
         @keyframes shimmer {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         .text-shimmer {
-            background: linear-gradient(to right, #2563eb 20%, #93c5fd 40%, #93c5fd 60%, #2563eb 80%);
-            background-size: 200% auto;
-            color: transparent;
+            position: relative;
+            background: linear-gradient(to right, #2563eb 20%, #93c5fd 50%, #2563eb 80%);
             -webkit-background-clip: text;
             background-clip: text;
-            animation: shimmer 3s linear infinite;
+            color: transparent;
+            will-change: transform;
+        }
+        .text-shimmer::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+            animation: shimmer 2.5s linear infinite;
+            will-change: transform;
         }
 
         /* ==========================================
-           LIFETIME — Text Gradient + Neon Glow
+           LIFETIME — GPU-Friendly: opacity pulse, no text-shadow
            ========================================== */
-        @keyframes lifetimeGlow {
-            0%, 100% {
-                text-shadow:
-                    0 0 6px rgba(16, 185, 129, 0.55),
-                    0 0 14px rgba(16, 185, 129, 0.35),
-                    0 0 28px rgba(16, 185, 129, 0.18);
-            }
-            50% {
-                text-shadow:
-                    0 0 10px rgba(52, 211, 153, 0.80),
-                    0 0 22px rgba(52, 211, 153, 0.55),
-                    0 0 40px rgba(52, 211, 153, 0.30);
-            }
+        @keyframes lifetimePulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.72; }
         }
         .text-lifetime-glow {
-            /* Gradient: emerald-700 → emerald-500 → teal-400 */
             background: linear-gradient(90deg, #047857 0%, #10b981 40%, #34d399 75%, #10b981 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
@@ -188,9 +186,8 @@
             font-weight: 900;
             font-size: 1.2em;
             letter-spacing: -0.01em;
-            animation:
-                shimmer 4s linear infinite,
-                lifetimeGlow 2.5s ease-in-out infinite;
+            animation: lifetimePulse 2.5s ease-in-out infinite;
+            will-change: opacity;
         }
 
         /* ==========================================
@@ -301,7 +298,7 @@
                             <span class="divider text-gray-300 shrink-0 hidden sm:inline">•</span>
                             <span class="mp-label font-semibold shrink-0 hidden sm:inline">Tersedia juga di Marketplace resmi kami:</span>
                             <div class="mp-icons flex items-center hover:opacity-90 transition-opacity duration-300 mix-blend-multiply shrink-0">
-                                <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.png') }}" alt="Marketplace Resmi LKTech" class="h-4.5 sm:h-7 w-auto object-contain">
+                                <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.webp') }}" alt="Marketplace Resmi LKTech" width="300" height="83" class="h-4.5 sm:h-7 w-auto object-contain" loading="eager">
                             </div>
                         </div>
 
@@ -860,7 +857,7 @@
             </div>
 
             <div class="text-center mb-8 mt-2">
-                <img src="{{ asset('images/LKtech.png') }}" alt="LKTech" class="h-10 mx-auto mb-4">
+                <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" class="h-10 mx-auto mb-4" width="160" height="190" loading="lazy">
                 <h3 class="text-2xl font-black text-gray-800">Masuk ke Sistem</h3>
                 <p class="text-sm text-gray-500 mt-1">Silakan masukkan kredensial Anda</p>
             </div>

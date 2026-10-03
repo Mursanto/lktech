@@ -26,7 +26,7 @@
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech Logo" class="h-7 sm:h-8 w-auto">
+                    <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech Logo" width="120" height="143" class="h-7 sm:h-8 w-auto">
                     <div class="hidden sm:flex flex-col">
                         <span class="font-montserrat font-black text-xl tracking-tight text-blue-900 leading-none">LKTech Indonesia</span>
                     </div>

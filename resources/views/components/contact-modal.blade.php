@@ -26,7 +26,7 @@
         </div>
 
         <div class="text-center mb-8 mt-2">
-            <img src="{{ asset('images/LKtech.png') }}" alt="LKTech" class="h-10 mx-auto mb-4">
+            <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" width="120" height="143" class="h-10 mx-auto mb-4">
             <h3 class="text-2xl font-black text-gray-800">Hubungi Kami</h3>
             <p class="text-sm text-gray-500 mt-1">Kami siap membantu pengadaan dan kemitraan Anda</p>
         </div>
