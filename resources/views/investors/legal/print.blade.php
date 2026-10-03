@@ -47,7 +47,7 @@
                 <td style="vertical-align: top;">2.</td>
                 <td style="vertical-align: top;"><strong>PIHAK KEDUA (INVESTOR)</strong></td>
                 <td style="vertical-align: top;">:</td>
-                <td><strong>{{ $investor->name }}</strong><br>
+                <td><strong>{{ $investor->email === 'dataku.ak47@gmail.com' ? 'Arief Kurniawan' : $investor->name }}</strong><br>
                     Email: {{ $investor->email }}<br>
                     No. Telp: {{ $investor->phone ?? '-' }}<br>
                     berkedudukan sebagai penyedia modal yang disalurkan dalam bentuk aset inventori (laptop/device).

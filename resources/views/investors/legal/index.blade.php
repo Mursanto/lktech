@@ -44,7 +44,7 @@
                 <p class="mb-4">Pada hari ini, disepakati Perjanjian Kerja Sama Investasi antara pihak-pihak di bawah ini:</p>
                 <div class="mb-6 space-y-2 pl-4 border-l-2 border-brand-200">
                     <p><strong>1. PIHAK PERTAMA (PENGELOLA):</strong><br> LKTech Indonesia, diwakili oleh Mursanto selaku Owner/Pemilik, berkedudukan sebagai pengelola dana, pengada barang, promotor, penjamin teknis, dan penjual akhir kepada konsumen.</p>
-                    <p><strong>2. PIHAK KEDUA (INVESTOR/PEMODAL):</strong><br> <strong>{{ $investor->name }}</strong> (email: {{ $investor->email }}), berkedudukan sebagai penyedia modal yang disalurkan dalam bentuk aset inventori (laptop/device).</p>
+                    <p><strong>2. PIHAK KEDUA (INVESTOR/PEMODAL):</strong><br> <strong>{{ $investor->email === 'dataku.ak47@gmail.com' ? 'Arief Kurniawan' : $investor->name }}</strong> (email: {{ $investor->email }}), berkedudukan sebagai penyedia modal yang disalurkan dalam bentuk aset inventori (laptop/device).</p>
                 </div>
                 
                 <p class="mb-4 font-bold text-natural-900">Pasal 1: Skema Bagi Hasil (Nisbah) & Perhitungan Profit</p>
