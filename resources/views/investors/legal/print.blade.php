@@ -39,48 +39,59 @@
         <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
             <tr>
                 <td style="width: 20px; vertical-align: top;">1.</td>
-                <td style="width: 150px; vertical-align: top;"><strong>Nama Lembaga</strong></td>
+                <td style="width: 150px; vertical-align: top;"><strong>PIHAK PERTAMA (PENGELOLA)</strong></td>
                 <td style="width: 10px; vertical-align: top;">:</td>
-                <td><strong>LKTech Indonesia</strong><br>Selanjutnya disebut sebagai <strong>PIHAK PERTAMA (PENGELOLA)</strong></td>
+                <td><strong>LKTech Indonesia</strong>, diwakili oleh Mursanto selaku Owner/Pemilik, berkedudukan sebagai pengelola dana, pengada barang, promotor, penjamin teknis, dan penjual akhir kepada konsumen.</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">2.</td>
-                <td style="vertical-align: top;"><strong>Nama Lengkap</strong></td>
+                <td style="vertical-align: top;"><strong>PIHAK KEDUA (INVESTOR)</strong></td>
                 <td style="vertical-align: top;">:</td>
                 <td><strong>{{ $investor->name }}</strong><br>
                     Email: {{ $investor->email }}<br>
                     No. Telp: {{ $investor->phone ?? '-' }}<br>
-                    Selanjutnya disebut sebagai <strong>PIHAK KEDUA (INVESTOR)</strong>
+                    berkedudukan sebagai penyedia modal yang disalurkan dalam bentuk aset inventori (laptop/device).
                 </td>
             </tr>
         </table>
 
         <p>Kedua belah pihak telah sepakat mengikatkan diri dalam Perjanjian Kerja Sama (PKS) Kemitraan Inventori dengan syarat dan ketentuan sebagai berikut:</p>
 
-        <h4>Pasal 1: Skema Bagi Hasil (Nisbah)</h4>
+        <h4>Pasal 1: Skema Bagi Hasil (Nisbah) & Perhitungan Profit</h4>
         <ol>
-            <li>Keuntungan bersih (Nett Profit) per unit dihitung berdasarkan Harga Jual Akhir dikurangi Harga Modal Dasar.</li>
-            <li>Nisbah pembagian keuntungan bersih adalah {{ 100 - $investor->share_percentage }}% untuk Pihak Pertama dan {{ number_format($investor->share_percentage, 0) }}% untuk Pihak Kedua.</li>
-            <li>Harga Jual Akhir dan Harga Modal Dasar bersifat final dan dapat diawasi secara langsung oleh Pihak Kedua melalui Dashboard Real-time LKTech.</li>
+            <li>Laba Bersih (Nett Profit) per unit dihitung dari Harga Jual Akhir dikurangi Harga Modal Dasar dan Biaya Perbaikan Garansi (apabila ada klaim perbaikan hardware selama masa garansi toko).</li>
+            <li>Nisbah pembagian Laba Bersih adalah {{ 100 - $investor->share_percentage }}% ({{ number_format(100 - $investor->share_percentage, 0) }} persen) untuk Pihak Pertama dan {{ number_format($investor->share_percentage, 0) }}% ({{ number_format($investor->share_percentage, 0) }} persen) untuk Pihak Kedua.</li>
+            <li>Harga Modal Dasar, Harga Jual Akhir, dan alokasi unit bersifat transparan dan dapat dipantau langsung oleh Pihak Kedua melalui Dashboard Real-time LKTech.</li>
         </ol>
 
-        <h4>Pasal 2: Pencairan Dana dan Return Modal</h4>
+        <h4>Pasal 2: Masa Garansi Toko & Tanggung Jawab Bersih Perbaikan</h4>
         <ol>
-            <li>Modal beserta keuntungan bagian Pihak Kedua akan dicairkan/dikreditkan ke saldo akun Pihak Kedua secara otomatis saat status barang telah "Terjual/Lunas".</li>
-            <li>Waktu penarikan (payout) dana ke rekening bank Pihak Kedua dapat dilakukan sesuai dengan kebijakan SLA pencairan dari Pihak Pertama.</li>
+            <li><strong>Garansi Mitra/Supplier:</strong> Garansi dari mitra pengada barang (supplier) adalah selama 1 (satu) minggu. Jika unit mengalami kerusakan pada minggu pertama, klaim dilakukan langsung ke mitra/supplier tanpa memotong profit investasi.</li>
+            <li><strong>Garansi Consumer After-Sales:</strong> Pihak Pertama memberikan garansi hardware kepada konsumen selama 1 (satu) bulan (30 hari) sejak unit diterima/terjual.</li>
+            <li><strong>Prinsip Tanggung Jawab Bersama (Anti-Gravity Risk Allocation):</strong>
+                <ul>
+                    <li>Apabila terjadi kerusakan hardware (termasuk namun tidak terbatas pada Keyboard, LCD, RAM, SSD, atau Mainboard) setelah masa garansi mitra habis (minggu ke-2 hingga hari ke-30), biaya perbaikan/penggantian komponen dialokasikan sebagai Biaya Operasional Garansi Unit.</li>
+                    <li>Biaya tersebut dipotong dari Laba Kotor (Gross Profit) unit terkait terlebih dahulu sebelum sisa Laba Bersih dibagi sesuai nisbah {{ 100 - $investor->share_percentage }}:{{ number_format($investor->share_percentage, 0) }}.</li>
+                    <li>Apabila biaya perbaikan melebihi estimasi laba unit tersebut, selisih biaya ditanggung bersama secara proporsional atau dipotong dari modal unit terkait atas kesepakatan kedua pihak.</li>
+                </ul>
+            </li>
         </ol>
 
-        <h4>Pasal 3: Hak Pengawasan dan Transparansi</h4>
+        <h4>Pasal 3: Pencairan Dana & Return Modal (Payout SLA)</h4>
         <ol>
-            <li>Pihak Pertama wajib memberikan akses sistem Dashboard Investor kepada Pihak Kedua.</li>
-            <li>Pihak Kedua berhak melihat secara real-time status aset, stok tersisa, harga modal terdaftar, dan estimasi profit setiap saat.</li>
+            <li>Pengembalian modal dasar beserta bagian keuntungan Pihak Kedua akan dikreditkan ke saldo akun/dashboard Pihak Kedua setelah unit dinyatakan Terjual Lunas dan Selesai Masa Garansi Hardware 1 Bulan (30 Hari).</li>
+            <li>Penahanan dana selama 30 hari ini bertujuan untuk memastikan cash flow aman dan nilai profit yang dicairkan sudah benar-benar bersih (nett) dari risiko retur/klaim konsumen.</li>
+            <li>Penarikan dana (payout) dari saldo Dashboard ke rekening bank Pihak Kedua dapat dilakukan sesuai dengan prosedur dan SLA pencairan yang berlaku di LKTech Indonesia.</li>
         </ol>
 
-        <h4>Pasal 4: Ketentuan Garansi dan Jaminan Fisik</h4>
+        <h4>Pasal 4: Hak Pengawasan & Transparansi</h4>
         <ol>
-            <li>Pihak Pertama bertanggung jawab atas keamanan fisik inventori dari kerusakan, kehilangan, atau cacat sebelum barang terjual.</li>
-            <li>Segala bentuk klaim garansi dari konsumen (after-sales) akan ditangani penuh oleh Pihak Pertama tanpa mengurangi nilai return Pihak Kedua.</li>
+            <li>Pihak Pertama wajib memberikan dan menjaga akses akun Dashboard Investor kepada Pihak Kedua.</li>
+            <li>Pihak Kedua berhak melihat secara real-time status aset, stok tersisa, harga modal terdaftar, status garansi yang berjalan, dan estimasi profit setiap saat.</li>
         </ol>
+
+        <h4>Pasal 5: Penyelesaian Perselisihan</h4>
+        <p>Segala bentuk perselisihan yang timbul dari pelaksanaan perjanjian ini akan diselesaikan secara musyawarah dan mufakat berdasarkan asas transparansi, keterbukaan, dan iktikad baik.</p>
     </div>
 
     <div class="signature-area">
