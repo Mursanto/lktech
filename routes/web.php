@@ -544,3 +544,101 @@ Route::get('/compress-blogs-now', function () {
     return $html;
 });
 
+
+Route::get('/compress-catalog-now', function () {
+    ini_set('max_execution_time', 600); // 10 menit
+    ini_set('memory_limit', '512M');
+
+    $directory = storage_path('app/public/catalog');
+    if (!is_dir($directory)) {
+        return "Direktori tidak ditemukan: $directory";
+    }
+
+    $files = scandir($directory);
+    $count = 0;
+    $totalBefore = 0;
+    $totalAfter = 0;
+
+    $html = "<h2>Mulai Kompresi Gambar Katalog ke WebP</h2><ul>";
+
+    foreach ($files as $file) {
+        if (in_array($file, ['.', '..'])) continue;
+        
+        $filePath = $directory . '/' . $file;
+        $info = pathinfo($filePath);
+        $ext = strtolower($info['extension'] ?? '');
+        
+        // Sertakan jfif, jpeg, jpg, png
+        if (in_array($ext, ['png', 'jpg', 'jpeg', 'jfif'])) {
+            $webpPath = $directory . '/' . $info['filename'] . '.webp';
+            
+            if (file_exists($webpPath)) {
+                continue;
+            }
+            
+            $beforeSize = filesize($filePath);
+            $image = null;
+            
+            if ($ext === 'png') {
+                $image = @imagecreatefrompng($filePath);
+                if ($image) {
+                    imagepalettetotruecolor($image);
+                    imagealphablending($image, true);
+                    imagesavealpha($image, true);
+                }
+            } else {
+                $image = @imagecreatefromjpeg($filePath);
+            }
+            
+            if ($image) {
+                $width = imagesx($image);
+                $height = imagesy($image);
+                
+                // Max lebar 800px untuk katalog
+                if ($width > 800) {
+                    $ratio = 800 / $width;
+                    $newHeight = $height * $ratio;
+                    $newImage = imagecreatetruecolor(800, $newHeight);
+                    
+                    if ($ext === 'png') {
+                        imagealphablending($newImage, false);
+                        imagesavealpha($newImage, true);
+                        $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+                        imagefilledrectangle($newImage, 0, 0, 800, $newHeight, $transparent);
+                    }
+                    
+                    imagecopyresampled($newImage, $image, 0, 0, 0, 0, 800, $newHeight, $width, $height);
+                    $image = $newImage;
+                }
+                
+                if (imagewebp($image, $webpPath, 80)) {
+                    $afterSize = filesize($webpPath);
+                    $totalBefore += $beforeSize;
+                    $totalAfter += $afterSize;
+                    $count++;
+                    
+                    $beforeKb = round($beforeSize / 1024);
+                    $afterKb = round($afterSize / 1024);
+                    
+                    $html .= "<li>OK: <b>$file</b> ($beforeKb KB &rarr; $afterKb KB)</li>";
+                } else {
+                    $html .= "<li><span style='color:red'>Gagal menyimpan WebP: $file</span></li>";
+                }
+                
+                imagedestroy($image);
+            }
+        }
+    }
+
+    $html .= "</ul>";
+
+    if ($count > 0) {
+        $saved = round(($totalBefore - $totalAfter) / 1024);
+        $html .= "<h3>Selesai! $count gambar katalog berhasil dikompresi.</h3>";
+        $html .= "<p>Total penghematan: <b>$saved KB</b></p>";
+    } else {
+        $html .= "<h3>Tidak ada gambar katalog baru yang perlu dikompresi.</h3>";
+    }
+    
+    return $html;
+});
