@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -128,7 +128,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::post('/investor-report/bulk-payout', [App\Http\Controllers\InvestorReportController::class, 'processBulkPayout'])->name('investor.report.bulk-payout');
 });
 
-// Investor Dashboard (Read-Only) — role Investor
+// Investor Dashboard (Read-Only) â€” role Investor
 Route::middleware(['auth', 'role:Investor'])->group(function () {
     Route::get('/investor/dashboard', [App\Http\Controllers\InvestorReportController::class, 'dashboard'])->name('investor.dashboard');
     Route::get('/investor/dashboard/export', [App\Http\Controllers\InvestorReportController::class, 'exportDashboard'])->name('investor.dashboard.export');
@@ -543,3 +543,4 @@ Route::get('/compress-blogs-now', function () {
     
     return $html;
 });
+
