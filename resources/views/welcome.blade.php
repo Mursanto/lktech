@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} â€” Laptop Bekas Berkualitas Premium Bogor</title>
+    <title>{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Berkualitas Premium Bogor</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="LKTech TN SEREAL â€” Jual laptop bekas berkualitas premium dengan garansi software lifetime. Tersedia servis laptop, rakit PC, jasa website, dan WiFi voucher di Bogor.">
+    <meta name="description" content="LKTech TN SEREAL — Jual laptop bekas berkualitas premium dengan garansi software lifetime. Tersedia servis laptop, rakit PC, jasa website, dan WiFi voucher di Bogor.">
     <meta name="keywords" content="laptop bekas bogor, laptop second berkualitas, servis laptop bogor, rakit PC bogor, LKTech, jual laptop murah">
     <meta name="author" content="LKTech TN SEREAL">
     <link rel="canonical" href="{{ url('/') }}">
@@ -14,14 +14,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} â€” Laptop Bekas Premium Bogor">
+    <meta property="og:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium Bogor">
     <meta property="og:description" content="Laptop bekas berkualitas dengan garansi software lifetime. Servis, rakit PC, jasa website di Bogor.">
     <meta property="og:image" content="{{ asset('images/LKtech.png') }}">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} â€” Laptop Bekas Premium">
+    <meta name="twitter:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium">
     <meta name="twitter:description" content="Laptop bekas berkualitas dengan garansi software lifetime di Bogor.">
     <meta name="twitter:image" content="{{ asset('images/LKtech.png') }}">
 
@@ -63,7 +63,7 @@
         [x-cloak] { display: none !important; }
 
         /* ==========================================
-           RADAR WAVE â€” PROMO PRODUCT CARDS
+           RADAR WAVE — PROMO PRODUCT CARDS
            ========================================== */
 
         /* Badge Promo Utama - Warna Merah Crimson */
@@ -112,7 +112,7 @@
         /* ==========================================
            PIANO WAVE ANIMATION UNTUK SERVICE CARDS
            ========================================== */
-        /* pianoWave â€” GPU-only (transform only, no box-shadow animation) */
+        /* pianoWave — GPU-only (transform only, no box-shadow animation) */
         @keyframes pianoWave {
           0%, 100% { transform: translateY(0) translateZ(0); }
           50%       { transform: translateY(-4px) translateZ(0); }
@@ -157,7 +157,7 @@
           margin-bottom: 10px;
         }
 
-        /* Shimmer Animation â€” GPU-accelerated via transform */
+        /* Shimmer Animation — GPU-accelerated via transform */
         @keyframes shimmer {
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
@@ -180,7 +180,7 @@
         }
 
         /* ==========================================
-           LIFETIME â€” GPU-Friendly: opacity pulse, no text-shadow
+           LIFETIME — GPU-Friendly: opacity pulse, no text-shadow
            ========================================== */
         @keyframes lifetimePulse {
             0%, 100% { opacity: 1; }
@@ -292,7 +292,7 @@
                             Laptop Bekas <span class="text-shimmer">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
                         </h1>
                         <p class="hero-description text-gray-600 text-[9px] sm:text-xs md:text-sm leading-tight font-medium mb-3 text-justify">
-                            Pilihan bijak dapatkan perangkat spesifikasi tinggiâ€”lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
+                            Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 
                         <!-- Tombol CTA -->
@@ -303,8 +303,8 @@
 
                         <!-- Marketplace & Rating Bar (Rapat & 1 Baris di Mobile) -->
                         <div class="hero-trust-bar flex flex-row items-center flex-nowrap overflow-x-auto gap-2 pt-1.5 text-[10px] sm:text-xs text-gray-500 border-t border-gray-150 mt-1 whitespace-nowrap w-full scrollbar-none">
-                            <span class="rating-text flex items-center gap-0.5 font-bold text-gray-800 shrink-0">â­ <strong>4.9</strong> <span class="font-normal text-gray-500 text-[9px] sm:text-[10px]">(Rating Toko)</span></span>
-                            <span class="divider text-gray-300 shrink-0 hidden sm:inline">â€¢</span>
+                            <span class="rating-text flex items-center gap-0.5 font-bold text-gray-800 shrink-0">⭐ <strong>4.9</strong> <span class="font-normal text-gray-500 text-[9px] sm:text-[10px]">(Rating Toko)</span></span>
+                            <span class="divider text-gray-300 shrink-0 hidden sm:inline">•</span>
                             <span class="mp-label font-semibold shrink-0 hidden sm:inline">Tersedia juga di Marketplace resmi kami:</span>
                             <div class="mp-icons flex items-center hover:opacity-90 transition-opacity duration-300 mix-blend-multiply shrink-0">
                                 <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.webp') }}" alt="Marketplace Resmi LKTech" width="300" height="83" class="h-4.5 sm:h-7 w-auto object-contain" loading="eager">
@@ -377,7 +377,7 @@
                                                     <img width="800" height="800" loading="lazy" src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Right -->
-                                                        <div class="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">ðŸ”¥ Hot Promo</div>
+                                                        <div class="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
                                                         
                                                         <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/95 via-black/60 to-transparent rounded-b-3xl flex flex-col justify-end px-3 pb-3 sm:px-4 sm:pb-4">
                                                             <h3 class="text-white font-bold text-xs sm:text-sm leading-tight mb-0.5 font-montserrat">{{ $banner['title'] }}</h3>
@@ -897,7 +897,7 @@
                             <i class='bx bx-lock-alt text-gray-400 text-lg'></i>
                         </div>
                         <input id="password" type="password" name="password" required
-                               class="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all bg-gray-50 hover:bg-white focus:bg-white @error('password') border-red-500 @enderror" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢">
+                               class="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition-all bg-gray-50 hover:bg-white focus:bg-white @error('password') border-red-500 @enderror" placeholder="••••••••">
                     </div>
                     @error('password')
                         <p class="text-red-500 text-[11px] mt-1 font-semibold">{{ $message }}</p>
@@ -990,7 +990,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                     <span class="truncate">{{ $activeVideo->title }}</span>
-                    <span class="text-[8px] sm:text-[9px] shrink-0">âž”</span>
+                    <span class="text-[8px] sm:text-[9px] shrink-0">➔</span>
                 </a>
             @else
                 <div class="bg-red-600/90 text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide shadow flex items-center gap-1 max-w-[70%]">
@@ -1003,7 +1003,7 @@
 
             <button onclick="closeVideoWidget()" 
                     class="pointer-events-auto bg-black/60 hover:bg-red-600 text-white rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs transition-colors shrink-0">
-                âœ•
+                ✕
             </button>
         </div>
 
@@ -1015,10 +1015,10 @@
                    controls 
                    preload="metadata" 
                    playsinline>
-                <source src="{{ asset('storage/' . $activeVideo->video_path) }}" type="video/mp4">
+                <source src="{{ asset('storage/' . str_replace('public/', '', $activeVideo->video_path)) }}" type="video/mp4">
             </video>
         @else
-            <img width="800" height="800" loading="lazy" id="promoVideo" src="{{ asset('storage/' . $activeVideo->video_path) }}" class="w-full h-full object-cover bg-black pointer-events-auto">
+            <img width="800" height="800" loading="lazy" id="promoVideo" src="{{ asset('storage/' . str_replace('public/', '', $activeVideo->video_path)) }}" class="w-full h-full object-cover bg-black pointer-events-auto">
         @endif
     </div>
 
@@ -1135,6 +1135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
 });
 </script>
+
 
 
 

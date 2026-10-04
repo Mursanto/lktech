@@ -300,7 +300,7 @@
                             } elseif (!empty($product->video_url)) {
                                 // Convert YouTube watch URL → embed URL
                                 $yt = $product->video_url;
-                                if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $yt, $m)) {
+                                if (preg_match('/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/', $yt, $m)) {
                                     $videoSrc = 'https://www.youtube.com/embed/' . $m[1] . '?autoplay=1&rel=0';
                                     $isYoutube = true;
                                 } else {

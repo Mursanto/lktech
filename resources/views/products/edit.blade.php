@@ -255,7 +255,7 @@
                                         @if(is_array($product->gallery_images))
                                             @foreach($product->gallery_images as $img)
                                             <div class="gallery-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200 group">
-                                                <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
+                                                <img src="{{ asset('storage/' . str_replace('public/', '', $img)) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                                 <button type="button" onclick="removeExistingGalleryImage(this, '{{ $img }}')" class="absolute top-1 right-1 bg-red-600 text-white rounded p-0.5 opacity-0 group-hover:opacity-100 transition shadow hover:bg-red-700">
                                                     <i class='bx bx-trash text-[10px]'></i>
                                                 </button>
@@ -411,6 +411,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('product-form').onsubmit = function() {
         document.getElementById('description-input').value = quill.root.innerHTML;
+        if (typeof galleryData !== 'undefined' && galleryData.files) {
+            document.getElementById('gallery-upload').files = galleryData.files;
+        }
     };
 });
 
@@ -431,27 +434,58 @@ function previewImage(event) {
     }
 }
 
+let galleryData = new DataTransfer();
+
 function previewGallery(event) {
     const files = event.target.files;
+    if (!files) return;
+
+    const existingCount = document.querySelectorAll('#gallery-preview-container .gallery-item:not(.new-item)').length;
+    const remainingSlots = Math.max(0, 9 - existingCount);
+
+    Array.from(files).forEach(file => {
+        if (galleryData.items.length < remainingSlots) {
+            galleryData.items.add(file);
+        }
+    });
+
+    const fileInput = document.getElementById('gallery-upload');
+    fileInput.files = galleryData.files;
+    renderNewGalleryPreviews();
+}
+
+function renderNewGalleryPreviews() {
     const container = document.getElementById('gallery-preview-container');
     const addBtn = document.getElementById('gallery-add-btn');
     
-    // Do NOT clear old previews to allow append visualization
-    // However, for newly selected files, we append them
-    if (files) {
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const div = document.createElement('div');
-                div.className = 'gallery-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200';
-                div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
-                                 <div class="absolute inset-0 bg-black bg-opacity-10 pointer-events-none"></div>
-                                 <div class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[8px] px-1 rounded">Baru</div>`;
-                container.insertBefore(div, addBtn);
-            }
-            reader.readAsDataURL(file);
-        });
-    }
+    const oldNewPreviews = container.querySelectorAll('.gallery-item.new-item');
+    oldNewPreviews.forEach(el => el.remove());
+
+    Array.from(galleryData.files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const div = document.createElement('div');
+            div.className = 'gallery-item new-item relative w-full aspect-square bg-gray-100 rounded overflow-hidden border border-gray-200 group';
+            div.innerHTML = `<img src="${e.target.result}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
+                             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none"></div>
+                             <button type="button" onclick="removeNewGalleryImage(${index})" class="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow" title="Hapus">
+                                 <i class='bx bx-trash text-xs'></i>
+                             </button>
+                             <div class="absolute bottom-1 right-1 bg-emerald-500 text-white text-[10px] px-1.5 py-0.5 rounded font-bold">Baru</div>`;
+            container.insertBefore(div, addBtn);
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function removeNewGalleryImage(index) {
+    const newData = new DataTransfer();
+    Array.from(galleryData.files).forEach((file, i) => {
+        if (i !== index) newData.items.add(file);
+    });
+    galleryData = newData;
+    document.getElementById('gallery-upload').files = galleryData.files;
+    renderNewGalleryPreviews();
 }
 
 function removeExistingGalleryImage(btn, path) {

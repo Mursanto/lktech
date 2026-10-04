@@ -86,8 +86,8 @@ class ProductController extends Controller
             'original_price' => 'nullable|integer|min:0',
             'stock' => 'required|integer|min:0',
             'tipe_stok' => 'required|in:ready_stock,open_order',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif,heic|max:20480',
+            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif,heic|max:20480',
             'video_url' => 'nullable|string|max:500',
             'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:102400',
             'description' => 'nullable|string',
@@ -133,6 +133,7 @@ class ProductController extends Controller
         if ($request->hasFile('gallery_images')) {
             $galleryPaths = [];
             foreach ($request->file('gallery_images') as $index => $file) {
+                if (!$file || !$file->isValid()) continue;
                 if (count($galleryPaths) >= 9) break;
                 $galleryPaths[] = $this->compressAndStore($file, 'public/catalog/gallery');
             }
@@ -192,8 +193,8 @@ class ProductController extends Controller
             'operational_cost' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'tipe_stok' => 'required|in:ready_stock,open_order',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif,heic|max:20480',
+            'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,jfif,heic|max:20480',
             'video_url' => 'nullable|string|max:500',
             'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:102400',
             'description' => 'nullable|string',
@@ -267,6 +268,7 @@ class ProductController extends Controller
             }
 
             foreach ($newFiles as $index => $file) {
+                if (!$file || !$file->isValid()) continue;
                 if (count($galleryPaths) >= 9) break;
                 $galleryPaths[] = $this->compressAndStore($file, 'public/catalog/gallery');
                 $galleryUpdated = true;

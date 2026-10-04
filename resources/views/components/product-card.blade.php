@@ -82,7 +82,13 @@
         <!-- Image & Video Area — Full Bleed -->
         <div class="relative w-full aspect-square bg-gray-100 overflow-hidden">
             @php
-                $videoSrc = $product->video_path ? asset('storage/' . $product->video_path) : $product->video_url;
+                $videoSrc = null;
+                if (!empty($product->video_path)) {
+                    $vp = str_replace('public/', '', $product->video_path);
+                    $videoSrc = asset('storage/' . $vp);
+                } elseif (!empty($product->video_url) && preg_match('/\.(mp4|webm)$/i', $product->video_url)) {
+                    $videoSrc = $product->video_url;
+                }
             @endphp
             @if(!empty($videoSrc))
                 <!-- Play Icon Badge -->
@@ -221,3 +227,4 @@
         </div>
     </a>
 </div>
+

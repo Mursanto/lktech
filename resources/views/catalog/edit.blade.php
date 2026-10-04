@@ -69,7 +69,7 @@
                                         @if($product->gallery_images && is_array($product->gallery_images))
                                             @foreach($product->gallery_images as $galleryImg)
                                                 <div class="gallery-item relative w-full aspect-square bg-gray-100 rounded-md overflow-hidden border border-gray-200 shadow-sm group">
-                                                    <img src="{{ Storage::url($galleryImg) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
+                                                    <img src="{{ asset('storage/' . str_replace('public/', '', $galleryImg)) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                                     <button type="button" onclick="removeExistingGalleryImage(this, '{{ $galleryImg }}')" class="absolute top-1 right-1 bg-red-600 text-white rounded p-1 opacity-0 group-hover:opacity-100 transition shadow hover:bg-red-700">
                                                         <i class='bx bx-trash text-xs'></i>
                                                     </button>

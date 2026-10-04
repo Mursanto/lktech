@@ -60,6 +60,12 @@ trait UploadsImage
             Storage::disk('public')->put($path, (string) $encoded);
         }
 
+        unset($image);
+        unset($encoded);
+        if (function_exists('gc_collect_cycles')) {
+            gc_collect_cycles();
+        }
+
         return $path;
     }
 }

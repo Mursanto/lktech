@@ -146,7 +146,7 @@
                                     @if(is_array($product->gallery_images) && count($product->gallery_images) > 0)
                                         @foreach($product->gallery_images as $img)
                                         <div class="relative w-full aspect-square bg-white rounded overflow-hidden border border-gray-200">
-                                            <img src="{{ Storage::url($img) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
+                                            <img src="{{ asset('storage/' . str_replace('public/', '', $img)) }}" class="absolute inset-0 w-full h-full object-contain bg-white sm:bg-gray-50 p-2">
                                         </div>
                                         @endforeach
                                     @else
