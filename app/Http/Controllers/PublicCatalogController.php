@@ -612,13 +612,19 @@ class PublicCatalogController extends Controller
             return asset('images/LKtech-fallback.webp');
         }
 
-        // Try WebP variant first
-        $webpPath = preg_replace('/\.(jpe?g|png)$/i', '.webp', $imagePath);
+        // Try WebP variant first (support .jpg, .jpeg, .jfif, .png)
+        $webpPath = preg_replace('/\.(jpe?g|jfif|png)$/i', '.webp', $imagePath);
         if ($webpPath !== $imagePath && Storage::disk('public')->exists($webpPath)) {
             return Storage::url($webpPath);
         }
 
-        return Storage::url($imagePath);
+        // Serve original if it exists
+        if (Storage::disk('public')->exists($imagePath)) {
+            return Storage::url($imagePath);
+        }
+
+        // Last resort fallback
+        return asset('images/LKtech-fallback.webp');
     }
 }
 
