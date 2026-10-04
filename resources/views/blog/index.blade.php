@@ -27,7 +27,7 @@
                 <!-- Thumbnail -->
                 <a href="{{ route('blog.show', $post->slug) }}" class="block w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 overflow-hidden relative shrink-0 rounded-xl">
                     @if($post->thumbnail)
-                        <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="{{ $post->display_thumbnail }}" alt="{{ $post->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     @else
                         <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                             <i class='bx bx-image-alt text-4xl'></i>
@@ -75,3 +75,4 @@
 
 </body>
 </html>
+
