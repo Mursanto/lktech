@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -639,6 +639,66 @@ Route::get('/compress-catalog-now', function () {
     } else {
         $html .= "<h3>Tidak ada gambar katalog baru yang perlu dikompresi.</h3>";
     }
+    
+    return $html;
+});
+
+// ===============================================================
+// EMERGENCY: Hapus file asli dari storage setelah konversi WebP
+// agar disk server tidak penuh → akses: /emergency-cleanup-storage
+// ===============================================================
+Route::get('/emergency-cleanup-storage', function () {
+    ini_set('max_execution_time', 300);
+    
+    $html = "<h1 style='color:darkred'>🔧 Emergency Storage Cleanup</h1>";
+    $html .= "<p>Menghapus file asli (.png/.jpg/.jpeg/.jfif) yang sudah ada versi .webp-nya...</p><ul>";
+    
+    $directories = [
+        'catalog' => storage_path('app/public/catalog'),
+        'blogs'   => storage_path('app/public/blogs'),
+    ];
+    
+    $totalDeleted = 0;
+    $totalFreed = 0;
+    
+    foreach ($directories as $dirName => $directory) {
+        if (!is_dir($directory)) continue;
+        
+        $html .= "<li><strong>Folder: $dirName</strong><ul>";
+        
+        foreach (scandir($directory) as $file) {
+            if (in_array($file, ['.', '..'])) continue;
+            
+            $filePath = $directory . '/' . $file;
+            $info = pathinfo($filePath);
+            $ext = strtolower($info['extension'] ?? '');
+            
+            if (!in_array($ext, ['png', 'jpg', 'jpeg', 'jfif'])) continue;
+            
+            $webpPath = $directory . '/' . $info['filename'] . '.webp';
+            
+            // Hanya hapus jika versi webp SUDAH ADA
+            if (!file_exists($webpPath)) {
+                $html .= "<li style='color:orange'>LEWATI (tidak ada webp): <b>$file</b></li>";
+                continue;
+            }
+            
+            $sizeKb = round(filesize($filePath) / 1024);
+            
+            if (@unlink($filePath)) {
+                $totalFreed += $sizeKb;
+                $totalDeleted++;
+                $html .= "<li style='color:green'>✓ Dihapus: <b>$file</b> ($sizeKb KB)</li>";
+            } else {
+                $html .= "<li style='color:red'>✗ Gagal hapus: <b>$file</b></li>";
+            }
+        }
+        
+        $html .= "</ul></li>";
+    }
+    
+    $html .= "</ul>";
+    $html .= "<h2 style='color:green'>Selesai! $totalDeleted file dihapus, disk dibebaskan: <b>$totalFreed KB</b></h2>";
     
     return $html;
 });
