@@ -612,15 +612,20 @@ class PublicCatalogController extends Controller
             return asset('images/LKtech-fallback.webp');
         }
 
+        // The image path might be stored as 'public/catalog/...' in DB
+        // But Storage::disk('public') root is already 'storage/app/public'
+        // So we need to strip 'public/' for the exists() check
+        $checkPath = preg_replace('/^public\//', '', $imagePath);
+
         // Try WebP variant first (support .jpg, .jpeg, .jfif, .png)
-        $webpPath = preg_replace('/\.(jpe?g|jfif|png)$/i', '.webp', $imagePath);
-        if ($webpPath !== $imagePath && Storage::disk('public')->exists($webpPath)) {
+        $webpPath = preg_replace('/\.(jpe?g|jfif|png)$/i', '.webp', $checkPath);
+        if ($webpPath !== $checkPath && Storage::disk('public')->exists($webpPath)) {
             return Storage::url($webpPath);
         }
 
         // Serve original if it exists
-        if (Storage::disk('public')->exists($imagePath)) {
-            return Storage::url($imagePath);
+        if (Storage::disk('public')->exists($checkPath)) {
+            return Storage::url($checkPath);
         }
 
         // Last resort fallback
