@@ -810,7 +810,7 @@
                     <!-- Thumbnail (Kiri) -->
                     <a href="{{ route('blog.show', $post->slug) }}" class="block w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden shrink-0 relative">
                         @if($post->thumbnail)
-                            <img width="800" height="800" loading="lazy" src="{{ $post->display_thumbnail }}" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img width="400" height="400" src="{{ $post->display_thumbnail }}" onerror="this.onerror=null; this.src='{{ asset('storage/' . str_replace('public/', '', $post->thumbnail)) }}';" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="absolute inset-0 w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                                 <i class='bx bx-image text-2xl'></i>

@@ -56,7 +56,7 @@
                 <!-- Floated Container for Image and Meta Info -->
                 <div class="float-left w-[45%] sm:w-1/3 md:w-1/4 mr-4 mb-2 md:mr-6 md:mb-4 flex flex-col gap-2">
                     @if($post->thumbnail)
-                        <img src="{{ Storage::url($post->thumbnail) }}" alt="{{ $post->title }}" class="w-full rounded-xl object-contain bg-gray-50 border border-gray-100 p-1">
+                        <img src="{{ $post->display_thumbnail }}" onerror="this.onerror=null; this.src='{{ asset('storage/' . str_replace('public/', '', $post->thumbnail)) }}';" alt="{{ $post->title }}" class="w-full rounded-xl object-contain bg-gray-50 border border-gray-100 p-1">
                     @else
                         <div class="w-full aspect-square flex items-center justify-center text-gray-400 bg-gray-100 rounded-xl border border-gray-100">
                             <i class='bx bx-image-alt text-4xl md:text-6xl'></i>
