@@ -603,7 +603,7 @@ class PublicCatalogController extends Controller
     }
 
     /**
-     * Resolve image URL Ã¢â‚¬â€ prefer WebP version if it exists on disk.
+     * Resolve image URL - prefer WebP version if it exists on disk.
      * Converts e.g. "catalog/img_xxx.jpeg" -> "catalog/img_xxx.webp" if the .webp exists.
      */
     private function resolveImageUrl(?string $imagePath): string

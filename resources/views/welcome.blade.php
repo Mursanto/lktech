@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Berkualitas Premium Bogor</title>
+    <title>{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Berkualitas Premium Bogor</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="LKTech TN SEREAL — Jual laptop bekas berkualitas premium dengan garansi software lifetime. Tersedia servis laptop, rakit PC, jasa website, dan WiFi voucher di Bogor.">
+    <meta name="description" content="LKTech TN SEREAL — Jual laptop bekas berkualitas premium dengan garansi software lifetime. Tersedia servis laptop, rakit PC, jasa website, dan WiFi voucher di Bogor.">
     <meta name="keywords" content="laptop bekas bogor, laptop second berkualitas, servis laptop bogor, rakit PC bogor, LKTech, jual laptop murah">
     <meta name="author" content="LKTech TN SEREAL">
     <link rel="canonical" href="{{ url('/') }}">
@@ -14,14 +14,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium Bogor">
+    <meta property="og:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium Bogor">
     <meta property="og:description" content="Laptop bekas berkualitas dengan garansi software lifetime. Servis, rakit PC, jasa website di Bogor.">
     <meta property="og:image" content="{{ asset('images/LKtech.png') }}">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium">
+    <meta name="twitter:title" content="{{ $settings->nama_toko ?? 'LKTech TN SEREAL' }} — Laptop Bekas Premium">
     <meta name="twitter:description" content="Laptop bekas berkualitas dengan garansi software lifetime di Bogor.">
     <meta name="twitter:image" content="{{ asset('images/LKtech.png') }}">
 
@@ -63,7 +63,7 @@
         [x-cloak] { display: none !important; }
 
         /* ==========================================
-           RADAR WAVE — PROMO PRODUCT CARDS
+           RADAR WAVE — PROMO PRODUCT CARDS
            ========================================== */
 
         /* Badge Promo Utama - Warna Merah Crimson */
@@ -112,7 +112,7 @@
         /* ==========================================
            PIANO WAVE ANIMATION UNTUK SERVICE CARDS
            ========================================== */
-        /* pianoWave — GPU-only (transform only, no box-shadow animation) */
+        /* pianoWave — GPU-only (transform only, no box-shadow animation) */
         @keyframes pianoWave {
           0%, 100% { transform: translateY(0) translateZ(0); }
           50%       { transform: translateY(-4px) translateZ(0); }
@@ -157,7 +157,7 @@
           margin-bottom: 10px;
         }
 
-        /* Shimmer Animation — GPU-accelerated via transform */
+        /* Shimmer Animation — GPU-accelerated via transform */
         @keyframes shimmer {
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
@@ -180,7 +180,7 @@
         }
 
         /* ==========================================
-           LIFETIME — GPU-Friendly: opacity pulse, no text-shadow
+           LIFETIME — GPU-Friendly: opacity pulse, no text-shadow
            ========================================== */
         @keyframes lifetimePulse {
             0%, 100% { opacity: 1; }
@@ -292,7 +292,7 @@
                             Laptop Bekas <span class="text-shimmer">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
                         </h1>
                         <p class="hero-description text-gray-600 text-[9px] sm:text-xs md:text-sm leading-tight font-medium mb-3 text-justify">
-                            Pilihan bijak dapatkan perangkat spesifikasi tinggi—lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
+                            Pilihan bijak dapatkan perangkat spesifikasi tinggi — lolos uji QC ketat, dilengkapi garansi software <span class="text-lifetime-glow">Lifetime</span> dan terjamin, serta dukungan after-sales yang siap membantu Anda kapan saja.
                         </p>
 
                         <!-- Tombol CTA -->
