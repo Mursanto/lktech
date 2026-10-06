@@ -39,17 +39,43 @@ class ProductController extends Controller
         }
 
         // Search Filter
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('brand', 'LIKE', "%{$search}%")
-                  ->orWhere('model_series', 'LIKE', "%{$search}%")
-                  ->orWhere('serial_number', 'LIKE', "%{$search}%")
-                  ->orWhere('processor', 'LIKE', "%{$search}%")
-                  ->orWhere('description', 'LIKE', "%{$search}%")
-                  ->orWhereHas('category', function($cat) use ($search) {
-                      $cat->where('name', 'LIKE', "%{$search}%");
-                  });
+        if ($request->filled('search')) {
+            $search = trim($request->search);
+            $rawKeywords = preg_split('/[\s,\+]+/', $search, -1, PREG_SPLIT_NO_EMPTY);
+            $keywords = array_values(array_filter($rawKeywords, fn($w) => mb_strlen($w) >= 2));
+
+            $query->where(function($mainQ) use ($keywords, $search) {
+                $mainQ->where(function($phraseQ) use ($search) {
+                    $phraseQ->where('brand', 'LIKE', "%{$search}%")
+                            ->orWhere('model_series', 'LIKE', "%{$search}%")
+                            ->orWhere('serial_number', 'LIKE', "%{$search}%")
+                            ->orWhere('processor', 'LIKE', "%{$search}%")
+                            ->orWhere('ram', 'LIKE', "%{$search}%")
+                            ->orWhere('storage', 'LIKE', "%{$search}%")
+                            ->orWhere('description', 'LIKE', "%{$search}%")
+                            ->orWhereHas('category', function($cat) use ($search) {
+                                $cat->where('name', 'LIKE', "%{$search}%");
+                            });
+                });
+
+                if (count($keywords) > 1) {
+                    $mainQ->orWhere(function($allWordsQ) use ($keywords) {
+                        foreach ($keywords as $word) {
+                            $allWordsQ->where(function($wordQ) use ($word) {
+                                $wordQ->where('brand', 'LIKE', "%{$word}%")
+                                      ->orWhere('model_series', 'LIKE', "%{$word}%")
+                                      ->orWhere('serial_number', 'LIKE', "%{$word}%")
+                                      ->orWhere('processor', 'LIKE', "%{$word}%")
+                                      ->orWhere('ram', 'LIKE', "%{$word}%")
+                                      ->orWhere('storage', 'LIKE', "%{$word}%")
+                                      ->orWhere('description', 'LIKE', "%{$word}%")
+                                      ->orWhereHas('category', function($cat) use ($word) {
+                                          $cat->where('name', 'LIKE', "%{$word}%");
+                                      });
+                            });
+                        }
+                    });
+                }
             });
         }
 

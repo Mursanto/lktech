@@ -11,13 +11,17 @@ class PublicCatalogController extends Controller
     public function index(Request $request)
     {
         $query = Product::with('category')
-                    ->whereIn('category_id', \App\Models\Category::where('id', 1)->orWhere('parent_id', 1)->pluck('id'))
                     ->where(function($q) {
                         $q->where(function($q1) {
                             $q1->where('stock', '>', 0)
                                ->where('status', '!=', 'sold');
                         })->orWhereNotNull('image_path');
                     });
+
+        // Hanya batasi ke kategori Laptop (Category 1) jika user TIDAK sedang melakukan pencarian
+        if (!$request->filled('search')) {
+            $query->whereIn('category_id', \App\Models\Category::where('id', 1)->orWhere('parent_id', 1)->pluck('id'));
+        }
 
         // Sort Filter
         if ($request->has('sort')) {
@@ -34,17 +38,8 @@ class PublicCatalogController extends Controller
             $query->orderByRaw('is_promo_utama DESC, is_banner_hero DESC, created_at DESC');
         }
 
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('brand', 'like', "%{$search}%")
-                  ->orWhere('model_series', 'like', "%{$search}%")
-                  ->orWhere('processor', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhereHas('category', function($cat) use ($search) {
-                      $cat->where('name', 'like', "%{$search}%");
-                  });
-            });
+        if ($request->filled('search')) {
+            $this->applySearchFilter($query, $request->search);
             $products = $query->paginate(12)->withQueryString();
             $collectionToTransform = $products->getCollection();
         } else {
@@ -487,17 +482,8 @@ class PublicCatalogController extends Controller
                         });
 
             // Search filter
-            if ($request->has('search') && $request->search != '') {
-                $search = $request->search;
-                $query->where(function($q) use ($search) {
-                    $q->where('brand', 'like', "%{$search}%")
-                      ->orWhere('model_series', 'like', "%{$search}%")
-                      ->orWhere('processor', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%")
-                      ->orWhereHas('category', function($cat) use ($search) {
-                          $cat->where('name', 'like', "%{$search}%");
-                      });
-                });
+            if ($request->filled('search')) {
+                $this->applySearchFilter($query, $request->search);
             }
 
             // Brand filter
@@ -640,6 +626,56 @@ class PublicCatalogController extends Controller
 
         // Last resort fallback
         return asset('images/LKtech-fallback.webp');
+    }
+
+    /**
+     * Terapkan pencarian produk multi-kata & lintas kolom atribut
+     */
+    protected function applySearchFilter($query, string $search)
+    {
+        $search = trim($search);
+        if ($search === '') {
+            return $query;
+        }
+
+        $rawKeywords = preg_split('/[\s,\+]+/', $search, -1, PREG_SPLIT_NO_EMPTY);
+        $keywords = array_values(array_filter($rawKeywords, fn($w) => mb_strlen($w) >= 2));
+
+        return $query->where(function($mainQ) use ($keywords, $search) {
+            // 1. Prioritas kecocokan frase utuh
+            $mainQ->where(function($phraseQ) use ($search) {
+                $phraseQ->where('brand', 'like', "%{$search}%")
+                        ->orWhere('model_series', 'like', "%{$search}%")
+                        ->orWhere('serial_number', 'like', "%{$search}%")
+                        ->orWhere('processor', 'like', "%{$search}%")
+                        ->orWhere('ram', 'like', "%{$search}%")
+                        ->orWhere('storage', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhereHas('category', function($cat) use ($search) {
+                            $cat->where('name', 'like', "%{$search}%");
+                        });
+            });
+
+            // 2. Kecocokan multi-kata: semua kata kunci harus ada di antara atribut produk
+            if (count($keywords) > 1) {
+                $mainQ->orWhere(function($allWordsQ) use ($keywords) {
+                    foreach ($keywords as $word) {
+                        $allWordsQ->where(function($wordQ) use ($word) {
+                            $wordQ->where('brand', 'like', "%{$word}%")
+                                  ->orWhere('model_series', 'like', "%{$word}%")
+                                  ->orWhere('serial_number', 'like', "%{$word}%")
+                                  ->orWhere('processor', 'like', "%{$word}%")
+                                  ->orWhere('ram', 'like', "%{$word}%")
+                                  ->orWhere('storage', 'like', "%{$word}%")
+                                  ->orWhere('description', 'like', "%{$word}%")
+                                  ->orWhereHas('category', function($cat) use ($word) {
+                                      $cat->where('name', 'like', "%{$word}%");
+                                  });
+                        });
+                    }
+                });
+            }
+        });
     }
 }
 
