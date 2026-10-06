@@ -35,6 +35,48 @@ Route::get('/run-migration-live', function() {
     }
 });
 
+Route::get('/run-performance-optimize', function() {
+    $results = [];
+    try {
+        // 1. Generate WebP Thumbnails untuk produk lama
+        \Illuminate\Support\Facades\Artisan::call('images:generate-thumbnails');
+        $results['generate_thumbnails'] = \Illuminate\Support\Facades\Artisan::output();
+
+        // 2. Clear cache & views
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        $results['optimize_clear'] = \Illuminate\Support\Facades\Artisan::output();
+
+        // 3. Storage Link check
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        $results['storage_link'] = \Illuminate\Support\Facades\Artisan::output();
+
+        // 4. Sample verification
+        $sampleProduct = \App\Models\Product::whereNotNull('image_path')->orderBy('id', 'desc')->first();
+
+        $outputHtml = "<div style='font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; max-width:800px; margin:40px auto; padding:28px; border:1px solid #e2e8f0; border-radius:16px; background:#fff; box-shadow:0 10px 25px -5px rgba(0,0,0,0.05);'>";
+        $outputHtml .= "<div style='display:flex; align-items:center; gap:12px; margin-bottom:20px;'><span style='font-size:32px;'>🚀</span><div><h2 style='color:#16a34a; margin:0; font-size:20px;'>Optimasi Performa & Thumbnails Berhasil Dijalankan!</h2><p style='color:#64748b; margin:4px 0 0; font-size:13px;'>Semua cache dibersihkan & varian thumbnail WebP telah siap disajikan.</p></div></div>";
+        $outputHtml .= "<hr style='border:0; border-top:1px solid #f1f5f9; margin:20px 0;'>";
+        $outputHtml .= "<h4 style='color:#1e293b; margin:16px 0 8px; font-size:14px;'>1. Output Pembuatan Thumbnail (images:generate-thumbnails):</h4><pre style='background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:8px; font-size:12px; color:#334155; overflow-x:auto; max-height:220px;'>" . htmlspecialchars($results['generate_thumbnails'] ?: 'Thumbnails siap dan up to date.') . "</pre>";
+        $outputHtml .= "<h4 style='color:#1e293b; margin:16px 0 8px; font-size:14px;'>2. Output Pembersihan Cache (optimize:clear):</h4><pre style='background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:8px; font-size:12px; color:#334155; overflow-x:auto;'>" . htmlspecialchars($results['optimize_clear']) . "</pre>";
+        if ($sampleProduct) {
+            $outputHtml .= "<h4 style='color:#1e293b; margin:16px 0 8px; font-size:14px;'>3. Verifikasi Produk Sampel Terbaru:</h4>";
+            $outputHtml .= "<div style='background:#f8fafc; border:1px solid #e2e8f0; padding:16px; border-radius:8px; font-size:13px; line-height:1.7;'>";
+            $outputHtml .= "<div><strong>Produk:</strong> " . htmlspecialchars($sampleProduct->brand . ' ' . $sampleProduct->model_series) . "</div>";
+            $outputHtml .= "<div><strong>Gambar Utama:</strong> <a href='" . $sampleProduct->display_image . "' target='_blank' style='color:#2563eb;'>" . $sampleProduct->display_image . "</a></div>";
+            $outputHtml .= "<div><strong>Thumbnail (600px WebP):</strong> <a href='" . $sampleProduct->display_thumbnail . "' target='_blank' style='color:#16a34a; font-weight:600;'>" . $sampleProduct->display_thumbnail . "</a></div>";
+            $outputHtml .= "</div>";
+        }
+        $outputHtml .= "<div style='margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;'>";
+        $outputHtml .= "<a href='/' style='background:#2563eb; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;'>Buka Beranda LKTech</a>";
+        $outputHtml .= "<a href='https://pagespeed.web.dev/analysis/https-lktech-online/ysndbevuvf?form_factor=mobile' target='_blank' style='background:#16a34a; color:#fff; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;'>Cek Ulang PageSpeed Insights</a>";
+        $outputHtml .= "</div></div>";
+
+        return response($outputHtml);
+    } catch (\Exception $e) {
+        return response("<div style='font-family:sans-serif; padding:24px; color:#dc2626;'><h3>❌ Terjadi Error:</h3><p>" . htmlspecialchars($e->getMessage()) . "</p></div>", 500);
+    }
+});
+
 Route::get('/', [App\Http\Controllers\PublicCatalogController::class, 'index'])->name('home');
 Route::get('/katalog', [App\Http\Controllers\PublicCatalogController::class, 'katalog'])->name('katalog.index');
 Route::post('/katalog/contact', [App\Http\Controllers\PublicCatalogController::class, 'contact'])->name('katalog.contact');
