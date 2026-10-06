@@ -865,8 +865,8 @@
                 </button>
             </div>
 
-            <div class="text-center mb-8 mt-2">
-                <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" class="h-10 mx-auto mb-4" width="160" height="190" loading="lazy">
+            <div class="text-center mb-6 mt-1">
+                <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" class="h-16 sm:h-20 w-auto object-contain mx-auto mb-3 drop-shadow-sm hover:scale-105 transition-transform" width="800" height="953" loading="eager">
                 <h3 class="text-2xl font-black text-gray-800">Masuk ke Sistem</h3>
                 <p class="text-sm text-gray-500 mt-1">Silakan masukkan kredensial Anda</p>
             </div>

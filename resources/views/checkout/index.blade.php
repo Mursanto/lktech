@@ -26,7 +26,7 @@
             <span class="text-[16px] font-bold text-gray-900 leading-none">Checkout</span>
         </div>
         <div class="w-11 h-11 flex items-center justify-end -mr-2">
-            <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech Logo" width="120" height="143" class="h-[30px] object-contain">
+            <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech Logo" width="120" height="143" class="h-[30px] w-auto object-contain">
         </div>
     </div>
 

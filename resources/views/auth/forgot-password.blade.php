@@ -11,9 +11,9 @@
             <!-- Decorative Blue/Cyan header bar (matches login modal) -->
             <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
 
-            <div class="text-center mb-8 mt-2">
-                <a href="{{ route('home') }}">
-                    <img src="{{ asset('images/LKtech.png') }}" alt="LKTech" class="h-10 mx-auto mb-4 hover:scale-105 transition-transform">
+            <div class="text-center mb-6 mt-1">
+                <a href="{{ route('home') }}" class="inline-block">
+                    <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" width="800" height="953" class="h-16 sm:h-20 w-auto object-contain mx-auto mb-3 drop-shadow-sm hover:scale-105 transition-transform" loading="eager">
                 </a>
                 <h3 class="text-2xl font-black text-gray-800">Lupa Password</h3>
                 <p class="text-sm text-gray-500 mt-2 leading-relaxed">
