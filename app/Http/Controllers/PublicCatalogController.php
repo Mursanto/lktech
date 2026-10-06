@@ -89,9 +89,10 @@ class PublicCatalogController extends Controller
         $collectionToTransform->transform(function ($product) use ($promoProductIds) {
             if ($product->image_path) {
                 $product->display_image = $this->resolveImageUrl($product->image_path);
+                $product->display_thumbnail = $this->resolveThumbnailUrl($product->image_path);
             } else {
-                $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
                 $product->display_image = asset('images/LKtech-fallback.webp');
+                $product->display_thumbnail = asset('images/LKtech-fallback.webp');
             }
             $product->is_active_promo = $promoProductIds->contains($product->id);
             return $product;
@@ -110,9 +111,10 @@ class PublicCatalogController extends Controller
             $promoItems->transform(function ($product) {
                 if ($product->image_path) {
                     $product->display_image = $this->resolveImageUrl($product->image_path);
+                    $product->display_thumbnail = $this->resolveThumbnailUrl($product->image_path);
                 } else {
-                    $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
                     $product->display_image = asset('images/LKtech-fallback.webp');
+                    $product->display_thumbnail = asset('images/LKtech-fallback.webp');
                 }
                 $product->is_active_promo = true;
                 return $product;
@@ -176,6 +178,7 @@ class PublicCatalogController extends Controller
         
         $softwareProducts = $softwareQuery->take(6)->get()->transform(function ($product) {
             $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
+            $product->display_thumbnail = $product->image_path ? $this->resolveThumbnailUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -189,6 +192,7 @@ class PublicCatalogController extends Controller
             
         $accessoriesProducts = $accessoriesQuery->take(6)->get()->transform(function ($product) {
             $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
+            $product->display_thumbnail = $product->image_path ? $this->resolveThumbnailUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -202,6 +206,7 @@ class PublicCatalogController extends Controller
             
         $sparepartProducts = $sparepartQuery->take(6)->get()->transform(function ($product) {
             $product->display_image = $product->image_path ? $this->resolveImageUrl($product->image_path) : asset('images/LKtech-fallback.webp');
+            $product->display_thumbnail = $product->image_path ? $this->resolveThumbnailUrl($product->image_path) : asset('images/LKtech-fallback.webp');
             $product->is_active_promo = false;
             return $product;
         });
@@ -288,9 +293,10 @@ class PublicCatalogController extends Controller
         // Setup main image
         if ($product->image_path) {
             $product->display_image = $this->resolveImageUrl($product->image_path);
+            $product->display_thumbnail = $this->resolveThumbnailUrl($product->image_path);
         } else {
-            $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
             $product->display_image = asset('images/LKtech-fallback.webp');
+            $product->display_thumbnail = asset('images/LKtech-fallback.webp');
         }
         
         $setting = \App\Models\WebSetting::first();
@@ -370,9 +376,10 @@ class PublicCatalogController extends Controller
         $relatedProducts->transform(function ($rp) {
             if ($rp->image_path) {
                 $rp->display_image = $this->resolveImageUrl($rp->image_path);
+                $rp->display_thumbnail = $this->resolveThumbnailUrl($rp->image_path);
             } else {
-                $searchQuery = urlencode($rp->brand . ' ' . $rp->model_series . ' laptop');
                 $rp->display_image = asset('images/LKtech-fallback.webp');
+                $rp->display_thumbnail = asset('images/LKtech-fallback.webp');
             }
             return $rp;
         });
@@ -537,9 +544,10 @@ class PublicCatalogController extends Controller
             $collectionToTransform->transform(function ($product) use ($promoProductIds) {
                 if ($product->image_path) {
                     $product->display_image = $this->resolveImageUrl($product->image_path);
+                    $product->display_thumbnail = $this->resolveThumbnailUrl($product->image_path);
                 } else {
-                    $searchQuery = urlencode($product->brand . ' ' . $product->model_series . ' laptop');
                     $product->display_image = asset('images/LKtech-fallback.webp');
+                    $product->display_thumbnail = asset('images/LKtech-fallback.webp');
                 }
                 $product->is_active_promo = $promoProductIds->contains($product->id);
                 return $product;
@@ -590,42 +598,18 @@ class PublicCatalogController extends Controller
 
     /**
      * Resolve image URL - prefer WebP version if it exists on disk.
-     * Converts e.g. "catalog/img_xxx.jpeg" -> "catalog/img_xxx.webp" if the .webp exists.
      */
     private function resolveImageUrl(?string $imagePath): string
     {
-        if (!$imagePath) {
-            return asset('images/LKtech-fallback.webp');
-        }
+        return \App\Models\Product::resolveImageUrl($imagePath);
+    }
 
-        // The image path might be stored as 'public/catalog/...' in DB
-        // But Storage::disk('public') root is already 'storage/app/public'
-        // So we need to strip 'public/' for the exists() check
-        $checkPath = preg_replace('/^public\//', '', $imagePath);
-
-        // Try WebP variant first (support .jpg, .jpeg, .jfif, .png)
-        $webpPath = preg_replace('/\.(jpe?g|jfif|png)$/i', '.webp', $checkPath);
-        if ($webpPath !== $checkPath && (Storage::disk('public')->exists($webpPath) || file_exists(public_path('storage/' . $webpPath)))) {
-            return asset('storage/' . $webpPath);
-        }
-
-        // Serve original if it exists
-        if (Storage::disk('public')->exists($checkPath) || file_exists(public_path('storage/' . $checkPath))) {
-            return asset('storage/' . $checkPath);
-        }
-
-        // If file exists directly in public/ without storage/
-        if (file_exists(public_path($checkPath))) {
-            return asset($checkPath);
-        }
-
-        // If path is already a valid absolute or web URL
-        if (str_starts_with($imagePath, 'http://') || str_starts_with($imagePath, 'https://') || str_starts_with($imagePath, '/')) {
-            return $imagePath;
-        }
-
-        // Last resort fallback
-        return asset('images/LKtech-fallback.webp');
+    /**
+     * Resolve thumbnail URL - prefer _thumb.webp if exists on disk.
+     */
+    private function resolveThumbnailUrl(?string $imagePath): string
+    {
+        return \App\Models\Product::resolveThumbnailUrl($imagePath);
     }
 
     /**

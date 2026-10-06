@@ -28,8 +28,20 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/LKtech-sm.webp') }}">
 
-    <!-- Preload LCP: Navbar Logo (kecil, 5KB) -->
+    <!-- Preload LCP: Navbar Logo (5KB) & Mobile Primary Product Card LCP Image -->
     <link rel="preload" as="image" href="{{ asset('images/LKtech-sm.webp') }}">
+    @php
+        $firstProductForLcp = isset($products) && $products->isNotEmpty() ? $products->first() : null;
+        $lcpMainUrl = $firstProductForLcp ? ($firstProductForLcp->display_image ?: asset('images/LKtech-fallback.webp')) : null;
+        $lcpThumbUrl = $firstProductForLcp ? ($firstProductForLcp->display_thumbnail ?: $lcpMainUrl) : null;
+    @endphp
+    @if($firstProductForLcp && $lcpThumbUrl)
+        @if($lcpThumbUrl !== $lcpMainUrl)
+            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" imagesrcset="{{ $lcpThumbUrl }} 600w, {{ $lcpMainUrl }} 800w" imagesizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 250px" fetchpriority="high">
+        @else
+            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" fetchpriority="high">
+        @endif
+    @endif
 
     <!-- Fonts (Non-Render-Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -473,7 +485,7 @@
             <!-- Precision Grid (Compact Design) -->
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                 @forelse($products as $product)
-                <x-product-card :product="$product" :loop-index="$loop->index" />
+                <x-product-card :product="$product" :loop-index="$loop->index" :is-lcp="$loop->first" />
                 @empty
                 <div class="col-span-full py-12 flex flex-col items-center justify-center text-center bg-white rounded-xl border border-gray-200">
                     <i class='bx bx-search-alt text-5xl text-gray-300 mb-3'></i>
@@ -525,7 +537,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($softwareProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
-                            <x-product-card :product="$product" :loop-index="$index" />
+                            <x-product-card :product="$product" :loop-index="$index" :is-lcp="false" />
                         </div>
                     @endforeach
                 </div>
@@ -553,7 +565,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($accessoriesProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
-                            <x-product-card :product="$product" :loop-index="$index" />
+                            <x-product-card :product="$product" :loop-index="$index" :is-lcp="false" />
                         </div>
                     @endforeach
                 </div>
@@ -581,7 +593,7 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-1.5 sm:gap-2">
                     @foreach($sparepartProducts as $index => $product)
                         <div class="w-full" x-show="{{ $index }} < count" style="display: none;" x-transition.opacity>
-                            <x-product-card :product="$product" :loop-index="$index" />
+                            <x-product-card :product="$product" :loop-index="$index" :is-lcp="false" />
                         </div>
                     @endforeach
                 </div>

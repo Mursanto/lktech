@@ -1,4 +1,4 @@
-@props(['product', 'loopIndex' => 0])
+@props(['product', 'loopIndex' => 0, 'isLcp' => null])
 @php 
     $isPromo = !empty($product->is_active_promo); 
     $isPreOrder = ($product->tipe_stok ?? 'ready_stock') === 'open_order' || $product->status === 'Pre-Order';
@@ -11,6 +11,14 @@
     $fireStyle = $isEven
         ? 'filter: drop-shadow(0 0 3px #FF5722);'                                          // Orange fire
         : 'filter: hue-rotate(200deg) saturate(3) brightness(1.2) drop-shadow(0 0 4px #00B0FF);'; // Blue fire
+
+    // Prioritas LCP hanya untuk kartu paling pertama di atas fold
+    $isPrimaryLcp = ($isLcp !== null) ? (bool)$isLcp : ($loopIndex === 0);
+
+    // Resolusi Gambar Utama & Thumbnail Responsif
+    $mainImg = $product->display_image ?: asset('images/LKtech-fallback.webp');
+    $thumbImg = $product->display_thumbnail ?: $mainImg;
+    $hasThumb = !empty($thumbImg) && ($thumbImg !== $mainImg);
 @endphp
 @once
 <script>
@@ -104,15 +112,23 @@
             @endif
             
             <img
-                src="{{ $product->display_image ?: asset('images/LKtech-fallback.webp') }}"
+                src="{{ $thumbImg }}"
+                @if($hasThumb)
+                    srcset="{{ $thumbImg }} 600w, {{ $mainImg }} 800w"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 250px"
+                @endif
                 onerror="this.onerror=null; this.src='{{ asset('images/LKtech-fallback.webp') }}';"
                 alt="{{ $product->brand }} {{ $product->model_series }}"
-                @if($loopIndex < 4)
+                width="400"
+                height="400"
+                @if($isPrimaryLcp)
                     loading="eager"
                     fetchpriority="high"
+                    decoding="sync"
                 @else
                     loading="lazy"
                     fetchpriority="low"
+                    decoding="async"
                 @endif
                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">
             

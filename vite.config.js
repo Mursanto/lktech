@@ -8,4 +8,8 @@ export default defineConfig({
             'resources/js/app.js',
         ]),
     ],
+    build: {
+        cssMinify: true,
+        reportCompressedSize: true,
+    },
 });

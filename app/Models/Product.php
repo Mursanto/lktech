@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -65,6 +66,90 @@ class Product extends Model
     public function investor()
     {
         return $this->belongsTo(Investor::class);
+    }
+
+    // -------------------------------------------------------
+    // Image Resolution & Accessors (Responsive & WebP Support)
+    // -------------------------------------------------------
+
+    /**
+     * Resolve image URL (prefer WebP version if exists on disk).
+     */
+    public static function resolveImageUrl(?string $imagePath): string
+    {
+        if (!$imagePath) {
+            return asset('images/LKtech-fallback.webp');
+        }
+
+        $checkPath = preg_replace('/^public\//', '', $imagePath);
+
+        // Cek varian WebP terlebih dahulu
+        $webpPath = preg_replace('/\.(jpe?g|jfif|png)$/i', '.webp', $checkPath);
+        if ($webpPath !== $checkPath && (Storage::disk('public')->exists($webpPath) || file_exists(public_path('storage/' . $webpPath)))) {
+            return asset('storage/' . $webpPath);
+        }
+
+        // Cek file asli
+        if (Storage::disk('public')->exists($checkPath) || file_exists(public_path('storage/' . $checkPath))) {
+            return asset('storage/' . $checkPath);
+        }
+
+        if (file_exists(public_path($checkPath))) {
+            return asset($checkPath);
+        }
+
+        if (str_starts_with($imagePath, 'http://') || str_starts_with($imagePath, 'https://') || str_starts_with($imagePath, '/')) {
+            return $imagePath;
+        }
+
+        return asset('images/LKtech-fallback.webp');
+    }
+
+    /**
+     * Resolve thumbnail URL (prefer _thumb.webp if exists, fallback ke display_image).
+     */
+    public static function resolveThumbnailUrl(?string $imagePath): string
+    {
+        if (!$imagePath) {
+            return asset('images/LKtech-fallback.webp');
+        }
+
+        $checkPath = preg_replace('/^public\//', '', $imagePath);
+
+        // Cek apakah ada file versi _thumb.webp
+        $thumbPath = preg_replace('/\.(jpe?g|jfif|png|webp)$/i', '_thumb.webp', $checkPath);
+        if (Storage::disk('public')->exists($thumbPath) || file_exists(public_path('storage/' . $thumbPath))) {
+            return asset('storage/' . $thumbPath);
+        }
+
+        // Jika path sudah bertuliskan _thumb
+        if (str_contains($checkPath, '_thumb.') && (Storage::disk('public')->exists($checkPath) || file_exists(public_path('storage/' . $checkPath)))) {
+            return asset('storage/' . $checkPath);
+        }
+
+        return self::resolveImageUrl($imagePath);
+    }
+
+    /**
+     * Accessor untuk gambar utama produk.
+     */
+    public function getDisplayImageAttribute()
+    {
+        if (isset($this->attributes['display_image']) && !empty($this->attributes['display_image'])) {
+            return $this->attributes['display_image'];
+        }
+        return self::resolveImageUrl($this->image_path);
+    }
+
+    /**
+     * Accessor untuk thumbnail responsif produk.
+     */
+    public function getDisplayThumbnailAttribute()
+    {
+        if (isset($this->attributes['display_thumbnail']) && !empty($this->attributes['display_thumbnail'])) {
+            return $this->attributes['display_thumbnail'];
+        }
+        return self::resolveThumbnailUrl($this->image_path);
     }
 
     // -------------------------------------------------------
