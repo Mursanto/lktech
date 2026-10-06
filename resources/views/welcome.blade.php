@@ -422,11 +422,11 @@
                                 
                                 @if(count($promoBanners) > 1)
                                     <!-- Left/Right Arrow Buttons (Manual navigation) -->
-                                    <button @click="activeSlide = activeSlide === 0 ? slides - 1 : activeSlide - 1" 
+                                    <button @click="activeSlide = activeSlide === 0 ? slides - 1 : activeSlide - 1" aria-label="Banner Sebelumnya"
                                             class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20">
                                         <i class='bx bx-chevron-left text-xl'></i>
                                     </button>
-                                    <button @click="activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1" 
+                                    <button @click="activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1" aria-label="Banner Selanjutnya"
                                             class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/35 hover:bg-black/55 text-white flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20">
                                         <i class='bx bx-chevron-right text-xl'></i>
                                     </button>
@@ -435,6 +435,7 @@
                                     <div class="flex justify-center gap-2 mt-4">
                                         @foreach($promoBanners as $index => $banner)
                                             <button @click="activeSlide = {{ $index }}" 
+                                                    aria-label="Lihat Banner {{ $loop->iteration }}"
                                                     class="w-2.5 h-2.5 rounded-full transition-all duration-300"
                                                     :class="activeSlide === {{ $index }} ? 'bg-brand-600 w-6' : 'bg-brand-300 hover:bg-brand-400'"></button>
                                         @endforeach
@@ -777,10 +778,10 @@
                     <!-- Navigation Controls -->
                     <template x-if="totalPages >= 1">
                         <div>
-                            <button @click="prev()" class="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
+                            <button @click="prev()" aria-label="Ulasan Sebelumnya" class="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
                                 <i class='bx bx-chevron-left text-xl sm:text-2xl'></i>
                             </button>
-                            <button @click="next()" class="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
+                            <button @click="next()" aria-label="Ulasan Selanjutnya" class="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white shadow-md border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-brand-600 flex items-center justify-center transition-all z-10 opacity-100 sm:flex">
                                 <i class='bx bx-chevron-right text-xl sm:text-2xl'></i>
                             </button>
                         </div>
@@ -860,7 +861,7 @@
             <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
             
             <div class="absolute top-4 right-4">
-                <button @click="loginModalOpen = false" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 transition">
+                <button @click="loginModalOpen = false" aria-label="Tutup Modal Login" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 transition">
                     <i class='bx bx-x text-2xl'></i>
                 </button>
             </div>
@@ -1001,7 +1002,7 @@
                 </div>
             @endif
 
-            <button onclick="closeVideoWidget()" 
+            <button onclick="closeVideoWidget()" aria-label="Tutup Video Promo"
                     class="pointer-events-auto bg-black/60 hover:bg-red-600 text-white rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs transition-colors shrink-0">
                 ✕
             </button>

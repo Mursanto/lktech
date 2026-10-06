@@ -20,7 +20,7 @@
         <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
         
         <div class="absolute top-4 right-4">
-            <button @click="showContactModal = false" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 transition">
+            <button @click="showContactModal = false" aria-label="Tutup Modal Kontak" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 transition">
                 <i class='bx bx-x text-2xl'></i>
             </button>
         </div>

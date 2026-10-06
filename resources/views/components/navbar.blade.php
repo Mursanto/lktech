@@ -36,8 +36,8 @@
             <!-- Mobile Search Bar (Always Visible) -->
             <div class="flex-1 md:hidden px-2">
                 <form action="{{ route('katalog.index') }}" method="GET" class="relative w-full flex items-center">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari..." class="w-full pl-3 pr-8 py-1.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] shadow-inner transition-shadow">
-                    <button type="submit" class="absolute right-0 top-0 h-full px-2.5 flex items-center justify-center text-gray-400 hover:text-brand-600">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari..." class="w-full pl-3 pr-8 py-1.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-[13px] shadow-inner transition-shadow" aria-label="Cari produk">
+                    <button type="submit" aria-label="Cari Produk" class="absolute right-0 top-0 h-full px-2.5 flex items-center justify-center text-gray-400 hover:text-brand-600">
                         <i class='bx bx-search text-base'></i>
                     </button>
                 </form>
@@ -125,8 +125,9 @@
                         <i class='bx bx-search text-xl text-gray-400 group-focus-within:text-brand-500 transition-colors'></i>
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari laptop, PC, atau jasa..." 
-                           class="w-full pl-14 pr-24 py-2.5 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:bg-white focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 text-[14px] transition-all duration-300 shadow-sm hover:shadow-md group-focus-within:shadow-md placeholder-gray-400 font-medium">
-                    <button type="submit" class="absolute right-1.5 top-1.5 bottom-1.5 px-6 flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-bold text-[13px] tracking-wide rounded-full transition-all duration-300 shadow-sm shadow-brand-500/30">
+                           class="w-full pl-14 pr-24 py-2.5 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:bg-white focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 text-[14px] transition-all duration-300 shadow-sm hover:shadow-md group-focus-within:shadow-md placeholder-gray-400 font-medium"
+                           aria-label="Cari laptop, PC, atau jasa">
+                    <button type="submit" aria-label="Cari" class="absolute right-1.5 top-1.5 bottom-1.5 px-6 flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white font-bold text-[13px] tracking-wide rounded-full transition-all duration-300 shadow-sm shadow-brand-500/30">
                         Cari
                     </button>
                 </form>
@@ -135,16 +136,16 @@
             <!-- Auth Navigation (Desktop) -->
             <div class="hidden md:flex flex-shrink-0 items-center gap-2">
                 <!-- Riwayat Pesanan Link -->
-                <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors" title="Riwayat Pesanan">
+                <a href="{{ route('orders.index') }}" aria-label="Riwayat Pesanan" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
                 </a>
 
                 <!-- FAQ Link -->
-                <a href="{{ route('faq') }}" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors {{ request()->routeIs('faq') ? 'text-brand-600' : '' }}" title="FAQ">
+                <a href="{{ route('faq') }}" aria-label="FAQ & Bantuan" class="relative text-gray-600 hover:text-brand-600 p-2 transition-colors {{ request()->routeIs('faq') ? 'text-brand-600' : '' }}" title="FAQ">
                     <i class='bx bx-help-circle text-2xl'></i>
                 </a>
 
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-2 mr-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
+                <a href="{{ route('checkout.index') }}" aria-label="Keranjang Belanja" class="relative text-gray-600 hover:text-brand-600 p-2 mr-1 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>
@@ -157,7 +158,7 @@
                     </a>
                 @else
                     @if(request()->routeIs('home'))
-                    <button @click="loginModalOpen = true" class="flex items-center gap-2 px-4 py-1.5 bg-white text-brand-600 border border-brand-600 rounded-lg font-bold text-sm hover:bg-brand-50 transition shadow-sm">
+                    <button @click="loginModalOpen = true" aria-label="Masuk ke Sistem" class="flex items-center gap-2 px-4 py-1.5 bg-white text-brand-600 border border-brand-600 rounded-lg font-bold text-sm hover:bg-brand-50 transition shadow-sm">
                         Masuk
                     </button>
                     @else
@@ -171,18 +172,18 @@
             <!-- Cart & Hamburger (Mobile) -->
             <div class="flex items-center md:hidden gap-1">
                 <!-- Riwayat Pesanan Link (Mobile) -->
-                <a href="{{ route('orders.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" title="Riwayat Pesanan">
+                <a href="{{ route('orders.index') }}" aria-label="Riwayat Pesanan" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" title="Riwayat Pesanan">
                     <i class='bx bx-receipt text-2xl'></i>
                 </a>
 
 
 
-                <a href="{{ route('checkout.index') }}" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
+                <a href="{{ route('checkout.index') }}" aria-label="Keranjang Belanja" class="relative text-gray-600 hover:text-brand-600 p-1.5 transition-colors" x-data="{ cartCount: {{ count(session('cart', [])) }} }" @cart-updated.window="cartCount = $event.detail" @cart-increment.window="cartCount++">
                     <i class='bx bx-cart text-2xl'></i>
                     <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-orange-500 rounded-full shadow-sm"></span>
                 </a>
                 
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-brand-600 focus:outline-none p-1.5 rounded-lg">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Buka Menu Navigasi" class="text-gray-600 hover:text-brand-600 focus:outline-none p-1.5 rounded-lg">
                     <i class='bx bx-menu text-3xl' x-show="!mobileMenuOpen"></i>
                     <i class='bx bx-x text-3xl' x-show="mobileMenuOpen" x-cloak></i>
                 </button>
