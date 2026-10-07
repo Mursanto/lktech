@@ -37,21 +37,21 @@
     @endphp
     @if($firstProductForLcp && $lcpThumbUrl)
         @if($lcpThumbUrl !== $lcpMainUrl)
-            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" imagesrcset="{{ $lcpThumbUrl }} 600w, {{ $lcpMainUrl }} 800w" imagesizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 250px" fetchpriority="high">
+            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" imagesrcset="{{ $lcpThumbUrl }} 600w, {{ $lcpMainUrl }} 800w" imagesizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px" fetchpriority="high">
         @else
             <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" fetchpriority="high">
         @endif
     @endif
 
-    <!-- Fonts (Non-Render-Blocking) -->
+    <!-- Fonts & Icons (Preloaded as style & display=swap to eliminate CLS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
 
-    <!-- Boxicons (Non-Render-Blocking) + font-display:swap override -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' media="print" onload="this.media='all'">
-    <noscript><link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></noscript>
+    <!-- Boxicons (Preloaded as style + font-display:swap override) -->
+    <link rel="preload" as="style" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <style>
         /* Override font-display untuk Boxicons agar tidak block render */
         @font-face {
@@ -298,7 +298,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 lg:gap-6">
                     
                     <!-- Left: Text (60%) -->
-                    <div class="hero-content md:col-span-7 flex flex-col">
+                    <div class="hero-content md:col-span-7 flex flex-col min-h-[220px] sm:min-h-[300px] lg:min-h-[380px] justify-center">
                         <!-- Judul & Deskripsi Ringkas -->
                         <h1 class="hero-title text-xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-2 sm:mb-3 text-justify">
                             Laptop Bekas <span class="text-shimmer">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
@@ -319,7 +319,7 @@
                             <span class="divider text-gray-300 shrink-0 hidden sm:inline">•</span>
                             <span class="mp-label font-semibold shrink-0 hidden sm:inline">Tersedia juga di Marketplace resmi kami:</span>
                             <div class="mp-icons flex items-center hover:opacity-90 transition-opacity duration-300 mix-blend-multiply shrink-0">
-                                <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.webp') }}" alt="Marketplace Resmi LKTech" width="300" height="83" class="h-4.5 sm:h-7 w-auto object-contain" loading="eager">
+                                <img src="{{ asset('images/Logo-TokPed-TikTok-Shopee.webp') }}" alt="Marketplace Resmi LKTech" width="300" height="83" class="h-[18px] sm:h-7 w-auto object-contain" loading="eager" fetchpriority="low" decoding="async">
                             </div>
                         </div>
 
@@ -352,7 +352,7 @@
                         @endphp
                         
                         @if(count($promoBanners) > 0)
-                            <div class="relative w-full max-w-lg mx-auto group"
+                            <div class="relative w-full max-w-lg mx-auto group min-h-[220px] sm:min-h-[300px] lg:min-h-[380px]"
                                  x-data="{ 
                                     activeSlide: 0, 
                                     slides: {{ count($promoBanners) }},
@@ -365,7 +365,7 @@
                                     }
                                  }">
                                  
-                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-white border border-white/20 group-hover:scale-105">
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] min-h-[220px] sm:min-h-[300px] lg:min-h-[380px] bg-white border border-white/20 group-hover:scale-105">
                                     @foreach($promoBanners as $index => $banner)
                                         <div x-show="activeSlide === {{ $index }}" 
                                              x-transition:enter="transition ease-out duration-700"
@@ -386,7 +386,7 @@
                                             @endphp
                                             @if(!empty($banner['link']))
                                                 <a href="{{ $banner['link'] }}" class="block w-full h-full relative">
-                                                    <img width="800" height="800" loading="lazy" src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                    <img width="800" height="450" @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" fetchpriority="low" decoding="async" @endif src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                                     @if(isset($banner['title']))
                                                         <!-- Promo Badge moved to Top-Right -->
                                                         <div class="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full shadow-md font-bold uppercase tracking-wide z-10">🔥 Hot Promo</div>
@@ -426,7 +426,7 @@
                                                     @endif
                                                 </a>
                                             @else
-                                                <img width="800" height="800" loading="lazy" src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
+                                                <img width="800" height="450" @if($index === 0) loading="eager" fetchpriority="high" decoding="sync" @else loading="lazy" fetchpriority="low" decoding="async" @endif src="{{ $imgSrc }}" alt="Promo Banner {{ $index + 1 }}" class="w-full h-full object-cover rounded-3xl">
                                             @endif
                                         </div>
                                     @endforeach
@@ -1126,28 +1126,38 @@
     });
     </script>
     @endif
+
+    <script>
+    (function() {
+        function initVideoObserver() {
+            if (!('IntersectionObserver' in window)) return;
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        if (!video.src && video.dataset.src) {
+                            video.src = video.dataset.src;
+                            video.load();
+                        }
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { rootMargin: '50px', threshold: 0.25 });
+
+            document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
+        }
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initVideoObserver);
+        } else {
+            window.addEventListener('load', initVideoObserver);
+        }
+    })();
+    </script>
 </body>
 </html>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const videoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            const video = entry.target;
-            if (entry.isIntersecting) {
-                if (!video.src && video.dataset.src) {
-                    video.src = video.dataset.src;
-                    video.load();
-                }
-                video.play().catch(e => console.log('Autoplay blocked:', e));
-            } else {
-                video.pause();
-            }
-        });
-    }, { rootMargin: '0px', threshold: 0.5 });
-
-    document.querySelectorAll('.product-video-preview').forEach(v => videoObserver.observe(v));
-});
-</script>
 
 
 

@@ -190,19 +190,19 @@
                     <div class="flex flex-col gap-2">
                         <!-- Kopkarsat -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="Logo Mitra KOPKARSAT" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
+                            <img src="{{ asset('images/kopkarsat.jpg') }}" alt="Logo Mitra KOPKARSAT" width="80" height="32" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy" decoding="async">
                         </div>
                         <!-- Martabak Jawara -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Logo Mitra Martabak Jawara" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
+                            <img src="{{ asset('images/martabak-jawara/Logo-Martabak-Jawara.webp') }}" alt="Logo Mitra Martabak Jawara" width="80" height="32" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy" decoding="async">
                         </div>
                         <!-- Furniture -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/logo-furniture.webp') }}" alt="Logo Mitra Jasa Furniture" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
+                            <img src="{{ asset('images/logo-furniture.webp') }}" alt="Logo Mitra Jasa Furniture" width="80" height="32" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy" decoding="async">
                         </div>
                         <!-- Limbah Elektronik Bintang -->
                         <div class="flex items-center justify-center h-10 hover:opacity-80 transition-opacity">
-                            <img src="{{ asset('images/logo-bintang-v2.webp') }}" alt="Logo Mitra Limbah Elektronik Bintang" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy">
+                            <img src="{{ asset('images/logo-bintang-v2.webp') }}" alt="Logo Mitra Limbah Elektronik Bintang" width="80" height="32" class="max-h-8 max-w-[80px] object-contain mix-blend-multiply" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>

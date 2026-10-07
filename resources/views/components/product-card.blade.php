@@ -115,7 +115,7 @@
                 src="{{ $thumbImg }}"
                 @if($hasThumb)
                     srcset="{{ $thumbImg }} 600w, {{ $mainImg }} 800w"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 250px"
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px"
                 @endif
                 onerror="this.onerror=null; this.src='{{ asset('images/LKtech-fallback.webp') }}';"
                 alt="{{ $product->brand }} {{ $product->model_series }}"
