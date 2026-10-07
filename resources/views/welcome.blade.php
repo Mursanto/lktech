@@ -41,14 +41,13 @@
         <link rel="preload" as="image" href="{{ $lcp600 }}" imagesrcset="{{ $lcp300 }} 300w, {{ $lcp600 }} 600w, {{ $lcp1200 }} 1200w" imagesizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px" fetchpriority="high">
     @endif
 
-    <!-- Fonts & Icons (Preloaded as style & display=swap to eliminate CLS) -->
+    <!-- Fonts & Icons (display=swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
 
-    <!-- Boxicons (Preloaded as style + font-display:swap override) -->
-    <link rel="preload" as="style" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <!-- Boxicons (+ font-display:swap override) -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <style>
         /* Override font-display untuk Boxicons agar tidak block render */
@@ -71,16 +70,12 @@
         @media (min-width: 640px) { .hero-container { padding: 1rem 1.5rem; } }
         @media (min-width: 1024px) { .hero-container { padding: 1.25rem 2rem; } }
         .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 900; line-height: 1.2; color: #111827; }
-        .text-shimmer { background: linear-gradient(90deg, #1E56A0, #00B0FF, #1E56A0); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .text-lifetime-glow { color: #059669; font-weight: 700; }
         .btn-primary { background: linear-gradient(to right, #1E56A0, #00B0FF); color: #ffffff; border-radius: 0.5rem; }
         .btn-outline { background: transparent; border: 2px solid #1E56A0; color: #1E56A0; border-radius: 0.5rem; }
     </style>
 
-    <!-- Tailwind CSS (Asynchronous Non-Blocking Loading via Preload + media print swap) -->
-    <link rel="preload" as="style" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}">
-    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}"></noscript>
+    <!-- Tailwind CSS (sinkron: mencegah layout shift/CLS akibat render tanpa layout) -->
+    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}">
     @vite('resources/js/app.js')
     
         <style>
@@ -180,7 +175,7 @@
 
         /* Styling Judul Utama Baru */
         .hero-title {
-          line-weight: 800;
+          font-weight: 800;
           letter-spacing: -0.02em;
           color: #0f172a;
           margin-top: 0;
@@ -189,8 +184,8 @@
 
         /* Shimmer Animation — GPU-accelerated via transform */
         @keyframes shimmer {
-            0%   { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0%   { transform: translateX(-100%); opacity: 1; }
+            100% { transform: translateX(100%); opacity: 1; }
         }
         .text-shimmer {
             position: relative;
@@ -205,7 +200,8 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
-            animation: shimmer 2.5s linear infinite;
+            animation: shimmer 2.5s linear 3;
+            opacity: 0; /* tersembunyi setelah animasi selesai */
             will-change: transform;
         }
 
@@ -225,8 +221,14 @@
             font-weight: 900;
             font-size: 1.2em;
             letter-spacing: -0.01em;
-            animation: lifetimePulse 2.5s ease-in-out infinite;
+            animation: lifetimePulse 2.5s ease-in-out 3;
             will-change: opacity;
+        }
+
+        /* Aksesibilitas & performa: matikan animasi untuk pengguna reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .text-shimmer::after, .text-lifetime-glow, .badge-promo-live,
+            .promo-card-radar, .service-card { animation: none !important; will-change: auto; }
         }
 
         /* ==========================================
