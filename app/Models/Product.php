@@ -152,6 +152,14 @@ class Product extends Model
         return self::resolveThumbnailUrl($this->image_path);
     }
 
+    /**
+     * Accessor untuk varian responsif gambar produk (300w, 600w, 1200w).
+     */
+    public function getResponsiveImageAttribute(): array
+    {
+        return \App\Services\ImageOptimizationService::resolveResponsiveVariants($this->image_path);
+    }
+
     // -------------------------------------------------------
     // Query Scopes
     // -------------------------------------------------------

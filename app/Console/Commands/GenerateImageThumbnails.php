@@ -40,9 +40,10 @@ class GenerateImageThumbnails extends Command
                     continue;
                 }
 
-                $thumbPath = preg_replace('/\.(webp|jpe?g|jfif|png)$/i', '_thumb.webp', $filePath);
+                $thumb600Path = preg_replace('/\.(webp|jpe?g|jfif|png)$/i', '_thumb.webp', $filePath);
+                $thumb300Path = preg_replace('/\.(webp|jpe?g|jfif|png)$/i', '_300.webp', $filePath);
 
-                if (!$force && $disk->exists($thumbPath)) {
+                if (!$force && $disk->exists($thumb600Path) && $disk->exists($thumb300Path)) {
                     $skipped++;
                     continue;
                 }
@@ -55,23 +56,35 @@ class GenerateImageThumbnails extends Command
                         $image = $manager->decode($fullPath);
                     }
 
-                    // Skala maksimal lebar 600px
-                    if ($image->width() > 600) {
-                        $image->scaleDown(width: 600);
+                    // 1. Skala varian 600px
+                    if (!$disk->exists($thumb600Path) || $force) {
+                        $img600 = clone $image;
+                        if ($img600->width() > 600) {
+                            $img600->scaleDown(width: 600);
+                        }
+                        $encoded600 = method_exists($img600, 'toWebp')
+                            ? $img600->toWebp(80)
+                            : $img600->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+                        $disk->put($thumb600Path, (string) $encoded600);
+                        $created++;
                     }
 
-                    if (method_exists($image, 'toWebp')) {
-                        $encoded = $image->toWebp(80);
-                    } else {
-                        $encoded = $image->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+                    // 2. Skala varian 300px
+                    if (!$disk->exists($thumb300Path) || $force) {
+                        $img300 = clone $image;
+                        if ($img300->width() > 300) {
+                            $img300->scaleDown(width: 300);
+                        }
+                        $encoded300 = method_exists($img300, 'toWebp')
+                            ? $img300->toWebp(80)
+                            : $img300->encode(new \Intervention\Image\Encoders\WebpEncoder(80));
+                        $disk->put($thumb300Path, (string) $encoded300);
+                        $created++;
                     }
 
-                    $disk->put($thumbPath, (string) $encoded);
-                    $created++;
-                    $this->line("<info>[OK]</info> Dibuat: {$thumbPath} (" . round(strlen((string) $encoded) / 1024, 1) . " KB)");
+                    $this->line("<info>[OK]</info> Diproses: {$filePath}");
 
                     unset($image);
-                    unset($encoded);
                 } catch (\Exception $e) {
                     $failed++;
                     $this->error("[FAIL] Gagal memproses {$filePath}: " . $e->getMessage());

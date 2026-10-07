@@ -94,8 +94,24 @@ trait UploadsImage
                     Storage::disk('public')->put($thumbPath, (string) $encodedThumb);
                 }
 
+                // Varian 300px untuk Mobile LCP & grid hemat bandwidth
+                if ($thumbImage->width() > 300) {
+                    $thumbImage->scaleDown(width: 300);
+                }
+                $thumb300Filename = $baseId . '_300.webp';
+                $encoded300 = method_exists($thumbImage, 'toWebp')
+                    ? $thumbImage->toWebp($quality)
+                    : $thumbImage->encode(new \Intervention\Image\Encoders\WebpEncoder($quality));
+                $thumb300Path = $directory . '/' . $thumb300Filename;
+                if (str_starts_with($directory, 'public/')) {
+                    Storage::put($thumb300Path, (string) $encoded300);
+                } else {
+                    Storage::disk('public')->put($thumb300Path, (string) $encoded300);
+                }
+
                 unset($thumbImage);
                 unset($encodedThumb);
+                unset($encoded300);
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::warning('Gagal membuat thumbnail: ' . $e->getMessage());
             }

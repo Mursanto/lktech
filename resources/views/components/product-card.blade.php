@@ -15,10 +15,11 @@
     // Prioritas LCP hanya untuk kartu paling pertama di atas fold
     $isPrimaryLcp = ($isLcp !== null) ? (bool)$isLcp : ($loopIndex === 0);
 
-    // Resolusi Gambar Utama & Thumbnail Responsif
-    $mainImg = $product->display_image ?: asset('images/LKtech-fallback.webp');
-    $thumbImg = $product->display_thumbnail ?: $mainImg;
-    $hasThumb = !empty($thumbImg) && ($thumbImg !== $mainImg);
+    // Resolusi Gambar Utama & Varian Responsif (300px, 600px, 1200px)
+    $responsive = $product->responsive_image ?? [];
+    $thumb300 = $responsive['thumb_300'] ?? ($product->display_thumbnail ?: $product->display_image);
+    $thumb600 = $responsive['mobile_600'] ?? ($product->display_thumbnail ?: $product->display_image);
+    $mainDesk = $responsive['desktop_1200'] ?? ($product->display_image ?: asset('images/LKtech-fallback.webp'));
 @endphp
 @once
 <script>
@@ -112,22 +113,19 @@
             @endif
             
             <img
-                src="{{ $thumbImg }}"
-                @if($hasThumb)
-                    srcset="{{ $thumbImg }} 600w, {{ $mainImg }} 800w"
-                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px"
-                @endif
+                src="{{ $thumb600 }}"
+                srcset="{{ $thumb300 }} 300w, {{ $thumb600 }} 600w, {{ $mainDesk }} 1200w"
+                sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px"
                 onerror="this.onerror=null; this.src='{{ asset('images/LKtech-fallback.webp') }}';"
                 alt="{{ $product->brand }} {{ $product->model_series }}"
-                width="400"
-                height="400"
+                width="300"
+                height="300"
                 @if($isPrimaryLcp)
                     loading="eager"
                     fetchpriority="high"
                     decoding="sync"
                 @else
                     loading="lazy"
-                    fetchpriority="low"
                     decoding="async"
                 @endif
                 class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-0">

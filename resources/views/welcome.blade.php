@@ -32,15 +32,13 @@
     <link rel="preload" as="image" href="{{ asset('images/LKtech-sm.webp') }}">
     @php
         $firstProductForLcp = isset($products) && $products->isNotEmpty() ? $products->first() : null;
-        $lcpMainUrl = $firstProductForLcp ? ($firstProductForLcp->display_image ?: asset('images/LKtech-fallback.webp')) : null;
-        $lcpThumbUrl = $firstProductForLcp ? ($firstProductForLcp->display_thumbnail ?: $lcpMainUrl) : null;
+        $lcpResponsive = $firstProductForLcp ? ($firstProductForLcp->responsive_image ?? []) : [];
+        $lcp300 = $lcpResponsive['thumb_300'] ?? ($firstProductForLcp ? $firstProductForLcp->display_thumbnail : null);
+        $lcp600 = $lcpResponsive['mobile_600'] ?? ($firstProductForLcp ? $firstProductForLcp->display_thumbnail : null);
+        $lcp1200 = $lcpResponsive['desktop_1200'] ?? ($firstProductForLcp ? $firstProductForLcp->display_image : null);
     @endphp
-    @if($firstProductForLcp && $lcpThumbUrl)
-        @if($lcpThumbUrl !== $lcpMainUrl)
-            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" imagesrcset="{{ $lcpThumbUrl }} 600w, {{ $lcpMainUrl }} 800w" imagesizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px" fetchpriority="high">
-        @else
-            <link rel="preload" as="image" href="{{ $lcpThumbUrl }}" fetchpriority="high">
-        @endif
+    @if($firstProductForLcp && $lcp600)
+        <link rel="preload" as="image" href="{{ $lcp600 }}" imagesrcset="{{ $lcp300 }} 300w, {{ $lcp600 }} 600w, {{ $lcp1200 }} 1200w" imagesizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px" fetchpriority="high">
     @endif
 
     <!-- Fonts & Icons (Preloaded as style & display=swap to eliminate CLS) -->
@@ -825,7 +823,7 @@
                     <!-- Thumbnail (Kiri) -->
                     <a href="{{ route('blog.show', $post->slug) }}" class="block w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden shrink-0 relative">
                         @if($post->thumbnail)
-                            <img width="400" height="400" src="{{ $post->display_thumbnail }}" onerror="this.onerror=null; this.src='{{ asset('storage/' . str_replace('public/', '', $post->thumbnail)) }}';" alt="{{ $post->title }}" loading="lazy" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img width="400" height="400" src="{{ $post->display_thumbnail }}" onerror="this.onerror=null; this.src='{{ asset('storage/' . str_replace('public/', '', $post->thumbnail)) }}';" alt="{{ $post->title }}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                             <div class="absolute inset-0 w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
                                 <i class='bx bx-image text-2xl'></i>
@@ -881,7 +879,7 @@
             </div>
 
             <div class="text-center mb-6 mt-1">
-                <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" class="h-16 sm:h-20 w-auto object-contain mx-auto mb-3 drop-shadow-sm hover:scale-105 transition-transform" width="800" height="953" loading="eager">
+                <img src="{{ asset('images/LKtech.webp') }}" alt="LKTech" class="h-16 sm:h-20 w-auto object-contain mx-auto mb-3 drop-shadow-sm hover:scale-105 transition-transform" width="800" height="953" loading="lazy" decoding="async">
                 <h3 class="text-2xl font-black text-gray-800">Masuk ke Sistem</h3>
                 <p class="text-sm text-gray-500 mt-1">Silakan masukkan kredensial Anda</p>
             </div>
