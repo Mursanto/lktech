@@ -298,7 +298,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-4 lg:gap-6">
                     
                     <!-- Left: Text (60%) -->
-                    <div class="hero-content md:col-span-7 flex flex-col min-h-[220px] sm:min-h-[300px] lg:min-h-[380px] justify-center">
+                    <div class="hero-content md:col-span-7 flex flex-col">
                         <!-- Judul & Deskripsi Ringkas -->
                         <h1 class="hero-title text-xl sm:text-3xl lg:text-4xl font-montserrat font-black leading-tight tracking-tight text-gray-900 drop-shadow-sm mb-2 sm:mb-3 text-justify">
                             Laptop Bekas <span class="text-shimmer">Berkualitas Premium</span> untuk Produktivitas Tanpa Batas
@@ -352,7 +352,7 @@
                         @endphp
                         
                         @if(count($promoBanners) > 0)
-                            <div class="relative w-full max-w-lg mx-auto group min-h-[220px] sm:min-h-[300px] lg:min-h-[380px]"
+                            <div class="relative w-full max-w-lg mx-auto group"
                                  x-data="{ 
                                     activeSlide: 0, 
                                     slides: {{ count($promoBanners) }},
@@ -365,7 +365,7 @@
                                     }
                                  }">
                                  
-                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] min-h-[220px] sm:min-h-[300px] lg:min-h-[380px] bg-white border border-white/20 group-hover:scale-105">
+                                <div class="relative overflow-hidden rounded-3xl shadow-2xl transform hover:scale-105 transition duration-700 aspect-[16/9] bg-white border border-white/20 group-hover:scale-105">
                                     @foreach($promoBanners as $index => $banner)
                                         <div x-show="activeSlide === {{ $index }}" 
                                              x-transition:enter="transition ease-out duration-700"
