@@ -279,7 +279,11 @@ class PublicCatalogController extends Controller
             })->toArray();
         }
 
-        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews', 'dynamicPromoBanners'));
+        // Deteksi User-Agent Mobile untuk conditional rendering asset & banner (FASE 3)
+        $userAgent = $request->header('User-Agent', '');
+        $isMobile = (bool) preg_match('/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i', $userAgent);
+
+        return view('welcome', compact('products', 'latestPosts', 'setting', 'softwareProducts', 'accessoriesProducts', 'sparepartProducts', 'googleReviews', 'dynamicPromoBanners', 'isMobile'));
     }
 
     public function show(Product $product)

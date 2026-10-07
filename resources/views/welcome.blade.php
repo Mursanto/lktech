@@ -327,7 +327,8 @@
 
                     </div>
                     
-                    <!-- Right: Dynamic Promo Banner (40%) -->
+                    <!-- Right: Dynamic Promo Banner (40%) - Conditional Backend Rendering (FASE 3) -->
+                    @if(!($isMobile ?? false))
                     <div class="md:col-span-5 hidden md:block relative px-4 lg:px-8 flex justify-center">
                         @php
                             $promoBanners = [];
@@ -461,6 +462,7 @@
                             </div>
                         @endif
                     </div>
+                    @endif
 
                 </div>
             </div>
