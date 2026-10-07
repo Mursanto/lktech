@@ -60,8 +60,28 @@
         }
     </style>
 
-    <!-- Tailwind CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- CRITICAL ABOVE-THE-FOLD INLINE CSS (FASE 2: Menurunkan FCP) -->
+    <style>
+        *, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: #e5e7eb; }
+        html { line-height: 1.5; -webkit-text-size-adjust: 100%; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        body { margin: 0; background-color: #f8fafc; color: #1f2937; }
+        header { background-color: #ffffff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 50; }
+        .hero-section { position: relative; background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%); overflow: hidden; }
+        .hero-container { width: 100%; max-width: 80rem; margin-left: auto; margin-right: auto; padding: 0.75rem 0.375rem; }
+        @media (min-width: 640px) { .hero-container { padding: 1rem 1.5rem; } }
+        @media (min-width: 1024px) { .hero-container { padding: 1.25rem 2rem; } }
+        .hero-title { font-family: 'Montserrat', sans-serif; font-weight: 900; line-height: 1.2; color: #111827; }
+        .text-shimmer { background: linear-gradient(90deg, #1E56A0, #00B0FF, #1E56A0); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-lifetime-glow { color: #059669; font-weight: 700; }
+        .btn-primary { background: linear-gradient(to right, #1E56A0, #00B0FF); color: #ffffff; border-radius: 0.5rem; }
+        .btn-outline { background: transparent; border: 2px solid #1E56A0; color: #1E56A0; border-radius: 0.5rem; }
+    </style>
+
+    <!-- Tailwind CSS (Asynchronous Non-Blocking Loading via Preload + media print swap) -->
+    <link rel="preload" as="style" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}">
+    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/css/app.css') }}"></noscript>
+    @vite('resources/js/app.js')
     
         <style>
         .line-clamp-2 {

@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useTailwind();
         Product::observe(ProductObserver::class);
+        \Illuminate\Support\Facades\Vite::useScriptTagAttributes(['defer' => true]);
 
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('web_settings')) {
