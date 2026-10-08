@@ -647,7 +647,31 @@ class SaleController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($sale) {
+                // Sinkronkan profit detail jika ada diskon pada transaksi induk
+                if (($sale->discount ?? 0) > 0) {
+                    $subtotal = $sale->subtotal > 0 ? $sale->subtotal : $sale->saleDetails->sum(fn($d) => ($d->price_at_transaction ?? 0) * ($d->quantity ?? 1));
+                    $discountRemaining = (int) $sale->discount;
+                    $itemsCount = $sale->saleDetails->count();
+                    $loopIndex = 0;
+                    $totalProfit = 0;
+
+                    foreach ($sale->saleDetails as $detail) {
+                        $loopIndex++;
+                        $itemGross = ($detail->price_at_transaction ?? 0) * ($detail->quantity ?? 1);
+                        if ($loopIndex === $itemsCount) {
+                            $itemDiscount = $discountRemaining;
+                        } else {
+                            $itemDiscount = $subtotal > 0 ? (int) round(($itemGross / $subtotal) * $sale->discount) : 0;
+                            $discountRemaining -= $itemDiscount;
+                        }
+                        $modalTotal = ($detail->purchase_price ?? 0) * ($detail->quantity ?? 1);
+                        $netProfit = ($itemGross - $itemDiscount) - $modalTotal;
+                        $totalProfit += $netProfit;
+                        $detail->update(['profit' => $netProfit]);
+                    }
+                    $sale->update(['profit_amount' => $totalProfit]);
+                }
+
                 // Update status
                 $sale->update([
                     'payment_status' => 'success',

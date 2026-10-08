@@ -100,11 +100,12 @@ class Investor extends Model
     }
 
     /**
-     * Total profit kotor dari penjualan produk investor.
+     * Total profit bersih riil dari penjualan produk investor (setelah dikurangi diskon/potongan).
      */
     public function totalGrossProfit(?string $startDate = null, ?string $endDate = null): int
     {
-        $query = SaleDetail::whereHas('product', fn($q) => $q->where('investor_id', $this->id))
+        $query = SaleDetail::with(['sale', 'product'])
+            ->whereHas('product', fn($q) => $q->where('investor_id', $this->id))
             ->whereHas('sale', fn($q) => $q->where('payment_status', 'success'));
 
         if ($startDate && $endDate) {
@@ -114,7 +115,7 @@ class Investor extends Model
             ]));
         }
 
-        return (int) $query->get()->sum(fn($d) => ($d->profit ?? 0));
+        return (int) $query->get()->sum(fn($d) => $d->net_profit);
     }
 
     /**

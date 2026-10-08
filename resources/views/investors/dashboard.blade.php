@@ -276,9 +276,10 @@
                             <th class="text-left px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Produk</th>
                             <th class="text-center px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Qty</th>
                             <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Modal</th>
-                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Jual</th>
-                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Profit</th>
-                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-violet-600 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Hak ({{ number_format($investor->share_percentage, 1) }}%)</th>
+                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Harga Jual (Nett)</th>
+                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Profit Bersih</th>
+                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-violet-600 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Est. Bagi Hasil ({{ number_format($investor->share_percentage, 0) }}%)</th>
+                            <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-blue-600 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Est. Total Return</th>
                             <th class="text-center px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Status</th>
                             <th class="text-right px-1.5 sm:px-2 py-2 sm:py-3 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider whitespace-nowrap">Tanggal</th>
                         </tr>
@@ -290,9 +291,17 @@
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 font-semibold text-natural-700 min-w-[120px]">{{ $detail['product'] }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-center text-natural-600">{{ $detail['qty'] }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['purchase_price'], 0, ',', '.') }}</td>
-                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-natural-400">Rp</span>{{ number_format($detail['price'], 0, ',', '.') }}</td>
+                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right whitespace-nowrap">
+                                <span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-natural-400">Rp</span><span class="font-bold text-emerald-600">{{ number_format($detail['price'], 0, ',', '.') }}</span>
+                                @if(($detail['discount'] ?? 0) > 0)
+                                <div class="text-[8px] text-red-500 font-medium leading-tight">
+                                    <span class="line-through text-natural-400">Rp {{ number_format($detail['gross_price'], 0, ',', '.') }}</span> (-Rp {{ number_format($detail['discount'], 0, ',', '.') }})
+                                </div>
+                                @endif
+                            </td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right font-bold text-amber-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-amber-500">Rp</span>{{ number_format($detail['profit'], 0, ',', '.') }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right font-black text-violet-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-violet-500">Rp</span>{{ number_format($detail['investor_share'], 0, ',', '.') }}</td>
+                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right font-black text-blue-600 whitespace-nowrap"><span class="text-[8px] sm:text-[10px] font-medium mr-0.5 text-blue-500">Rp</span>{{ number_format($detail['total_return'], 0, ',', '.') }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-center whitespace-nowrap">
                                 @if(isset($detail['payout_status']) && $detail['payout_status'] == 'paid')
                                     <div class="flex flex-col items-center justify-center gap-1">
@@ -315,8 +324,10 @@
                     </tbody>
                     <tfoot>
                         <tr class="bg-violet-50 border-t-2 border-violet-200 font-bold">
-                            <td colspan="5" class="px-1.5 sm:px-2 py-2 sm:py-3 text-natural-700 font-bold text-[10px] sm:text-xs">Total Hak Bagi Hasil</td>
-                            <td colspan="2" class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-violet-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-violet-500">Rp</span>{{ number_format($investorShare, 0, ',', '.') }}</td>
+                            <td colspan="5" class="px-1.5 sm:px-2 py-2 sm:py-3 text-natural-700 font-bold text-[10px] sm:text-xs">Total Hak Bagi Hasil & Return</td>
+                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-amber-700 font-black text-xs whitespace-nowrap"><span class="text-[8px] sm:text-[9px] mr-0.5 text-amber-500">Rp</span>{{ number_format($details->sum('profit'), 0, ',', '.') }}</td>
+                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-violet-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-violet-500">Rp</span>{{ number_format($investorShare, 0, ',', '.') }}</td>
+                            <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-blue-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-blue-500">Rp</span>{{ number_format($details->sum('total_return'), 0, ',', '.') }}</td>
                             <td colspan="2"></td>
                         </tr>
                     </tfoot>

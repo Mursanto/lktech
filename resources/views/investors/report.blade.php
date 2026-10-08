@@ -235,9 +235,9 @@
                                 <th class="text-left px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Produk</th>
                                 <th class="text-left px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Pelanggan</th>
                                 <th class="text-center px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Qty</th>
-                                <th class="text-right px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Harga Jual</th>
+                                <th class="text-right px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Harga Jual (Nett)</th>
                                 <th class="text-right px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">HPP</th>
-                                <th class="text-right px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Profit</th>
+                                <th class="text-right px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">Profit Bersih</th>
                                 <th class="text-center px-4 py-2.5 text-natural-500 font-bold uppercase tracking-wider">%</th>
                                 <th class="text-right px-4 py-2.5 text-violet-600 font-bold uppercase tracking-wider">Hak Investor</th>
                                 <th class="text-right px-4 py-2.5 text-emerald-600 font-bold uppercase tracking-wider">Bagian LKTech</th>
@@ -254,7 +254,14 @@
                                 <td class="px-4 py-2.5 font-semibold text-natural-700 max-w-[140px] truncate" title="{{ $detail['product'] }}">{{ $detail['product'] }}</td>
                                 <td class="px-4 py-2.5 text-natural-500">{{ $detail['customer'] }}</td>
                                 <td class="px-4 py-2.5 text-center text-natural-600 font-semibold">{{ $detail['qty'] }}</td>
-                                <td class="px-4 py-2.5 text-right font-semibold">Rp {{ number_format($detail['price'], 0, ',', '.') }}</td>
+                                <td class="px-4 py-2.5 text-right font-semibold">
+                                    Rp {{ number_format($detail['price'], 0, ',', '.') }}
+                                    @if(($detail['discount'] ?? 0) > 0)
+                                    <div class="text-[9px] text-red-500 font-normal leading-tight">
+                                        <span class="line-through text-natural-400">Rp {{ number_format($detail['gross_price'], 0, ',', '.') }}</span> (-Rp {{ number_format($detail['discount'], 0, ',', '.') }})
+                                    </div>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2.5 text-right text-natural-500">Rp {{ number_format($detail['purchase_price'], 0, ',', '.') }}</td>
                                 <td class="px-4 py-2.5 text-right font-bold text-natural-800">Rp {{ number_format($detail['profit'], 0, ',', '.') }}</td>
                                 <td class="px-4 py-2.5 text-center">

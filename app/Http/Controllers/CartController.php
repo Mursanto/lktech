@@ -194,6 +194,8 @@ class CartController extends Controller
         $sale = Sale::create([
             'user_id' => $userId,
             'customer_id' => $customer->id,
+            'subtotal' => $totalAmount,
+            'discount' => 0,
             'total_amount' => $totalAmount,
             'profit_amount' => $totalProfit,
             'transaction_date' => now(),

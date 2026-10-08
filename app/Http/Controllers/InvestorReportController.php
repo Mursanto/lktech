@@ -43,8 +43,9 @@ class InvestorReportController extends Controller
         // ===================================================
         // 2. PROFIT DARI PENJUALAN (dalam rentang tanggal)
         // ===================================================
-        // Profit produk LKTech
-        $lktechProfitQuery = SaleDetail::whereHas('product', fn($q) => $q->lkTech())
+        // Profit produk LKTech (bersih setelah diskon)
+        $lktechProfitQuery = SaleDetail::with(['sale', 'product'])
+            ->whereHas('product', fn($q) => $q->lkTech())
             ->whereHas('sale', fn($q) => $q->where('payment_status', 'success'));
 
         if ($startDate && $endDate) {
@@ -57,7 +58,7 @@ class InvestorReportController extends Controller
                 ->whereYear('created_at', now()->year)
             );
         }
-        $lktechGrossProfit = (int) $lktechProfitQuery->sum('profit');
+        $lktechGrossProfit = (int) $lktechProfitQuery->get()->sum(fn($d) => $d->net_profit);
 
         // ===================================================
         // 3. PER-INVESTOR BREAKDOWN
@@ -94,9 +95,12 @@ class InvestorReportController extends Controller
             }
 
             $details = $detailQuery->orderBy('id', 'desc')->get()->map(function ($detail) use ($investor) {
-                $profit         = $detail->profit ?? 0;
+                $profit         = $detail->net_profit;
                 $invShare       = (int) round($profit * ($investor->share_percentage / 100));
                 $lkShare        = $profit - $invShare;
+                $modalTotal     = ($detail->purchase_price ?? 0) * ($detail->quantity ?? 1);
+                $estTotalReturn = $modalTotal + $invShare;
+
                 return [
                     'id'             => $detail->id,
                     'sale_id'        => $detail->sale_id,
@@ -104,12 +108,15 @@ class InvestorReportController extends Controller
                     'customer'       => $detail->sale->customer->name ?? 'Umum',
                     'product'        => ($detail->product->brand ?? '') . ' ' . ($detail->product->model_series ?? ''),
                     'qty'            => $detail->quantity ?? 1,
-                    'price'          => $detail->price_at_transaction ?? 0,
+                    'gross_price'    => $detail->price_at_transaction ?? 0,
+                    'discount'       => $detail->discount_amount,
+                    'price'          => $detail->net_price_per_unit,
                     'purchase_price' => $detail->purchase_price ?? 0,
                     'profit'         => $profit,
                     'share_pct'      => $investor->share_percentage,
                     'investor_share' => $invShare,
                     'lktech_share'   => $lkShare,
+                    'total_return'   => $estTotalReturn,
                     'payout_status'  => $detail->investor_payout_status ?? 'pending',
                     'date'           => optional($detail->sale)->created_at,
                 ];
@@ -220,17 +227,23 @@ class InvestorReportController extends Controller
         $detailsResults = $detailQuery->orderBy('id', 'desc')->get();
 
         $details = $detailsResults->map(function ($detail) use ($investor) {
-                $profit   = $detail->profit ?? 0;
-                $invShare = (int) round($profit * ($investor->share_percentage / 100));
+                $profit         = $detail->net_profit;
+                $invShare       = (int) round($profit * ($investor->share_percentage / 100));
+                $modalTotal     = ($detail->purchase_price ?? 0) * ($detail->quantity ?? 1);
+                $estTotalReturn = $modalTotal + $invShare;
+
                 return [
                     'id'             => $detail->id,
                     'invoice'        => '#INV-' . str_pad($detail->sale_id, 6, '0', STR_PAD_LEFT),
                     'product'        => ($detail->product->brand ?? '') . ' ' . ($detail->product->model_series ?? ''),
                     'qty'            => $detail->quantity ?? 1,
-                    'price'          => $detail->price_at_transaction ?? 0,
+                    'gross_price'    => $detail->price_at_transaction ?? 0,
+                    'discount'       => $detail->discount_amount,
+                    'price'          => $detail->net_price_per_unit,
                     'purchase_price' => $detail->purchase_price ?? 0,
                     'profit'         => $profit,
                     'investor_share' => $invShare,
+                    'total_return'   => $estTotalReturn,
                     'payout_status'  => $detail->investor_payout_status ?? 'pending',
                     'payout_attachment' => $detail->payout_attachment,
                     'payout_date'    => $detail->payout_date,
@@ -348,7 +361,7 @@ class InvestorReportController extends Controller
 
             $details = $detailQuery->orderBy('id', 'desc')->get();
             foreach ($details as $detail) {
-                $profit   = $detail->profit ?? 0;
+                $profit   = $detail->net_profit;
                 $invShare = (int) round($profit * ($investor->share_percentage / 100));
                 $lkShare  = $profit - $invShare;
                 
@@ -358,6 +371,8 @@ class InvestorReportController extends Controller
                     $detail->sale->customer->name ?? 'Umum',
                     $detail->quantity ?? 1,
                     $detail->price_at_transaction ?? 0,
+                    $detail->discount_amount,
+                    $detail->net_price_per_unit,
                     $detail->purchase_price ?? 0,
                     $profit,
                     $investor->share_percentage . '%',
@@ -368,7 +383,7 @@ class InvestorReportController extends Controller
             }
         }
 
-        $headers = ['Invoice', 'Produk', 'Pelanggan', 'Qty', 'Harga Jual', 'HPP', 'Profit Kotor', '% Bagi Hasil', 'Hak Investor', 'Bagian LKTech', 'Tanggal'];
+        $headers = ['Invoice', 'Produk', 'Pelanggan', 'Qty', 'Harga Normal', 'Diskon', 'Harga Bersih (Nett)', 'HPP', 'Profit Bersih', '% Bagi Hasil', 'Hak Investor', 'Bagian LKTech', 'Tanggal'];
         $title = 'Laporan Konsolidasi Investor: ' . $investorName;
         if ($startDate && $endDate) {
             $title .= " (" . \Carbon\Carbon::parse($startDate)->format('d/m/Y') . " - " . \Carbon\Carbon::parse($endDate)->format('d/m/Y') . ")";
@@ -400,21 +415,27 @@ class InvestorReportController extends Controller
 
         $data = [];
         foreach ($details as $detail) {
-            $profit   = $detail->profit ?? 0;
-            $invShare = (int) round($profit * ($investor->share_percentage / 100));
+            $profit         = $detail->net_profit;
+            $invShare       = (int) round($profit * ($investor->share_percentage / 100));
+            $modalTotal     = ($detail->purchase_price ?? 0) * ($detail->quantity ?? 1);
+            $estTotalReturn = $modalTotal + $invShare;
             
             $data[] = [
                 '#INV-' . str_pad($detail->sale_id, 6, '0', STR_PAD_LEFT),
                 ($detail->product->brand ?? '') . ' ' . ($detail->product->model_series ?? ''),
                 $detail->quantity ?? 1,
+                $detail->purchase_price ?? 0,
                 $detail->price_at_transaction ?? 0,
+                $detail->discount_amount,
+                $detail->net_price_per_unit,
                 $profit,
                 $invShare,
+                $estTotalReturn,
                 optional($detail->sale)->created_at ? optional($detail->sale)->created_at->format('d/m/Y') : '-'
             ];
         }
 
-        $headers = ['Invoice', 'Produk', 'Qty', 'Harga Jual', 'Profit Kotor', 'Hak Anda (' . number_format($investor->share_percentage, 1) . '%)', 'Tanggal'];
+        $headers = ['Invoice', 'Produk', 'Qty', 'Modal Unit', 'Harga Normal', 'Diskon', 'Harga Bersih (Nett)', 'Profit Bersih', 'Hak Anda (' . number_format($investor->share_percentage, 1) . '%)', 'Est. Total Return', 'Tanggal'];
         $title = 'Riwayat Transaksi Investor: ' . $investor->name . ' (All Time)';
 
         return Excel::download(new InvestorReportExport($data, $title, $headers), 'riwayat_transaksi_' . $investor->name . '_' . date('Ymd_His') . '.xlsx', \Maatwebsite\Excel\Excel::XLSX);
