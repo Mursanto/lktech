@@ -647,6 +647,7 @@ class SaleController extends Controller
         }
 
         try {
+            DB::transaction(function () use ($sale) {
                 // Sinkronkan profit detail jika ada diskon pada transaksi induk
                 if (($sale->discount ?? 0) > 0) {
                     $subtotal = $sale->subtotal > 0 ? $sale->subtotal : $sale->saleDetails->sum(fn($d) => ($d->price_at_transaction ?? 0) * ($d->quantity ?? 1));
