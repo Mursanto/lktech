@@ -9,6 +9,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Keamanan: Validasi Secret Key agar tidak sembarang orang bisa menjalankan deploy
+$secretKey = $_GET['key'] ?? '';
+if ($secretKey !== 'lktech2026deploy') {
+    http_response_code(403);
+    die("<h2 style='color:red;'>403 Forbidden</h2>Akses ditolak. Sertakan parameter ?key= yang valid untuk melakukan deployment.<br><small>Contoh: deploy_secret.php?key=lktech2026deploy</small>");
+}
+
 echo "<b>Memulai Deployment Khusus via ZIP GitHub...</b><br><br>";
 
 $repoUrl = "https://github.com/Mursanto/lktech/archive/refs/heads/main.zip";
@@ -87,26 +94,13 @@ if ($zip->open($zipFile) === TRUE) {
         unlink($zipFile);
         echo "3. File sementara berhasil dibersihkan.<br><br>";
         
-        // Update .env SMTP config
-        echo "4. Memperbarui pengaturan email di .env server...<br>";
+        // 4. Verifikasi konfigurasi .env server (keamanan: kredensial rahasia tetap di .env server dan tidak ditimpa)
+        echo "4. Memeriksa file konfigurasi .env server...<br>";
         $envPath = $baseDir . '/.env';
         if (file_exists($envPath)) {
-            $envContent = file_get_contents($envPath);
-            $envContent = preg_replace('/^MAIL_MAILER=.*$/m', 'MAIL_MAILER=smtp', $envContent);
-            $envContent = preg_replace('/^MAIL_HOST=.*$/m', 'MAIL_HOST=mail.lktech.online', $envContent);
-            $envContent = preg_replace('/^MAIL_PORT=.*$/m', 'MAIL_PORT=465', $envContent);
-            $envContent = preg_replace('/^MAIL_USERNAME=.*$/m', 'MAIL_USERNAME=sales@lktech.online', $envContent);
-            $envContent = preg_replace('/^MAIL_PASSWORD=.*$/m', 'MAIL_PASSWORD=Lktech123qwe', $envContent);
-            $envContent = preg_replace('/^MAIL_ENCRYPTION=.*$/m', 'MAIL_ENCRYPTION=ssl', $envContent);
-            $envContent = preg_replace('/^MAIL_FROM_ADDRESS=.*$/m', 'MAIL_FROM_ADDRESS="sales@lktech.online"', $envContent);
-            
-            if (strpos($envContent, 'MAIL_HOST=') === false) {
-                $envContent .= "\nMAIL_MAILER=smtp\nMAIL_HOST=mail.lktech.online\nMAIL_PORT=465\nMAIL_USERNAME=sales@lktech.online\nMAIL_PASSWORD=Lktech123qwe\nMAIL_ENCRYPTION=ssl\nMAIL_FROM_ADDRESS=\"sales@lktech.online\"\n";
-            }
-            file_put_contents($envPath, $envContent);
-            echo "- Pengaturan SMTP di .env hosting berhasil diotomatisasi.<br><br>";
+            echo "- File .env terdeteksi dan dipertahankan (kredensial database & email aman di server).<br><br>";
         } else {
-            echo "- File .env tidak ditemukan di server.<br><br>";
+            echo "- ⚠️ File .env tidak ditemukan di server.<br><br>";
         }
         
         // 5. Jalankan optimasi Laravel (Clear Cache & Migrate)
