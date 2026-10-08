@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <h3 class="text-sm font-bold text-natural-800">Perjanjian Kerja Sama (PKS)</h3>
-                        <p class="text-[10px] text-natural-500">Versi Dokumen: v1.0.0</p>
+                        <p class="text-[10px] text-natural-500">Versi Dokumen: v1.1.0 (Update Penyesuaian Diskon)</p>
                     </div>
                 </div>
                 
@@ -47,18 +47,36 @@
                     <p><strong>2. PIHAK KEDUA (INVESTOR/PEMODAL):</strong><br> <strong>{{ $investor->email === 'dataku.ak47@gmail.com' ? 'Arief Kurniawan' : $investor->name }}</strong> (email: {{ $investor->email }}), berkedudukan sebagai penyedia modal yang disalurkan dalam bentuk aset inventori (laptop/device).</p>
                 </div>
                 
-                <p class="mb-4 font-bold text-natural-900">Pasal 1: Skema Bagi Hasil (Nisbah) & Perhitungan Profit</p>
-                <ul class="list-decimal pl-5 mb-6 space-y-1">
-                    <li>Laba Bersih (Nett Profit) per unit dihitung dari Harga Jual Akhir dikurangi Harga Modal Dasar dan Biaya Perbaikan Garansi (apabila ada klaim perbaikan hardware selama masa garansi toko).</li>
-                    <li>Nisbah pembagian Laba Bersih adalah <strong>{{ 100 - $investor->share_percentage }}% ({{ number_format(100 - $investor->share_percentage, 0) }} persen) untuk Pihak Pertama</strong> dan <strong>{{ number_format($investor->share_percentage, 0) }}% ({{ number_format($investor->share_percentage, 0) }} persen) untuk Pihak Kedua</strong>.</li>
-                    <li>Harga Modal Dasar, Harga Jual Akhir, dan alokasi unit bersifat transparan dan dapat dipantau langsung oleh Pihak Kedua melalui Dashboard Real-time LKTech.</li>
+                <p class="mb-2 font-bold text-natural-900">Pasal 1: Skema Bagi Hasil (Nisbah), Perhitungan Profit & Penyesuaian Diskon</p>
+                <ul class="list-decimal pl-5 mb-6 space-y-2">
+                    <li><strong>Definisi Harga Penjualan Bersih (Nett Sales Price):</strong><br>
+                        Harga Penjualan Bersih adalah Harga Jual Akhir nominal yang diterima dari konsumen setelah dikurangi Diskon/Potongan Harga yang disetujui, program promosi, atau biaya transaksi payment gateway (apabila ada).
+                    </li>
+                    <li><strong>Perhitungan Laba Bersih (Nett Profit):</strong><br>
+                        Laba Bersih per unit dihitung dengan rumus:
+                        <div class="my-1.5 p-2 bg-natural-50 rounded border border-natural-200 font-mono text-xs font-bold text-natural-800">
+                            Laba Bersih = Harga Penjualan Bersih - Harga Modal Dasar - Biaya Perbaikan Garansi (jika ada)
+                        </div>
+                    </li>
+                    <li><strong>Nisbah Pembagian:</strong><br>
+                        Nisbah pembagian Laba Bersih adalah <strong>{{ 100 - $investor->share_percentage }}% ({{ number_format(100 - $investor->share_percentage, 0) }} persen) untuk Pihak Pertama</strong> dan <strong>{{ number_format($investor->share_percentage, 0) }}% ({{ number_format($investor->share_percentage, 0) }} persen) untuk Pihak Kedua</strong>.
+                    </li>
+                    <li><strong>Perlakuan Diskon / Potongan Penjualan:</strong>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Apabila Pihak Pertama memberikan diskon/potongan harga kepada konsumen pada saat transaksi penjualan, nilai diskon tersebut memotong Laba Kotor (Gross Profit) transaksi secara keseluruhan, bukan ditanggung oleh salah satu pihak saja.</li>
+                            <li>Pihak Pertama wajib memastikan bahwa pemberian diskon tetap mempertahankan Laba Bersih dalam nilai positif, kecuali atas persetujuan bersama.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Transparansi Sistem Dashboard:</strong><br>
+                        Harga Modal Dasar, Harga Jual Akhir, nilai diskon/potongan transaksi, dan alokasi unit bersifat transparan serta dihitung secara otomatis berdasarkan nilai transaksi bersih (nett) melalui Dashboard Real-time LKTech.
+                    </li>
                 </ul>
 
-                <p class="mb-4 font-bold text-natural-900">Pasal 2: Masa Garansi Toko & Tanggung Jawab Bersih Perbaikan</p>
-                <ul class="list-decimal pl-5 mb-6 space-y-1">
+                <p class="mb-2 font-bold text-natural-900">Pasal 2: Masa Garansi Toko & Tanggung Jawab Bersih Perbaikan</p>
+                <ul class="list-decimal pl-5 mb-6 space-y-2">
                     <li><strong>Garansi Mitra/Supplier:</strong> Garansi dari mitra pengada barang (supplier) adalah selama 1 (satu) minggu. Jika unit mengalami kerusakan pada minggu pertama, klaim dilakukan langsung ke mitra/supplier tanpa memotong profit investasi.</li>
                     <li><strong>Garansi Consumer After-Sales:</strong> Pihak Pertama memberikan garansi hardware kepada konsumen selama 1 (satu) bulan (30 hari) sejak unit diterima/terjual.</li>
-                    <li><strong>Prinsip Tanggung Jawab Bersama (Anti-Gravity Risk Allocation):</strong>
+                    <li><strong>Prinsip Tanggung Jawab Bersama:</strong>
                         <ul class="list-disc pl-5 mt-1 space-y-1">
                             <li>Apabila terjadi kerusakan hardware (termasuk namun tidak terbatas pada Keyboard, LCD, RAM, SSD, atau Mainboard) setelah masa garansi mitra habis (minggu ke-2 hingga hari ke-30), biaya perbaikan/penggantian komponen dialokasikan sebagai Biaya Operasional Garansi Unit.</li>
                             <li>Biaya tersebut dipotong dari Laba Kotor (Gross Profit) unit terkait terlebih dahulu sebelum sisa Laba Bersih dibagi sesuai nisbah {{ 100 - $investor->share_percentage }}:{{ number_format($investor->share_percentage, 0) }}.</li>
@@ -67,20 +85,20 @@
                     </li>
                 </ul>
 
-                <p class="mb-4 font-bold text-natural-900">Pasal 3: Pencairan Dana & Return Modal (Payout SLA)</p>
+                <p class="mb-2 font-bold text-natural-900">Pasal 3: Pencairan Dana & Return Modal (Payout SLA)</p>
                 <ul class="list-decimal pl-5 mb-6 space-y-1">
                     <li>Pengembalian modal dasar beserta bagian keuntungan Pihak Kedua akan dikreditkan ke saldo akun/dashboard Pihak Kedua setelah unit dinyatakan Terjual Lunas dan Selesai Masa Garansi Hardware 1 Bulan (30 Hari).</li>
-                    <li>Penahanan dana selama 30 hari ini bertujuan untuk memastikan cash flow aman dan nilai profit yang dicairkan sudah benar-benar bersih (nett) dari risiko retur/klaim konsumen.</li>
+                    <li>Penahanan dana selama 30 hari ini bertujuan untuk memastikan cash flow aman dan nilai profit yang dicairkan sudah benar-benar bersih (nett) dari risiko retur/klaim konsumen maupun penyesuaian diskon akhir.</li>
                     <li>Penarikan dana (payout) dari saldo Dashboard ke rekening bank Pihak Kedua dapat dilakukan sesuai dengan prosedur dan SLA pencairan yang berlaku di LKTech Indonesia.</li>
                 </ul>
 
-                <p class="mb-4 font-bold text-natural-900">Pasal 4: Hak Pengawasan & Transparansi</p>
+                <p class="mb-2 font-bold text-natural-900">Pasal 4: Hak Pengawasan & Transparansi</p>
                 <ul class="list-decimal pl-5 mb-6 space-y-1">
                     <li>Pihak Pertama wajib memberikan dan menjaga akses akun Dashboard Investor kepada Pihak Kedua.</li>
-                    <li>Pihak Kedua berhak melihat secara real-time status aset, stok tersisa, harga modal terdaftar, status garansi yang berjalan, dan estimasi profit setiap saat.</li>
+                    <li>Pihak Kedua berhak melihat secara real-time status aset, stok tersisa, harga modal terdaftar, detail potongan/diskon transaksi, status garansi yang berjalan, dan estimasi profit bersih setiap saat.</li>
                 </ul>
 
-                <p class="mb-4 font-bold text-natural-900">Pasal 5: Penyelesaian Perselisihan</p>
+                <p class="mb-2 font-bold text-natural-900">Pasal 5: Penyelesaian Perselisihan</p>
                 <p class="mb-6 pl-5">Segala bentuk perselisihan yang timbul dari pelaksanaan perjanjian ini akan diselesaikan secara musyawarah dan mufakat berdasarkan asas transparansi, keterbukaan, dan iktikad baik.</p>
             </div>
             
