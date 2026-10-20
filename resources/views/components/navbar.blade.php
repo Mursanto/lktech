@@ -46,7 +46,7 @@
             <!-- Desktop Navigation Links -->
             <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-700">
                 <a href="{{ route('home') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('home') ? 'text-brand-600' : '' }}">Beranda</a>
-                <a href="{{ route('katalog.index') }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
+                <a href="{{ route('katalog.index', ['category_id' => 1]) }}" class="hover:text-brand-600 transition-colors {{ request()->routeIs('katalog.*') ? 'text-brand-600' : '' }}">Katalog</a>
                 <div class="relative group flex items-center h-full" x-data="{ open: false, mitraOpen: false, infoOpen: false }" @mouseleave="open = false; mitraOpen = false; infoOpen = false">
                     <button @mouseover="open = true" class="hover:text-brand-600 transition-colors flex items-center gap-1 h-full py-4 -my-4 {{ request()->routeIs('rakit-pc') || request()->routeIs('jasa-website') || request()->routeIs('service-pc') || request()->routeIs('sewa-laptop') || request()->routeIs('wifi-voucher') || request()->routeIs('jasa-furniture') || request()->routeIs('martabak-jawara') || request()->routeIs('limbah-elektronik') || request()->routeIs('tentang-kami') || request()->routeIs('faq') || request()->routeIs('blog.index') ? 'text-brand-600' : '' }}">
                         Layanan <i class='bx bx-chevron-down text-lg'></i>

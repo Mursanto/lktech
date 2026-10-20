@@ -330,7 +330,7 @@
                         <!-- Tombol CTA -->
                         <div class="hero-buttons flex flex-row w-full gap-2 sm:gap-4 mb-4">
                             <a href="https://wa.me/628567354046?text=Halo%20LKtech,%20saya%20ingin%20Konsultasi%20Gratis." target="_blank" class="btn btn-primary flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-2.5 bg-brand-600 border border-brand-600 text-white font-extrabold rounded-lg shadow-md hover:bg-brand-700 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">Konsultasi Gratis</a>
-                            <a href="{{ route('katalog.index') }}" class="btn btn-outline flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-2.5 bg-transparent border-2 border-brand-600 text-brand-600 font-extrabold rounded-lg hover:bg-brand-50 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">Lihat Katalog</a>
+                            <a href="{{ route('katalog.index', ['category_id' => 1]) }}" class="btn btn-outline flex-1 justify-center text-center px-2 sm:px-4 py-2 sm:py-2.5 bg-transparent border-2 border-brand-600 text-brand-600 font-extrabold rounded-lg hover:bg-brand-50 transition text-xs sm:text-sm flex items-center gap-1 sm:gap-2">Lihat Katalog</a>
                         </div>
 
                         <!-- Marketplace & Rating Bar (Rapat & 1 Baris di Mobile) -->
