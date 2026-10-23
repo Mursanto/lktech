@@ -87,19 +87,71 @@
         <div class="max-w-[1400px] mx-auto px-1.5 sm:px-6 lg:px-8 pt-3 md:pt-8 pb-6 md:pb-8 flex flex-col md:flex-row gap-8">
         
         {{-- ============================================================ --}}
-        {{-- SIDEBAR DESKTOP (Categories + Filter Brand + Harga)          --}}
+        {{-- ============================================================ --}}
+        {{-- SIDEBAR DESKTOP (Promo + Categories + Filter Brand + Harga)  --}}
         {{-- ============================================================ --}}
         <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
             <div class="sticky top-20 space-y-4">
                 
+                {{-- Filter Promo & Diskon Spesial --}}
+                <div class="bg-gradient-to-br from-rose-50 via-white to-amber-50 p-3.5 rounded-xl shadow-xs border border-rose-200/80">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <div class="flex items-center gap-1.5 font-extrabold text-gray-800 text-sm">
+                            <span class="text-base animate-pulse">🔥</span>
+                            <span>Promo &amp; Diskon</span>
+                        </div>
+                        @if($totalPromoCount > 0)
+                            <span class="bg-rose-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">
+                                {{ $totalPromoCount }}
+                            </span>
+                        @endif
+                    </div>
+                    <p class="text-[11px] text-gray-500 mb-2.5">Produk berlabel Hot Promo &amp; potongan harga spesial.</p>
+
+                    <form method="GET" action="{{ route('katalog.index') }}">
+                        @if(request()->has('category_id'))
+                            <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                        @endif
+                        @if(request()->has('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        @if(request()->has('sort'))
+                            <input type="hidden" name="sort" value="{{ request('sort') }}">
+                        @endif
+                        @foreach($selectedBrands ?? [] as $b)
+                            <input type="hidden" name="brands[]" value="{{ $b }}">
+                        @endforeach
+                        @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
+                        @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
+                        
+                        <label class="flex items-center justify-between p-2 rounded-lg cursor-pointer bg-white border {{ $isPromoFilter ? 'border-rose-400 ring-2 ring-rose-200 bg-rose-50/50' : 'border-gray-200 hover:border-rose-300' }} transition-all">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" name="promo" value="1" onchange="this.form.submit()" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                                <span class="text-xs font-bold {{ $isPromoFilter ? 'text-rose-700' : 'text-gray-700' }}">Hot Promo / Diskon</span>
+                            </div>
+                            @if($isPromoFilter)
+                                <span class="text-[10px] font-bold text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded">Aktif</span>
+                            @endif
+                        </label>
+                        @if($isPromoFilter)
+                            <a href="{{ request()->url() . '?' . http_build_query(request()->except('promo')) }}" class="mt-2 inline-block text-[11px] text-rose-600 hover:text-rose-700 font-bold">
+                                &times; Nonaktifkan filter promo
+                            </a>
+                        @endif
+                    </form>
+                </div>
+
                 {{-- Category List --}}
-                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-2">Kategori Produk</h3>
-                    <ul class="space-y-0.5">
+                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: true }">
+                    <button type="button" @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm cursor-pointer" :class="expanded ? 'border-b border-gray-100 pb-2 mb-2' : ''">
+                        <span>Kategori Produk</span>
+                        <i class='bx text-gray-400 text-base transition-transform' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                    </button>
+                    <ul class="space-y-0.5" x-show="expanded">
                         @foreach($mainCategories as $category)
                             @if($category->total_count > 0)
                             <li>
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}" 
+                                <a href="{{ route('katalog.index', array_merge(request()->all(), ['category_id' => $category->id])) }}" 
                                    class="flex justify-between items-center px-2 py-1.5 text-[13px] {{ (isset($selectedCategoryId) && $selectedCategoryId == $category->id) ? 'text-brand-600 bg-brand-50 font-bold' : 'text-gray-600 font-medium hover:text-brand-600 hover:bg-brand-50' }} rounded-lg transition-colors group">
                                     <span class="truncate">{{ $category->name }}</span>
                                     <span class="bg-gray-100 text-gray-500 group-hover:bg-brand-100 group-hover:text-brand-600 flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold">
@@ -114,9 +166,9 @@
 
                 {{-- Filter: Merek --}}
                 @if(count($availableBrands) > 0)
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200" 
+                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200" 
                      x-data="{ 
-                        expanded: true,
+                        expanded: {{ !empty($selectedBrands) ? 'true' : 'false' }},
                         selectedBrands: {{ json_encode($selectedBrands) }},
                         toggleParent(parent, children) {
                             if (this.selectedBrands.includes(parent)) {
@@ -132,16 +184,22 @@
                             $refs.brandForm.submit();
                         }
                      }">
-                    <button @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-3">
+                    <button type="button" @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm cursor-pointer" :class="expanded ? 'border-b border-gray-100 pb-2 mb-3' : ''">
                         <span>Filter Merek</span>
-                        <i class='bx text-gray-400 text-base' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                        <i class='bx text-gray-400 text-base transition-transform' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                     </button>
                     <form x-ref="brandForm" method="GET" action="{{ route('katalog.index') }}" x-show="expanded">
                         @if(request()->has('category_id'))
                             <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                         @endif
+                        @if(request()->has('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
                         @if(request()->has('sort'))
                             <input type="hidden" name="sort" value="{{ request('sort') }}">
+                        @endif
+                        @if($isPromoFilter)
+                            <input type="hidden" name="promo" value="1">
                         @endif
                         @if(request()->has('price_min'))
                             <input type="hidden" name="price_min" value="{{ request('price_min') }}">
@@ -156,9 +214,9 @@
                                 <div class="flex items-center justify-between">
                                     <label class="flex items-center gap-2 cursor-pointer group flex-1 py-0.5">
                                         <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
-                                               x-model="selectedBrands"
-                                               @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
-                                               class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                                x-model="selectedBrands"
+                                                @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
+                                                class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
                                         <span class="text-[13px] font-medium text-gray-700 group-hover:text-brand-600 transition-colors truncate">{{ $parentBrand }}</span>
                                     </label>
                                     @if(count($childBrands) > 0)
@@ -173,9 +231,9 @@
                                     @foreach($childBrands as $childBrand)
                                     <label class="flex items-center gap-2 cursor-pointer group py-0.5">
                                         <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
-                                               x-model="selectedBrands"
-                                               @change="submitForm()"
-                                               class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
+                                                x-model="selectedBrands"
+                                                @change="submitForm()"
+                                                class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300 focus:ring-brand-500 cursor-pointer">
                                         <span class="text-[11px] font-normal text-gray-600 group-hover:text-brand-600 transition-colors truncate">{{ $childBrand }}</span>
                                     </label>
                                     @endforeach
@@ -186,7 +244,7 @@
                         </div>
                         @if(!empty($selectedBrands))
                         <a href="{{ request()->url() . '?' . http_build_query(array_merge(request()->except('brands'), [])) }}" 
-                           class="mt-3 inline-block text-xs text-red-500 hover:text-red-600 font-medium">
+                            class="mt-3 inline-block text-xs text-red-500 hover:text-red-600 font-medium">
                             × Hapus filter merek
                         </a>
                         @endif
@@ -195,17 +253,23 @@
                 @endif
 
                 {{-- Filter: Harga --}}
-                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: true }">
-                    <button @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm border-b border-gray-100 pb-2 mb-3">
+                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200" x-data="{ expanded: {{ ($priceMin || $priceMax) ? 'true' : 'false' }} }">
+                    <button type="button" @click="expanded = !expanded" class="flex justify-between items-center w-full font-bold text-gray-800 text-sm cursor-pointer" :class="expanded ? 'border-b border-gray-100 pb-2 mb-3' : ''">
                         <span>Rentang Harga</span>
-                        <i class='bx text-gray-400 text-base' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                        <i class='bx text-gray-400 text-base transition-transform' :class="expanded ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                     </button>
                     <form method="GET" action="{{ route('katalog.index') }}" x-show="expanded">
                         @if(request()->has('category_id'))
                             <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                         @endif
+                        @if(request()->has('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
                         @if(request()->has('sort'))
                             <input type="hidden" name="sort" value="{{ request('sort') }}">
+                        @endif
+                        @if($isPromoFilter)
+                            <input type="hidden" name="promo" value="1">
                         @endif
                         @foreach($selectedBrands ?? [] as $b)
                             <input type="hidden" name="brands[]" value="{{ $b }}">
@@ -217,12 +281,12 @@
                             <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max"
                                 class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         </div>
-                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-medium h-8 rounded-lg transition-colors">
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-medium h-8 rounded-lg transition-colors cursor-pointer">
                             Terapkan
                         </button>
                             @if($priceMin || $priceMax)
                             <a href="{{ request()->url() . '?' . http_build_query(request()->except(['price_min', 'price_max'])) }}"
-                               class="block text-center text-xs text-red-500 hover:text-red-600 font-medium mt-1">
+                                class="block text-center text-xs text-red-500 hover:text-red-600 font-medium mt-1">
                                 × Hapus filter harga
                             </a>
                             @endif
@@ -237,22 +301,26 @@
         {{-- ============================================================ --}}
         <div class="flex-1 min-w-0">
 
-            {{-- Mobile Top Bar: Filter + Sort always visible side by side --}}
-            <div class="flex items-center gap-2 mb-2 md:hidden" x-data="{ filterOpen: false }" @open-filter-modal.window="filterOpen = true">
-
-                {{-- Filter Button --}}
-                <button type="button" @click="filterOpen = true"
-                        class="flex items-center gap-1.5 px-2.5 py-1.5 border border-gray-200 bg-white rounded-lg text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-colors cursor-pointer shrink-0">
-                    <i class='bx bx-filter-alt text-brand-500'></i>
-                    Filter
-                    @if(!empty($selectedBrands) || $priceMin || $priceMax)
-                        <span class="bg-brand-600 text-white rounded-full text-[9px] font-bold w-4 h-4 flex items-center justify-center">
-                            {{ count($selectedBrands ?? []) + ($priceMin || $priceMax ? 1 : 0) }}
+            {{-- ============================================================ --}}
+            {{-- MOBILE TOP BAR (Tepat di Bawah Kolom Pencarian Utama)          --}}
+            {{-- ============================================================ --}}
+            <div class="flex items-center gap-2 mb-2.5 md:hidden">
+                {{-- Tombol Filter --}}
+                <button type="button" @click="$dispatch('open-filter-drawer')"
+                        class="flex items-center justify-center gap-1.5 px-3.5 py-2 border border-gray-200 bg-white rounded-lg text-xs font-bold text-gray-700 shadow-xs hover:bg-gray-50 active:scale-95 transition-all cursor-pointer shrink-0">
+                    <i class='bx bx-filter-alt text-brand-600 text-sm'></i>
+                    <span>Filter</span>
+                    @php
+                        $activeCount = count($selectedBrands ?? []) + ($priceMin || $priceMax ? 1 : 0) + ($isPromoFilter ? 1 : 0);
+                    @endphp
+                    @if($activeCount > 0)
+                        <span class="bg-brand-600 text-white rounded-full text-[9px] font-extrabold w-4 h-4 flex items-center justify-center">
+                            {{ $activeCount }}
                         </span>
                     @endif
                 </button>
 
-                {{-- Sort Dropdown: always visible on mobile --}}
+                {{-- Dropdown Urutkan Berdampingan Rapi --}}
                 <form method="GET" action="{{ route('katalog.index') }}" class="flex-1 relative">
                     @if(request()->has('category_id'))
                         <input type="hidden" name="category_id" value="{{ request('category_id') }}">
@@ -260,136 +328,52 @@
                     @if(request()->has('search'))
                         <input type="hidden" name="search" value="{{ request('search') }}">
                     @endif
+                    @if($isPromoFilter)
+                        <input type="hidden" name="promo" value="1">
+                    @endif
                     @foreach($selectedBrands ?? [] as $b)
                         <input type="hidden" name="brands[]" value="{{ $b }}">
                     @endforeach
                     @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
                     @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
+                    
                     <select name="sort" onchange="this.form.submit()"
-                            class="w-full appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-2.5 pr-8 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm cursor-pointer">
-                        <option value="terbaru"  {{ request('sort', 'terbaru') == 'terbaru'  ? 'selected' : '' }}>Paling Sesuai</option>
+                            style="background-image: none !important;"
+                            class="w-full appearance-none bg-none bg-white border border-brand-500 hover:border-brand-600 text-gray-800 py-2 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-xs cursor-pointer transition-all">
+                        <option value="terbaru" {{ request('sort', 'terbaru') == 'terbaru' ? 'selected' : '' }}>Paling Sesuai</option>
                         <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
                         <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
                         <option value="terbaru_saja" {{ request('sort') == 'terbaru_saja' ? 'selected' : '' }}>Produk Terbaru</option>
+                        <option value="diskon_terbesar" {{ request('sort') == 'diskon_terbesar' ? 'selected' : '' }}>Diskon Terbesar</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                        <i class='bx bx-chevron-down text-sm'></i>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-brand-600">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
                     </div>
                 </form>
-
-                {{-- Bottom Sheet (inline Alpine scope) --}}
-                <div x-show="filterOpen"
-                     x-transition:enter="transition ease-out duration-200"
-                     x-transition:enter-start="opacity-0"
-                     x-transition:enter-end="opacity-100"
-                     x-transition:leave="transition ease-in duration-150"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0"
-                     @click="filterOpen = false"
-                     class="fixed inset-0 bg-black/50 z-[200]" x-cloak>
-                </div>
-                <div x-show="filterOpen"
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="translate-y-full"
-                     x-transition:enter-end="translate-y-0"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="translate-y-0"
-                     x-transition:leave-end="translate-y-full"
-                     class="fixed bottom-0 inset-x-0 z-[210] bg-white rounded-t-2xl shadow-2xl max-h-[85vh] overflow-y-auto" x-cloak>
-                    <div class="flex justify-center pt-3 pb-1">
-                        <div class="w-10 h-1 bg-gray-200 rounded-full"></div>
-                    </div>
-                    <div class="flex items-center justify-between px-5 py-3 border-b border-gray-100">
-                        <h3 class="font-bold text-gray-800 text-base">Filter & Urutkan</h3>
-                        <button @click="filterOpen = false" class="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-                            <i class='bx bx-x text-xl text-gray-500'></i>
-                        </button>
-                    </div>
-                    <form method="GET" action="{{ route('katalog.index') }}" class="px-5 pb-28">
-                        @if(request()->has('category_id'))
-                            <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-                        @endif
-                        @if(request()->has('search'))
-                            <input type="hidden" name="search" value="{{ request('search') }}">
-                        @endif
-                        {{-- Sort --}}
-                        <div class="py-4 border-b border-gray-100">
-                            <h4 class="text-sm font-bold text-gray-700 mb-3">Urutkan</h4>
-                            <div class="grid grid-cols-2 gap-2">
-                                @foreach(['terbaru' => 'Paling Sesuai', 'terendah' => 'Harga Terendah', 'tertinggi' => 'Harga Tertinggi', 'terbaru_saja' => 'Produk Terbaru'] as $val => $label)
-                                <label class="flex items-center gap-2 border {{ request('sort', 'terbaru') == $val ? 'border-brand-500 bg-brand-50 text-brand-600' : 'border-gray-200 text-gray-600' }} rounded-lg px-3 py-2 cursor-pointer text-sm font-medium">
-                                    <input type="radio" name="sort" value="{{ $val }}" {{ request('sort', 'terbaru') == $val ? 'checked' : '' }} class="w-3.5 h-3.5 text-brand-600">
-                                    {{ $label }}
-                                </label>
-                                @endforeach
-                            </div>
-                        </div>
-                        {{-- Brand Filter --}}
-                        @if(count($availableBrands) > 0)
-                        <div class="py-4 border-b border-gray-100" x-data="{
-                            selectedBrands: {{ json_encode($selectedBrands) }},
-                            toggleParent(parent, children) {
-                                if (this.selectedBrands.includes(parent)) {
-                                    children.forEach(child => {
-                                        if (!this.selectedBrands.includes(child)) this.selectedBrands.push(child);
-                                    });
-                                } else {
-                                    this.selectedBrands = this.selectedBrands.filter(b => !children.includes(b));
-                                }
-                            }
-                        }">
-                            <h4 class="text-sm font-bold text-gray-700 mb-3">Filter Merek</h4>
-                            <div class="space-y-1.5 py-1">
-                                @foreach($availableBrands as $parentBrand => $childBrands)
-                                <div class="flex flex-col gap-1" x-data="{ open: false }">
-                                    <div class="flex items-center justify-between">
-                                        <label class="flex items-center gap-2 cursor-pointer flex-1 py-0.5">
-                                            <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
-                                                   x-model="selectedBrands"
-                                                   @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
-                                                   class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300">
-                                            <span class="text-[13px] font-medium text-gray-700 truncate">{{ $parentBrand }}</span>
-                                        </label>
-                                        @if(count($childBrands) > 0)
-                                        <button type="button" @click="open = !open" class="text-gray-400 p-0.5">
-                                            <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
-                                        </button>
-                                        @endif
-                                    </div>
-                                    @if(count($childBrands) > 0)
-                                    <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
-                                        @foreach($childBrands as $childBrand)
-                                        <label class="flex items-center gap-2 cursor-pointer py-0.5">
-                                            <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
-                                                   x-model="selectedBrands"
-                                                   class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300">
-                                            <span class="text-[11px] font-normal text-gray-600 truncate">{{ $childBrand }}</span>
-                                        </label>
-                                        @endforeach
-                                    </div>
-                                    @endif
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-                        {{-- Price Range --}}
-                        <div class="py-3">
-                            <h4 class="text-sm font-bold text-gray-700 mb-2">Rentang Harga</h4>
-                            <div class="flex items-center gap-2">
-                                <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                <span class="text-gray-400 font-medium">-</span>
-                                <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max" class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                        </div>
-                        {{-- Action Buttons --}}
-                        <div class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-100 px-5 py-3 flex gap-3">
-                            <a href="{{ route('katalog.index', request()->only('category_id', 'search')) }}" class="flex-1 text-center border border-gray-200 rounded-xl py-3 text-sm font-bold text-gray-700">Reset</a>
-                            <button type="submit" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-bold transition-colors">Terapkan</button>
-                        </div>
-                    </form>
-                </div>
             </div>
+
+            {{-- ============================================================ --}}
+            {{-- PRODUCT CATEGORIES & GRIDS                                   --}}
+            {{-- ============================================================ --}}
+            @php
+                $totalProductsRendered = $displayCategories->sum(fn($c) => $c->all_products->count());
+            @endphp
+
+            @if($totalProductsRendered === 0)
+                <div class="bg-white rounded-2xl border border-gray-200 p-8 text-center my-6">
+                    <div class="w-16 h-16 mx-auto bg-gray-100 text-gray-400 rounded-full flex items-center justify-center text-3xl mb-3">
+                        <i class='bx bx-search-alt'></i>
+                    </div>
+                    <h3 class="text-base font-bold text-gray-800 mb-1">Tidak ada produk yang cocok</h3>
+                    <p class="text-xs text-gray-500 mb-4 max-w-sm mx-auto">Coba ubah kata kunci pencarian, kurangi filter merek/harga, atau nonaktifkan filter promo.</p>
+                    <a href="{{ route('katalog.index') }}" class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors shadow-xs">
+                        <i class='bx bx-refresh text-base'></i>
+                        <span>Reset Semua Filter</span>
+                    </a>
+                </div>
+            @endif
 
             <div class="space-y-5 md:space-y-8">
                 @foreach($displayCategories as $category)
@@ -404,55 +388,72 @@
                                 </a>
                             </h2>
 
-                            @if(!isset($selectedCategoryId) && !request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax)
-                                {{-- Preview mode: Lihat Semua on the right --}}
-                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
-                                   class="shrink-0 ml-3 text-[10px] md:text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
-                                    Lihat Semua ({{ $category->total_count }}) &rarr;
-                                </a>
-                            @else
-                                {{-- Detail/Filter mode --}}
-                                {{-- Mobile: show "← Semua" link on right of category header (Row 2) --}}
+                            {{-- Mobile: show "← Semua" link on right of category header --}}
+                            <div class="flex items-center gap-2 md:hidden shrink-0 ml-2">
                                 @if(isset($selectedCategoryId))
                                 <a href="{{ route('katalog.index') }}"
-                                   class="shrink-0 ml-3 text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1.5 rounded-lg whitespace-nowrap md:hidden">
+                                   class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1.5 rounded-lg whitespace-nowrap">
                                     &larr; Semua
                                 </a>
+                                @elseif(!request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax && !$isPromoFilter && request('sort', 'terbaru') == 'terbaru')
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
+                                   class="text-[10px] font-semibold text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap">
+                                    Lihat Semua ({{ $category->total_count }}) &rarr;
+                                </a>
                                 @endif
-                                {{-- Desktop: Action buttons on right --}}
-                                <div class="hidden md:flex items-center gap-2 shrink-0 ml-3">
-                                    @if(isset($selectedCategoryId))
-                                    <a href="{{ route('katalog.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors border border-brand-100/50 whitespace-nowrap">
-                                        &larr; Lihat Semua Kategori
-                                    </a>
+                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md whitespace-nowrap">
+                                    {{ method_exists($category->all_products, 'total') ? $category->all_products->total() : $category->all_products->count() }} Produk
+                                </span>
+                            </div>
+
+                            {{-- Desktop: Action buttons on right (Lihat Semua Kategori, Dropdown Urutkan Pojok Kanan Atas, Total Produk) --}}
+                            <div class="hidden md:flex items-center gap-2 shrink-0 ml-3">
+                                @if(isset($selectedCategoryId))
+                                <a href="{{ route('katalog.index') }}" class="text-xs font-bold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors border border-brand-100/50 whitespace-nowrap">
+                                    &larr; Lihat Semua Kategori
+                                </a>
+                                @elseif(!request()->has('search') && empty($selectedBrands) && !$priceMin && !$priceMax && !$isPromoFilter && request('sort', 'terbaru') == 'terbaru')
+                                <a href="{{ route('katalog.index', ['category_id' => $category->id]) }}"
+                                   class="text-[10px] md:text-xs font-semibold text-brand-600 hover:text-brand-700 transition-colors whitespace-nowrap mr-1">
+                                    Lihat Semua ({{ $category->total_count }}) &rarr;
+                                </a>
+                                @endif
+                                
+                                @if($loop->first)
+                                <form action="{{ route('katalog.index') }}" method="GET" class="relative">
+                                    @if(request()->has('category_id'))
+                                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                                     @endif
-                                    
-                                    <form action="{{ route('katalog.index') }}" method="GET" class="relative">
-                                        @if(request()->has('category_id'))
-                                            <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-                                        @endif
-                                        @if(request()->has('search'))
-                                            <input type="hidden" name="search" value="{{ request('search') }}">
-                                        @endif
-                                        @foreach($selectedBrands ?? [] as $b)
-                                            <input type="hidden" name="brands[]" value="{{ $b }}">
-                                        @endforeach
-                                        @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
-                                        @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
-                                        <select name="sort" onchange="this.form.submit()"
-                                                class="appearance-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
-                                            <option value="terbaru"      {{ request('sort', 'terbaru') == 'terbaru'  ? 'selected' : '' }}>Paling Sesuai</option>
-                                            <option value="terendah"     {{ request('sort') == 'terendah'   ? 'selected' : '' }}>Harga Terendah</option>
-                                            <option value="tertinggi"    {{ request('sort') == 'tertinggi'  ? 'selected' : '' }}>Harga Tertinggi</option>
-                                            <option value="terbaru_saja" {{ request('sort') == 'terbaru_saja' ? 'selected' : '' }}>Produk Terbaru</option>
-                                        </select>
-                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-                                            <i class='bx bx-chevron-down text-sm'></i>
-                                        </div>
-                                    </form>
-                                    <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ $category->total_count }} Produk</span>
-                                </div>
-                            @endif
+                                    @if(request()->has('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
+                                    @if($isPromoFilter)
+                                        <input type="hidden" name="promo" value="1">
+                                    @endif
+                                    @foreach($selectedBrands ?? [] as $b)
+                                        <input type="hidden" name="brands[]" value="{{ $b }}">
+                                    @endforeach
+                                    @if($priceMin)<input type="hidden" name="price_min" value="{{ $priceMin }}">@endif
+                                    @if($priceMax)<input type="hidden" name="price_max" value="{{ $priceMax }}">@endif
+                                    <select name="sort" onchange="this.form.submit()"
+                                            style="background-image: none !important;"
+                                            class="appearance-none bg-none bg-white border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
+                                        <option value="terbaru" {{ request('sort', 'terbaru') == 'terbaru' ? 'selected' : '' }}>Paling Sesuai</option>
+                                        <option value="terendah" {{ request('sort') == 'terendah' ? 'selected' : '' }}>Harga Terendah</option>
+                                        <option value="tertinggi" {{ request('sort') == 'tertinggi' ? 'selected' : '' }}>Harga Tertinggi</option>
+                                        <option value="terbaru_saja" {{ request('sort') == 'terbaru_saja' ? 'selected' : '' }}>Produk Terbaru</option>
+                                        <option value="diskon_terbesar" {{ request('sort') == 'diskon_terbesar' ? 'selected' : '' }}>Diskon Terbesar</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-400">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="m6 9 6 6 6-6" />
+                                        </svg>
+                                    </div>
+                                </form>
+                                @endif
+
+                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ method_exists($category->all_products, 'total') ? $category->all_products->total() : $category->all_products->count() }} Produk</span>
+                            </div>
                         </div>
 
                         {{-- Product Grid --}}
@@ -480,45 +481,53 @@
     </main>
 
     {{-- ================================================================ --}}
-    {{-- MOBILE BOTTOM SHEET FILTER MODAL                                 --}}
+    {{-- RESPONSIVE SLIDEOVER / DRAWER FILTER (Mobile & Tablet)           --}}
     {{-- ================================================================ --}}
-    <div x-data="{ open: false }" @open-filter-modal.window="open = true" x-cloak>
-        {{-- Backdrop --}}
-        <div x-show="open"
-             x-transition:enter="transition ease-out duration-200"
+    <div x-data="{ openDrawer: false }" 
+         @open-filter-drawer.window="openDrawer = true" 
+         @open-filter-modal.window="openDrawer = true" 
+         @keydown.window.escape="openDrawer = false" 
+         x-cloak>
+        {{-- Backdrop Overlay --}}
+        <div x-show="openDrawer"
+             x-transition:enter="transition ease-out duration-250"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             @click="open = false"
-             class="fixed inset-0 bg-black/50 z-[200] md:hidden">
+             @click="openDrawer = false"
+             class="fixed inset-0 bg-black/60 backdrop-blur-xs z-[220]">
         </div>
 
-        {{-- Bottom Sheet Panel --}}
-        <div x-show="open"
+        {{-- Slideover Drawer Panel --}}
+        <div x-show="openDrawer"
              x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="translate-y-full"
-             x-transition:enter-end="translate-y-0"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="translate-y-0"
-             x-transition:leave-end="translate-y-full"
-             class="fixed bottom-0 inset-x-0 z-[210] bg-white rounded-t-2xl shadow-2xl md:hidden max-h-[85vh] overflow-y-auto">
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-250"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full"
+             class="fixed inset-y-0 right-0 z-[230] w-full max-w-[340px] sm:max-w-md bg-white shadow-2xl flex flex-col justify-between">
             
-            {{-- Handle --}}
-            <div class="flex justify-center pt-3 pb-1">
-                <div class="w-10 h-1 bg-gray-200 rounded-full"></div>
-            </div>
-
-            {{-- Header --}}
-            <div class="flex items-center justify-between px-5 py-3 border-b border-gray-100">
-                <h3 class="font-bold text-gray-800 text-base">Filter & Urutkan</h3>
-                <button @click="open = false" class="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-                    <i class='bx bx-x text-xl text-gray-500'></i>
+            {{-- Drawer Header --}}
+            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-brand-50 flex items-center justify-center text-brand-600">
+                        <i class='bx bx-slider-alt text-lg'></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-gray-900 text-sm">Filter &amp; Pengurutan</h3>
+                        <p class="text-[11px] text-gray-400">Atur kriteria produk sesuai kebutuhan</p>
+                    </div>
+                </div>
+                <button type="button" @click="openDrawer = false" class="w-8 h-8 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 flex items-center justify-center transition-colors cursor-pointer">
+                    <i class='bx bx-x text-2xl'></i>
                 </button>
             </div>
 
-            <form method="GET" action="{{ route('katalog.index') }}" class="px-5 pb-24">
+            {{-- Drawer Scrollable Content --}}
+            <form id="drawer-filter-form" method="GET" action="{{ route('katalog.index') }}" class="flex-1 overflow-y-auto px-5 py-4 space-y-5 custom-scrollbar">
                 @if(request()->has('category_id'))
                     <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                 @endif
@@ -526,27 +535,78 @@
                     <input type="hidden" name="search" value="{{ request('search') }}">
                 @endif
 
-                {{-- Sort --}}
-                <div class="py-4 border-b border-gray-100">
-                    <h4 class="text-sm font-bold text-gray-700 mb-3">Urutkan</h4>
-                    <div class="grid grid-cols-2 gap-2">
-                        @foreach([
-                            'terbaru'     => 'Paling Sesuai',
-                            'terendah'    => 'Harga Terendah',
-                            'tertinggi'   => 'Harga Tertinggi',
-                            'paling_laris'=> 'Paling Laris',
-                        ] as $val => $label)
-                        <label class="flex items-center gap-2 border {{ request('sort', 'terbaru') == $val ? 'border-brand-500 bg-brand-50 text-brand-600' : 'border-gray-200 text-gray-600' }} rounded-lg px-3 py-2 cursor-pointer text-sm font-medium">
-                            <input type="radio" name="sort" value="{{ $val }}" {{ request('sort', 'terbaru') == $val ? 'checked' : '' }} class="hidden">
-                            {{ $label }}
+                {{-- Filter Promo Card --}}
+                <div class="p-3 bg-gradient-to-r from-rose-50 via-white to-amber-50 rounded-xl border border-rose-200 shadow-xs">
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-xl">🔥</span>
+                            <div>
+                                <div class="text-xs font-extrabold text-gray-900">Hot Promo &amp; Diskon</div>
+                                <div class="text-[10px] text-gray-500">Tampilkan hanya produk berdiskon/promo</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" name="promo" value="1" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                    </label>
+                </div>
+
+                {{-- Opsi Pengurutan (5 Opsi) --}}
+                <div>
+                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                        <i class='bx bx-sort-alt-2 text-brand-500'></i>
+                        <span>Urutkan Produk</span>
+                    </h4>
+                    <div class="grid grid-cols-1 gap-1.5">
+                        @php
+                            $sortOptions = [
+                                'terbaru'         => ['label' => 'Paling Sesuai', 'desc' => 'Rekomendasi promo & relevansi produk'],
+                                'terendah'        => ['label' => 'Harga Terendah', 'desc' => 'Harga termurah ke termahal'],
+                                'tertinggi'       => ['label' => 'Harga Tertinggi', 'desc' => 'Harga termahal ke termurah'],
+                                'terbaru_saja'    => ['label' => 'Produk Terbaru', 'desc' => 'Unit yang baru ditambahkan'],
+                                'diskon_terbesar' => ['label' => 'Diskon Terbesar', 'desc' => 'Potongan harga paling maksimal'],
+                            ];
+                        @endphp
+                        @foreach($sortOptions as $val => $opt)
+                        <label class="flex items-center justify-between p-2.5 rounded-lg border cursor-pointer transition-all {{ request('sort', 'terbaru') == $val ? 'border-brand-500 bg-brand-50/70 text-brand-700 font-bold' : 'border-gray-200 hover:border-gray-300 text-gray-700 font-medium' }}">
+                            <div class="flex items-center gap-2.5">
+                                <input type="radio" name="sort" value="{{ $val }}" {{ request('sort', 'terbaru') == $val ? 'checked' : '' }} class="w-3.5 h-3.5 text-brand-600 focus:ring-brand-500 cursor-pointer">
+                                <div>
+                                    <div class="text-xs">{{ $opt['label'] }}</div>
+                                    <div class="text-[10px] font-normal text-gray-500">{{ $opt['desc'] }}</div>
+                                </div>
+                            </div>
+                            @if(request('sort', 'terbaru') == $val)
+                                <i class='bx bx-check text-brand-600 text-base'></i>
+                            @endif
                         </label>
                         @endforeach
                     </div>
                 </div>
 
-                {{-- Brand Filter --}}
+                {{-- Filter Kategori --}}
+                <div>
+                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class='bx bx-category-alt text-brand-500'></i>
+                        <span>Kategori Produk</span>
+                    </h4>
+                    <div class="flex flex-wrap gap-1.5">
+                        <a href="{{ route('katalog.index', request()->except('category_id')) }}" 
+                           class="px-2.5 py-1 rounded-lg text-xs font-semibold border {{ !isset($selectedCategoryId) ? 'bg-brand-600 text-white border-brand-700' : 'bg-gray-50 text-gray-700 border-gray-200' }}">
+                            Semua
+                        </a>
+                        @foreach($mainCategories as $cat)
+                            @if($cat->total_count > 0)
+                                <a href="{{ route('katalog.index', array_merge(request()->all(), ['category_id' => $cat->id])) }}"
+                                   class="px-2.5 py-1 rounded-lg text-xs font-semibold border {{ (isset($selectedCategoryId) && $selectedCategoryId == $cat->id) ? 'bg-brand-600 text-white border-brand-700' : 'bg-gray-50 text-gray-700 border-gray-200' }}">
+                                    {{ $cat->name }} ({{ $cat->total_count }})
+                                </a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Filter Merek --}}
                 @if(count($availableBrands) > 0)
-                <div class="py-4 border-b border-gray-100" x-data="{
+                <div x-data="{
                     selectedBrands: {{ json_encode($selectedBrands) }},
                     toggleParent(parent, children) {
                         if (this.selectedBrands.includes(parent)) {
@@ -558,32 +618,35 @@
                         }
                     }
                 }">
-                    <h4 class="text-sm font-bold text-gray-700 mb-3">Filter Merek</h4>
-                    <div class="space-y-1.5 py-1">
+                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class='bx bx-purchase-tag-alt text-brand-500'></i>
+                        <span>Filter Merek</span>
+                    </h4>
+                    <div class="space-y-1.5 max-h-56 overflow-y-auto custom-scrollbar pr-1">
                         @foreach($availableBrands as $parentBrand => $childBrands)
-                        <div class="flex flex-col gap-1" x-data="{ open: false }">
+                        <div class="flex flex-col gap-1 border-b border-gray-50 pb-1" x-data="{ openBrand: false }">
                             <div class="flex items-center justify-between">
                                 <label class="flex items-center gap-2 cursor-pointer flex-1 py-0.5">
                                     <input type="checkbox" name="brands[]" value="{{ $parentBrand }}" 
                                            x-model="selectedBrands"
                                            @change="toggleParent('{{ $parentBrand }}', {{ json_encode($childBrands) }})"
-                                           class="w-3.5 h-3.5 text-brand-600 rounded border border-gray-300">
-                                    <span class="text-[13px] font-medium text-gray-700 truncate">{{ $parentBrand }}</span>
+                                           class="w-3.5 h-3.5 text-brand-600 rounded border-gray-300">
+                                    <span class="text-xs font-semibold text-gray-700 truncate">{{ $parentBrand }}</span>
                                 </label>
                                 @if(count($childBrands) > 0)
-                                <button type="button" @click="open = !open" class="text-gray-400 p-0.5">
-                                    <i class='bx text-base' :class="open ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                <button type="button" @click="openBrand = !openBrand" class="text-gray-400 hover:text-brand-600 p-0.5 cursor-pointer">
+                                    <i class='bx text-sm' :class="openBrand ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                                 </button>
                                 @endif
                             </div>
                             @if(count($childBrands) > 0)
-                            <div x-show="open" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
+                            <div x-show="openBrand" class="flex flex-col gap-1 pl-4 ml-1.5 border-l border-gray-200">
                                 @foreach($childBrands as $childBrand)
                                 <label class="flex items-center gap-2 cursor-pointer py-0.5">
                                     <input type="checkbox" name="brands[]" value="{{ $childBrand }}" 
                                            x-model="selectedBrands"
-                                           class="w-3.5 h-3.5 text-brand-500 rounded border border-gray-300">
-                                    <span class="text-[11px] font-normal text-gray-600 truncate">{{ $childBrand }}</span>
+                                           class="w-3.5 h-3.5 text-brand-500 rounded border-gray-300">
+                                    <span class="text-[11px] text-gray-600 truncate">{{ $childBrand }}</span>
                                 </label>
                                 @endforeach
                             </div>
@@ -594,29 +657,33 @@
                 </div>
                 @endif
 
-                {{-- Price Range --}}
-                <div class="py-3">
-                    <h4 class="text-sm font-bold text-gray-700 mb-2">Rentang Harga</h4>
+                {{-- Filter Harga --}}
+                <div>
+                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class='bx bx-money text-brand-500'></i>
+                        <span>Rentang Harga</span>
+                    </h4>
                     <div class="flex items-center gap-2">
                         <input type="number" name="price_min" value="{{ $priceMin }}" placeholder="Rp Min"
-                            class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <span class="text-gray-400 font-medium">-</span>
+                               class="w-full border border-gray-200 rounded-lg px-2.5 h-9 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <span class="text-gray-400 font-bold">-</span>
                         <input type="number" name="price_max" value="{{ $priceMax }}" placeholder="Rp Max"
-                            class="w-full border border-gray-200 rounded-lg px-2.5 h-8 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+                               class="w-full border border-gray-200 rounded-lg px-2.5 h-9 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
-
-                {{-- Action Buttons --}}
-                <div class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-100 px-5 py-3 flex gap-3">
-                    <a href="{{ route('katalog.index', request()->only('category_id', 'search')) }}"
-                       class="flex-1 text-center border border-gray-200 rounded-xl py-3 text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors">
-                        Reset
-                    </a>
-                    <button type="submit" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-bold transition-colors">
-                        Terapkan Filter
-                    </button>
-                </div>
             </form>
+
+            {{-- Drawer Footer --}}
+            <div class="p-4 border-t border-gray-100 bg-white flex gap-3 shrink-0 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+                <a href="{{ route('katalog.index', request()->only('category_id', 'search')) }}"
+                   class="flex-1 text-center border border-gray-200 hover:bg-gray-50 rounded-xl py-2.5 text-xs font-bold text-gray-700 transition-colors">
+                    Reset Filter
+                </a>
+                <button type="submit" form="drawer-filter-form"
+                        class="flex-1 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 text-xs font-bold shadow-md shadow-brand-500/20 transition-all cursor-pointer">
+                    Terapkan
+                </button>
+            </div>
         </div>
     </div>
 

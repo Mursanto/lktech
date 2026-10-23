@@ -480,6 +480,28 @@ class PublicCatalogController extends Controller
         $selectedBrands = $request->brands ?? [];
         $priceMin = $request->price_min ? (int) str_replace('.', '', $request->price_min) : null;
         $priceMax = $request->price_max ? (int) str_replace('.', '', $request->price_max) : null;
+        $isPromoFilter = $request->boolean('promo') || $request->promo === '1';
+        $currentSort = $request->sort ?? 'terbaru';
+
+        // Hitung total produk promo aktif untuk badge promo
+        $totalPromoCount = \App\Models\Product::where(function($q) use ($promoProductIds) {
+            $q->where('is_promo_utama', true)
+              ->orWhere('is_banner_hero', true)
+              ->orWhere(function($sub) {
+                  $sub->whereNotNull('original_price')
+                      ->whereColumn('original_price', '>', 'selling_price');
+              });
+            if ($promoProductIds->isNotEmpty()) {
+                $q->orWhereIn('id', $promoProductIds);
+            }
+        })->where(function($q) {
+            $q->where(function($q1) {
+                $q1->where('stock', '>', 0)
+                   ->where('status', '!=', 'sold');
+            })->orWhereNotNull('image_path');
+        })->count();
+
+        $promoIdsList = $promoProductIds->isNotEmpty() ? $promoProductIds->implode(',') : '0';
 
         foreach($displayCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
@@ -495,6 +517,21 @@ class PublicCatalogController extends Controller
             // Search filter
             if ($request->filled('search')) {
                 $this->applySearchFilter($query, $request->search);
+            }
+
+            // Promo filter
+            if ($isPromoFilter) {
+                $query->where(function($q) use ($promoProductIds) {
+                    $q->where('is_promo_utama', true)
+                      ->orWhere('is_banner_hero', true)
+                      ->orWhere(function($sub) {
+                          $sub->whereNotNull('original_price')
+                              ->whereColumn('original_price', '>', 'selling_price');
+                      });
+                    if ($promoProductIds->isNotEmpty()) {
+                        $q->orWhereIn('id', $promoProductIds);
+                    }
+                });
             }
 
             // Brand filter
@@ -517,15 +554,44 @@ class PublicCatalogController extends Controller
             }
 
             // Sorting
-            $sort = $request->sort ?? 'terbaru';
-            switch ($sort) {
-                case 'tertinggi':    $query->orderBy('selling_price', 'desc'); break;
-                case 'terendah':     $query->orderBy('selling_price', 'asc');  break;
-                case 'terbaru_saja': $query->latest('created_at');             break;
-                default:             $query->latest();                          break; // 'terbaru' / default
+            switch ($currentSort) {
+                case 'tertinggi':
+                    $query->orderBy('selling_price', 'desc');
+                    break;
+                case 'terendah':
+                    $query->orderBy('selling_price', 'asc');
+                    break;
+                case 'terbaru_saja':
+                    $query->latest('created_at');
+                    break;
+                case 'diskon_terbesar':
+                    $query->orderByRaw("
+                        CASE 
+                            WHEN original_price IS NOT NULL AND original_price > selling_price 
+                                THEN ((original_price - selling_price) / original_price) * 100
+                            WHEN is_promo_utama = 1 OR is_banner_hero = 1 OR id IN ($promoIdsList) 
+                                THEN 15.0
+                            ELSE 0 
+                        END DESC
+                    ")->orderByRaw("
+                        CASE 
+                            WHEN original_price IS NOT NULL AND original_price > selling_price 
+                                THEN (original_price - selling_price)
+                            WHEN is_promo_utama = 1 OR is_banner_hero = 1 OR id IN ($promoIdsList) 
+                                THEN (selling_price * 0.15)
+                            ELSE 0 
+                        END DESC
+                    ")->latest('created_at');
+                    break;
+                default:
+                    // 'terbaru' / Paling Sesuai: Produk promo utama tampil lebih dulu, lalu produk terbaru
+                    $query->orderByRaw('is_promo_utama DESC, is_banner_hero DESC, created_at DESC');
+                    break;
             }
 
-            if (!$selectedCategoryId && !$request->has('search') && empty($selectedBrands) && $priceMin === null && $priceMax === null) {
+            $hasActiveFilter = $selectedCategoryId || $request->filled('search') || !empty($selectedBrands) || $priceMin !== null || $priceMax !== null || $isPromoFilter || ($request->has('sort') && $request->sort !== 'terbaru');
+
+            if (!$hasActiveFilter) {
                 // Preview mode: limit products to avoid empty grid spaces
                 $catNameLower = strtolower($category->name);
                 
@@ -553,7 +619,7 @@ class PublicCatalogController extends Controller
                     $product->display_image = asset('images/LKtech-fallback.webp');
                     $product->display_thumbnail = asset('images/LKtech-fallback.webp');
                 }
-                $product->is_active_promo = $promoProductIds->contains($product->id);
+                $product->is_active_promo = $promoProductIds->contains($product->id) || ($product->original_price && $product->original_price > $product->selling_price);
                 return $product;
             });
 
@@ -562,7 +628,8 @@ class PublicCatalogController extends Controller
 
         return view('katalog.index', compact(
             'mainCategories', 'displayCategories', 'selectedCategoryId',
-            'availableBrands', 'selectedBrands', 'priceMin', 'priceMax'
+            'availableBrands', 'selectedBrands', 'priceMin', 'priceMax',
+            'isPromoFilter', 'totalPromoCount', 'currentSort'
         ));
     }
 
