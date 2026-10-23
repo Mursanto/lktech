@@ -480,53 +480,79 @@ class PublicCatalogController extends Controller
         $selectedBrands = $request->brands ?? [];
         $priceMin = $request->price_min ? (int) str_replace('.', '', $request->price_min) : null;
         $priceMax = $request->price_max ? (int) str_replace('.', '', $request->price_max) : null;
-        $isPromoFilter = $request->boolean('promo') || $request->promo === '1';
+        $isPromoFilter = ($request->has('is_promo') && $request->is_promo == '1')
+                      || ($request->has('promo') && $request->promo == '1')
+                      || $request->boolean('is_promo')
+                      || $request->boolean('promo');
         $currentSort = $request->sort ?? 'terbaru';
 
         // Hitung total produk promo aktif untuk badge promo
-        $totalPromoCount = \App\Models\Product::where(function($q) use ($promoProductIds) {
+        $promoBaseQuery = \App\Models\Product::where(function($q) use ($promoProductIds) {
             $q->where('is_promo_utama', true)
               ->orWhere('is_banner_hero', true)
               ->orWhere(function($sub) {
-                  $sub->whereNotNull('original_price')
-                      ->whereColumn('original_price', '>', 'selling_price');
+                  if (\Illuminate\Support\Facades\Schema::hasColumn('products', 'discount_price')) {
+                      $sub->whereNotNull('discount_price')
+                          ->whereColumn('discount_price', '<', 'selling_price');
+                  } else {
+                      $sub->whereNotNull('original_price')
+                          ->whereColumn('original_price', '>', 'selling_price');
+                  }
               });
             if ($promoProductIds->isNotEmpty()) {
                 $q->orWhereIn('id', $promoProductIds);
             }
-        })->where(function($q) {
-            $q->where(function($q1) {
-                $q1->where('stock', '>', 0)
-                   ->where('status', '!=', 'sold');
-            })->orWhereNotNull('image_path');
-        })->count();
+        });
+
+        if (\Illuminate\Support\Facades\Schema::hasColumn('products', 'is_active')) {
+            $promoBaseQuery->where('is_active', true);
+        } else {
+            $promoBaseQuery->where(function($q) {
+                $q->where(function($q1) {
+                    $q1->where('stock', '>', 0)
+                       ->where('status', '!=', 'sold');
+                })->orWhereNotNull('image_path');
+            });
+        }
+        $totalPromoCount = $promoBaseQuery->count();
 
         $promoIdsList = $promoProductIds->isNotEmpty() ? $promoProductIds->implode(',') : '0';
 
         foreach($displayCategories as $category) {
             $categoryIds = $category->children->pluck('id')->push($category->id)->toArray();
 
-            $query = \App\Models\Product::with('category')->whereIn('category_id', $categoryIds)
-                        ->where(function($q) {
-                            $q->where(function($q1) {
-                                $q1->where('stock', '>', 0)
-                                   ->where('status', '!=', 'sold');
-                            })->orWhereNotNull('image_path');
-                        });
+            // 1. Kueri dasar: Hanya produk aktif & berdasarkan category_id
+            $query = \App\Models\Product::with('category')->whereIn('category_id', $categoryIds);
+
+            if (\Illuminate\Support\Facades\Schema::hasColumn('products', 'is_active')) {
+                $query->where('is_active', true);
+            } else {
+                $query->where(function($q) {
+                    $q->where(function($q1) {
+                        $q1->where('stock', '>', 0)
+                           ->where('status', '!=', 'sold');
+                    })->orWhereNotNull('image_path');
+                });
+            }
 
             // Search filter
             if ($request->filled('search')) {
                 $this->applySearchFilter($query, $request->search);
             }
 
-            // Promo filter
+            // 2. Filter promo/diskon HANYA diaktifkan jika terdapat request eksplisit dari checkbox
             if ($isPromoFilter) {
                 $query->where(function($q) use ($promoProductIds) {
                     $q->where('is_promo_utama', true)
                       ->orWhere('is_banner_hero', true)
                       ->orWhere(function($sub) {
-                          $sub->whereNotNull('original_price')
-                              ->whereColumn('original_price', '>', 'selling_price');
+                          if (\Illuminate\Support\Facades\Schema::hasColumn('products', 'discount_price')) {
+                              $sub->whereNotNull('discount_price')
+                                  ->whereColumn('discount_price', '<', 'selling_price');
+                          } else {
+                              $sub->whereNotNull('original_price')
+                                  ->whereColumn('original_price', '>', 'selling_price');
+                          }
                       });
                     if ($promoProductIds->isNotEmpty()) {
                         $q->orWhereIn('id', $promoProductIds);
@@ -562,7 +588,7 @@ class PublicCatalogController extends Controller
                     $query->orderBy('selling_price', 'asc');
                     break;
                 case 'terbaru_saja':
-                    $query->latest('created_at');
+                    $query->latest('created_at')->latest('id');
                     break;
                 case 'diskon_terbesar':
                     $query->orderByRaw("
@@ -573,18 +599,11 @@ class PublicCatalogController extends Controller
                                 THEN 15.0
                             ELSE 0 
                         END DESC
-                    ")->orderByRaw("
-                        CASE 
-                            WHEN original_price IS NOT NULL AND original_price > selling_price 
-                                THEN (original_price - selling_price)
-                            WHEN is_promo_utama = 1 OR is_banner_hero = 1 OR id IN ($promoIdsList) 
-                                THEN (selling_price * 0.15)
-                            ELSE 0 
-                        END DESC
                     ")->latest('created_at');
                     break;
+                case 'terbaru':
                 default:
-                    // 'terbaru' / Paling Sesuai: Produk promo utama tampil lebih dulu, lalu produk terbaru
+                    // 'terbaru' / Paling Sesuai: Produk promo utama diprioritaskan di atas tanpa memfilter produk lainnya, lalu diurutkan terbaru
                     $query->orderByRaw('is_promo_utama DESC, is_banner_hero DESC, created_at DESC');
                     break;
             }
@@ -598,7 +617,7 @@ class PublicCatalogController extends Controller
                 if (str_contains($catNameLower, 'komponen') || str_contains($catNameLower, 'aksesoris') || str_contains($catNameLower, 'lisensi') || str_contains($catNameLower, 'software') || str_contains($catNameLower, 'sparepart')) {
                     $limit = 6; // 1 baris penuh (desktop)
                 } elseif (str_contains($catNameLower, 'laptop & device') || str_contains($catNameLower, 'laptop') || str_contains($catNameLower, 'device')) {
-                    $limit = 30; // 5 baris penuh (desktop)
+                    $limit = 12; // 2 baris penuh (desktop)
                 } else {
                     $limit = 12; // Default 2 baris penuh (desktop)
                 }
@@ -606,8 +625,8 @@ class PublicCatalogController extends Controller
                 $products = $query->take($limit)->get();
                 $collectionToTransform = $products;
             } else {
-                // Detail/filtered mode: paginate with simplePaginate for performance
-                $products = $query->simplePaginate(24)->withQueryString();
+                // 3. Tampilkan seluruh 115 produk secara utuh menggunakan paginate(12)
+                $products = $query->paginate(12)->withQueryString();
                 $collectionToTransform = $products->getCollection();
             }
 

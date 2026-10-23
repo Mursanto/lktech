@@ -126,7 +126,7 @@
                         
                         <label class="flex items-center justify-between p-2 rounded-lg cursor-pointer bg-white border {{ $isPromoFilter ? 'border-rose-400 ring-2 ring-rose-200 bg-rose-50/50' : 'border-gray-200 hover:border-rose-300' }} transition-all">
                             <div class="flex items-center gap-2">
-                                <input type="checkbox" name="promo" value="1" onchange="this.form.submit()" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                                <input type="checkbox" name="is_promo" value="1" onchange="this.form.submit()" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
                                 <span class="text-xs font-bold {{ $isPromoFilter ? 'text-rose-700' : 'text-gray-700' }}">Hot Promo / Diskon</span>
                             </div>
                             @if($isPromoFilter)
@@ -134,7 +134,7 @@
                             @endif
                         </label>
                         @if($isPromoFilter)
-                            <a href="{{ request()->url() . '?' . http_build_query(request()->except('promo')) }}" class="mt-2 inline-block text-[11px] text-rose-600 hover:text-rose-700 font-bold">
+                            <a href="{{ request()->url() . '?' . http_build_query(request()->except(['is_promo', 'promo'])) }}" class="mt-2 inline-block text-[11px] text-rose-600 hover:text-rose-700 font-bold">
                                 &times; Nonaktifkan filter promo
                             </a>
                         @endif
@@ -199,7 +199,7 @@
                             <input type="hidden" name="sort" value="{{ request('sort') }}">
                         @endif
                         @if($isPromoFilter)
-                            <input type="hidden" name="promo" value="1">
+                            <input type="hidden" name="is_promo" value="1">
                         @endif
                         @if(request()->has('price_min'))
                             <input type="hidden" name="price_min" value="{{ request('price_min') }}">
@@ -269,7 +269,7 @@
                             <input type="hidden" name="sort" value="{{ request('sort') }}">
                         @endif
                         @if($isPromoFilter)
-                            <input type="hidden" name="promo" value="1">
+                            <input type="hidden" name="is_promo" value="1">
                         @endif
                         @foreach($selectedBrands ?? [] as $b)
                             <input type="hidden" name="brands[]" value="{{ $b }}">
@@ -329,7 +329,7 @@
                         <input type="hidden" name="search" value="{{ request('search') }}">
                     @endif
                     @if($isPromoFilter)
-                        <input type="hidden" name="promo" value="1">
+                        <input type="hidden" name="is_promo" value="1">
                     @endif
                     @foreach($selectedBrands ?? [] as $b)
                         <input type="hidden" name="brands[]" value="{{ $b }}">
@@ -402,7 +402,7 @@
                                 </a>
                                 @endif
                                 <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md whitespace-nowrap">
-                                    {{ method_exists($category->all_products, 'total') ? $category->all_products->total() : $category->all_products->count() }} Produk
+                                    {{ method_exists($category->all_products, 'total') ? $category->all_products->total() : ($category->total_count ?? $category->all_products->count()) }} Produk
                                 </span>
                             </div>
 
@@ -428,7 +428,7 @@
                                         <input type="hidden" name="search" value="{{ request('search') }}">
                                     @endif
                                     @if($isPromoFilter)
-                                        <input type="hidden" name="promo" value="1">
+                                        <input type="hidden" name="is_promo" value="1">
                                     @endif
                                     @foreach($selectedBrands ?? [] as $b)
                                         <input type="hidden" name="brands[]" value="{{ $b }}">
@@ -452,7 +452,7 @@
                                 </form>
                                 @endif
 
-                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ method_exists($category->all_products, 'total') ? $category->all_products->total() : $category->all_products->count() }} Produk</span>
+                                <span class="text-xs font-semibold text-gray-400 bg-gray-100 px-2 py-1 rounded-md">{{ method_exists($category->all_products, 'total') ? $category->all_products->total() : ($category->total_count ?? $category->all_products->count()) }} Produk</span>
                             </div>
                         </div>
 
@@ -545,7 +545,7 @@
                                 <div class="text-[10px] text-gray-500">Tampilkan hanya produk berdiskon/promo</div>
                             </div>
                         </div>
-                        <input type="checkbox" name="promo" value="1" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
+                        <input type="checkbox" name="is_promo" value="1" {{ $isPromoFilter ? 'checked' : '' }} class="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500 cursor-pointer">
                     </label>
                 </div>
 
