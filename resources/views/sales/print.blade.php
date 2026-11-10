@@ -55,10 +55,10 @@
 
         /* Badges */
         .badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; font-weight: 800; border: 1px solid; }
-        .badge-success  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .badge-success  { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
         .badge-pending  { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
         .badge-failed   { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
-        .badge-selesai  { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+        .badge-selesai  { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
         .badge-diproses { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
         .badge-batal    { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
         .badge-menunggu { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
@@ -70,7 +70,7 @@
         .prod-table th.right { text-align: right; }
         .prod-table td { padding: 5px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 10px; }
         .prod-table td.right { text-align: right; font-weight: 700; }
-        .prod-name { font-weight: 700; color: #111827; }
+        .prod-name { font-weight: 700; color: #2563eb; }
         .prod-cat  { font-size: 9px; color: #6b7280; }
         .prod-spec { font-size: 9px; color: #4b5563; background: #f9fafb; padding: 1px 4px; border-radius: 3px; display: inline-block; margin-top: 2px; line-height: 1.3; }
         .prod-sn   { font-size: 9px; font-family: monospace; color: #1e40af; margin-top: 2px; }
@@ -119,7 +119,12 @@
                 </div>
             </div>
         </div>
-        <div class="inv-title">Invoice</div>
+        <div style="text-align: right;">
+            <div class="inv-title">Invoice</div>
+            <div style="font-size: 9px; font-weight: 600; color: #2563eb; margin-top: 2px;">
+                Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}
+            </div>
+        </div>
     </div>
 
     {{-- 2-COLUMN INFO --}}
@@ -157,11 +162,14 @@
                 <tr>
                     <td style="font-weight:600; padding:2px 0;">Status Pembayaran</td>
                     <td style="text-align:center;">:</td>
-                    <td style="text-align:right;">
-                        @php $ps = $sale->payment_status; @endphp
-                        <span class="badge {{ $ps==='success'?'badge-success':($ps==='failed'?'badge-failed':'badge-pending') }}">
-                            {{ strtoupper($ps==='success'?'LUNAS':($ps==='failed'?'BATAL':'PENDING')) }}
-                        </span>
+                    <td style="text-align:right; font-weight:600; color:#111827;">
+                        @if($sale->payment_status === 'success')
+                            LUNAS
+                        @elseif($sale->payment_status === 'failed')
+                            <span style="color:#dc2626; font-weight:700;">BATAL</span>
+                        @else
+                            <span style="color:#d97706; font-weight:700;">PENDING</span>
+                        @endif
                     </td>
                 </tr>
             </table>
@@ -196,8 +204,6 @@
                         {{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}
                         @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
                             <span class="badge-preorder">Pre-Order</span>
-                        @else
-                            <span class="badge-ready">Ready</span>
                         @endif
                     </div>
                     <div class="prod-cat">{{ $detail->product->category->name ?? 'Umum' }}</div>

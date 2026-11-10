@@ -112,7 +112,7 @@
                         <!-- Invoice Title -->
                         <div class="mt-2 md:mt-0 text-left md:text-right">
                             <h2 class="text-2xl font-extrabold text-gray-900 uppercase tracking-widest mb-0.5">Invoice</h2>
-                            <div class="text-[10px] text-gray-500 font-medium tracking-wide">
+                            <div class="text-[10px] font-semibold tracking-wide" style="color: #2563eb;">
                                 Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}
                             </div>
                         </div>
@@ -166,10 +166,14 @@
                                     <tr>
                                         <td class="py-1 pt-2 font-medium">Status Pembayaran</td>
                                         <td class="py-1 pt-2 text-center">:</td>
-                                        <td class="py-1 pt-2 text-right">
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold {{ $sale->payment_status === 'success' ? 'bg-green-100 text-green-800 border-green-200' : ($sale->payment_status === 'failed' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200') }} border">
-                                                {{ strtoupper($sale->payment_status === 'success' ? 'LUNAS' : ($sale->payment_status === 'failed' ? 'BATAL' : 'PENDING')) }}
-                                            </span>
+                                        <td class="py-1 pt-2 text-right text-slate-900 font-semibold">
+                                            @if($sale->payment_status === 'success')
+                                                LUNAS
+                                            @elseif($sale->payment_status === 'failed')
+                                                <span class="text-red-600 font-bold">BATAL</span>
+                                            @else
+                                                <span class="text-amber-600 font-bold">PENDING</span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
@@ -203,13 +207,11 @@
                                 <tr style="background-color: #ffffff;" class="hover:bg-gray-50">
                                     <td style="width: 48%; padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #e5e7eb; font-size: 8pt;">
                                         <div>
-                                            <div class="font-bold text-gray-800 flex items-center gap-1.5 flex-wrap">
-                                                {{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}
-                                                {{-- Badge Tipe Stok di Laporan --}}
+                                            <div class="font-bold flex items-center gap-1.5 flex-wrap" style="color: #2563eb;">
+                                                <span>{{ $detail->product->brand }} {{ $detail->product->model_series ?? '' }}</span>
+                                                {{-- Badge Tipe Stok: tulisan Ready disembunyikan sesuai permintaan --}}
                                                 @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
                                                     <span style="display:inline-block; padding: 1px 5px; border-radius: 3px; font-size: 7pt; font-weight: 700; background-color: #fff7ed; color: #c2410c; border: 1px solid #fed7aa;">Pre-Order</span>
-                                                @else
-                                                    <span style="display:inline-block; padding: 1px 5px; border-radius: 3px; font-size: 7pt; font-weight: 700; background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0;">Ready</span>
                                                 @endif
                                             </div>
                                             <div class="text-[10px] text-gray-500">{{ $detail->product->category->name ?? 'Umum' }}</div>

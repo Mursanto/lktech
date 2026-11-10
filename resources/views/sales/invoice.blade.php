@@ -140,9 +140,9 @@
             font-weight: 700;
         }
         .status-lunas {
-            background-color: #dcfce7;
-            color: #166534;
-            border: 1px solid #bbf7d0;
+            background-color: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
         }
         .status-pending {
             background-color: #fef9c3;
@@ -177,7 +177,7 @@
 
         .product-name {
             font-weight: 700;
-            color: #1f2937;
+            color: #2563eb;
             margin-bottom: 2px;
         }
 
@@ -279,7 +279,7 @@
                 </td>
                 <td class="header-title" style="width: 50%; text-align: right; vertical-align: middle;">
                     <h1 class="invoice-title" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-bottom: 2px;">INVOICE</h1>
-                    <div style="font-size: 8pt; color: #6b7280; font-weight: normal; letter-spacing: 0.5px;">Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}</div>
+                    <div style="font-size: 8pt; color: #2563eb; font-weight: 600; letter-spacing: 0.5px;">Order ID {{ $sale->payment_reference_id ?? 'SALE-' . $sale->id . '-' . ($sale->created_at ? $sale->created_at->timestamp : time()) }}</div>
                 </td>
             </tr>
         </table>
@@ -337,13 +337,13 @@
                               <tr>
                                   <td style="padding: 6px 0 0 0; font-weight: 500; vertical-align: middle;">Status Pembayaran</td>
                                   <td style="padding: 6px 0 0 0; text-align: center; vertical-align: middle;">:</td>
-                                  <td style="padding: 6px 0 0 0; text-align: right; vertical-align: middle;">
+                                  <td style="padding: 6px 0 0 0; text-align: right; font-weight: 700; color: #0f172a; vertical-align: middle;">
                                       @if($sale->payment_status === 'success')
-                                          <span class="status-badge status-lunas">LUNAS</span>
+                                          LUNAS
                                       @elseif($sale->payment_status === 'failed')
-                                          <span class="status-badge status-batal" style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">BATAL</span>
+                                          <span style="color: #dc2626;">BATAL</span>
                                       @else
-                                          <span class="status-badge status-pending">PENDING</span>
+                                          <span style="color: #d97706;">PENDING</span>
                                       @endif
                                   </td>
                               </tr>
@@ -381,8 +381,6 @@
                             {{ $detail->product->brand ?? '' }} {{ $detail->product->model_series ?? '' }}
                             @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
                                 <span class="badge badge-po">Pre-Order</span>
-                            @else
-                                <span class="badge badge-ready">Ready</span>
                             @endif
                         </div>
                         <div class="product-category">{{ $detail->product->category->name ?? 'Umum' }}</div>
