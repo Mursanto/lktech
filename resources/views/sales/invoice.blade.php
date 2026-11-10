@@ -357,15 +357,26 @@
         <table class="products-table">
             <thead>
                 <tr>
-                    <th style="width: 50%;">PRODUK</th>
-                    <th style="width: 25%;">NOMOR SERI</th>
-                    <th style="width: 25%; text-align: right;">HARGA</th>
+                    <th style="width: 48%;">INFO PRODUK</th>
+                    <th style="width: 12%; text-align: center;">JUMLAH</th>
+                    <th style="width: 20%; text-align: right;">HARGA SATUAN</th>
+                    <th style="width: 20%; text-align: right;">TOTAL HARGA</th>
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $calculatedSubtotal = 0;
+                @endphp
                 @foreach($sale->saleDetails as $detail)
+                @php
+                    $qty = $detail->quantity ?? 1;
+                    $unitPrice = $detail->price_at_transaction ?? 0;
+                    $lineTotal = $unitPrice * $qty;
+                    $calculatedSubtotal += $lineTotal;
+                    $sn = $detail->serial_number ?? $detail->product->serial_number ?? null;
+                @endphp
                 <tr>
-                    <td>
+                    <td style="width: 48%;">
                         <div class="product-name">
                             {{ $detail->product->brand ?? '' }} {{ $detail->product->model_series ?? '' }}
                             @if(($detail->product->tipe_stok ?? 'ready_stock') === 'open_order')
@@ -385,48 +396,54 @@
                                 @if(!empty($detail->product->storage) && $detail->product->storage != '-') | Storage: {{ $detail->product->storage }} @endif
                             </div>
                         @endif
-                    </td>
-                    <td>
-                        <div>{{ $detail->serial_number ?? $detail->product->serial_number ?? '-' }}</div>
+
+                        @if($sn && $sn !== '-')
+                            <div style="font-size: 8pt; color: #4b5563; margin-top: 4px; font-family: monospace;">
+                                <span style="font-family: inherit; font-weight: 600; color: #374151;">No. Seri / SKU:</span> {{ $sn }}
+                            </div>
+                        @endif
                         @if($detail->manual_sn)
-                        <div style="font-size: 8pt; color: #4b5563; margin-top: 4px;">SN/Key: {{ $detail->manual_sn }}</div>
+                            <div style="font-size: 8pt; color: #4b5563; margin-top: 2px; font-family: monospace;">
+                                <span style="font-family: inherit; font-weight: 600; color: #374151;">SN/Key:</span> {{ $detail->manual_sn }}
+                            </div>
                         @endif
                     </td>
-                    <td style="text-align: right; font-weight: 700;">
-                        Rp {{ number_format($detail->price_at_transaction, 0, ',', '.') }}
+                    <td style="width: 12%; text-align: center; font-weight: 600;">
+                        {{ $qty }}
+                    </td>
+                    <td style="width: 20%; text-align: right; color: #374151;">
+                        Rp {{ number_format($unitPrice, 0, ',', '.') }}
+                    </td>
+                    <td style="width: 20%; text-align: right; font-weight: 700;">
+                        Rp {{ number_format($lineTotal, 0, ',', '.') }}
                     </td>
                 </tr>
                 @endforeach
                 
                 <!-- Total Rows -->
                 @php
-                    $subtotal = 0;
-                    foreach($sale->saleDetails as $detail) {
-                        $subtotal += ($detail->price_at_transaction * $detail->quantity);
-                    }
+                    $finalSubtotal = $sale->subtotal > 0 ? $sale->subtotal : ($calculatedSubtotal > 0 ? $calculatedSubtotal : ($sale->total_amount + ($sale->discount ?? 0)));
                 @endphp
                 
-                @if($sale->discount > 0)
                 <tr>
-                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #4b5563; font-size: 10pt;">
-                        SUBTOTAL
+                    <td colspan="3" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #4b5563; font-size: 10pt;">
+                        SUBTOTAL HARGA PRODUK
                     </td>
                     <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; font-size: 10pt;">
-                        Rp {{ number_format($subtotal, 0, ',', '.') }}
+                        Rp {{ number_format($finalSubtotal, 0, ',', '.') }}
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #6b7280; font-size: 10pt;">
+                <tr style="background-color: #ffffff;">
+                    <td colspan="3" style="text-align: right; border-left: 1px solid #e5e7eb; padding: 10px; font-weight: 400; color: #4b5563; font-size: 10pt;">
                         Diskon / Potongan
                     </td>
-                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 700; color: #ef4444; font-size: 10pt;">
-                        -Rp {{ number_format($sale->discount, 0, ',', '.') }}
+                    <td style="text-align: right; border-right: 1px solid #e5e7eb; padding: 10px; font-weight: 400; color: #4b5563; font-size: 10pt;">
+                        -Rp {{ number_format($sale->discount ?? 0, 0, ',', '.') }}
                     </td>
                 </tr>
-                @endif
                 
                 <tr class="total-row">
-                    <td colspan="2" style="text-align: right; border-left: 1px solid #e5e7eb;">TOTAL BAYAR</td>
+                    <td colspan="3" style="text-align: right; border-left: 1px solid #e5e7eb;">TOTAL BAYAR</td>
                     <td style="text-align: right; border-right: 1px solid #e5e7eb;">
                         Rp {{ number_format($sale->total_amount, 0, ',', '.') }}
                     </td>
