@@ -200,6 +200,7 @@ class InvestorReportController extends Controller
         $totalCapital       = $investor->totalCapital();
         $cumulativeTurnover = $investor->cumulativePurchasedValue();
         $totalInvestment    = $totalCapital;
+        $idleCapital        = max(0, $totalCapital - $assetValue); // Sisa modal tunai yang belum dibelanjakan jadi stok
         $totalQty           = $investor->totalQty();
         $soldQty            = $investor->soldQty();
         $currentStockQty    = $investor->currentStockQty();
@@ -265,6 +266,7 @@ class InvestorReportController extends Controller
 
         $totalPendingPayout = $details->where('payout_status', 'pending')->sum('investor_share');
         $totalPaidPayout    = $details->where('payout_status', 'paid')->sum('investor_share');
+        $realSalesRevenue   = (int) $details->sum(fn($d) => ($d['price'] ?? 0) * ($d['qty'] ?? 1));
 
         // Produk aktif milik investor
         $activeProducts = $investor->activeProducts()->with('category')->get();
@@ -281,6 +283,8 @@ class InvestorReportController extends Controller
             'totalInvestment',
             'totalCapital',
             'cumulativeTurnover',
+            'idleCapital',
+            'realSalesRevenue',
             'deposits',
             'totalQty',
             'soldQty',

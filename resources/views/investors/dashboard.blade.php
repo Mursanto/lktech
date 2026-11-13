@@ -88,8 +88,8 @@
                     <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
                 </div>
                 <div class="mt-1 flex items-center justify-between text-[8px] sm:text-[9px] text-natural-500">
-                    <span class="font-medium text-emerald-600">Dana Berputar</span>
-                    <span class="text-natural-400 font-normal" title="Total belanja stok yang pernah diputar dari modal ini">Omzet: Rp {{ number_format($cumulativeTurnover ?? $totalInvestment, 0, ',', '.') }}</span>
+                    <span class="font-medium text-emerald-600 flex items-center gap-0.5"><i class='bx bx-sync'></i> Dana Berputar</span>
+                    <span class="text-natural-400 font-normal" title="Akumulasi seluruh belanja modal stok yang pernah diputar">Belanja Stok: Rp {{ number_format($cumulativeTurnover ?? $totalInvestment, 0, ',', '.') }}</span>
                 </div>
             </div>
 
@@ -106,7 +106,9 @@
                         <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
                         <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($investorShare, 0, ',', '.') }}</span>
                     </div>
-                    <p class="text-natural-400 font-medium text-[9px] sm:text-[10px] mt-0.5 sm:mt-0 sm:text-right">{{ $soldQty }} Terjual</p>
+                    <p class="text-natural-400 font-medium text-[8px] sm:text-[9px] mt-0.5 sm:mt-0 sm:text-right" title="Omzet Penjualan Bersih Produk Investor: Rp {{ number_format($realSalesRevenue ?? 0, 0, ',', '.') }}">
+                        Omzet: Rp {{ number_format($realSalesRevenue ?? 0, 0, ',', '.') }} <span class="text-natural-300">|</span> {{ $soldQty }} Terjual
+                    </p>
                 </div>
                 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-1.5 mt-auto">
@@ -133,7 +135,14 @@
                     <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
                     <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($assetValue, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-natural-500 font-medium text-[9px] sm:text-[10px] mt-1">{{ $currentStockQty }} Unit Tersedia</p>
+                <div class="mt-1 flex items-center justify-between text-[8px] sm:text-[9px]">
+                    <span class="text-natural-500 font-medium">{{ $currentStockQty }} Unit Tersedia</span>
+                    @if(($idleCapital ?? 0) > 0)
+                    <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-blue-50 text-blue-700 font-bold rounded border border-blue-100" title="Sisa modal pokok belum dibelanjakan jadi unit (mengendap aman sebagai saldo kas siap diputar)">
+                        <i class='bx bx-wallet text-[10px]'></i> Kas: Rp {{ number_format($idleCapital, 0, ',', '.') }}
+                    </span>
+                    @endif
+                </div>
             </div>
 
             {{-- ROI --}}
@@ -149,6 +158,18 @@
                 <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90 cursor-help" title="Kalkulasi: Total Profit (Rp {{ number_format($investorShare, 0, ',', '.') }}) ÷ Modal Pokok Disetor (Rp {{ number_format($totalInvestment, 0, ',', '.') }})">(Profit &divide; Modal Pokok)</p>
             </div>
         </div>
+
+        {{-- Info Rekonsiliasi Kas Mengendap jika ada --}}
+        @if(($idleCapital ?? 0) > 0)
+        <div class="bg-blue-50/70 border border-blue-200 rounded-xl px-3 py-2 flex items-center justify-between text-[10px] sm:text-xs text-blue-900 shadow-xs">
+            <div class="flex items-center gap-2">
+                <i class='bx bx-info-circle text-blue-600 text-base shrink-0'></i>
+                <span>
+                    <strong>Rekonsiliasi Modal:</strong> Dari modal pokok <strong>Rp {{ number_format($totalInvestment, 0, ',', '.') }}</strong>, sebesar <strong>Rp {{ number_format($assetValue, 0, ',', '.') }}</strong> aktif berupa {{ $currentStockQty }} unit stok, dan <strong>Rp {{ number_format($idleCapital, 0, ',', '.') }}</strong> adalah saldo kas mengendap (sisa modal belum dibelanjakan).
+                </span>
+            </div>
+        </div>
+        @endif
 
         {{-- Chart Trend Profit Bulanan (Dihilangkan sementara) --}}
         {{--
@@ -413,6 +434,25 @@
                             </td>
                             <td></td>
                         </tr>
+                        @if(($idleCapital ?? 0) > 0 || $assetValue > 0)
+                        <tr class="bg-natural-50 text-[10px] sm:text-xs border-t border-natural-200 text-natural-600">
+                            <td colspan="3" class="px-3 py-2.5">
+                                <div class="flex flex-col gap-1">
+                                    <span class="font-bold text-natural-700 flex items-center gap-1"><i class='bx bx-check-shield text-emerald-600'></i> Rekonsiliasi Alokasi Modal Berjalan:</span>
+                                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-natural-600">
+                                        <span>&bull; Terwujud Stok Aktif ({{ $currentStockQty }} Unit): <strong class="text-amber-700 font-bold">Rp {{ number_format($assetValue, 0, ',', '.') }}</strong></span>
+                                        <span>&bull; Kas Belum Dibelanjakan (Mengendap): <strong class="text-blue-700 font-bold">Rp {{ number_format($idleCapital ?? 0, 0, ',', '.') }}</strong></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 text-right font-black text-natural-800 whitespace-nowrap">
+                                Rp {{ number_format($assetValue + ($idleCapital ?? 0), 0, ',', '.') }}
+                            </td>
+                            <td class="px-3 py-2.5 text-center">
+                                <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 whitespace-nowrap">Sinkron 100%</span>
+                            </td>
+                        </tr>
+                        @endif
                     </tfoot>
                 </table>
             </div>
