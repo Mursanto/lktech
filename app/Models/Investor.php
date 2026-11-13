@@ -35,6 +35,38 @@ class Investor extends Model
     }
 
     /**
+     * Riwayat setoran / penarikan modal pokok investor.
+     */
+    public function deposits()
+    {
+        return $this->hasMany(InvestorDeposit::class);
+    }
+
+    /**
+     * Modal Pokok Terdaftar (Uang Riil yang Disetorkan Investor).
+     * Dihitung dari riwayat setoran (deposit) dikurangi penarikan (withdrawal).
+     * Jika belum memiliki catatan setoran, fallback ke totalInvestmentValue().
+     */
+    public function totalCapital(): int
+    {
+        if ($this->deposits()->exists()) {
+            $in  = (int) $this->deposits()->where('type', 'deposit')->sum('amount');
+            $out = (int) $this->deposits()->where('type', 'withdrawal')->sum('amount');
+            return max(0, $in - $out);
+        }
+
+        return $this->totalInvestmentValue();
+    }
+
+    /**
+     * Total omzet perputaran belanja stok kumulatif (semua unit yang pernah dibelikan).
+     */
+    public function cumulativePurchasedValue(): int
+    {
+        return $this->totalInvestmentValue();
+    }
+
+    /**
      * Produk aktif (available) milik investor.
      */
     public function activeProducts()

@@ -193,14 +193,19 @@ class InvestorReportController extends Controller
         }
 
         // Aset aktif
-        $assetValue    = $investor->totalAssetValue();
-        $grossProfit   = $investor->totalGrossProfit($startDate, $endDate);
-        $investorShare = $investor->investorShareAmount($startDate, $endDate);
+        $assetValue         = $investor->totalAssetValue();
+        $grossProfit        = $investor->totalGrossProfit($startDate, $endDate);
+        $investorShare      = $investor->investorShareAmount($startDate, $endDate);
 
-        $totalInvestment = $investor->totalInvestmentValue();
-        $totalQty = $investor->totalQty();
-        $soldQty = $investor->soldQty();
-        $currentStockQty = $investor->currentStockQty();
+        $totalCapital       = $investor->totalCapital();
+        $cumulativeTurnover = $investor->cumulativePurchasedValue();
+        $totalInvestment    = $totalCapital;
+        $totalQty           = $investor->totalQty();
+        $soldQty            = $investor->soldQty();
+        $currentStockQty    = $investor->currentStockQty();
+
+        // Riwayat mutasi modal pokok
+        $deposits           = $investor->deposits()->orderBy('date', 'desc')->get();
 
         // Trend profit 6 bulan terakhir
         $profitTrend = [];
@@ -267,6 +272,9 @@ class InvestorReportController extends Controller
             'trendLabels',
             'activeProducts',
             'totalInvestment',
+            'totalCapital',
+            'cumulativeTurnover',
+            'deposits',
             'totalQty',
             'soldQty',
             'currentStockQty',

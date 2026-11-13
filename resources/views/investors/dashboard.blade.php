@@ -75,10 +75,10 @@
 
         {{-- Summary Cards --}}
         <div class="grid grid-cols-2 lg:grid-cols-12 gap-3">
-            {{-- Total Investasi --}}
-            <div class="bg-white rounded-xl border border-natural-100 p-2.5 sm:p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between">
+            {{-- Total Investasi / Modal Pokok --}}
+            <div class="bg-white rounded-xl border border-natural-100 p-2.5 sm:p-3 shadow-sm col-span-1 lg:col-span-3 flex flex-col justify-between" title="Modal bersih yang disetor oleh Investor (berputar dalam inventori)">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[8px] sm:text-[9px] font-bold text-natural-500 uppercase tracking-wider leading-tight pr-1">Total Modal</p>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-natural-500 uppercase tracking-wider leading-tight pr-1">Modal Pokok Disetor</p>
                     <div class="w-5 h-5 sm:w-6 sm:h-6 bg-blue-50 text-blue-600 rounded flex items-center justify-center shrink-0">
                         <i class='bx bx-briefcase text-xs sm:text-sm'></i>
                     </div>
@@ -87,7 +87,10 @@
                     <span class="text-[10px] sm:text-xs font-bold text-natural-500 mt-0.5 sm:mt-0.5">Rp</span>
                     <span class="text-[13px] sm:text-lg lg:text-xl font-black text-natural-800 tracking-tight">{{ number_format($totalInvestment, 0, ',', '.') }}</span>
                 </div>
-                <p class="text-natural-500 font-medium text-[9px] sm:text-[10px] mt-1">{{ $totalQty }} Unit Barang</p>
+                <div class="mt-1 flex items-center justify-between text-[8px] sm:text-[9px] text-natural-500">
+                    <span class="font-medium text-emerald-600">Dana Berputar</span>
+                    <span class="text-natural-400 font-normal" title="Total belanja stok yang pernah diputar dari modal ini">Omzet: Rp {{ number_format($cumulativeTurnover ?? $totalInvestment, 0, ',', '.') }}</span>
+                </div>
             </div>
 
             {{-- Pendapatan Bersih --}}
@@ -137,13 +140,13 @@
             @php $roi = $totalInvestment > 0 ? ($investorShare / $totalInvestment) * 100 : 0; @endphp
             <div class="bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl p-2.5 sm:p-3 shadow-sm text-white col-span-1 lg:col-span-2 flex flex-col justify-between">
                 <div class="flex justify-between items-start mb-1">
-                    <p class="text-[8px] sm:text-[9px] font-bold text-violet-200 uppercase tracking-wider leading-tight pr-1">ROI</p>
+                    <p class="text-[8px] sm:text-[9px] font-bold text-violet-200 uppercase tracking-wider leading-tight pr-1">ROI Riil</p>
                     <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white/20 rounded flex items-center justify-center shrink-0">
                         <i class='bx bx-trending-up text-xs sm:text-sm'></i>
                     </div>
                 </div>
-                <p class="text-[13px] sm:text-lg lg:text-xl font-black whitespace-nowrap" title="Kalkulasi otomatis berbasis skema LKTech {{ 100 - $investor->share_percentage }}% : Investor {{ number_format($investor->share_percentage, 0) }}%">{{ number_format($roi, 2, ',', '.') }}%</p>
-                <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90 cursor-help" title="Kalkulasi otomatis berbasis skema LKTech {{ 100 - $investor->share_percentage }}% : Investor {{ number_format($investor->share_percentage, 0) }}%">(Profit &divide; Modal)</p>
+                <p class="text-[13px] sm:text-lg lg:text-xl font-black whitespace-nowrap" title="Kalkulasi otomatis berbasis modal pokok disetor Rp {{ number_format($totalInvestment, 0, ',', '.') }}">{{ number_format($roi, 2, ',', '.') }}%</p>
+                <p class="text-violet-200 text-[7px] sm:text-[8px] mt-1 font-medium leading-tight opacity-90 cursor-help" title="Kalkulasi: Total Profit (Rp {{ number_format($investorShare, 0, ',', '.') }}) ÷ Modal Pokok Disetor (Rp {{ number_format($totalInvestment, 0, ',', '.') }})">(Profit &divide; Modal Pokok)</p>
             </div>
         </div>
 
@@ -181,6 +184,12 @@
                         class="px-2 sm:px-4 py-2.5 sm:py-3 border-b-2 text-[10px] sm:text-sm transition-all focus:outline-none flex items-center gap-1 sm:gap-2 whitespace-nowrap">
                     <i class='bx bx-receipt text-sm sm:text-lg'></i>
                     Riwayat Terjual ({{ $soldQty }} Unit)
+                </button>
+                <button @click="activeTab = 'setoran'" 
+                        :class="activeTab === 'setoran' ? 'border-brand-500 text-brand-700 font-bold' : 'border-transparent text-natural-500 hover:text-natural-700 font-medium'"
+                        class="px-2 sm:px-4 py-2.5 sm:py-3 border-b-2 text-[10px] sm:text-sm transition-all focus:outline-none flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                    <i class='bx bx-wallet text-sm sm:text-lg'></i>
+                    Riwayat Setoran Modal ({{ isset($deposits) ? $deposits->count() : 0 }})
                 </button>
             </div>
 
@@ -329,6 +338,80 @@
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-violet-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-violet-500">Rp</span>{{ number_format($investorShare, 0, ',', '.') }}</td>
                             <td class="px-1.5 sm:px-2 py-2 sm:py-3 text-right text-blue-700 font-black text-xs sm:text-sm whitespace-nowrap"><span class="text-[9px] sm:text-xs font-semibold mr-0.5 text-blue-500">Rp</span>{{ number_format($details->sum('total_return'), 0, ',', '.') }}</td>
                             <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            @endif
+        </div>
+
+        {{-- Tab 3: Riwayat Setoran / Penarikan Modal Pokok --}}
+        <div x-cloak x-show="activeTab === 'setoran'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="bg-white rounded-2xl border border-natural-100 shadow-sm overflow-hidden">
+            <div class="px-4 sm:px-5 py-3 sm:py-4 border-b border-natural-100 flex justify-between items-center">
+                <div>
+                    <h3 class="text-xs sm:text-sm font-bold text-natural-800">Riwayat Setoran Modal Pokok</h3>
+                    <p class="text-[9px] sm:text-[10px] text-natural-400 mt-0.5">Catatan modal uang tunai yang disetor investor (diputar menjadi inventori)</p>
+                </div>
+            </div>
+            @if(!isset($deposits) || $deposits->isEmpty())
+            <div class="py-10 text-center text-natural-400 text-sm">
+                <i class='bx bx-wallet text-3xl mb-2'></i>
+                <p>Belum ada catatan mutasi setoran modal</p>
+            </div>
+            @else
+            <div class="overflow-x-auto hide-scrollbar">
+                <table class="w-full text-[10px] sm:text-xs">
+                    <thead>
+                        <tr class="bg-natural-50 border-b border-natural-100">
+                            <th class="text-left px-3 py-2.5 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Tanggal</th>
+                            <th class="text-left px-3 py-2.5 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Tipe</th>
+                            <th class="text-left px-3 py-2.5 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Keterangan</th>
+                            <th class="text-right px-3 py-2.5 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Nominal</th>
+                            <th class="text-center px-3 py-2.5 text-natural-500 font-semibold text-[9px] sm:text-[11px] uppercase tracking-wider">Bukti</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-natural-50">
+                        @foreach($deposits as $dep)
+                        <tr class="hover:bg-natural-50/60 transition-colors">
+                            <td class="px-3 py-2.5 font-medium text-natural-600 whitespace-nowrap">
+                                {{ $dep->date ? \Carbon\Carbon::parse($dep->date)->format('d M Y') : '-' }}
+                            </td>
+                            <td class="px-3 py-2.5 whitespace-nowrap">
+                                @if($dep->type === 'deposit')
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                                        Setoran Modal
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                        Penarikan Modal
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-3 py-2.5 text-natural-700 font-medium">
+                                {{ $dep->notes ?? 'Setoran Modal Pokok' }}
+                            </td>
+                            <td class="px-3 py-2.5 text-right font-bold whitespace-nowrap {{ $dep->type === 'deposit' ? 'text-blue-700' : 'text-amber-700' }}">
+                                {{ $dep->type === 'deposit' ? '+' : '-' }}Rp {{ number_format($dep->amount, 0, ',', '.') }}
+                            </td>
+                            <td class="px-3 py-2.5 text-center whitespace-nowrap">
+                                @if($dep->proof_attachment)
+                                    <a href="{{ asset('storage/' . $dep->proof_attachment) }}" target="_blank" class="text-brand-600 hover:underline flex items-center justify-center gap-1 text-[10px]">
+                                        <i class='bx bx-file'></i> Lampiran
+                                    </a>
+                                @else
+                                    <span class="text-natural-400 text-[10px]">-</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-blue-50 border-t-2 border-blue-200 font-bold">
+                            <td colspan="3" class="px-3 py-2.5 text-natural-800">Total Modal Pokok Disetor</td>
+                            <td class="px-3 py-2.5 text-right text-blue-800 font-black text-xs sm:text-sm">
+                                Rp {{ number_format($totalInvestment, 0, ',', '.') }}
+                            </td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>

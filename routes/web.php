@@ -182,6 +182,8 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
     // Investor Management
     Route::get('investors/{investor}/pks', [App\Http\Controllers\InvestorController::class, 'downloadPks'])->name('investors.pks');
+    Route::post('investors/{investor}/deposits', [App\Http\Controllers\InvestorController::class, 'storeDeposit'])->name('investors.deposits.store');
+    Route::delete('investors/deposits/{deposit}', [App\Http\Controllers\InvestorController::class, 'destroyDeposit'])->name('investors.deposits.destroy');
     Route::resource('investors', App\Http\Controllers\InvestorController::class);
     Route::get('/investor-report', [App\Http\Controllers\InvestorReportController::class, 'index'])->name('investor.report');
     Route::get('/investor-report/export', [App\Http\Controllers\InvestorReportController::class, 'export'])->name('investor.report.export');

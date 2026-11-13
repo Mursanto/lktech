@@ -75,7 +75,8 @@ class InvestorController extends Controller
      */
     public function edit(Investor $investor)
     {
-        return view('investors.edit', compact('investor'));
+        $deposits = $investor->deposits()->orderBy('date', 'desc')->get();
+        return view('investors.edit', compact('investor', 'deposits'));
     }
 
     /**
@@ -145,5 +146,58 @@ class InvestorController extends Controller
         }
 
         return view('investors.legal.print', compact('investor'));
+    }
+
+    /**
+     * Tambah setoran / penarikan modal investor (Admin).
+     */
+    public function storeDeposit(Request $request, Investor $investor)
+    {
+        $validated = $request->validate([
+            'type'   => 'required|in:deposit,withdrawal',
+            'amount' => 'required|numeric|min:1',
+            'date'   => 'required|date',
+            'notes'  => 'nullable|string|max:255',
+            'proof_attachment' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+        ]);
+
+        if ($request->hasFile('proof_attachment')) {
+            $validated['proof_attachment'] = $request->file('proof_attachment')->store('investor_deposits', 'public');
+        }
+
+        $validated['investor_id'] = $investor->id;
+        $validated['created_by']  = Auth::id();
+
+        \App\Models\InvestorDeposit::create($validated);
+
+        ActivityLog::create([
+            'user_id'     => Auth::id(),
+            'action'      => 'create',
+            'module'      => 'Investor',
+            'description' => 'Mencatat mutasi modal (' . $validated['type'] . ') Rp ' . number_format($validated['amount']) . ' untuk investor: ' . $investor->name,
+            'ip_address'  => $request->ip(),
+        ]);
+
+        return back()->with('success', 'Mutasi modal investor berhasil dicatat.');
+    }
+
+    /**
+     * Hapus catatan mutasi modal investor (Admin).
+     */
+    public function destroyDeposit(\App\Models\InvestorDeposit $deposit)
+    {
+        $investor = $deposit->investor;
+        $amount = $deposit->amount;
+        $deposit->delete();
+
+        ActivityLog::create([
+            'user_id'     => Auth::id(),
+            'action'      => 'delete',
+            'module'      => 'Investor',
+            'description' => 'Menghapus mutasi modal Rp ' . number_format($amount) . ' milik investor: ' . ($investor->name ?? '-'),
+            'ip_address'  => request()->ip(),
+        ]);
+
+        return back()->with('success', 'Catatan mutasi modal berhasil dihapus.');
     }
 }
