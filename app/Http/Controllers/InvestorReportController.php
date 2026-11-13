@@ -205,7 +205,14 @@ class InvestorReportController extends Controller
         $currentStockQty    = $investor->currentStockQty();
 
         // Riwayat mutasi modal pokok
-        $deposits           = $investor->deposits()->orderBy('date', 'desc')->get();
+        $deposits = collect();
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('investor_deposits')) {
+                $deposits = $investor->deposits()->orderBy('date', 'desc')->get();
+            }
+        } catch (\Throwable $e) {
+            $deposits = collect();
+        }
 
         // Trend profit 6 bulan terakhir
         $profitTrend = [];

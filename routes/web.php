@@ -340,10 +340,40 @@ Route::get('/storage/{path}', function($path) {
 Route::get('/run-migrations', function () {
     try {
         \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
-        return 'Migrasi Database dan Clear Cache Berhasil! Silakan kembali ke halaman utama.';
+        $optimizeOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        // Pastikan record modal awal terisi jika belum ada
+        if (\Illuminate\Support\Facades\Schema::hasTable('investor_deposits')) {
+            $arief = \Illuminate\Support\Facades\DB::table('investors')->where('email', 'dataku.ak47@gmail.com')->orWhere('name', 'like', '%Arief%')->first();
+            if ($arief) {
+                $hasDeposit = \Illuminate\Support\Facades\DB::table('investor_deposits')->where('investor_id', $arief->id)->exists();
+                if (!$hasDeposit) {
+                    \Illuminate\Support\Facades\DB::table('investor_deposits')->insert([
+                        'investor_id'      => $arief->id,
+                        'type'             => 'deposit',
+                        'amount'           => 6600000,
+                        'date'             => '2026-10-01',
+                        'notes'            => 'Setoran Modal Pokok Awal (2 Unit ThinkPad X1 Carbon Gen 7th)',
+                        'created_at'       => now(),
+                        'updated_at'       => now(),
+                    ]);
+                }
+            }
+        }
+
+        return "<div style='font-family:sans-serif; padding:25px; line-height:1.6; max-width:600px; margin:40px auto; background:#fff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.05);'>
+            <h2 style='color:#16a34a; margin-top:0;'>✓ Migrasi Database & Clear Cache Berhasil!</h2>
+            <p style='color:#4b5563;'>Tabel mutasi modal pokok investor telah berhasil dibuat dan disinkronkan.</p>
+            <pre style='background:#f3f4f6; padding:12px; border-radius:8px; font-size:12px; overflow-x:auto;'>" . e($migrateOutput . "\n" . $optimizeOutput) . "</pre>
+            <p style='margin-top:20px;'><a href='/investor/dashboard' style='display:inline-block; padding:10px 18px; background:#2563eb; color:#fff; text-decoration:none; border-radius:8px; font-weight:bold; font-size:14px;'>Buka Dashboard Investor &rarr;</a></p>
+        </div>";
     } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
+        return "<div style='font-family:sans-serif; padding:25px; color:#dc2626; max-width:600px; margin:40px auto; background:#fff; border:1px solid #fee2e2; border-radius:12px;'>
+            <h2 style='margin-top:0;'>✕ Gagal Menjalankan Migrasi</h2>
+            <pre style='background:#fef2f2; padding:12px; border-radius:8px; font-size:12px; color:#991b1b; overflow-x:auto;'>" . e($e->getMessage()) . "</pre>
+        </div>";
     }
 });
 

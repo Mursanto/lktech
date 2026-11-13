@@ -49,10 +49,14 @@ class Investor extends Model
      */
     public function totalCapital(): int
     {
-        if ($this->deposits()->exists()) {
-            $in  = (int) $this->deposits()->where('type', 'deposit')->sum('amount');
-            $out = (int) $this->deposits()->where('type', 'withdrawal')->sum('amount');
-            return max(0, $in - $out);
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('investor_deposits') && $this->deposits()->exists()) {
+                $in  = (int) $this->deposits()->where('type', 'deposit')->sum('amount');
+                $out = (int) $this->deposits()->where('type', 'withdrawal')->sum('amount');
+                return max(0, $in - $out);
+            }
+        } catch (\Throwable $e) {
+            // Fallback aman jika tabel belum dimigrasi
         }
 
         return $this->totalInvestmentValue();
